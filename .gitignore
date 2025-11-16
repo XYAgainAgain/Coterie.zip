@@ -3,6 +3,7 @@ site/
 
 # Development files
 .*/
+.claude/
 .dev/
 
 # Python
