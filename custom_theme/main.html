@@ -16,7 +16,11 @@
   <link href="{{ base_url }}/css/custom.css" rel="stylesheet">
 {% endblock %}
 
+{% block footer %}
+  {# Override footer to hide or move it - empty block hides default footer #}
+{% endblock %}
+
 {% block scripts %}
   {{ super() }}
-  {# Additional JavaScript can be added here #}
+  <script src="{{ base_url }}/assets/javascripts/custom.js"></script>
 {% endblock %}

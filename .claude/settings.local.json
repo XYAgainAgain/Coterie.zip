@@ -8,7 +8,11 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:gristlabs.github.io)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(python -c:*)",
+      "WebFetch(domain:noraj.github.io)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(python -m pip:*)"
     ],
     "deny": [],
     "ask": []

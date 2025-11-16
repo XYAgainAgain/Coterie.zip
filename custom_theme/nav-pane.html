@@ -1,0 +1,47 @@
+{# Side-pane with table of contents - Modified for Coterie custom fonts #}
+{# Based on mkdocs-windmill-dark by noraj (https://github.com/noraj1337/mkdocs-windmill-dark) #}
+
+<style>
+/* Import Google Fonts for navigation */
+@import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=IM+Fell+English+SC&display=swap');
+
+/* Top-level navigation items (Core Systems, Disciplines, etc.) - Metamorphous */
+.wm-toc-lev1 > a.wm-article-link,
+.wm-toc-lev1 > span.wm-toc-text {
+  font-family: 'Metamorphous', serif !important;
+  font-size: 1.1em !important;
+}
+
+/* Nested navigation items (How to Play, Harm & Healing, etc.) - IM FELL English SC */
+.wm-toc-lev2 > a.wm-article-link,
+.wm-toc-lev2 > span.wm-toc-text {
+  font-family: 'IM Fell English SC', serif !important;
+  font-size: 1.15em !important;
+  font-weight: 600 !important;
+}
+</style>
+
+<nav class="wm-toc-pane">
+  {# Optional link to the repository #}
+  {%- block repo %}
+    {%- if config.repo_url %}
+    <ul class="wm-toctree wm-toc-repo">
+      <li class="wm-toc-li wm-toc-lev1">
+      <a class="wm-article-link wm-toc-text" href="{{ config.repo_url }}">
+        {% include 'repo-icon.html' %}
+        {{ config.repo_name }}
+      </a>
+      </li>
+    </ul>
+    {%- endif %}
+  {%- endblock %}
+
+  {%- block site_nav %}
+  <ul class="wm-toctree">
+    {%- set navlevel = 1 %}
+    {%- for nav_item in nav %}
+        {% include 'nav-item.html' %}
+    {%- endfor %}
+  </ul>
+  {%- endblock %}
+</nav>

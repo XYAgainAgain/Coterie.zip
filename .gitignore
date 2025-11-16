@@ -2,6 +2,7 @@
 site/
 
 # Development files
+.*/
 .dev/
 
 # Python
