@@ -1,0 +1,31 @@
+# MkDocs build output
+site/
+
+# Development files
+.dev/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+.obsidian/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# MkDocs cache
+.cache/

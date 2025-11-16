@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{# Custom theme extending Windmill Dark #}
+{# Override blocks here to customize the theme #}
+
+{% block extrahead %}
+  {{ super() }}
+  {# Google Fonts #}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Metamorphous&family=IM+Fell+English+SC&family=IM+Fell+Great+Primer&family=Merriweather+Sans:wght@400;700&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block styles %}
+  {{ super() }}
+  <link href="{{ base_url }}/css/custom.css" rel="stylesheet">
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  {# Additional JavaScript can be added here #}
+{% endblock %}

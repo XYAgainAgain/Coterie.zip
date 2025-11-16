@@ -1,0 +1,77 @@
+site_name: Coterie
+site_url: https://coterie.zip
+site_description: Documentation site for Coterie
+site_author: Sam
+
+repo_url: https://github.com/yourusername/coterie.zip
+repo_name: coterie.zip
+
+theme:
+  name: windmill-dark
+  custom_dir: custom_theme
+  locale: en
+
+nav:
+  - Home: index.md
+  - Core Systems:
+    - How to Play: core-systems/how-to-play.md
+    - Harm & Healing: core-systems/harm-healing.md
+    - Combat: core-systems/combat.md
+    - Hunger: core-systems/hunger.md
+    - Humanity & Stains: core-systems/humanity-stains.md
+    - Debt: core-systems/debt.md
+    - Clocks: core-systems/clocks.md
+    - Coteries: core-systems/coteries.md
+  - The Vampiric Condition:
+    - Kith & Kindred: vampiric-condition/kith-kindred.md
+    - Blood Potency: vampiric-condition/blood-potency.md
+    - Age Brackets: vampiric-condition/age-brackets.md
+  - Basic Moves & Advancement:
+    - Basic Moves: moves-advancement/basic-moves.md
+    - Advancement: moves-advancement/advancement.md
+  - Your Character:
+    - Creating Your Kindred: character/creating-kindred.md
+    - Individual Stats: character/stats.md
+    - Predator Types: character/predator-types.md
+    - Discipline Overview: character/discipline-overview.md
+    - Playbooks: character/playbooks.md
+  - Your Coterie:
+    - Coterie Creation: coterie/creation.md
+    - Coterie Stats: coterie/stats.md
+    - Coterie Moves: coterie/moves.md
+    - Coterie Types: coterie/types.md
+  - Disciplines:
+    - General Rules: disciplines/general-rules.md
+    - Amalgam Powers: disciplines/amalgam-powers.md
+    - Discipline Reference: disciplines/reference.md
+    - Animalism: disciplines/animalism.md
+    - Auspex: disciplines/auspex.md
+    - Celerity: disciplines/celerity.md
+    - Dominate: disciplines/dominate.md
+    - Fortitude: disciplines/fortitude.md
+    - Obfuscate: disciplines/obfuscate.md
+    - Oblivion: disciplines/oblivion.md
+    - Potence: disciplines/potence.md
+    - Presence: disciplines/presence.md
+    - Protean: disciplines/protean.md
+    - Blood Sorcery: disciplines/blood-sorcery.md
+    - Thin-Blood Alchemy: disciplines/thin-blood-alchemy.md
+  - Storyteller Guide:
+    - Running Coterie: storyteller/running-coterie.md
+    - The Masquerade as a Threat: storyteller/masquerade-threat.md
+    - Building Your World: storyteller/building-world.md
+    - Threats & Antagonists: storyteller/threats-antagonists.md
+    - Chronicles & Campaign Structure: storyteller/chronicles-campaigns.md
+  - Appendices:
+    - Quick Reference: appendices/quick-reference.md
+    - Tag System: appendices/tag-system.md
+    - Generic Alternatives & Optional Rules: appendices/optional-rules.md
+    - Index: appendices/index.md
+    - Acknowledgments: appendices/acknowledgments.md
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - meta
+  - toc:
+      permalink: true
