@@ -7,9 +7,36 @@ repo_url: https://github.com/XYAgainAgain/Coterie.zip
 repo_name: coterie.zip
 
 theme:
-  name: windmill-dark
+  name: material
   custom_dir: custom_theme
-  locale: en
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+  font: false
+  features:
+    - toc.integrate
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/extra.js
 
 nav:
   - Home: index.md
@@ -43,19 +70,20 @@ nav:
   - Disciplines:
     - General Rules: disciplines/general-rules.md
     - Amalgam Powers: disciplines/amalgam-powers.md
-    - Discipline Reference: disciplines/reference.md
-    - Animalism: disciplines/animalism.md
-    - Auspex: disciplines/auspex.md
-    - Celerity: disciplines/celerity.md
-    - Dominate: disciplines/dominate.md
-    - Fortitude: disciplines/fortitude.md
-    - Obfuscate: disciplines/obfuscate.md
-    - Oblivion: disciplines/oblivion.md
-    - Potence: disciplines/potence.md
-    - Presence: disciplines/presence.md
-    - Protean: disciplines/protean.md
-    - Blood Sorcery: disciplines/blood-sorcery.md
-    - Thin-Blood Alchemy: disciplines/thin-blood-alchemy.md
+    - Discipline Reference:
+      - Overview: disciplines/reference.md
+      - Animalism: disciplines/animalism.md
+      - Auspex: disciplines/auspex.md
+      - Celerity: disciplines/celerity.md
+      - Dominate: disciplines/dominate.md
+      - Fortitude: disciplines/fortitude.md
+      - Obfuscate: disciplines/obfuscate.md
+      - Oblivion: disciplines/oblivion.md
+      - Potence: disciplines/potence.md
+      - Presence: disciplines/presence.md
+      - Protean: disciplines/protean.md
+      - Blood Sorcery: disciplines/blood-sorcery.md
+      - Thin-Blood Alchemy: disciplines/thin-blood-alchemy.md
   - Storyteller Guide:
     - Running Coterie: storyteller/running-coterie.md
     - The Masquerade as a Threat: storyteller/masquerade-threat.md
@@ -75,3 +103,4 @@ markdown_extensions:
   - meta
   - toc:
       permalink: true
+      toc_depth: 2

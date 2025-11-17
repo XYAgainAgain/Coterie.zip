@@ -5,6 +5,7 @@ site/
 .*/
 .claude/
 .dev/
+CLAUDE.md
 
 # Python
 __pycache__/

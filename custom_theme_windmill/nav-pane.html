@@ -3,21 +3,34 @@
 
 <style>
 /* Import Google Fonts for navigation */
-@import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=IM+Fell+English+SC&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=Merriweather:wght@400;700&family=IM+Fell+English+SC&display=swap');
 
-/* Top-level navigation items (Core Systems, Disciplines, etc.) - Metamorphous */
-.wm-toc-lev1 > a.wm-article-link,
-.wm-toc-lev1 > span.wm-toc-text {
+/* Repository link (coterie.zip) - Metamorphous */
+.wm-toc-repo a.wm-article-link {
   font-family: 'Metamorphous', serif !important;
   font-size: 1.1em !important;
 }
 
-/* Nested navigation items (How to Play, Harm & Healing, etc.) - IM FELL English SC */
+/* Top-level navigation items - Merriweather serif */
+.wm-toc-lev1 > a.wm-article-link,
+.wm-toc-lev1 > span.wm-toc-text {
+  font-family: 'Merriweather', serif !important;
+  font-size: 1.05em !important;
+  font-weight: 700 !important;
+}
+
+/* Nested navigation items (all levels) - Merriweather */
 .wm-toc-lev2 > a.wm-article-link,
-.wm-toc-lev2 > span.wm-toc-text {
-  font-family: 'IM Fell English SC', serif !important;
-  font-size: 1.15em !important;
-  font-weight: 600 !important;
+.wm-toc-lev2 > span.wm-toc-text,
+.wm-toc-lev3 > a.wm-article-link,
+.wm-toc-lev3 > span.wm-toc-text,
+.wm-toc-lev4 > a.wm-article-link,
+.wm-toc-lev4 > span.wm-toc-text,
+.wm-toc-lev5 > a.wm-article-link,
+.wm-toc-lev5 > span.wm-toc-text {
+  font-family: 'Merriweather', serif !important;
+  font-size: 1.05em !important;
+  font-weight: 400 !important;
 }
 </style>
 

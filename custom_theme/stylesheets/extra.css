@@ -62,66 +62,26 @@
 }
 
 /* ========================================
-   GOTHIC VAMPIRE COLOR SCHEME
+   DARK THEME COLOR SCHEME
    ======================================== */
-
-/* Coterie Color Palette:
-   - Deep Crimson (#96031a): Header, primary accents
-   - Carbon Black (#1b1b1e): Background
-   - White (#fbfffe): Text
-   - Dim Grey (#6d676e): Standout elements
-   - Gold (#faa916): Links, active states
-*/
 
 [data-md-color-scheme="slate"] {
-  /* Header - Deep Crimson */
-  --md-primary-fg-color: #96031a;
-  --md-primary-fg-color--light: #b5041f;
-  --md-primary-fg-color--dark: #6d0212;
+  /* Spooky dark blood red header and accents */
+  --md-primary-fg-color: #8B0000;
+  --md-primary-fg-color--light: #A52A2A;
+  --md-primary-fg-color--dark: #5C0000;
 
-  /* Background - Carbon Black */
-  --md-default-bg-color: #1b1b1e;
-  --md-default-bg-color--light: #252528;
-  --md-default-bg-color--lighter: #2f2f32;
-  --md-default-bg-color--lightest: #39393c;
+  /* Dark stormy grey background */
+  --md-default-bg-color: #2B2B2B;
+  --md-default-bg-color--light: #3A3A3A;
+  --md-default-bg-color--lighter: #4A4A4A;
+  --md-default-bg-color--lightest: #5A5A5A;
 
-  /* Text - White */
-  --md-default-fg-color: #fbfffe;
-  --md-default-fg-color--light: #e0e0df;
-  --md-default-fg-color--lighter: #c5c5c4;
-  --md-default-fg-color--lightest: #aaaaaa;
-
-  /* Accent/Links - Gold */
-  --md-accent-fg-color: #faa916;
-  --md-accent-fg-color--transparent: rgba(250, 169, 22, 0.1);
-
-  /* Code blocks - Dim Grey background */
-  --md-code-bg-color: #6d676e;
-  --md-code-fg-color: #fbfffe;
-
-  /* Standout elements - Dim Grey */
-  --md-typeset-table-color: #6d676e;
-}
-
-/* ========================================
-   FULL-WIDTH HEADER
-   ======================================== */
-
-/* Remove header padding to extend to edges */
-.md-header {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-/* Ensure header inner content has appropriate spacing */
-.md-header__inner {
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
-}
-
-/* Site title proper spacing */
-.md-header__title {
-  padding-left: 0;
+  /* Adjust text for better contrast on darker background */
+  --md-default-fg-color: #E8E8E8;
+  --md-default-fg-color--light: #CCCCCC;
+  --md-default-fg-color--lighter: #AAAAAA;
+  --md-default-fg-color--lightest: #888888;
 }
 
 /* ========================================
@@ -226,7 +186,7 @@ h5, h6 {
 
 /* Material uses a different layout system, adjust container width */
 .md-grid {
-  max-width: 100rem; /* ~1600px, increased for wider layout */
+  max-width: 80rem; /* ~1280px, allows for comfortable reading */
 }
 
 .md-main__inner {
@@ -235,7 +195,7 @@ h5, h6 {
 
 /* Content area */
 .md-content {
-  max-width: 75%;
+  max-width: 66%;
 }
 
 /* ========================================
@@ -281,17 +241,6 @@ h5, h6 {
   }
 }
 
-/* Ultra-wide: >= 1920px */
-@media screen and (min-width: 1920px) {
-  .md-grid {
-    max-width: 120rem; /* ~1920px */
-  }
-
-  .md-content {
-    max-width: 80%;
-  }
-}
-
 /* ========================================
    CODE BLOCKS & SYNTAX HIGHLIGHTING
    ======================================== */
@@ -313,30 +262,18 @@ code {
   border-left: 4px solid;
 }
 
-/* Links - Gold color scheme */
+/* Links */
 .md-typeset a {
-  color: #faa916;
   text-decoration: none;
 }
 
 .md-typeset a:hover {
-  color: #fbb647;
   text-decoration: underline;
 }
 
-.md-typeset a:active,
-.md-nav__link--active {
-  color: #faa916;
-}
-
-/* Tables - Dim Grey borders */
+/* Tables */
 .md-typeset table:not([class]) {
-  border: 1px solid #6d676e;
-}
-
-.md-typeset table:not([class]) th {
-  background-color: #6d676e;
-  color: #fbfffe;
+  border: 1px solid var(--md-default-fg-color--lightest);
 }
 
 /* ========================================
@@ -365,118 +302,6 @@ code {
 /* Search results */
 .md-search-result__article {
   background-color: var(--md-default-bg-color--light);
-}
-
-/* ========================================
-   GOTHIC VAMPIRE ENHANCEMENTS
-   ======================================== */
-
-/* Search bar - Carbon Black with Gold accents */
-.md-search__input {
-  background-color: #1b1b1e;
-  color: #fbfffe;
-  border: 1px solid #96031a;
-}
-
-.md-search__input::placeholder {
-  color: rgba(251, 255, 254, 0.6);
-}
-
-.md-search__input:focus {
-  border-color: #faa916;
-}
-
-/* Code blocks - Dim Grey background */
-.md-typeset code {
-  background-color: #6d676e;
-  color: #fbfffe;
-  padding: 0.2em 0.4em;
-  border-radius: 3px;
-}
-
-.md-typeset pre {
-  background-color: #6d676e;
-}
-
-.md-typeset pre > code {
-  background-color: #6d676e;
-  color: #fbfffe;
-}
-
-/* Admonitions - Dim Grey with color accents */
-.md-typeset .admonition {
-  background-color: rgba(109, 103, 110, 0.2);
-  border-left-color: #6d676e;
-}
-
-.md-typeset .admonition-title {
-  background-color: rgba(109, 103, 110, 0.4);
-  border-left-color: #96031a;
-}
-
-/* Footer - Carbon Black with Dim Grey text */
-.md-footer {
-  background-color: #1b1b1e;
-  color: #6d676e;
-}
-
-.md-footer-meta {
-  background-color: #1b1b1e;
-}
-
-.md-footer__link {
-  color: #6d676e;
-}
-
-.md-footer__link:hover {
-  color: #faa916;
-}
-
-/* Scrollbar - Deep Crimson thumb */
-::-webkit-scrollbar {
-  width: 10px;
-  background: #1b1b1e;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #96031a;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #b5041f;
-}
-
-/* Navigation drawer/sidebar - Dim Grey highlights */
-.md-nav__title {
-  background-color: rgba(109, 103, 110, 0.3);
-}
-
-.md-nav__item--active > .md-nav__link {
-  color: #faa916;
-}
-
-/* Buttons - Gold accents */
-.md-button {
-  color: #faa916;
-  border-color: #faa916;
-}
-
-.md-button:hover {
-  background-color: rgba(250, 169, 22, 0.1);
-  border-color: #fbb647;
-  color: #fbb647;
-}
-
-.md-button--primary {
-  background-color: #96031a;
-  color: #fbfffe;
-  border-color: #96031a;
-}
-
-.md-button--primary:hover {
-  background-color: #b5041f;
-  border-color: #b5041f;
 }
 
 /* ========================================

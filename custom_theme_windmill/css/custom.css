@@ -1,0 +1,221 @@
+/* Custom theme styles extending Windmill Dark */
+
+/* Dark background for body area behind content */
+body {
+  font-family: 'Merriweather Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 12pt !important;
+  background-color: #1a1a1a !important;
+}
+
+/* Typography - with !important to override theme defaults */
+h1 {
+  font-family: 'Metamorphous', serif !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+h2,
+h3,
+h4 {
+  font-family: 'IM Fell English SC', serif !important;
+}
+
+h5,
+h6 {
+  font-family: 'IM Fell Great Primer', serif !important;
+}
+
+/* Top title styling - reduced size */
+.wm-top-title {
+  font-family: 'Metamorphous', serif !important;
+  font-size: 2em !important;
+  padding-left: 10px !important;
+}
+
+.wm-article-link {
+  font-family: 'Metamorphous', serif !important;
+}
+
+/* Widen content area (2/3 instead of 1/3) */
+.container-fluid.wm-page-content {
+  max-width: 66% !important;
+  width: 66% !important;
+}
+
+/* Page table of contents font styling */
+.wm-page-toc-text {
+  font-family: 'Merriweather', serif !important;
+  font-size: 0.95em !important;
+}
+
+/* Footer styling - smaller and less obtrusive */
+footer.container-fluid.wm-page-content {
+  font-size: 0.75em !important;
+  padding: 10px 15px !important;
+  opacity: 0.7;
+}
+
+footer.container-fluid.wm-page-content a {
+  font-size: 0.9em;
+}
+
+/* Hide h3+ headers in navigation sidebar */
+.wm-toc-lev3,
+.wm-toc-lev4,
+.wm-toc-lev5,
+.wm-toc-lev6 {
+  display: none !important;
+}
+
+/* Sidebar width customization - increased from 250px to 300px */
+.wm-toc-pane {
+  width: 300px !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+.wm-content-pane {
+  padding-left: 300px !important;
+}
+
+.wm-toc-hidden > .wm-toc-pane {
+  margin-left: -300px !important;
+}
+
+/* Search bar - Metamorphous font for placeholder */
+input#mkdocs-search-query::placeholder {
+  font-family: 'Metamorphous', serif !important;
+  opacity: 0.8;
+}
+
+/* Previous/Next navigation buttons - minimal approach */
+.wm-article-nav-buttons .btn-xs.btn-default,
+.wm-article-nav-buttons .btn-xs.btn-link {
+  display: inline-block !important;
+  height: 38px !important;
+  margin: 0 !important;
+  padding: 10px 16px !important;
+  vertical-align: middle !important;
+  box-sizing: border-box !important;
+  line-height: 1 !important;
+  font-size: 16px !important;
+}
+
+.wm-article-nav-buttons .fa-chevron-left,
+.wm-article-nav-buttons .fa-chevron-right {
+  font-size: 16px !important;
+}
+
+.wm-article-nav-buttons {
+  margin: 1.5rem 0 !important;
+}
+
+.wm-article-nav {
+  height: 38px !important;
+  max-width: 50% !important;
+  vertical-align: middle !important;
+}
+
+/* Transparent border on title previews */
+.wm-article-nav-buttons .btn-xs.btn-link {
+  border: 1px solid transparent !important;
+}
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS (Modern Standards)
+   ======================================== */
+
+/* Mobile: < 640px (phones in portrait) */
+@media (max-width: 639px) {
+  /* Reset content to full width */
+  .container-fluid.wm-page-content {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+
+  /* Remove sidebar padding from content pane */
+  .wm-content-pane {
+    padding-left: 0px !important;
+  }
+
+  /* Ensure hidden sidebar margin works */
+  .wm-toc-hidden > .wm-toc-pane {
+    margin-left: -300px !important;
+  }
+
+  /* Reduce font sizes for mobile */
+  body {
+    font-size: 11pt !important;
+  }
+
+  .wm-top-title {
+    font-size: 1.5em !important;
+  }
+
+  /* Navigation container - fixed width for consistency */
+  .wm-article-nav {
+    width: 145px !important;
+    height: 32px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Mobile navigation buttons - minimal approach */
+  .wm-article-nav-buttons .btn-xs.btn-default {
+    display: inline-block !important;
+    width: 32px !important;
+    height: 32px !important;
+    margin: 0 !important;
+    padding: 6px !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    font-size: 0 !important;
+  }
+
+  /* Show only the chevron icons */
+  .wm-article-nav-buttons .fa-chevron-left,
+  .wm-article-nav-buttons .fa-chevron-right {
+    font-size: 16px !important;
+  }
+
+  /* Page title preview text */
+  .wm-article-nav-buttons .btn-xs.btn-link {
+    display: inline-block !important;
+    width: 110px !important;
+    height: 32px !important;
+    margin: 0 !important;
+    padding: 4px 6px !important;
+    vertical-align: middle !important;
+    box-sizing: border-box !important;
+    line-height: 2 !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Tablet: 640px - 1023px (tablets, small laptops) */
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* Content width between mobile and desktop */
+  .container-fluid.wm-page-content {
+    max-width: 85% !important;
+    width: 85% !important;
+  }
+
+  /* Slightly smaller sidebar for tablets */
+  .wm-toc-pane {
+    width: 280px !important;
+  }
+
+  .wm-content-pane {
+    padding-left: 280px !important;
+  }
+
+  .wm-toc-hidden > .wm-toc-pane {
+    margin-left: -280px !important;
+  }
+}
+
+/* Desktop: 1024px+ (laptops, desktops, large screens)
+   Default styles above apply here - no overrides needed */
