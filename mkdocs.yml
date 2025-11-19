@@ -3,8 +3,8 @@ site_url: https://coterie.zip
 site_description: Documentation site for Coterie
 site_author: Sam
 
-repo_url: https://github.com/XYAgainAgain/Coterie.zip
-repo_name: coterie.zip
+repo_url: https://coterie.zip/assets/downloads/Coterie.zip
+repo_name: Coterie.zip
 
 theme:
   name: material
@@ -37,6 +37,7 @@ extra_css:
 
 extra_javascript:
   - javascripts/extra.js
+  - javascripts/terminology-toggle.js
 
 nav:
   - Home: index.md

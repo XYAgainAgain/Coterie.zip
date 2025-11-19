@@ -1,0 +1,215 @@
+{
+  "_comment": "Coterie Terminology Mappings - VTM to Generic",
+  "_blacklist": [
+    "Vampire: The Masquerade",
+    "V:TM",
+    "VtM",
+    "V5",
+    "V20"
+  ],
+  "_affix_guide": {
+    "_description": "The 'forms' array generates word variants automatically",
+    "_asymmetric_handling": "Use source_forms and target_forms when source/target have different plural rules",
+    "_examples_using_Kindred": {
+      "symmetric_case": {
+        "structure": "\"Term\": {\"to\": \"replacement\", \"forms\": [\"'s\"]}",
+        "explanation": "Both source and target get the same affixes",
+        "example": "Auspex + 's → Auspex's, Scrying + 's → Scrying's"
+      },
+      "asymmetric_case": {
+        "structure": "\"Kindred\": {\"to\": \"vampire\", \"source_forms\": [\"'s\"], \"target_forms\": [\"s\", \"'s\"]}",
+        "explanation": "Kindred is singular/plural, but vampire needs 's' for plural",
+        "generates": {
+          "source_variants": ["Kindred", "Kindred's"],
+          "target_variants": ["vampire", "vampires", "vampire's"]
+        }
+      }
+    },
+    "_available_affixes": {
+      "s": "plural suffix (vampire → vampires)",
+      "'s": "possessive suffix (vampire → vampire's)"
+    },
+    "_context_detection": {
+      "how_it_works": "For asymmetric terms, the system detects grammatical context to choose singular or plural form",
+      "plural_indicators": ["are", "were", "have", "these", "those", "many", "several", "all", "few", "numbers > 1"],
+      "singular_indicators": ["is", "was", "has", "a", "an", "this", "that", "one", "each", "every"],
+      "examples": {
+        "What are Kindred?": "What are vampires? (detected 'are' → plural)",
+        "She was a fellow Kindred": "She was a fellow vampire (detected 'was' + 'a' → singular)",
+        "The Kindred is dangerous": "The vampire is dangerous (detected 'is' → singular)",
+        "These Kindred are ancient": "These vampires are ancient (detected 'these' + 'are' → plural)"
+      }
+    }
+  },
+  "_testing_instructions": {
+    "_description": "How to test and refine singular/plural detection after core document is complete",
+    "_when_to_test": "After populating all Generic term mappings and completing core documentation",
+    "_steps": [
+      "1. Use grep to find all instances of terms with asymmetric forms (Kindred, Brujah, Ventrue, Lasombra)",
+      "2. Export results with surrounding context: grep -B1 -A1 'Kindred' docs/**/*.md > kindred_test.txt",
+      "3. Toggle to Generic mode and manually check each instance on the site",
+      "4. Note any instances where singular/plural form is incorrect",
+      "5. Check console logs for context detection (shows what context was detected)",
+      "6. Add new patterns to hasPluralIndicator() or hasSingularIndicator() functions in terminology-toggle.js",
+      "7. Repeat until accuracy is acceptable (target: 95%+)"
+    ],
+    "_grep_commands": {
+      "find_all_kindred": "grep -n 'Kindred' docs/**/*.md",
+      "with_context": "grep -B1 -A1 'Kindred' docs/**/*.md > kindred_instances.txt",
+      "count_occurrences": "grep -o 'Kindred' docs/**/*.md | wc -l"
+    },
+    "_edge_cases_to_watch": [
+      "Possessive forms: Kindred's vs vampire's/vampires'",
+      "Compound subjects: 'The Kindred and mortals are...'",
+      "Inverted sentences: 'Among the Kindred are...'",
+      "Interrupted phrases: 'The Kindred, despite their power, are...'",
+      "Ambiguous contexts: 'The Kindred can...' (could be singular or plural)"
+    ],
+    "_debugging": {
+      "console_logs": "Check browser console for [Context] logs showing detection decisions",
+      "test_procedure": "Toggle VTM → Generic and review each page systematically",
+      "refinement": "Add missed patterns to terminology-toggle.js context detection functions"
+    }
+  },
+
+  "_GENERAL": "--- General VTM terminology ---",
+
+  "Kindred": {
+    "to": "vampire",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "'s"]
+  },
+  "childer": {
+    "to": "freshblood",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "'s"]
+  },
+    "neonate": {
+    "to": "youngblood",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "'s"]
+  },
+    "ancilla": {
+    "to": "midblood",
+    "source_forms": ["e", "e's", "'s"],
+    "target_forms": ["s", "'s"]
+  },
+  
+  "_DISCIPLINES": "--- Disciplines from V5 ---",
+
+  "Animalism": {
+    "to": "Taming",
+    "forms": ["'s"]
+  },
+  "Auspex": {
+    "to": "Scrying",
+    "forms": ["'s"]
+  },
+  "Celerity": {
+    "to": "Swiftness",
+    "forms": ["'s"]
+  },
+  "Dominate": {
+    "to": "Mesmerism",
+    "forms": ["'s"]
+  },
+  "Fortitude": {
+    "to": "Tenacity",
+    "forms": ["'s"]
+  },
+  "Obfuscate": {
+    "to": "Veiling",
+    "forms": ["'s"]
+  },
+  "Oblivion": {
+    "to": "Black Magick",
+    "forms": ["'s"]
+  },
+  "Potence": {
+    "to": "Might",
+    "forms": ["'s"]
+  },
+  "Presence": {
+    "to": "Enthrallment",
+    "forms": ["'s"]
+  },
+  "Protean": {
+    "to": "Shapeshifting",
+    "forms": ["'s"]
+  },
+  "Thin-Blood Alchemy": {
+    "to": "Half-Blood Alchemy",
+    "forms": ["'s"]
+  },
+
+  "_CLANS": "--- Clans from V5 ---",
+
+  "Brujah": {
+    "to": "Punk",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "'s"]
+  },
+  "Gangrel": {
+    "to": "Feral",
+    "forms": ["s", "'s"]
+  },
+  "Malkavian": {
+    "to": "Oracle",
+    "forms": ["s", "'s"]
+  },
+  "Nosferatu": {
+    "to": "Scab",
+    "forms": ["'s"]
+  },
+  "Toreador": {
+    "to": "Sensate",
+    "forms": ["s", "'s"]
+  },
+  "Tremere": {
+    "to": "Thaumaturge",
+    "forms": ["'s"]
+  },
+  "Ventrue": {
+    "to": "Blueblood",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "'s"]
+  },
+  "Banu Haqim": {
+    "to": "Judge",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "s'"]
+  },
+  "Hecata": {
+    "to": "Unclean",
+    "forms": ["'s"]
+  },
+  "Lasombra": {
+    "to": "Nightwalker",
+    "source_forms": ["'s"],
+    "target_forms": ["s", "'s"]
+  },
+  "The Ministry": {
+    "to": "The Faithful",
+    "forms": ["'s"]
+  },
+  "Ravnos": {
+    "to": "Roamer",
+    "forms": ["'s"]
+  },
+  "Salubri": {
+    "to": "Soul-Thief",
+    "forms": ["'s"]
+  },
+  "Caitiff": {
+    "to": "Clanless",
+    "forms": ["s", "'s"]
+  },
+  "Thin-Blood": {
+    "to": "Half-Blood",
+    "forms": ["s", "'s"]
+  },
+  "Ghoul": {
+    "to": "Thrall",
+    "forms": ["s", "'s"]
+  }
+}

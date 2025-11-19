@@ -65,7 +65,7 @@
    GOTHIC VAMPIRE COLOR SCHEME
    ======================================== */
 
-/* Coterie Color Palette:
+/* Coterie Night Mode Color Palette:
    - Deep Crimson (#96031a): Header, primary accents
    - Carbon Black (#1b1b1e): Background
    - White (#fbfffe): Text
@@ -101,6 +101,44 @@
 
   /* Standout elements - Dim Grey */
   --md-typeset-table-color: #6d676e;
+}
+
+/* Coterie Sunset Mode Color Palette:
+   - Dried Blood (#903749): Header, primary accents
+   - Twilight Blue (#2B2E4A): Background
+   - White (#fbfffe): Text
+   - Dusty Purp (#53354A): Standout elements
+   - Blood Orange (#E84545): Links, active states
+*/
+
+[data-md-color-scheme="default"] {
+  /* Header - Dried Blood */
+  --md-primary-fg-color: #903749;
+  --md-primary-fg-color--light: #a94256;
+  --md-primary-fg-color--dark: #6d2837;
+
+  /* Background - Twilight Blue */
+  --md-default-bg-color: #2B2E4A;
+  --md-default-bg-color--light: #353959;
+  --md-default-bg-color--lighter: #3f4468;
+  --md-default-bg-color--lightest: #494f77;
+
+  /* Text - White */
+  --md-default-fg-color: #fbfffe;
+  --md-default-fg-color--light: #e0e0df;
+  --md-default-fg-color--lighter: #c5c5c4;
+  --md-default-fg-color--lightest: #aaaaaa;
+
+  /* Accent/Links - Blood Orange */
+  --md-accent-fg-color: #E84545;
+  --md-accent-fg-color--transparent: rgba(232, 69, 69, 0.1);
+
+  /* Code blocks - Dusty Purp background */
+  --md-code-bg-color: #53354A;
+  --md-code-fg-color: #fbfffe;
+
+  /* Standout elements - Dusty Purp */
+  --md-typeset-table-color: #53354A;
 }
 
 /* ========================================
@@ -313,29 +351,55 @@ code {
   border-left: 4px solid;
 }
 
-/* Links - Gold color scheme */
-.md-typeset a {
+/* Links - Night Mode (Gold) */
+[data-md-color-scheme="slate"] .md-typeset a {
   color: #faa916;
   text-decoration: none;
 }
 
-.md-typeset a:hover {
+[data-md-color-scheme="slate"] .md-typeset a:hover {
   color: #fbb647;
   text-decoration: underline;
 }
 
-.md-typeset a:active,
-.md-nav__link--active {
+[data-md-color-scheme="slate"] .md-typeset a:active,
+[data-md-color-scheme="slate"] .md-nav__link--active {
   color: #faa916;
 }
 
-/* Tables - Dim Grey borders */
-.md-typeset table:not([class]) {
+/* Tables - Night Mode (Dim Grey) */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
   border: 1px solid #6d676e;
 }
 
-.md-typeset table:not([class]) th {
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
   background-color: #6d676e;
+  color: #fbfffe;
+}
+
+/* Links - Sunset Mode (Blood Orange) */
+[data-md-color-scheme="default"] .md-typeset a {
+  color: #E84545;
+  text-decoration: none;
+}
+
+[data-md-color-scheme="default"] .md-typeset a:hover {
+  color: #ff6b6b;
+  text-decoration: underline;
+}
+
+[data-md-color-scheme="default"] .md-typeset a:active,
+[data-md-color-scheme="default"] .md-nav__link--active {
+  color: #E84545;
+}
+
+/* Tables - Sunset Mode (Dusty Purp) */
+[data-md-color-scheme="default"] .md-typeset table:not([class]) {
+  border: 1px solid #53354A;
+}
+
+[data-md-color-scheme="default"] .md-typeset table:not([class]) th {
+  background-color: #53354A;
   color: #fbfffe;
 }
 
@@ -368,115 +432,230 @@ code {
 }
 
 /* ========================================
-   GOTHIC VAMPIRE ENHANCEMENTS
+   GOTHIC VAMPIRE ENHANCEMENTS - NIGHT MODE
    ======================================== */
 
-/* Search bar - Carbon Black with Gold accents */
-.md-search__input {
+[data-md-color-scheme="slate"] .md-search__input {
   background-color: #1b1b1e;
   color: #fbfffe;
   border: 1px solid #96031a;
 }
 
-.md-search__input::placeholder {
+[data-md-color-scheme="slate"] .md-search__input::placeholder {
   color: rgba(251, 255, 254, 0.6);
 }
 
-.md-search__input:focus {
+[data-md-color-scheme="slate"] .md-search__input:focus {
   border-color: #faa916;
 }
 
-/* Code blocks - Dim Grey background */
-.md-typeset code {
+[data-md-color-scheme="slate"] .md-typeset code {
   background-color: #6d676e;
   color: #fbfffe;
   padding: 0.2em 0.4em;
   border-radius: 3px;
 }
 
-.md-typeset pre {
+[data-md-color-scheme="slate"] .md-typeset pre {
   background-color: #6d676e;
 }
 
-.md-typeset pre > code {
+[data-md-color-scheme="slate"] .md-typeset pre > code {
   background-color: #6d676e;
   color: #fbfffe;
 }
 
-/* Admonitions - Dim Grey with color accents */
-.md-typeset .admonition {
+[data-md-color-scheme="slate"] .md-typeset .admonition {
   background-color: rgba(109, 103, 110, 0.2);
   border-left-color: #6d676e;
 }
 
-.md-typeset .admonition-title {
+[data-md-color-scheme="slate"] .md-typeset .admonition-title {
   background-color: rgba(109, 103, 110, 0.4);
   border-left-color: #96031a;
 }
 
-/* Footer - Carbon Black with Dim Grey text */
-.md-footer {
+[data-md-color-scheme="slate"] .md-footer {
   background-color: #1b1b1e;
   color: #6d676e;
 }
 
-.md-footer-meta {
+[data-md-color-scheme="slate"] .md-footer-meta {
   background-color: #1b1b1e;
 }
 
-.md-footer__link {
+[data-md-color-scheme="slate"] .md-footer__link {
   color: #6d676e;
 }
 
-.md-footer__link:hover {
+[data-md-color-scheme="slate"] .md-footer__link:hover {
   color: #faa916;
 }
 
-/* Scrollbar - Deep Crimson thumb */
-::-webkit-scrollbar {
+[data-md-color-scheme="slate"] ::-webkit-scrollbar {
   width: 10px;
   background: #1b1b1e;
 }
 
-::-webkit-scrollbar-thumb {
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb {
   background: #96031a;
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+[data-md-color-scheme="slate"] ::-webkit-scrollbar-thumb:hover {
   background: #b5041f;
 }
 
-/* Navigation drawer/sidebar - Dim Grey highlights */
-.md-nav__title {
+[data-md-color-scheme="slate"] .md-nav__title {
   background-color: rgba(109, 103, 110, 0.3);
 }
 
-.md-nav__item--active > .md-nav__link {
+[data-md-color-scheme="slate"] .md-nav__item--active > .md-nav__link {
   color: #faa916;
 }
 
-/* Buttons - Gold accents */
-.md-button {
+[data-md-color-scheme="slate"] .md-button {
   color: #faa916;
   border-color: #faa916;
 }
 
-.md-button:hover {
+[data-md-color-scheme="slate"] .md-button:hover {
   background-color: rgba(250, 169, 22, 0.1);
   border-color: #fbb647;
   color: #fbb647;
 }
 
-.md-button--primary {
+[data-md-color-scheme="slate"] .md-button--primary {
   background-color: #96031a;
   color: #fbfffe;
   border-color: #96031a;
 }
 
-.md-button--primary:hover {
+[data-md-color-scheme="slate"] .md-button--primary:hover {
   background-color: #b5041f;
   border-color: #b5041f;
+}
+
+/* ========================================
+   GOTHIC VAMPIRE ENHANCEMENTS - SUNSET MODE
+   ======================================== */
+
+[data-md-color-scheme="default"] .md-search__input {
+  background-color: #2B2E4A;
+  color: #fbfffe;
+  border: 1px solid #903749;
+}
+
+[data-md-color-scheme="default"] .md-search__input::placeholder {
+  color: rgba(251, 255, 254, 0.6);
+}
+
+[data-md-color-scheme="default"] .md-search__input:focus {
+  border-color: #E84545;
+}
+
+[data-md-color-scheme="default"] .md-typeset code {
+  background-color: #53354A;
+  color: #fbfffe;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+[data-md-color-scheme="default"] .md-typeset pre {
+  background-color: #53354A;
+}
+
+[data-md-color-scheme="default"] .md-typeset pre > code {
+  background-color: #53354A;
+  color: #fbfffe;
+}
+
+[data-md-color-scheme="default"] .md-typeset .admonition {
+  background-color: rgba(83, 53, 74, 0.2);
+  border-left-color: #53354A;
+}
+
+[data-md-color-scheme="default"] .md-typeset .admonition-title {
+  background-color: rgba(83, 53, 74, 0.4);
+  border-left-color: #903749;
+}
+
+[data-md-color-scheme="default"] .md-footer {
+  background-color: #2B2E4A;
+  color: #53354A;
+}
+
+[data-md-color-scheme="default"] .md-footer-meta {
+  background-color: #2B2E4A;
+}
+
+[data-md-color-scheme="default"] .md-footer__link {
+  color: #53354A;
+}
+
+[data-md-color-scheme="default"] .md-footer__link:hover {
+  color: #E84545;
+}
+
+[data-md-color-scheme="default"] ::-webkit-scrollbar {
+  width: 10px;
+  background: #2B2E4A;
+}
+
+[data-md-color-scheme="default"] ::-webkit-scrollbar-thumb {
+  background: #903749;
+  border-radius: 5px;
+}
+
+[data-md-color-scheme="default"] ::-webkit-scrollbar-thumb:hover {
+  background: #a94256;
+}
+
+[data-md-color-scheme="default"] .md-nav__title {
+  background-color: rgba(83, 53, 74, 0.3);
+}
+
+[data-md-color-scheme="default"] .md-nav__item--active > .md-nav__link {
+  color: #E84545;
+}
+
+[data-md-color-scheme="default"] .md-button {
+  color: #E84545;
+  border-color: #E84545;
+}
+
+[data-md-color-scheme="default"] .md-button:hover {
+  background-color: rgba(232, 69, 69, 0.1);
+  border-color: #ff6b6b;
+  color: #ff6b6b;
+}
+
+[data-md-color-scheme="default"] .md-button--primary {
+  background-color: #903749;
+  color: #fbfffe;
+  border-color: #903749;
+}
+
+[data-md-color-scheme="default"] .md-button--primary:hover {
+  background-color: #a94256;
+  border-color: #a94256;
+}
+
+/* ========================================
+   TERMINOLOGY TOGGLE - PREVENT FOUC
+   ======================================== */
+
+/* Prevent flash of VTM terms when in Generic mode */
+/* Hide content until terminology mode is set */
+body:not([data-terminology-mode]) .md-content,
+body:not([data-terminology-mode]) .md-nav {
+  opacity: 0.01;
+  transition: opacity 0.15s ease-in;
+}
+
+body[data-terminology-mode] .md-content,
+body[data-terminology-mode] .md-nav {
+  opacity: 1;
 }
 
 /* ========================================

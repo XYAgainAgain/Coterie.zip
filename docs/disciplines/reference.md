@@ -1,7 +1,16 @@
-# Discipline Reference
+# Discipline Reference Table
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
-## Discipline Reference Table
-
-Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+| DISCIPLINE         | DESCRIPTION                                                                                                                                                                                      | CLAN(S)                                                  |
+| :----------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------: |
+| Animalism          | Utilized by those who desire a close and supernatural bond with the animal world as well as a vampire's own Beast.                                                                               | Gangrel, Nosferatu, Ravnos, Tzimisce                     |
+| Auspex             | Enables users to hone their senses both physical and psychic in order to bolster their awareness, perceptions, or even see visions of the future.                                                | Hecata, Malkavian, Salubri, Toreador, Tremere            |
+| Blood Sorcery      | A type of blood magic that allows the practitioners to manipulate the blood, mortal or vampiric. (Rituals are an extension of this.)                                                             | Banu Haqim, Tremere                                      |
+| Celerity           | Powers up the movement of the user, enabling them to have unnatural quickness in their movement and supernatural reflexes.                                                                       | Banu Haqim, Brujah, Toreador                             |
+| Dominate           | Allows the user to use mind control through eye contact and spoken word as well as manipulate memories of their victims.                                                                         | Lasombra, Malkavian, Salubri, Tremere, Tzimisce, Ventrue |
+| Fortitude          | Strengthens the user's physical and mental resistance.                                                                                                                                           | Gangrel, Hecata, Salubri, Ventrue                        |
+| Obfuscate          | The art of not being seen even in crowds either through being wholly unseen or by blending in.                                                                                                   | Banu Haqim, Malkavian, The Ministry, Nosferatu, Ravnos   |
+| Oblivion           | Has two branches: one allows the user to manipulate shadows at will and the other enables necromancy or usage of spirits, though both tap into the Abyss. (Ceremonies are an extension of this.) | Hecata, Lasombra                                         |
+| Potence            | Strengthens the user's physical prowess.                                                                                                                                                         | Brujah, Nosferatu, Lasombra                              |
+| Presence           | Enables the user to use subtle manipulation, control, and swaying of emotions to guide others towards a goal.                                                                                    | Brujah, Ravnos, Toreador, The Ministry, Ventrue          |
+| Protean            | Grants the ability to change one's shape, grow claws, meld into the earth, or become fog.                                                                                                        | Gangrel, The Ministry, Tzimisce                          |
+| Thin-Blood Alchemy | The creation of mixtures of blood, emotions, and other varied ingredients to activate unique effects or even copy other Disciplines.                                                             | Thin-Bloods                                              |
