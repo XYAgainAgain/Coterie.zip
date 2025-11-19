@@ -1,7 +1,7 @@
 # Discipline Reference Table
 
 | DISCIPLINE         | DESCRIPTION                                                                                                                                                                                      | CLAN(S)                                                  |
-| :----------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------: |
+| :----------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------: |
 | Animalism          | Utilized by those who desire a close and supernatural bond with the animal world as well as a vampire's own Beast.                                                                               | Gangrel, Nosferatu, Ravnos, Tzimisce                     |
 | Auspex             | Enables users to hone their senses both physical and psychic in order to bolster their awareness, perceptions, or even see visions of the future.                                                | Hecata, Malkavian, Salubri, Toreador, Tremere            |
 | Blood Sorcery      | A type of blood magic that allows the practitioners to manipulate the blood, mortal or vampiric. (Rituals are an extension of this.)                                                             | Banu Haqim, Tremere                                      |
