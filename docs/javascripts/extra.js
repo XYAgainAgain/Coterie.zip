@@ -132,6 +132,14 @@
 
     var top = document.querySelector('.md-top svg');
     if (top) top.replaceWith(makeArrow('up'));
+
+    var prevLink = document.querySelector('.md-footer__link--prev');
+    var prevTitle = document.querySelector('.md-footer__link--prev .md-ellipsis');
+    if (prevLink && prevTitle) prevLink.setAttribute('aria-label', 'Previous: ' + prevTitle.textContent.trim());
+
+    var nextLink = document.querySelector('.md-footer__link--next');
+    var nextTitle = document.querySelector('.md-footer__link--next .md-ellipsis');
+    if (nextLink && nextTitle) nextLink.setAttribute('aria-label', 'Next: ' + nextTitle.textContent.trim());
   }
 
   if (typeof document$ !== 'undefined') {
@@ -148,7 +156,10 @@
   'use strict';
   function setSourceTooltip() {
     var link = document.querySelector('.md-source');
-    if (link) link.title = 'Download Coterie for free!';
+    if (link) {
+      link.title = 'Download Coterie for free!';
+      link.setAttribute('aria-label', 'Download Coterie for free!');
+    }
   }
   if (typeof document$ !== 'undefined') {
     document$.subscribe(setSourceTooltip);
@@ -484,6 +495,8 @@
         var pos = headings[i].getBoundingClientRect().top + window.scrollY;
         if (pos > scrollTop + 10) {
           window.scrollTo({ top: pos - headerH, behavior: getScrollBehavior() });
+          headings[i].setAttribute('tabindex', '-1');
+          headings[i].focus({ preventScroll: true });
           return;
         }
       }
@@ -494,6 +507,8 @@
         var p = headings[j].getBoundingClientRect().top + window.scrollY;
         if (p < scrollTop - 30) {
           window.scrollTo({ top: p - headerH, behavior: getScrollBehavior() });
+          headings[j].setAttribute('tabindex', '-1');
+          headings[j].focus({ preventScroll: true });
           return;
         }
       }
@@ -520,7 +535,8 @@
 
     document.addEventListener('keydown', function(e) {
       if (e.target.matches('input, textarea, select, [contenteditable]')) return;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
+      if (e.target.closest('pre, code, .md-typeset__scrollwrap')) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); navigateSection(1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); navigateSection(-1); }
     });
@@ -555,6 +571,10 @@
   function smoothScrollToTop() {
     var start = window.scrollY;
     if (start === 0) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      window.scrollTo(0, 0);
+      return;
+    }
     var startTime = null;
 
     function step(timestamp) {

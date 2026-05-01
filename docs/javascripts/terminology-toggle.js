@@ -33,12 +33,18 @@
     vtmLabel.textContent = 'VTM';
     vtmLabel.className = 'term-toggle__label term-toggle__label--vtm';
 
+    let currentMode;
+    try { currentMode = localStorage.getItem(STORAGE_KEY) || DEFAULT_MODE; }
+    catch (e) { currentMode = DEFAULT_MODE; }
+
     const button = document.createElement('button');
     button.className = 'term-toggle__btn';
-    button.setAttribute('aria-label', 'Toggle terminology mode');
+    button.setAttribute('aria-label', 'Terminology: ' + (currentMode === 'vtm' ? 'VTM' : 'Generic'));
+    button.setAttribute('aria-pressed', String(currentMode === 'generic'));
 
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
 
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', 'M21,9L17,5V8H10V10H17V13M7,11L3,15L7,19V16H14V14H7V11Z');
@@ -54,9 +60,6 @@
     container.appendChild(button);
     container.appendChild(genericLabel);
 
-    let currentMode;
-    try { currentMode = localStorage.getItem(STORAGE_KEY) || DEFAULT_MODE; }
-    catch (e) { currentMode = DEFAULT_MODE; }
     container.setAttribute('data-mode', currentMode);
 
     function doToggle() {
@@ -70,8 +73,6 @@
     }
 
     button.addEventListener('click', doToggle);
-    vtmLabel.addEventListener('click', doToggle);
-    genericLabel.addEventListener('click', doToggle);
 
     const themeToggle = header.querySelector('[data-md-component="palette"]');
     if (themeToggle) {

@@ -111,7 +111,7 @@ body[data-font-mode="dyslexic"] {
   --color-h2: #7A1324;
   --color-h3: #8A1528;
   --color-h4: #BC1E35;
-  --color-h5-reserve: #C4850F;
+  --color-h5-reserve: #C4850F; /* unused — H5 uses --color-accent */
   --color-nav-hover: #BC1E35;
   --color-nested-bat: #96031a;
   --color-table-header-text: var(--color-accent);
@@ -161,7 +161,7 @@ body[data-font-mode="dyslexic"] {
   --color-h2: #F1980D;
   --color-h3: #CE6D0F;
   --color-h4: #B31840;
-  --color-h5-reserve: #5C3B68;
+  --color-h5-reserve: #5C3B68; /* unused — H5 uses --color-accent */
   --color-nav-hover: #B31840;
   --color-nested-bat: #F1980D;
   --color-table-header-text: var(--color-h2);
@@ -232,6 +232,8 @@ h2, h3, h4, h5, h6 {
 [data-md-color-scheme="default"] .md-content h3 { color: var(--color-h3); }
 [data-md-color-scheme="slate"] .md-content h4,
 [data-md-color-scheme="default"] .md-content h4 { color: var(--color-h4); }
+[data-md-color-scheme="slate"] .md-content h5,
+[data-md-color-scheme="default"] .md-content h5 { color: var(--color-accent); }
 
 /* • ━ ━ • ━ pattern — the game's 5s motif */
 .md-content h2 {
@@ -437,6 +439,11 @@ a, button, .md-nav__link, .md-footer__link {
   align-items: center;
 }
 
+.term-toggle__btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
 .term-toggle__btn svg {
   width: 20px;
   height: 20px;
@@ -474,6 +481,10 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 .md-header__button.bat-toggle:hover { opacity: 1; }
+.md-header__button.bat-toggle:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
 
 [data-md-color-scheme="slate"] .md-header__button.bat-toggle img { filter: invert(1); }
 [data-md-color-scheme="default"] .md-header__button.bat-toggle img { filter: invert(0.9); }
@@ -687,6 +698,9 @@ a, button, .md-nav__link, .md-footer__link {
 @media (prefers-reduced-motion: reduce) {
   .ambient-blob,
   .ambient-smoke { animation: none; }
+
+  .md-content__inner { animation: none; }
+  * { transition-duration: 0s !important; }
 }
 
 /* End Ambient Background */
@@ -1379,24 +1393,23 @@ body[data-terminology-mode] .md-nav {
 /* 12. Responsive */
 
 @media (prefers-reduced-motion: reduce) {
-  .pron-btn {
-    transition: opacity var(--transition-quick);
-  }
   .pron-btn:hover,
   .pron-btn:active { transform: none; }
   .pron-btn.playing { animation: none; }
 
-  .md-footer__link {
-    transition: none;
-  }
   .md-footer__link:hover { transform: none; }
-  .md-footer__button {
-    transition: none;
-  }
   .md-footer__button:hover {
     transform: translateY(-50%);
     filter: none;
   }
+
+  .md-tabs__link:hover { transform: none; }
+  .md-nav__link:hover { padding-left: 0; }
+  .md-typeset .admonition:hover { transform: none; }
+  .md-top:hover { transform: translate(-50%, 0); }
+  .md-header__button.md-logo::before,
+  .md-header__button.md-logo::after { transition: none; }
+  .md-typeset a::after { transition: none; }
 }
 
 /* Bump mobile ToC button above the floating footer */
