@@ -285,6 +285,17 @@ h2, h3, h4, h5, h6 {
      0.5px  0     0 var(--color-footer-text),
      2px  3px 8px rgba(0, 0, 0, 0.7);
 }
+/* Skip drop cap on pages that open with an all-italic hook (Playbook pages) */
+.md-content .md-typeset > p:first-of-type:has(> em:only-child)::first-letter {
+  font-family: inherit;
+  font-size: inherit;
+  float: none;
+  line-height: inherit;
+  margin-right: 0;
+  padding-top: 0;
+  color: inherit;
+  text-shadow: none;
+}
 
 .md-typeset ul,
 .md-typeset ol {
@@ -717,13 +728,18 @@ a, button, .md-nav__link, .md-footer__link {
   font-weight: 700;
 }
 
-.md-nav__link:hover {
+.md-nav__link:hover,
+.md-nav--primary .md-nav__link[href]:hover:not(.md-nav__link--active),
+.md-nav--primary .md-nav__link[for]:hover:not(.md-nav__link--active),
+.md-nav--primary .md-nav__link[href]:focus:not(.md-nav__link--active),
+.md-nav--primary .md-nav__link[for]:focus:not(.md-nav__link--active) {
   padding-left: 0.3rem;
   color: var(--color-nav-hover);
   background-color: rgba(var(--color-primary-rgb), 0.15);
 }
 
-.md-nav__item--active > .md-nav__link {
+.md-nav__item--active > .md-nav__link,
+.md-nav__item .md-nav__link--active {
   color: var(--color-accent);
   background-color: rgba(var(--color-accent-rgb), 0.08);
 }

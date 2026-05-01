@@ -112,6 +112,7 @@
   var autoRoostTid = null;
   var roosts = [];
   var roostIdx = 0;
+  var firstRoost = true;
   var reduced = false;
 
   function getTheme() {
@@ -297,8 +298,8 @@
           autoRoostTid = setTimeout(function () {
             if (state !== 'FLYING' || tier !== 0) return;
             var r = roosts[roostIdx];
-            tx = r.x + DW / 2;
-            ty = r.y + DH / 2;
+            tx = r.x;
+            ty = r.y;
           }, wanderTime);
         }
         break;
@@ -388,7 +389,11 @@
       var dist = Math.sqrt(dx * dx + dy * dy);
       moveLerp(tx, ty, 0.008, dt);
       clampAndTransform();
-      if (dist < 30) enter('ROOSTING');
+      if (dist < 30) {
+        px = tx; py = ty;
+        clampAndTransform();
+        enter('ROOSTING');
+      }
       return;
     }
 
@@ -413,8 +418,8 @@
 
       if (dist < 40) {
         var r = roosts[roostIdx];
-        var atRoost = Math.abs(tx - r.x - DW / 2) < 10 && Math.abs(ty - r.y - DH / 2) < 10;
-        if (atRoost) { jx = jy = 0; enter('ROOSTING'); return; }
+        var atRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
+        if (atRoost) { px = r.x; py = r.y; jx = jy = 0; clampAndTransform(); enter('ROOSTING'); return; }
         pickWanderTarget();
       }
 
@@ -426,8 +431,8 @@
         autoRoostTid = setTimeout(function () {
           if (state !== 'FLYING' || tier !== 0) return;
           var r = roosts[roostIdx];
-          tx = r.x + DW / 2;
-          ty = r.y + DH / 2;
+          tx = r.x;
+          ty = r.y;
         }, wanderTime);
       } else if (curDist < 150 && now - lastWander > WANDER_COOLDOWN) {
         pickWanderTarget();
@@ -627,26 +632,23 @@
 
   function computeRoosts() {
     roosts = [];
-    /* Hangs from bottom edge of header, just left of source link */
-    addRoost('.md-header__source', 'hang-left');
-    /* Hangs from bottom of header bar, near center */
-    addRoost('.md-header__inner', 'hang-center');
-    /* Top edge of screen — random x */
-    roosts.push({ x: Math.random() * (window.innerWidth - DW * 2) + DW, y: 0 });
-    /* Top-right corner of content area */
-    addRoost('.md-content', 'top-right');
-    /* Hangs from bottom edge of ToC heading area */
-    addRoost('.md-sidebar--secondary', 'hang-left');
-    /* Bottom of left nav */
-    addRoost('.md-sidebar--primary', 'hang-right');
+    var hdr = document.querySelector('.md-header');
+    var hdrBottom = hdr ? hdr.getBoundingClientRect().bottom - 6 : 80;
+    var w = window.innerWidth;
 
-    if (!roosts.length) {
-      roosts.push({ x: window.innerWidth - DW - 20, y: 80 });
-    }
+    /* Favorite: left-side divider on source link (~25% weight) */
+    addRoost('.md-header__source', 'hang-left');
+
+    /* Random points along header bottom edge and top of screen */
+    roosts.push({ x: DW + Math.random() * (w - DW * 3), y: hdrBottom });
+    roosts.push({ x: DW + Math.random() * (w - DW * 3), y: hdrBottom });
+    roosts.push({ x: DW + Math.random() * (w - DW * 3), y: 0 });
   }
 
   function pickRoost() {
     computeRoosts();
+    /* First roost after spawn always goes to the favorite spot */
+    if (firstRoost) { roostIdx = 0; firstRoost = false; return; }
     if (roosts.length <= 1) { roostIdx = 0; return; }
     var old = roostIdx;
     do { roostIdx = Math.floor(Math.random() * roosts.length); } while (roostIdx === old);
@@ -655,8 +657,8 @@
   function flyToRoost() {
     pickRoost();
     var r = roosts[roostIdx];
-    tx = r.x + DW / 2;
-    ty = r.y + DH / 2;
+    tx = r.x;
+    ty = r.y;
     jx = jy = 0;
     state = 'FLYIN';
     setAnim('move1');
@@ -720,8 +722,8 @@
 
     pickRoost();
     var r = roosts[roostIdx];
-    tx = r.x + DW / 2;
-    ty = r.y + DH / 2;
+    tx = r.x;
+    ty = r.y;
     facingLeft = tx < px;
     state = 'FLYIN';
     setAnim(Math.random() < 0.5 ? 'move1' : 'move2');
@@ -870,7 +872,7 @@
         clampAndTransform();
         pickRoost();
         var r = roosts[roostIdx];
-        tx = r.x + DW / 2; ty = r.y + DH / 2;
+        tx = r.x; ty = r.y;
         facingLeft = tx < px;
         state = 'FLYIN';
         setAnim(Math.random() < 0.5 ? 'move1' : 'move2');

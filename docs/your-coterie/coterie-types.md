@@ -16,7 +16,7 @@ You protect the neighborhood. Muggers, predatory landlords, corrupt cops, drug o
 
 **Haven Stats:** **Clout +0** | **Cohesion +1** | **Charm +2** | **Claim +0** | **Currency -1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *community respect, neighborhood watch, cool telescope, police scanner, first aid kit, local informants, reinforced doors, escape route, motion sensors, tip line*
 - **Pick 2 Negative:** *vigilante reputation, chronic underfunding, rabid local fanbase, nosy neighbors, big target, local resentment, sleep deprivation*
@@ -29,7 +29,7 @@ Nobody here chose this. A shared sire who couldn't pick favorites, a mandated ar
 
 **Haven Stats:** **Clout +0** | **Cohesion -2** | **Charm +1** | **Claim +1** | **Currency +2**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 2 Positive:** *surprisingly spacious, convenient location, pre-furnished, secure locks, reliable internet, nice view, free parking, good water pressure, lenient/lazy landlord*
 - **Pick 3 Negative:** *one bedroom, thermostat wars, unclear lease, hostile chore wheel, mysterious stain, someone's lingering ex, overcrowded blood fridge, incompatible décor, thin walls*
@@ -42,7 +42,7 @@ Your Coterie formed around shared devotion. Maybe it's genuine faith in somethin
 
 **Haven Stats:** **Clout -1** | **Cohesion +3** | **Charm -1** | **Claim +1** | **Currency +0**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *ritual chamber, devoted congregation, soundproofed sanctum, hidden entrance, communal blood supply, sacred relic, indoctrination library, altar with drainage, rooftop garden*
 - **Pick 3 Negative:** *incense-scented everything, many complaints filed, curious police, definitely watchlisted, stained floors, fundamentally unsanitary, fire hazard, escaped member*
@@ -55,7 +55,7 @@ Most vampires are useless during the day. You're not. Your Coterie is composed o
 
 **Haven Stats:** **Clout -1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *blackout curtains, daytime armory, mortal-passing décor, sunscreen stockpile, light-tight room, shift schedule, tinted vehicle, dawn alarm, coffee machine, rooftop sundeck*
 - **Pick 2 Negative:** *expendable reputation, nocturnal visitors, double shifts, suspicious van, always on call, unappreciative supervisor(s), overworked and understaffed*
@@ -68,7 +68,7 @@ You're in business together, and business is good, or at least complicated enoug
 
 **Haven Stats:** **Clout +1** | **Cohesion +0** | **Charm +0** | **Claim -1** | **Currency +2**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *corner office, legal counsel, slush fund, corporate housing, company vehicles, mortal employees, tax shelter, investor network, expense accounts, conference room, attractive secretary*
 - **Pick 2 Negative:** *pending audit, paper trail, disgruntled employee, hostile shareholders, embezzlement rumors, regulatory scrutiny, overtime culture, quarterly expectations*
@@ -81,7 +81,7 @@ You exist in the gaps between factions that would rather kill each other. Mediat
 
 **Haven Stats:** **Clout +1** | **Cohesion +0** | **Charm +2** | **Claim -1** | **Currency +0**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *neutral ground, diplomatic immunity, secure meeting room, confidential archives, trusted couriers, faction contacts, travel documents, hospitality suite, multilingual library, white flag collection*
 - **Pick 2 Negative:** *no real allies, assassination risk, constant travel, borrowed spaces, trust deficit, weaponized neutrality, everyone's dirty secrets*
@@ -94,7 +94,7 @@ You're related. By Clan, by Blood Marriage, by sire, by some tangled combination
 
 **Haven Stats:** **Clout +1** | **Cohesion +0** | **Charm -1** | **Claim +1** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *ancestral property, family heirlooms, nearby mortal relatives, generational wealth, legacy contacts, extensive genealogy, holiday traditions, family lawyer, spare bedrooms, wine/"wine" cellar*
 - **Pick 2 Negative:** *inheritance disputes, estranged branch, family secrets, judgmental Elders, awkward reunions, unsettled wills, skeletons (literal), obligatory dinners*
@@ -107,7 +107,7 @@ You're criminals and you're damn good at it. Heists, shakedowns, smash-and-grabs
 
 **Haven Stats:** **Clout +0** | **Cohesion +1** | **Charm -1** | **Claim +1** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *getaway vehicle, weapons stash, reliable fence, police scanner, loading dock, cash safe, fake IDs, chop shop, lookout post, burner phones*
 - **Pick 2 Negative:** *rival territory, persistent detective, bullet-hole decor, landlord snitches, inherited beef, known hangout, stolen goods, annoying wannabe*
@@ -120,7 +120,7 @@ Someone breached the Masquerade. Someone *always* breaches the Masquerade. That'
 
 **Haven Stats:** **Clout +2** | **Cohesion +1** | **Charm -1** | **Claim +0** | **Currency +0**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *media contacts, police liaison, surveillance gear, cleanup supplies, evidence disposal, social media monitoring, blackmail archive, secure comms, unmarked vehicle, cover stories*
 - **Pick 2 Negative:** *seen too much, everyone's trash, constant callouts, many dead bodies, budget constraints, dangerous knowledge, favors owed*
@@ -133,7 +133,7 @@ You're running. Someone powerful wants you found, staked, and dealt with. Maybe 
 
 **Haven Stats:** **Clout -1** | **Cohesion +2** | **Charm +1** | **Claim -2** | **Currency +2**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 2 Positive:** *hidey-holes, burner phones, emergency cash, fake plates collection, faraway contact, light-tight trunk, forgery kit, go-bags ready, backup vehicle, buried safe*
 - **Pick 3 Negative:** *no fixed address, active pursuers, smelly car, slumbering in shifts, compromised safehouse, cash only, paranoid habits, no friends nearby*
@@ -146,7 +146,7 @@ Your Coterie deals with the dead. The actually dead; ghosts, spirits, restless a
 
 **Haven Stats:** **Clout +1** | **Cohesion +1** | **Charm -2** | **Claim +1** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *spirit wards, cemetery access, ritual circle, spectral informants, séance parlor, occult library, consecrated ground, bone collection, ghost traps, cold storage*
 - **Pick 3 Negative:** *very fucking haunted, perpetual chill, friendly new neighbors, unsettling noises, always attracting weirdos, corpse smell, restless tenants, flickering lights*
@@ -159,7 +159,7 @@ You know blood better than anyone. Where to find it, how to cultivate it, which 
 
 **Haven Stats:** **Clout +0** | **Cohesion +0** | **Charm +1** | **Claim +2** | **Currency -1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *managed herd, blood storage, private feeding rooms, distinguished clientele, discreet location, veterinary supplies, delivery network, wellness program, tasting notes*
 - **Pick 2 Negative:** *herd poachers, inventory spoilage, demanding clientele, attachment issues, refrigeration costs, ethical queasiness, jealous rivals*
@@ -172,7 +172,7 @@ You don't stay. Maybe you perform; a traveling show, a band, a roving market of 
 
 **Haven Stats:** **Clout +0** | **Cohesion +1** | **Charm +2** | **Claim -2** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *trusty vehicle, mobile blood storage, updated maps, performance gear, mortal entourage, inter-city contacts, portable shrine, dope sound system, campfire stories, fascinating collection*
 - **Pick 2 Negative:** *vehicle breakdowns, frequent border crossings, cramped quarters, no gas money, unwelcome everywhere, local rivalries, road fatigue, no fixed address*
@@ -185,7 +185,7 @@ You serve a patron, a cause, or a faction from the shadows. Espionage, infiltrat
 
 **Haven Stats:** **Clout -1** | **Cohesion +2** | **Charm +1** | **Claim +0** | **Currency +0**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *comprehensive fake identities, dead drops, secure comms, surveillance gear, handler contact, actual safe house, disguise kit, encrypted devices, extraction plan, cool weapon stash*
 - **Pick 2 Negative:** *burned cover risk, handler's agenda, disposable assets, double agent paranoia, loyalty tests, compartmentalized lives, paper-thin trust*
@@ -198,7 +198,7 @@ Someone powerful left, and you inherited the keys. Maybe your patron entered Tor
 
 **Haven Stats:** **Clout +2** | **Cohesion +0** | **Charm +0** | **Claim +1** | **Currency -1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 4 Positive:** *inherited estate, political connections, existing staff, established domain, extensive library, recognized authority, ancestral wards, intelligence network, impressive address, legacy reputation*
 - **Pick 3 Negative:** *inherited enemies, empty treasury, unfinished business, loyalty tests, succession vultures, crumbling infrastructure, outdated policies, impossible expectations, useless help, nasty rumors*
@@ -211,7 +211,7 @@ You are tastemakers, aesthetes, and social predators of the most refined variety
 
 **Haven Stats:** **Clout +1** | **Cohesion +0** | **Charm +2** | **Claim -1** | **Currency +0**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *gallery space, art collection, designer wardrobe, event connections, VIP contacts, recording studio, rooftop lounge, impressive bar, personal stylist, several blood dolls*
 - **Pick 2 Negative:** *rival socialites, expensive tastes, reputation fragility, tabloid attention, venue damage, trend anxiety, jealous admirers*
@@ -224,7 +224,7 @@ You move people. Thin-Bloods fleeing persecution, Kindred dodging a death senten
 
 **Haven Stats:** **Clout -2** | **Cohesion +1** | **Charm +2** | **Claim +0** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *clear-ish conscience, hidden rooms, escape tunnel, forged documents, mortal sympathizers, medical supplies, safe route maps, refugee network, rotating shelters, trusted drivers, supply cache*
 - **Pick 3 Negative:** *hunted by authorities, always overcrowded, resource drain, informant risk, desperate guests, betrayal potential, worn-out welcome, guilt trips, network stretched thin*
@@ -237,7 +237,7 @@ You chase questions and answers, not necessarily related to each other. Ancient 
 
 **Haven Stats:** **Clout +1** | **Cohesion +1** | **Charm -1** | **Claim +0** | **Currency +1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *ancient library, artifact vault, expedition gear, academic contacts, translation tools, map collection, rare manuscripts, restoration workshop, impeccable filing system*
 - **Pick 2 Negative:** *obsessive hoarding, rival researchers, cursed acquisitions, unstable artifacts, grant dependency, information overload, recently-stolen goods, dangerous upcoming expedition*
@@ -250,7 +250,7 @@ You guard something important. A sacred site, a strategic chokepoint, a building
 
 **Haven Stats:** **Clout +1** | **Cohesion +1** | **Charm -1** | **Claim +2** | **Currency -1**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 4 Positive:** *fortified entrance, security system, patrol routes, armory access, defensible layout, guest quarters, emergency lockdown, watchtower, hidden passages, architectural plans*
 - **Pick 3 Negative:** *no nights off, siege mentality, crumbling walls, unwanted visitors, thankless duty, maintenance costs, cabin fever, territorial obsession*
@@ -263,7 +263,7 @@ You fight. That's the short version. The longer version is that you fight for a 
 
 **Haven Stats:** **Clout +2** | **Cohesion +1** | **Charm -2** | **Claim +1** | **Currency +0**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *large weapons arsenal, training room, tactical maps, armored vehicle, medical supplies, fortified perimeter, sparring ring, war trophies, comms array, watchtower*
 - **Pick 2 Negative:** *constant threat(s), expendable reputation, civilian discomfort, unrepaired battle damage, growing enemies list, aggressive neighbors, recent member death, foolish new recruit*
@@ -276,7 +276,7 @@ You control information. Hackers, influencers, citizen journalists, rumor broker
 
 **Haven Stats:** **Clout +1** | **Cohesion +0** | **Charm +0** | **Claim -1** | **Currency +2**
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *server room, social media bots, encrypted network, police band radio, hacker contacts, data archive, burner phones, remote monitoring station, VPN infrastructure, truly anonymous accounts*
 - **Pick 2 Negative:** *electricity dependency, digital footprint, rival hackers, information addiction, targeted by authorities, server overheating, data breaches, just moved again*
@@ -289,7 +289,7 @@ If none of the above Coterie archetypes fit, choose this option to create your o
 
 **Haven Stats:** Distribute stats to reflect your current situation, ensuring that none start at ±3 and that all the numbers add up to a total of 2.
 
-### Haven Features
+##### *Haven Features*
 
 - **Pick 3 Positive:** *any from the above lists in any combination that makes thematic sense, or invent your own with your Storyteller's help*
 - **Pick 2 Negative:** *ditto, but make sure they'll be fun for everyone*
