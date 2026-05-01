@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<link rel="icon" type="image/png" href="/assets/images/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg" />
+<link rel="shortcut icon" href="/assets/images/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/images/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Coterie" />
+<link rel="manifest" href="/assets/images/site.webmanifest" />
+
+{% if page and page.meta and page.meta.description %}{% set page_desc = page.meta.description %}{% else %}{% set page_desc = config.site_description %}{% endif %}
+{% set page_title = page.title | default(config.site_name, true) %}
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="{{ config.site_name }}" />
+<meta property="og:title" content="{{ page_title }} — {{ config.site_name }}" />
+<meta property="og:description" content="{{ page_desc }}" />
+<meta property="og:url" content="{{ page.canonical_url }}" />
+<meta property="og:image" content="{{ config.site_url }}/assets/images/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="{{ page_title }} — {{ config.site_name }}" />
+<meta name="twitter:description" content="{{ page_desc }}" />
+<meta name="twitter:image" content="{{ config.site_url }}/assets/images/og-image.png" />
+
+<!-- Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "{{ config.site_name }}",
+      "url": "{{ config.site_url }}",
+      "description": "{{ config.site_description }}"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "{{ config.site_name }}",
+      "url": "{{ config.site_url }}",
+      "description": "{{ config.site_description }}",
+      "author": {
+        "@type": "Person",
+        "name": "{{ config.site_author }}"
+      },
+      "genre": "Tabletop Role-Playing Game",
+      "isAccessibleForFree": true
+    }
+  ]
+}
+</script>
+{% endblock %}

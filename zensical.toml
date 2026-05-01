@@ -1,0 +1,157 @@
+[project]
+
+site_name = "Coterie"
+site_url = "https://coterie.zip"
+site_description = "Homepage for Coterie, a cozy medium-stakes vampire TTRPG of middling crunch"
+site_author = "Sam Atwood"
+
+repo_url = "/assets/downloads/Coterie.zip"
+repo_name = "Coterie.zip"
+
+extra_css = ["stylesheets/extra.css"]
+
+extra_javascript = [
+  "javascripts/extra.js",
+  "javascripts/terminology-toggle.js",
+  "javascripts/bat-pal.js",
+]
+
+nav = [
+  { "Home" = "index.md" },
+  { "Core Systems" = [
+    { "How to Play" = "core-systems/how-to-play.md" },
+    { "Individual Stats" = "core-systems/individual-stats.md" },
+    { "Rolling Dice" = "core-systems/rolling-dice.md" },
+    { "Basic Moves" = "core-systems/basic-moves.md" },
+    { "Harm & Healing" = "core-systems/harm-healing.md" },
+    { "Combat" = "core-systems/combat.md" },
+    { "Debt" = "core-systems/debt.md" },
+    { "Clocks" = "core-systems/clocks.md" },
+  ] },
+  { "The Vampiric Condition" = [
+    { "Kith & Kindred" = "the-vampiric-condition/kith-kindred.md" },
+    { "Hunger" = "the-vampiric-condition/hunger.md" },
+    { "Humanity" = "the-vampiric-condition/humanity.md" },
+    { "Age Brackets" = "the-vampiric-condition/age-brackets.md" },
+    { "Blood Potency" = "the-vampiric-condition/blood-potency.md" },
+    { "Blood Potency Table" = "the-vampiric-condition/blood-potency-table.md" },
+  ] },
+  { "Your Kindred" = [
+    { "Creating Your Character" = "your-kindred/creating-your-character.md" },
+    { "Predator Types" = "your-kindred/predator-types.md" },
+    { "Clan Playbooks" = [
+      { "Banu Haqim" = "your-kindred/banu-haqim.md" },
+      { "Brujah" = "your-kindred/brujah.md" },
+      { "Gangrel" = "your-kindred/gangrel.md" },
+      { "Hecata" = "your-kindred/hecata.md" },
+      { "Lasombra" = "your-kindred/lasombra.md" },
+      { "Malkavian" = "your-kindred/malkavian.md" },
+      { "The Ministry" = "your-kindred/the-ministry.md" },
+      { "Nosferatu" = "your-kindred/nosferatu.md" },
+      { "Ravnos" = "your-kindred/ravnos.md" },
+      { "Salubri" = "your-kindred/salubri.md" },
+      { "Toreador" = "your-kindred/toreador.md" },
+      { "Tremere" = "your-kindred/tremere.md" },
+      { "Tzimisce" = "your-kindred/tzimisce.md" },
+      { "Ventrue" = "your-kindred/ventrue.md" },
+    ] },
+    { "Clanless Playbooks" = [
+      { "Caitiff" = "your-kindred/caitiff.md" },
+      { "Daughter of Cacophony" = "your-kindred/daughter-of-cacophony.md" },
+      { "Devorari" = "your-kindred/devorari.md" },
+      { "Gargoyle" = "your-kindred/gargoyle.md" },
+      { "Ghoul" = "your-kindred/ghoul.md" },
+      { "Osirian" = "your-kindred/osirian.md" },
+      { "Thin-Blood" = "your-kindred/thin-blood.md" },
+    ] },
+    { "Optional Extras" = "your-kindred/optional-extras.md" },
+    { "Advancement" = "your-kindred/advancement.md" },
+  ] },
+  { "Your Coterie" = [
+    { "Coterie Creation" = "your-coterie/coterie-creation.md" },
+    { "Coterie Stats" = "your-coterie/coterie-stats.md" },
+    { "Coterie Moves" = "your-coterie/coterie-moves.md" },
+    { "Coterie Types" = "your-coterie/coterie-types.md" },
+    { "Coterie Stat Reference Tables" = "your-coterie/coterie-stat-reference-tables.md" },
+  ] },
+  { "Disciplines" = [
+    { "General Rules" = "disciplines/general-rules.md" },
+    { "Disciplines" = [
+      { "Animalism" = "disciplines/animalism.md" },
+      { "Auspex" = "disciplines/auspex.md" },
+      { "Bardo" = "disciplines/bardo.md" },
+      { "Blood Sorcery" = "disciplines/blood-sorcery.md" },
+      { "Celerity" = "disciplines/celerity.md" },
+      { "Dominate" = "disciplines/dominate.md" },
+      { "Fortitude" = "disciplines/fortitude.md" },
+      { "Melpominee" = "disciplines/melpominee.md" },
+      { "Obfuscate" = "disciplines/obfuscate.md" },
+      { "Oblivion" = "disciplines/oblivion.md" },
+      { "Potence" = "disciplines/potence.md" },
+      { "Presence" = "disciplines/presence.md" },
+      { "Protean" = "disciplines/protean.md" },
+      { "Psychotrophia" = "disciplines/psychotrophia.md" },
+      { "Thin-Blood Alchemy" = "disciplines/thin-blood-alchemy.md" },
+      { "Visceratika" = "disciplines/visceratika.md" },
+    ] },
+  ] },
+]
+
+
+# Start with Material's traditional look so existing CSS keeps applying.
+# Flip between "classic" & "modern" if you want.
+[project.theme]
+variant = "modern"
+language = "en"
+custom_dir = "overrides"
+favicon = "assets/images/favicon.svg"
+features = [
+  "navigation.instant",
+  "navigation.tracking",
+  "navigation.top",
+  "navigation.footer",
+  "search.highlight",
+  "content.code.copy",
+  "toc.follow",
+]
+
+# Palette toggling follows Material's scheme="default"/"slate" pattern;
+# the actual Gothic Vampire colors are set via CSS variables in extra.css.
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "material/brightness-7"
+toggle.name = "Switch to light mode"
+
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "material/brightness-4"
+toggle.name = "Switch to dark mode"
+
+[project.markdown_extensions.admonition]
+[project.markdown_extensions.pymdownx.betterem]
+[project.markdown_extensions.meta]
+[project.markdown_extensions.attr_list]
+[project.markdown_extensions.md_in_html]
+[project.markdown_extensions.footnotes]
+[project.markdown_extensions.toc]
+permalink = true
+toc_depth = 4
+[project.markdown_extensions.def_list]
+[project.markdown_extensions.pymdownx.smartsymbols]
+[project.markdown_extensions.pymdownx.mark]
+[project.markdown_extensions.pymdownx.caret]
+[project.markdown_extensions.pymdownx.tilde]
+[project.markdown_extensions.pymdownx.tasklist]
+custom_checkbox = true
+[project.markdown_extensions.pymdownx.keys]
+[project.markdown_extensions.pymdownx.snippets]
+[project.markdown_extensions.pymdownx.emoji]
+emoji_index = "zensical.extensions.emoji.twemoji"
+emoji_generator = "zensical.extensions.emoji.to_svg"
+[project.markdown_extensions.pymdownx.highlight]
+anchor_linenums = true
+[project.markdown_extensions.pymdownx.inlinehilite]
+[project.markdown_extensions.pymdownx.superfences]
+[project.markdown_extensions.pymdownx.details]
+[project.markdown_extensions.pymdownx.tabbed]
+alternate_style = true

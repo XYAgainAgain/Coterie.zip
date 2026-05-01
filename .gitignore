@@ -1,0 +1,33 @@
+# Build Output
+site/
+
+# Development Files
+.dev/
+.obsidian/
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# IDE & Stuff
+.vscode/
+.idea/
+.obsidian/
+*.swp
+*.swo
+*~
+
+# OS Crap
+.DS_Store
+Thumbs.db
+
+# Build cache
+.cache/
