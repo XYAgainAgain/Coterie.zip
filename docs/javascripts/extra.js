@@ -440,6 +440,247 @@
   }
 })();
 
+// Bat Stats — worldwide Batthew KDR popover, powered by Firebase RTDB
+(function() {
+  'use strict';
+
+  var STATS = [
+    { key: 'bites',  label: 'Total Bites' },
+    { key: 'meals',  label: 'Times Fed' },
+    { key: 'deaths', label: 'Resurrections' }
+  ];
+
+  var THEME_FOLDERS = { slate: 'night', default: 'sunset', abyss: 'abyss' };
+  var epithets = [];
+  var recentEpithets = [];
+
+  fetch('/javascripts/batthew-epithets.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) { if (Array.isArray(data)) epithets = data; })
+    .catch(function() {});
+
+  function pickEpithet() {
+    if (epithets.length === 0) return '';
+    var pool = epithets.filter(function(e) { return recentEpithets.indexOf(e) === -1; });
+    if (pool.length === 0) pool = epithets;
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    recentEpithets.push(pick);
+    if (recentEpithets.length > 3) recentEpithets.shift();
+    return pick;
+  }
+
+  function getMugshotSrc() {
+    var scheme = document.body.getAttribute('data-md-color-scheme') || 'slate';
+    var folder = THEME_FOLDERS[scheme] || 'sunset';
+    return '/assets/images/batthew/' + folder + '/mugshot.webp';
+  }
+
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  }
+
+  function formatEST() {
+    try {
+      var now = new Date();
+      var opts = {
+        timeZone: 'America/New_York',
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', hour12: false
+      };
+      var parts = new Intl.DateTimeFormat('en-US', opts).formatToParts(now);
+      var p = {};
+      parts.forEach(function(x) { p[x.type] = x.value; });
+      return p.month + '/' + p.day + '/' + p.year + ' | ' + p.hour + ':' + p.minute + ' EST';
+    } catch (e) {
+      return new Date().toLocaleString();
+    }
+  }
+
+  function buildPopover() {
+    var pop = document.createElement('div');
+    pop.id = 'bat-stats-popover';
+    pop.className = 'bat-stats__popover';
+    var hdr = el('div', 'bat-stats__header');
+    var nameCol = el('div', 'bat-stats__name-col');
+    nameCol.appendChild(el('span', 'bat-stats__name', 'BATTHEW'));
+    nameCol.appendChild(el('span', 'bat-stats__epithet'));
+    hdr.appendChild(nameCol);
+    var mug = document.createElement('img');
+    mug.className = 'bat-stats__mugshot';
+    mug.src = getMugshotSrc();
+    mug.alt = 'Batthew';
+    hdr.appendChild(mug);
+    pop.appendChild(hdr);
+
+    var loading = el('div', 'bat-stats__loading', 'Loading...');
+    pop.appendChild(loading);
+
+    var body = el('div', 'bat-stats__body');
+    body.style.display = 'none';
+    STATS.forEach(function(s) {
+      var row = el('div', 'bat-stats__row');
+      row.appendChild(el('span', '', s.label));
+      var val = el('span', 'bat-stats__value', '0');
+      val.setAttribute('data-stat', s.key);
+      row.appendChild(val);
+      body.appendChild(row);
+    });
+    body.appendChild(el('div', 'bat-stats__kd'));
+    body.appendChild(el('div', 'bat-stats__timestamp'));
+    pop.appendChild(body);
+
+    return pop;
+  }
+
+  function injectBatStats() {
+    if (document.getElementById('bat-stats')) return;
+    var header = document.querySelector('.md-header__inner');
+    if (!header) return;
+
+    var wrap = el('div', 'bat-stats');
+    wrap.id = 'bat-stats';
+
+    var btn = el('div', 'bat-stats__btn');
+    btn.setAttribute('role', 'button');
+    btn.setAttribute('tabindex', '0');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.title = 'Bat Stats';
+    btn.setAttribute('aria-label', 'Bat Stats');
+    var icon = el('span', 'bat-stats__icon');
+    icon.setAttribute('aria-hidden', 'true');
+    btn.appendChild(icon);
+    wrap.appendChild(btn);
+
+    var pop = buildPopover();
+    wrap.appendChild(pop);
+
+    var batToggle = header.querySelector('#coterie-bat-toggle');
+    if (batToggle) {
+      header.insertBefore(wrap, batToggle);
+    } else {
+      var source = header.querySelector('.md-header__source');
+      if (source) header.insertBefore(wrap, source);
+      else header.appendChild(wrap);
+    }
+
+    var mugImg = pop.querySelector('.bat-stats__mugshot');
+    new MutationObserver(function() {
+      mugImg.src = getMugshotSrc();
+    }).observe(document.body, { attributes: true, attributeFilter: ['data-md-color-scheme'] });
+
+    var hideTimer = null;
+    var isOpen = false;
+
+    var epithetEl = pop.querySelector('.bat-stats__epithet');
+
+    function openStats() {
+      if (isOpen) return;
+      clearTimeout(hideTimer);
+      isOpen = true;
+      pop.classList.add('bat-stats__popover--open');
+      btn.setAttribute('aria-expanded', 'true');
+      epithetEl.textContent = pickEpithet();
+      fetchStats();
+    }
+
+    function closeStats() {
+      hideTimer = setTimeout(function() {
+        isOpen = false;
+        pop.classList.remove('bat-stats__popover--open');
+        btn.setAttribute('aria-expanded', 'false');
+      }, 1500);
+    }
+
+    wrap.addEventListener('mouseenter', openStats);
+    wrap.addEventListener('mouseleave', closeStats);
+    /* Popover extends below wrap's box — keep it open while cursor is on the card */
+    pop.addEventListener('mouseenter', function() { clearTimeout(hideTimer); });
+    pop.addEventListener('mouseleave', closeStats);
+
+    function closeImmediate() {
+      clearTimeout(hideTimer);
+      isOpen = false;
+      pop.classList.remove('bat-stats__popover--open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+
+    btn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (isOpen) closeImmediate();
+        else openStats();
+      } else if (e.key === 'Escape' && isOpen) {
+        closeImmediate();
+      }
+    });
+
+    var lastFetch = 0;
+    var cachedData = null;
+    var CACHE_MS = 30000;
+
+    function renderStats(data) {
+      var loading = pop.querySelector('.bat-stats__loading');
+      var body = pop.querySelector('.bat-stats__body');
+      if (loading) loading.style.display = 'none';
+      if (body) body.style.display = '';
+
+      STATS.forEach(function(s) {
+        pop.querySelector('[data-stat="' + s.key + '"]').textContent = data[s.key].toLocaleString();
+      });
+
+      var kd = data.deaths === 0 ? '∞' : (data.meals / data.deaths).toFixed(2);
+      var kdEl = pop.querySelector('.bat-stats__kd');
+      kdEl.textContent = '';
+      var kSpan = document.createElement('span');
+      kSpan.textContent = 'K';
+      kSpan.style.color = 'var(--color-stat-meals)';
+      var dSpan = document.createElement('span');
+      dSpan.textContent = 'D';
+      dSpan.style.color = 'var(--color-stat-deaths)';
+      kdEl.appendChild(kSpan);
+      kdEl.appendChild(document.createTextNode('/'));
+      kdEl.appendChild(dSpan);
+      kdEl.appendChild(document.createTextNode(': ' + kd));
+      pop.querySelector('.bat-stats__timestamp').textContent = 'As of ' + formatEST();
+    }
+
+    function fetchStats() {
+      var loading = pop.querySelector('.bat-stats__loading');
+
+      if (Date.now() - lastFetch < CACHE_MS && cachedData) {
+        renderStats(cachedData);
+        return;
+      }
+
+      if (!window.__kdrRead) {
+        if (loading) loading.textContent = 'Firebase unavailable';
+        return;
+      }
+
+      window.__kdrRead(function(data) {
+        if (!data) {
+          if (loading) loading.textContent = 'Could not load stats';
+          return;
+        }
+        lastFetch = Date.now();
+        cachedData = data;
+        renderStats(data);
+      });
+    }
+  }
+
+  if (typeof document$ !== 'undefined') {
+    document$.subscribe(function() { injectBatStats(); });
+  } else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectBatStats);
+  } else {
+    injectBatStats();
+  }
+})();
+
 // Text-size rocker + font swapper — persists in localStorage
 (function() {
   'use strict';

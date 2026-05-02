@@ -320,6 +320,7 @@
         break;
       case 'GRABBING':
         setAnim('grab1');
+        if (window.__kdrIncrement) window.__kdrIncrement('bites');
         break;
       case 'HIT':
         setAnim('hit');
@@ -328,6 +329,7 @@
         break;
       case 'DYING':
         deaths++;
+        if (window.__kdrIncrement) window.__kdrIncrement('deaths');
         setAnim(deaths >= 3 ? 'death1' : 'death2');
         break;
       case 'DEAD':
@@ -562,6 +564,7 @@
     if (anim === 'grab1') return;
 
     if (anim === 'grab2' && Date.now() - feedStart > FEED_TIME) {
+      if (window.__kdrIncrement) window.__kdrIncrement('meals');
       tier = 0;
       timesDisturbed = 0;
       flyToRoost();
