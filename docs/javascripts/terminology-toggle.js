@@ -73,6 +73,8 @@
     }
 
     button.addEventListener('click', doToggle);
+    vtmLabel.addEventListener('click', doToggle);
+    genericLabel.addEventListener('click', doToggle);
 
     const themeToggle = header.querySelector('[data-md-component="palette"]');
     if (themeToggle) {

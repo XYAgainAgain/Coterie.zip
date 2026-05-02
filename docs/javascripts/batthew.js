@@ -3,22 +3,22 @@
 
   /* On SPA re-execution: re-attach bat if Zensical removed it during content swap.
      MutationObserver catches ALL removal methods (some nav types skip document$). */
-  if (window.__batPalInit) {
-    if (!window.__batPalReattach) {
-      window.__batPalReattach = true;
+  if (window.__batthewInit) {
+    if (!window.__batthewReattach) {
+      window.__batthewReattach = true;
       new MutationObserver(function () {
-        var bat = window.__batPalEl;
+        var bat = window.__batthewEl;
         if (bat && !bat.parentNode) document.body.appendChild(bat);
       }).observe(document.body, { childList: true });
     }
     return;
   }
-  window.__batPalInit = true;
+  window.__batthewInit = true;
 
   var W = 40, H = 42, SCALE = 2;
   var DW = W * SCALE, DH = H * SCALE;
   var FRAME_MS = 83;
-  var BASE = '/assets/images/bat-pal/';
+  var BASE = '/assets/images/batthew/';
   var REF_DT = 16.67;
 
   var ANIM_NAMES = [
@@ -139,23 +139,23 @@
 
   function createDOM() {
     el = document.createElement('div');
-    el.id = 'bat-pal';
+    el.id = 'batthew';
     el.setAttribute('aria-hidden', 'true');
 
     cvs = document.createElement('canvas');
     var dpr = window.devicePixelRatio || 1;
-    cvs.width = W * dpr;
-    cvs.height = H * dpr;
+    cvs.width = DW * dpr;
+    cvs.height = DH * dpr;
     cvs.style.width = DW + 'px';
     cvs.style.height = DH + 'px';
 
     ctx = cvs.getContext('2d');
     ctx.imageSmoothingEnabled = false;
-    ctx.scale(dpr, dpr);
+    ctx.scale(dpr * SCALE, dpr * SCALE);
 
     el.appendChild(cvs);
     document.body.appendChild(el);
-    window.__batPalEl = el;
+    window.__batthewEl = el;
   }
 
   function render() {
@@ -266,6 +266,7 @@
 
     switch (s) {
       case 'SPAWNING':
+        cvs.style.pointerEvents = '';
         fading = false;
         el.style.opacity = '1';
         /* Spawn along bottom edge — death1 reversed looks like ground-based materialization */
@@ -316,6 +317,7 @@
         setAnim(deaths >= 3 ? 'death1' : 'death2');
         break;
       case 'DEAD':
+        cvs.style.pointerEvents = 'none';
         clearTimeout(respawnTid);
         var delay = deaths >= 3
           ? RESPAWN_LONG[0] + Math.random() * (RESPAWN_LONG[1] - RESPAWN_LONG[0])
@@ -696,6 +698,10 @@
     else { tx = -DW * 2; ty = py; }
   }
 
+  window.__batthewInCooldown = function () {
+    return Date.now() - lastDismiss < DISMISS_COOLDOWN;
+  };
+
   function jitterButton() {
     var btn = document.getElementById('coterie-bat-toggle');
     if (!btn) return;
@@ -709,6 +715,7 @@
 
   function summon() {
     if (Date.now() - lastDismiss < DISMISS_COOLDOWN) { jitterButton(); return; }
+    cvs.style.pointerEvents = '';
     dismissing = false;
     enabled = true;
     el.style.display = '';

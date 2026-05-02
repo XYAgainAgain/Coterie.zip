@@ -12,8 +12,8 @@ extra_css = ["stylesheets/extra.css"]
 
 extra_javascript = [
   "javascripts/extra.js",
-  "javascripts/terminology-toggle.js",
-  "javascripts/bat-pal.js",
+  # "javascripts/terminology-toggle.js",
+  "javascripts/batthew.js",
 ]
 
 nav = [
@@ -155,3 +155,6 @@ anchor_linenums = true
 [project.markdown_extensions.pymdownx.details]
 [project.markdown_extensions.pymdownx.tabbed]
 alternate_style = true
+
+[project.validation]
+invalid_links = false

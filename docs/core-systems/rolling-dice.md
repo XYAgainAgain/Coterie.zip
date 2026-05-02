@@ -4,7 +4,7 @@ title: "Rolling Dice"
 
 Any time the Storyteller asks you to roll for something, they'll tell you what stat to use, or ideally, you know your Moves well enough that you know which numbers go where. Regardless of the result, the narrative moves forward. In general, you will never roll more than once per action. That single roll determines the degree of success of your efforts. In ***Coterie***, there are a few types of rolls, but 95% of them will be as follows:
 
-**Basic Roll ("Roll +[stat]") =** 2d6 + stat modifier + any relevant modifiers (bonuses/penalties)
+**Basic Roll ("Roll +\[stat]") =** 2d6 + stat modifier + any relevant modifiers (bonuses/penalties)
 
 **Outcomes & Degrees of Success:**
 

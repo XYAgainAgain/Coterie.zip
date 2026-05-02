@@ -374,7 +374,6 @@ a, button, .md-nav__link, .md-footer__link {
   align-items: center;
 }
 
-/* Desktop header: center search via absolute positioning within flex parent */
 @media screen and (min-width: 60em) {
   .md-header__inner {
     position: relative;
@@ -387,15 +386,13 @@ a, button, .md-nav__link, .md-footer__link {
 
   .md-search {
     position: absolute;
-    left: 50%;
+    left: min(50%, calc(100% - 610px));
     transform: translateX(-50%);
   }
 }
 
-/* Mobile: push search icon to far right, just before source link */
 @media screen and (max-width: 59.984375em) {
   .md-search { order: 90; }
-  .md-header__source { order: 100; }
 }
 
 .md-header__title {
@@ -403,52 +400,61 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 /* Visual ordering independent of JS insertion timing */
-#coterie-terminology-toggle { order: 10; }
 .md-header__button.bat-toggle { order: 20; }
 .text-size-rocker { order: 30; }
 .md-header__option { order: 40; }
 .md-header__source { order: 50; }
 
-.term-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.15rem;
-}
-
-.term-toggle__label {
-  font-size: 0.9rem;
-  color: var(--md-primary-bg-color);
-  cursor: pointer;
-  transition: opacity var(--transition-quick);
-}
-
-.term-toggle__label--vtm { font-family: "Metamorphous", serif; }
-.term-toggle__label--generic { font-family: "IM Fell English SC", serif; }
-
-.term-toggle[data-mode="vtm"] .term-toggle__label--vtm { opacity: 1; }
-.term-toggle[data-mode="vtm"] .term-toggle__label--generic { opacity: 0.5; }
-.term-toggle[data-mode="generic"] .term-toggle__label--vtm { opacity: 0.5; }
-.term-toggle[data-mode="generic"] .term-toggle__label--generic { opacity: 1; }
-
-.term-toggle__btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
-.term-toggle__btn:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: -2px;
-}
-
-.term-toggle__btn svg {
-  width: 20px;
-  height: 20px;
-  fill: var(--md-accent-fg-color);
-}
+/*
+ * Terminology toggle — disabled until more game content is written.
+ * Preserved for rewrite; re-enable in zensical.toml extra_javascript.
+ *
+ * #coterie-terminology-toggle { order: 10; }
+ *
+ * .term-toggle {
+ *   display: flex;
+ *   align-items: center;
+ *   gap: 0.15rem;
+ * }
+ *
+ * .term-toggle__label {
+ *   font-size: 0.9rem;
+ *   color: var(--md-primary-bg-color);
+ *   cursor: pointer;
+ *   transition: opacity var(--transition-quick);
+ * }
+ *
+ * .term-toggle__label--vtm { font-family: "Metamorphous", serif; }
+ * .term-toggle__label--generic { font-family: "IM Fell English SC", serif; }
+ *
+ * .term-toggle[data-mode="vtm"] .term-toggle__label--vtm { opacity: 1; }
+ * .term-toggle[data-mode="vtm"] .term-toggle__label--generic { opacity: 0.5; }
+ * .term-toggle[data-mode="generic"] .term-toggle__label--vtm { opacity: 0.5; }
+ * .term-toggle[data-mode="generic"] .term-toggle__label--generic { opacity: 1; }
+ *
+ * .term-toggle[data-mode="vtm"]::after { opacity: 0.5; }
+ * .term-toggle[data-mode="generic"]::after { opacity: 1; }
+ *
+ * .term-toggle__btn {
+ *   background: none;
+ *   border: none;
+ *   cursor: pointer;
+ *   padding: 0;
+ *   display: flex;
+ *   align-items: center;
+ * }
+ *
+ * .term-toggle__btn:focus-visible {
+ *   outline: 2px solid var(--color-accent);
+ *   outline-offset: -2px;
+ * }
+ *
+ * .term-toggle__btn svg {
+ *   width: 20px;
+ *   height: 20px;
+ *   fill: var(--md-accent-fg-color);
+ * }
+ */
 
 .md-header__option label.md-header__button {
   padding: 0.3rem;
@@ -464,7 +470,7 @@ a, button, .md-nav__link, .md-footer__link {
   border: none;
   cursor: pointer;
   padding: 0.3rem;
-  margin: 0;
+  margin: 0 0.15rem 0 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1047,6 +1053,21 @@ a, button, .md-nav__link, .md-footer__link {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
+.darkpack-logo {
+  float: right;
+  width: 120px;
+  height: auto;
+  margin: -0.5rem 0 0.5rem 1rem;
+  border-radius: 4px;
+}
+
+@media (max-width: 480px) {
+  .darkpack-logo {
+    width: 80px;
+    margin: -0.25rem 0 0.4rem 0.75rem;
+  }
+}
+
 .md-typeset blockquote {
   background-color: var(--color-bg-lighter);
 }
@@ -1345,7 +1366,7 @@ code,
 
 /* Pixel bat mascot */
 
-#bat-pal {
+#batthew {
   position: fixed;
   top: 0;
   left: 0;
@@ -1354,7 +1375,7 @@ code,
   will-change: transform;
 }
 
-#bat-pal canvas {
+#batthew canvas {
   display: block;
   pointer-events: auto;
   cursor: pointer;
@@ -1364,22 +1385,24 @@ code,
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #bat-pal { will-change: auto; }
+  #batthew { will-change: auto; }
 }
 
 
-/* 10. FOUC Prevention — terminology toggle opacity guard */
+/* 10. FOUC Prevention — terminology toggle opacity guard (disabled with toggle) */
 
-body:not([data-terminology-mode]) .md-content,
-body:not([data-terminology-mode]) .md-nav {
-  opacity: 0.01;
-  transition: opacity 0.15s ease-in;
-}
-
-body[data-terminology-mode] .md-content,
-body[data-terminology-mode] .md-nav {
-  opacity: 1;
-}
+/*
+ * body:not([data-terminology-mode]) .md-content,
+ * body:not([data-terminology-mode]) .md-nav {
+ *   opacity: 0.01;
+ *   transition: opacity 0.15s ease-in;
+ * }
+ *
+ * body[data-terminology-mode] .md-content,
+ * body[data-terminology-mode] .md-nav {
+ *   opacity: 1;
+ * }
+ */
 
 
 /* 11. Print */
@@ -1520,23 +1543,7 @@ body[data-terminology-mode] .md-nav {
     background-color: var(--md-default-bg-color--light);
   }
 
-  .term-toggle { gap: 0.2rem; }
-  .term-toggle__label { font-size: 0.75rem; }
-  .term-toggle__btn svg { width: 18px; height: 18px; }
-
-  /* Abbreviate "Generic" label to "G" */
-  .term-toggle__label--generic { font-size: 0; }
-  .term-toggle__label--generic::after {
-    content: 'G';
-    font-size: 0.75rem;
-    font-family: 'IM Fell English SC', serif;
-    color: var(--md-default-fg-color);
-  }
-
-  /* Hide "Coterie.zip" text, keep download icon */
-  .md-source__repository { display: none !important; }
-  .md-header__source { width: auto; max-width: none; }
-  .md-header__source::before { display: none; }
+  .md-header__source { display: none !important; }
 }
 
 @media screen and (max-width: 479px) {
@@ -1568,8 +1575,4 @@ body[data-terminology-mode] .md-nav {
   .md-top { bottom: 0.4rem; }
 
   .md-sidebar--secondary { bottom: 4rem; }
-
-  .term-toggle { gap: 0.15rem; }
-  .term-toggle__label { font-size: 0.7rem; }
-  .term-toggle__btn svg { width: 16px; height: 16px; }
 }

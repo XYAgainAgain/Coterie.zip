@@ -20,6 +20,21 @@ At its core, ***Coterie*** asks only one question of its players:
 
 ---
 
+!!! note "Legalese"
+
+    <img src="assets/images/darkpack_logo2.png" alt="Dark Pack Logo" class="darkpack-logo">
+
+    *This is an unofficial, non-commercial fan project. It is not affiliated with or endorsed by Paradox Interactive.*
+
+    *Portions of the materials are the copyrights and trademarks of Paradox Interactive AB, and are used with permission. All rights reserved. For more information please visit [worldofdarkness.com](http://worldofdarkness.com).*
+
+    *Vampire: The Masquerade is a trademark of Paradox Interactive AB. This project operates under the [Dark Pack Agreement](https://www.paradoxinteractive.com/games/world-of-darkness/community/dark-pack-agreement).*
+
+    [*Powered by the Apocalypse*](http://apocalypse-world.com/pbta/policy) *framework by D. Vincent Baker and Meguey Baker. Coterie is not affiliated with the creators of PbtA, but I'm a huge fan and I love their work! Thanks so much!*
+
+    *Site theme based on [Zensical](https://zensical.org/) by Martin Donath (MIT License). Fonts used under the SIL Open Font License. The animation sprites for the adorable little bat buddy (**Batthew**) are from [ggoolmool on Itch.io](http://Itch.io)!*
+---
+
 ## Temporary Design Notes
 
 Important things to keep in mind:

@@ -261,6 +261,7 @@
     btn.appendChild(img);
 
     btn.addEventListener('click', function() {
+      if (window.__batthewInCooldown && window.__batthewInCooldown()) return;
       var nowOn = !getBatState();
       try { localStorage.setItem(BAT_KEY, nowOn ? 'on' : 'off'); }
       catch (e) { /* localStorage unavailable */ }
