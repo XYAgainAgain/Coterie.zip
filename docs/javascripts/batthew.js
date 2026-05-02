@@ -51,7 +51,6 @@
   var GRAB3_LERP = 0.5;
   var GRAB3_SETTLE_MS = 1000;
 
-  /* Per-tier: [shy, curious, hunting] */
   var NEAR_ROOST = [150, 200, 250];
   var LERP_FLY = [0.008, 0.015, 0.04];
   var JITTER_AMP = [30, 20, 10];
@@ -66,7 +65,9 @@
   var DASH_COOLDOWN = 5000;
   var DASH_DIST = 350;
   var TIER_DECAY_MS = 300000;
-  var FEED_TIME = 10000;
+  var FEED_TIME_MIN = 7000;
+  var FEED_TIME_MAX = 13000;
+  var feedTime = 10000;
   var DEATH_FADE_MS = 1000;
   var RESPAWN_QUICK = 5000;
   var RESPAWN_LONG = [15000, 30000];
@@ -252,6 +253,7 @@
       case 'grab1':
         setAnim('grab2');
         feedStart = Date.now();
+        feedTime = FEED_TIME_MIN + Math.random() * (FEED_TIME_MAX - FEED_TIME_MIN);
         startFeedingDrip();
         break;
       case 'hit':
@@ -377,7 +379,6 @@
   function jitter(now, amp) {
     var t = now * 0.001;
     var mult = (cSpeed < 2) ? JITTER_HOVER_MULT : 1;
-    /* Shy bat flutters harder when cursor is nearby */
     if (tier === 0 && state === 'FLYING') {
       var cd = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
       if (cd < 200) mult *= 1 + (200 - cd) / 100;
@@ -389,7 +390,6 @@
     };
   }
 
-  /* Exact framerate-independent lerp — identical result at any Hz */
   function moveLerp(targetX, targetY, lerp, dt) {
     var f = 1 - Math.pow(1 - lerp, dt / REF_DT);
     px += (targetX - px) * f;
@@ -487,9 +487,7 @@
       return;
     }
 
-    /* Tiers 1 & 2 */
     if (state === 'FLYING') {
-      /* No cursor: wander instead of chasing */
       if (!hasCursor) {
         var distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
         if (distToTarget < 40 && now - lastWander > WANDER_COOLDOWN) pickWanderTarget();
@@ -568,7 +566,7 @@
     if (state !== 'GRABBING') return;
     if (anim === 'grab1') return;
 
-    if (anim === 'grab2' && Date.now() - feedStart > FEED_TIME) {
+    if (anim === 'grab2' && Date.now() - feedStart > feedTime) {
       if (window.__kdrIncrement) window.__kdrIncrement('meals');
       stopFeedingDrip();
       startHealingDrip();
@@ -578,13 +576,12 @@
       return;
     }
 
-    /* tx/ty already offset to bat's top-left — match the GRAB_RADIUS entry check */
     var distToCursor = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
     if (cSpeed > GRAB_BREAK || distToCursor > GRAB_DIST_BREAK) { stopAllDrips(); enter('FLYING'); return; }
 
     var cursorMoving = performance.now() - lastMove < GRAB3_SETTLE_MS;
     if (cursorMoving && anim === 'grab2') setAnim('grab3');
-    else if (!cursorMoving && anim === 'grab3') { setAnim('grab2'); feedStart = Date.now(); }
+    else if (!cursorMoving && anim === 'grab3') setAnim('grab2');
   }
 
   function measureSpeed() {
@@ -626,7 +623,6 @@
     leaveTid = setTimeout(function () {
       if (hasCursor) return;
       if (state === 'GRABBING') enter('FLYING');
-      /* Wander aggressively while cursor is absent */
       if (state === 'FLYING') pickWanderTarget();
     }, LEAVE_GRACE_MS);
   }
@@ -683,10 +679,7 @@
     var hdrBottom = hdr ? hdr.getBoundingClientRect().bottom - 6 : 80;
     var w = window.innerWidth;
 
-    /* Favorite: left-side divider on source link (~25% weight) */
     addRoost('.md-header__source', 'hang-left');
-
-    /* Random points along header bottom edge and top of screen */
     roosts.push({ x: DW + Math.random() * (w - DW * 3), y: hdrBottom });
     roosts.push({ x: DW + Math.random() * (w - DW * 3), y: hdrBottom });
     roosts.push({ x: DW + Math.random() * (w - DW * 3), y: 0 });
@@ -694,7 +687,6 @@
 
   function pickRoost() {
     computeRoosts();
-    /* First roost after spawn always goes to the favorite spot */
     if (firstRoost) { roostIdx = 0; firstRoost = false; return; }
     if (roosts.length <= 1) { roostIdx = 0; return; }
     var old = roostIdx;
@@ -885,7 +877,6 @@
       setTimeout(syncEnabled, 50);
     });
 
-    /* Hide bat behind search overlay */
     var searchInput = document.querySelector('.md-search__input');
     if (searchInput) {
       searchInput.addEventListener('focus', function () { el.style.visibility = 'hidden'; });
@@ -956,7 +947,6 @@
     });
   }
 
-  /* Blood drip particle system — pixel blood drops from cursor during grab cycle */
   var BLOOD_FRESH = '#E40707';
   var BLOOD_DARK = '#6B0606';
   var DRIP_CAP = 30;
@@ -1051,16 +1041,14 @@
 
   function scheduleFeedDrip() {
     var elapsed = Date.now() - feedStart;
-    var progress = Math.min(elapsed / FEED_TIME, 1);
-    /* Widen interval as feeding progresses — starts brisk, tapers off */
+    var progress = Math.min(elapsed / feedTime, 1);
     var interval = DRIP_BASE_MS * (1 + progress * 0.8);
-    /* Wide random variance per Sam's request */
     var jitter = interval * 0.5;
     var delay = interval + (Math.random() - 0.5) * jitter;
 
     heartbeatTid = setTimeout(function () {
       if (state !== 'GRABBING') return;
-      var progress2 = Math.min((Date.now() - feedStart) / FEED_TIME, 1);
+      var progress2 = Math.min((Date.now() - feedStart) / feedTime, 1);
       var color = progress2 < 0.6 ? BLOOD_FRESH : BLOOD_DARK;
       spawnDrip(mx, my, color, 3, 7, 0.2, 1.2, 0.8);
       if (Math.random() < 0.3) {
