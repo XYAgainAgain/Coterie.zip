@@ -117,7 +117,9 @@
 
   function getTheme() {
     var s = document.body.getAttribute('data-md-color-scheme');
-    return s === 'slate' ? 'night' : 'sunset';
+    if (s === 'slate') return 'night';
+    if (s === 'abyss') return 'abyss';
+    return 'sunset';
   }
 
   function preload(t, cb) {
@@ -222,6 +224,20 @@
   function onAnimEnd() {
     switch (anim) {
       case 'appearance':
+        if (state === 'FLYOFF_WARMUP') {
+          setAnim('move2');
+          setTimeout(function() {
+            if (state === 'FLYOFF_WARMUP') {
+              state = 'FLYOFF';
+              setAnim('dash');
+            }
+          }, 400);
+          break;
+        }
+        if (state === 'LANDING') {
+          enter('ROOSTING');
+          break;
+        }
         enter('ROOSTING');
         break;
       case 'idle2':
@@ -295,13 +311,11 @@
         boredStart = performance.now();
         if (tier === 0) {
           pickWanderTarget();
-          var wanderTime = AUTO_ROOST_MIN + Math.random() * (AUTO_ROOST_MAX - AUTO_ROOST_MIN);
+          clearTimeout(autoRoostTid);
           autoRoostTid = setTimeout(function () {
             if (state !== 'FLYING' || tier !== 0) return;
-            var r = roosts[roostIdx];
-            tx = r.x;
-            ty = r.y;
-          }, wanderTime);
+            flyToRoost();
+          }, 3000 + Math.random() * 4000);
         }
         break;
       case 'GRABBING':
@@ -376,10 +390,16 @@
   }
 
   function updatePos(dt, now) {
-    if (state === 'FLYOFF' || state === 'FLYIN') jx = jy = 0;
+    if (state === 'FLYOFF' || state === 'FLYIN' || state === 'FLYOFF_WARMUP') jx = jy = 0;
+
+    if (state === 'FLYOFF_WARMUP') {
+      moveLerp(tx, ty, 0.008, dt);
+      clampAndTransform();
+      return;
+    }
 
     if (state === 'FLYOFF') {
-      moveLerp(tx, ty, 0.12, dt);
+      moveLerp(tx, ty, 0.03, dt);
       clampAndTransform();
       if (px < -DW || px > window.innerWidth + DW ||
           py < -DH || py > window.innerHeight + DH) hideBat();
@@ -391,16 +411,29 @@
       var dist = Math.sqrt(dx * dx + dy * dy);
       moveLerp(tx, ty, 0.008, dt);
       clampAndTransform();
-      if (dist < 30) {
-        px = tx; py = ty;
-        clampAndTransform();
-        enter('ROOSTING');
+      if (dist < 40) {
+        var r = roosts[roostIdx];
+        var headingToRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
+        if (headingToRoost) {
+          px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
+          state = 'LANDING';
+          setAnim('appearance', true);
+        } else {
+          enter('FLYING');
+          pickWanderTarget();
+          clearTimeout(autoRoostTid);
+          autoRoostTid = setTimeout(function() {
+            if (state !== 'FLYING' || tier !== 0) return;
+            flyToRoost();
+          }, 3000 + Math.random() * 4000);
+        }
       }
       return;
     }
 
     var frozen = state === 'ROOSTING' || state === 'CURIOUS' || state === 'DEAD' ||
-                 state === 'DYING' || state === 'SPAWNING' || state === 'HIT';
+                 state === 'DYING' || state === 'SPAWNING' || state === 'HIT' ||
+                 state === 'LANDING';
     if (frozen) return;
 
     /* Jitter is VISUAL ONLY — smoothed via its own lerp so it drifts
@@ -421,7 +454,12 @@
       if (dist < 40) {
         var r = roosts[roostIdx];
         var atRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
-        if (atRoost) { px = r.x; py = r.y; jx = jy = 0; clampAndTransform(); enter('ROOSTING'); return; }
+        if (atRoost) {
+          px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
+          state = 'LANDING';
+          setAnim('appearance', true);
+          return;
+        }
         pickWanderTarget();
       }
 
@@ -429,13 +467,10 @@
       if (curDist < 80) {
         pickWanderTarget();
         clearTimeout(autoRoostTid);
-        var wanderTime = AUTO_ROOST_MIN + Math.random() * (AUTO_ROOST_MAX - AUTO_ROOST_MIN);
         autoRoostTid = setTimeout(function () {
           if (state !== 'FLYING' || tier !== 0) return;
-          var r = roosts[roostIdx];
-          tx = r.x;
-          ty = r.y;
-        }, wanderTime);
+          flyToRoost();
+        }, 3000 + Math.random() * 4000);
       } else if (curDist < 150 && now - lastWander > WANDER_COOLDOWN) {
         pickWanderTarget();
       }
@@ -477,7 +512,7 @@
   }
 
   function clampAndTransform() {
-    if (state !== 'FLYOFF') {
+    if (state !== 'FLYOFF' && state !== 'FLYOFF_WARMUP') {
       px = Math.max(0, Math.min(window.innerWidth - DW, px));
       py = Math.max(0, Math.min(window.innerHeight - DH, py));
     }
@@ -485,7 +520,7 @@
   }
 
   function updateFacing() {
-    if (state === 'FLYOFF' || state === 'FLYIN') {
+    if (state === 'FLYOFF' || state === 'FLYIN' || state === 'FLYOFF_WARMUP') {
       var dx = tx - px;
       if (Math.abs(dx) > FLIP_HYSTERESIS) facingLeft = dx < 0;
       return;
@@ -657,6 +692,8 @@
   }
 
   function flyToRoost() {
+    clearTimeout(autoRoostTid);
+    clearTimeout(curiousTid);
     pickRoost();
     var r = roosts[roostIdx];
     tx = r.x;
@@ -683,24 +720,34 @@
     el.style.transition = '';
     el.style.opacity = '1';
 
-    if (Math.random() < 0.25) {
-      state = 'DYING';
-      setAnim('death1');
-      return;
-    }
-
-    state = 'FLYOFF';
-    setAnim('dash');
     var edge = Math.floor(Math.random() * 4);
     if (edge === 0) { tx = px; ty = -DH * 2; }
     else if (edge === 1) { tx = window.innerWidth + DW * 2; ty = py; }
     else if (edge === 2) { tx = px; ty = window.innerHeight + DH * 2; }
     else { tx = -DW * 2; ty = py; }
+    facingLeft = tx < px;
+
+    var wasPerched = state === 'ROOSTING' || state === 'CURIOUS';
+    state = 'FLYOFF_WARMUP';
+
+    if (wasPerched) {
+      setAnim('appearance');
+    } else {
+      setAnim('move2');
+      setTimeout(function() {
+        if (state === 'FLYOFF_WARMUP') {
+          state = 'FLYOFF';
+          setAnim('dash');
+        }
+      }, 400);
+    }
   }
 
   window.__batthewInCooldown = function () {
     return Date.now() - lastDismiss < DISMISS_COOLDOWN;
   };
+
+  window.__batthewJitter = jitterButton;
 
   function jitterButton() {
     var btn = document.getElementById('coterie-bat-toggle');
@@ -715,6 +762,10 @@
 
   function summon() {
     if (Date.now() - lastDismiss < DISMISS_COOLDOWN) { jitterButton(); return; }
+    clearTimeout(autoRoostTid);
+    clearTimeout(curiousTid);
+    clearTimeout(tierDecayTid);
+    clearTimeout(respawnTid);
     cvs.style.pointerEvents = '';
     dismissing = false;
     enabled = true;
@@ -727,10 +778,8 @@
     else { px = -DW * 2; py = Math.random() * window.innerHeight; }
     el.style.transform = 'translate3d(' + Math.round(px) + 'px,' + Math.round(py) + 'px,0)';
 
-    pickRoost();
-    var r = roosts[roostIdx];
-    tx = r.x;
-    ty = r.y;
+    tx = DW + Math.random() * (window.innerWidth - DW * 2);
+    ty = DH + Math.random() * (window.innerHeight * 0.5);
     facingLeft = tx < px;
     state = 'FLYIN';
     setAnim(Math.random() < 0.5 ? 'move1' : 'move2');
@@ -843,7 +892,9 @@
     if (!enabled) return;
 
     preload(theme, function () {
-      preload(theme === 'night' ? 'sunset' : 'night', function () {});
+      ['night', 'sunset', 'abyss'].forEach(function(t) {
+        if (t !== theme) preload(t, function() {});
+      });
 
       if (!sheets[theme].idle1 || !sheets[theme].move1) {
         el.style.display = 'none';
@@ -877,9 +928,8 @@
         else if (edge === 2) { px = Math.random() * window.innerWidth; py = window.innerHeight + DH * 2; }
         else { px = -DW * 2; py = Math.random() * window.innerHeight; }
         clampAndTransform();
-        pickRoost();
-        var r = roosts[roostIdx];
-        tx = r.x; ty = r.y;
+        tx = DW + Math.random() * (window.innerWidth - DW * 2);
+        ty = DH + Math.random() * (window.innerHeight * 0.5);
         facingLeft = tx < px;
         state = 'FLYIN';
         setAnim(Math.random() < 0.5 ? 'move1' : 'move2');

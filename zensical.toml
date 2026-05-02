@@ -119,13 +119,18 @@ features = [
 # the actual Gothic Vampire colors are set via CSS variables in extra.css.
 [[project.theme.palette]]
 scheme = "slate"
-toggle.icon = "material/brightness-7"
-toggle.name = "Switch to light mode"
+toggle.icon = "material/weather-night"
+toggle.name = "Switch to Sunset"
 
 [[project.theme.palette]]
 scheme = "default"
-toggle.icon = "material/brightness-4"
-toggle.name = "Switch to dark mode"
+toggle.icon = "material/weather-sunset"
+toggle.name = "Switch to Abyss"
+
+[[project.theme.palette]]
+scheme = "abyss"
+toggle.icon = "material/eye-outline"
+toggle.name = "Switch to Night"
 
 [project.markdown_extensions.admonition]
 [project.markdown_extensions.pymdownx.betterem]

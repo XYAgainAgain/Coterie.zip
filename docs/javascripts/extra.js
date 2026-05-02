@@ -1,4 +1,19 @@
 // Custom JavaScript for Coterie - Zensical
+
+/* Auto-activate Abyss for prefers-contrast users who haven't chosen a theme */
+(function() {
+  'use strict';
+  try {
+    var scope = new URL('.', location).pathname;
+    var key = scope + '.__palette';
+    var stored = localStorage.getItem(key);
+    if (!stored && window.matchMedia('(prefers-contrast: more)').matches) {
+      document.body.setAttribute('data-md-color-scheme', 'abyss');
+      localStorage.setItem(key, JSON.stringify({ index: 2 }));
+    }
+  } catch(e) {}
+})();
+
 // HTML Entity Decoding (precautionary; Zensical and Material both escape cleanly)
 
 (function() {
@@ -227,6 +242,140 @@
   document.body.appendChild(smoke);
 })();
 
+/* Eye toggle — custom 3-way theme switcher; clicks Zensical's hidden radio
+   inputs so its internal JS handles storage and scheme application for us */
+(function() {
+  'use strict';
+
+  var SCHEMES = ['default', 'slate', 'abyss'];
+  var LABELS = ['Switch to Night', 'Switch to Abyss', 'Switch to Sunset'];
+  var blinkTid = null;
+  var rotateTid = null;
+  var btn = null;
+
+  function getScheme() {
+    return document.body.getAttribute('data-md-color-scheme') || 'slate';
+  }
+
+  function getIndex() {
+    var i = SCHEMES.indexOf(getScheme());
+    return i < 0 ? 1 : i;
+  }
+
+  function cycle() {
+    var next = (getIndex() + 1) % SCHEMES.length;
+    var input = document.querySelector(
+      '.md-option[data-md-color-scheme="' + SCHEMES[next] + '"]'
+    );
+    if (input) input.click();
+  }
+
+  /* Night — random blink: dims glow briefly, 1 or 2 blinks in succession */
+  function doBlink() {
+    if (!btn) return;
+    var eyes = btn.querySelectorAll('.eye-toggle__eye--1, .eye-toggle__eye--2');
+    var double = Math.random() < 0.35;
+
+    eyes.forEach(function(eye) {
+      eye.classList.add('eye-toggle__eye--blink');
+    });
+    setTimeout(function() {
+      eyes.forEach(function(eye) {
+        eye.classList.remove('eye-toggle__eye--blink');
+      });
+      if (double) {
+        setTimeout(function() {
+          eyes.forEach(function(eye) {
+            eye.classList.add('eye-toggle__eye--blink');
+          });
+          setTimeout(function() {
+            eyes.forEach(function(eye) {
+              eye.classList.remove('eye-toggle__eye--blink');
+            });
+          }, 150);
+        }, 200);
+      }
+    }, 150);
+  }
+
+  function scheduleBlink() {
+    blinkTid = setTimeout(function() {
+      doBlink();
+      scheduleBlink();
+    }, 3000 + Math.random() * 5000);
+  }
+
+  /* Abyss — rotate eye positions (three-cup shuffle) */
+  function scheduleRotation() {
+    if (!btn) return;
+    btn.setAttribute('data-rotation', '0');
+    rotateTid = setTimeout(function advanceRotation() {
+      var cur = parseInt(btn.getAttribute('data-rotation') || '0', 10);
+      btn.setAttribute('data-rotation', String((cur + 1) % 3));
+      rotateTid = setTimeout(advanceRotation, 4000 + Math.random() * 4000);
+    }, 4000 + Math.random() * 4000);
+  }
+
+  function stopTimers() {
+    clearTimeout(blinkTid);
+    clearTimeout(rotateTid);
+    blinkTid = null;
+    rotateTid = null;
+  }
+
+  function startBehavior() {
+    stopTimers();
+    var scheme = getScheme();
+    if (scheme === 'slate') scheduleBlink();
+    if (scheme === 'abyss') scheduleRotation();
+  }
+
+  function create() {
+    var nav = document.querySelector('.md-header__inner');
+    if (!nav || document.querySelector('.eye-toggle')) return;
+
+    btn = document.createElement('button');
+    btn.className = 'eye-toggle';
+    btn.type = 'button';
+    btn.setAttribute('aria-label', LABELS[getIndex()]);
+    btn.setAttribute('data-rotation', '0');
+
+    for (var i = 1; i <= 3; i++) {
+      var img = document.createElement('img');
+      img.src = '/assets/images/eye.svg';
+      img.alt = '';
+      img.className = 'eye-toggle__eye eye-toggle__eye--' + i;
+      img.setAttribute('aria-hidden', 'true');
+      btn.appendChild(img);
+    }
+
+    btn.addEventListener('click', function() {
+      cycle();
+      btn.setAttribute('aria-label', LABELS[getIndex()]);
+    });
+
+    nav.appendChild(btn);
+
+    /* Watch for scheme changes to start/stop idle behaviors */
+    new MutationObserver(function() {
+      startBehavior();
+    }).observe(document.body, {
+      attributes: true,
+      attributeFilter: ['data-md-color-scheme']
+    });
+
+    startBehavior();
+  }
+
+  if (typeof document$ !== 'undefined') {
+    document$.subscribe(create);
+  } else if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', create);
+  } else {
+    create();
+  }
+})();
+
 // Bat toggle — swaps between bat-on/bat-off SVGs, persists in localStorage
 (function() {
   'use strict';
@@ -250,7 +399,7 @@
     btn.id = 'coterie-bat-toggle';
     btn.className = 'md-header__button bat-toggle';
     btn.type = 'button';
-    btn.title = isOn ? 'Bats: on' : 'Bats: off';
+    btn.title = isOn ? 'Batthew: on' : 'Batthew: off';
     btn.setAttribute('aria-label', btn.title);
     btn.setAttribute('aria-pressed', String(isOn));
 
@@ -261,12 +410,15 @@
     btn.appendChild(img);
 
     btn.addEventListener('click', function() {
-      if (window.__batthewInCooldown && window.__batthewInCooldown()) return;
+      if (window.__batthewInCooldown && window.__batthewInCooldown()) {
+        if (window.__batthewJitter) window.__batthewJitter();
+        return;
+      }
       var nowOn = !getBatState();
       try { localStorage.setItem(BAT_KEY, nowOn ? 'on' : 'off'); }
       catch (e) { /* localStorage unavailable */ }
       img.src = nowOn ? BAT_ON_SRC : BAT_OFF_SRC;
-      btn.title = nowOn ? 'Bats: on' : 'Bats: off';
+      btn.title = nowOn ? 'Batthew: on' : 'Batthew: off';
       btn.setAttribute('aria-label', btn.title);
       btn.setAttribute('aria-pressed', String(nowOn));
     });
