@@ -824,6 +824,10 @@ a, button, .md-nav__link, .md-footer__link {
   image-rendering: pixelated;
 }
 
+[data-md-color-scheme="abyss"] .bat-stats__mugshot {
+  animation: batthew-glow 3s ease-in-out infinite;
+}
+
 .bat-stats__row {
   display: flex;
   justify-content: space-between;
@@ -1781,6 +1785,27 @@ code,
   50% { transform: scale(1.25); }
 }
 
+
+/* Blood drip particles */
+
+.blood-drips {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.blood-drip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blood-drips { display: none; }
+}
 
 /* Pixel bat mascot */
 

@@ -252,6 +252,7 @@
       case 'grab1':
         setAnim('grab2');
         feedStart = Date.now();
+        startFeedingDrip();
         break;
       case 'hit':
         lives--;
@@ -319,15 +320,19 @@
         }
         break;
       case 'GRABBING':
+        stopAllDrips();
         setAnim('grab1');
         if (window.__kdrIncrement) window.__kdrIncrement('bites');
+        biteSplash();
         break;
       case 'HIT':
+        stopAllDrips();
         setAnim('hit');
         tier = Math.min(2, tier + 1);
         timesDisturbed = Math.max(timesDisturbed, tier);
         break;
       case 'DYING':
+        stopAllDrips();
         deaths++;
         if (window.__kdrIncrement) window.__kdrIncrement('deaths');
         setAnim(deaths >= 3 ? 'death1' : 'death2');
@@ -565,6 +570,8 @@
 
     if (anim === 'grab2' && Date.now() - feedStart > FEED_TIME) {
       if (window.__kdrIncrement) window.__kdrIncrement('meals');
+      stopFeedingDrip();
+      startHealingDrip();
       tier = 0;
       timesDisturbed = 0;
       flyToRoost();
@@ -573,7 +580,7 @@
 
     /* tx/ty already offset to bat's top-left — match the GRAB_RADIUS entry check */
     var distToCursor = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
-    if (cSpeed > GRAB_BREAK || distToCursor > GRAB_DIST_BREAK) { enter('FLYING'); return; }
+    if (cSpeed > GRAB_BREAK || distToCursor > GRAB_DIST_BREAK) { stopAllDrips(); enter('FLYING'); return; }
 
     var cursorMoving = performance.now() - lastMove < GRAB3_SETTLE_MS;
     if (cursorMoving && anim === 'grab2') setAnim('grab3');
@@ -789,6 +796,7 @@
   }
 
   function hideBat() {
+    stopAllDrips();
     enabled = false;
     dismissing = false;
     fading = false;
@@ -853,8 +861,9 @@
     document.addEventListener('touchend', onTouchEnd);
 
     document.addEventListener('visibilitychange', function () {
-      if (document.hidden && (state === 'FLYING' || state === 'GRABBING')) {
-        flyToRoost();
+      if (document.hidden) {
+        stopAllDrips();
+        if (state === 'FLYING' || state === 'GRABBING') flyToRoost();
       }
     });
 
@@ -945,6 +954,157 @@
       watchTheme();
       loop(performance.now());
     });
+  }
+
+  /* Blood drip particle system — pixel blood drops from cursor during grab cycle */
+  var BLOOD_FRESH = '#E40707';
+  var BLOOD_DARK = '#6B0606';
+  var DRIP_CAP = 30;
+  var DRIP_GRAVITY = 0.08;
+  var DRIP_BASE_MS = 750;
+
+  var dripBox = null;
+  var drips = [];
+  var dripRaf = null;
+  var dripRunning = false;
+  var heartbeatTid = null;
+  var healTid = null;
+  var healCount = 0;
+  var healTarget = 0;
+
+  function ensureDripBox() {
+    if (dripBox) return;
+    dripBox = document.createElement('div');
+    dripBox.className = 'blood-drips';
+    document.body.appendChild(dripBox);
+  }
+
+  function spawnDrip(x, y, color, sizeMin, sizeMax, vyMin, vyMax, vxSpread) {
+    if (reduced || !enabled || !dripBox) return;
+    if (drips.length >= DRIP_CAP) {
+      var old = drips.shift();
+      if (old.el.parentNode) old.el.parentNode.removeChild(old.el);
+    }
+    var sz = sizeMin + Math.random() * (sizeMax - sizeMin);
+    var d = document.createElement('div');
+    d.className = 'blood-drip';
+    d.style.width = sz + 'px';
+    d.style.height = sz + 'px';
+    d.style.backgroundColor = color;
+    dripBox.appendChild(d);
+
+    var particle = {
+      el: d,
+      x: x - sz / 2,
+      y: y,
+      vx: (Math.random() - 0.5) * (vxSpread || 0.6),
+      vy: vyMin + Math.random() * (vyMax - vyMin),
+      op: 0.85 + Math.random() * 0.15,
+      fade: 0.003 + Math.random() * 0.004
+    };
+    d.style.opacity = particle.op;
+    d.style.transform = 'translate(' + particle.x + 'px,' + particle.y + 'px)';
+    drips.push(particle);
+
+    if (!dripRunning) {
+      dripRunning = true;
+      dripRaf = requestAnimationFrame(tickDrips);
+    }
+  }
+
+  function tickDrips() {
+    var i = drips.length;
+    while (i--) {
+      var d = drips[i];
+      d.vy += DRIP_GRAVITY;
+      d.x += d.vx;
+      d.y += d.vy;
+      d.op -= d.fade;
+      if (d.op <= 0 || d.y > window.innerHeight + 20) {
+        if (d.el.parentNode) d.el.parentNode.removeChild(d.el);
+        drips.splice(i, 1);
+        continue;
+      }
+      d.el.style.transform = 'translate(' + d.x + 'px,' + d.y + 'px)';
+      d.el.style.opacity = d.op;
+    }
+    if (drips.length > 0) {
+      dripRaf = requestAnimationFrame(tickDrips);
+    } else {
+      dripRunning = false;
+    }
+  }
+
+  function biteSplash() {
+    ensureDripBox();
+    var count = 3 + Math.floor(Math.random() * 4);
+    for (var i = 0; i < count; i++) {
+      spawnDrip(mx, my, BLOOD_FRESH, 4, 8, 1.0, 3.0, 3.0);
+    }
+  }
+
+  function startFeedingDrip() {
+    stopFeedingDrip();
+    ensureDripBox();
+    scheduleFeedDrip();
+  }
+
+  function scheduleFeedDrip() {
+    var elapsed = Date.now() - feedStart;
+    var progress = Math.min(elapsed / FEED_TIME, 1);
+    /* Widen interval as feeding progresses — starts brisk, tapers off */
+    var interval = DRIP_BASE_MS * (1 + progress * 0.8);
+    /* Wide random variance per Sam's request */
+    var jitter = interval * 0.5;
+    var delay = interval + (Math.random() - 0.5) * jitter;
+
+    heartbeatTid = setTimeout(function () {
+      if (state !== 'GRABBING') return;
+      var progress2 = Math.min((Date.now() - feedStart) / FEED_TIME, 1);
+      var color = progress2 < 0.6 ? BLOOD_FRESH : BLOOD_DARK;
+      spawnDrip(mx, my, color, 3, 7, 0.2, 1.2, 0.8);
+      if (Math.random() < 0.3) {
+        spawnDrip(mx + (Math.random() - 0.5) * 6, my, color, 2, 5, 0.3, 0.8, 0.4);
+      }
+      scheduleFeedDrip();
+    }, delay);
+  }
+
+  function stopFeedingDrip() {
+    clearTimeout(heartbeatTid);
+    heartbeatTid = null;
+  }
+
+  function startHealingDrip() {
+    stopHealingDrip();
+    ensureDripBox();
+    healCount = 0;
+    healTarget = 2 + Math.floor(Math.random() * 7);
+    scheduleHealDrip();
+  }
+
+  function scheduleHealDrip() {
+    var delay = 800 + Math.random() * 700;
+    healTid = setTimeout(function () {
+      var t = healCount / healTarget;
+      var lo = 2 + (1 - t) * 3;
+      var hi = 3 + (1 - t) * 5;
+      spawnDrip(mx, my, BLOOD_DARK, lo, hi, 0.1, 0.5, 0.3);
+      healCount++;
+      if (healCount < healTarget) {
+        scheduleHealDrip();
+      }
+    }, delay);
+  }
+
+  function stopHealingDrip() {
+    clearTimeout(healTid);
+    healTid = null;
+  }
+
+  function stopAllDrips() {
+    stopFeedingDrip();
+    stopHealingDrip();
   }
 
   var inited = false;
