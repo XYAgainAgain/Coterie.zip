@@ -1894,6 +1894,11 @@ code,
   .md-sidebar--secondary {
     bottom: 5rem;
   }
+  .md-nav--secondary {
+    background-color: color-mix(in srgb, var(--color-bg) 92%, transparent);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+  }
 }
 
 @media screen and (min-width: 1920px) {

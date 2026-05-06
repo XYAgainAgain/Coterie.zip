@@ -640,16 +640,26 @@
   function onTouch(e) {
     var t = e.touches[0];
     if (!t) return;
-    mx = t.clientX;
-    my = t.clientY;
-    tx = mx - DW / 2;
-    ty = my - DH / 2;
-    lastMove = performance.now();
+    var nx = t.clientX, ny = t.clientY;
+    var moved = Math.abs(nx - mx) > 3 || Math.abs(ny - my) > 3;
+    if (moved) lastMove = performance.now();
+    mx = nx;
+    my = ny;
     hasCursor = true;
+
     if (state === 'ROOSTING' || state === 'CURIOUS') {
-      tier = Math.min(2, timesDisturbed);
-      timesDisturbed++;
-      enter('FLYING');
+      var dx = mx - px - DW / 2, dy = my - py - DH / 2;
+      if (Math.sqrt(dx * dx + dy * dy) < NEAR_ROOST[tier]) {
+        tier = Math.min(2, timesDisturbed);
+        timesDisturbed++;
+        if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
+        enter('FLYING');
+      }
+      return;
+    }
+
+    if ((state === 'FLYING' || state === 'GRABBING') && tier > 0) {
+      if (moved || state === 'GRABBING') { tx = mx - DW / 2; ty = my - DH / 2; }
     }
   }
 
@@ -808,6 +818,7 @@
     if (wantOn && !enabled) summon();
     else if (!wantOn && enabled && !dismissing) dismiss();
   }
+  window.__batthewSync = syncEnabled;
 
   function checkReduced() {
     reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -871,11 +882,6 @@
 
     window.matchMedia('(prefers-reduced-motion: reduce)')
       .addEventListener('change', checkReduced);
-
-    var toggle = document.getElementById('coterie-bat-toggle');
-    if (toggle) toggle.addEventListener('click', function () {
-      setTimeout(syncEnabled, 50);
-    });
 
     var searchInput = document.querySelector('.md-search__input');
     if (searchInput) {

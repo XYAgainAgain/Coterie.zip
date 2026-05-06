@@ -421,6 +421,7 @@
       btn.title = nowOn ? 'Batthew: on' : 'Batthew: off';
       btn.setAttribute('aria-label', btn.title);
       btn.setAttribute('aria-pressed', String(nowOn));
+      if (window.__batthewSync) window.__batthewSync();
     });
 
     var source = header.querySelector('.md-header__source');
