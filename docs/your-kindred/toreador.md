@@ -6,6 +6,8 @@ title: "Toreador"
 
 ## What Are You?
 
+![Toreador symbol](../assets/images/vtm/bloodlines/toreador.webp){ .bloodline-symbol }
+
 You were Embraced because something about you was exquisite. Perhaps it was talent; a voice, a brush, a stage presence that turned all eyes upon you. Perhaps it was just raw beauty — the kind that stops traffic and starts wars. The Toreador define "art" quite broadly. Painters and musicians, yes, but also dancers, potters, writers, cobblers, podcasters, designers, sex workers, filmmakers, social architects, and anyone who makes people *feel* something. Your sire saw you create or embody a moment of genuine beauty and thought it deserved to last forever. Sometimes that decision is carefully considered, sometimes it's an impulse they regret by next Tuesday.
 
 The Clan of the Rose dominates nightlife, cultural scenes, festivals, galas, art galleries, and social networks. You know everyone worth knowing, you control who gets attention and who doesn't, and your ability to read and manipulate emotions is literally supernatural. Other Kindred underestimate you as shallow hedonists and decorative socialites, which is a mistake they tend to make exactly once. Beauty is power, desire is leverage, and a Toreador who wants something from you will make you want to give it willingly.

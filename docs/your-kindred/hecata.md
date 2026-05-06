@@ -6,6 +6,8 @@ title: "Hecata"
 
 ## What Are You?
 
+![Hecata symbol](../assets/images/vtm/bloodlines/hecata.webp){ .bloodline-symbol }
+
 You were Embraced into a family. A sprawling, centuries-old dynasty that happens to include the dead among its active members. The Hecata are a patchwork of necromantic bloodlines bound together by shared obsession: understanding death, commanding it, and profiting from both. Your sire chose you because you had the right temperament; pragmatic, morbid, maybe a little too comfortable around corpses. Many Hecata are pulled from the Clan's own mortal relatives, guilt-tripped, deceived, and obligated into service before they even understand what's happening.
 
 What you bring to the table is something no other Clan can quite match: the dead talk to you. Ghosts, corpses, spirits — the Hecata can interrogate them, command them, even send them out as spies. That kind of access to secrets that people assumed were safely buried makes the Clan very useful and very wealthy. Other Kindred often find the whole thing distasteful, but they still come knocking when they need a body silenced permanently or a long-dead witness dragged back to testify. The Hecata are happy to help... for a price.

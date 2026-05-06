@@ -6,6 +6,8 @@ title: "Ventrue"
 
 ## What Are You?
 
+![Ventrue symbol](../assets/images/vtm/bloodlines/ventrue.webp){ .bloodline-symbol }
+
 You were Embraced because you already carried yourself like you were in charge. The Ventrue recruit from overachievers, power brokers, royalty, and people who've spent their mortal lives accumulating influence; politicians, executives, military officers, old money heirs, and anyone who treats authority as a natural state rather than something to be earned. Your sire chose you because the Clan's most sacred tradition is the Embrace itself, and a Ventrue who Embraces a weak link embarrasses the entire lineage. You are expected to lead. Anything else is beneath you.
 
 The Ventrue are the establishment. They make the rules, enforce the rules, and punish anyone who breaks the rules, which conveniently keeps them at the top. For centuries, the Ventrue have held more positions of power than any other Clan and they will fight to keep it that way. These nights, open leadership is too dangerous; the smart ones operate as shadow directors, reclusive donors, and silent partners, influencing mortal institutions from just off-stage. They resent having to hide, but they're pragmatic enough to do it anyway. In a Coterie, every Ventrue considers themselves the natural leader, and they might even be right. They're also the ones most likely to keep the group functional through sheer force of organizational will.

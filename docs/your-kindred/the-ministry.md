@@ -6,6 +6,8 @@ title: "The Ministry"
 
 ## What Are You?
 
+![The Ministry symbol](../assets/images/vtm/bloodlines/the-ministry.webp){ .bloodline-symbol }
+
 You were Embraced because you know how to make people question the things they take for granted. Maybe you were a cult deprogrammer who understood manipulation a little too well, a street vendor with real charisma, a dealer who kept clients coming back, or an activist who could make a crowd doubt everything they'd been taught. The Ministry recruits mortals who challenge prevailing morality; people with the confidence to ask "why is this forbidden?" and the nerve to then demonstrate the answer.
 
 This Clan operates somewhere between faith and con artistry, and most Ministers live comfortably in the overlap. You present yourself as a liberator, someone who frees others from guilt, shame, and the invisible rules they never agreed to follow. Sometimes that's genuine, but liberation has a way of creating dependency, and the solutions you offer tend to generate new problems that only you can fix. Some Ministers build genuine congregations and shrines while others just run very sophisticated long games. Either way, other Kindred come to you when they need something they're too proud to get themselves, and you always have something to offer.

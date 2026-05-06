@@ -6,6 +6,8 @@ title: "Tzimisce"
 
 ## What Are You?
 
+![Tzimisce symbol](../assets/images/vtm/bloodlines/tzimisce.webp){ .bloodline-symbol }
+
 You were Embraced because you understand and aim to experience ownership on a level that makes other people uncomfortable. The Tzimisce recruit from territorial obsessives; landlords, cult leaders, gang bosses, military commanders, hoarders of every stripe. Your sire didn't just want someone ambitious because ambition implies you're still reaching. They wanted someone who takes, keeps, and would sooner burn it all to ash than let a single piece fall into someone else's grubby hands. Many Tzimisce treat the Embrace itself as an act of possession — you are your sire's legacy. Whether that makes you an heir or property depends on the sire.
 
 The Clan's signature is Vicissitude, a specialized form of fleshcrafting that lets you reshape living tissue like wet clay. Your own body or someone else's — skin, bone, muscle, fats, sinew, organs, all of it malleable under your talented fingers. Some Tzimisce sculpt themselves into their definition of flawless. Others go the other direction entirely, crafting forms that are deliberately alien, grotesque, or functional in ways that humanoid anatomy was never meant to be. It's the ultimate expression of the Tzimisce philosophy: if you own something, you can do *whatever* you want with it. This extends to everything else, too. Land, gangs, businesses, buildings, people; a Tzimisce claims a treasure (or charge) and guards it. The holdings don't need to be pretty or well-maintained, they just need to be *yours.*

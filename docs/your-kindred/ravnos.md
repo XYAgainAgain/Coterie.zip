@@ -6,6 +6,8 @@ title: "Ravnos"
 
 ## What Are You?
 
+![Ravnos symbol](../assets/images/vtm/bloodlines/ravnos.webp){ .bloodline-symbol }
+
 You were Embraced because you're a survivor who travels light and thinks fast. The Ravnos recruit from con artists, messengers, drifters, pickpockets, spies, and anyone who's already comfortable living off the grid and burning bridges behind them. Your sire saw someone who could adapt to anything, charm their way through anything, and disappear before anyone figured out what happened. The Clan was nearly wiped out not long ago; every Ravnos walking tonight is proof that the line refused to die.
 
 Your people are wanderers, tricksters, and opportunists. You move between domains selling your services as a spy, a saboteur, a negotiator, or whatever else pays and keeps you reasonably safe. A secret network of signs and signals helps Ravnos find each other on the road, and when you do meet up, the tradition is storytelling; swapping rumors, trading intel, one-upping each other's exploits. Some of your Clan build identities around trickster mythology, treating their craft as something close to sacred. Others just like the thrill. Either way, your methods favor wit and illusion over brute force, and you'd rather vanish than fight a battle you didn't choose.

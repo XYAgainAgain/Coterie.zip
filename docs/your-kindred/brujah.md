@@ -6,6 +6,8 @@ title: "Brujah"
 
 ## What Are You?
 
+![Brujah symbol](../assets/images/vtm/bloodlines/brujah.webp){ .bloodline-symbol }
+
 You were Embraced because something in you refused to accept the world as it is. Maybe you were a street organizer, a disillusioned academic, a union rep who wouldn't back down, or just someone who looked at the powerful and were sickened by what they saw. Brujah are drawn to people who push back; against systems, against complacency, against anyone who would grind others underfoot. Whether you dismantle things with your fists or with your words, you were chosen because you couldn't sit still while something was wrong.
 
 The stereotype is leather jackets and Molotovs, and sure, there's plenty of that, but the Clan runs deeper than its reputation. For every punk smashing windows, there's a Brujah infiltrating a corrupt institution from the inside, or a philosopher picking apart the social structures that prop up Kindred tyranny. The activists and the theorists don't always get along — passion and patience make uneasy bedfellows — but both sides agree on one thing: the way things are isn't good enough. Other Kindred call you rabble, and some of you wear that proudly. The ones who think before they swing are rare but valued amongst your kind.

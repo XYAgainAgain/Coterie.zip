@@ -6,6 +6,8 @@ title: "Thin-Blood"
 
 ## What Are You?
 
+![Thin-Blood symbol](../assets/images/vtm/bloodlines/thin-blood.webp){ .bloodline-symbol }
+
 You exist in the gap between mortal and Kindred, and neither side wants to claim you. Thin-Bloods are created when a vampire whose blood is already stretched dangerously thin attempts the Embrace; sometimes on purpose, sometimes by accident, almost always against the advice of every Elder ever. The result is something that barely qualifies as a vampire. You have the Hunger, yes, and the fangs, but the curse didn't fully take. Your heart *almost* beats. Your skin *almost* feels warm. You can eat human food, walk in daylight, and pass as mortal without even trying. To a lot of Kindred, that makes you an abomination.
 
 What you lack in raw vampiric power, you make up for in ways nobody expected. Your people pioneered their own form of blood magic called Thin-Blood Alchemy; a filthy improvisational craft that mixes Vitae with emotions and raw ingredients to produce effects that rival more traditional Disciplines. You can even borrow other vampires' abilities temporarily by feeding from them, your diluted blood briefly taking on the flavor and power of theirs. The Beast barely whispers in your ear, which means you almost never devolve into a rageful menace. You're adaptable, inventive, and constantly underestimated.

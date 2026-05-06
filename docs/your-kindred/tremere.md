@@ -6,6 +6,8 @@ title: "Tremere"
 
 ## What Are You?
 
+![Tremere symbol](../assets/images/vtm/bloodlines/tremere.webp){ .bloodline-symbol }
+
 You were Embraced because you had the mind for it. The Tremere recruit from academics, occultists, researchers, surgeons, and anyone whose hunger for knowledge borders on compulsive. Your Clan was founded by a cabal of mortal sorcerers who couldn't accept their own mortality, so they stole the secret of vampirism through ritual experimentation, murdering thousands of mortals and vivisecting hundreds of Kindred to crack the formula. They got what they wanted, and it got them right back. Every Tremere carries that original sin in their blood, and the other Kindred Clans have never let them forget it.
 
 For centuries, the Tremere maintained a rigid internal hierarchy called the Pyramid, enforced through magical Blood Bonds that chained every member to their superiors. Then the Second Inquisition found their headquarters in Vienna and burned it to the ground. The Pyramid shattered, the bonds broke, and the Clan scattered. Now the Warlocks operate as independent agents; some cling to the old ways, some embrace the chaos, and all of them are selling their services to whomever pays most handsomely. Blood Sorcery (particularly the Rituals) is the Tremere's unique currency, and the other Clans need it badly enough to tolerate the vampires who practice it. You are useful, mistrusted, and fully aware of both.

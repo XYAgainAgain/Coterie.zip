@@ -162,5 +162,8 @@ anchor_linenums = true
 [project.markdown_extensions.pymdownx.tabbed]
 alternate_style = true
 
+[project.markdown_extensions.zensical.extensions.glightbox]
+skip_classes = ["darkpack-logo", "pron-btn"]
+
 [project.validation]
 invalid_links = false

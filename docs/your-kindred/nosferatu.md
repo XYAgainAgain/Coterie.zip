@@ -6,6 +6,8 @@ title: "Nosferatu"
 
 ## What Are You?
 
+![Nosferatu symbol](../assets/images/vtm/bloodlines/nosferatu.webp){ .bloodline-symbol }
+
 You were Embraced, and the blood ruined you. Every Nosferatu undergoes a transformation that warps their body towards the grotesque. Weeks of agonizing change that leave you looking like a horror movie extra, with such delights as tumorous growths, sunken features, weeping sores, translucent skin stretched over visible bone, and malformed but powerful limbs. The specifics vary, but the result is always the same: you cannot pass as human without supernatural help. Your sire chose you anyway; maybe because you were a survivor, a fighter, or just someone who already knew what it was like to be invisible or discarded. This Clan recruits from the margins. It figures, because who better to become a monster than someone society already treated like one?
 
 The Nosferatu are the eyes and ears of Kindred society. When you can't walk among mortals, you learn to watch them from the cracks. Your Clan operates the most extensive information networks in the vampiric world, trading secrets, brokering deals, and knowing things that powerful Kindred would pay dearly to keep hidden. Every sewer tunnel, abandoned basement, overlooked office, and forgotten maintenance corridor is your highway. Other vampires come to you when they need to find someone, learn something, or make a problem quietly disappear, and they pay your price because the alternative is having you as an enemy. For all the disgust directed your way, nobody wants to be on the wrong side of a Clan that knows where the bodies are buried.

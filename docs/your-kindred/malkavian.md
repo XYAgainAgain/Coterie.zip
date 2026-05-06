@@ -6,6 +6,8 @@ title: "Malkavian"
 
 ## What Are You?
 
+![Malkavian symbol](../assets/images/vtm/bloodlines/malkavian.webp){ .bloodline-symbol }
+
 You were Embraced because something about the way you perceive the world caught a Malkavian's attention. Maybe you interpreted dreams that came true, read people with freakish accuracy, or pursued questions so obsessively that you forgot to eat for days. The Clan of the Moon looks for mortals who already operate on a slightly different wavelength; people with piercing empathy, uncanny intuition, or a mind that simply works differently from everyone else's. Your sire saw potential in that, and the Embrace cranked it up to eleven.
 
 Every Malkavian carries a supernatural affliction that warps their perception, emotions, and/or behavior. It might amplify something that was already there, or it might be entirely new. Either way, it's yours now, permanently woven into your Blood. The upside is genuine insight that other Kindred just can't replicate. You notice things they miss, sense dangers they can't feel, have meaningful and productive conversations with inanimate objects or corpses, and occasionally *just know* things you have no business knowing. Some Malkavians whisper about a shared psychic network connecting the entire Clan; a kind of static hum beneath conscious thought. Whether that's real or just another symptom depends on who you ask, what time of night it is, and whether you remembered to use words or not.

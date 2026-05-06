@@ -6,6 +6,8 @@ title: "Banu Haqim"
 
 ## What Are You?
 
+![Banu Haqim symbol](../assets/images/vtm/bloodlines/banu-haqim.webp){ .bloodline-symbol }
+
 You were Embraced because you understood that structure keeps chaos at bay. Whether you were a magistrate, an enforcer, a philosopher, or simply someone who saw the world's injustices and refused to look away, your blood now binds you to that purpose. You uphold codes — personal, moral, legal — because without them, the Beast wins and all is lost.
 
 Most Kindred know your reputation: assassins, contract killers, Sheriffs who clean up messes others won't touch. Some fear you. Some hire you. All respect that you take your work seriously. You're pragmatic about vampirism; it's a curse, yes, but also a magnificent tool. You seek out others who share your sense of morality and justice, building networks of those who understand that someone must stand between civilization and the Abyss.

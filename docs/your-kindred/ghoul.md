@@ -6,6 +6,8 @@ title: "Ghoul"
 
 ## What Are You?
 
+![Ghoul symbol](../assets/images/vtm/bloodlines/ghoul.webp){ .bloodline-symbol }
+
 You're a mortal who drank a vampire's blood, and it changed you. You're stronger, tougher, and slower to age than any human has a right to be; you might even have access to a sliver of your patron's supernatural abilities. In exchange, you're bound whether you like it or not. The Blood Bond ties you to the vampire who feeds you their Vitae with a devotion that borders on worship; part gratitude, part addiction, part something deeper and uglier that you probably don't want to examine too closely. You might call this vampire your domitor, your patron, your boss, your partner, or just their name. Whatever the label, you belong to them, and there's not a lot you can do about it.
 
 Ghouls exist in the margins of Kindred society. You handle daytime errands, maintain mortal cover stories, guard your patron's haven while they sleep, and do whatever else needs doing while the sun is up. Some Ghouls are treasured confidants or collaborators. Others are disposable tools. Most fall somewhere in between, clinging to the hope that loyal service will eventually be rewarded with the Embrace. That hope keeps you obedient, and your patron knows it and depends upon it. In a Coterie, you're the one who can walk into a police station at noon, pick up groceries, and check whether that suspicious building is actually abandoned during working hours; all things your undead companions literally cannot do. You're indispensable during the day and completely outclassed after sunset.
