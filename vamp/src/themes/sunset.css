@@ -1,0 +1,26 @@
+[data-theme="sunset"] {
+  --_bg-primary: #2B2E4A;
+  --_bg-secondary: #343760;
+  --_bg-elevated: #3d4170;
+  --_bg-sunken: #222540;
+
+  --_text-primary: #E1E1E1;
+  --_text-secondary: #b8b8c8;
+  --_text-muted: #9b8a96;
+  --_text-accent: #ff7a6b;
+
+  --_accent: #E84545;
+  --_accent-hover: #ff6b6b;
+  --_accent-subtle: rgba(232, 69, 69, 0.15);
+  --_primary: #903749;
+  --_glow: #c03030;
+  --_glow-bright: #c03030;
+
+  --_border: #4a4d6e;
+  --_border-accent: rgba(232, 69, 69, 0.3);
+
+  --_glass-bg: hsla(236, 27%, 15%, 0.82);
+  --_glass-border: hsla(5, 70%, 50%, 0.12);
+
+  color-scheme: dark;
+}

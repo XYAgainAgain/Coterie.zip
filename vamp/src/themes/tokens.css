@@ -1,0 +1,43 @@
+:root {
+  --v-bg-primary: var(--_bg-primary);
+  --v-bg-secondary: var(--_bg-secondary);
+  --v-bg-elevated: var(--_bg-elevated);
+  --v-bg-sunken: var(--_bg-sunken);
+
+  --v-text-primary: var(--_text-primary);
+  --v-text-secondary: var(--_text-secondary);
+  --v-text-muted: var(--_text-muted);
+  --v-text-accent: var(--_text-accent);
+
+  --v-accent: var(--_accent);
+  --v-accent-hover: var(--_accent-hover);
+  --v-accent-subtle: var(--_accent-subtle);
+  --v-primary: var(--_primary);
+  --v-glow: var(--_glow);
+  --v-glow-bright: var(--_glow-bright);
+
+  --v-border: var(--_border);
+  --v-border-accent: var(--_border-accent);
+
+  --v-glass-bg: var(--_glass-bg);
+  --v-glass-border: var(--_glass-border);
+
+  --v-danger: #c62828;
+  --v-warning: #e65100;
+  --v-success: #2e7d32;
+
+  --v-hunger-low: var(--_accent);
+  --v-hunger-mid: var(--_primary);
+  --v-hunger-high: var(--v-danger);
+
+  --v-font-body: 'Merriweather Sans', system-ui, sans-serif;
+  --v-font-display: 'Sinistre', 'Metamorphous', serif;
+  --v-font-heading: 'IM Fell English SC', 'Metamorphous', serif;
+  --v-font-mono: 'Fira Code', monospace;
+
+  --v-radius-sm: 0.25rem;
+  --v-radius-md: 0.5rem;
+  --v-radius-lg: 0.75rem;
+
+  --v-transition: 0.15s ease;
+}

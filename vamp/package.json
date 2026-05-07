@@ -1,0 +1,22 @@
+{
+  "name": "vamp",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "preact": "^10.29.1",
+    "@preact/signals": "^2.9.0",
+    "preact-router": "^4.1.2",
+    "marked": "^18.0.0"
+  },
+  "devDependencies": {
+    "@preact/preset-vite": "^2.10.5",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

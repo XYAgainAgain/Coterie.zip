@@ -1,0 +1,26 @@
+[data-theme="abyss"] {
+  --_bg-primary: #070707;
+  --_bg-secondary: #0f0d14;
+  --_bg-elevated: #1A1030;
+  --_bg-sunken: #040404;
+
+  --_text-primary: #E8E8E8;
+  --_text-secondary: #c0c0c0;
+  --_text-muted: #7a7490;
+  --_text-accent: #c4adff;
+
+  --_accent: #A88BFF;
+  --_accent-hover: #c4adff;
+  --_accent-subtle: rgba(168, 139, 255, 0.15);
+  --_primary: #1A1030;
+  --_glow: #A88BFF;
+  --_glow-bright: #C4ADFF;
+
+  --_border: #2a2438;
+  --_border-accent: rgba(168, 139, 255, 0.3);
+
+  --_glass-bg: hsla(270, 30%, 5%, 0.85);
+  --_glass-border: hsla(260, 50%, 60%, 0.12);
+
+  color-scheme: dark;
+}

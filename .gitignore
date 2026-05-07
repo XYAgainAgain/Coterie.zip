@@ -31,3 +31,7 @@ Thumbs.db
 
 # Build cache
 .cache/
+
+# Vamp sheet stuff
+vamp/node_modules/
+vamp/dist/
