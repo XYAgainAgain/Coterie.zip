@@ -1,5 +1,3 @@
-// Custom JavaScript for Coterie - Zensical
-
 /* Auto-activate Abyss for prefers-contrast users who haven't chosen a theme */
 (function() {
   'use strict';
@@ -14,21 +12,17 @@
   } catch(e) {}
 })();
 
-// HTML Entity Decoding (precautionary; Zensical and Material both escape cleanly)
-
+/* Entity decoding, just in case (Zensical escapes cleanly but better safe) */
 (function() {
   'use strict';
 
-  // Decode HTML entities using textarea trick
   function decodeHTMLEntities(text) {
     var textarea = document.createElement('textarea');
     textarea.innerHTML = text;
     return textarea.value;
   }
 
-  // Fix entities in navigation links
   function fixNavEntities() {
-    // Material uses different selectors - adjust as needed
     var navLinks = document.querySelectorAll('.md-nav__link, .md-tabs__link');
     navLinks.forEach(function(link) {
       var decoded = decodeHTMLEntities(link.textContent);
@@ -38,7 +32,6 @@
     });
   }
 
-  // Fix entities in page headings
   function fixPageHeadings() {
     var headings = document.querySelectorAll('.md-content h1, .md-content h2, .md-content h3, .md-content h4, .md-content h5, .md-content h6');
     headings.forEach(function(heading) {
@@ -49,7 +42,6 @@
     });
   }
 
-  // Fix entities in table of contents
   function fixTocEntities() {
     var tocLinks = document.querySelectorAll('.md-nav--secondary .md-nav__link');
     tocLinks.forEach(function(link) {
@@ -60,22 +52,17 @@
     });
   }
 
-  // Run entity fixing on page load
   function initEntityFixes() {
     fixNavEntities();
     fixPageHeadings();
     fixTocEntities();
   }
 
-  // Zensical (like Material for MkDocs) uses instant loading (SPA-like behavior).
-  // Subscribe to the document$ observable if available.
   if (typeof document$ !== 'undefined') {
     document$.subscribe(function() {
-      // Run fixes after each page load
       setTimeout(initEntityFixes, 100);
     });
   } else {
-    // Fallback for non-instant loading
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initEntityFixes);
     } else {
@@ -85,7 +72,7 @@
 
 })();
 
-// Dialogue speaker colors in blockquotes
+/* Dialogue speaker colors in blockquotes */
 (function() {
   'use strict';
 
@@ -112,7 +99,7 @@
   }
 })();
 
-// Replace footer + BtT arrows with custom circled SVGs
+/* Replace footer + BtT arrows with circled SVGs */
 (function() {
   'use strict';
 
@@ -166,7 +153,7 @@
   }
 })();
 
-// Download tooltip on source link
+/* Download tooltip on source link */
 (function() {
   'use strict';
   function setSourceTooltip() {
@@ -185,38 +172,32 @@
   }
 })();
 
-// Auto-expand Core Systems section on page load
+/* Auto-expand Core Systems nav section on page load */
 (function() {
   'use strict';
 
   function expandCoreSystemsSection() {
-    // Find the Core Systems navigation item
     var coreSystemsNav = document.querySelector('.md-nav__item--section .md-nav__link[title="Core Systems"]');
 
     if (coreSystemsNav) {
-      // Find the parent section container
       var parentSection = coreSystemsNav.closest('.md-nav__item--section');
 
       if (parentSection) {
-        // Find the input checkbox that controls expansion
         var checkbox = parentSection.querySelector('input.md-nav__toggle');
 
         if (checkbox && !checkbox.checked) {
-          // Check the checkbox to expand the section
           checkbox.checked = true;
         }
       }
     }
   }
 
-  // Run on initial page load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', expandCoreSystemsSection);
   } else {
     expandCoreSystemsSection();
   }
 
-  // Re-run on Material instant loading navigation
   if (typeof document$ !== 'undefined') {
     document$.subscribe(function() {
       setTimeout(expandCoreSystemsSection, 50);
@@ -224,7 +205,7 @@
   }
 })();
 
-// Ambient background blobs — injected once, CSS handles everything else
+/* Ambient background blobs, injected once (CSS handles the rest) */
 (function() {
   'use strict';
   if (document.querySelector('.ambient-blob')) return;
@@ -242,8 +223,7 @@
   document.body.appendChild(smoke);
 })();
 
-/* Eye toggle — custom 3-way theme switcher; clicks Zensical's hidden radio
-   inputs so its internal JS handles storage and scheme application for us */
+/* Eye toggle: 3-way theme switcher that clicks Zensical's hidden radio inputs */
 (function() {
   'use strict';
 
@@ -270,7 +250,7 @@
     if (input) input.click();
   }
 
-  /* Night — random blink: dims glow briefly, 1 or 2 blinks in succession */
+  /* Night: random blink, sometimes a double */
   function doBlink() {
     if (!btn) return;
     var eyes = btn.querySelectorAll('.eye-toggle__eye--1, .eye-toggle__eye--2');
@@ -305,7 +285,7 @@
     }, 3000 + Math.random() * 5000);
   }
 
-  /* Abyss — rotate eye positions (three-cup shuffle) */
+  /* Abyss: three-cup shuffle on the eye positions */
   function scheduleRotation() {
     if (!btn) return;
     btn.setAttribute('data-rotation', '0');
@@ -356,7 +336,6 @@
 
     nav.appendChild(btn);
 
-    /* Watch for scheme changes to start/stop idle behaviors */
     new MutationObserver(function() {
       startBehavior();
     }).observe(document.body, {
@@ -376,7 +355,7 @@
   }
 })();
 
-// Bat toggle — swaps between bat-on/bat-off SVGs, persists in localStorage
+/* Bat toggle, persists in localStorage */
 (function() {
   'use strict';
 
@@ -441,7 +420,7 @@
   }
 })();
 
-// Bat Stats — worldwide Batthew KDR popover, powered by Firebase RTDB
+/* Bat Stats: worldwide Batthew KDR popover (Firebase RTDB) */
 (function() {
   'use strict';
 
@@ -597,7 +576,7 @@
 
     wrap.addEventListener('mouseenter', openStats);
     wrap.addEventListener('mouseleave', closeStats);
-    /* Popover extends below wrap's box — keep it open while cursor is on the card */
+    /* Popover extends below wrap's box; keep it open while hovering the card */
     pop.addEventListener('mouseenter', function() { clearTimeout(hideTimer); });
     pop.addEventListener('mouseleave', closeStats);
 
@@ -682,7 +661,7 @@
   }
 })();
 
-// Text-size rocker + font swapper — persists in localStorage
+/* Text-size rocker + font swapper, persists in localStorage */
 (function() {
   'use strict';
 
@@ -845,7 +824,7 @@
   }
 })();
 
-// Heading-to-heading keyboard navigation (←/→ arrows)
+/* Heading-to-heading keyboard nav (←/→ arrows) */
 (function() {
   'use strict';
 
@@ -857,12 +836,11 @@
   }
 
   function followPageLink(direction) {
-    /* Click the actual footer <a> so Zensical's instant navigation handles it
-       (window.location.href bypasses SPA and triggers a full page reload) */
+    /* Click footer <a> instead of setting location.href so SPA nav works */
     var cls = direction === 1 ? '.md-footer__link--next' : '.md-footer__link--prev';
     var footerLink = document.querySelector(cls);
     if (footerLink) { footerLink.click(); return; }
-    /* Fallback: use <link rel> if footer buttons aren't present */
+    /* Fallback to <link rel> if footer buttons aren't present */
     var rel = direction === 1 ? 'next' : 'prev';
     var link = document.querySelector('link[rel="' + rel + '"]');
     if (!link) return;
@@ -953,7 +931,7 @@
   }
 })();
 
-// Smooth scroll-to-top (500ms ease-in-out)
+/* Smooth scroll-to-top */
 (function() {
   'use strict';
 
@@ -983,7 +961,7 @@
     requestAnimationFrame(step);
   }
 
-  /* Capture phase on document fires before Zensical's bubble-phase handler on the button */
+  /* Capture phase fires before Zensical's own handler */
   document.addEventListener('click', function(e) {
     if (!e.target.closest('.md-top')) return;
     e.preventDefault();
@@ -992,7 +970,7 @@
   }, true);
 })();
 
-// Pronunciation audio player
+/* Pronunciation audio player */
 (function() {
   'use strict';
 

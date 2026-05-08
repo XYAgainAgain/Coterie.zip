@@ -1,5 +1,5 @@
-/* Firebase Realtime Database — Batthew's worldwide counters.
-   SDK loaded via CDN in main.html; this file just inits and exposes helpers. */
+/* Firebase RTDB: Batthew's worldwide counters.
+   SDK loaded via CDN in main.html, this file inits and exposes helpers. */
 (function () {
   'use strict';
 

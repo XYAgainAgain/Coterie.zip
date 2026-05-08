@@ -99,8 +99,7 @@ nav = [
 ]
 
 
-# Start with Material's traditional look so existing CSS keeps applying.
-# Flip between "classic" & "modern" if you want.
+# Using "modern" variant; all Material CSS overrides still apply.
 [project.theme]
 variant = "modern"
 language = "en"
@@ -116,8 +115,7 @@ features = [
   "toc.follow",
 ]
 
-# Palette toggling follows Material's scheme="default"/"slate" pattern;
-# the actual Gothic Vampire colors are set via CSS variables in extra.css.
+# Palette uses "default"/"slate"/"abyss" schemes; actual colors live in extra.css.
 [[project.theme.palette]]
 scheme = "slate"
 toggle.icon = "material/weather-night"

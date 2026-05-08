@@ -178,7 +178,7 @@
 
   function setAnim(name, reverse) {
     if (anim === name && !reverse) { animReverse = false; return; }
-    /* Shared first frames — swap seamlessly without resetting */
+    /* Shared first frames, swap seamlessly without resetting */
     var pair = (anim === 'move1' || anim === 'move2') && (name === 'move1' || name === 'move2');
     if (!pair) pair = (anim === 'idle1' || anim === 'idle2') && (name === 'idle1' || name === 'idle2');
     if (pair && frame <= 1 && !reverse) {
@@ -288,7 +288,7 @@
         cvs.style.pointerEvents = '';
         fading = false;
         el.style.opacity = '1';
-        /* Spawn along bottom edge — death1 reversed looks like ground-based materialization */
+        /* Spawn along bottom edge; reversed death1 looks like ground-based materialization */
         px = DW + Math.random() * (window.innerWidth - DW * 3);
         py = window.innerHeight - DH;
         clampAndTransform();
@@ -374,7 +374,7 @@
     }
   }
 
-  /* Sine jitter for natural flight wobble — two overlapping waves per axis.
+  /* Sine jitter for natural flight wobble: two overlapping waves per axis.
      Amplifies when cursor is still (bats can't hover, they flutter harder). */
   function jitter(now, amp) {
     var t = now * 0.001;
@@ -443,8 +443,7 @@
                  state === 'LANDING';
     if (frozen) return;
 
-    /* Jitter is VISUAL ONLY — smoothed via its own lerp so it drifts
-       instead of teleporting, then applied in clampAndTransform.
+    /* Jitter is visual only, smoothed via lerp so it drifts not teleports.
        px/py stay clean for grab detection. */
     var j = jitter(now, JITTER_AMP[tier]);
     if (state === 'GRABBING') { jx = jy = 0; }
@@ -612,7 +611,7 @@
       }
     } else if ((state === 'FLYING' || state === 'GRABBING') && tier > 0) {
       /* FLYING: threshold prevents hand tremor from resetting convergence.
-         GRABBING: always track — tight follow matters more than stability. */
+         GRABBING: always track; tight follow matters more than stability. */
       if (moved || state === 'GRABBING') { tx = mx - DW / 2; ty = my - DH / 2; }
     }
   }
@@ -872,8 +871,7 @@
 
     var resizeTid = null;
     window.addEventListener('resize', function () {
-      /* Debounce — SPA page swaps often fire resize as content height changes,
-         and we don't want to reset the bat's position on every navigation */
+      /* Debounce: SPA nav fires resize as content height changes */
       clearTimeout(resizeTid);
       resizeTid = setTimeout(function () {
         if (state === 'ROOSTING' || state === 'CURIOUS') flyToRoost();

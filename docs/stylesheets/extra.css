@@ -77,6 +77,11 @@
   --transition-page: 250ms ease-in-out;
 }
 
+/* Sticky header obscures anchor targets without this */
+html {
+  scroll-padding-top: 5rem;
+}
+
 body[data-font-mode="serif"] {
   --md-text-font: "Merriweather", Georgia, "Times New Roman", serif;
 }
@@ -86,9 +91,10 @@ body[data-font-mode="dyslexic"] {
 }
 
 
-/* 3. Color Schemes — Night */
+/* 3. Color Schemes: Night */
 
 [data-md-color-scheme="slate"] {
+  color-scheme: dark;
   --color-bg: #1B1B1E;
   --color-bg-light: #252528;
   --color-bg-lighter: #2f2f32;
@@ -111,7 +117,7 @@ body[data-font-mode="dyslexic"] {
   --color-h2: #7A1324;
   --color-h3: #8A1528;
   --color-h4: #BC1E35;
-  --color-h5-reserve: #C4850F; /* unused — H5 uses --color-accent */
+  --color-h5-reserve: #C4850F; /* unused, H5 uses --color-accent */
   --color-nav-hover: #BC1E35;
   --color-nested-bat: #96031a;
   --color-table-header-text: var(--color-accent);
@@ -141,7 +147,12 @@ body[data-font-mode="dyslexic"] {
   --md-typeset-table-color: var(--color-standout);
 }
 
-/* 3. Color Schemes — Sunset */
+/* 3. Color Schemes: Sunset */
+
+/* Doubled selector: palette.css sets color-scheme: light on "default" */
+[data-md-color-scheme="default"][data-md-color-scheme="default"] {
+  color-scheme: dark;
+}
 
 [data-md-color-scheme="default"] {
   --color-bg: #2B2E4A;
@@ -166,7 +177,7 @@ body[data-font-mode="dyslexic"] {
   --color-h2: #F1980D;
   --color-h3: #CE6D0F;
   --color-h4: #B31840;
-  --color-h5-reserve: #5C3B68; /* unused — H5 uses --color-accent */
+  --color-h5-reserve: #5C3B68; /* unused, H5 uses --color-accent */
   --color-nav-hover: #B31840;
   --color-nested-bat: #F1980D;
   --color-table-header-text: var(--color-h2);
@@ -202,9 +213,9 @@ body[data-font-mode="dyslexic"] {
   --color-backdrop: 0 0 0;
 }
 
-/* 3. Color Schemes — Abyss (high-contrast OLED, Spectral palette) */
+/* 3. Color Schemes: Abyss (high-contrast OLED, Spectral palette) */
 
-/* Double-attribute selector beats Zensical's palette.css (loads after extra.css) */
+/* Doubled selector: palette.css loads after extra.css */
 [data-md-color-scheme="abyss"][data-md-color-scheme="abyss"] {
   --color-bg: #070707;
   --color-bg-light: #0E0E0E;
@@ -316,7 +327,7 @@ h2, h3, h4, h5, h6 {
   font-family: 'IM Fell English SC', serif;
 }
 
-/* IM Fell SC renders optically small — compensate */
+/* IM Fell SC renders optically small, compensate */
 .md-content h2 { font-size: 1.5em; }
 .md-content h3 { font-size: 1.25em; }
 .md-content h4 { font-size: 1.05em; }
@@ -326,7 +337,7 @@ h2, h3, h4, h5, h6 {
   text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Scheme-qualified for specificity — Zensical palette CSS targets these at 0,1,1 */
+/* Scheme-qualified: Zensical palette CSS targets these at 0,1,1 */
 [data-md-color-scheme="slate"] .md-content h2,
 [data-md-color-scheme="default"] .md-content h2,
 [data-md-color-scheme="abyss"] .md-content h2 { color: var(--color-h2); }
@@ -340,7 +351,7 @@ h2, h3, h4, h5, h6 {
 [data-md-color-scheme="default"] .md-content h5,
 [data-md-color-scheme="abyss"] .md-content h5 { color: var(--color-accent); }
 
-/* • ━ ━ • ━ pattern — the game's 5s motif */
+/* • ━ ━ • ━ pattern, the game's 5s motif */
 .md-content h2 {
   padding-bottom: 0.3em;
 }
@@ -369,7 +380,7 @@ h2, h3, h4, h5, h6 {
 .md-typeset h2 { margin: 1.6em 0 0.64em; }
 .md-typeset p { text-indent: 1em; }
 
-/* Drop cap — first letter of each page's opening paragraph */
+/* Drop cap on each page's opening paragraph */
 .md-content .md-typeset > p:first-of-type {
   text-indent: 0;
 }
@@ -408,7 +419,7 @@ h2, h3, h4, h5, h6 {
   font-family: 'Metamorphous', serif;
 }
 
-/* OpenDyslexic overrides everything except site header chrome — must come after heading font rules */
+/* OpenDyslexic overrides everything except header chrome; must come after heading font rules */
 body[data-font-mode="dyslexic"] .md-content h1,
 body[data-font-mode="dyslexic"] .md-content h2,
 body[data-font-mode="dyslexic"] .md-content h3,
@@ -431,7 +442,7 @@ body[data-font-mode="dyslexic"] .md-typeset table:not([class]) thead th {
   font-family: "OpenDyslexic", cursive, sans-serif;
 }
 
-/* Pin search bar chrome to default font — results page still inherits OpenDyslexic via --md-text-font */
+/* Pin search bar to default font; results still inherit OpenDyslexic via --md-text-font */
 body[data-font-mode="dyslexic"] .md-search__input,
 body[data-font-mode="dyslexic"] .md-search__input::placeholder,
 body[data-font-mode="dyslexic"] .md-search__form,
@@ -505,7 +516,7 @@ a, button, .md-nav__link, .md-footer__link {
 .md-header__source { order: 50; }
 
 /*
- * Terminology toggle — disabled until more game content is written.
+ * Terminology toggle, disabled until more game content is written.
  * Preserved for rewrite; re-enable in zensical.toml extra_javascript.
  *
  * #coterie-terminology-toggle { order: 10; }
@@ -564,7 +575,7 @@ a, button, .md-nav__link, .md-footer__link {
   height: 1.3rem;
 }
 
-/* Hide Zensical's default palette toggle — replaced by custom eye toggle */
+/* Hide Zensical's default palette toggle; custom eye toggle replaces it */
 .md-header__option { display: none; }
 
 .eye-toggle {
@@ -599,7 +610,7 @@ a, button, .md-nav__link, .md-footer__link {
 
 .eye-toggle__eye--1 { z-index: 2; }
 
-/* Sunset — 1 large eye, glow cycles through sunset colors */
+/* Sunset: 1 large eye, glow cycles through sunset colors */
 [data-md-color-scheme="default"] .eye-toggle__eye {
   width: 20px;
   height: 20px;
@@ -611,7 +622,7 @@ a, button, .md-nav__link, .md-footer__link {
   opacity: 0;
 }
 
-/* Night — 2 medium eyes, eye-3 tucked behind eye-1 */
+/* Night: 2 medium eyes, eye-3 tucked behind eye-1 */
 [data-md-color-scheme="slate"] .eye-toggle__eye {
   width: 14px;
   height: 14px;
@@ -627,14 +638,14 @@ a, button, .md-nav__link, .md-footer__link {
   opacity: 0;
 }
 
-/* Abyss — 3 small eyes, breathing glow, JS-driven position shuffle */
+/* Abyss: 3 small eyes, breathing glow, JS shuffles positions */
 [data-md-color-scheme="abyss"] .eye-toggle__eye {
   width: 11px;
   height: 11px;
   animation: abyss-breathe 3s ease-in-out infinite;
 }
 
-/* Abyss rotation states — JS cycles data-rotation to shuffle positions */
+/* Abyss rotation states: JS cycles data-rotation */
 [data-md-color-scheme="abyss"] .eye-toggle[data-rotation="0"] .eye-toggle__eye--1,
 [data-md-color-scheme="abyss"] .eye-toggle[data-rotation="1"] .eye-toggle__eye--3,
 [data-md-color-scheme="abyss"] .eye-toggle[data-rotation="2"] .eye-toggle__eye--2 {
@@ -651,7 +662,7 @@ a, button, .md-nav__link, .md-footer__link {
   translate: 9px 7px;
 }
 
-/* Night blink — JS adds this class on random timer */
+/* Night blink: JS adds this class on random timer */
 [data-md-color-scheme="slate"] .eye-toggle__eye.eye-toggle__eye--blink {
   animation: eye-blink 0.15s ease-in-out;
 }
@@ -717,7 +728,7 @@ a, button, .md-nav__link, .md-footer__link {
   transition: opacity var(--transition-normal);
 }
 
-/* SVGs have large viewBox with internal padding — needs extra size to match other icons visually */
+/* bat-bullet viewBox is 528x800, so these need extra size to match other icons */
 .md-header__button.bat-toggle img {
   display: block;
   height: 1.3rem;
@@ -756,8 +767,7 @@ a, button, .md-nav__link, .md-footer__link {
   outline-offset: -2px;
 }
 
-/* Flipped left by default, rotates down when open */
-/* bat-bullet viewBox is 528x800 — aspect ratio ~2:3 */
+/* bat-bullet viewBox is 528x800, aspect ratio ~2:3 */
 .bat-stats__icon {
   width: 0.9rem;
   height: 1.35rem;
@@ -876,7 +886,6 @@ a, button, .md-nav__link, .md-footer__link {
   margin-top: 0.25rem;
 }
 
-/* Loading/error states */
 .bat-stats__loading {
   text-align: center;
   font-size: 0.8rem;
@@ -964,12 +973,12 @@ a, button, .md-nav__link, .md-footer__link {
   border-right: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* OpenDyslexic has wide kerning — tighten to keep button fixed-width */
+/* OpenDyslexic has wide kerning, tighten to keep button fixed-width */
 .text-size-rocker__btn[data-text-size="font"][data-font-next="dyslexic"] {
   letter-spacing: -0.05em;
 }
 
-/* Content scaling via --md-text-scale — header/nav chrome stays fixed */
+/* Content scaling via --md-text-scale; header/nav chrome stays fixed */
 .md-typeset {
   font-size: calc(0.8rem * var(--md-text-scale, 1));
 }
@@ -997,7 +1006,7 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 
-/* Ambient Background — blurred div blobs, GPU-composited transforms, no banding */
+/* Ambient background: blurred blobs, GPU-composited */
 
 .ambient-blob {
   position: fixed;
@@ -1008,7 +1017,7 @@ a, button, .md-nav__link, .md-footer__link {
   will-change: transform;
 }
 
-/* Night — void above, blood below */
+/* Night: void above, blood below */
 [data-md-color-scheme="slate"] .ambient-blob--top {
   background: radial-gradient(ellipse,
     rgba(0, 0, 0, 0.16) 0%,
@@ -1030,7 +1039,7 @@ a, button, .md-nav__link, .md-footer__link {
     transparent 100%);
 }
 
-/* Sunset — night encroaches from above, warm light clings below */
+/* Sunset: night encroaches from above, warm light clings below */
 [data-md-color-scheme="default"] .ambient-blob--top {
   background: radial-gradient(ellipse,
     rgba(5, 5, 20, 0.25) 0%,
@@ -1051,7 +1060,7 @@ a, button, .md-nav__link, .md-footer__link {
     transparent 100%);
 }
 
-/* Abyss — spectral violet seeping through void */
+/* Abyss: spectral violet seeping through void */
 [data-md-color-scheme="abyss"] .ambient-blob--top {
   background: radial-gradient(ellipse,
     rgba(15, 20, 55, 0.30) 0%,
@@ -1073,7 +1082,7 @@ a, button, .md-nav__link, .md-footer__link {
     transparent 100%);
 }
 
-/* Wide ellipses hugging top/bottom edges — center stays clean */
+/* Wide ellipses hugging top/bottom edges, center stays clean */
 .ambient-blob--top {
   width: 200vw;
   height: 70vh;
@@ -1135,7 +1144,6 @@ a, button, .md-nav__link, .md-footer__link {
   * { transition-duration: 0s !important; }
 }
 
-/* End Ambient Background */
 
 
 /* 6. Navigation */
@@ -1242,7 +1250,7 @@ a, button, .md-nav__link, .md-footer__link {
   font-size: 0.9rem;
 }
 
-/* Zensical caps this at calc(100% - 1.2rem) with text-overflow: ellipsis */
+/* Zensical caps this at calc(100% - 1.2rem) with ellipsis */
 .md-source__repository {
   max-width: none;
   overflow: visible;
@@ -1315,7 +1323,7 @@ a, button, .md-nav__link, .md-footer__link {
   display: none;
 }
 
-/* pointer-events: none on container, auto on buttons — lets clicks pass through to content below */
+/* pointer-events: none on container, auto on buttons; clicks pass through to content */
 .md-footer__inner {
   position: fixed;
   bottom: 0;
@@ -1405,7 +1413,7 @@ a, button, .md-nav__link, .md-footer__link {
   margin: 0;
 }
 
-/* Asymmetric padding — more on arrow side, less on opposite — centers text visually between arrow and edge */
+/* Asymmetric padding centers text between arrow and edge */
 .md-footer__link--prev .md-footer__title { padding: 0 0.4rem 0 1.5rem; }
 .md-footer__link--next .md-footer__title { padding: 0 1.5rem 0 0.4rem; }
 
@@ -1451,7 +1459,7 @@ a, button, .md-nav__link, .md-footer__link {
   outline-offset: 4px;
 }
 
-/* Back to top — matches footer button styling, bottom matches .md-footer__inner padding */
+/* Back to top */
 .md-top {
   font-family: 'Metamorphous', serif;
   background-color: rgba(var(--color-primary-rgb), 0.85);
@@ -1526,7 +1534,7 @@ a, button, .md-nav__link, .md-footer__link {
   background-color: var(--color-bg-lighter);
 }
 
-/* Bat bullets — mask-image for CSS color control */
+/* Bat bullets, mask-image for CSS color control */
 .md-typeset ul:not(.task-list) > li {
   list-style: none;
   position: relative;
@@ -1557,7 +1565,7 @@ a, button, .md-nav__link, .md-footer__link {
   filter: drop-shadow(2px 3px 8px rgba(0, 0, 0, 0.7));
 }
 
-/* Replace Zensical's default logo with fangs — two layers for hover crossfade */
+/* Replace Zensical's logo with fangs; two layers for hover crossfade */
 .md-header__button.md-logo {
   position: relative;
 }
@@ -1630,8 +1638,7 @@ code,
               color var(--transition-theme);
 }
 
-/* Animated underline — slides in from left on hover */
-/* Scheme-qualified for specificity — Zensical sets --md-typeset-a-color at 0,1,1 */
+/* Animated underline on hover; scheme-qualified because Zensical sets --md-typeset-a-color at 0,1,1 */
 [data-md-color-scheme="slate"] .md-typeset a,
 [data-md-color-scheme="default"] .md-typeset a,
 [data-md-color-scheme="abyss"] .md-typeset a {
@@ -1675,7 +1682,7 @@ code,
   color: var(--color-accent);
 }
 
-/* Zensical JS wraps tables in inline-block .md-typeset__table — center the wrapper */
+/* Zensical JS wraps tables in inline-block; center the wrapper */
 .md-typeset__scrollwrap {
   text-align: center;
 }
@@ -1827,8 +1834,6 @@ code,
 }
 
 
-/* Blood drip particles */
-
 .blood-drips {
   position: fixed;
   inset: 0;
@@ -1847,8 +1852,6 @@ code,
 @media (prefers-reduced-motion: reduce) {
   .blood-drips { display: none; }
 }
-
-/* Pixel bat mascot */
 
 #batthew {
   position: fixed;
@@ -1884,7 +1887,7 @@ code,
 }
 
 
-/* 10. FOUC Prevention — terminology toggle opacity guard (disabled with toggle) */
+/* 10. FOUC Prevention (disabled with toggle) */
 
 /*
  * body:not([data-terminology-mode]) .md-content,
@@ -2001,7 +2004,7 @@ code,
 
   .md-footer__title { display: none !important; }
 
-  /* Reset desktop absolute positioning — let link's flexbox center the icon */
+  /* Reset desktop absolute positioning so flexbox can center the icon */
   .md-footer__button.md-icon {
     position: static !important;
     transform: none !important;
