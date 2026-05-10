@@ -846,6 +846,7 @@
     else if (!wantOn && enabled && !dismissing) dismiss();
   }
   window.__batthewSync = syncEnabled;
+  window.__batthewEcho = function() { if (enabled && !reduced) emitEchoPulse(); };
 
   function checkReduced() {
     reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;

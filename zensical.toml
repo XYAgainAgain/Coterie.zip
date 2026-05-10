@@ -8,9 +8,10 @@ site_author = "Sam Atwood"
 repo_url = "/assets/downloads/Coterie.zip"
 repo_name = "Coterie.zip"
 
-extra_css = ["stylesheets/extra.css"]
+extra_css = ["stylesheets/glightbox.min.css", "stylesheets/extra.css"]
 
 extra_javascript = [
+  "javascripts/glightbox.min.js",
   "javascripts/extra.js",
   # "javascripts/terminology-toggle.js",
   "javascripts/firebase-kdr.js",

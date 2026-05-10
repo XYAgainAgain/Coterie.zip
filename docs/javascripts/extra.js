@@ -331,7 +331,9 @@
 
     btn.addEventListener('click', function() {
       cycle();
-      btn.setAttribute('aria-label', LABELS[getIndex()]);
+      setTimeout(function() {
+        btn.setAttribute('aria-label', LABELS[getIndex()]);
+      }, 0);
     });
 
     nav.appendChild(btn);
@@ -345,6 +347,13 @@
 
     startBehavior();
   }
+
+  window.__cycleTheme = function() {
+    cycle();
+    setTimeout(function() {
+      if (btn) btn.setAttribute('aria-label', LABELS[getIndex()]);
+    }, 0);
+  };
 
   if (typeof document$ !== 'undefined') {
     document$.subscribe(create);
@@ -523,9 +532,9 @@
     var wrap = el('div', 'bat-stats');
     wrap.id = 'bat-stats';
 
-    var btn = el('div', 'bat-stats__btn');
-    btn.setAttribute('role', 'button');
-    btn.setAttribute('tabindex', '0');
+    var btn = document.createElement('button');
+    btn.className = 'bat-stats__btn';
+    btn.type = 'button';
     btn.setAttribute('aria-expanded', 'false');
     btn.title = 'Bat Stats';
     btn.setAttribute('aria-label', 'Bat Stats');
@@ -576,7 +585,6 @@
 
     wrap.addEventListener('mouseenter', openStats);
     wrap.addEventListener('mouseleave', closeStats);
-    /* Popover extends below wrap's box; keep it open while hovering the card */
     pop.addEventListener('mouseenter', function() { clearTimeout(hideTimer); });
     pop.addEventListener('mouseleave', closeStats);
 
@@ -587,14 +595,13 @@
       btn.setAttribute('aria-expanded', 'false');
     }
 
+    btn.addEventListener('click', function() {
+      if (isOpen) closeImmediate();
+      else openStats();
+    });
+
     btn.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        if (isOpen) closeImmediate();
-        else openStats();
-      } else if (e.key === 'Escape' && isOpen) {
-        closeImmediate();
-      }
+      if (e.key === 'Escape' && isOpen) closeImmediate();
     });
 
     var lastFetch = 0;
@@ -660,6 +667,20 @@
     injectBatStats();
   }
 })();
+
+/* Zensical search lives in shadow DOM; activeElement is the host, not the input */
+function isTypingContext(e) {
+  var ae = document.activeElement;
+  if (!ae) return false;
+  if (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'SELECT' || ae.isContentEditable) return true;
+  if (ae.closest && ae.closest('.md-search')) return true;
+  if (document.body.hasAttribute('data-md-search-open')) return true;
+  if (ae.shadowRoot) {
+    var inner = ae.shadowRoot.activeElement;
+    if (inner && (inner.tagName === 'INPUT' || inner.tagName === 'TEXTAREA')) return true;
+  }
+  return false;
+}
 
 /* Text-size rocker + font swapper, persists in localStorage */
 (function() {
@@ -790,20 +811,31 @@
   }
 
   var kbBound = false;
+  var echoCooldownUntil = 0;
+
+  function triggerEcho() {
+    var now = Date.now();
+    if (now < echoCooldownUntil) return;
+    if (!window.__batthewEcho) return;
+    echoCooldownUntil = now + 3000;
+    window.__batthewEcho();
+  }
 
   function bindKeyboard() {
     if (kbBound) return;
     kbBound = true;
 
     document.addEventListener('keydown', function(e) {
-      var ae = document.activeElement;
-      if (ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.isContentEditable)) return;
+      if (isTypingContext(e)) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       switch (e.key) {
         case '-': adjustScale('decrease'); break;
         case '+': case '=': adjustScale('increase'); break;
         case '0': adjustScale('reset'); break;
+        case 't': if (window.__cycleTheme) window.__cycleTheme(); break;
+        case 'f': if (window.__cycleFont) window.__cycleFont(); break;
+        case 'e': triggerEcho(); break;
       }
     });
   }
@@ -815,6 +847,8 @@
     bindKeyboard();
   }
 
+  window.__cycleFont = cycleFont;
+
   if (typeof document$ !== 'undefined') {
     document$.subscribe(init);
   } else if (document.readyState === 'loading') {
@@ -824,7 +858,7 @@
   }
 })();
 
-/* Heading-to-heading keyboard nav (←/→ arrows) */
+/* Heading-to-heading keyboard nav */
 (function() {
   'use strict';
 
@@ -902,16 +936,54 @@
     window.scrollTo({ top: last.getBoundingClientRect().top + window.scrollY - headerH, behavior: 'auto' });
   }
 
+  function navigateToHeading(level, direction) {
+    if (level === 1) { followPageLink(direction); return; }
+
+    var header = document.querySelector('.md-header');
+    var headerH = header ? header.offsetHeight : 0;
+    var content = document.querySelector('.md-content');
+    if (!content) return;
+
+    var headings = content.querySelectorAll('h' + level);
+    if (headings.length === 0) return;
+
+    var scrollTop = window.scrollY + headerH;
+    if (direction === 1) {
+      for (var i = 0; i < headings.length; i++) {
+        var pos = headings[i].getBoundingClientRect().top + window.scrollY;
+        if (pos > scrollTop + 10) {
+          window.scrollTo({ top: pos - headerH, behavior: getScrollBehavior() });
+          headings[i].setAttribute('tabindex', '-1');
+          headings[i].focus({ preventScroll: true });
+          return;
+        }
+      }
+    } else {
+      for (var j = headings.length - 1; j >= 0; j--) {
+        var p = headings[j].getBoundingClientRect().top + window.scrollY;
+        if (p < scrollTop - 30) {
+          window.scrollTo({ top: p - headerH, behavior: getScrollBehavior() });
+          headings[j].setAttribute('tabindex', '-1');
+          headings[j].focus({ preventScroll: true });
+          return;
+        }
+      }
+    }
+  }
+
   function bindNav() {
     if (navBound) return;
     navBound = true;
 
     document.addEventListener('keydown', function(e) {
-      if (e.target.matches('input, textarea, select, [contenteditable]')) return;
-      if (e.ctrlKey || e.metaKey || e.altKey || e.shiftKey) return;
-      if (e.target.closest('pre, code, .md-typeset__scrollwrap')) return;
+      if (isTypingContext(e)) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (e.target.closest && e.target.closest('pre, code, .md-typeset__scrollwrap')) return;
+      var digitMatch = e.code && e.code.match(/^Digit([1-5])$/);
+      if (e.shiftKey && !digitMatch) return;
       if (e.key === 'ArrowRight') { e.preventDefault(); navigateSection(1); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); navigateSection(-1); }
+      else if (digitMatch) { e.preventDefault(); navigateToHeading(parseInt(digitMatch[1], 10), e.shiftKey ? -1 : 1); }
     });
   }
 

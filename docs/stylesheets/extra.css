@@ -360,7 +360,7 @@ h2, h3, h4, h5, h6 {
   display: block;
   margin-top: 0.3em;
   height: 2px;
-  opacity: 0.4;
+  opacity: 0.8;
   background: repeating-linear-gradient(
     90deg,
     currentColor 0 4px,
@@ -496,7 +496,7 @@ a, button, .md-nav__link, .md-footer__link {
 
   .md-search {
     position: absolute;
-    left: min(50%, calc(100% - 610px));
+    left: min(50%, calc(100% - 670px));
     transform: translateX(-50%);
   }
 }
