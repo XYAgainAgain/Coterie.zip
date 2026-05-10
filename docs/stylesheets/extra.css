@@ -1886,6 +1886,25 @@ code,
   [data-md-color-scheme="abyss"] #batthew canvas { animation: none; }
 }
 
+.echo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.echo-overlay path {
+  fill: none;
+  stroke: #E1E1E1;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .echo-overlay { display: none; }
+}
+
 
 /* 10. FOUC Prevention (disabled with toggle) */
 

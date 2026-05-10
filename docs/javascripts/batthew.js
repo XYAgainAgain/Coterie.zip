@@ -100,6 +100,10 @@
   var state;
   var enabled = true;
   var dismissing = false;
+  var wantCurious = false;
+  var echoChance = false;
+  var echoFlyTid = null;
+  var digestUntil = 0;
   var fading = false;
   var lastDismiss = 0;
   var feedStart = 0;
@@ -279,9 +283,11 @@
 
   function enter(s) {
     state = s;
+    wantCurious = false;
     clearTimeout(curiousTid);
     clearTimeout(autoRoostTid);
     clearTimeout(tierDecayTid);
+    clearTimeout(echoFlyTid);
 
     switch (s) {
       case 'SPAWNING':
@@ -308,10 +314,21 @@
         break;
       case 'CURIOUS':
         setAnim('idle2');
+        echoChance = Date.now() >= digestUntil && Math.random() < 0.75;
         break;
       case 'FLYING':
         setAnim('move1');
         boredStart = performance.now();
+        scheduleEchoFly();
+        if (Date.now() < digestUntil) {
+          pickWanderTarget();
+          clearTimeout(autoRoostTid);
+          autoRoostTid = setTimeout(function () {
+            if (state !== 'FLYING') return;
+            flyToRoost();
+          }, 2000 + Math.random() * 1000);
+          break;
+        }
         if (tier === 0) {
           pickWanderTarget();
           clearTimeout(autoRoostTid);
@@ -360,7 +377,7 @@
     clearTimeout(curiousTid);
     var d = CURIOUS_RANGE[0] + Math.random() * (CURIOUS_RANGE[1] - CURIOUS_RANGE[0]);
     curiousTid = setTimeout(function () {
-      if (state === 'ROOSTING') enter('CURIOUS');
+      if (state === 'ROOSTING') wantCurious = true;
     }, d);
   }
 
@@ -571,6 +588,7 @@
       startHealingDrip();
       tier = 0;
       timesDisturbed = 0;
+      digestUntil = Date.now() + 120000;
       flyToRoost();
       return;
     }
@@ -604,10 +622,15 @@
     if (state === 'ROOSTING' || state === 'CURIOUS') {
       var dx = mx - px - DW / 2, dy = my - py - DH / 2;
       if (Math.sqrt(dx * dx + dy * dy) < NEAR_ROOST[tier]) {
-        tier = Math.min(2, timesDisturbed);
-        timesDisturbed++;
-        if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
-        enter('FLYING');
+        if (Date.now() < digestUntil) {
+          /* Post-feed: flutter briefly, don't escalate, re-roost fast */
+          enter('FLYING');
+        } else {
+          tier = Math.min(2, timesDisturbed);
+          timesDisturbed++;
+          if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
+          enter('FLYING');
+        }
       }
     } else if ((state === 'FLYING' || state === 'GRABBING') && tier > 0) {
       /* FLYING: threshold prevents hand tremor from resetting convergence.
@@ -649,10 +672,14 @@
     if (state === 'ROOSTING' || state === 'CURIOUS') {
       var dx = mx - px - DW / 2, dy = my - py - DH / 2;
       if (Math.sqrt(dx * dx + dy * dy) < NEAR_ROOST[tier]) {
-        tier = Math.min(2, timesDisturbed);
-        timesDisturbed++;
-        if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
-        enter('FLYING');
+        if (Date.now() < digestUntil) {
+          enter('FLYING');
+        } else {
+          tier = Math.min(2, timesDisturbed);
+          timesDisturbed++;
+          if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
+          enter('FLYING');
+        }
       }
       return;
     }
@@ -722,6 +749,7 @@
     }
     dismissing = true;
     lastDismiss = Date.now();
+    cleanupEchoPulse();
     clearTimeout(respawnTid);
     clearTimeout(curiousTid);
     clearTimeout(autoRoostTid);
@@ -842,6 +870,15 @@
     updateFlightAnim();
     updateGrab();
     stepAnim(dt);
+    if (wantCurious && anim === 'idle1' && frame <= 1) {
+      wantCurious = false;
+      enter('CURIOUS');
+    }
+    /* frame === 24 reserved for hunting double-chirp (Phase 2) */
+    if (state === 'CURIOUS' && anim === 'idle2' && frame >= 19 && echoChance) {
+      echoChance = false;
+      emitEchoPulse();
+    }
     render();
   }
 
@@ -865,6 +902,7 @@
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
         stopAllDrips();
+        cleanupEchoPulse();
         if (state === 'FLYING' || state === 'GRABBING') flyToRoost();
       }
     });
@@ -874,6 +912,7 @@
       /* Debounce: SPA nav fires resize as content height changes */
       clearTimeout(resizeTid);
       resizeTid = setTimeout(function () {
+        cleanupEchoPulse();
         if (state === 'ROOSTING' || state === 'CURIOUS') flyToRoost();
       }, 500);
     });
@@ -893,6 +932,7 @@
   function init() {
     theme = getTheme();
     createDOM();
+    createEchoSvg();
     syncEnabled();
     checkReduced();
 
@@ -1097,6 +1137,368 @@
   function stopAllDrips() {
     stopFeedingDrip();
     stopHealingDrip();
+  }
+
+  var ECHO_RAYS = 18;
+  var ECHO_ARC_DEG = 270;
+  var ECHO_MAX_RADIUS = DW * 30;
+  var ECHO_EMIT_MS = 1000;
+  var ECHO_CONTACT_MS = 150;
+  var ECHO_RETURN_MS = 1000;
+  var ECHO_OPACITY = 0.2;
+  var ECHO_FLY_ARCS = [270, 180, 90];
+  var ECHO_FLY_INTERVALS = [[5000, 8000], [2500, 4000], [1000, 2000]];
+  var ECHO_FLY_OPACITY = [0.2, 0.2, 0.12];
+  var ECHO_FREQ = 7;
+  var ECHO_AMP = 4;
+
+  var echoSvg = null;
+  var echoPulses = [];
+  var echoTicking = false;
+
+  function createEchoSvg() {
+    if (echoSvg && echoSvg.parentNode) return;
+    if (!echoSvg) {
+      echoSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      echoSvg.setAttribute('class', 'echo-overlay');
+      echoSvg.setAttribute('aria-hidden', 'true');
+    }
+    echoSvg.setAttribute('width', window.innerWidth);
+    echoSvg.setAttribute('height', window.innerHeight);
+    document.body.appendChild(echoSvg);
+  }
+
+  var ECHO_SELECTORS = [
+    '.md-sidebar',
+    '.md-search',
+    '.md-content h1',
+    '.md-content img',
+    '.highlight', 'pre',
+    '.admonition',
+    '.md-typeset table',
+    '.md-top',
+    '.md-footer__link'
+  ];
+
+  function echoIsVisible(el) {
+    if (!el) return false;
+    if (el.offsetParent === null && getComputedStyle(el).position !== 'fixed') return false;
+    var r = el.getBoundingClientRect();
+    if (r.width === 0 || r.height === 0) return false;
+    return r.bottom > 0 && r.top < window.innerHeight &&
+           r.right > 0 && r.left < window.innerWidth;
+  }
+
+  function gatherReflectors() {
+    var rects = [];
+    for (var i = 0; i < ECHO_SELECTORS.length; i++) {
+      var els = document.querySelectorAll(ECHO_SELECTORS[i]);
+      for (var j = 0; j < els.length; j++) {
+        if (echoIsVisible(els[j])) {
+          var r = els[j].getBoundingClientRect();
+          rects.push({ x: r.left, y: r.top, w: r.width, h: r.height });
+        }
+      }
+    }
+    if (hasCursor) rects.push({ x: mx - 20, y: my - 20, w: 40, h: 40 });
+    return rects;
+  }
+
+  function rayHitRect(ox, oy, cos, sin, rect) {
+    var tmin = 0, tmax = ECHO_MAX_RADIUS;
+    var invX = cos !== 0 ? 1 / cos : 1e12;
+    var t1 = (rect.x - ox) * invX;
+    var t2 = (rect.x + rect.w - ox) * invX;
+    if (invX < 0) { var tmp = t1; t1 = t2; t2 = tmp; }
+    tmin = Math.max(tmin, t1);
+    tmax = Math.min(tmax, t2);
+    if (tmin > tmax) return -1;
+
+    var invY = sin !== 0 ? 1 / sin : 1e12;
+    t1 = (rect.y - oy) * invY;
+    t2 = (rect.y + rect.h - oy) * invY;
+    if (invY < 0) { tmp = t1; t1 = t2; t2 = tmp; }
+    tmin = Math.max(tmin, t1);
+    tmax = Math.min(tmax, t2);
+    if (tmin > tmax) return -1;
+
+    return tmin > 0 ? tmin : -1;
+  }
+
+  function castEchoRays(cx, cy, facingAngle, arcDeg) {
+    var rects = gatherReflectors();
+    var startAngle = facingAngle - (arcDeg / 2) * (Math.PI / 180);
+    var step = arcDeg / (ECHO_RAYS - 1) * (Math.PI / 180);
+    var hits = [];
+
+    for (var i = 0; i < ECHO_RAYS; i++) {
+      var angle = startAngle + step * i;
+      var cos = Math.cos(angle);
+      var sin = Math.sin(angle);
+      var closest = ECHO_MAX_RADIUS;
+      var hitSomething = false;
+
+      for (var j = 0; j < rects.length; j++) {
+        var t = rayHitRect(cx, cy, cos, sin, rects[j]);
+        if (t > 0 && t < closest) {
+          closest = t;
+          hitSomething = true;
+        }
+      }
+
+      hits.push({
+        angle: angle,
+        dist: closest,
+        hit: hitSomething,
+        px: cx + cos * closest,
+        py: cy + sin * closest
+      });
+    }
+    return hits;
+  }
+
+  function buildSineArcPath(cx, cy, radius, startAngle, arcRad, freq, amp, phase, perRayDist) {
+    var steps = 72;
+    var d = '';
+    var penDown = false;
+
+    for (var i = 0; i <= steps; i++) {
+      var t = i / steps;
+      var angle = startAngle + arcRad * t;
+
+      var rayIdx = Math.round(t * (ECHO_RAYS - 1));
+      var maxR = perRayDist ? perRayDist[rayIdx] : ECHO_MAX_RADIUS;
+
+      /* Skip sections where the wave already hit a surface */
+      if (radius > maxR) { penDown = false; continue; }
+
+      var scaledAmp = amp * (radius / 100);
+      var sineOffset = Math.sin(freq * t * Math.PI * 2 + phase) * scaledAmp;
+      var r = radius + sineOffset;
+
+      var x = cx + Math.cos(angle) * r;
+      var y = cy + Math.sin(angle) * r;
+      d += (penDown ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
+      penDown = true;
+    }
+    return d;
+  }
+
+  function buildReturnWavePath(cx, cy, hitX, hitY, progress, freq, amp, phase) {
+    var dx = hitX - cx, dy = hitY - cy;
+    var hitDist = Math.sqrt(dx * dx + dy * dy);
+    var hitAngle = Math.atan2(dy, dx);
+
+    var currentDist = hitDist * (1 - progress);
+    var arcSpan = 0.4;
+    var steps = 12;
+    var d = '';
+
+    for (var i = 0; i <= steps; i++) {
+      var t = i / steps;
+      var angle = hitAngle - arcSpan / 2 + arcSpan * t;
+      var scaledAmp = amp * (currentDist / 100) * (1 - progress);
+      var sineOffset = Math.sin(freq * t * Math.PI * 2 + phase) * scaledAmp;
+      var r = currentDist + sineOffset;
+      var x = cx + Math.cos(angle) * r;
+      var y = cy + Math.sin(angle) * r;
+      d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
+    }
+    return d;
+  }
+
+  function emitEchoPulse(opOverride) {
+    if (echoPulses.length >= 2 || reduced || !enabled) return;
+    if (state === 'HIDDEN' || state === 'DEAD' || state === 'DYING' ||
+        state === 'HIT' || state === 'GRABBING') return;
+    createEchoSvg();
+
+    var cx = px + DW / 2;
+    var cy = py + DH / 2;
+
+    var facingAngle;
+    if (state === 'CURIOUS' || state === 'ROOSTING') {
+      facingAngle = Math.PI / 2;
+    } else {
+      facingAngle = facingLeft ? Math.PI : 0;
+    }
+
+    var arcDeg = ECHO_ARC_DEG;
+    if (state === 'FLYING') arcDeg = ECHO_FLY_ARCS[tier];
+    var op = opOverride != null ? opOverride : ECHO_OPACITY;
+
+    var hits = castEchoRays(cx, cy, facingAngle, arcDeg);
+    var perRayDist = hits.map(function(h) { return h.dist; });
+
+    var returnWaves = [];
+    for (var i = 0; i < hits.length; i++) {
+      if (hits[i].hit) {
+        returnWaves.push({
+          px: hits[i].px,
+          py: hits[i].py,
+          freq: ECHO_FREQ * (0.5 + Math.random() * 1.5),
+          amp: ECHO_AMP * (0.3 + Math.random() * 1.2),
+          phase: Math.random() * Math.PI * 2,
+          started: false,
+          startTime: 0
+        });
+      }
+    }
+
+    var arcPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    arcPath.setAttribute('opacity', op);
+    echoSvg.appendChild(arcPath);
+
+    var startAngle = facingAngle - (arcDeg / 2) * (Math.PI / 180);
+    var arcRad = arcDeg * (Math.PI / 180);
+
+    echoPulses.push({
+      cx: cx,
+      cy: cy,
+      startAngle: startAngle,
+      arcRad: arcRad,
+      arcDeg: arcDeg,
+      perRayDist: perRayDist,
+      hits: hits,
+      returnWaves: returnWaves,
+      arcPath: arcPath,
+      returnPaths: [],
+      startTime: performance.now(),
+      phase: 'emit',
+      op: op
+    });
+
+    if (!echoTicking) {
+      echoTicking = true;
+      requestAnimationFrame(tickEchoPulse);
+    }
+  }
+
+  function scheduleEchoFly() {
+    clearTimeout(echoFlyTid);
+    if (state !== 'FLYING' || Date.now() < digestUntil) return;
+    var interval = ECHO_FLY_INTERVALS[tier];
+    var delay = interval[0] + Math.random() * (interval[1] - interval[0]);
+    echoFlyTid = setTimeout(function() {
+      if (state !== 'FLYING') return;
+      var op = ECHO_FLY_OPACITY[tier];
+      emitEchoPulse(op);
+      if (tier === 2) {
+        /* Double-chirp: second pulse 100ms after first concludes */
+        echoFlyTid = setTimeout(function() {
+          if (state === 'FLYING') emitEchoPulse(op);
+          scheduleEchoFly();
+        }, ECHO_EMIT_MS + ECHO_RETURN_MS + 100);
+      } else {
+        scheduleEchoFly();
+      }
+    }, delay);
+  }
+
+  function tickEchoPulse(now) {
+    if (echoPulses.length === 0) { echoTicking = false; return; }
+    if (!enabled) { cleanupEchoPulse(); return; }
+
+    for (var p = echoPulses.length - 1; p >= 0; p--) {
+      var d = echoPulses[p];
+      var elapsed = now - d.startTime;
+
+      if (d.phase === 'emit') {
+        var progress = Math.min(elapsed / ECHO_EMIT_MS, 1);
+        var currentRadius = progress * ECHO_MAX_RADIUS;
+        var dStr = buildSineArcPath(
+          d.cx, d.cy, currentRadius, d.startAngle, d.arcRad,
+          ECHO_FREQ, ECHO_AMP, 0, d.perRayDist
+        );
+        d.arcPath.setAttribute('d', dStr);
+        d.arcPath.setAttribute('opacity', d.op * (1 - progress * 0.3));
+
+        for (var i = 0; i < d.returnWaves.length; i++) {
+          var rw = d.returnWaves[i];
+          if (rw.started) continue;
+          var rwDist = Math.sqrt(
+            (rw.px - d.cx) * (rw.px - d.cx) + (rw.py - d.cy) * (rw.py - d.cy)
+          );
+          if (currentRadius >= rwDist) {
+            rw.started = true;
+            rw.startTime = now;
+            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('opacity', d.op);
+            echoSvg.appendChild(path);
+            d.returnPaths.push({ path: path, wave: rw });
+
+            var ripple = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            ripple.setAttribute('cx', rw.px);
+            ripple.setAttribute('cy', rw.py);
+            ripple.setAttribute('r', '3');
+            ripple.setAttribute('fill', 'none');
+            ripple.setAttribute('stroke', '#E1E1E1');
+            ripple.setAttribute('stroke-width', '1');
+            ripple.setAttribute('opacity', d.op * 1.5);
+            echoSvg.appendChild(ripple);
+            setTimeout(function(r) {
+              return function() {
+                r.setAttribute('r', '12');
+                r.setAttribute('opacity', '0');
+                r.style.transition = 'all ' + ECHO_CONTACT_MS + 'ms ease-out';
+                setTimeout(function() { if (r.parentNode) r.parentNode.removeChild(r); }, ECHO_CONTACT_MS);
+              };
+            }(ripple), 16);
+          }
+        }
+
+        if (progress >= 1) {
+          d.phase = 'return';
+          d.startTime = now;
+          if (d.arcPath.parentNode) d.arcPath.parentNode.removeChild(d.arcPath);
+        }
+      }
+
+      var allReturnsDone = true;
+      for (var i = 0; i < d.returnPaths.length; i++) {
+        var rp = d.returnPaths[i];
+        var rElapsed = now - rp.wave.startTime;
+        var rProgress = Math.min(rElapsed / ECHO_RETURN_MS, 1);
+
+        if (rProgress < 1) {
+          allReturnsDone = false;
+          var dStr = buildReturnWavePath(
+            d.cx, d.cy, rp.wave.px, rp.wave.py,
+            rProgress, rp.wave.freq, rp.wave.amp, rp.wave.phase
+          );
+          rp.path.setAttribute('d', dStr);
+          rp.path.setAttribute('opacity', d.op * (1 - rProgress));
+        } else {
+          rp.path.setAttribute('opacity', '0');
+        }
+      }
+
+      if (d.phase === 'return' && (allReturnsDone || elapsed > ECHO_RETURN_MS + 200)) {
+        removePulse(p);
+      }
+    }
+
+    if (echoPulses.length > 0) {
+      requestAnimationFrame(tickEchoPulse);
+    } else {
+      echoTicking = false;
+    }
+  }
+
+  function removePulse(idx) {
+    var d = echoPulses[idx];
+    if (d.arcPath.parentNode) d.arcPath.parentNode.removeChild(d.arcPath);
+    for (var i = 0; i < d.returnPaths.length; i++) {
+      if (d.returnPaths[i].path.parentNode) d.returnPaths[i].path.parentNode.removeChild(d.returnPaths[i].path);
+    }
+    echoPulses.splice(idx, 1);
+  }
+
+  function cleanupEchoPulse() {
+    if (!echoSvg) return;
+    while (echoSvg.firstChild) echoSvg.removeChild(echoSvg.firstChild);
+    echoPulses = [];
+    echoTicking = false;
   }
 
   var inited = false;
