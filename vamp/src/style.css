@@ -360,19 +360,7 @@ body {
   height: 2px;
   margin-top: 0.6rem;
   opacity: 0.4;
-  background: repeating-linear-gradient(
-    90deg,
-    currentColor 0 4px,
-    transparent 4px 8px,
-    currentColor 8px 22px,
-    transparent 22px 26px,
-    currentColor 26px 40px,
-    transparent 40px 44px,
-    currentColor 44px 48px,
-    transparent 48px 52px,
-    currentColor 52px 66px,
-    transparent 66px 72px
-  );
+  background: var(--v-dot-dash-h);
 }
 
 .vamp-identity__name {
@@ -487,19 +475,7 @@ body {
   height: 2px;
   margin-bottom: 0.6rem;
   opacity: 0.4;
-  background: repeating-linear-gradient(
-    90deg,
-    currentColor 0 4px,
-    transparent 4px 8px,
-    currentColor 8px 22px,
-    transparent 22px 26px,
-    currentColor 26px 40px,
-    transparent 40px 44px,
-    currentColor 44px 48px,
-    transparent 48px 52px,
-    currentColor 52px 66px,
-    transparent 66px 72px
-  );
+  background: var(--v-dot-dash-h);
 }
 
 .vamp-sidebar__universal > .vamp-stat__name {

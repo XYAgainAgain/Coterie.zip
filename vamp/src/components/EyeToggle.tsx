@@ -17,6 +17,16 @@ const initial = loadTheme();
 document.documentElement.setAttribute('data-theme', initial);
 export const theme = signal<Theme>(initial);
 
+// Cached eye element refs -- avoids querySelectorAll on every blink/rotation tick
+let cachedBlinkEyes: NodeListOf<Element> | null = null;
+
+function getBlinkEyes(btn: HTMLButtonElement): NodeListOf<Element> {
+  if (!cachedBlinkEyes || !cachedBlinkEyes[0]?.parentNode) {
+    cachedBlinkEyes = btn.querySelectorAll('.eye-toggle__eye--1, .eye-toggle__eye--2');
+  }
+  return cachedBlinkEyes;
+}
+
 export function EyeToggle() {
   const btnRef = useRef<HTMLButtonElement>(null);
   const blinkTid = useRef<number | null>(null);
@@ -32,7 +42,7 @@ export function EyeToggle() {
   function doBlink() {
     const btn = btnRef.current;
     if (!btn) return;
-    const eyes = btn.querySelectorAll('.eye-toggle__eye--1, .eye-toggle__eye--2');
+    const eyes = getBlinkEyes(btn);
     const double = Math.random() < 0.35;
 
     eyes.forEach(e => e.classList.add('eye-toggle__eye--blink'));

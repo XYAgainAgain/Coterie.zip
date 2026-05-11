@@ -1,33 +1,87 @@
 (function () {
   'use strict';
 
+  window.Coterie = window.Coterie || {};
+  window.Coterie.batthew = window.Coterie.batthew || {};
+
   /* On SPA re-execution: re-attach bat if Zensical removed it during content swap.
      MutationObserver catches ALL removal methods (some nav types skip document$). */
-  if (window.__batthewInit) {
-    if (!window.__batthewReattach) {
-      window.__batthewReattach = true;
+  if (window.Coterie.batthew._init) {
+    if (!window.Coterie.batthew._reattach) {
+      window.Coterie.batthew._reattach = true;
       new MutationObserver(function () {
-        var bat = window.__batthewEl;
+        const bat = window.Coterie.batthew.el;
         if (bat && !bat.parentNode) document.body.appendChild(bat);
       }).observe(document.body, { childList: true });
     }
     return;
   }
-  window.__batthewInit = true;
+  window.Coterie.batthew._init = true;
 
-  var W = 40, H = 42, SCALE = 2;
-  var DW = W * SCALE, DH = H * SCALE;
-  var FRAME_MS = 83;
-  var BASE = '/assets/images/batthew/';
-  var REF_DT = 16.67;
+  // Sprite dimensions and rendering
+  const SPRITE = { W: 40, H: 42, SCALE: 2 };
+  const DISPLAY = { DW: SPRITE.W * SPRITE.SCALE, DH: SPRITE.H * SPRITE.SCALE };
 
-  var ANIM_NAMES = [
+  // Animation timing and playback
+  const TIMING = {
+    FRAME_MS: 83,
+    REF_DT: 16.67,
+    DEATH_FADE_MS: 1000,
+    DISMISS_COOLDOWN: 3000,
+    LEAVE_GRACE_MS: 200,
+    GRAB3_SETTLE_MS: 1000,
+    WANDER_COOLDOWN: 2000,
+    AUTO_ROOST_MIN: 20000,
+    AUTO_ROOST_MAX: 40000,
+    DASH_COOLDOWN: 5000,
+    TIER_DECAY_MS: 300000,
+    FEED_TIME_MIN: 7000,
+    FEED_TIME_MAX: 13000,
+    RESPAWN_QUICK: 5000,
+    RESPAWN_LONG: [15000, 30000],
+    CURIOUS_RANGE: [8000, 10000]
+  };
+
+  // Spatial thresholds
+  const DISTANCE = {
+    FLIP_HYSTERESIS: 8,
+    NEAR_ROOST: [150, 200, 250],
+    GRAB_RADIUS: 12,
+    GRAB_DIST_BREAK: 80,
+    DASH_DIST: 350
+  };
+
+  // Movement interpolation and speed
+  const MOVEMENT = {
+    LERP_FLY: [0.008, 0.015, 0.04],
+    GRAB_LERP: 0.3,
+    GRAB3_LERP: 0.5,
+    SPEED_SMOOTH: 0.3,
+    GRAB_BREAK: 6
+  };
+
+  // Jitter (flight wobble)
+  const JITTER = {
+    AMP: [30, 20, 10],
+    HOVER_MULT: 5
+  };
+
+  // Behavioral timers (per-tier arrays indexed by tier 0/1/2)
+  const BEHAVIOR = {
+    GRAB_IDLE_MS: [Infinity, 3000, 1500],
+    BORED_MS: [Infinity, 12000, Infinity],
+    MAX_LIVES: 3
+  };
+
+  const BASE = '/assets/images/batthew/';
+
+  const ANIM_NAMES = [
     'idle1', 'idle2', 'appearance', 'move1', 'move2',
     'turnaround', 'dash', 'grab1', 'grab2', 'grab3',
     'hit', 'death1', 'death2'
   ];
 
-  var CFG = {
+  const CFG = {
     idle1:      { loop: true,  interrupt: true  },
     idle2:      { loop: false, interrupt: true  },
     appearance: { loop: false, interrupt: false },
@@ -43,85 +97,60 @@
     death2:     { loop: false, interrupt: false }
   };
 
-  var FLIP_HYSTERESIS = 8;
-  var SPEED_SMOOTH = 0.3;
-  var GRAB_BREAK = 6;
-  var GRAB_DIST_BREAK = 80;
-  var GRAB_LERP = 0.3;
-  var GRAB3_LERP = 0.5;
-  var GRAB3_SETTLE_MS = 1000;
+  let el, cvs, ctx;
+  const sheets = {};
+  let theme, anim, frame;
+  let animAccum = 0;
+  let animDone = false;
+  let animReverse = false;
+  let lastTime = 0;
+  let facingLeft = false;
+  let pendingFlip = false;
 
-  var NEAR_ROOST = [150, 200, 250];
-  var LERP_FLY = [0.008, 0.015, 0.04];
-  var JITTER_AMP = [30, 20, 10];
-  var JITTER_HOVER_MULT = 5;
-  var GRAB_IDLE_MS = [Infinity, 3000, 1500];
-  var BORED_MS = [Infinity, 12000, Infinity];
+  let px, py;
+  let jx = 0, jy = 0;
+  let prevPx = 0, prevPy = 0;
+  let tx = -1, ty = -1;
+  let mx = -1, my = -1;
+  let pmx = -1, pmy = -1;
+  let cSpeed = 0;
+  let lastMove = 0;
+  let hasCursor = false;
 
-  var GRAB_RADIUS = 12;
-  var WANDER_COOLDOWN = 2000;
-  var AUTO_ROOST_MIN = 20000;
-  var AUTO_ROOST_MAX = 40000;
-  var DASH_COOLDOWN = 5000;
-  var DASH_DIST = 350;
-  var TIER_DECAY_MS = 300000;
-  var FEED_TIME_MIN = 7000;
-  var FEED_TIME_MAX = 13000;
-  var feedTime = 10000;
-  var DEATH_FADE_MS = 1000;
-  var RESPAWN_QUICK = 5000;
-  var RESPAWN_LONG = [15000, 30000];
-  var CURIOUS_RANGE = [8000, 10000];
-  var MAX_LIVES = 3;
-  var DISMISS_COOLDOWN = 3000;
-  var LEAVE_GRACE_MS = 200;
+  let lives, deaths, tier, timesDisturbed;
+  let state;
+  let enabled = true;
+  let dismissing = false;
+  let wantCurious = false;
+  let echoChance = false;
+  let echoFlyTid = null;
+  let digestUntil = 0;
+  let fading = false;
+  let lastDismiss = 0;
+  let feedStart = 0;
+  let feedTime = 10000;
+  let boredStart = 0;
+  let lastWander = 0;
+  let lastDashEnd = 0;
+  let leaveTid = null;
+  let tierDecayTid = null;
+  let respawnTid = null;
+  let curiousTid = null;
+  let autoRoostTid = null;
+  let roosts = [];
+  let roostIdx = 0;
+  let firstRoost = true;
+  let reduced = false;
 
-  var el, cvs, ctx;
-  var sheets = {};
-  var theme, anim, frame;
-  var animAccum = 0;
-  var animDone = false;
-  var animReverse = false;
-  var lastTime = 0;
-  var facingLeft = false;
-  var pendingFlip = false;
+  // RAF loop state
+  let rafId = null;
 
-  var px, py;
-  var jx = 0, jy = 0;
-  var prevPx = 0, prevPy = 0;
-  var tx = -1, ty = -1;
-  var mx = -1, my = -1;
-  var pmx = -1, pmy = -1;
-  var cSpeed = 0;
-  var lastMove = 0;
-  var hasCursor = false;
-
-  var lives, deaths, tier, timesDisturbed;
-  var state;
-  var enabled = true;
-  var dismissing = false;
-  var wantCurious = false;
-  var echoChance = false;
-  var echoFlyTid = null;
-  var digestUntil = 0;
-  var fading = false;
-  var lastDismiss = 0;
-  var feedStart = 0;
-  var boredStart = 0;
-  var lastWander = 0;
-  var lastDashEnd = 0;
-  var leaveTid = null;
-  var tierDecayTid = null;
-  var respawnTid = null;
-  var curiousTid = null;
-  var autoRoostTid = null;
-  var roosts = [];
-  var roostIdx = 0;
-  var firstRoost = true;
-  var reduced = false;
+  // Re-execution guard
+  let _eventsBound = false;
+  let _themeWatching = false;
 
   function getTheme() {
-    var s = document.body.getAttribute('data-md-color-scheme');
+    const s = document.body.getAttribute('data-md-color-scheme');
     if (s === 'slate') return 'night';
     if (s === 'abyss') return 'abyss';
     return 'sunset';
@@ -129,10 +158,10 @@
 
   function preload(t, cb) {
     if (!sheets[t]) sheets[t] = {};
-    var n = ANIM_NAMES.length;
+    let n = ANIM_NAMES.length;
     ANIM_NAMES.forEach(function (name) {
       if (sheets[t][name]) { if (--n === 0) cb(); return; }
-      var img = new Image();
+      const img = new Image();
       img.onload = function () { sheets[t][name] = img; if (--n === 0) cb(); };
       img.onerror = function () { if (--n === 0) cb(); };
       img.src = BASE + t + '/' + name + '.webp';
@@ -140,8 +169,8 @@
   }
 
   function frameCount(name) {
-    var img = sheets[theme] && sheets[theme][name];
-    return img ? Math.floor(img.naturalWidth / W) : 1;
+    const img = sheets[theme] && sheets[theme][name];
+    return img ? Math.floor(img.naturalWidth / SPRITE.W) : 1;
   }
 
   function createDOM() {
@@ -150,40 +179,40 @@
     el.setAttribute('aria-hidden', 'true');
 
     cvs = document.createElement('canvas');
-    var dpr = window.devicePixelRatio || 1;
-    cvs.width = DW * dpr;
-    cvs.height = DH * dpr;
-    cvs.style.width = DW + 'px';
-    cvs.style.height = DH + 'px';
+    const dpr = window.devicePixelRatio || 1;
+    cvs.width = DISPLAY.DW * dpr;
+    cvs.height = DISPLAY.DH * dpr;
+    cvs.style.width = DISPLAY.DW + 'px';
+    cvs.style.height = DISPLAY.DH + 'px';
 
     ctx = cvs.getContext('2d');
     ctx.imageSmoothingEnabled = false;
-    ctx.scale(dpr * SCALE, dpr * SCALE);
+    ctx.scale(dpr * SPRITE.SCALE, dpr * SPRITE.SCALE);
 
     el.appendChild(cvs);
     document.body.appendChild(el);
-    window.__batthewEl = el;
+    window.Coterie.batthew.el = el;
   }
 
   function render() {
     if (fading) return;
-    var img = sheets[theme] && sheets[theme][anim];
+    const img = sheets[theme] && sheets[theme][anim];
     if (!img) return;
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, SPRITE.W, SPRITE.H);
     if (facingLeft) {
       ctx.save();
       ctx.scale(-1, 1);
-      ctx.drawImage(img, frame * W, 0, W, H, -W, 0, W, H);
+      ctx.drawImage(img, frame * SPRITE.W, 0, SPRITE.W, SPRITE.H, -SPRITE.W, 0, SPRITE.W, SPRITE.H);
       ctx.restore();
     } else {
-      ctx.drawImage(img, frame * W, 0, W, H, 0, 0, W, H);
+      ctx.drawImage(img, frame * SPRITE.W, 0, SPRITE.W, SPRITE.H, 0, 0, SPRITE.W, SPRITE.H);
     }
   }
 
   function setAnim(name, reverse) {
     if (anim === name && !reverse) { animReverse = false; return; }
     /* Shared first frames, swap seamlessly without resetting */
-    var pair = (anim === 'move1' || anim === 'move2') && (name === 'move1' || name === 'move2');
+    let pair = (anim === 'move1' || anim === 'move2') && (name === 'move1' || name === 'move2');
     if (!pair) pair = (anim === 'idle1' || anim === 'idle2') && (name === 'idle1' || name === 'idle2');
     if (pair && frame <= 1 && !reverse) {
       anim = name;
@@ -199,9 +228,9 @@
   function stepAnim(dt) {
     if (animDone) return;
     animAccum += dt;
-    while (animAccum >= FRAME_MS) {
-      animAccum -= FRAME_MS;
-      var total = frameCount(anim);
+    while (animAccum >= TIMING.FRAME_MS) {
+      animAccum -= TIMING.FRAME_MS;
+      const total = frameCount(anim);
       if (animReverse) {
         frame--;
         if (frame <= 0) {
@@ -257,7 +286,7 @@
       case 'grab1':
         setAnim('grab2');
         feedStart = Date.now();
-        feedTime = FEED_TIME_MIN + Math.random() * (FEED_TIME_MAX - FEED_TIME_MIN);
+        feedTime = TIMING.FEED_TIME_MIN + Math.random() * (TIMING.FEED_TIME_MAX - TIMING.FEED_TIME_MIN);
         startFeedingDrip();
         break;
       case 'hit':
@@ -270,13 +299,13 @@
         if (animReverse) { flyToRoost(); break; }
         if (dismissing) { hideBat(); break; }
         fading = true;
-        el.style.transition = 'opacity ' + DEATH_FADE_MS + 'ms ease-out';
+        el.style.transition = 'opacity ' + TIMING.DEATH_FADE_MS + 'ms ease-out';
         el.style.opacity = '0';
         setTimeout(function () {
           el.style.transition = '';
-          ctx.clearRect(0, 0, W, H);
+          ctx.clearRect(0, 0, SPRITE.W, SPRITE.H);
           enter('DEAD');
-        }, DEATH_FADE_MS);
+        }, TIMING.DEATH_FADE_MS);
         break;
     }
   }
@@ -295,8 +324,8 @@
         fading = false;
         el.style.opacity = '1';
         /* Spawn along bottom edge; reversed death1 looks like ground-based materialization */
-        px = DW + Math.random() * (window.innerWidth - DW * 3);
-        py = window.innerHeight - DH;
+        px = DISPLAY.DW + Math.random() * (window.innerWidth - DISPLAY.DW * 3);
+        py = window.innerHeight - DISPLAY.DH;
         clampAndTransform();
         setAnim('death1', true);
         break;
@@ -309,7 +338,7 @@
               tier = Math.max(0, tier - 1);
               timesDisturbed = Math.max(0, timesDisturbed - 1);
             }
-          }, TIER_DECAY_MS);
+          }, TIMING.TIER_DECAY_MS);
         }
         break;
       case 'CURIOUS':
@@ -356,17 +385,18 @@
         if (window.__kdrIncrement) window.__kdrIncrement('deaths');
         setAnim(deaths >= 3 ? 'death1' : 'death2');
         break;
-      case 'DEAD':
+      case 'DEAD': {
         cvs.style.pointerEvents = 'none';
         clearTimeout(respawnTid);
-        var delay = deaths >= 3
-          ? RESPAWN_LONG[0] + Math.random() * (RESPAWN_LONG[1] - RESPAWN_LONG[0])
-          : RESPAWN_QUICK;
+        const delay = deaths >= 3
+          ? TIMING.RESPAWN_LONG[0] + Math.random() * (TIMING.RESPAWN_LONG[1] - TIMING.RESPAWN_LONG[0])
+          : TIMING.RESPAWN_QUICK;
         respawnTid = setTimeout(function () { enter('RESPAWNING'); }, delay);
         break;
+      }
       case 'RESPAWNING':
         if (deaths >= 3) { deaths = 0; tier = 0; timesDisturbed = 0; }
-        lives = MAX_LIVES;
+        lives = BEHAVIOR.MAX_LIVES;
         pickRoost();
         enter('SPAWNING');
         break;
@@ -375,7 +405,7 @@
 
   function scheduleCurious() {
     clearTimeout(curiousTid);
-    var d = CURIOUS_RANGE[0] + Math.random() * (CURIOUS_RANGE[1] - CURIOUS_RANGE[0]);
+    const d = TIMING.CURIOUS_RANGE[0] + Math.random() * (TIMING.CURIOUS_RANGE[1] - TIMING.CURIOUS_RANGE[0]);
     curiousTid = setTimeout(function () {
       if (state === 'ROOSTING') wantCurious = true;
     }, d);
@@ -383,10 +413,10 @@
 
   function pickWanderTarget() {
     lastWander = performance.now();
-    for (var i = 0; i < 10; i++) {
-      var x = DW + Math.random() * (window.innerWidth - DW * 3);
-      var y = DH + Math.random() * (window.innerHeight - DH * 3);
-      var d = Math.sqrt((x - mx) * (x - mx) + (y - my) * (y - my));
+    for (let i = 0; i < 10; i++) {
+      const x = DISPLAY.DW + Math.random() * (window.innerWidth - DISPLAY.DW * 3);
+      const y = DISPLAY.DH + Math.random() * (window.innerHeight - DISPLAY.DH * 3);
+      const d = Math.sqrt((x - mx) * (x - mx) + (y - my) * (y - my));
       if (d > 200 || i === 9) { tx = x; ty = y; return; }
     }
   }
@@ -394,13 +424,13 @@
   /* Sine jitter for natural flight wobble: two overlapping waves per axis.
      Amplifies when cursor is still (bats can't hover, they flutter harder). */
   function jitter(now, amp) {
-    var t = now * 0.001;
-    var mult = (cSpeed < 2) ? JITTER_HOVER_MULT : 1;
+    const t = now * 0.001;
+    let mult = (cSpeed < 2) ? JITTER.HOVER_MULT : 1;
     if (tier === 0 && state === 'FLYING') {
-      var cd = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
+      const cd = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
       if (cd < 200) mult *= 1 + (200 - cd) / 100;
     }
-    var a = amp * mult;
+    const a = amp * mult;
     return {
       x: (Math.sin(t * 2.3) + Math.sin(t * 3.7) * 0.6) * a,
       y: (Math.cos(t * 1.9) + Math.cos(t * 4.1) * 0.5) * a
@@ -408,7 +438,7 @@
   }
 
   function moveLerp(targetX, targetY, lerp, dt) {
-    var f = 1 - Math.pow(1 - lerp, dt / REF_DT);
+    const f = 1 - Math.pow(1 - lerp, dt / TIMING.REF_DT);
     px += (targetX - px) * f;
     py += (targetY - py) * f;
   }
@@ -425,19 +455,19 @@
     if (state === 'FLYOFF') {
       moveLerp(tx, ty, 0.03, dt);
       clampAndTransform();
-      if (px < -DW || px > window.innerWidth + DW ||
-          py < -DH || py > window.innerHeight + DH) hideBat();
+      if (px < -DISPLAY.DW || px > window.innerWidth + DISPLAY.DW ||
+          py < -DISPLAY.DH || py > window.innerHeight + DISPLAY.DH) hideBat();
       return;
     }
 
     if (state === 'FLYIN') {
-      var dx = tx - px, dy = ty - py;
-      var dist = Math.sqrt(dx * dx + dy * dy);
+      const dx = tx - px, dy = ty - py;
+      const dist = Math.sqrt(dx * dx + dy * dy);
       moveLerp(tx, ty, 0.008, dt);
       clampAndTransform();
       if (dist < 40) {
-        var r = roosts[roostIdx];
-        var headingToRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
+        const r = roosts[roostIdx];
+        const headingToRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
         if (headingToRoost) {
           px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
           state = 'LANDING';
@@ -455,28 +485,28 @@
       return;
     }
 
-    var frozen = state === 'ROOSTING' || state === 'CURIOUS' || state === 'DEAD' ||
+    const frozen = state === 'ROOSTING' || state === 'CURIOUS' || state === 'DEAD' ||
                  state === 'DYING' || state === 'SPAWNING' || state === 'HIT' ||
                  state === 'LANDING';
     if (frozen) return;
 
     /* Jitter is visual only, smoothed via lerp so it drifts not teleports.
        px/py stay clean for grab detection. */
-    var j = jitter(now, JITTER_AMP[tier]);
+    const j = jitter(now, JITTER.AMP[tier]);
     if (state === 'GRABBING') { jx = jy = 0; }
     else {
-      var jf = 1 - Math.pow(1 - 0.03, dt / REF_DT);
+      const jf = 1 - Math.pow(1 - 0.03, dt / TIMING.REF_DT);
       jx += (j.x - jx) * jf;
       jy += (j.y - jy) * jf;
     }
 
     if (tier === 0 && state === 'FLYING') {
-      var dx = tx - px, dy = ty - py;
-      var dist = Math.sqrt(dx * dx + dy * dy);
+      const dx = tx - px, dy = ty - py;
+      const dist = Math.sqrt(dx * dx + dy * dy);
 
       if (dist < 40) {
-        var r = roosts[roostIdx];
-        var atRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
+        const r = roosts[roostIdx];
+        const atRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
         if (atRoost) {
           px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
           state = 'LANDING';
@@ -486,7 +516,7 @@
         pickWanderTarget();
       }
 
-      var curDist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
+      const curDist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
       if (curDist < 80) {
         pickWanderTarget();
         clearTimeout(autoRoostTid);
@@ -494,64 +524,64 @@
           if (state !== 'FLYING' || tier !== 0) return;
           flyToRoost();
         }, 3000 + Math.random() * 4000);
-      } else if (curDist < 150 && now - lastWander > WANDER_COOLDOWN) {
+      } else if (curDist < 150 && now - lastWander > TIMING.WANDER_COOLDOWN) {
         pickWanderTarget();
       }
 
-      moveLerp(tx, ty, LERP_FLY[0], dt);
+      moveLerp(tx, ty, MOVEMENT.LERP_FLY[0], dt);
       clampAndTransform();
       return;
     }
 
     if (state === 'FLYING') {
       if (!hasCursor) {
-        var distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
-        if (distToTarget < 40 && now - lastWander > WANDER_COOLDOWN) pickWanderTarget();
-        moveLerp(tx, ty, LERP_FLY[tier], dt);
+        const distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
+        if (distToTarget < 40 && now - lastWander > TIMING.WANDER_COOLDOWN) pickWanderTarget();
+        moveLerp(tx, ty, MOVEMENT.LERP_FLY[tier], dt);
         clampAndTransform();
         return;
       }
 
-      distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
-      if (distToTarget < GRAB_RADIUS && now - lastMove > GRAB_IDLE_MS[tier]) {
+      const distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
+      if (distToTarget < DISTANCE.GRAB_RADIUS && now - lastMove > BEHAVIOR.GRAB_IDLE_MS[tier]) {
         jx = jy = 0;
         enter('GRABBING');
         return;
       }
 
-      if (cSpeed < 2 && now - boredStart > BORED_MS[tier]) {
+      if (cSpeed < 2 && now - boredStart > BEHAVIOR.BORED_MS[tier]) {
         flyToRoost();
         return;
       }
       if (cSpeed >= 2) boredStart = now;
     }
 
-    var spd = LERP_FLY[tier];
-    if (state === 'GRABBING') spd = (anim === 'grab3') ? GRAB3_LERP : GRAB_LERP;
+    let spd = MOVEMENT.LERP_FLY[tier];
+    if (state === 'GRABBING') spd = (anim === 'grab3') ? MOVEMENT.GRAB3_LERP : MOVEMENT.GRAB_LERP;
     moveLerp(tx, ty, spd, dt);
     clampAndTransform();
   }
 
   function clampAndTransform() {
     if (state !== 'FLYOFF' && state !== 'FLYOFF_WARMUP') {
-      px = Math.max(0, Math.min(window.innerWidth - DW, px));
-      py = Math.max(0, Math.min(window.innerHeight - DH, py));
+      px = Math.max(0, Math.min(window.innerWidth - DISPLAY.DW, px));
+      py = Math.max(0, Math.min(window.innerHeight - DISPLAY.DH, py));
     }
     el.style.transform = 'translate3d(' + Math.round(px + jx) + 'px,' + Math.round(py + jy) + 'px,0)';
   }
 
   function updateFacing() {
     if (state === 'FLYOFF' || state === 'FLYIN' || state === 'FLYOFF_WARMUP') {
-      var dx = tx - px;
-      if (Math.abs(dx) > FLIP_HYSTERESIS) facingLeft = dx < 0;
+      const dx = tx - px;
+      if (Math.abs(dx) > DISTANCE.FLIP_HYSTERESIS) facingLeft = dx < 0;
       return;
     }
     if (state !== 'FLYING') return;
     if (anim === 'turnaround') return;
-    var target = (tier === 0) ? tx : mx;
-    var dx = target - px;
-    if (Math.abs(dx) < FLIP_HYSTERESIS) return;
-    var wantLeft = dx < 0;
+    const target = (tier === 0) ? tx : mx;
+    const dx = target - px;
+    if (Math.abs(dx) < DISTANCE.FLIP_HYSTERESIS) return;
+    const wantLeft = dx < 0;
     if (wantLeft === facingLeft) return;
     pendingFlip = wantLeft;
     setAnim('turnaround');
@@ -562,16 +592,16 @@
     if (!CFG[anim].interrupt) return;
     if (tier === 0) return;
 
-    var curDist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
-    var dx = px - prevPx, dy = py - prevPy;
-    var vel = Math.sqrt(dx * dx + dy * dy);
+    const curDist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
+    const dx = px - prevPx, dy = py - prevPy;
+    const vel = Math.sqrt(dx * dx + dy * dy);
     prevPx = px; prevPy = py;
 
-    var now = Date.now();
-    if (curDist > DASH_DIST && anim !== 'dash' && now - lastDashEnd > DASH_COOLDOWN) {
+    const now = Date.now();
+    if (curDist > DISTANCE.DASH_DIST && anim !== 'dash' && now - lastDashEnd > TIMING.DASH_COOLDOWN) {
       setAnim('dash'); return;
     }
-    if (curDist <= DASH_DIST && anim === 'dash') {
+    if (curDist <= DISTANCE.DASH_DIST && anim === 'dash') {
       lastDashEnd = now; setAnim('move2'); return;
     }
     if (anim === 'move1' && vel > 3) setAnim('move2');
@@ -593,50 +623,57 @@
       return;
     }
 
-    var distToCursor = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
-    if (cSpeed > GRAB_BREAK || distToCursor > GRAB_DIST_BREAK) { stopAllDrips(); enter('FLYING'); return; }
+    const distToCursor = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
+    if (cSpeed > MOVEMENT.GRAB_BREAK || distToCursor > DISTANCE.GRAB_DIST_BREAK) { stopAllDrips(); enter('FLYING'); return; }
 
-    var cursorMoving = performance.now() - lastMove < GRAB3_SETTLE_MS;
+    const cursorMoving = performance.now() - lastMove < TIMING.GRAB3_SETTLE_MS;
     if (cursorMoving && anim === 'grab2') setAnim('grab3');
     else if (!cursorMoving && anim === 'grab3') setAnim('grab2');
   }
 
   function measureSpeed() {
     if (pmx < 0) { pmx = mx; pmy = my; return; }
-    var dx = mx - pmx, dy = my - pmy;
-    var raw = Math.sqrt(dx * dx + dy * dy);
-    cSpeed = cSpeed * (1 - SPEED_SMOOTH) + raw * SPEED_SMOOTH;
+    const dx = mx - pmx, dy = my - pmy;
+    const raw = Math.sqrt(dx * dx + dy * dy);
+    cSpeed = cSpeed * (1 - MOVEMENT.SPEED_SMOOTH) + raw * MOVEMENT.SPEED_SMOOTH;
     pmx = mx;
     pmy = my;
   }
 
-  function onMouse(e) {
-    var nx = e.clientX, ny = e.clientY;
-    var moved = Math.abs(nx - mx) > 3 || Math.abs(ny - my) > 3;
+  // Shared pointer logic for mouse and touch
+  function handlePointer(clientX, clientY) {
+    const nx = clientX, ny = clientY;
+    const moved = Math.abs(nx - mx) > 3 || Math.abs(ny - my) > 3;
     if (moved) lastMove = performance.now();
     mx = nx;
     my = ny;
     hasCursor = true;
-    clearTimeout(leaveTid);
 
     if (state === 'ROOSTING' || state === 'CURIOUS') {
-      var dx = mx - px - DW / 2, dy = my - py - DH / 2;
-      if (Math.sqrt(dx * dx + dy * dy) < NEAR_ROOST[tier]) {
+      const dx = mx - px - DISPLAY.DW / 2, dy = my - py - DISPLAY.DH / 2;
+      if (Math.sqrt(dx * dx + dy * dy) < DISTANCE.NEAR_ROOST[tier]) {
         if (Date.now() < digestUntil) {
           /* Post-feed: flutter briefly, don't escalate, re-roost fast */
           enter('FLYING');
         } else {
           tier = Math.min(2, timesDisturbed);
           timesDisturbed++;
-          if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
+          if (tier > 0) { tx = mx - DISPLAY.DW / 2; ty = my - DISPLAY.DH / 2; }
           enter('FLYING');
         }
+        return true;
       }
     } else if ((state === 'FLYING' || state === 'GRABBING') && tier > 0) {
       /* FLYING: threshold prevents hand tremor from resetting convergence.
          GRABBING: always track; tight follow matters more than stability. */
-      if (moved || state === 'GRABBING') { tx = mx - DW / 2; ty = my - DH / 2; }
+      if (moved || state === 'GRABBING') { tx = mx - DISPLAY.DW / 2; ty = my - DISPLAY.DH / 2; }
     }
+    return false;
+  }
+
+  function onMouse(e) {
+    handlePointer(e.clientX, e.clientY);
+    clearTimeout(leaveTid);
   }
 
   function onLeave() {
@@ -646,7 +683,7 @@
       if (hasCursor) return;
       if (state === 'GRABBING') enter('FLYING');
       if (state === 'FLYING') pickWanderTarget();
-    }, LEAVE_GRACE_MS);
+    }, TIMING.LEAVE_GRACE_MS);
   }
 
   function hitBat() {
@@ -660,33 +697,10 @@
   function onCanvasTouch(e) { e.stopPropagation(); hitBat(); }
 
   function onTouch(e) {
-    var t = e.touches[0];
+    const t = e.touches[0];
     if (!t) return;
-    var nx = t.clientX, ny = t.clientY;
-    var moved = Math.abs(nx - mx) > 3 || Math.abs(ny - my) > 3;
-    if (moved) lastMove = performance.now();
-    mx = nx;
-    my = ny;
-    hasCursor = true;
-
-    if (state === 'ROOSTING' || state === 'CURIOUS') {
-      var dx = mx - px - DW / 2, dy = my - py - DH / 2;
-      if (Math.sqrt(dx * dx + dy * dy) < NEAR_ROOST[tier]) {
-        if (Date.now() < digestUntil) {
-          enter('FLYING');
-        } else {
-          tier = Math.min(2, timesDisturbed);
-          timesDisturbed++;
-          if (tier > 0) { tx = mx - DW / 2; ty = my - DH / 2; }
-          enter('FLYING');
-        }
-      }
-      return;
-    }
-
-    if ((state === 'FLYING' || state === 'GRABBING') && tier > 0) {
-      if (moved || state === 'GRABBING') { tx = mx - DW / 2; ty = my - DH / 2; }
-    }
+    const didDisturb = handlePointer(t.clientX, t.clientY);
+    if (didDisturb) return;
   }
 
   function onTouchEnd() {
@@ -696,36 +710,36 @@
   }
 
   function addRoost(selector, anchor) {
-    var el = document.querySelector(selector);
-    if (!el) return;
-    var r = el.getBoundingClientRect();
+    const target = document.querySelector(selector);
+    if (!target) return;
+    const r = target.getBoundingClientRect();
     if (r.width === 0 || r.height === 0) return;
     switch (anchor) {
       case 'hang-left':   roosts.push({ x: r.left, y: r.bottom - 6 }); break;
-      case 'hang-right':  roosts.push({ x: r.right - DW, y: r.bottom - 6 }); break;
-      case 'hang-center': roosts.push({ x: r.left + r.width / 2 - DW / 2, y: r.bottom - 6 }); break;
+      case 'hang-right':  roosts.push({ x: r.right - DISPLAY.DW, y: r.bottom - 6 }); break;
+      case 'hang-center': roosts.push({ x: r.left + r.width / 2 - DISPLAY.DW / 2, y: r.bottom - 6 }); break;
       case 'top-left':    roosts.push({ x: r.left, y: r.top }); break;
-      case 'top-right':   roosts.push({ x: r.right - DW, y: r.top }); break;
+      case 'top-right':   roosts.push({ x: r.right - DISPLAY.DW, y: r.top }); break;
     }
   }
 
   function computeRoosts() {
     roosts = [];
-    var hdr = document.querySelector('.md-header');
-    var hdrBottom = hdr ? hdr.getBoundingClientRect().bottom - 6 : 80;
-    var w = window.innerWidth;
+    const hdr = document.querySelector('.md-header');
+    const hdrBottom = hdr ? hdr.getBoundingClientRect().bottom - 6 : 80;
+    const w = window.innerWidth;
 
     addRoost('.md-header__source', 'hang-left');
-    roosts.push({ x: DW + Math.random() * (w - DW * 3), y: hdrBottom });
-    roosts.push({ x: DW + Math.random() * (w - DW * 3), y: hdrBottom });
-    roosts.push({ x: DW + Math.random() * (w - DW * 3), y: 0 });
+    roosts.push({ x: DISPLAY.DW + Math.random() * (w - DISPLAY.DW * 3), y: hdrBottom });
+    roosts.push({ x: DISPLAY.DW + Math.random() * (w - DISPLAY.DW * 3), y: hdrBottom });
+    roosts.push({ x: DISPLAY.DW + Math.random() * (w - DISPLAY.DW * 3), y: 0 });
   }
 
   function pickRoost() {
     computeRoosts();
     if (firstRoost) { roostIdx = 0; firstRoost = false; return; }
     if (roosts.length <= 1) { roostIdx = 0; return; }
-    var old = roostIdx;
+    const old = roostIdx;
     do { roostIdx = Math.floor(Math.random() * roosts.length); } while (roostIdx === old);
   }
 
@@ -733,7 +747,7 @@
     clearTimeout(autoRoostTid);
     clearTimeout(curiousTid);
     pickRoost();
-    var r = roosts[roostIdx];
+    const r = roosts[roostIdx];
     tx = r.x;
     ty = r.y;
     jx = jy = 0;
@@ -741,9 +755,19 @@
     setAnim('move1');
   }
 
+  // Random off-screen edge position for fly-in/fly-off
+  function randomEdgePosition() {
+    const edge = Math.floor(Math.random() * 4);
+    const vw = window.innerWidth, vh = window.innerHeight;
+    if (edge === 0) return { x: Math.random() * vw, y: -DISPLAY.DH * 2 };
+    if (edge === 1) return { x: vw + DISPLAY.DW * 2, y: Math.random() * vh };
+    if (edge === 2) return { x: Math.random() * vw, y: vh + DISPLAY.DH * 2 };
+    return { x: -DISPLAY.DW * 2, y: Math.random() * vh };
+  }
+
   function dismiss() {
     if (dismissing || state === 'HIDDEN') return;
-    if (Date.now() - lastDismiss < DISMISS_COOLDOWN) {
+    if (Date.now() - lastDismiss < TIMING.DISMISS_COOLDOWN) {
       jitterButton();
       return;
     }
@@ -755,18 +779,18 @@
     clearTimeout(autoRoostTid);
     clearTimeout(tierDecayTid);
     fading = false;
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, SPRITE.W, SPRITE.H);
     el.style.transition = '';
     el.style.opacity = '1';
 
-    var edge = Math.floor(Math.random() * 4);
-    if (edge === 0) { tx = px; ty = -DH * 2; }
-    else if (edge === 1) { tx = window.innerWidth + DW * 2; ty = py; }
-    else if (edge === 2) { tx = px; ty = window.innerHeight + DH * 2; }
-    else { tx = -DW * 2; ty = py; }
+    const edge = Math.floor(Math.random() * 4);
+    if (edge === 0) { tx = px; ty = -DISPLAY.DH * 2; }
+    else if (edge === 1) { tx = window.innerWidth + DISPLAY.DW * 2; ty = py; }
+    else if (edge === 2) { tx = px; ty = window.innerHeight + DISPLAY.DH * 2; }
+    else { tx = -DISPLAY.DW * 2; ty = py; }
     facingLeft = tx < px;
 
-    var wasPerched = state === 'ROOSTING' || state === 'CURIOUS';
+    const wasPerched = state === 'ROOSTING' || state === 'CURIOUS';
     state = 'FLYOFF_WARMUP';
 
     if (wasPerched) {
@@ -782,16 +806,16 @@
     }
   }
 
-  window.__batthewInCooldown = function () {
-    return Date.now() - lastDismiss < DISMISS_COOLDOWN;
+  window.Coterie.batthew.inCooldown = function () {
+    return Date.now() - lastDismiss < TIMING.DISMISS_COOLDOWN;
   };
 
-  window.__batthewJitter = jitterButton;
+  window.Coterie.batthew.jitter = jitterButton;
 
   function jitterButton() {
-    var btn = document.getElementById('coterie-bat-toggle');
+    const btn = document.getElementById('coterie-bat-toggle');
     if (!btn) return;
-    var offsets = [[2,-1],[-2,2],[1,-2],[-1,1],[0,0]];
+    const offsets = [[2,-1],[-2,2],[1,-2],[-1,1],[0,0]];
     offsets.forEach(function (o, i) {
       setTimeout(function () {
         btn.style.transform = 'translate(' + o[0] + 'px,' + o[1] + 'px)';
@@ -800,7 +824,7 @@
   }
 
   function summon() {
-    if (Date.now() - lastDismiss < DISMISS_COOLDOWN) { jitterButton(); return; }
+    if (Date.now() - lastDismiss < TIMING.DISMISS_COOLDOWN) { jitterButton(); return; }
     clearTimeout(autoRoostTid);
     clearTimeout(curiousTid);
     clearTimeout(tierDecayTid);
@@ -810,18 +834,17 @@
     enabled = true;
     el.style.display = '';
 
-    var edge = Math.floor(Math.random() * 4);
-    if (edge === 0) { px = Math.random() * window.innerWidth; py = -DH * 2; }
-    else if (edge === 1) { px = window.innerWidth + DW * 2; py = Math.random() * window.innerHeight; }
-    else if (edge === 2) { px = Math.random() * window.innerWidth; py = window.innerHeight + DH * 2; }
-    else { px = -DW * 2; py = Math.random() * window.innerHeight; }
+    const pos = randomEdgePosition();
+    px = pos.x;
+    py = pos.y;
     el.style.transform = 'translate3d(' + Math.round(px) + 'px,' + Math.round(py) + 'px,0)';
 
-    tx = DW + Math.random() * (window.innerWidth - DW * 2);
-    ty = DH + Math.random() * (window.innerHeight * 0.5);
+    tx = DISPLAY.DW + Math.random() * (window.innerWidth - DISPLAY.DW * 2);
+    ty = DISPLAY.DH + Math.random() * (window.innerHeight * 0.5);
     facingLeft = tx < px;
     state = 'FLYIN';
     setAnim(Math.random() < 0.5 ? 'move1' : 'move2');
+    startLoop();
   }
 
   function hideBat() {
@@ -838,15 +861,15 @@
   }
 
   function syncEnabled() {
-    var wantOn;
+    let wantOn;
     try { wantOn = localStorage.getItem('coterie-bat-mode') !== 'off'; }
     catch (e) { wantOn = true; }
 
     if (wantOn && !enabled) summon();
     else if (!wantOn && enabled && !dismissing) dismiss();
   }
-  window.__batthewSync = syncEnabled;
-  window.__batthewEcho = function() { if (enabled && !reduced) emitEchoPulse(); };
+  window.Coterie.batthew.sync = syncEnabled;
+  window.Coterie.batthew.echo = function() { if (enabled && !reduced) emitEchoPulse(); };
 
   function checkReduced() {
     reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -857,12 +880,21 @@
       frame = 0;
       render();
     }
+    if (!reduced && enabled) startLoop();
+  }
+
+  // RAF loop: only schedules frames when the bat is active and visible
+  function startLoop() {
+    if (!rafId) rafId = requestAnimationFrame(loop);
   }
 
   function loop(now) {
-    requestAnimationFrame(loop);
-    if (!enabled || document.hidden || reduced) return;
-    var dt = lastTime ? now - lastTime : 0;
+    if (!enabled || document.hidden || reduced) {
+      rafId = null;
+      return;
+    }
+    rafId = requestAnimationFrame(loop);
+    let dt = lastTime ? now - lastTime : 0;
     lastTime = now;
     if (dt > 200) dt = 0;
     measureSpeed();
@@ -884,14 +916,19 @@
   }
 
   function watchTheme() {
+    if (_themeWatching) return;
+    _themeWatching = true;
     new MutationObserver(function () {
-      var t = getTheme();
+      const t = getTheme();
       if (t === theme) return;
       preload(t, function () { theme = t; });
     }).observe(document.body, { attributes: true, attributeFilter: ['data-md-color-scheme'] });
   }
 
   function bindEvents() {
+    if (_eventsBound) return;
+    _eventsBound = true;
+
     document.addEventListener('mousemove', onMouse);
     document.addEventListener('mouseleave', onLeave);
     cvs.addEventListener('click', onCanvasClick);
@@ -905,10 +942,13 @@
         stopAllDrips();
         cleanupEchoPulse();
         if (state === 'FLYING' || state === 'GRABBING') flyToRoost();
+      } else {
+        // Resume loop when page becomes visible again
+        if (enabled && !reduced) startLoop();
       }
     });
 
-    var resizeTid = null;
+    let resizeTid = null;
     window.addEventListener('resize', function () {
       /* Debounce: SPA nav fires resize as content height changes */
       clearTimeout(resizeTid);
@@ -921,7 +961,7 @@
     window.matchMedia('(prefers-reduced-motion: reduce)')
       .addEventListener('change', checkReduced);
 
-    var searchInput = document.querySelector('.md-search__input');
+    const searchInput = document.querySelector('.md-search__input');
     if (searchInput) {
       searchInput.addEventListener('focus', function () { el.style.visibility = 'hidden'; });
       searchInput.addEventListener('blur', function () {
@@ -949,14 +989,14 @@
         return;
       }
 
-      lives = MAX_LIVES;
+      lives = BEHAVIOR.MAX_LIVES;
       deaths = 0;
       tier = 0;
       timesDisturbed = 0;
       computeRoosts();
 
       if (reduced) {
-        var r = roosts[roostIdx];
+        const r = roosts[roostIdx];
         px = r.x; py = r.y;
         clampAndTransform();
         anim = 'idle1';
@@ -967,17 +1007,15 @@
       }
 
       /* Resume from prior session: fly in from edge instead of full spawn */
-      var returning = false;
+      let returning = false;
       try { returning = localStorage.getItem('coterie-bat-active') === '1'; } catch (e) {}
       if (returning) {
-        var edge = Math.floor(Math.random() * 4);
-        if (edge === 0) { px = Math.random() * window.innerWidth; py = -DH * 2; }
-        else if (edge === 1) { px = window.innerWidth + DW * 2; py = Math.random() * window.innerHeight; }
-        else if (edge === 2) { px = Math.random() * window.innerWidth; py = window.innerHeight + DH * 2; }
-        else { px = -DW * 2; py = Math.random() * window.innerHeight; }
+        const pos = randomEdgePosition();
+        px = pos.x;
+        py = pos.y;
         clampAndTransform();
-        tx = DW + Math.random() * (window.innerWidth - DW * 2);
-        ty = DH + Math.random() * (window.innerHeight * 0.5);
+        tx = DISPLAY.DW + Math.random() * (window.innerWidth - DISPLAY.DW * 2);
+        ty = DISPLAY.DH + Math.random() * (window.innerHeight * 0.5);
         facingLeft = tx < px;
         state = 'FLYIN';
         setAnim(Math.random() < 0.5 ? 'move1' : 'move2');
@@ -988,24 +1026,27 @@
 
       bindEvents();
       watchTheme();
-      loop(performance.now());
+      startLoop();
     });
   }
 
-  var BLOOD_FRESH = '#E40707';
-  var BLOOD_DARK = '#6B0606';
-  var DRIP_CAP = 30;
-  var DRIP_GRAVITY = 0.08;
-  var DRIP_BASE_MS = 750;
+  // Blood drip system
+  const BLOOD = {
+    FRESH: '#E40707',
+    DARK: '#6B0606',
+    DRIP_CAP: 30,
+    GRAVITY: 0.08,
+    BASE_MS: 750
+  };
 
-  var dripBox = null;
-  var drips = [];
-  var dripRaf = null;
-  var dripRunning = false;
-  var heartbeatTid = null;
-  var healTid = null;
-  var healCount = 0;
-  var healTarget = 0;
+  let dripBox = null;
+  let drips = [];
+  let dripRaf = null;
+  let dripRunning = false;
+  let heartbeatTid = null;
+  let healTid = null;
+  let healCount = 0;
+  let healTarget = 0;
 
   function ensureDripBox() {
     if (dripBox) return;
@@ -1016,19 +1057,19 @@
 
   function spawnDrip(x, y, color, sizeMin, sizeMax, vyMin, vyMax, vxSpread) {
     if (reduced || !enabled || !dripBox) return;
-    if (drips.length >= DRIP_CAP) {
-      var old = drips.shift();
+    if (drips.length >= BLOOD.DRIP_CAP) {
+      const old = drips.shift();
       if (old.el.parentNode) old.el.parentNode.removeChild(old.el);
     }
-    var sz = sizeMin + Math.random() * (sizeMax - sizeMin);
-    var d = document.createElement('div');
+    const sz = sizeMin + Math.random() * (sizeMax - sizeMin);
+    const d = document.createElement('div');
     d.className = 'blood-drip';
     d.style.width = sz + 'px';
     d.style.height = sz + 'px';
     d.style.backgroundColor = color;
     dripBox.appendChild(d);
 
-    var particle = {
+    const particle = {
       el: d,
       x: x - sz / 2,
       y: y,
@@ -1048,10 +1089,10 @@
   }
 
   function tickDrips() {
-    var i = drips.length;
+    let i = drips.length;
     while (i--) {
-      var d = drips[i];
-      d.vy += DRIP_GRAVITY;
+      const d = drips[i];
+      d.vy += BLOOD.GRAVITY;
       d.x += d.vx;
       d.y += d.vy;
       d.op -= d.fade;
@@ -1072,9 +1113,9 @@
 
   function biteSplash() {
     ensureDripBox();
-    var count = 3 + Math.floor(Math.random() * 4);
-    for (var i = 0; i < count; i++) {
-      spawnDrip(mx, my, BLOOD_FRESH, 4, 8, 1.0, 3.0, 3.0);
+    const count = 3 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < count; i++) {
+      spawnDrip(mx, my, BLOOD.FRESH, 4, 8, 1.0, 3.0, 3.0);
     }
   }
 
@@ -1085,16 +1126,16 @@
   }
 
   function scheduleFeedDrip() {
-    var elapsed = Date.now() - feedStart;
-    var progress = Math.min(elapsed / feedTime, 1);
-    var interval = DRIP_BASE_MS * (1 + progress * 0.8);
-    var jitter = interval * 0.5;
-    var delay = interval + (Math.random() - 0.5) * jitter;
+    const elapsed = Date.now() - feedStart;
+    const progress = Math.min(elapsed / feedTime, 1);
+    const interval = BLOOD.BASE_MS * (1 + progress * 0.8);
+    const jit = interval * 0.5;
+    const delay = interval + (Math.random() - 0.5) * jit;
 
     heartbeatTid = setTimeout(function () {
       if (state !== 'GRABBING') return;
-      var progress2 = Math.min((Date.now() - feedStart) / feedTime, 1);
-      var color = progress2 < 0.6 ? BLOOD_FRESH : BLOOD_DARK;
+      const progress2 = Math.min((Date.now() - feedStart) / feedTime, 1);
+      const color = progress2 < 0.6 ? BLOOD.FRESH : BLOOD.DARK;
       spawnDrip(mx, my, color, 3, 7, 0.2, 1.2, 0.8);
       if (Math.random() < 0.3) {
         spawnDrip(mx + (Math.random() - 0.5) * 6, my, color, 2, 5, 0.3, 0.8, 0.4);
@@ -1117,12 +1158,12 @@
   }
 
   function scheduleHealDrip() {
-    var delay = 800 + Math.random() * 700;
+    const delay = 800 + Math.random() * 700;
     healTid = setTimeout(function () {
-      var t = healCount / healTarget;
-      var lo = 2 + (1 - t) * 3;
-      var hi = 3 + (1 - t) * 5;
-      spawnDrip(mx, my, BLOOD_DARK, lo, hi, 0.1, 0.5, 0.3);
+      const t = healCount / healTarget;
+      const lo = 2 + (1 - t) * 3;
+      const hi = 3 + (1 - t) * 5;
+      spawnDrip(mx, my, BLOOD.DARK, lo, hi, 0.1, 0.5, 0.3);
       healCount++;
       if (healCount < healTarget) {
         scheduleHealDrip();
@@ -1140,22 +1181,37 @@
     stopHealingDrip();
   }
 
-  var ECHO_RAYS = 18;
-  var ECHO_ARC_DEG = 270;
-  var ECHO_MAX_RADIUS = DW * 30;
-  var ECHO_EMIT_MS = 1000;
-  var ECHO_CONTACT_MS = 150;
-  var ECHO_RETURN_MS = 1000;
-  var ECHO_OPACITY = 0.2;
-  var ECHO_FLY_ARCS = [270, 180, 90];
-  var ECHO_FLY_INTERVALS = [[5000, 8000], [2500, 4000], [1000, 2000]];
-  var ECHO_FLY_OPACITY = [0.2, 0.2, 0.12];
-  var ECHO_FREQ = 7;
-  var ECHO_AMP = 4;
+  // Echolocation system
+  const ECHO = {
+    RAYS: 18,
+    ARC_DEG: 270,
+    MAX_RADIUS: DISPLAY.DW * 30,
+    EMIT_MS: 1000,
+    CONTACT_MS: 150,
+    RETURN_MS: 1000,
+    OPACITY: 0.2,
+    FLY_ARCS: [270, 180, 90],
+    FLY_INTERVALS: [[5000, 8000], [2500, 4000], [1000, 2000]],
+    FLY_OPACITY: [0.2, 0.2, 0.12],
+    FREQ: 7,
+    AMP: 4
+  };
 
-  var echoSvg = null;
-  var echoPulses = [];
-  var echoTicking = false;
+  const ECHO_SELECTORS = [
+    '.md-sidebar',
+    '.md-search',
+    '.md-content h1',
+    '.md-content img',
+    '.highlight', 'pre',
+    '.admonition',
+    '.md-typeset table',
+    '.md-top',
+    '.md-footer__link'
+  ];
+
+  let echoSvg = null;
+  let echoPulses = [];
+  let echoTicking = false;
 
   function createEchoSvg() {
     if (echoSvg && echoSvg.parentNode) return;
@@ -1169,34 +1225,22 @@
     document.body.appendChild(echoSvg);
   }
 
-  var ECHO_SELECTORS = [
-    '.md-sidebar',
-    '.md-search',
-    '.md-content h1',
-    '.md-content img',
-    '.highlight', 'pre',
-    '.admonition',
-    '.md-typeset table',
-    '.md-top',
-    '.md-footer__link'
-  ];
-
-  function echoIsVisible(el) {
-    if (!el) return false;
-    if (el.offsetParent === null && getComputedStyle(el).position !== 'fixed') return false;
-    var r = el.getBoundingClientRect();
+  function echoIsVisible(target) {
+    if (!target) return false;
+    if (target.offsetParent === null && getComputedStyle(target).position !== 'fixed') return false;
+    const r = target.getBoundingClientRect();
     if (r.width === 0 || r.height === 0) return false;
     return r.bottom > 0 && r.top < window.innerHeight &&
            r.right > 0 && r.left < window.innerWidth;
   }
 
   function gatherReflectors() {
-    var rects = [];
-    for (var i = 0; i < ECHO_SELECTORS.length; i++) {
-      var els = document.querySelectorAll(ECHO_SELECTORS[i]);
-      for (var j = 0; j < els.length; j++) {
+    const rects = [];
+    for (let i = 0; i < ECHO_SELECTORS.length; i++) {
+      const els = document.querySelectorAll(ECHO_SELECTORS[i]);
+      for (let j = 0; j < els.length; j++) {
         if (echoIsVisible(els[j])) {
-          var r = els[j].getBoundingClientRect();
+          const r = els[j].getBoundingClientRect();
           rects.push({ x: r.left, y: r.top, w: r.width, h: r.height });
         }
       }
@@ -1206,19 +1250,19 @@
   }
 
   function rayHitRect(ox, oy, cos, sin, rect) {
-    var tmin = 0, tmax = ECHO_MAX_RADIUS;
-    var invX = cos !== 0 ? 1 / cos : 1e12;
-    var t1 = (rect.x - ox) * invX;
-    var t2 = (rect.x + rect.w - ox) * invX;
-    if (invX < 0) { var tmp = t1; t1 = t2; t2 = tmp; }
+    let tmin = 0, tmax = ECHO.MAX_RADIUS;
+    const invX = cos !== 0 ? 1 / cos : 1e12;
+    let t1 = (rect.x - ox) * invX;
+    let t2 = (rect.x + rect.w - ox) * invX;
+    if (invX < 0) { const tmp = t1; t1 = t2; t2 = tmp; }
     tmin = Math.max(tmin, t1);
     tmax = Math.min(tmax, t2);
     if (tmin > tmax) return -1;
 
-    var invY = sin !== 0 ? 1 / sin : 1e12;
+    const invY = sin !== 0 ? 1 / sin : 1e12;
     t1 = (rect.y - oy) * invY;
     t2 = (rect.y + rect.h - oy) * invY;
-    if (invY < 0) { tmp = t1; t1 = t2; t2 = tmp; }
+    if (invY < 0) { const tmp = t1; t1 = t2; t2 = tmp; }
     tmin = Math.max(tmin, t1);
     tmax = Math.min(tmax, t2);
     if (tmin > tmax) return -1;
@@ -1227,20 +1271,20 @@
   }
 
   function castEchoRays(cx, cy, facingAngle, arcDeg) {
-    var rects = gatherReflectors();
-    var startAngle = facingAngle - (arcDeg / 2) * (Math.PI / 180);
-    var step = arcDeg / (ECHO_RAYS - 1) * (Math.PI / 180);
-    var hits = [];
+    const rects = gatherReflectors();
+    const startAngle = facingAngle - (arcDeg / 2) * (Math.PI / 180);
+    const step = arcDeg / (ECHO.RAYS - 1) * (Math.PI / 180);
+    const hits = [];
 
-    for (var i = 0; i < ECHO_RAYS; i++) {
-      var angle = startAngle + step * i;
-      var cos = Math.cos(angle);
-      var sin = Math.sin(angle);
-      var closest = ECHO_MAX_RADIUS;
-      var hitSomething = false;
+    for (let i = 0; i < ECHO.RAYS; i++) {
+      const angle = startAngle + step * i;
+      const cos = Math.cos(angle);
+      const sin = Math.sin(angle);
+      let closest = ECHO.MAX_RADIUS;
+      let hitSomething = false;
 
-      for (var j = 0; j < rects.length; j++) {
-        var t = rayHitRect(cx, cy, cos, sin, rects[j]);
+      for (let j = 0; j < rects.length; j++) {
+        const t = rayHitRect(cx, cy, cos, sin, rects[j]);
         if (t > 0 && t < closest) {
           closest = t;
           hitSomething = true;
@@ -1259,26 +1303,26 @@
   }
 
   function buildSineArcPath(cx, cy, radius, startAngle, arcRad, freq, amp, phase, perRayDist) {
-    var steps = 72;
-    var d = '';
-    var penDown = false;
+    const steps = 72;
+    let d = '';
+    let penDown = false;
 
-    for (var i = 0; i <= steps; i++) {
-      var t = i / steps;
-      var angle = startAngle + arcRad * t;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const angle = startAngle + arcRad * t;
 
-      var rayIdx = Math.round(t * (ECHO_RAYS - 1));
-      var maxR = perRayDist ? perRayDist[rayIdx] : ECHO_MAX_RADIUS;
+      const rayIdx = Math.round(t * (ECHO.RAYS - 1));
+      const maxR = perRayDist ? perRayDist[rayIdx] : ECHO.MAX_RADIUS;
 
       /* Skip sections where the wave already hit a surface */
       if (radius > maxR) { penDown = false; continue; }
 
-      var scaledAmp = amp * (radius / 100);
-      var sineOffset = Math.sin(freq * t * Math.PI * 2 + phase) * scaledAmp;
-      var r = radius + sineOffset;
+      const scaledAmp = amp * (radius / 100);
+      const sineOffset = Math.sin(freq * t * Math.PI * 2 + phase) * scaledAmp;
+      const r = radius + sineOffset;
 
-      var x = cx + Math.cos(angle) * r;
-      var y = cy + Math.sin(angle) * r;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
       d += (penDown ? 'L' : 'M') + x.toFixed(1) + ',' + y.toFixed(1);
       penDown = true;
     }
@@ -1286,23 +1330,23 @@
   }
 
   function buildReturnWavePath(cx, cy, hitX, hitY, progress, freq, amp, phase) {
-    var dx = hitX - cx, dy = hitY - cy;
-    var hitDist = Math.sqrt(dx * dx + dy * dy);
-    var hitAngle = Math.atan2(dy, dx);
+    const dx = hitX - cx, dy = hitY - cy;
+    const hitDist = Math.sqrt(dx * dx + dy * dy);
+    const hitAngle = Math.atan2(dy, dx);
 
-    var currentDist = hitDist * (1 - progress);
-    var arcSpan = 0.4;
-    var steps = 12;
-    var d = '';
+    const currentDist = hitDist * (1 - progress);
+    const arcSpan = 0.4;
+    const steps = 12;
+    let d = '';
 
-    for (var i = 0; i <= steps; i++) {
-      var t = i / steps;
-      var angle = hitAngle - arcSpan / 2 + arcSpan * t;
-      var scaledAmp = amp * (currentDist / 100) * (1 - progress);
-      var sineOffset = Math.sin(freq * t * Math.PI * 2 + phase) * scaledAmp;
-      var r = currentDist + sineOffset;
-      var x = cx + Math.cos(angle) * r;
-      var y = cy + Math.sin(angle) * r;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const angle = hitAngle - arcSpan / 2 + arcSpan * t;
+      const scaledAmp = amp * (currentDist / 100) * (1 - progress);
+      const sineOffset = Math.sin(freq * t * Math.PI * 2 + phase) * scaledAmp;
+      const r = currentDist + sineOffset;
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
       d += (i === 0 ? 'M' : 'L') + x.toFixed(1) + ',' + y.toFixed(1);
     }
     return d;
@@ -1314,31 +1358,31 @@
         state === 'HIT' || state === 'GRABBING') return;
     createEchoSvg();
 
-    var cx = px + DW / 2;
-    var cy = py + DH / 2;
+    const cx = px + DISPLAY.DW / 2;
+    const cy = py + DISPLAY.DH / 2;
 
-    var facingAngle;
+    let facingAngle;
     if (state === 'CURIOUS' || state === 'ROOSTING') {
       facingAngle = Math.PI / 2;
     } else {
       facingAngle = facingLeft ? Math.PI : 0;
     }
 
-    var arcDeg = ECHO_ARC_DEG;
-    if (state === 'FLYING') arcDeg = ECHO_FLY_ARCS[tier];
-    var op = opOverride != null ? opOverride : ECHO_OPACITY;
+    let arcDeg = ECHO.ARC_DEG;
+    if (state === 'FLYING') arcDeg = ECHO.FLY_ARCS[tier];
+    const op = opOverride != null ? opOverride : ECHO.OPACITY;
 
-    var hits = castEchoRays(cx, cy, facingAngle, arcDeg);
-    var perRayDist = hits.map(function(h) { return h.dist; });
+    const hits = castEchoRays(cx, cy, facingAngle, arcDeg);
+    const perRayDist = hits.map(function(h) { return h.dist; });
 
-    var returnWaves = [];
-    for (var i = 0; i < hits.length; i++) {
+    const returnWaves = [];
+    for (let i = 0; i < hits.length; i++) {
       if (hits[i].hit) {
         returnWaves.push({
           px: hits[i].px,
           py: hits[i].py,
-          freq: ECHO_FREQ * (0.5 + Math.random() * 1.5),
-          amp: ECHO_AMP * (0.3 + Math.random() * 1.2),
+          freq: ECHO.FREQ * (0.5 + Math.random() * 1.5),
+          amp: ECHO.AMP * (0.3 + Math.random() * 1.2),
           phase: Math.random() * Math.PI * 2,
           started: false,
           startTime: 0
@@ -1346,12 +1390,12 @@
       }
     }
 
-    var arcPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    const arcPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     arcPath.setAttribute('opacity', op);
     echoSvg.appendChild(arcPath);
 
-    var startAngle = facingAngle - (arcDeg / 2) * (Math.PI / 180);
-    var arcRad = arcDeg * (Math.PI / 180);
+    const startAngle = facingAngle - (arcDeg / 2) * (Math.PI / 180);
+    const arcRad = arcDeg * (Math.PI / 180);
 
     echoPulses.push({
       cx: cx,
@@ -1378,18 +1422,18 @@
   function scheduleEchoFly() {
     clearTimeout(echoFlyTid);
     if (state !== 'FLYING' || Date.now() < digestUntil) return;
-    var interval = ECHO_FLY_INTERVALS[tier];
-    var delay = interval[0] + Math.random() * (interval[1] - interval[0]);
+    const interval = ECHO.FLY_INTERVALS[tier];
+    const delay = interval[0] + Math.random() * (interval[1] - interval[0]);
     echoFlyTid = setTimeout(function() {
       if (state !== 'FLYING') return;
-      var op = ECHO_FLY_OPACITY[tier];
+      const op = ECHO.FLY_OPACITY[tier];
       emitEchoPulse(op);
       if (tier === 2) {
         /* Double-chirp: second pulse 100ms after first concludes */
         echoFlyTid = setTimeout(function() {
           if (state === 'FLYING') emitEchoPulse(op);
           scheduleEchoFly();
-        }, ECHO_EMIT_MS + ECHO_RETURN_MS + 100);
+        }, ECHO.EMIT_MS + ECHO.RETURN_MS + 100);
       } else {
         scheduleEchoFly();
       }
@@ -1400,35 +1444,35 @@
     if (echoPulses.length === 0) { echoTicking = false; return; }
     if (!enabled) { cleanupEchoPulse(); return; }
 
-    for (var p = echoPulses.length - 1; p >= 0; p--) {
-      var d = echoPulses[p];
-      var elapsed = now - d.startTime;
+    for (let p = echoPulses.length - 1; p >= 0; p--) {
+      const d = echoPulses[p];
+      const elapsed = now - d.startTime;
 
       if (d.phase === 'emit') {
-        var progress = Math.min(elapsed / ECHO_EMIT_MS, 1);
-        var currentRadius = progress * ECHO_MAX_RADIUS;
-        var dStr = buildSineArcPath(
+        const progress = Math.min(elapsed / ECHO.EMIT_MS, 1);
+        const currentRadius = progress * ECHO.MAX_RADIUS;
+        const dStr = buildSineArcPath(
           d.cx, d.cy, currentRadius, d.startAngle, d.arcRad,
-          ECHO_FREQ, ECHO_AMP, 0, d.perRayDist
+          ECHO.FREQ, ECHO.AMP, 0, d.perRayDist
         );
         d.arcPath.setAttribute('d', dStr);
         d.arcPath.setAttribute('opacity', d.op * (1 - progress * 0.3));
 
-        for (var i = 0; i < d.returnWaves.length; i++) {
-          var rw = d.returnWaves[i];
+        for (let i = 0; i < d.returnWaves.length; i++) {
+          const rw = d.returnWaves[i];
           if (rw.started) continue;
-          var rwDist = Math.sqrt(
+          const rwDist = Math.sqrt(
             (rw.px - d.cx) * (rw.px - d.cx) + (rw.py - d.cy) * (rw.py - d.cy)
           );
           if (currentRadius >= rwDist) {
             rw.started = true;
             rw.startTime = now;
-            var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
             path.setAttribute('opacity', d.op);
             echoSvg.appendChild(path);
             d.returnPaths.push({ path: path, wave: rw });
 
-            var ripple = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            const ripple = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
             ripple.setAttribute('cx', rw.px);
             ripple.setAttribute('cy', rw.py);
             ripple.setAttribute('r', '3');
@@ -1441,8 +1485,8 @@
               return function() {
                 r.setAttribute('r', '12');
                 r.setAttribute('opacity', '0');
-                r.style.transition = 'all ' + ECHO_CONTACT_MS + 'ms ease-out';
-                setTimeout(function() { if (r.parentNode) r.parentNode.removeChild(r); }, ECHO_CONTACT_MS);
+                r.style.transition = 'all ' + ECHO.CONTACT_MS + 'ms ease-out';
+                setTimeout(function() { if (r.parentNode) r.parentNode.removeChild(r); }, ECHO.CONTACT_MS);
               };
             }(ripple), 16);
           }
@@ -1455,15 +1499,15 @@
         }
       }
 
-      var allReturnsDone = true;
-      for (var i = 0; i < d.returnPaths.length; i++) {
-        var rp = d.returnPaths[i];
-        var rElapsed = now - rp.wave.startTime;
-        var rProgress = Math.min(rElapsed / ECHO_RETURN_MS, 1);
+      let allReturnsDone = true;
+      for (let i = 0; i < d.returnPaths.length; i++) {
+        const rp = d.returnPaths[i];
+        const rElapsed = now - rp.wave.startTime;
+        const rProgress = Math.min(rElapsed / ECHO.RETURN_MS, 1);
 
         if (rProgress < 1) {
           allReturnsDone = false;
-          var dStr = buildReturnWavePath(
+          const dStr = buildReturnWavePath(
             d.cx, d.cy, rp.wave.px, rp.wave.py,
             rProgress, rp.wave.freq, rp.wave.amp, rp.wave.phase
           );
@@ -1474,7 +1518,7 @@
         }
       }
 
-      if (d.phase === 'return' && (allReturnsDone || elapsed > ECHO_RETURN_MS + 200)) {
+      if (d.phase === 'return' && (allReturnsDone || elapsed > ECHO.RETURN_MS + 200)) {
         removePulse(p);
       }
     }
@@ -1487,9 +1531,9 @@
   }
 
   function removePulse(idx) {
-    var d = echoPulses[idx];
+    const d = echoPulses[idx];
     if (d.arcPath.parentNode) d.arcPath.parentNode.removeChild(d.arcPath);
-    for (var i = 0; i < d.returnPaths.length; i++) {
+    for (let i = 0; i < d.returnPaths.length; i++) {
       if (d.returnPaths[i].path.parentNode) d.returnPaths[i].path.parentNode.removeChild(d.returnPaths[i].path);
     }
     echoPulses.splice(idx, 1);
@@ -1502,7 +1546,7 @@
     echoTicking = false;
   }
 
-  var inited = false;
+  let inited = false;
   function initOnce() {
     if (inited) return;
     inited = true;

@@ -337,19 +337,12 @@ h2, h3, h4, h5, h6 {
   text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Scheme-qualified: Zensical palette CSS targets these at 0,1,1 */
-[data-md-color-scheme="slate"] .md-content h2,
-[data-md-color-scheme="default"] .md-content h2,
-[data-md-color-scheme="abyss"] .md-content h2 { color: var(--color-h2); }
-[data-md-color-scheme="slate"] .md-content h3,
-[data-md-color-scheme="default"] .md-content h3,
-[data-md-color-scheme="abyss"] .md-content h3 { color: var(--color-h3); }
-[data-md-color-scheme="slate"] .md-content h4,
-[data-md-color-scheme="default"] .md-content h4,
-[data-md-color-scheme="abyss"] .md-content h4 { color: var(--color-h4); }
-[data-md-color-scheme="slate"] .md-content h5,
-[data-md-color-scheme="default"] .md-content h5,
-[data-md-color-scheme="abyss"] .md-content h5 { color: var(--color-accent); }
+/* Scheme-qualified: Zensical palette CSS targets these at 0,1,1.
+   Using [data-md-color-scheme] (any value) matches all three schemes at the same specificity. */
+[data-md-color-scheme] .md-content h2 { color: var(--color-h2); }
+[data-md-color-scheme] .md-content h3 { color: var(--color-h3); }
+[data-md-color-scheme] .md-content h4 { color: var(--color-h4); }
+[data-md-color-scheme] .md-content h5 { color: var(--color-accent); }
 
 /* • ━ ━ • ━ pattern, the game's 5s motif */
 .md-content h2 {
@@ -454,15 +447,22 @@ body[data-font-mode="dyslexic"] .md-search {
 /* 5. Layout & Animations */
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(0.625rem); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 .md-content__inner {
-  animation: fadeIn var(--transition-page) ease-out;
+  animation: fadeIn 250ms ease-out;
 }
 
-* {
+.md-header,
+.md-nav,
+.md-content,
+.md-footer,
+.md-sidebar,
+.md-tabs,
+.md-search,
+body {
   transition: background-color var(--transition-theme),
               color var(--transition-theme),
               border-color var(--transition-theme);
@@ -515,56 +515,6 @@ a, button, .md-nav__link, .md-footer__link {
 .md-header__option { order: 40; }
 .md-header__source { order: 50; }
 
-/*
- * Terminology toggle, disabled until more game content is written.
- * Preserved for rewrite; re-enable in zensical.toml extra_javascript.
- *
- * #coterie-terminology-toggle { order: 10; }
- *
- * .term-toggle {
- *   display: flex;
- *   align-items: center;
- *   gap: 0.15rem;
- * }
- *
- * .term-toggle__label {
- *   font-size: 0.9rem;
- *   color: var(--md-primary-bg-color);
- *   cursor: pointer;
- *   transition: opacity var(--transition-quick);
- * }
- *
- * .term-toggle__label--vtm { font-family: "Metamorphous", serif; }
- * .term-toggle__label--generic { font-family: "IM Fell English SC", serif; }
- *
- * .term-toggle[data-mode="vtm"] .term-toggle__label--vtm { opacity: 1; }
- * .term-toggle[data-mode="vtm"] .term-toggle__label--generic { opacity: 0.5; }
- * .term-toggle[data-mode="generic"] .term-toggle__label--vtm { opacity: 0.5; }
- * .term-toggle[data-mode="generic"] .term-toggle__label--generic { opacity: 1; }
- *
- * .term-toggle[data-mode="vtm"]::after { opacity: 0.5; }
- * .term-toggle[data-mode="generic"]::after { opacity: 1; }
- *
- * .term-toggle__btn {
- *   background: none;
- *   border: none;
- *   cursor: pointer;
- *   padding: 0;
- *   display: flex;
- *   align-items: center;
- * }
- *
- * .term-toggle__btn:focus-visible {
- *   outline: 2px solid var(--color-accent);
- *   outline-offset: -2px;
- * }
- *
- * .term-toggle__btn svg {
- *   width: 20px;
- *   height: 20px;
- *   fill: var(--md-accent-fg-color);
- * }
- */
 
 .md-header__option label.md-header__button {
   padding: 0.3rem;
@@ -615,7 +565,7 @@ a, button, .md-nav__link, .md-footer__link {
   width: 20px;
   height: 20px;
   translate: 0 0;
-  animation: sunset-glow 30s ease-in-out infinite;
+  animation: sunset-glow var(--anim-sunset-glow) ease-in-out infinite;
 }
 [data-md-color-scheme="default"] .eye-toggle__eye--2,
 [data-md-color-scheme="default"] .eye-toggle__eye--3 {
@@ -642,7 +592,7 @@ a, button, .md-nav__link, .md-footer__link {
 [data-md-color-scheme="abyss"] .eye-toggle__eye {
   width: 11px;
   height: 11px;
-  animation: abyss-breathe 3s ease-in-out infinite;
+  animation: abyss-breathe var(--anim-abyss-breathe) ease-in-out infinite;
 }
 
 /* Abyss rotation states: JS cycles data-rotation */
@@ -699,19 +649,6 @@ a, button, .md-nav__link, .md-footer__link {
 /* Preserve eye transitions during Zensical's color-switching suppression */
 [data-md-color-switching] .eye-toggle .eye-toggle__eye {
   transition-duration: 300ms !important;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .eye-toggle__eye {
-    transition: none;
-    animation: none !important;
-  }
-  [data-md-color-switching] .eye-toggle .eye-toggle__eye {
-    transition-duration: 0ms !important;
-  }
-  .md-header__source {
-    animation: none !important;
-  }
 }
 
 .md-header__button.bat-toggle {
@@ -850,7 +787,7 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 [data-md-color-scheme="abyss"] .bat-stats__mugshot {
-  animation: batthew-glow 3s ease-in-out infinite;
+  animation: batthew-glow var(--anim-batthew-glow) ease-in-out infinite;
 }
 
 .bat-stats__row {
@@ -893,11 +830,6 @@ a, button, .md-nav__link, .md-footer__link {
   padding: 0.5rem 0;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .bat-stats__icon { transition: none; }
-  .bat-stats__popover { transition: none; }
-}
-
 .text-size-rocker {
   display: flex;
   align-items: center;
@@ -934,33 +866,13 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 /* −/+ buttons get accent fill */
-[data-md-color-scheme="slate"] .text-size-rocker__btn[data-text-size="decrease"],
-[data-md-color-scheme="slate"] .text-size-rocker__btn[data-text-size="increase"] {
+[data-md-color-scheme] .text-size-rocker__btn[data-text-size="decrease"],
+[data-md-color-scheme] .text-size-rocker__btn[data-text-size="increase"] {
   background: var(--color-primary);
 }
 
-[data-md-color-scheme="slate"] .text-size-rocker__btn[data-text-size="decrease"]:hover,
-[data-md-color-scheme="slate"] .text-size-rocker__btn[data-text-size="increase"]:hover {
-  background: var(--color-primary-light);
-}
-
-[data-md-color-scheme="default"] .text-size-rocker__btn[data-text-size="decrease"],
-[data-md-color-scheme="default"] .text-size-rocker__btn[data-text-size="increase"] {
-  background: var(--color-primary);
-}
-
-[data-md-color-scheme="default"] .text-size-rocker__btn[data-text-size="decrease"]:hover,
-[data-md-color-scheme="default"] .text-size-rocker__btn[data-text-size="increase"]:hover {
-  background: var(--color-primary-light);
-}
-
-[data-md-color-scheme="abyss"] .text-size-rocker__btn[data-text-size="decrease"],
-[data-md-color-scheme="abyss"] .text-size-rocker__btn[data-text-size="increase"] {
-  background: var(--color-primary);
-}
-
-[data-md-color-scheme="abyss"] .text-size-rocker__btn[data-text-size="decrease"]:hover,
-[data-md-color-scheme="abyss"] .text-size-rocker__btn[data-text-size="increase"]:hover {
+[data-md-color-scheme] .text-size-rocker__btn[data-text-size="decrease"]:hover,
+[data-md-color-scheme] .text-size-rocker__btn[data-text-size="increase"]:hover {
   background: var(--color-primary-light);
 }
 
@@ -1007,6 +919,17 @@ a, button, .md-nav__link, .md-footer__link {
 
 
 /* Ambient background: blurred blobs, GPU-composited */
+
+/* Tuned animation durations: coprime values prevent visible repetition */
+:root {
+  --anim-blob-drift-1: 71s;
+  --anim-blob-drift-2: 97s;
+  --anim-smoke-1: 37s;
+  --anim-smoke-2: 43s;
+  --anim-sunset-glow: 30s;
+  --anim-abyss-breathe: 3s;
+  --anim-batthew-glow: 3s;
+}
 
 .ambient-blob {
   position: fixed;
@@ -1088,7 +1011,7 @@ a, button, .md-nav__link, .md-footer__link {
   height: 70vh;
   top: -40vh;
   left: -50vw;
-  animation: drift-top 71s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  animation: drift-top var(--anim-blob-drift-1) cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
 .ambient-blob--bottom {
@@ -1096,7 +1019,7 @@ a, button, .md-nav__link, .md-footer__link {
   height: 70vh;
   bottom: -45vh;
   right: -50vw;
-  animation: drift-bottom 97s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+  animation: drift-bottom var(--anim-blob-drift-2) cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
 }
 
 @keyframes drift-top {
@@ -1122,8 +1045,8 @@ a, button, .md-nav__link, .md-footer__link {
   will-change: transform, rotate;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:
-    smoke-drift 37s linear infinite,
-    smoke-warp 43s ease-in-out infinite alternate;
+    smoke-drift var(--anim-smoke-1) linear infinite,
+    smoke-warp var(--anim-smoke-2) ease-in-out infinite alternate;
 }
 
 @keyframes smoke-drift {
@@ -1134,14 +1057,6 @@ a, button, .md-nav__link, .md-footer__link {
 @keyframes smoke-warp {
   from { rotate: 0deg; }
   to   { rotate: 8deg; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ambient-blob,
-  .ambient-smoke { animation: none; }
-
-  .md-content__inner { animation: none; }
-  * { transition-duration: 0s !important; }
 }
 
 
@@ -1216,10 +1131,10 @@ a, button, .md-nav__link, .md-footer__link {
     drop-shadow(0 0 6px var(--color-glow));
 }
 [data-md-color-scheme="default"] .md-header__source {
-  animation: source-glow-sunset 30s ease-in-out infinite;
+  animation: source-glow-sunset var(--anim-sunset-glow) ease-in-out infinite;
 }
 [data-md-color-scheme="abyss"] .md-header__source {
-  animation: source-glow-abyss 3s ease-in-out infinite;
+  animation: source-glow-abyss var(--anim-abyss-breathe) ease-in-out infinite;
 }
 
 .md-header__source::before {
@@ -1379,12 +1294,8 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 /* Override Zensical's opacity: .7 hover dim */
-[data-md-color-scheme="slate"] .md-footer__link:hover,
-[data-md-color-scheme="slate"] .md-footer__link:focus,
-[data-md-color-scheme="default"] .md-footer__link:hover,
-[data-md-color-scheme="default"] .md-footer__link:focus,
-[data-md-color-scheme="abyss"] .md-footer__link:hover,
-[data-md-color-scheme="abyss"] .md-footer__link:focus {
+[data-md-color-scheme] .md-footer__link:hover,
+[data-md-color-scheme] .md-footer__link:focus {
   opacity: 1;
 }
 
@@ -1494,13 +1405,13 @@ a, button, .md-nav__link, .md-footer__link {
 }
 
 .md-typeset .admonition:hover {
-  transform: translateX(4px);
+  transform: translateX(0.25rem);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .darkpack-logo {
   float: right;
-  width: 120px;
+  width: 7.5rem;
   height: auto;
   margin: -0.5rem 0 0.5rem 1rem;
   border-radius: 4px;
@@ -1508,7 +1419,7 @@ a, button, .md-nav__link, .md-footer__link {
 
 @media (max-width: 480px) {
   .darkpack-logo {
-    width: 80px;
+    width: 5rem;
     margin: -0.25rem 0 0.4rem 0.75rem;
   }
 }
@@ -1639,18 +1550,14 @@ code,
 }
 
 /* Animated underline on hover; scheme-qualified because Zensical sets --md-typeset-a-color at 0,1,1 */
-[data-md-color-scheme="slate"] .md-typeset a,
-[data-md-color-scheme="default"] .md-typeset a,
-[data-md-color-scheme="abyss"] .md-typeset a {
+[data-md-color-scheme] .md-typeset a {
   color: var(--color-accent);
   text-decoration: none;
   position: relative;
   transition: color var(--transition-normal);
 }
 
-[data-md-color-scheme="slate"] .md-typeset a::after,
-[data-md-color-scheme="default"] .md-typeset a::after,
-[data-md-color-scheme="abyss"] .md-typeset a::after {
+[data-md-color-scheme] .md-typeset a::after {
   content: '';
   position: absolute;
   left: 0;
@@ -1661,24 +1568,16 @@ code,
   transition: width var(--transition-normal) ease-out;
 }
 
-[data-md-color-scheme="slate"] .md-typeset a:hover,
-[data-md-color-scheme="default"] .md-typeset a:hover,
-[data-md-color-scheme="abyss"] .md-typeset a:hover {
+[data-md-color-scheme] .md-typeset a:hover {
   color: var(--color-accent-hover);
 }
 
-[data-md-color-scheme="slate"] .md-typeset a:hover::after,
-[data-md-color-scheme="default"] .md-typeset a:hover::after,
-[data-md-color-scheme="abyss"] .md-typeset a:hover::after {
+[data-md-color-scheme] .md-typeset a:hover::after {
   width: 100%;
 }
 
-[data-md-color-scheme="slate"] .md-typeset a:active,
-[data-md-color-scheme="default"] .md-typeset a:active,
-[data-md-color-scheme="abyss"] .md-typeset a:active,
-[data-md-color-scheme="slate"] .md-nav__link--active,
-[data-md-color-scheme="default"] .md-nav__link--active,
-[data-md-color-scheme="abyss"] .md-nav__link--active {
+[data-md-color-scheme] .md-typeset a:active,
+[data-md-color-scheme] .md-nav__link--active {
   color: var(--color-accent);
 }
 
@@ -1849,10 +1748,6 @@ code,
   will-change: transform, opacity;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .blood-drips { display: none; }
-}
-
 #batthew {
   position: fixed;
   top: 0;
@@ -1873,17 +1768,12 @@ code,
 
 [data-md-color-scheme="abyss"] #batthew canvas {
   opacity: 0.8;
-  animation: batthew-glow 3s ease-in-out infinite;
+  animation: batthew-glow var(--anim-batthew-glow) ease-in-out infinite;
 }
 
 @keyframes batthew-glow {
   0%, 100% { filter: drop-shadow(0 0 3px var(--color-glow)) drop-shadow(0 0 6px color-mix(in srgb, var(--color-glow) 40%, transparent)); }
   50%      { filter: drop-shadow(0 0 6px var(--color-glow-bright)) drop-shadow(0 0 12px color-mix(in srgb, var(--color-glow) 60%, transparent)); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  #batthew { will-change: auto; }
-  [data-md-color-scheme="abyss"] #batthew canvas { animation: none; }
 }
 
 .echo-overlay {
@@ -1901,25 +1791,8 @@ code,
   stroke-linecap: round;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .echo-overlay { display: none; }
-}
 
-
-/* 10. FOUC Prevention (disabled with toggle) */
-
-/*
- * body:not([data-terminology-mode]) .md-content,
- * body:not([data-terminology-mode]) .md-nav {
- *   opacity: 0.01;
- *   transition: opacity 0.15s ease-in;
- * }
- *
- * body[data-terminology-mode] .md-content,
- * body[data-terminology-mode] .md-nav {
- *   opacity: 1;
- * }
- */
+/* 10. (reserved) */
 
 
 /* 11. Print */
@@ -1933,16 +1806,53 @@ code,
 /* 12. Responsive */
 
 @media (prefers-reduced-motion: reduce) {
+  /* Global */
+  * { transition-duration: 0s !important; }
+  .md-content__inner { animation: none; }
+
+  /* Eye toggle */
+  .eye-toggle__eye {
+    transition: none;
+    animation: none !important;
+  }
+  [data-md-color-switching] .eye-toggle .eye-toggle__eye {
+    transition-duration: 0ms !important;
+  }
+  .md-header__source {
+    animation: none !important;
+  }
+
+  /* Bat stats */
+  .bat-stats__icon { transition: none; }
+  .bat-stats__popover { transition: none; }
+
+  /* Ambient */
+  .ambient-blob,
+  .ambient-smoke { animation: none; }
+
+  /* Blood drips */
+  .blood-drips { display: none; }
+
+  /* Batthew */
+  #batthew { will-change: auto; }
+  [data-md-color-scheme="abyss"] #batthew canvas { animation: none; }
+
+  /* Echolocation */
+  .echo-overlay { display: none; }
+
+  /* Pronunciation */
   .pron-btn:hover,
   .pron-btn:active { transform: none; }
   .pron-btn.playing { animation: none; }
 
+  /* Footer */
   .md-footer__link:hover { transform: none; }
   .md-footer__button:hover {
     transform: translateY(-50%);
     filter: none;
   }
 
+  /* Navigation + components */
   .md-tabs__link:hover { transform: none; }
   .md-nav__link:hover { padding-left: 0; }
   .md-typeset .admonition:hover { transform: none; }

@@ -20,7 +20,6 @@ ENV/
 # IDE & Stuff
 .vscode/
 .idea/
-.obsidian/
 *.swp
 *.swo
 *~
@@ -28,9 +27,6 @@ ENV/
 # OS Crap
 .DS_Store
 Thumbs.db
-
-# Build cache
-.cache/
 
 # Vamp sheet stuff
 vamp/node_modules/
