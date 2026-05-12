@@ -28,6 +28,7 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Vamp sheet stuff
+# Vamp Sheet & Playtesting Stuff
 vamp/node_modules/
 vamp/dist/
+playtest/
