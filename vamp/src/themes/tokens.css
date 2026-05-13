@@ -22,6 +22,9 @@
   --v-glass-bg: var(--_glass-bg);
   --v-glass-border: var(--_glass-border);
 
+  --v-dice-body: var(--_dice-body);
+  --v-dice-numeral: var(--_dice-numeral);
+
   --v-danger: #c62828;
   --v-warning: #e65100;
   --v-success: #2e7d32;

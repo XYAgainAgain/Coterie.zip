@@ -3,6 +3,7 @@ import { signal } from '@preact/signals';
 import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
 import { EyeToggle } from './components/EyeToggle';
+import { DiceOverlay } from './dice/DiceOverlay';
 
 const editMode = signal(false);
 
@@ -43,6 +44,7 @@ export function App() {
           <Route path="/vamp/:slug" component={CharacterSheet} />
         </Router>
       </main>
+      <DiceOverlay />
     </div>
   );
 }

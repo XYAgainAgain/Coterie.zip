@@ -22,5 +22,8 @@
   --_glass-bg: hsla(240, 4%, 11%, 0.82);
   --_glass-border: hsla(0, 60%, 40%, 0.15);
 
+  --_dice-body: #96031a;
+  --_dice-numeral: #faa916;
+
   color-scheme: dark;
 }

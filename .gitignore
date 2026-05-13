@@ -1,8 +1,8 @@
 # Build Output
 site/
 
-# Development Files
-.dev/
+# Development Files; dev undotted so I can see it in Obsidian
+dev/
 .obsidian/
 .cache/
 

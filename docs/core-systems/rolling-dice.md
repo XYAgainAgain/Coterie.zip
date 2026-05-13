@@ -8,11 +8,11 @@ Any time the Storyteller asks you to roll for something, they'll tell you what s
 
 **Outcomes & Degrees of Success:**
 
-- **2-:** Critical Failure (Storyteller makes a Move & it may take the roller by surprise)
-- **6-:** Failure (Storyteller makes a Move; either Soft or Hard — don't laugh)
-- **7–9:** Mixed Success (you manage it but incur complications or costs)
+- **All 1s:** Bestial Failure (like a regular failure but nastier! Storyteller will tell you what goes wrong; only happens when rolling 2 or more d6s)
+- **6-:** Failure (something bad happens and/or the Storyteller makes a Move; either Soft or Hard — *don't laugh*)
+- **7–9:** Mixed Success (you manage it but incur complications or costs, each dictated per Move/Power)
 - **10+:** Success (you do what you set out to do, good job!)
-- **12+:** Critical Success (many Moves have special 12+ results; otherwise treat as 10+)
+- **12+:** Critical Success (many Moves/Powers have special 12+ results; otherwise treat as 10+)
 
 ## Roll Modifiers
 

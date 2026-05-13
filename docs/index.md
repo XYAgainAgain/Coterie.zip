@@ -2,8 +2,6 @@
 title: "Coterie Corebook"
 ---
 
-## Player Rules (Big Ol' WIP)
-
 # WHAT EVEN IS THIS?
 
 Great question, *so* glad you asked. This document is the beginnings of a new Powered by the Apocalypse TTRPG called ***Coterie***, created by Sam Atwood. It's intended as a pleasant and easy-to-grasp all-vampire game, drawing heavily from *Vampire: The Masquerade V5* (and some *V20*), *Urban Shadows 2e* (plus a long-running *World of Darkness* conversion homebrew), *Low Stakes*, *Blades in the Dark*, and *Monster of the Week*. If those names don't mean anything to you, here's a simpler pitch: you roll dice, pretend to bite people, and deal with lots of consequences.
@@ -54,7 +52,7 @@ Important things to keep in mind:
 
 ## Permanent Capitalization Standards
 
-Game terms are *always* capitalized for clarity and easy recognition (which is weirdly uncommon in PbtA games):
+Game Terms are *always* capitalized for clarity and easy recognition (which is weirdly uncommon in PbtA games):
 
 - Moves not moves
 - Playbook not playbook

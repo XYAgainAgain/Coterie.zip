@@ -44,7 +44,7 @@ The Storyteller is the final arbiter of when Debts are created. Not every favor 
 
 Before making a social or investigative roll involving someone you have a Debt with — **Influence**, **Discern Vibes**, or **Catch the Scent** — you can Invoke a Debt that character owes you to gain +2 Forward to that roll. The fiction must make sense: you're leaning on their obligation, calling in favors from their contacts, or reminding them (or witnesses) of what they owe you.
 
-**Frequency:** Once per Debt per night. Once you Invoke a Debt for a bonus, you can't Invoke it again that same night. The Debt isn't erased by invoking it, you're just leveraging it to get your way. You can still Cash In later for a full favor.
+**Frequency:** Once per Debt per night. Once you Invoke a Debt for a bonus, you can't Invoke it again that same night. The Debt isn't erased by Invoking it, you're just leveraging it to get your way. You can still Cash In later for a full favor.
 
 #### *Cashing In Debts*
 
