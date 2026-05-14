@@ -2,7 +2,7 @@
 title: "Coterie Creation"
 ---
 
-[IMPORTANT LMAO]
+\[IMPORTANT LMAO]
 
 ## What is a Coterie?
 

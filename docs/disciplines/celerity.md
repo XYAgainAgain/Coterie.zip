@@ -2,7 +2,7 @@
 title: "Celerity"
 ---
 
-Celerity is speed refined to an art form. Where mortals train for years to shave fractions of seconds, Kindred with Celerity move at a pace that makes the very concept of reaction time irrelevant. The Discipline encompasses far more than raw velocity — it sharpens reflexes, accelerates perception, and enables feats of movement that brush past the laws of physics with polite indifference.
+Celerity is speed refined to an art form. Where mortals train for years to shave fractions of seconds, Kindred with Celerity move at a pace that makes the very concept of reaction time irrelevant. The Discipline encompasses far more than raw velocity; it sharpens reflexes, accelerates perception, and enables feats of movement that brush past the laws of physics with polite indifference.
 
 Most Celerity Powers are self-targeted, which means there's no "victim" to resist, but being spotted moving at such dizzying speeds could be cause for serious alarm. Whether a given use constitutes a Masquerade breach depends on context and is at the Storyteller's discretion: ***Cat's Grace*** on a balance beam looks like talent, ***Traversal*** up a fire escape could *maybe* pass for impressive parkour, but ***Blink*** across a parking lot looks like a glitch in reality.
 
@@ -54,6 +54,24 @@ This does not stack with Celerity Powers that already modify your movement dista
 
 ## Level 3
 
+### *A Thousand Cuts*
+
+**When you unleash a flurry of strikes against a single target with your claws or an edged weapon**, make a Hunger Check and roll +Blood.
+
+**On a 12+,** roll a number of d6s equal to your Blood Potency. The target takes the total as Superficial Harm. What's left looks less like a fight and more like a disagreement with industrial machinery.
+
+**On a 10+,** the target takes Superficial Harm equal to 3 + your Blood stat.
+
+**On a 7–9,** the target takes Superficial Harm equal to your Blood stat. The Storyteller chooses 1 complication:
+
+- Your follow-through carried you past the target; you're out of position and they have Advantage on their next roll against you
+- Some of their blood got in your mouth; make another Hunger Check (with Disadvantage if you're at 3 Hunger or higher)
+- If mortals are present, the Masquerade Clock advances; the aftermath looks like a crime scene because it absolutely is one
+
+Regardless of the result, the carnage triggers the Beast in anyone watching. Every vampire within Close Range with 3 or more Hunger must **Stay Chill** or Frenzy from the blood spray with the injured creature as their focal point. On any result except a 6-, allies who know you well have Advantage on this roll.
+
+**On a 6-,** your speed outruns your aim. You tear through everything except your target; the Storyteller decides what you hit instead. The walls are redecorated in arterial red, but it's yours. Take 2 Superficial Harm, and every vampire nearby still has to **Stay Chill** from the scent of your spilled Vitae, with no ally Advantage. If you're a Salubri, everybody has Disadvantage instead because you smell like a snack.
+
 ### *Blink*
 
 **When you swoop across the space to a point up to 2 Range bands away**, make a Hunger Check and roll +Blood. In combat, ***Blink*** replaces your Movement; you can still act before or after you arrive.
@@ -93,6 +111,19 @@ If the Hunger cost pushes you to 5 Hunger and you Frenzy, ***Blurred Momentum***
 **When you open a vein and let someone drink directly from you**, make a Hunger Check with Disadvantage. The drinker gains temporary access to all of Level 1 Celerity until the next dawn. For vampires, the gift fades when they next **Feed** or reach 5 Hunger, whichever comes first.
 
 Drinking directly from a Kindred is an intimate and dangerous act. This counts as 1 exchange of Vitae toward a Blood Bond.
+
+### *Faster Than Light (Passive)*
+
+*(Requires: **Blink**)*
+
+Your ***Blink*** can now carry you through any barrier that light could pass through: windows, thin curtains, fences, chain-link, latticed gates, glass doors, wrought-iron bars. If light gets through, so do you.
+
+**When your *Blink* path crosses through fire or direct sunlight**, you pass through unharmed on a 10+ result. The exposure is simply too brief to catch.
+
+On a 7–9 ***Blink*** result, the Storyteller may choose from two additional complications when this Power is relevant:
+
+- You passed through fire or sunlight and weren't quite fast enough; take Aggravated Harm at the Storyteller's discretion (brief flashes = 1, sustained patches = worse)
+- You burst through a physical barrier on exit; take 2 Superficial Harm from the shrapnel, and the explosion draws every eye in the vicinity
 
 ### *Unerring Aim (Passive)*
 

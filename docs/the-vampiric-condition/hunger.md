@@ -28,10 +28,10 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 - You need blood *soon*.
 - **Penalty:** −2 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
 
-**5 Hunger: The Beast Unleashed**
+**5 Hunger: Frenzy**
 
-- You remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters. This is commonly called "Frenzy" and it's something every Kindred experiences at least once.
-- When you reach 0 Hunger again, the Beast releases you. Your character does not remember exactly what happened during their rampage. They will soon find out.
+- You remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. This is something every Kindred experiences at least once.
+- When you reach 0 Hunger again, the Beast releases you. Your character may not remember exactly what happened during their rampage. They will soon find out.
 - **Age Scaling:**
     - **Thin-Blood:** Desperate, embarrassing. Starving wretch, not horror movie monster.
     - **Fledgling:** Violent and dangerous. You will hurt someone.

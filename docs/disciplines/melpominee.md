@@ -22,6 +22,12 @@ You can use any other Melpominee Power through your projected voice as though yo
 
 ## Level 1
 
+### *Cognitive Dissonance (Passive)*
+
+You lean into the music that never stops. While singing along with your Inner Song (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer −1 Ongoing to all rolls for as long as you keep singing and they can hear you.
+
+While ***Cognitive Dissonance*** is active, you cannot use any other Discipline Power that requires vocalization; your voice is already spoken for. This Power works in combat, but ends if you take Harm equal to or greater than your Blood Potency — it's quite hard to get stabbed and keep singing. Ask me how I know.
+
 ### *Distorted Voice*
 
 You can freely alter your own voice in any way: deeper, higher, accented, aged, gendered, robotic, auto-tuned, or completely unrecognizable. No roll is required and the change lasts as long as you want.
@@ -38,15 +44,32 @@ You can freely alter your own voice in any way: deeper, higher, accented, aged, 
 
 **On a 6-,** the impression is obviously wrong. Anyone hearing it knows immediately that it's fake, and they'll remember your real voice underneath the attempt. The person you were impersonating will eventually hear about this. Plus it's kind of cringe-inducing for everyone around you. Yikes, girl.
 
-### *Cognitive Dissonance (Passive)*
-
-You lean into the music that never stops. While singing along with your Inner Song (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer −1 Ongoing to all rolls for as long as you keep singing and they can hear you.
-
-While ***Cognitive Dissonance*** is active, you cannot use any other Discipline Power that requires vocalization; your voice is already spoken for. This Power works in combat, but ends if you take Harm equal to or greater than your Blood Potency — it's quite hard to get stabbed and keep singing. Ask me how I know.
-
 ---
 
 ## Level 2
+
+### *Convincing Affect*
+
+**When you vocalize with deliberate emotional intent, threading a specific feeling into the timbre of your voice**, make a number of Hunger Checks equal to the intensity you wish to instill (1 for Fleeting, 2 for Intense, 3 for Acute), then roll +Demeanor.
+
+You instill one of the four Blood Resonances in a single target:
+
+- **Sanguine** (joy, desire, pleasure)
+- **Choleric** (anger, passion, intensity)
+- **Melancholic** (sorrow, fear, grief)
+- **Phlegmatic** (calm, apathy, submission)
+
+The Resonance you instill matches the emotional tone of your vocalization. The target's blood carries that Resonance at the chosen intensity for the rest of the night or until someone **Feeds** upon them. Any vampire who does so gains the corresponding Advantage, even if they didn't want or earn it. The target also experiences the associated emotions, though they retain free will. They might also want your number, or maybe even your autograph.
+
+**On a 10+,** the Resonance takes hold cleanly. The target has no idea their emotional state was externally altered.
+
+**On a 7–9,** the Resonance takes hold, but the Storyteller chooses 1 complication:
+
+- The emotional shift is obvious and jarring; the target and anyone nearby can tell something just happened and you might need to explain yourself quickly
+- The intensity is one step weaker than you intended (Acute → Intense, Intense → Fleeting)
+- The Resonance is matched to your Inner Song; any vampire who **Feeds** from this vessel tonight also hears a melody they cannot shake and suffers −1 Ongoing to +Wits rolls as per your Bane
+
+**On a 6-,** the Resonance rebounds. Your own Vitae carries the Resonance you were trying to instill at the intensity you paid for. Any vampire who **Feeds** on you tonight gets the corresponding Advantage. The target is unaffected and may wonder why you suddenly look so emotional.
 
 ### *Piercing Wail*
 
@@ -64,40 +87,9 @@ The wail strikes every person, creature, and object within Close Range, dealing 
 
 **On a 6-,** full Harm as above, but the blast spirals beyond your control. The sonic wave carries further than Close Range, the structural damage is significant, and the Inner Song floods in through the ringing silence that follows. You must immediately **Stay Chill** or succumb to your Compulsion as the Cacophony crashes over you.
 
-### *Convincing Affect*
-
-**When you vocalize with deliberate emotional intent, threading a specific feeling into the timbre of your voice**, make a number of Hunger Checks equal to the intensity you wish to instill (1 for Fleeting, 2 for Intense, 3 for Acute), then roll +Demeanor.
-
-You instill one of the four Blood Resonances in a single target:
-
-- **Sanguine** (joy, desire, pleasure)
-- **Choleric** (anger, passion, intensity)
-- **Melancholic** (sorrow, fear, grief)
-- **Phlegmatic** (calm, apathy, submission)
-
-The Resonance you instill matches the emotional tone of your vocalization. The target's blood carries that Resonance at the chosen intensity for the rest of the night or until someone **Feeds** upon them. Any vampire who does so gains the corresponding Advantage, even if they didn't want or earn it. The target also experiences the associated emotions, though they retain free will. They might also want your number, or maybe even your autograph.
-
-**On a 10+,** the Resonance takes hold cleanly. The target has no idea their emotional state was externally influenced.
-
-**On a 7–9,** the Resonance takes hold, but the Storyteller chooses 1 complication:
-
-- The emotional shift is obvious and jarring; the target and anyone nearby can tell something just happened and you might need to explain yourself quickly
-- The intensity is one step weaker than you intended (Acute → Intense, Intense → Fleeting)
-- The Resonance is matched to your Inner Song; any vampire who **Feeds** from this vessel tonight also hears a melody they cannot shake and suffers −1 Ongoing to +Wits rolls as per your Bane
-
-**On a 6-,** the Resonance rebounds. Your own Vitae carries the Resonance you were trying to instill at the intensity you paid for. Any vampire who **Feeds** on you tonight gets the corresponding Advantage. The target is unaffected and may wonder why you suddenly look so emotional.
-
 ---
 
 ## Level 3
-
-### *Phantom Voice*
-
-**When you reach out with your voice to someone you've spoken to before for at least 1 scene**, make a number of Hunger Checks equal to the number of scenes you wish to maintain the connection (1 Hunger Check = 1 scene, up to 5).
-
-Your voice is heard in the target's ear as clearly as if you were standing next to them. You can hold a normal two-way conversation; they can respond and you hear them. The connection's reach depends on your Blood Potency; at BP 3 you can reach anyone within Distant Range, at BP 4 you can reach any other Daughter of Cacophony at any distance, and at BP 5, the Range restriction is removed and you may contact anyone you know anywhere in the world.
-
-The target always hears your Inner Song bleeding faintly underneath your words, like hold music from a phone line nobody really wants to be on. There is nothing you can do about this. The target may find it unsettling, soothing, groovy as hell, or just plain weird.
 
 ### *Distraction*
 
@@ -119,9 +111,31 @@ Supernatural creatures with Blood Potency higher than yours can attempt to resis
 
 **On a 6-,** the Inner Song overwhelms your performance. Your voice cracks, distorts, or shifts into something you didn't intend. You must immediately **Stay Chill** or succumb to your Compulsion. The audience snaps out of it, and anyone supernatural in the room more or less knows what you just tried to do.
 
+### *Phantom Voice*
+
+**When you reach out with your voice to someone you've spoken to before for at least 1 scene**, make a number of Hunger Checks equal to the number of scenes you wish to maintain the connection (1 Hunger Check = 1 scene, up to 5).
+
+Your voice is heard in the target's ear as clearly as if you were standing next to them. You can hold a normal two-way conversation; they can respond and you hear them. The connection's reach depends on your Blood Potency; at BP 3 you can reach anyone within Distant Range, at BP 4 you can reach any other Daughter of Cacophony at any distance, and at BP 5, the Range restriction is removed and you may contact anyone anywhere in the world.
+
+The target always hears your Inner Song bleeding faintly underneath your words, like hold music from a phone line nobody really wants to be on. There is nothing you can do about this. The target may find it unsettling, soothing, groovy as hell, or just plain weird.
+
 ---
 
 ## Level 4
+
+### *Invigorating Display*
+
+**When you perform for a crowd of at least ten mortals and drink in their collective emotions**, make a Hunger Check and roll +Demeanor. You must sustain the performance for the majority of a scene; this is a full show, not a silly little card trick.
+
+**On a 12+,** choose the Blood Resonance Humor you want. You absorb Acute Resonance (3 stocked Advantages). Additionally, slake 1 Hunger. You may distribute any number of the stocked Advantages among Coterie members who witnessed the performance; each recipient who receives at least 1 Advantage also slakes 1 Hunger.
+
+**On a 10+,** choose the Resonance Humor. You absorb Intense Resonance (2 stocked Advantages). You may distribute the stocked Advantages among Coterie members who witnessed the performance.
+
+**On a 7–9,** the Storyteller chooses which Resonance Humor you absorb. You gain Fleeting Resonance (1 stocked Advantage) and must keep it for yourself.
+
+**On a 6-,** the crowd's emotions crash into you, undifferentiated and raw. No Resonance is absorbed. You must immediately **Stay Chill** or be overwhelmed by the collective emotional weight of the audience and have a breakdown in front of everybody. The result is almost certainly a career-defining moment for all the wrong reasons. This *will* be going on the internet.
+
+The audience is left emotionally drained regardless of your result. Mortals who witnessed the performance lose whatever Blood Resonance they were carrying and feel hollow, listless, and vaguely disappointed for the rest of the night. They'll chalk it up to the show being so good that nothing compares.
 
 ### *Lingering Echo*
 
@@ -153,14 +167,14 @@ If used in the company of ordinary mortals, the sonic force is beyond what a hum
 
 ## Level 5
 
-### *Virtuosa (Passive)*
-
-Your mastery of voice and sound transcends ordinary limits. Any Melpominee Power that normally affects a single target can now affect a number of targets up to your Blood Potency.
-
-Additionally, you can split your voice between up to 2 vocal-based Powers simultaneously, even from different Disciplines. You could maintain ***Cognitive Dissonance*** while using ***Convincing Affect***, or run ***Distraction*** alongside Presence's ***Awe***. The usual restriction against using multiple vocal Powers at once no longer applies to you.
-
 ### *Psychic Scream (Passive)*
 
 Your Melpominee Powers no longer require the target to physically hear you. The sound travels directly into the mind, bypassing ears entirely. Deafness, earplugs, noise-canceling headphones, soundproofed rooms, and supernatural silence all fail to block your magnificent voice.
 
 The target still perceives the sound as auditory; they hear your voice in their head as clearly as if you were standing next to them, they just can't make it stop by covering their ears and screaming... but why would they want to? You sound *amazing*.
+
+### *Virtuosa (Passive)*
+
+Your mastery of voice and sound transcends ordinary limits. Any Melpominee Power that normally affects a single target can now affect a number of targets up to your Blood Potency.
+
+Additionally, you can split your voice between up to 2 vocal-based Powers simultaneously, even from different Disciplines. You could maintain ***Cognitive Dissonance*** while using ***Convincing Affect***, or run ***Distraction*** alongside Presence's ***Awe***. The usual restriction against using multiple vocal Powers at once no longer applies to you.

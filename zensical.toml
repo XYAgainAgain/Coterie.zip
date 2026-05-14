@@ -84,6 +84,7 @@ nav = [
       { "Bardo" = "disciplines/bardo.md" },
       { "Blood Sorcery" = "disciplines/blood-sorcery.md" },
       { "Celerity" = "disciplines/celerity.md" },
+      { "Daimonion" = "disciplines/daimonion.md" },
       { "Dominate" = "disciplines/dominate.md" },
       { "Fortitude" = "disciplines/fortitude.md" },
       { "Melpominee" = "disciplines/melpominee.md" },

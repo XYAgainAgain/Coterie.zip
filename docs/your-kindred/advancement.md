@@ -95,4 +95,4 @@ Learn a single Power from a Discipline you've already unlocked. Level 1 Powers c
 
 ### Other Improvements
 
-[A bunch more improvements are in the works, including equipment upgrades, Humanity recovery, Haven improvements, and the acquisition of extra Merits. These will be detailed later as their parent systems are expanded along with my brain.]
+\[A bunch more improvements are in the works, including equipment upgrades, Humanity recovery, Haven improvements, and the acquisition of extra Merits. These will be detailed later as their parent systems are expanded along with my brain.]

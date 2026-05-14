@@ -34,7 +34,7 @@ Against supernatural creatures, make a Hunger Check and roll +Demeanor (commandi
 
 ### *Cloud Memory (Passive)*
 
-Your ***Compel*** can now target recent memories. A simple "Forget" erases the target's memory of the last few minutes (1 scene or less), long enough to mask a feeding or a chance encounter. The gap is permanent. If pressed, the target realizes they have time missing but cannot recover what was lost.
+Your ***Compel*** can now target recent memories. A simple "Forget" erases the target's memory of the last few minutes (1 scene or less), long enough to mask a **Feeding** or a chance encounter. The gap is permanent. If pressed, the target realizes they have time missing but cannot recover what was lost.
 
 Against supernatural creatures, this still requires the usual ***Compel*** roll.
 
@@ -47,23 +47,6 @@ Your mental hold comes first. Everybody else can wait in line.
 ---
 
 ## Level 2
-
-### *Mesmerize*
-
-**When you hold someone's gaze and issue a series of clear, immediate commands**, make a Hunger Check and roll +Resolve.
-
-The commands must be immediately actionable: "Go to the front desk, collect your belongings, and leave through the back exit." No conditional logic ("If you see Hank, give him the envelope"), no tasks requiring judgment, and nothing the target couldn't accomplish on autopilot. The target carries out your instructions mindlessly and to the letter (think Jedi mind trick, not strategic briefing).
-
-**On a 10+,** the target completes your commands flawlessly without attracting attention. They have no memory of the interaction afterward.
-
-**On a 7–9,** the target obeys, but the Storyteller chooses 1 complication:
-
-- The target bungles a critical detail or draws attention while carrying out your commands
-- Someone who knows the target recognizes that something is deeply wrong with their behavior
-- The target completes the task but retains fragments of memory; they'll have questions later
-- The glazed-eyed obedience is obvious to anyone watching; this does not look voluntary
-
-**On a 6-,** the commands collapse into painful noise inside the target's head. They clutch their skull, shout loudly, or lash out physically. Everyone nearby has questions, and the target remembers your face and your voice with perfect clarity.
 
 ### *Dementation*
 
@@ -92,9 +75,48 @@ Your command over the Blood Bond is ironclad:
 - Maintaining Blood Bonds over other Kindred requires half the normal effort and Vitae.
 - If you and another vampire share a mutual Blood Bond and either of you has this Power, you both have +1 Ongoing to all rolls when acting together in the same scene.
 
+### *Mesmerize*
+
+**When you hold someone's gaze and issue a series of clear, immediate commands**, make a Hunger Check and roll +Resolve.
+
+The commands must be immediately actionable: "Go to the front desk, collect your belongings, and leave through the back exit." No conditional logic ("If you see Hank, give him the envelope"), no tasks requiring judgment, and nothing the target couldn't accomplish on autopilot. The target carries out your instructions mindlessly and to the letter (think Jedi mind trick, not strategic briefing).
+
+**On a 10+,** the target completes your commands flawlessly without attracting attention. They have no memory of the interaction afterward.
+
+**On a 7–9,** the target obeys, but the Storyteller chooses 1 complication:
+
+- The target bungles a critical detail or draws attention while carrying out your commands
+- Someone who knows the target recognizes that something is deeply wrong with their behavior
+- The target completes the task but retains fragments of memory; they'll have questions later
+- The glazed-eyed obedience is obvious to anyone watching; this does not look voluntary
+
+**On a 6-,** the commands collapse into painful noise inside the target's head. They clutch their skull, shout loudly, or lash out physically. Everyone nearby has questions, and the target remembers your face and your voice with perfect clarity.
+
+### *The Stolen Voice*
+
+**When you lock eyes with someone and command their silence**, make a Hunger Check. Against mortals, no roll is needed; the silence is immediate and total (equivalent to the 6- result).
+
+Against supernatural creatures, the target must **Stay Chill** to resist. If the target's Blood Potency exceeds yours, they have Advantage on this roll. Their result determines the depth of silence:
+
+**On a 12+,** the Power reflects back at you. You are silenced as per 7–9 for the rest of the scene instead.
+
+**On a 10+,** they resist entirely. Nothing happens immediately, but they might be suspicious of you.
+
+**On a 7–9,** they suffer complete vocal and textual silencing for the rest of the scene. No speech, no writing, no typing. Gestures and sign language still work just fine.
+
+**On a 6-,** they suffer total silence for the rest of the scene. No speech, no writing, no sounds of any kind emanate from their person; even gunshots are muffled into dull thuds. Gestures and sign language still work (you can suppress sound, not motion), but nothing they do is audible.
+
 ---
 
 ## Level 3
+
+### *Submerged Directive (Passive)*
+
+*(Requires: **Mesmerize**)*
+
+Your ***Mesmerize*** commands can now include conditional triggers. Instead of "do this now," you can implant "when X happens, do Y." The trigger can be a specific date, a person's arrival, a spoken phrase, a location, or any other observable event.
+
+Only one directive can be embedded per target at a time. The directive lies dormant indefinitely until the trigger condition is met, at which point the target carries out the command as though freshly ***Mesmerized***. The target has no awareness of the embedded command until it activates. Combined with ***Devotion***, these buried commands are exceptionally difficult for other vampires to dislodge.
 
 ### *The Forgetful Mind*
 
@@ -115,14 +137,6 @@ The scope of memory you can rewrite depends on your Blood Potency:
 - The process took longer than expected; someone came looking for one of you
 
 **On a 6-,** the target's mind fractures under the strain. They don't remember what you wanted them to forget, but they don't remember what was really there either. The gap is obvious and distressing. The target may develop lasting paranoia, identity issues, or obsessive behavior as their psyche tries to paper over the void.
-
-### *Submerged Directive (Passive)*
-
-*(Requires: **Mesmerize**)*
-
-Your ***Mesmerize*** commands can now include conditional triggers. Instead of "do this now," you can implant "when X happens, do Y." The trigger can be a specific date, a person's arrival, a spoken phrase, a location, or any other observable event.
-
-Only one directive can be embedded per target at a time. The directive lies dormant indefinitely until the trigger condition is met, at which point the target carries out the command as though freshly ***Mesmerized***. The target has no awareness of the embedded command until it activates. Combined with ***Devotion***, these buried commands are exceptionally difficult for other vampires to dislodge.
 
 ---
 
@@ -164,15 +178,51 @@ Radical changes to core beliefs (making a pacifist violent, a devoted parent neg
 
 ### *Rationalize (Passive)*
 
-Your Dominate victims now believe that everything they did under your influence was entirely their own idea. They defend their actions with complete conviction, no matter how absurd those actions were.
+Your Dominate victims now believe that everything they did under your command was entirely their own idea. They defend their actions with complete conviction, no matter how absurd those actions were.
 
 Only hard evidence or persistent, highly specific questioning can crack the illusion. Even then, the target is far more likely to question their own sanity than to realize they were Dominated. Long-term exposure to ***Rationalize*** causes lasting psychological damage: anxiety disorders, identity crises, a creeping sense that their own thoughts aren't trustworthy.
 
 It's one of the cruelest applications of Dominate, and Kindred who use it casually tend to find themselves reviled by their peers. Assuming anyone figures out they're doing it, of course.
 
+### *Tabula Rasa*
+
+**When you restrain a conscious target, lock their gaze, and begin systematically dismantling their identity**, make 3 Hunger Checks. If any of these push you to 5 Hunger, you Frenzy. The Power fails, and your Beast demands you drain the helpless body in front of you completely. If the target is Kindred, this may constitute Diablerie.
+
+If you maintain control, roll +Resolve. This requires a full, uninterrupted scene; any significant disturbance ends the attempt.
+
+**On a 10+,** you enact total mental erasure. Memories, Convictions, Touchstones, all gone. The target retains physical capabilities, stats, one random language they speak, and Discipline access, but nothing else. They are hollow, compliant, and have no idea who they are. The erasure is permanent and cannot be undone.
+
+**On a 7–9,** the erasure is nearly complete, but the Storyteller chooses 1 complication:
+
+- One Conviction survives, buried deep; it will resurface at the worst possible time
+- The target retains fragmented emotional impressions; they can't remember who they were, but feel loss, rage, or devotion toward people and places they can no longer identify
+- The process damaged you too; you absorb a fragment of the target's erased memories and the Storyteller decides what you now permanently "remember" that isn't yours
+
+**On a 6-,** the target's psyche violently rejects the intrusion. Their mind snaps shut and the backlash hits you. Botched Domination applies. The target retains all memories and knows exactly what you attempted. You take −1 Ongoing for the rest of the scene from the psychic strain.
+
+On any successful use of this Power (7+), you automatically gain Stains equal to 2× the target's Blood Potency (minimum 2).
+
 ---
 
 ## Level 5
+
+### *Lethe's Call*
+
+*(Requires: **Cloud Memory** or **The Forgetful Mind**)*
+
+Where ***The Forgetful Mind*** is a surgeon's scalpel, this Power is a pressure washer. No rewriting, no careful verbal painting, no scene full of focused work. Just a glance and a decision about how much goes. This Power operates in two modes:
+
+**Erasure by Time:** Make 1 Hunger Check to erase the target's past week of memories. Each additional week costs 1 additional Hunger Check, up to 5 total (erasing approximately 1 month). No roll is needed; the memories simply vanish. The target is left with a clean gap or a vague sense of time having passed (your choice). Eye contact is required but the process takes only moments.
+
+**Erasure by Topic:** **When you lock eyes with someone and will a specific person or event out of their memory entirely**, make a Hunger Check and roll +Wits.
+
+**On a 12+,** you achieve perfect erasure. Every trace of the specified person or event is gone. No mundane or supernatural means can recover what was lost.
+
+**On a 10+,** your erasure is thorough. The target has no conscious access to the erased memories. Only supernatural investigation (Auspex, Blood Sorcery, another vampire's ***The Forgetful Mind***) can uncover traces that something is missing, but are unlikely to actually retrieve the memories.
+
+**On a 7–9,** you enact shoddy erasure. Surface memories are gone, but fragments persist: a familiar scent, unease in a specific location, a face in a dream they can't place. Close questioning or returning to a connected place could unravel the whole thing. It's up to the Storyteller if you're aware of your shortcoming.
+
+**On a 6-,** the erasure misfires. Both you and the target suffer total amnesia of the current night up until the exact moment this goes wrong. The target knows you tried to tamper with their mind and is furious.
 
 ### *Mass Manipulation (Passive)*
 

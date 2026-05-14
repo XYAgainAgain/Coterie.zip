@@ -2,7 +2,7 @@
 title: "Kith & Kindred"
 ---
 
-[YEAH? WHAT ABOUT 'EM?]
+\[YEAH? WHAT ABOUT 'EM?]
 
 ## What Are Kindred?
 
@@ -10,7 +10,7 @@ title: "Kith & Kindred"
 
 ### Lore Summary
 
-[COMING SOON]
+\[COMING SOON]
 
 ### The Beast
 
@@ -24,4 +24,4 @@ In ***Coterie***, you (the player) are still in charge of your character and wha
 
 ### Unliving with Yourself (& Others)
 
-[COMING SOON LOL]
+\[COMING SOON LOL]

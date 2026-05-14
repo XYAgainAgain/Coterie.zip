@@ -2,11 +2,11 @@
 title: "Auspex"
 ---
 
-Auspex is perception beyond its usual limitations. Where mortals squint and guess and make up scary stories to tell in the dark, you *actually know*. You hear the heartbeat behind the wall, smell the lie beneath the smile, and see the ghost standing right next to the dead body that nobody else seems able to detect.
+Auspex is perception beyond its usual limitations. Where mortals squint and guess and make up scary stories to tell in the dark, you *actually know.* You hear the heartbeat behind the wall, smell the lie beneath the smile, and see the ghost standing right next to the dead body that nobody else seems able to detect.
 
 Your senses can expand to encompass entire city blocks or narrow to read the emotions written in a drop of blood. Most Auspex Powers are invisible to observers, so the Masquerade risk is low unless your eyes do something unsettling or you visibly space out while your mind is elsewhere. Auspex has no universal resistance mechanic; defenses are described within individual Powers.
 
-The flip side: everything hits a hell of a lot harder. ***Heightened Sense***s makes you vulnerable to extreme stimuli, and that vulnerability only grows as you open yourself wider. The more you perceive, the more you risk being overwhelmed by what you find.
+The flip side: everything hits a hell of a lot harder. ***Heightened Senses*** makes you vulnerable to extreme stimuli, and that vulnerability only grows as you open yourself wider. The more you perceive, the more you risk being overwhelmed by what you find.
 
 ### *Heightened Senses (Discipline Perk)*
 
@@ -17,6 +17,16 @@ However, if you're exposed to extreme sensations (loud bangs, intense light, ove
 ---
 
 ## Level 1
+
+### *Reveal Temperament*
+
+**When you lean close to draw in someone's scent**, make a Hunger Check and roll +Wits. You must be within Hand Range.
+
+**On a 10+,** the blood speaks volumes. You learn the target's Blood Resonance, if any, and which of the four Humors they're most predisposed to. If the target is a vampire, you also learn the Resonance of their last meal, whether they've **Fed** recently, and how they **Hunt** (their Predator Type).
+
+**On a 7–9,** the scent is faint. If the target is mortal, you catch their current Blood Resonance Humor but not the intensity. If the target is a vampire, you can tell whether they've **Fed** tonight, but nothing more.
+
+**On a 6-,** your senses flood and cross wires. The Storyteller gives you a reading that feels completely certain, but at least one critical detail is wrong. You won't know which until it matters.
 
 ### *Sense the Unseen (Passive)*
 
@@ -29,31 +39,9 @@ Your awareness pierces the veil between worlds. Cloaked vampires, distant watche
 - Is someone observing me with Auspex or similar magic?
 - What magical traces or spiritual echoes remain?
 
-### *Reveal Temperament*
-
-When you lean close to draw in someone's scent, make a Hunger Check and roll +Wits. You must be within Hand Range.
-
-**On a 10+,** the blood speaks volumes. You learn the target's Blood Resonance, if any, and which of the four Humors they're most predisposed to. If the target is a vampire, you also learn the Resonance of their last meal, whether they've **Fed** recently, and how they hunt (their Predator Type).
-
-**On a 7–9,** the scent is faint. If the target is mortal, you catch their current Blood Resonance Humor but not the intensity. If the target is a vampire, you can tell whether they've **Fed** tonight, but nothing more.
-
-**On a 6-,** your senses flood and cross wires. The Storyteller gives you a reading that feels completely certain, but at least one critical detail is wrong. You won't know which until it matters.
-
 ---
 
 ## Level 2
-
-### *Premonition*
-
-Your awareness occasionally slips forward in time. The Storyteller may give you brief, involuntary flashes of insight whenever they see fit: a prickle of danger before an ambush, a name that surfaces unbidden, a split-second image of someone you haven't met yet. These cost nothing and require no roll. The Storyteller should use these flashes to flag upcoming danger, highlight overlooked clues, or nudge the story forward when momentum stalls; they're pacing tools as much as character abilities.
-
-**When you deliberately still your mind and reach for a vision of what's to come**, make a Hunger Check and roll +Resolve. You may activate this only once per scene.
-
-**On a 10+,** the vision arrives with clarity. The Storyteller provides a truthful, actionable answer to one question you have about the subject: a person's near-term intentions, the most likely outcome(s) of a plan, what waits behind a closed door, or any other forward-looking question relevant to the current situation. Take +1 Ongoing when you act on what you've seen until it comes to pass.
-
-**On a 7–9,** you see only fragments: symbolic images, sensory flashes, or a gut feeling that something is off. The Storyteller gives you something real (a cryptic warning, a single vivid detail, an emotional impression) but it's incomplete and requires interpretation. The Storyteller is not obligated to tell you which parts are literal and which are metaphor.
-
-**On a 6-,** the vision crashes uncontrollably. The Storyteller describes what you see; it may be accurate, symbolic, outdated, or entirely misleading, and you have no way to tell which. The vision's emotional intensity bleeds into reality and you must **Stay Chill** or be overwhelmed by whatever the vision carries (terror, grief, rage, despair). Anyone watching can tell something just happened, but at worst, it just looks like an emotional outburst.
 
 ### *Panacea*
 
@@ -72,6 +60,28 @@ Spend Hold 1-for-1 to administer the following treatments:
 
 *If you also have Fortitude:* you may use ***Panacea*** on yourself.
 
+### *Premonition*
+
+Your awareness occasionally slips forward in time. The Storyteller may give you brief, involuntary flashes of insight whenever they see fit: a prickle of danger before an ambush, a name that surfaces unbidden, a split-second image of someone you haven't met yet. These cost nothing and require no roll. The Storyteller should use these flashes to flag upcoming danger, highlight overlooked clues, or nudge the story forward when momentum stalls; they're pacing tools as much as character abilities.
+
+**When you deliberately still your mind and reach for a vision of what's to come**, make a Hunger Check and roll +Resolve. You may activate this only once per scene.
+
+**On a 10+,** the vision arrives with clarity. The Storyteller provides a truthful, actionable answer to one question you have about the subject: a person's near-term intentions, the most likely outcome(s) of a plan, what waits behind a closed door, or any other forward-looking question relevant to the current situation. Take +1 Ongoing when you act on what you've seen until it comes to pass.
+
+**On a 7–9,** you see only fragments: symbolic images, sensory flashes, or a gut feeling that something is off. The Storyteller gives you something real (a cryptic warning, a single vivid detail, an emotional impression) but it's incomplete and requires interpretation. The Storyteller is not obligated to tell you which parts are literal and which are metaphor.
+
+**On a 6-,** the vision crashes in uncontrollably. The Storyteller describes what you see; it may be accurate, symbolic, outdated, or entirely misleading, and you have no way to tell which. The vision's emotional intensity bleeds into reality and you must **Stay Chill** or be overwhelmed by whatever the vision carries (terror, grief, rage, despair). Anyone watching can tell something just happened, but at worst, it just looks like an emotional outburst.
+
+### *Unerring Pursuit*
+
+**When you lock eyes with someone and plant a psychic marker in their consciousness**, make a Hunger Check and roll +Shadow. For a number of nights equal to your Blood Potency, whenever the target catches their own reflection (mirrors, windows, phone screens, puddles), you receive a brief, vivid flash of their surroundings: where they are, who they're with, what they're doing.
+
+**On a 10+,** the connection is one-way and invisible. The target has no idea they're being tracked.
+
+**On a 7–9,** the tracking works, but the mirror remembers your face. During the nights this Power is active, if the target rolls a 12+ on any investigative check (**Discern Vibes**, **Catch the Scent**, or similar), they catch a glimpse of you watching them from the other side of their reflection; the Storyteller decides whether they recognize you.
+
+**On a 6-,** the connection still works, but the mirror goes both ways for the full duration. Every time you see them in a reflection, they see you in theirs. They know exactly who's watching, and they get the same flashes of your surroundings that you get of theirs.
+
 ---
 
 ## Level 3
@@ -87,6 +97,22 @@ Spend Hold 1-for-1 to administer the following treatments:
 - What Debt, obligation, or pressure are they under?
 
 Additionally, when you use either Move, you may make one Hunger Check to gain +2 additional Hold. You see the fault lines in their composure, the cracks in their defenses, and the soft spots they've spent a lifetime hiding all light up like neon. It's your call which ones you want to leverage.
+
+### *Haruspex*
+
+*(Requires: Oblivion access)*
+
+**When you kill a mortal and read the secrets of the cosmos written in their cooling viscera**, make a Hunger Check and roll +Wits. The death must be fresh; this Power requires you to physically examine the remains within moments of their final breath. You gain 1 Stain (Organovore Predator Types are exempt; you've done this before).
+
+**On a 10+,** the dying mind's final glimpse of the infinite becomes yours. Bank a number of Disadvantages equal to your Blood Potency. Until the next dawn, whenever someone acts against you (attacking, **Influencing**, using a Discipline Power, etc.), you may spend 1 banked Disadvantage to impose Disadvantage on their roll. You already saw this coming.
+
+**On a 7–9,** bank Disadvantages equal to half your Blood Potency (rounded up). The Storyteller chooses 1 complication:
+
+- The vision was fragmentary; you can only use the banked Disadvantages against threats you've already identified, not surprises
+- The death attracted attention; someone heard, saw, or will find the body sooner than you'd like
+- The cosmic insight came with a price; you suffer a vivid, involuntary vision of your own Final Death that haunts you for the rest of the night (-1 Forward on your next **Stay Chill** roll)
+
+**On a 6-,** the dying mind's final vision crashes into you unfiltered. You see something true, terrible, and deeply personal about your own future. The Storyteller describes it. No Disadvantages are banked. You must immediately **Stay Chill** or be overwhelmed by what you saw.
 
 ### *Scry the Soul*
 
@@ -130,6 +156,38 @@ While the link is active, your body remains where you left it. You can act and m
 
 ## Level 4
 
+### *Clairvoyance*
+
+**When you close your eyes and expand your awareness beyond your immediate surroundings**, choose how long you wish to maintain the connection and make the corresponding Hunger Checks:
+
+- **1 Hunger Check:** One scene
+- **2 Hunger Checks:** Full night
+- **3 Hunger Checks:** Indefinitely, until you choose to end it or are interrupted
+
+If you are in your Haven, your Coterie's Claim (if positive) count as successful Hunger Checks for this Power. It takes little effort to survey your domain.
+
+While ***Clairvoyance*** is active, your awareness fills a roughly city-block-sized area (about Distant Range; more in sparse environments, less in dense ones, or the exact boundaries of your Haven if you're inside it). You gain Hold equal to your Blood Potency. Spend this Hold to ask questions from the **Discern Vibes** or **Catch the Scent** lists. The following additional questions are also available:
+
+- Who has entered or left this area recently?
+- What is the most unusual thing happening here right now?
+- When was the area last visited by someone uninvited?
+- Where is the nearest source of danger?
+- Why do I get the feeling I'm being watched?
+
+You must remain in the area while ***Clairvoyance*** is active. Taking Harm ends the Power immediately.
+
+### *Heart Laid Bare*
+
+**When you engage someone in conversation and begin peeling back the layers of their psyche**, choose whether you're searching for fears or desires, then make a Hunger Check and roll +Wits. You must sustain the conversation for several minutes; quick exchanges won't cut it.
+
+**On a 12+,** everything under the 10+, and you also learn the root cause: the formative experience, relationship, or trauma that created the fear or desire. You understand them better than they understand themselves.
+
+**On a 10+,** you see into their subconscious. The Storyteller reveals the target's deepest fear or desire (chosen at activation), including things the target may not be consciously aware of, complete with context and history. If the object of that fear or desire is physically present or was mentioned in conversation, the insight is even sharper.
+
+**On a 7–9,** you get a general impression: a category, a theme, a direction ("wealth," "abandonment," "power," "their sire"); enough to work with, not enough to leverage precisely.
+
+**On a 6-,** the connection inverts. You reveal a deep fear or desire of your own to the target; the Storyteller decides what slipped out, and it should be something true that you'd prefer stayed buried. The target gains +2 Ongoing whenever they act upon that information against you, lasting indefinitely. Secrets are currency, and you just went bankrupt.
+
 ### *Spirit's Touch*
 
 **When you press your hand to an object or surface and open your senses to its history**, choose how far back you wish to reach and make the corresponding Hunger Checks:
@@ -152,29 +210,32 @@ Spend Hold 1-for-1 to ask the Storyteller about events within your chosen time r
 
 **On a 6-,** the object's history swallows you whole. You experience the most traumatic moment in the object's past as a vivid first-person flashback, and for a full turn you cannot distinguish the memory from reality. Your body is unresponsive and vulnerable to anything happening around it. The emotional residue clings; you must **Stay Chill** or the memory's dominant emotion (fear, rage, grief, desperation) overwhelms your composure entirely.
 
-### *Clairvoyance*
-
-**When you close your eyes and expand your awareness beyond your immediate surroundings**, choose how long you wish to maintain the connection and make the corresponding Hunger Checks:
-
-- **1 Hunger Check:** One scene
-- **2 Hunger Checks:** Full night
-- **3 Hunger Checks:** Indefinitely, until you choose to end it or are interrupted
-
-If you are in your Haven, your Coterie's Claim (if positive) count as successful Hunger Checks for this Power. It takes little effort to survey your domain.
-
-While ***Clairvoyance*** is active, your awareness fills a roughly city-block-sized area (about Distant Range; more in sparse environments, less in dense ones, or the exact boundaries of your Haven if you're inside it). You gain Hold equal to your Blood Potency. Spend this Hold to ask questions from the **Discern Vibes** or **Catch the Scent** lists. The following additional questions are also available:
-
-- Who has entered or left this area recently?
-- What is the most unusual thing happening here right now?
-- When was the area last visited by someone uninvited?
-- Where is the nearest source of danger?
-- Why do I get the feeling I'm being watched?
-
-You must remain in the area while ***Clairvoyance*** is active. Taking Harm ends the Power immediately.
-
 ---
 
 ## Level 5
+
+### *Possession*
+
+*(Requires: Dominate access)*
+
+**When you lock eyes with a mortal or a Ghoul bound to you by Blood and project your consciousness into their body**, make a Hunger Check and roll +Resolve. This Power cannot target Kindred or other supernatural creatures.
+
+**On a 10+,** the ***Possession*** takes hold cleanly. Your consciousness inhabits the host; your body collapses into a Torpor-like trance wherever you left it (completely unresponsive, though Aggravated Harm to your real body wrenches you back immediately). While possessing the host, you can use any Discipline that operates through mental or vocal means: Auspex, Dominate, Presence, and Melpominee all function normally. Physical Disciplines do not. You're borrowing this body, not upgrading it.
+
+You cannot read the host's mind, access their memories, or use their skills. Impersonating the host convincingly requires you to **Influence** anyone who knows them. The host's mind is locked away for the duration, aware that something is wrong but unable to act.
+
+**On a 7–9,** the ***Possession*** works as above, but the Storyteller chooses 1 complication:
+
+- The host's body resists your control; you have −1 Ongoing to all physical actions while inside
+- Fragments of the host's personality bleed through; their mannerisms, speech patterns, or emotional reactions surface at inconvenient moments
+- The transition was rough; your real body twitched, cried out, or moved visibly before going limp, and anyone nearby likely has concerns
+- The host retains fragmentary awareness of what you do while inside; when you leave, they'll remember flashes of what happened
+
+**On a 6-,** the host's will snaps back against yours. You're ejected immediately and both you and the host are disoriented for a full turn. The host remembers the attempt with perfect clarity. Your body wrenches out of Torpor violently and you take 1 Aggravated Harm (ignore Armor).
+
+**Possession and the Soul:** For each full scene you remain inside the host, gain 1 Stain. When you exit the host (voluntarily or otherwise), you must immediately make a Remorse Check.
+
+**Daytime Possession:** If you wish to remain inside the host past dawn, roll +Resolve (with Advantage if your body is safely in your Haven). **On a 7+,** you stay in control through the day. **On a 6-,** the horrible sun drags your consciousness back to your sleeping body; the host regains control and wakes up confused, disoriented, and potentially aware of everything that happened.
 
 ### *Telepathy*
 
@@ -191,29 +252,6 @@ Against supernatural creatures:
 **On a 7–9,** you catch the surface and learn whatever the target is actively thinking about right now. It might be vital intelligence, or it might be utterly mundane. The Storyteller provides one piece of information from the target's surface thoughts, useful or otherwise.
 
 **On a 6-,** the target feels you rummaging around in there, and their mind violently expels you. They know exactly who tried to get in. The backlash tears open a two-way channel for a split second: they get a flash of your surface thoughts, and the force of their rejection leaves you reeling. You have −1 Ongoing to Wits rolls for the rest of the scene as the psychic aftershock rings through your skull. Yikes.
-
-### *Possession*
-
-*(Requires: Dominate access)*
-
-**When you lock eyes with a mortal or a Ghoul bound to you by Blood and project your consciousness into their body**, make a Hunger Check and roll +Resolve. This Power cannot target Kindred or other supernatural creatures.
-
-**On a 10+,** the ***Possession*** takes hold cleanly. Your consciousness inhabits the host; your body collapses into a Torpor-like trance wherever you left it (completely unresponsive, though Aggravated Harm to your real body wrenches you back immediately). While possessing the host, you can use any Discipline that operates through mental or vocal means: Auspex, Dominate, Presence, and Melpominee all function normally. Physical Disciplines do not. You're borrowing this body, not upgrading it.
-
-You cannot read the host's mind, access their memories, or use their skills. Impersonating the host convincingly requires you to **Influence** anyone who knows them. The host's mind is locked away for the duration, aware that something is wrong but unable to act.
-
-**On a 7–9,** the Possession works as above, but the Storyteller chooses 1 complication:
-
-- The host's body resists your control; you have −1 Ongoing to all physical actions while inside
-- Fragments of the host's personality bleed through; their mannerisms, speech patterns, or emotional reactions surface at inconvenient moments
-- The transition was rough; your real body twitched, cried out, or moved visibly before going limp, and anyone nearby likely has concerns
-- The host retains fragmentary awareness of what you do while inside; when you leave, they'll remember flashes of what happened
-
-**On a 6-,** the host's will snaps back against yours. You're ejected immediately and both you and the host are disoriented for a full turn. The host remembers the attempt with perfect clarity. Your body wrenches out of Torpor violently and you take 1 Aggravated Harm (ignore Armor).
-
-**Possession and the Soul:** For each full scene you remain inside the host, gain 1 Stain. When you exit the host (voluntarily or otherwise), you must immediately make a Remorse Check.
-
-**Daytime Possession:** If you wish to remain inside the host past dawn, roll +Resolve (with Advantage if your body is safely in your Haven). **On a 7+,** you stay in control through the day. **On a 6-,** the horrible sun drags your consciousness back to your sleeping body; the host regains control and wakes up confused, disoriented, and potentially aware of everything that happened.
 
 ### *Unburdening the Bestial Soul*
 

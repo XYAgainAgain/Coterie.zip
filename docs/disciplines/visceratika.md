@@ -18,17 +18,17 @@ You can carry a number of willing passengers equal to your Blood Potency, or hal
 
 ## Level 1
 
-### *Skin of the Chameleon (Passive)*
-
-Your stone skin automatically shifts to match your surroundings: granite grey with moss on a rooftop, ruddy brick against a tenement, dark and cloudy against the night sky.
-
-**When you Slip Away while perched on architecture, posing as a statue, or flying at night**, treat a roll of 6- as a 7–9. Observers who aren't actively searching for you assume you're part of the scenery.
-
 ### *Sentinel's Perch (Passive)*
 
 While touching stone, earth, concrete, or brick, you feel vibrations through the surface such as footsteps, doors opening, heartbeats pressed against walls, or the tapping of a keyboard. You can detect the presence and approximate location of any creature moving within Close Range inside the structure without rolling.
 
 If you also have ***Skin of the Chameleon*** and remain perfectly still, your awareness expands to encompass the entire structure you're touching, regardless of its size.
+
+### *Skin of the Chameleon (Passive)*
+
+Your stone skin automatically shifts to match your surroundings: granite grey with moss on a rooftop, ruddy brick against a tenement, dark and cloudy against the night sky.
+
+**When you Slip Away while perched on architecture, posing as a statue, or flying at night**, treat a roll of 6- as a 7–9. Observers who aren't actively searching for you assume you're part of the scenery.
 
 ---
 
@@ -102,10 +102,6 @@ Your stone skin thickens and hardens beyond its natural state. Each scene, you m
 
 **On a 6-,** you partially merge and get stuck. You need help or a subsequent roll as before to extract yourself, and you're vulnerable while embedded.
 
-### *The Rock Within (Passive)*
-
-Your innards have petrified, and yes, it feels weird. Piercing and puncturing weapons (bullets, knives, arrows, stakes) deal half Harm to you (round down, minimum 1). Staking you is near-impossible — any attempt to stake you automatically fails unless you're already at 0 HP and they have enough time to get the appropriate tools.
-
 ### *Lurking Grotesque*
 
 **When you blend or meld into a stone surface and lie in wait for prey**, make a Hunger Check and roll +Shadow.
@@ -121,6 +117,10 @@ Your innards have petrified, and yes, it feels weird. Piercing and puncturing we
 Your ambush still triggers as above when a target comes within Hand Range.
 
 **On a 6-,** you don't merge properly. You're partially embedded and your position is obvious. Somebody is definitely going to notice you, but you might not realize you're showing. It could be anyone with a reason to be there, even your intended target.
+
+### *The Rock Within (Passive)*
+
+Your innards have petrified, and yes, it feels weird. Piercing and puncturing weapons (bullets, knives, arrows, stakes) deal half Harm to you (round down, minimum 1). Staking you is near-impossible — any attempt to stake you automatically fails unless you're already at 0 HP and they have enough time to get the appropriate tools.
 
 ---
 
