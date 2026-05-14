@@ -22,7 +22,7 @@ Choose 1 Discipline from those available to your patron's Clan.
 
 **You are supernaturally bound to the vampire who feeds you their Vitae.** This manifests as an unbreakable Debt that your patron holds over you. They can **Cash In** this Debt a total number of times equal to their Blood Potency without depleting it, and can **Invoke** it just as many times per night. You cannot refuse, erase, or transfer this Debt by any normal means. The Blood Bond persists until you are Embraced or your patron meets Final Death.
 
-Additionally, your stat array is reduced: distribute +1 | +1 | +0 | -1 | -1 instead of the standard spread. You are mortal. You are outmatched.
+Additionally, your stat array is reduced: distribute +1 | +1 | +0 | −1 | −1 instead of the standard spread. You are mortal. You are outmatched.
 
 ## Compulsion: *Dark Devotion*
 
@@ -57,9 +57,9 @@ Rebuild your character using that Clan's Playbook, transferring all your Convict
 ## Archetypes
 
 - **Enthusiast:** *You're here because you want to be, and you can't wait for the night they finally turn you.*
-    - Blood -1 | Shadow +0 | Resolve -1 | Demeanor +1 | Wits +1
+    - Blood −1 | Shadow +0 | Resolve −1 | Demeanor +1 | Wits +1
 - **Pragmatist:** *The arrangement has its perks. Whether you actually want the Embrace is a question you keep dodging.*
-    - Blood +0 | Shadow +1 | Resolve +1 | Demeanor -1 | Wits -1
+    - Blood +0 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits −1
 - **Captive:** *You didn't choose this. The Bond chose it for you, and now you can't leave even if you wanted to.*
-    - Blood +1 | Shadow -1 | Resolve +1 | Demeanor -1 | Wits +0
-- **Custom Archetype:** Create your own by distributing these stats: **+1 | +1 | +0 | -1 | -1**
+    - Blood +1 | Shadow −1 | Resolve +1 | Demeanor −1 | Wits +0
+- **Custom Archetype:** Create your own by distributing these stats: **+1 | +1 | +0 | −1 | −1**

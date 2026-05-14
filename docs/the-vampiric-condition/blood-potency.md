@@ -34,7 +34,7 @@ This scaling also applies to some [Variant Banes](../your-kindred/optional-extra
 
 ### Compulsion Intensity
 
-Like Bane Severity, an Ongoing penalty imposed by your Clan Compulsion scales with your Blood Potency. At BP 1, most triggered Compulsions are a -1 annoyance you can push through. At BP 4–5, it's a -4 or -5 penalty that makes anything other than satisfying the urge nearly impossible. Full Compulsion rules and Clan-specific triggers are in each Playbook.
+Like Bane Severity, an Ongoing penalty imposed by your Clan Compulsion scales with your Blood Potency. At BP 1, most triggered Compulsions are a −1 annoyance you can push through. At BP 4–5, it's a −4 or −5 penalty that makes anything other than satisfying the urge nearly impossible. Full Compulsion rules and Clan-specific triggers are in each Playbook.
 
 ### Blood Surges
 
@@ -67,8 +67,8 @@ Younger vampires learn and adapt faster than older ones. Your Blood Potency affe
 Older, more potent vampires have seen it all before. What would be a transformative experience for a Fledgling is just another Tuesday night for an Elder. This penalty applies to Slumber Reflections and Storyteller Awards only, never to Clan Experience triggers.
 
 - **BP 0–2:** No penalty.
-- **BP 3:** -1 XP from affected sources (minimum 0 per source).
-- **BP 4–5:** -2 XP from affected sources (minimum 0 per source).
+- **BP 3:** −1 XP from affected sources (minimum 0 per source).
+- **BP 4–5:** −2 XP from affected sources (minimum 0 per source).
 
 This means a BP 4 Elder who would receive +2 from Slumber Reflections and +2 from a Storyteller Award gets 0 + 0 = nothing from those sources that night. Their Clan triggers still work normally. See the [Advancement](../your-kindred/advancement.md) section for more details.
 

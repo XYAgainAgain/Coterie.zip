@@ -21,12 +21,12 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 **3 Hunger: Distracted**
 
 - Blood is on your mind constantly.
-- **Penalty:** -1 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
+- **Penalty:** −1 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
 
 **4 Hunger: Ravenous**
 
 - You need blood *soon*.
-- **Penalty:** -2 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
+- **Penalty:** −2 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
 
 **5 Hunger: The Beast Unleashed**
 

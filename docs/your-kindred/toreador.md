@@ -32,7 +32,7 @@ Until you can no longer perceive the object of your fixation or the scene ends, 
 
 You get 2 unique abilities:
 
-***Center of Gravity:*** When you are the focus of attention in a social scene, all non-Coterie characters except Elder Kindred present take -1 Ongoing to notice anything that isn't you. You don't need to roll to hold a room; you simply command it. This effect lasts as long as you're actively engaging the crowd and ends the moment you stop performing, conversing, or otherwise captivating your audience.
+***Center of Gravity:*** When you are the focus of attention in a social scene, all non-Coterie characters except Elder Kindred present take −1 Ongoing to notice anything that isn't you. You don't need to roll to hold a room; you simply command it. This effect lasts as long as you're actively engaging the crowd and ends the moment you stop performing, conversing, or otherwise captivating your audience.
 
 ***Muse's Gift:*** Once per session, you can spend a quiet moment with a willing character (Coterie or NPC) and inspire them. Describe what you do: sing for them, sketch them, tell them something they needed to hear, hold their hand in silent support, or whatever else they might need. They gain Advantage on the next roll they make that aligns with the emotional tone of your inspiration. If the target was a Coterie member and the roll succeeds, you both gain +1 XP.
 
@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Artisan:** *Your medium doesn't matter. What matters is that when you're finished, nobody can look away.*
-    - Blood -1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1
+    - Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1
 - **Impresario:** *You don't just attend the party; you decide who gets in and who gets remembered.*
-    - Blood +1 | Shadow -1 | Resolve +0 | Demeanor +2 | Wits +1
+    - Blood +1 | Shadow −1 | Resolve +0 | Demeanor +2 | Wits +1
 - **Muse:** *You don't make art. You inspire others to create art they didn't know was inside them.*
-    - Blood +0 | Shadow +1 | Resolve +1 | Demeanor +2 | Wits -1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow +1 | Resolve +1 | Demeanor +2 | Wits −1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

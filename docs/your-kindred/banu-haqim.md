@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Executioner:** *You are the blade of fate that ends that which should not continue.*
-    - Blood +1 | Shadow +2 | Resolve +1 | Demeanor -1 | Wits +0
+    - Blood +1 | Shadow +2 | Resolve +1 | Demeanor −1 | Wits +0
 - **Mediator:** *You prefer firm words over violence, but you'll use both when necessary.*
-    - Blood +0 | Shadow -1 | Resolve +1 | Demeanor +2 | Wits +1
+    - Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1
 - **Watcher:** *You observe, you wait, and you strike when the guilty think they're safe.*
-    - Blood +0 | Shadow +1 | Resolve +2 | Demeanor -1 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow +1 | Resolve +2 | Demeanor −1 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

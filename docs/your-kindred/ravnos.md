@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Courier:** *The package arrives on time, every time. Don't ask what's inside.*
-    - Blood +1 | Shadow +2 | Resolve +0 | Demeanor +1 | Wits -1
+    - Blood +1 | Shadow +2 | Resolve +0 | Demeanor +1 | Wits −1
 - **Grifter:** *The best cons are the ones where the mark thanks you afterward.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
 - **Antiquarian:** *Everything has a history, a value, and an owner who doesn't deserve it.*
-    - Blood +0 | Shadow +1 | Resolve -1 | Demeanor +1 | Wits +2
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow +1 | Resolve −1 | Demeanor +1 | Wits +2
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

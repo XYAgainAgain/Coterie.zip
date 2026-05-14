@@ -59,7 +59,7 @@ You must already be hidden for ***Unseen Passage*** to function. You can't use i
 
 **When you conjure a vivid hallucination in a small area targeting a single sense**, (a gunshot from the wrong direction, the stench of smoke, a hand gripping someone's shoulder) make a Hunger Check and roll +Shadow.
 
-**On a 10+,** the hallucination is perfect. Any witnesses are distracted and disoriented, taking -2 Forward as they react to something that isn't actually there.
+**On a 10+,** the hallucination is perfect. Any witnesses are distracted and disoriented, taking −2 Forward as they react to something that isn't actually there.
 
 **On a 7–9,** the hallucination lands, but the Storyteller chooses 1 complication:
 
@@ -128,7 +128,7 @@ Against supernatural creatures, roll +Shadow.
 
 - The target can still communicate with people outside the maze, which might bring help/danger
 - The maze has a flaw (a consistent landmark, an accidental omission, a draft from the real exit) that will eventually lead them out
-- The effect rebounds slightly; your own surroundings shimmer for a moment. Take -1 Forward
+- The effect rebounds slightly; your own surroundings shimmer for a moment. Take −1 Forward
 
 **On a 6-,** the maze folds in on you. Your target sees right through it, and for a heart-stopping moment, your own surroundings don't make sense either. They know exactly what you tried to do, and they're furious.
 
@@ -145,7 +145,7 @@ You build a mask only minds can see; a complete alternate identity with its own 
 **On a 7–9,** the mask holds, but the Storyteller chooses 1 complication:
 
 - The persona is convincing but shallow; deep probing reveals inconsistencies
-- Maintaining the mask is taxing; take -1 Forward on your next non-Obfuscate roll
+- Maintaining the mask is taxing; take −1 Forward on your next non-Obfuscate roll
 - One genuine emotion bleeds through, whatever you're feeling most strongly at the time; the reader senses something authentic beneath the façade but can't identify what
 
 **On a 6-,** the mask shatters. The reader sees your true psychic state laid bare; every thought, every emotion, every secret you were trying to hide. They know you were trying to deceive them. This feels deeply, uncomfortably intimate, like someone you admire walking in on you doing something very gross.

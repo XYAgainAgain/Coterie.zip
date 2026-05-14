@@ -49,9 +49,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Analyst:** *You take the world apart, piece by piece, until the pattern reveals itself.*
-    - Blood -1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2
+    - Blood −1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2
 - **Seer:** *You know what's coming. The tricky bit is getting anyone to believe you in time.*
-    - Blood -1 | Shadow +0 | Resolve +2 | Demeanor +1 | Wits +1
+    - Blood −1 | Shadow +0 | Resolve +2 | Demeanor +1 | Wits +1
 - **Conversationalist:** *Everyone and everything talks to you. The smart ones pay attention to what you say back.*
-    - Blood +0 | Shadow -1 | Resolve +1 | Demeanor +2 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

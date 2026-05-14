@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Puppet Master:** *The throne is just a chair. You decide who sits in it.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
 - **Slicing Shadow:** *They never see you coming, and by the time they do, it's already over.*
-    - Blood +0 | Shadow +2 | Resolve -1 | Demeanor +1 | Wits +1
+    - Blood +0 | Shadow +2 | Resolve −1 | Demeanor +1 | Wits +1
 - **Warlord:** *Some situations call for subtlety. Others call for you.*
-    - Blood +2 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits -1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +2 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits −1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

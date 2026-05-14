@@ -169,7 +169,7 @@ Every time your Coterie triggers one of these Moves, each Coterie member rolls, 
 
 **Half or more succeed:** Most people feel heard and understood. The Coterie collectively Holds 2. The Storyteller chooses 1 complication:
 
-- Someone feels dismissed or unheard; they take -1 Ongoing until the end of the scene
+- Someone feels dismissed or unheard; they take −1 Ongoing until the end of the scene
 - An old wound or unresolved issue resurfaces
 - A difficult truth comes out that someone wasn't ready for
 - The conversation takes longer than expected and cuts into the night too much

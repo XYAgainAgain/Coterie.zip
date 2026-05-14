@@ -34,7 +34,7 @@ You get 2 unique abilities:
 
 ***Sharpened Senses:*** You can always sense the presence of mundane and supernatural creatures within Close Range, even in total darkness or while blinded, without needing to roll. When you **Catch the Scent** to track prey or detect danger, roll with Advantage.
 
-***Beast's Leash:*** When the Beast starts to rise due to Hunger or a mundane effect, you can choose to let it loose instead of trying to **Stay Chill.** You Frenzy, but you retain enough control to choose your primary target and avoid harming your Coterie, and you always remember what happened. When you Frenzy this way, your Bane penalty is only -1 regardless of your Blood Potency. Afterwards, gain +1 Hunger (to a maximum of 4).
+***Beast's Leash:*** When the Beast starts to rise due to Hunger or a mundane effect, you can choose to let it loose instead of trying to **Stay Chill.** You Frenzy, but you retain enough control to choose your primary target and avoid harming your Coterie, and you always remember what happened. When you Frenzy this way, your Bane penalty is only −1 regardless of your Blood Potency. Afterwards, gain +1 Hunger (to a maximum of 4).
 
 ## Clan Experience
 
@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Apex:** *You are the top of the food chain, and everything below you should remember that.*
-    - Blood +2 | Shadow +1 | Resolve +1 | Demeanor -1 | Wits +0
+    - Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0
 - **Nightrunner:** *Every city is a wilderness once you know where the cracks are.*
-    - Blood +1 | Shadow +2 | Resolve +0 | Demeanor -1 | Wits +1
+    - Blood +1 | Shadow +2 | Resolve +0 | Demeanor −1 | Wits +1
 - **Boardroom Beast:** *You traded the forest floor for the corner office, but the fangs still fit.*
-    - Blood -1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

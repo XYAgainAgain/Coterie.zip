@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Preacher:** *Liberation starts with a sermon, and yours comes with complimentary refreshments.*
-    - Blood +0 | Shadow -1 | Resolve +1 | Demeanor +2 | Wits +1
+    - Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1
 - **Dealer:** *Everyone needs something. How convenient you just happen to have just the thing.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2
 - **Infiltrator:** *You're already inside. They invited you in themselves.*
-    - Blood +0 | Shadow +2 | Resolve +1 | Demeanor +1 | Wits -1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow +2 | Resolve +1 | Demeanor +1 | Wits −1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

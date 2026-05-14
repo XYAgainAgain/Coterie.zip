@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Medium:** *The dead have plenty to say, and you're happy to listen.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2
 - **Undertaker:** *Someone has to handle the bodies, and you're uncomfortably good at it.*
-    - Blood +1 | Shadow +1 | Resolve +2 | Demeanor -1 | Wits +0
+    - Blood +1 | Shadow +1 | Resolve +2 | Demeanor −1 | Wits +0
 - **Scion:** *The family's roots run deep; you carry every expectation that comes with them.*
-    - Blood +0 | Shadow -1 | Resolve +1 | Demeanor +2 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

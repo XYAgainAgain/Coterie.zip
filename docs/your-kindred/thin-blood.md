@@ -22,7 +22,7 @@ You have exclusive access to [Thin-Blood Alchemy](../disciplines/thin-blood-alch
 
 **You are barely a vampire.** Your Blood Potency is 0 and cannot increase through normal advancement — Diablerie is the one exception. You take Aggravated Harm from bladed weapons, bullets, and other sources that would only inflict Superficial Harm on full Kindred; your body is still mostly mortal. You cannot create Blood Bonds, and any attempt to Embrace a mortal has a high chance of simply killing them (the Storyteller decides the odds based on circumstances and must let you roll to determine the outcome).
 
-Kindred society treats you as something between a nuisance and a bad omen. The Storyteller may apply a penalty of -1 to -2 Forward on social rolls with Kindred who know and care what you are, and many domains require Thin-Bloods to bear a crescent moon brand.
+Kindred society treats you as something between a nuisance and a bad omen. The Storyteller may apply a penalty of −1 to −2 Forward on social rolls with Kindred who know and care what you are, and many domains require Thin-Bloods to bear a crescent moon brand.
 
 ## Compulsion: *Nothing*
 
@@ -61,9 +61,9 @@ You are no longer a being straddling the worlds of life and death. You are Kindr
 ## Archetypes
 
 - **Alchemist:** *You can't do what they do, so you invented something they can't fathom.*
-    - Blood -1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2
+    - Blood −1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2
 - **Daywalker:** *The sun doesn't scare you. It's the things that come out at night that do.*
-    - Blood +1 | Shadow -1 | Resolve +2 | Demeanor +1 | Wits +0
+    - Blood +1 | Shadow −1 | Resolve +2 | Demeanor +1 | Wits +0
 - **Chameleon:** *You always taste like whatever you last consumed. Nobody's quite sure what you really are, including you.*
-    - Blood +0 | Shadow +2 | Resolve -1 | Demeanor +1 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow +2 | Resolve −1 | Demeanor +1 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

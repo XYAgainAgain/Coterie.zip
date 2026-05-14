@@ -37,11 +37,11 @@ As your Humanity drops, the fiction changes around you. You become more dangerou
 
 **Humanity 4:** The predator is visible. You look and act like something that hurts people; your eyes are too flat, your movements too precise, your interest in others too obviously transactional. Your Touchstones require active effort to maintain — the Storyteller should periodically ask how you're keeping the relationship alive, and failure to engage will strain or damage the Touchstone over time. Mortals who spend extended time around you start making excuses to leave. Still no mechanical penalty, but the narrative pressure is real and the Storyteller should be leaning into it *hard*.
 
-**Humanity 3:** You are a monster wearing a memory of a person. Empathy is an intellectual exercise at best. Take -1 Ongoing to social rolls with mortals who aren't already afraid of you or supernaturally compelled. Additionally, take -1 Ongoing to **Stay Chill** because the Beast is much closer to the surface now, and it takes less to set you off. Your Touchstones are in genuine danger; maintaining them requires significant, visible sacrifice, and the Storyteller is within their rights to introduce complications that threaten them directly.
+**Humanity 3:** You are a monster wearing a memory of a person. Empathy is an intellectual exercise at best. Take −1 Ongoing to social rolls with mortals who aren't already afraid of you or supernaturally compelled. Additionally, take −1 Ongoing to **Stay Chill** because the Beast is much closer to the surface now, and it takes less to set you off. Your Touchstones are in genuine danger; maintaining them requires significant, visible sacrifice, and the Storyteller is within their rights to introduce complications that threaten them directly.
 
-**Humanity 2:** Almost gone. You struggle to distinguish between people and objects; both are just things that exist for your use. Take -2 Ongoing to social rolls with mortals and -2 Ongoing to **Stay Chill**. Your Touchstones are hanging by a thread. If you haven't done something meaningful to protect or connect with them recently, the Storyteller may rule that the Touchstone is damaged or destroyed through neglect. Losing a Touchstone at this level does not grant a new Stain... you're past feeling it.
+**Humanity 2:** Almost gone. You struggle to distinguish between people and objects; both are just things that exist for your use. Take −2 Ongoing to social rolls with mortals and −2 Ongoing to **Stay Chill**. Your Touchstones are hanging by a thread. If you haven't done something meaningful to protect or connect with them recently, the Storyteller may rule that the Touchstone is damaged or destroyed through neglect. Losing a Touchstone at this level does not grant a new Stain... you're past feeling it.
 
-**Humanity 1:** You are barely a person. You exist to eat, sleep, and occasionally lash out at things that irritate you. Take -3 Ongoing to social rolls with mortals and -3 Ongoing to **Stay Chill**. You cannot maintain Touchstones at all, and any remaining Touchstones are lost, along with their associated Convictions. You do not gain Stains from their loss. There is only one more step down from here, and it's into a deep, dark hole.
+**Humanity 1:** You are barely a person. You exist to eat, sleep, and occasionally lash out at things that irritate you. Take −3 Ongoing to social rolls with mortals and −3 Ongoing to **Stay Chill**. You cannot maintain Touchstones at all, and any remaining Touchstones are lost, along with their associated Convictions. You do not gain Stains from their loss. There is only one more step down from here, and it's into a deep, dark hole.
 
 **Humanity 0 — The Wight:** You are gone. The Beast has won completely, and whatever was left of the person you used to be has been consumed. Your body still moves, still hunts, still kills, but there's nobody home. The character is permanently under Storyteller control and cannot be recovered. Retire the character. Build a new one. Mourn if you want to. The Wight won't.
 
@@ -88,7 +88,7 @@ When you commit atrocities or violate your Convictions, you mark **Stains** on y
 
 - Minor violation: 1 Stain
 - Serious violation: 2–3 Stains
-- Acting in service of a Conviction: -1 Stain
+- Acting in service of a Conviction: −1 Stain
 
 If you accumulate 5 or more Stains or fill your remaining Humanity track (if it's lower than 5), you automatically lose 1 Humanity, and any remaining Stains roll over.
 
@@ -123,7 +123,7 @@ Each Compulsion has a specific fictional trigger; a bold sentence describing whe
 For example, Banu Haqim feel an overwhelming need to dispense judgment **when someone violates one of their Convictions or personal codes in their presence**, while Brujah are compelled to rebel **when they perceive themselves under the thumb of authority or expectation**.
 
 **What Compulsions Do:**
-Once triggered, a Compulsion doesn't force specific actions — you still choose how your character responds — but it makes everything except satisfying the urge significantly harder. You take an Ongoing penalty equal to your Blood Potency to all rolls that don't directly work toward fulfilling the Compulsion. At BP 1, that's only -1 (an annoyance). At BP 4, that's -4, which makes even simple tasks nearly impossible unless you're acting on the Beast's desires.
+Once triggered, a Compulsion doesn't force specific actions — you still choose how your character responds — but it makes everything except satisfying the urge significantly harder. You take an Ongoing penalty equal to your Blood Potency to all rolls that don't directly work toward fulfilling the Compulsion. At BP 1, that's only −1 (an annoyance). At BP 4, that's −4, which makes even simple tasks nearly impossible unless you're acting on the Beast's desires.
 
 **Ending a Compulsion:**
 A Compulsion persists until one of two things happens: you satisfy the urge as described in the specific Compulsion, or the scene ends naturally. You can absolutely choose to tough it out and eat the penalties for an entire scene if your character has the gumption to do so. Just remember that higher Blood Potency means the Beast's influence is harder to ignore.

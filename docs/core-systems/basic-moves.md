@@ -96,13 +96,13 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 **When you assist or interfere with another character's action**, roll with the same stat as your intended target after they roll but before the action is narrated or resolved.
 
-**On a 10+**, you give them +1 or -2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP.
+**On a 10+**, you give them +1 or −2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP.
 
-**On a 7–9**, you give them +1 or -1 to their roll (your choice), but you put yourself at risk of danger or exposure.
+**On a 7–9**, you give them +1 or −1 to their roll (your choice), but you put yourself at risk of danger or exposure.
 
 **On a 6-**, you get in the way and the intended bonus/penalty is inverted. The Storyteller takes an immediate Move against you.
 
-**Advanced: On a 12+**, you give them +2 or -2 to their roll, and both you and your ally gain 1 XP.
+**Advanced: On a 12+**, you give them +2 or −2 to their roll, and both you and your ally gain 1 XP.
 
 ### Stay Chill
 
@@ -125,7 +125,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 - You take one thing you could reasonably carry with you
 - You leave no mundane traces of your presence, including scents
 - You find the perfect hiding spot within eavesdropping range
-- You leave an ominous chill in the air or the shadows deepen, non-Coterie characters in the area have -1 Forward
+- You leave an ominous chill in the air or the shadows deepen, non-Coterie characters in the area have −1 Forward
 - A mortal who already noticed you thinks they're imagining things
 
 
@@ -160,7 +160,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 - You leave something behind or drop something
 - You miscalculated the safety or structural integrity of your destination
-- You're slightly off where you meant to be; take -1 Forward
+- You're slightly off where you meant to be; take −1 Forward
 - The danger follows you or catches up partially
 
 **On a 6-**, something blocks your path or interrupts your movement. You don't reach your destination and the Storyteller chooses 1 complication from above.
@@ -184,7 +184,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 - They also inflict Harm on you
 - They're tougher than you expected
-- You're off by a bit and have -1 Forward
+- You're off by a bit and have −1 Forward
 - The scuffle attracts unwanted attention
 - You leave clear evidence of your interaction
 
@@ -258,7 +258,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 **On a 7–9**, you (and only you) narrowly avoid the worst of it, but the Storyteller chooses 2 complications:
 
 - You suffer 1 Harm (can be Aggravated)
-- You take -1 Forward
+- You take −1 Forward
 - You lose any Hold you may have had
 - You gain +1 Hunger
 
@@ -277,8 +277,8 @@ What you can accomplish while appearing alive depends on your Humanity:
 - **9–10 Humanity:** You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to Demeanor checks made to do Normal Human Activities™.
 - **8:** You can use touchscreens, have sex and enjoy it, digest wine and light foods, and confidently pass as entirely human.
 - **7:** You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — on **10+** you pull it off, on **7–9** it's awkward, on **6-** they notice something's wrong.
-- **6:** You can use touchscreens; food makes you sick and you must **Stay Chill** to avoid vomiting. To fake sex as above, roll +Demeanor with -1 Forward.
-- **5:** Same as Humanity 6, but roll +Demeanor with -2 Forward to fake sex.
+- **6:** You can use touchscreens; food makes you sick and you must **Stay Chill** to avoid vomiting. To fake sex as above, roll +Demeanor with −1 Forward.
+- **5:** Same as Humanity 6, but roll +Demeanor with −2 Forward to fake sex.
 - **4:** You can use touchscreens. You cannot eat food or fake any intimacy.
 - **3-:** You can use touchscreens, but you probably don't know what they are.
 

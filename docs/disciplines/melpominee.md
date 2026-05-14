@@ -40,7 +40,7 @@ You can freely alter your own voice in any way: deeper, higher, accented, aged, 
 
 ### *Cognitive Dissonance (Passive)*
 
-You lean into the music that never stops. While singing along with your Inner Song (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer -1 Ongoing to all rolls for as long as you keep singing and they can hear you.
+You lean into the music that never stops. While singing along with your Inner Song (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer −1 Ongoing to all rolls for as long as you keep singing and they can hear you.
 
 While ***Cognitive Dissonance*** is active, you cannot use any other Discipline Power that requires vocalization; your voice is already spoken for. This Power works in combat, but ends if you take Harm equal to or greater than your Blood Potency — it's quite hard to get stabbed and keep singing. Ask me how I know.
 
@@ -52,7 +52,7 @@ While ***Cognitive Dissonance*** is active, you cannot use any other Discipline 
 
 **When you open your mouth and unleash a devastating sonic blast**, make a Hunger Check and roll +Blood.
 
-The wail strikes every person, creature, and object within Close Range, dealing 2 + your Blood + your Demeanor in Superficial Harm. Every target hit also suffers -1 Forward. Daughters of Cacophony and the belongings on their person are immune. You never take Harm directly from this Power. Everything and everyone else is fair game: Coterie members, enemies, bystanders, furniture, loose sandwiches, windows, load-bearing walls. Sound waves do not discriminate.
+The wail strikes every person, creature, and object within Close Range, dealing 2 + your Blood + your Demeanor in Superficial Harm. Every target hit also suffers −1 Forward. Daughters of Cacophony and the belongings on their person are immune. You never take Harm directly from this Power. Everything and everyone else is fair game: Coterie members, enemies, bystanders, furniture, loose sandwiches, windows, load-bearing walls. Sound waves do not discriminate.
 
 **On a 10+,** the blast is controlled and works as described above. You decide what exactly comes out.
 
@@ -83,7 +83,7 @@ The Resonance you instill matches the emotional tone of your vocalization. The t
 
 - The emotional shift is obvious and jarring; the target and anyone nearby can tell something just happened and you might need to explain yourself quickly
 - The intensity is one step weaker than you intended (Acute → Intense, Intense → Fleeting)
-- The Resonance is matched to your Inner Song; any vampire who **Feeds** from this vessel tonight also hears a melody they cannot shake and suffers -1 Ongoing to +Wits rolls as per your Bane
+- The Resonance is matched to your Inner Song; any vampire who **Feeds** from this vessel tonight also hears a melody they cannot shake and suffers −1 Ongoing to +Wits rolls as per your Bane
 
 **On a 6-,** the Resonance rebounds. Your own Vitae carries the Resonance you were trying to instill at the intensity you paid for. Any vampire who **Feeds** on you tonight gets the corresponding Advantage. The target is unaffected and may wonder why you suddenly look so emotional.
 
@@ -105,7 +105,7 @@ The target always hears your Inner Song bleeding faintly underneath your words, 
 
 The effect lasts for as long as you continue vocalizing. Stopping ends it immediately.
 
-Mortals within Close Range are automatically entranced; they stand still, listen, and suffer -3 Ongoing to noticing anything else happening around them. Supernatural creatures with Blood Potency equal to or lower than yours are similarly affected without resistance.
+Mortals within Close Range are automatically entranced; they stand still, listen, and suffer −3 Ongoing to noticing anything else happening around them. Supernatural creatures with Blood Potency equal to or lower than yours are similarly affected without resistance.
 
 Supernatural creatures with Blood Potency higher than yours can attempt to resist. They must **Stay Chill** and roll 7+ to be unaffected. On anything less, they too are caught in your melodic snare.
 
@@ -114,7 +114,7 @@ Supernatural creatures with Blood Potency higher than yours can attempt to resis
 **On a 7–9,** the performance takes hold, but the Storyteller chooses 1 complication:
 
 - The Inner Song bleeds into your performance; the affected hear something alien and unearthly underneath your voice and may be thoroughly disturbed by it afterward
-- Maintaining the vocalization is physically taxing; you suffer -1 Forward after the performance ends
+- Maintaining the vocalization is physically taxing; you suffer −1 Forward after the performance ends
 - One target at the edge of the effect shakes it off early and is now deeply suspicious
 
 **On a 6-,** the Inner Song overwhelms your performance. Your voice cracks, distorts, or shifts into something you didn't intend. You must immediately **Stay Chill** or succumb to your Compulsion. The audience snaps out of it, and anyone supernatural in the room more or less knows what you just tried to do.

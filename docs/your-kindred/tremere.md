@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Scholar:** *The answer exists, you just haven't found the right book yet.*
-    - Blood -1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2
+    - Blood −1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2
 - **Witcher:** *Theory is useful. Practice is better. Results are everything.*
-    - Blood +2 | Shadow +1 | Resolve +1 | Demeanor -1 | Wits +0
+    - Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0
 - **Iconoclast:** *The Pyramid fell and the old guard failed. Time to build something that actually works.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

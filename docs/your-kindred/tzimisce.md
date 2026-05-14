@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Landlord:** *This is yours. All of it. The buildings, the people, the rats in the walls. Every last piece.*
-    - Blood +0 | Shadow +1 | Resolve +2 | Demeanor +1 | Wits -1
+    - Blood +0 | Shadow +1 | Resolve +2 | Demeanor +1 | Wits −1
 - **Sculptor:** *The human form is a rough draft. You're trying to make the final edits.*
-    - Blood +1 | Shadow -1 | Resolve +1 | Demeanor +0 | Wits +2
+    - Blood +1 | Shadow −1 | Resolve +1 | Demeanor +0 | Wits +2
 - **Hoarder:** *You know exactly where every single thing you own is. Nobody is allowed to touch anything.*
-    - Blood +2 | Shadow +0 | Resolve +1 | Demeanor -1 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +2 | Shadow +0 | Resolve +1 | Demeanor −1 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

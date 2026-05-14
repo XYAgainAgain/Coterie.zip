@@ -37,7 +37,7 @@ At its core, ***Coterie*** asks only one question of its players:
 
 Important things to keep in mind:
 
-- **Personal stats** typically range from -3 to +3, reaching ±4–5 for very old/potent vampires
+- **Personal stats** typically range from −3 to +3, reaching ±4–5 for very old/potent vampires
 - **Coterie stats** cap at ±3, typically start at ±1 (rarely ±2)
 - **Clout and Currency** are spendable resources
 - **Cohesion** provides direct bonuses/penalties to Coterie Moves

@@ -47,9 +47,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Musclehead:** *The revolution needs muscle, and you've got plenty to spare.*
-    - Blood +2 | Shadow -1 | Resolve +1 | Demeanor +1 | Wits +0
+    - Blood +2 | Shadow −1 | Resolve +1 | Demeanor +1 | Wits +0
 - **Street Bat:** *You move through the gutters of the city like you were born in them (which is very possible).*
-    - Blood +0 | Shadow +2 | Resolve -1 | Demeanor +1 | Wits +1
+    - Blood +0 | Shadow +2 | Resolve −1 | Demeanor +1 | Wits +1
 - **Activist:** *Every cause needs someone who can keep the hotheads pointed in the right direction.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

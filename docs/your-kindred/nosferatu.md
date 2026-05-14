@@ -51,9 +51,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Broker:** *You are the information hub. Your currency is secrets. And also money, probably.*
-    - Blood -1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2
+    - Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2
 - **Stalker:** *You are the shadow who follows, watches, listens, and remembers.*
-    - Blood +0 | Shadow +2 | Resolve +1 | Demeanor -1 | Wits +1
+    - Blood +0 | Shadow +2 | Resolve +1 | Demeanor −1 | Wits +1
 - **Bruiser:** *Folks sometimes forget that Nosferatu can rip holes in buildings. Why don't you remind them?*
-    - Blood +2 | Shadow +1 | Resolve +1 | Demeanor -1 | Wits +0
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

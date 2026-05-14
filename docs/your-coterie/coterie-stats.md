@@ -6,7 +6,7 @@ These five stats, all starting with C for thematic consistency, represent your C
 
 **Typical Starting Range:** ±1 (rarely ±2 for exceptional circumstances)
 
-**Maximum Range:** -3 to +3
+**Maximum Range:** −3 to +3
 
 Reaching ±3 should be a major achievement requiring sustained effort (or lack thereof), significant accomplishments, or catastrophic fumbles. For a more granular breakdown of what the stats might actually mean, see the [Coterie Stat Reference Tables](coterie-stat-reference-tables.md).
 

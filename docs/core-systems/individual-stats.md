@@ -2,7 +2,7 @@
 title: "Individual Stats"
 ---
 
-These are the five core attributes — or statistics, AKA stats — for player characters in ***Coterie***. Typically, these range from -3 to +3, but can go up to ±4–5 for very old vampires or through certain buffing Powers. They are as follows:
+These are the five core attributes — or statistics, AKA stats — for player characters in ***Coterie***. Typically, these range from −3 to +3, but can go up to ±4–5 for very old vampires or through certain buffing Powers. They are as follows:
 
 ## Blood
 

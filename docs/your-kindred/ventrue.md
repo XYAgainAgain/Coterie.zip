@@ -51,9 +51,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Executive:** *Decisions flow upstream. Consequences flow downstream. You manage both.*
-    - Blood -1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1
+    - Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1
 - **Commander:** *Your Coterie is your unit, and you will drag them through hell and back whether they like it or not.*
-    - Blood +1 | Shadow -1 | Resolve +2 | Demeanor +1 | Wits +0
+    - Blood +1 | Shadow −1 | Resolve +2 | Demeanor +1 | Wits +0
 - **Old Guard:** *You remember when the rules meant something. You intend to remind everyone else.*
-    - Blood +0 | Shadow +1 | Resolve +1 | Demeanor -1 | Wits +2
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +2
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

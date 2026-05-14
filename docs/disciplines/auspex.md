@@ -12,7 +12,7 @@ The flip side: everything hits a hell of a lot harder. ***Heightened Sense***s m
 
 **When you Discern Vibes or Catch the Scent**, you have +1 Forward to those rolls.
 
-However, if you're exposed to extreme sensations (loud bangs, intense light, overpowering smells), you must **Stay Chill** or suffer -1 Ongoing to all Wits rolls for the rest of the scene as your heightened senses overload.
+However, if you're exposed to extreme sensations (loud bangs, intense light, overpowering smells), you must **Stay Chill** or suffer −1 Ongoing to all Wits rolls for the rest of the scene as your heightened senses overload.
 
 ---
 
@@ -107,7 +107,7 @@ If you act on the answers, take +1 Forward.
 
 Additionally, you may make one extra Hunger Check to broaden the reading to everyone within Close Range. For each person in the area, the Storyteller reveals their true nature and dominant emotion at a glance. This does *not* grant Hold as above; it's a snapshot, not a deep read.
 
-**On a 6-,** the auras hit you like a brick wall. Instead of reading the target, the connection inverts: they catch a vivid flash of your emotional state, your supernatural nature, or something you'd rather keep hidden. The Storyteller gives the target one truth about you that your aura revealed. The psychic backlash scrambles your perception; you have -1 Ongoing to Wits rolls for the rest of the scene as swirling afterimages of foreign auras swim across your vision.
+**On a 6-,** the auras hit you like a brick wall. Instead of reading the target, the connection inverts: they catch a vivid flash of your emotional state, your supernatural nature, or something you'd rather keep hidden. The Storyteller gives the target one truth about you that your aura revealed. The psychic backlash scrambles your perception; you have −1 Ongoing to Wits rolls for the rest of the scene as swirling afterimages of foreign auras swim across your vision.
 
 ### *Share the Senses*
 
@@ -117,7 +117,7 @@ Additionally, you may make one extra Hunger Check to broaden the reading to ever
 
 **On a 7–9,** the connection works, but the Storyteller chooses 1 complication:
 
-- The sensory overlap is disorienting; you have -3 Ongoing to actions involving your own body while the link is active
+- The sensory overlap is disorienting; you have −3 Ongoing to actions involving your own body while the link is active
 - The target senses something is off (a faint pressure behind the eyes, a feeling of being watched from inside)
 - The link is fragile; taking Harm or even being startled severs it immediately
 - You can only tap into one sense (Storyteller's choice)
@@ -190,7 +190,7 @@ Against supernatural creatures:
 
 **On a 7–9,** you catch the surface and learn whatever the target is actively thinking about right now. It might be vital intelligence, or it might be utterly mundane. The Storyteller provides one piece of information from the target's surface thoughts, useful or otherwise.
 
-**On a 6-,** the target feels you rummaging around in there, and their mind violently expels you. They know exactly who tried to get in. The backlash tears open a two-way channel for a split second: they get a flash of your surface thoughts, and the force of their rejection leaves you reeling. You have -1 Ongoing to Wits rolls for the rest of the scene as the psychic aftershock rings through your skull. Yikes.
+**On a 6-,** the target feels you rummaging around in there, and their mind violently expels you. They know exactly who tried to get in. The backlash tears open a two-way channel for a split second: they get a flash of your surface thoughts, and the force of their rejection leaves you reeling. You have −1 Ongoing to Wits rolls for the rest of the scene as the psychic aftershock rings through your skull. Yikes.
 
 ### *Possession*
 
@@ -204,7 +204,7 @@ You cannot read the host's mind, access their memories, or use their skills. Imp
 
 **On a 7–9,** the Possession works as above, but the Storyteller chooses 1 complication:
 
-- The host's body resists your control; you have -1 Ongoing to all physical actions while inside
+- The host's body resists your control; you have −1 Ongoing to all physical actions while inside
 - Fragments of the host's personality bleed through; their mannerisms, speech patterns, or emotional reactions surface at inconvenient moments
 - The transition was rough; your real body twitched, cried out, or moved visibly before going limp, and anyone nearby likely has concerns
 - The host retains fragmentary awareness of what you do while inside; when you leave, they'll remember flashes of what happened

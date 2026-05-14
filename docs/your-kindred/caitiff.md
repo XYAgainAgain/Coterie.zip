@@ -20,7 +20,7 @@ Choose any 2 Disciplines to start with. These are unaffected by your Bane.
 
 ## Bane: *Lacking Lineage*
 
-**You carry no supernatural curse, but Kindred society treats your existence as one**. Any Kindred who knows you're Caitiff may impose social consequences at their discretion; the Storyteller can apply a penalty of -1 to -2 Forward on Demeanor rolls with Kindred who look down on the clanless (which is most of them).
+**You carry no supernatural curse, but Kindred society treats your existence as one**. Any Kindred who knows you're Caitiff may impose social consequences at their discretion; the Storyteller can apply a penalty of −1 to −2 Forward on Demeanor rolls with Kindred who look down on the clanless (which is most of them).
 
 Additionally, Disciplines take more effort to advance, as your Blood must learn what the Clans inherit. When you spend XP on unlocking access to Disciplines, add your Blood Potency to the cost (minimum 1). When you spend XP on Discipline Powers from Disciplines other than your two starters, add half your Blood Potency (rounded up) instead.
 

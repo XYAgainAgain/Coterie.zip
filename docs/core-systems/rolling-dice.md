@@ -30,7 +30,7 @@ Sometimes, the Storyteller or a Move you have will modify a roll you make in som
 
 !!! warning "Important Note"
 
-    *If you have multiple Forward or Ongoing modifiers that overlap, they mathematically interact as expected. For example, having +2 Ongoing to a task but -1 Forward in that moment means your next roll will have a +1 bonus, but the roll after that may have the full +2 bonus.*
+    *If you have multiple Forward or Ongoing modifiers that overlap, they mathematically interact as expected. For example, having +2 Ongoing to a task but −1 Forward in that moment means your next roll will have a +1 bonus, but the roll after that may have the full +2 bonus.*
 
 ### Advantage & Disadvantage
 

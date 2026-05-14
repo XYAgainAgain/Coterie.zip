@@ -53,9 +53,9 @@ Once each per session, gain +1 XP when you...
 ## Archetypes
 
 - **Intimate:** *You crave closeness and you use every feeding as an excuse to find it.*
-    - Blood +1 | Shadow +0 | Resolve -1 | Demeanor +2 | Wits +1
+    - Blood +1 | Shadow +0 | Resolve −1 | Demeanor +2 | Wits +1
 - **Ascetic:** *Distance keeps people safe. You feed carefully, clinically, and leave before it gets personal.*
-    - Blood -1 | Shadow +1 | Resolve +2 | Demeanor +0 | Wits +1
+    - Blood −1 | Shadow +1 | Resolve +2 | Demeanor +0 | Wits +1
 - **Puzzler:** *You're much less interested in the feeding than in the question: what the hell are you?*
-    - Blood +0 | Shadow -1 | Resolve +1 | Demeanor +1 | Wits +2
-- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | -1**
+    - Blood +0 | Shadow −1 | Resolve +1 | Demeanor +1 | Wits +2
+- **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**
