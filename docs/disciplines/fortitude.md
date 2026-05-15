@@ -52,7 +52,7 @@ When a creature drinks your Vitae, each Hunger Check's worth heals 3 Aggravated 
 
 *(Requires: **Unswayable Mind**)*
 
-Your mind actively punishes intrusion. **When you successfully *Stay Chill* or otherwise resist mundane or supernatural coercion covered by *Unswayable Mind***, the creature that tried to tell you what to do takes Aggravated Harm equal to your Blood Potency. No roll, no Hunger Check, just instant searing psychic pain.
+Your mind actively punishes intrusion. **When you successfully *Stay Chill* or otherwise resist mundane or supernatural coercion covered by *Unswayable Mind***, the creature that tried to tell you what to do takes Aggravated Harm equal to half your Blood Potency (rounded up, minimum 1). No roll, no Hunger Check, just instant searing psychic pain.
 
 The intruder doesn't need to be nearby for this to work. A failed Dominate command delivered through a Familiar, a Presence Power projected across a room, even a mortal's particularly aggressive attempt at intimidation: if ***Unswayable Mind*** helps you resist it, ***Self-Assurance*** makes the source regret trying.
 
@@ -164,7 +164,7 @@ While active, your skin takes on an unsettling, faintly luminous sheen. It doesn
 
 ### *Meat Shields*
 
-**When you draw on the fragile vitality of the mortals around you**, make a Hunger Check with Disadvantage. For the rest of the scene, you gain 1 Temporary HP for each mortal within Close Range who isn't a direct threat to you, to a maximum of 5.
+**When you draw on the fragile vitality of the mortals around you**, make a Hunger Check with Disadvantage. For the rest of the scene, you gain 3 Temporary HP for each mortal within Close Range who isn't a direct threat to you, to a maximum of 15.
 
 Temporary HP is absorbed before your regular HP when you take Harm. It adjusts dynamically: if mortals enter Close Range, you gain more (up to the cap). If they leave or die, you lose the corresponding Temporary HP. When the scene ends, all remaining Temporary HP vanishes.
 

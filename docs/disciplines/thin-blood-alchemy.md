@@ -2,7 +2,7 @@
 title: "Thin-Blood Alchemy"
 ---
 
-\[COMIN' DOWN THE PIPELINE!]
+\[ON THE WAY!]
 
 ---
 

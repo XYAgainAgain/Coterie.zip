@@ -32,9 +32,9 @@ Until you establish dominance through a physical display (force, intimidation, a
 
 You get 2 unique abilities:
 
-***Sharpened Senses:*** You can always sense the presence of mundane and supernatural creatures within Close Range, even in total darkness or while blinded, without needing to roll. When you **Catch the Scent** to track prey or detect danger, roll with Advantage.
+***Sharpened Senses:*** You can always sense the presence of mundane and supernatural creatures within Close Range, even in total darkness or while blinded, without needing to roll. **When you *Catch the Scent* to track prey or detect danger**, roll with Advantage.
 
-***Beast's Leash:*** When the Beast starts to rise due to Hunger or a mundane effect, you can choose to let it loose instead of trying to **Stay Chill.** You Frenzy, but you retain enough control to choose your primary target and avoid harming your Coterie, and you always remember what happened. When you Frenzy this way, your Bane penalty is only −1 regardless of your Blood Potency. Afterwards, gain +1 Hunger (to a maximum of 4).
+***Beast's Leash:*** **When the Beast starts to rise due to Hunger or a mundane effect**, you can choose to let it loose instead of trying to **Stay Chill**. You Frenzy, but you retain enough control to choose your primary target and avoid harming your Coterie, and you always remember what happened. **When you Frenzy this way**, your Bane penalty is only −1 regardless of your Blood Potency. Afterwards, gain +1 Hunger (to a maximum of 4).
 
 ## Clan Experience
 

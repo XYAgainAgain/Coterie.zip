@@ -141,7 +141,7 @@ Your Familiar and any animals you summon through ***Feral Whispers*** are toughe
 
 **On a 10+,** the target is swarmed. Every animal in the vicinity converges and cooperates to harass them: stray dogs circle and snap, birds dive and peck, rats pour from storm drains and crawl up their legs. The target takes −3 Ongoing to all rolls from the constant harassment unless they can physically isolate themselves from all wildlife (and good luck with that outdoors). Any attempt to track the target gets +2 Forward from the very obvious trail of agitated animals.
 
-**On a 7–9,** the harassment is persistent but less overwhelming. −1 Ongoing to all rolls, +1 Forward to tracking. The Storyteller chooses 1 complication:
+**On a 7–9,** the harassment is persistent but less overwhelming. −2 Ongoing to all rolls, +1 Forward to tracking. The Storyteller chooses 1 complication:
 
 - The animals are aggressive enough to draw human attention and documentation; if mortals are present, the Masquerade Clock advances
 - One particular animal fixates on the target and refuses to leave; it's large, loud, and/or conspicuous
@@ -253,8 +253,8 @@ This Power has no effect on mortals. They might find the sound unsettling, but t
 
 **On a 10+,** all supernatural creatures within earshot are affected:
 
-- If Calming, they gain a Forward bonus equal to your Blood Potency to their next **Stay Chill** roll. Any creature currently in Frenzy may immediately attempt to **Stay Chill** again with the same bonus.
-- If Agitating, they take a Forward penalty equal to your Blood Potency to their next **Stay Chill** roll. If someone is already teetering at the brink of Frenzy, this might be all it takes.
+- If Calming, they gain a Forward bonus equal to half your Blood Potency (rounded down) to their next **Stay Chill** roll. Any creature currently in Frenzy may immediately attempt to **Stay Chill** again with the same bonus.
+- If Agitating, they take a Forward penalty equal to half your Blood Potency (rounded down) to their next **Stay Chill** roll. If someone is already teetering at the brink of Frenzy, this might be all it takes.
 
 **On a 7–9,** the effect takes hold but the Storyteller chooses 1 complication:
 

@@ -34,9 +34,9 @@ Until you perform, vocalize, or use Melpominee to impose your sound on the envir
 
 You get 2 unique abilities:
 
-***Resonant Voice:*** Your voice carries preternatural weight even without Discipline use. When you **Influence** someone through direct speech, song, or vocalization, treat a roll of 6- as a 7–9. Your words land even when your delivery falters; something in the timbre compels attention.
+***Resonant Voice:*** Your voice carries preternatural weight even without Discipline use. **When you *Influence* someone through direct speech, song, or vocalization**, treat a roll of 6- as a 7–9. Your words land even when your delivery falters; something in the timbre compels attention.
 
-***In Harmony:*** Once per scene, when you successfully use any Melpominee Power, one ally of your choice who can hear you gains +1 Forward on their next roll as an afterglow of your performance that sharpens their focus. If one or more allied Daughters participate in the same performance, this bonus extends to all allies who can hear you, and you gain an Ongoing bonus to your Melpominee rolls per participating Daughter (maximum +3) until you stop performing or the scene ends.
+***In Harmony:*** **Once per scene, when you successfully use any Melpominee Power**, one ally of your choice who can hear you gains +1 Forward on their next roll as an afterglow of your performance that sharpens their focus. If one or more allied Daughters participate in the same performance, this bonus extends to all allies who can hear you, and you gain an Ongoing bonus to your Melpominee rolls per participating Daughter (maximum +3) until you stop performing or the scene ends.
 
 ## Daughter Experience
 

@@ -32,7 +32,7 @@ Until you can no longer perceive the object of your fixation or the scene ends, 
 
 You get 2 unique abilities:
 
-***Center of Gravity:*** When you are the focus of attention in a social scene, all non-Coterie characters except Elder Kindred present take −1 Ongoing to notice anything that isn't you. You don't need to roll to hold a room; you simply command it. This effect lasts as long as you're actively engaging the crowd and ends the moment you stop performing, conversing, or otherwise captivating your audience.
+***Center of Gravity:*** **When you are the focus of attention in a social scene**, all non-Coterie characters except Elder Kindred present take −1 Ongoing to notice anything that isn't you. You don't need to roll to hold a room; you simply command it. This effect lasts as long as you're actively engaging the crowd and ends the moment you stop performing, conversing, or otherwise captivating your audience.
 
 ***Muse's Gift:*** Once per session, you can spend a quiet moment with a willing character (Coterie or NPC) and inspire them. Describe what you do: sing for them, sketch them, tell them something they needed to hear, hold their hand in silent support, or whatever else they might need. They gain Advantage on the next roll they make that aligns with the emotional tone of your inspiration. If the target was a Coterie member and the roll succeeds, you both gain +1 XP.
 

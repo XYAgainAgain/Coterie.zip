@@ -87,7 +87,7 @@ Convictions are your moral anchors, the rules you set for yourself to stay human
 
 ### 5. Identify Touchstones
 
-Each Conviction needs a Touchstone; a specific mortal who embodies that principle and keeps you tethered to it. Touchstones are your connection to humanity, but they're also vulnerable. Lose them and your Conviction crumbles.
+Each Conviction needs a Touchstone; a specific mortal who embodies that principle and keeps you tethered to it. Touchstones are your connection to Humanity, but they're also vulnerable. Lose them and your Conviction crumbles.
 
 **What You Need:**
 

@@ -20,7 +20,7 @@ Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Dominate](../disc
 
 ## Bane: *Hunted Blood*
 
-**A third eye sits in the center of your forehead.** No supernatural power can conceal it short of hiding your entire body; physical coverings (hats, scarves, bandages, masks, long bangs) work most of the time. When you use an Active Discipline Power, the eye opens and weeps blood. Nearby Kindred at Hunger 4+ who witness this must **Stay Chill** or feel drawn to **Feed** from you.
+**A third eye sits in the center of your forehead.** No supernatural power can conceal it short of hiding your entire body; physical coverings (hats, scarves, bandages, masks, long bangs) work most of the time. When you use an Active Discipline Power, the eye opens and weeps blood. Nearby Kindred at 4+ Hunger who witness this must **Stay Chill** or feel drawn to **Feed** from you.
 
 Your Vitae is intoxicating to other Kindred. When a non-Salubri tastes your blood, they must **Stay Chill** with a penalty equal to your Blood Potency (minimum 1) or continue feeding until physically stopped. Kindred of the Blood Leech Predator Type have Disadvantage on this roll.
 
@@ -34,7 +34,7 @@ Until you meaningfully alleviate the sufferer's pain, a more immediate crisis su
 
 You get 2 unique abilities:
 
-***Soul Sight:*** Your third eye perceives what others cannot. When you **Discern Vibes** on an entity, you may ask "What is their current Humanity?", "Do they intend to harm me?", or "Are they concealing their true nature?" without spending Hold. These answers come through the third eye, not normal observation.
+***Soul Sight:*** Your third eye perceives what others cannot. **When you *Discern Vibes* on an entity**, you may ask "What is their current Humanity?", "Do they intend to harm me?", or "Are they concealing their true nature?" without spending Hold. These answers come through the third eye, not normal observation.
 
 ***Mending Touch:*** Once per scene, you can heal 2 Superficial Harm (or 1 Aggravated Harm) on a willing creature through sustained physical contact. Healing Superficial Harm costs you +1 Hunger, and healing Aggravated Harm costs +2 Hunger. No roll required.
 

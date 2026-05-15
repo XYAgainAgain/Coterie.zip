@@ -12,7 +12,7 @@ You were Embraced because you're a survivor who travels light and thinks fast. T
 
 Your people are wanderers, tricksters, and opportunists. You move between domains selling your services as a spy, a saboteur, a negotiator, or whatever else pays and keeps you reasonably safe. A secret network of signs and signals helps Ravnos find each other on the road, and when you do meet up, the tradition is storytelling; swapping rumors, trading intel, one-upping each other's exploits. Some of your Clan build identities around trickster mythology, treating their craft as something close to sacred. Others just like the thrill. Either way, your methods favor wit and illusion over brute force, and you'd rather vanish than fight a battle you didn't choose.
 
-The cost is stillness. Your blood carries a fire that ignites if you stay in one place too long. Sleep in the same spot twice in the same week and you'll literally start burning from the inside out; no flame, no warning, just searing pain and scorched flesh. Every Ravnos maintains multiple havens, fake identities, go-bags, and an exit strategy for the exit strategy. You can never truly settle down, and the moment you get comfortable somewhere is the moment you need to leave. What the hell are you doing in a Coterie?
+The cost is stillness. Your blood carries a fire that ignites if you stay in one place too long. Sleep in the same spot twice in the same week and you'll literally start burning from the inside out; no flame, no warning, just searing pain and scorched flesh. Every Ravnos maintains multiple Havens, fake identities, go-bags, and an exit strategy for the exit strategy. You can never truly settle down, and the moment you get comfortable somewhere is the moment you need to leave. What the hell are you doing in a Coterie?
 
 ## Disciplines
 
@@ -32,9 +32,9 @@ Until you commit to the most daring approach available or the scene ends, take a
 
 You get 2 unique abilities:
 
-***Lucky Devil:*** Once per session, you may reroll any single roll you've just made and take either result. The dice of fate favor you — you just sometimes need to remind them.
+***Lucky Devil:*** Once per session, you may reroll any single roll you've just made and take either result. The dice of fate favor you! You just sometimes need to remind them.
 
-***Phantom Trick:*** You can conjure brief, minor sensory illusions at will: a sound from the wrong direction, a flicker of movement in peripheral vision, a phantom scent on the breeze. They dissolve under direct scrutiny. When you weave one into any Move as a distraction or misdirection, gain +1 Forward to that roll.
+***Phantom Trick:*** You can conjure brief, minor sensory illusions at will: a sound from the wrong direction, a flicker of movement in peripheral vision, a phantom scent on the breeze. **When you weave one into any Move as a distraction or misdirection**, gain +1 Forward to that roll. They dissolve under direct scrutiny.
 
 ## Clan Experience
 

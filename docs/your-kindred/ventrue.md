@@ -22,7 +22,7 @@ Choose 2 to start: [**Dominate**](../disciplines/dominate.md) **| [Fortitude](..
 
 **At character creation, define your exclusive feeding preference**: a narrow, specific category of vessel (e.g., redheads, military veterans, people experiencing grief, individuals of noble descent, methamphetamine users, etc.) Blood from anyone outside your preference provides no sustenance; you vomit it back up within moments. Ventrue with the Blood Leech Predator Type are especially susceptible to going hungry.
 
-You can sense whether a vessel matches your preference by spending a moment in close proximity and rolling +Wits; on a 7+, you know for certain if they fit the bill. It's like sniffing your food to check for mold.
+You can sense whether a vessel matches your preference by spending a moment in close proximity and rolling +Wits. **On a 7+,** you know for certain if they fit the bill. It's like sniffing your food to check for mold.
 
 At Blood Potency 3+, the dietary restriction narrows further — work with your Storyteller to define how. What was once "soldiers" might become "combat veterans with active PTSD." What was once "redheads" might become "natural redheads under 30." The pickier you are, the better they taste.
 
@@ -36,9 +36,9 @@ Until someone obeys a direct order you've given without supernatural enforcement
 
 You get 2 unique abilities:
 
-***Tactical Command:*** When you give a direct, specific order to a Coterie member or another ally during a tense or dangerous situation and they follow it, they gain Advantage and +1 Forward on the roll to execute it. You can only issue one such order per scene, so make it count.
+***Tactical Command:*** **When you give a direct, specific order to a Coterie member or another ally during a tense or dangerous situation and they follow it**, they gain Advantage and +1 Forward on the roll to execute it. You can only issue one such order per scene, so make it count.
 
-***Unyielding Privilege:*** You have weathered many years of plots, betrayals, and attempts on your unlife (or you carry the blood of those who have). When you **Stay Chill** to resist mundane or supernatural coercion, mental domination, or intimidation from any source, treat a roll of 6- as a 7-9.
+***Unyielding Privilege:*** You have weathered many years of plots, betrayals, and attempts on your unlife (or you carry the blood of those who have). **When you *Stay Chill* to resist mundane or supernatural coercion, mental domination, or intimidation from any source**, treat a roll of 6- as a 7–9.
 
 ## Clan Experience
 

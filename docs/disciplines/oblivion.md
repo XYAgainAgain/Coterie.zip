@@ -316,7 +316,7 @@ You can envelop a single creature by flowing over them. An enveloped target suff
 
 *(Requires: **Touch of Oblivion**)*
 
-**When you firmly grasp a creature, lock eyes, and channel raw entropy directly into their soul**, make 2 Hunger Checks and roll +Shadow. You must be within Hand Range. This Power affects mortals and vampires differently but devastates both. Mark 1 Stain unless the kill aligns with one of your Convictions.
+**When you firmly grasp a creature, lock eyes, and channel raw entropy directly into their soul**, make 2 Hunger Checks and roll +Shadow. You must be within Hand Range. This Power affects mortals and vampires differently but devastates both. Mark 5 Stains unless the kill aligns with one of your Convictions.
 
 Against mortals, the target takes Aggravated Harm equal to twice your Blood Potency. Those killed by ***Withering Spirit*** are annihilated so completely that they cannot return as ghosts. No Wraith, no Spectre, no haunting. They are gone and banished and no longer your problem.
 
@@ -336,4 +336,4 @@ Against vampires, instead of dealing Harm, you consume Humanity equal to your Bl
 
 ## Oblivion Ceremonies
 
-\[GATHERING THE UNDEAD HORDES, PLS BEAR WITH ME!]
+\[ON THE WAY!]

@@ -51,7 +51,7 @@ Your Ghoul doesn't need to know they're a delivery mechanism, and probably shoul
 
 ### *Pierce the Flesh*
 
-**When you open a wound on yourself and crystallize your Vitae into razor-sharp projectiles**, take 1 Superficial Harm and make a Hunger Check. A number of gleaming blood daggers equal to twice your Blood Potency materialize in the air around you, hovering menacingly until directed. They last until the end of the scene or until used.
+**When you open a wound on yourself and crystallize your Vitae into razor-sharp projectiles**, take 1 Superficial Harm (Ignore Armor) and make a Hunger Check. A number of gleaming blood daggers equal to twice your Blood Potency materialize in the air around you, hovering menacingly until directed. They last until the end of the scene or until used.
 
 You can hurl a single 1-Harm dagger at any target within Far Range as a Free Action without rolling, dealing Superficial Harm to supernatural creatures or Aggravated Harm to mortals.
 
@@ -146,9 +146,9 @@ Spend Hold 1-for-1 to ask the Storyteller:
 
 ### *Blood of Potency*
 
-**When you clench your fists and thicken the Vitae coursing through your undead veins**, make a number of Hunger Checks equal to the Blood Potency you're trying to reach. Your BP increases to the target level for 1 scene. To extend the boost to a full night, make twice that number of Hunger Checks instead.
+**When you clench your fists and thicken the Vitae coursing through your undead veins**, make a number of Hunger Checks equal to the Blood Potency you're trying to reach. Your BP increases to the target level until the end of the scene. To extend the boost to a full night, make twice that number of Hunger Checks instead.
 
-You gain every benefit and every cost of the higher BP: more HP, less XP, stronger Blood Surges, broader Discipline access, tighter feeding restrictions, and worse Bane severity. If the Hunger Checks push you to 5 Hunger and you Frenzy, the temporary BP boost still takes effect. Good luck with that.
+You gain every benefit and every cost of the higher BP: more HP, less XP, stronger Blood Surges, tighter feeding restrictions, and worse Bane severity. If the Hunger Checks push you to 5 Hunger and you Frenzy, the temporary BP boost still takes effect. Good luck with that.
 
 ### *Ripples of the Heart*
 
@@ -178,7 +178,7 @@ The next Kindred who **Feeds** from the altered source inherits the effect. Alte
 
 **When you beckon toward a mortal you can see and command their blood to leap from their body into your open mouth**, make a Hunger Check and roll +Blood. An arterial wound opens on the target in your preferred drinking location and a stream of blood arcs through the air toward you. You can do nothing else while **Feeding** this way except move, though you must maintain line of sight, and the process takes 3 full turns (15 seconds) to complete. The wound seals itself when the feeding ends, leaving no trace. A target wearing full-body protection (hazmat suit, sealed armor) merely bleeds ecstatically into their own outfit.
 
-Against supernatural creatures whose BP is half yours (rounded down) or lower, the Power works identically.
+Against supernatural creatures whose BP is half yours (rounded down) or lower, the Power works identically. If line of sight is broken at any time while you use this Power, the stream of blood splashes to the ground and you slake Hunger equal to how many turns you were able to hold it for; no other effects occur.
 
 **On a 12+,** slake 4 Hunger and take +2 Forward. The target is subdued as if experiencing the Kiss for the duration. **On a 10+,** slake 3 Hunger. **On a 7–9,** slake 2 Hunger, and the Storyteller chooses 1 complication:
 
@@ -191,7 +191,7 @@ Against supernatural creatures whose BP is half yours (rounded down) or lower, t
 
 ### *Marionette*
 
-**When you seize control of the blood inside a mortal's body and puppet them like they deserve**, make a Hunger Check and roll +Blood. You must have previously tasted the target's blood (even a single drop will suffice). The target maintains awareness and can still speak, but cannot resist your control of their limbs.
+**When you seize control of the blood inside a mortal's body and puppet them like they deserve**, make a Hunger Check, roll +Blood, and mark 2 Stains. You must have previously tasted the target's blood (even a single drop will suffice). The target maintains awareness and can still speak, but cannot resist your control of their limbs.
 
 Against supernatural creatures whose BP is half yours (rounded down) or lower, the Power works identically, though the target can spend a turn fighting for control at the cost of 1 Aggravated Harm as their blood shreds them from within. Sorry, but that's *your* blood right now.
 
@@ -252,7 +252,7 @@ Anyone who takes Harm from the explosion also counts as having tasted your Vitae
 
 **When you press your palm against a creature's skin and boil the blood inside their body**, gain +1 Hunger, mark 1 Stain, and roll +Blood. In combat, landing the touch requires you to successfully **Dirty Your Claws**.
 
-**On a 12+,** the target takes Aggravated Harm equal to 5 + your Blood stat. Mortals die screaming and steaming. Kindred who somehow survive gain +1 Hunger for each point of Harm dealt, but their Beast is terrified of you and they will flee at once if Frenzy takes hold.
+**On a 12+,** the target takes Aggravated Harm equal to 5 + your Blood stat. Mortals die screaming and steaming. Kindred who somehow survive immediately enter Frenzy, but their Beast is terrified of you and they will rapidly flee as soon as they are able. The Frenzy ends when they can no longer sense you or any members of your Coterie, when they reach 0 Hunger again, or until you rip out their spine to punish their cowardice.
 
 **On a 10+,** the target takes Aggravated Harm equal to 2 + your Blood stat. Same Hunger effect on surviving Kindred. **On a 7–9,** the Harm is equal to your Blood stat only, and the Storyteller chooses 1 complication:
 
@@ -275,4 +275,4 @@ No roll is required. The Vitae is yours and it always was. The only question is 
 
 ## Blood Sorcery Rituals
 
-\[THERE'S LITERALLY LIKE ALMOST 200 OF THESE GIMME A MINUTE LOL!]
+\[ON THE WAY!]

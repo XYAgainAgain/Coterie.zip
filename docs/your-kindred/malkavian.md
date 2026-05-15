@@ -22,7 +22,7 @@ Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Dominate](../disc
 
 At character creation, work with your Storyteller to define your supernatural affliction; how the Blood has reshaped your mind, your senses, or your emotional landscape. This isn't a clinical diagnosis, it's a curse that amplifies, distorts, or creates something unique to you.
 
-**When the Beast presses in** (at Hunger 4+, during Frenzy, after a 6- to **Stay Chill**, under intense supernatural pressure, etc.) your affliction flares. Take a penalty equal to your Blood Potency (minimum 1) to **Discern Vibes** and **Catch the Scent** rolls until the episode passes (when the pressure eases or the scene ends). While active, the Storyteller may lie to your face to introduce one false detail per episode that your character perceives as true but isn't. You won't know which one.
+**When the Beast presses in** (at Hunger 4+, during Frenzy, after a 6- to **Stay Chill**, under intense supernatural pressure, etc.), your affliction flares. Take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Discern Vibes** and **Catch the Scent** rolls until the episode passes (when the pressure eases or the scene ends). While active, the Storyteller may lie to your face to introduce one false detail per episode that your character perceives as true but isn't. You won't know which one.
 
 ## Compulsion: *Delusion*
 
@@ -36,7 +36,7 @@ You get 2 unique abilities:
 
 ***The Cobweb:*** Once per session, you receive a flash of insight from the psychic network connecting all Malkavians (whether or not people believe it's real is a moot point). You may ask the Storyteller a single yes-or-no question about anything in the past, present, or imminent future. The answer is always truthful but arrives filtered through your affliction; expect visions, whispers, or sensations rather than clear words.
 
-***Infectious Insight:*** When you share information gained from **Discern Vibes** or **Catch the Scent** with a Coterie member and they act on it, they gain +1 Forward. Your perception is unconventional, but those who choose to trust you find it eerily reliable.
+***Infectious Insight:*** **When you share information gained from *Discern Vibes* or *Catch the Scent* with a Coterie member and they act on it**, they gain +1 Forward. Your perception is unconventional, but those who choose to trust you find it eerily reliable.
 
 ## Clan Experience
 

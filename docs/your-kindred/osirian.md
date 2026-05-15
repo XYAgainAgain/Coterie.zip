@@ -30,7 +30,7 @@ Bardo does not follow normal Discipline access rules. Instead of requiring Blood
 
 You have spent your unlife suppressing the Beast through ascetic discipline, and it has not forgiven you.
 
-When you Frenzy, the starved Beast erupts with devastating force. After any Frenzy, take an Ongoing penalty to **Stay Chill** rolls equal to half your missing Humanity, rounded up (minimum 1) for the remainder of the night. Your missing Humanity is 10 minus your current Humanity. (At Humanity 8, that's −1. At Humanity 5, that's −3.)
+**When you Frenzy**, the starved Beast erupts with devastating force. After any Frenzy, take an Ongoing penalty to **Stay Chill** rolls equal to half your missing Humanity, rounded up (minimum 1) for the remainder of the night. Your missing Humanity is 10 minus your current Humanity. (At Humanity 8, that's −1. At Humanity 5, that's −3.)
 
 You cannot Embrace anyone. Any attempt to turn a mortal simply kills them; the blood of Osiris cannot create new unlife, only sustain the old.
 
@@ -44,9 +44,9 @@ Until you meaningfully de-escalate the situation, convince someone to step back 
 
 You get 2 unique abilities:
 
-***Pillar of Osiris:*** You can designate a fixed location (room, shrine, garden, cave, etc.) as your Pillar through one full night of uninterrupted meditation, creating a pleasant and persistent magical haze in the air that soothes everyone within it. While at your Pillar, you have +1 Ongoing to all Bardo Powers and **Stay Chill** rolls. When you meditate at your Pillar for at least one full scene, remove 1 Stain. You must return to your Pillar at least once per week; for each week you're away, take a cumulative −1 Ongoing to **Stay Chill** as the Beast inside you grows restless. Returning to your Pillar and meditating for one scene resets this penalty.
+***Pillar of Osiris:*** You can designate a fixed location (room, shrine, garden, cave, etc.) as your Pillar through one full night of uninterrupted meditation, creating a pleasant and persistent magical haze in the air that soothes everyone within it. While at your Pillar, you have +1 Ongoing to all Bardo Powers and **Stay Chill** rolls. **When you meditate at your Pillar for at least one full scene**, remove 1 Stain. You must return to your Pillar at least once per week; for each week you're away, take a cumulative −1 Ongoing to **Stay Chill** as the Beast inside you grows restless. Returning to your Pillar and meditating for one scene resets this penalty.
 
-***Gift of Apis:*** Animal blood nourishes you as effectively as human blood, regardless of your Blood Potency. When you **Feed** from animals, ignore all BP-related feeding restrictions. A rat, bird, coyote, deer, or any other animal is as filling as a full-grown human and somehow tastes just as good (though they never have Blood Resonance). You may select the Farmer Predator Type at any Blood Potency, overriding the normal BP 3+ restriction.
+***Gift of Apis:*** Animal blood nourishes you as effectively as human blood, regardless of your Blood Potency. **When you *Feed* from animals**, ignore all BP-related feeding restrictions. A rat, bird, coyote, deer, or any other animal is as filling as a full-grown human and somehow tastes just as good (though they never have Blood Resonance). You may select the Farmer Predator Type at any Blood Potency, overriding the normal BP 3+ restriction.
 
 ## Osirian Experience
 

@@ -133,7 +133,7 @@ You are an anomaly among Kindred who feeds covertly from your own or another vam
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Dominate
 - **Merit:** *Trusted Circle.* You maintain relationships with mortals who provide regular access to blood. **When you *Hunt* within your established circle** (family, close friends, dependents), you automatically find suitable prey without rolling.
-- **Flaw:** *Catastrophic Secret.* Your feeding method is a Masquerade breach waiting to happen. If your family or friends discover the full truth of what you are and what you've done, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it).
+- **Flaw:** *Catastrophic Secret.* Your feeding method is a Masquerade breach waiting to happen. **If your family or friends discover the full truth of what you are and what you've done**, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it).
 
 ---
 
@@ -345,7 +345,7 @@ There is one person in the world who occupies your every waking thought. You wat
 - **Hunting Stat:** +Shadow
 - **Discipline:** Obfuscate
 - **Merit:** *Devoted Watcher.* You know your obsession's routines almost better than they do. **When you *Hunt* or *Catch the Scent* in the vicinity of your obsession target**, roll with Advantage.
-- **Flaw:** *Fixation.* Your obsession controls you more than you control it. **If your obsession target dies, moves away, or becomes permanently inaccessible**, mark 2 Stains and take −1 Ongoing to all rolls until you designate a new target (requires a number of observation-only nights equal to your Blood Potency).
+- **Flaw:** *Fixation.* Your obsession controls you more than you control it. **If your obsession target dies, moves away, or becomes permanently inaccessible**, mark 2 Stains and take −1 Ongoing to all rolls until you designate a new target (requires a number of observation-only nights equal to your Blood Potency, minimum 1).
 - **Feeding Rules:** You can only reach 0 Hunger by **Feeding** from your obsession target. Nothing and no one else fully satisfies your Beast.
 
 ---
@@ -483,7 +483,7 @@ You seek out the devout, the pious, and the faithful, and you test every last ou
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Presence
 - **Merit:** *Crisis of Faith.* The pious are especially vulnerable to your allegedly god-fearing charms. **When you *Influence* or *Hunt* someone who is devoutly religious**, take +1 Forward.
-- **Flaw:** *Playing with Holy Fire.* The deeply faithful can be dangerously unpredictable when challenged. You start with 1 Debt owed to a religious figure who suspects what you are, or you have a number of persistent enemies among the clergy equal to your Blood Potency.
+- **Flaw:** *Playing with Holy Fire.* The deeply faithful can be dangerously unpredictable when challenged. You start with 1 Debt owed to a religious figure who suspects what you are, or you have a number of persistent enemies among the clergy equal to your Blood Potency (minimum 1).
 
 ---
 
@@ -516,7 +516,7 @@ You have a burning thirst for the blood of sinners and those who would do others
 - **Hunting Stat:** +Blood
 - **Discipline:** Blood Sorcery
 - **Merit:** *Moral Compass.* You can sense the weight of someone's sins. **When you *Catch the Scent* or *Discern Vibes* to read a mortal's character**, you automatically know whether they've committed a serious crime or act of cruelty within the last month.
-- **Flaw:** *Sensitive Stomach.* You struggle to keep down the blood of the innocent. **When you *Feed* from someone who is genuinely virtuous or has done no harm**, mark 1 Stain and roll +Resolve. On a 6-, you vomit their blood back up and regain any slaked Hunger.
+- **Flaw:** *Sensitive Stomach.* You struggle to keep down the blood of the innocent. **When you *Feed* from someone who is genuinely virtuous or has done no harm**, mark 1 Stain and roll +Resolve. **On a 6-,** you vomit their blood back up and regain any slaked Hunger.
 - **Humanity:** +1
 
 ---
@@ -528,7 +528,7 @@ You feed almost exclusively during sex or other intimate activities. You try to 
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Presence
 - **Merit:** *Touch-Starving.* **When you *Feed* during or immediately after sex or intimate physical contact**, you can choose to also heal 1 additional Superficial Harm. People you **Feed** from experience your bite as intensely pleasurable, much more so than the average vampire's bite.
-- **Flaw:** *Tangled Sheets & Hearts.* Your feeding creates complicated emotional bonds, even unintentionally. Each time you **Feed** from the same person more than once, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion.
+- **Flaw:** *Tangled Sheets & Hearts.* Your feeding creates complicated emotional bonds, even unintentionally. **Each time you *Feed* from the same person more than once**, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion.
 
 ---
 
@@ -620,4 +620,4 @@ You don't **Hunt**. You *can't* **Hunt**. You might wish you could or you might 
 - **Merit:** *One More Favor.* You have an uncanny ability to talk people into helping you. **When you *Influence* a Kindred to share their meal or provide you with a vessel**, take +1 Forward.
 - **Flaw:** *Bad Credit.* Your reputation for unpaid debts precedes you. You start with 2 Debts owed to Kindred who have helped you before and are growing impatient. You have −1 Ongoing to **Influence** any Kindred who has been burned by you in the past.
 - **Humanity:** +1
-- **Feeding Rules:** You cannot use the **Hunt** move yourself at all. You must rely on others (Coterie members, Touchstones, Ghouls, subordinates, contacts) to locate and deliver prey to you.
+- **Feeding Rules:** You cannot use the **Hunt** Move yourself at all. You must rely on others (Coterie members, Touchstones, Ghouls, subordinates, contacts) to locate and deliver prey to you.

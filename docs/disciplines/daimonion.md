@@ -2,4 +2,4 @@
 title: "Daimonion"
 ---
 
-\[*OOOOH* WHAT COULD THIS BE?!]
+\[ON THE WAY!]

@@ -12,7 +12,7 @@ You were built. Whether you were assembled from the stolen blood of Gangrel, Nos
 
 Then you woke up. Gradually, across generations, Gargoyles developed minds of their own; personalities, preferences, grudges, and eventually the ability to create more of your kind without Tremere assistance. Your creators hadn't planned for that. They hadn't planned for the revolt, either. One night, the weapons turned on their wielders, and the Gargoyles won their freedom through blood and fire. The Tremere were formally forbidden from making any more of you. They agreed, then quietly kept doing it anyway, because what else were they going to do with all that leftover Vitae? These nights, Gargoyles are rare, scattered, and fiercely independent. You organize into Flocks — tight-knit found families led communally or by the eldest member (not necessarily all Gargoyles). You're loyal to your Flock above all else and deeply suspicious of everyone outside it, especially anyone who smells like a library full of pennies and talks about *"the greater good."*
 
-The cost is everything they left inside you. Your body is a monument to someone else's ambition. Stone and wing and fang, magnificent and monstrous and impossible to hide. Your mind carries the programming your creators installed: a susceptibility to commands and coercion that even centuries of freedom haven't fully erased. And the gap between you and mortal humanity is one you can narrow but never close. You weren't human before this, not really; you were either made from parts or Embraced into something that was never meant to be a person. Whatever you are, you're building it from scratch, one night at a time, surrounded by and protecting the only people who seem to understand: your Flock.
+The cost is everything they left inside you. Your body is a monument to someone else's ambition. Stone and wing and fang, magnificent and monstrous and impossible to hide. Your mind carries the programming your creators installed: a susceptibility to commands and coercion that even centuries of freedom haven't fully erased. And the gap between you and mortal Humanity is one you can narrow but never close. You weren't human before this, not really; you were either made from parts or Embraced into something that was never meant to be a person. Whatever you are, you're building it from scratch, one night at a time, surrounded by and protecting the only people who seem to understand: your Flock.
 
 ## Disciplines
 
@@ -38,7 +38,7 @@ You get 2 unique abilities:
 
 ***Stone Hide:*** Your skin is rock. You have always-active Armor equal to your Blood Potency (minimum 1). Unlike all other forms of Armor, Stone Hide also reduces incoming Aggravated Harm. You were very literally built to take hits, and your stone gets stronger with every blow it absorbs.
 
-***Living Rampart:*** When you **Protect the Coterie**, treat a roll of 6- as a 7–9. You ignore the once-per-scene usage limit; you can throw yourself in front of danger as many times as the fiction demands. Additionally, on a 7–9, you protect both yourself and one ally within Close Range rather than only yourself, usually by extending a stony wing.
+***Living Rampart:*** **When you *Protect the Coterie***, treat a roll of 6- as a 7–9. You ignore the once-per-scene usage limit; you can throw yourself in front of danger as many times as the fiction demands. Additionally, on a 7–9, you protect both yourself and one ally within Close Range rather than only yourself, usually by extending a stony wing.
 
 ## Gargoyle Experience
 

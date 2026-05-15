@@ -21,12 +21,12 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 **3 Hunger: Distracted**
 
 - Blood is on your mind constantly.
-- **Penalty:** −1 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
+- **Penalty:** −1 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger**.
 
 **4 Hunger: Ravenous**
 
 - You need blood *soon*.
-- **Penalty:** −2 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger.**
+- **Penalty:** −2 Ongoing to all rolls except those made to **Hunt**, **Feed**, **Dirty Your Claws**, or **Sate Your Hunger**.
 
 **5 Hunger: Frenzy**
 
@@ -41,7 +41,7 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 
 ### Hunger Checks
 
-**When you** **use Disciplines, use Blush of Life, mend Harm, or Blood Surge, or are otherwise instructed to**, you must make a Hunger Check by rolling 1d6 separate from the other 2d6 (if present). If you're at 0 Hunger, a result of anything other than 6 increases your Hunger.
+**When you use Disciplines, use *Blush of Life*, mend Harm, or Blood Surge, or are otherwise instructed to**, you must make a Hunger Check by rolling 1d6 separate from the other 2d6 (if present). If you're at 0 Hunger, a result of anything other than 6 increases your Hunger.
 
 - If you roll **over** your current Hunger, you're fine.
 - If you roll **equal to or under** your Hunger, increase Hunger by 1 (or more, depending on the action).

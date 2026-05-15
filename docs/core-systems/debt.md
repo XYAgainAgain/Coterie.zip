@@ -4,7 +4,7 @@ title: "Debt"
 
 ## What's It For?
 
-In the world of Kindred, nothing comes free. Every favor creates an obligation, every betrayal leaves a scar, and every bit of help has strings attached. Debt is the invisible currency that binds vampires together — more valuable than money, more enduring than blood, and far more dangerous than either.
+In the world of Kindred, nothing comes free. Every favor creates an obligation, every betrayal leaves a scar, and every bit of help has strings attached. Debt is the invisible currency that binds vampires together. More valuable than money, more enduring than blood, and far more dangerous than either.
 
 A Debt isn't a physical thing you can hold, it's the weight of obligation between two parties, acknowledged by everyone who matters. When you owe someone a Debt, they have leverage over you. When someone owes you a Debt, you have leverage over them. Simple as that.
 
@@ -42,13 +42,13 @@ The Storyteller is the final arbiter of when Debts are created. Not every favor 
 
 #### *Invoking a Debt*
 
-Before making a social or investigative roll involving someone you have a Debt with — **Influence**, **Discern Vibes**, or **Catch the Scent** — you can Invoke a Debt that character owes you to gain +2 Forward to that roll. The fiction must make sense: you're leaning on their obligation, calling in favors from their contacts, or reminding them (or witnesses) of what they owe you.
+Before making a social or investigative roll involving someone you have a Debt with , you can Invoke a Debt that the character owes you to gain +2 Forward to that roll. The fiction must make sense: you're leaning on their obligation, calling in favors from their contacts, or reminding them (or witnesses) of what they owe you.
 
 **Frequency:** Once per Debt per night. Once you Invoke a Debt for a bonus, you can't Invoke it again that same night. The Debt isn't erased by Invoking it, you're just leveraging it to get your way. You can still Cash In later for a full favor.
 
 #### *Cashing In Debts*
 
-When you Cash In a Debt someone owes you, **remind them why they owe you,** then demand something from one of the following categories:
+**When you Cash In a Debt someone owes you**, remind them why they owe you, then demand something from one of the following categories:
 
 **Information & Access:**
 

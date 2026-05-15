@@ -64,15 +64,15 @@ When you take **Harm** during combat, mark it on your Harm track as normal (see 
 
 #### *Temporary Torpor*
 
-If you reach 0 HP and **less than half of your maximum HP is Aggravated Harm**, you enter Torpor. You collapse, your body goes rigid (or limp, up to you), and you are totally incapacitated. You cannot move, speak, feel, or react to any stimuli (with very few exceptions). You are at the mercy of whoever is standing over you.
+**If you reach 0 HP and less than half of your maximum HP is Aggravated Harm**, you enter Torpor. You collapse, your body goes rigid (or limp, up to you), and you are totally incapacitated. You cannot move, speak, feel, or react to any stimuli (with very few exceptions). You are at the mercy of whoever is standing over you.
 
 A vampire in Torpor can be revived by giving them enough blood to slake 1 or more Hunger. The most common method is puncturing a blood bag and holding it to their mouth, which revives them after about one round of combat (or 30 seconds out of combat) with HP equal to the Hunger the blood would have slaked. Their Hunger is not reduced, but they are functional again. They may owe their savior a Debt, depending on the relationship.
 
-Torpor from Harm or staking is a temporary state — you wake when fed. Long-term voluntary Torpor is a separate matter, covered in the [Blood Potency: Torpor](../the-vampiric-condition/blood-potency.md#torpor) section.
+Torpor from Harm or staking is a temporary state. Long-term voluntary Torpor is a separate matter, covered in the [Blood Potency: Torpor](../the-vampiric-condition/blood-potency.md#torpor) section.
 
 #### *Final Death*
 
-If you reach 0 HP and **half or more of your maximum HP is from Aggravated Harm**, you are permanently destroyed. Your body crumbles to ash, collapses into a desiccated husk, or simply stops existing in whatever suitably dramatic fashion the Storyteller describes.
+**If you reach 0 HP and half or more of your maximum HP is from Aggravated Harm**, you are permanently destroyed. Your body crumbles to ash, collapses into a desiccated husk, or simply stops existing in whatever suitably dramatic fashion the Storyteller describes.
 
 The Aggravated Harm thresholds for Final Death by Blood Potency are:
 

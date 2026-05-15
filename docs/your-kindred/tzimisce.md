@@ -32,9 +32,9 @@ Until you establish ownership over it (the Storyteller decides what qualifies), 
 
 You get 2 unique abilities:
 
-***Scrupulous Sentinel:*** When you are within your Haven or with your treasure and acting to defend, maintain, or control it, treat any roll of 6- as a 7-9. You are nearly impossible to dislodge from that which belongs to you. This does not apply elsewhere, even if you bring some of your treasure with you — its resting place (and yours) are what matter.
+***Scrupulous Sentinel:*** **When you are within your Haven or with your treasure and acting to defend, maintain, or control it**, treat any roll of 6- as a 7–9. You are nearly impossible to dislodge from that which belongs to you. This does not apply elsewhere, even if you bring some of your treasure with you — its resting place (and yours) are what matter.
 
-***Sculptor's Claws:*** You can reshape your own physical features over the course of an uninterrupted scene without rolling: smoothing or texturing skin, reshaping bone structure, recoloring anything, altering height, limb actuation, or build within semi-human proportions. Changes are real and permanent until you reshape them again. When you reveal a deliberately monstrous or alien alteration to intimidate or horrify, roll **Influence** with Advantage.
+***Sculptor's Claws:*** You can reshape your own physical features over the course of an uninterrupted scene without rolling: smoothing or texturing skin, reshaping bone structure, recoloring anything, altering height, limb actuation, or build within semi-human proportions. Changes are real and permanent until you reshape them again. **When you reveal a deliberately monstrous or alien alteration to intimidate or horrify**, roll **Influence** with Advantage.
 
 ## Clan Experience
 

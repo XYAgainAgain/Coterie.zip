@@ -68,7 +68,7 @@ Against supernatural creatures, make a Hunger Check and roll +Blood.
 
 ### *Brutal Feed*
 
-When you roll a 12+ on **Dirty Your Claws** and choose to quickly **Feed**, you may activate ***Brutal Feed*** instead of the standard 7–9 **Feed** result. No Hunger Check required.
+**When you roll a 12+ on *Dirty Your Claws***, you may activate ***Brutal Feed*** even if you don't have the Advanced version of the Move. No Hunger Check required.
 
 Roll 1d6. Reduce your Hunger by the result and also deal that same number as extra Aggravated Harm to the target. Blood vessels burst, organs rupture, bones crack from the inside out. The victim is drained at terrifying speed, collapses into a husk, and whatever's left of them certainly isn't going to last much longer.
 
@@ -140,6 +140,14 @@ If mortals are present, the Masquerade Clock advances. A vampire plummeting from
 
 Drinking directly from a Kindred is an intimate and dangerous act. This counts as 1 exchange of Vitae toward a Blood Bond.
 
+### *Subtle Hammer (Passive)*
+
+Every part of your body can project the sum of your strength through the smallest possible motion. A flick of your finger carries the force of a full-body punch. A casual nudge sends a grown adult flying across the room. You can snap handcuffs by tensing your wrists, shatter a lock by squeezing it, or crack a load-bearing column by leaning on it.
+
+This doesn't actually make you any stronger, it just lets you use all of your existing strength through movements so minor that casual observers have no idea what just happened. The bouncer you flicked goes flying and everyone assumes they tripped. The door you tapped swings off its hinges and people blame shoddy construction. The Storyteller should not advance the Masquerade Clock for Potence feats performed through ***Subtle Hammer*** unless a witness is specifically watching you and has reason to suspect supernatural involvement.
+
+You also automatically break free of any mundane physical restraint (handcuffs, zip ties, ropes, locked doors, vehicle trunks, grapples from mortals) without visible effort. To onlookers, you just... aren't restrained anymore. How strange.
+
 ---
 
 ## Level 5
@@ -169,11 +177,3 @@ If mortals are present, the Masquerade Clock advances. Twice, probably. Sinkhole
 **When you will the murderous strength of the First Vampire into your bare hands**, make a Hunger Check. For the rest of the scene, your unarmed strikes deal Aggravated Harm to all creatures, mortal and supernatural alike. Go wild with your violent descriptions. You can tear off limbs, punch through ribcages, decapitate with a casual slash, cave in sternums, crush skulls, or rip out any organs you'd like. Against most mortals, a single hit is super fatal. That's worse than regular fatal and I will not be elaborating further.
 
 While ***Fist of Caine*** is active, each time you slay an opponent by **Dirtying Your Claws**, you may immediately spring to another enemy within Close Range and **Dirty Your Claws** again. If that kill chains into another, keep going up to a total number of **Dirty Your Claws** rolls equal to your Blood Potency (including the first one that started the chain). Each strike in the chain still requires its own roll.
-
-### *Subtle Hammer (Passive)*
-
-Every part of your body can project the sum of your strength through the smallest possible motion. A flick of your finger carries the force of a full-body punch. A casual nudge sends a grown adult flying across the room. You can snap handcuffs by tensing your wrists, shatter a lock by squeezing it, or crack a load-bearing column by leaning on it.
-
-This doesn't actually make you any stronger, it just lets you use all of your existing strength through movements so minor that casual observers have no idea what just happened. The bouncer you flicked goes flying and everyone assumes they tripped. The door you tapped swings off its hinges and people blame shoddy construction. The Storyteller should not advance the Masquerade Clock for Potence feats performed through ***Subtle Hammer*** unless a witness is specifically watching you and has reason to suspect supernatural involvement.
-
-You also automatically break free of any mundane physical restraint (handcuffs, zip ties, ropes, locked doors, vehicle trunks, grapples from mortals) without visible effort. To onlookers, you just... aren't restrained anymore. How strange.

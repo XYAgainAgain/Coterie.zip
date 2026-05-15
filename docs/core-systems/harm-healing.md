@@ -46,7 +46,7 @@ All sources of Harm have a numeric value representing how many boxes you mark on
 
 All vampires are dangerous in close quarters. Whether you're throwing punches and flinging kicks, raking with claws, sinking your fangs into someone's throat, slamming them into a wall or nearby piece of furniture, or delivering a devastating headbutt, unarmed melee attacks always deal Harm equal to your Blood stat (minimum 1). How you describe the violence is up to you; mechanically, it all hits the same.
 
-Some Playbooks modify this. The Brujah's *Brutality* Perk adds their Blood Potency to unarmed Harm dealt. Discipline Powers from Potence and Protean can increase damage further. Devorari can choose to use Wits in place of Blood for all rolls, including unarmed Harm.
+Some Playbooks modify this. The Brujah's ***Brutality*** Perk adds their Blood Potency to unarmed Harm dealt. Discipline Powers from Potence and Protean can increase damage further. Devorari can choose to use Wits in place of Blood for all rolls, including unarmed Harm.
 
 ### Weapon Examples
 
@@ -88,7 +88,7 @@ A stake through the heart is every vampire's worst nightmare that doesn't involv
 
 Staking in combat requires a successful **Dirty Your Claws** roll with a weapon that could plausibly reach the heart (a stake, a sharpened chair leg, a broken broom handle, a piece of rebar, or even just a big sword). The attacker must declare their intent to stake before rolling, but more importantly, **the target must be well and truly powerless to stop it** (restrained or bound, grappled by someone much stronger, already at 0 HP, or similarly stuck between a spike and a hard place).
 
-On a 10+, the stake lands and the target is incapacitated. On a 7–9, the Storyteller chooses whether the stake found its mark or merely dealt normal Harm. On a 6-, the attempt fails entirely and possibly backfires.
+**On a 10+,** the stake lands and the target is incapacitated. **On a 7–9,** the Storyteller chooses whether the stake found its mark or merely dealt normal Harm. **On a 6-,** the attempt fails entirely and possibly backfires.
 
 A staked vampire can be revived by removing the stake, which can be done by anyone with physical access to the body. Removing a stake from another character within Intimate Range is a Free Action; removing one from yourself is impossible while it's in your heart. A staked vampire does not heal, does not gain or lose Hunger, and does not age. Time simply stops until the stake comes out.
 
@@ -106,7 +106,7 @@ At the end of any scene in which you took Superficial Harm, you may choose to ma
 
     *This healing is completely voluntary. If you're already at high Hunger and don't want to risk ticking closer to 5, you can choose not to mend and carry the damage into the next scene. Just don't forget about it!*
 
-**Ghouls** cannot mend Harm this way. They're mortal; their bodies don't regenerate on their own quite as quickly. Ghoul healing is handled almost entirely through the *Borrowed Time* Perk — consuming Vitae from their patron to heal Harm equal to the patron's Blood Potency. No Vitae means no healing. Bandages and a trip to the emergency room are always an option, but that takes time and raises mortal questions.
+**Ghouls** cannot mend Harm this way. They're mortal; their bodies don't regenerate on their own quite as quickly. Ghoul healing is handled almost entirely through the ***Borrowed Time*** Perk — consuming Vitae from their patron to heal Harm equal to the patron's Blood Potency. No Vitae means no healing. Bandages and a trip to the emergency room are always an option, but that takes time and raises mortal questions.
 
 **Thin-Bloods** can mend Superficial Harm as above (minimum 1 at BP 0), but their mostly-mortal bodies are slower about it. They look roughed up for longer and bruise like peaches. You are encouraged to tease them about this.
 
@@ -114,8 +114,8 @@ At the end of any scene in which you took Superficial Harm, you may choose to ma
 
 Aggravated Harm does *not* heal between scenes. It heals only during slumber, and only if you go to bed at 2 Hunger or below. Kindred need both rest and fuel to repair this kind of damage; if you're too hungry, it prioritizes keeping you functional over fixing what's broken.
 
-When you wake from slumber at 2 Hunger or below, heal Aggravated Harm equal to 1 + your Blood Potency. At BP 1, that's 2 Aggravated healed per day; at BP 4, that's 5. Significant wounds can still take multiple days of rest and feeding to fully recover from, which is intentional — Aggravated Harm should linger long enough to create consequences.
+When you wake from slumber at 2 Hunger or below, heal Aggravated Harm equal to 1 + your Blood Potency. At BP 1, that's 2 Aggravated healed per day; at BP 4, that's 5. Significant wounds can still take multiple days of rest and feeding to fully recover from, which is intentional. Aggravated Harm should linger long enough to create consequences.
 
-The **Feed** Basic Move also offers limited Aggravated healing: on a 10+, you can choose to heal 2 Superficial Harm, or spend both choices to heal 1 Aggravated Harm. This is the only way to heal Aggravated Harm outside of slumber (barring specific Discipline Powers or Perks such as the Salubri's *Mending Touch*).
+The **Feed** Basic Move also offers limited Aggravated healing. **On a 10+,** you can choose to heal 2 Superficial Harm, or spend both choices to heal 1 Aggravated Harm. This is the only way to heal Aggravated Harm outside of slumber (barring specific Discipline Powers or Perks such as the Salubri's ***Mending Touch***).
 
-**Ghouls** heal Aggravated Harm through the *Borrowed Time* Perk as above, mortal medical treatment, or simply time. They cannot mend it through slumber the way vampires can. Please, won't somebody just Embrace them already?
+**Ghouls** heal Aggravated Harm through the ***Borrowed Time*** Perk as above, mortal medical treatment, or simply time. They cannot mend it through slumber the way vampires can. Please, won't somebody just Embrace them already?

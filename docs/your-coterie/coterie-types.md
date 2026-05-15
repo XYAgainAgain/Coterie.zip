@@ -51,7 +51,7 @@ Your Coterie formed around shared devotion. Maybe it's genuine faith in somethin
 
 ## The Day Watch
 
-Most vampires are useless during the day. You're not. Your Coterie is composed of kith and Kindred who can walk in sunlight (Thin-Bloods, Ghouls, Devorari, Osirians, or anyone else who's somehow figured it out), and that makes you indispensable to vampiric leadership that needs eyes, hands, and fangs operating while the rest of the city slumbers. You guard sleeping Elders, scout hunter movements, run daytime errands that would dust anyone else, and generally handle hours of the day that most vampires try to pretend don't exist. The thanks you receive is roughly proportional to how expendable they consider you.
+Most vampires are useless during the day. You're not. Your Coterie is composed of Kith and Kindred who can walk in sunlight (Thin-Bloods, Ghouls, Devorari, Osirians, or anyone else who's somehow figured it out), and that makes you indispensable to vampiric leadership that needs eyes, hands, and fangs operating while the rest of the city slumbers. You guard sleeping Elders, scout hunter movements, run daytime errands that would dust anyone else, and generally handle hours of the day that most vampires try to pretend don't exist. The thanks you receive is roughly proportional to how expendable they consider you.
 
 **Haven Stats:** **Clout −1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
 
@@ -142,7 +142,7 @@ You're running. Someone powerful wants you found, staked, and dealt with. Maybe 
 
 ## The Gatekeepers
 
-Your Coterie deals with the dead. The actually dead; ghosts, spirits, restless ancestors, things that lurk in the spaces between life and whatever comes after. You commune with them, command them, lay them to rest, or exploit them, depending on your moral compass and your client list. Other vampires find you creepy, which is saying something. They also find you useful, which is why they keep calling.
+Your Coterie deals with the dead. The actually dead: ghosts, spirits, restless ancestors, things that lurk in the spaces between life and whatever comes after. You commune with them, command them, lay them to rest, or exploit them, depending on your moral compass and your client list. Other vampires find you creepy, which is saying something. They also find you useful, which is why they keep calling.
 
 **Haven Stats:** **Clout +1** | **Cohesion +1** | **Charm −2** | **Claim +1** | **Currency +1**
 

@@ -51,7 +51,7 @@ Throughout the game rules, you'll encounter some game terms that may initially c
 - **Discipline:** Broad categories of vampiric abilities and magic that any player character can access
 - **Predator Type:** The method by which a vampire hunts their prey
 - **Blood Potency:** How potentially strong a vampire can be on a scale of 0–5 (higher numbers theoretically exist but are *very* rare)
-- **Blond Bond:** A link between a vampire and a mortal, or between two vampires, that cannot be easily severed (think toxic marriage)
+- **Blood Bond:** A link between a vampire and a mortal, or between two vampires, that cannot be easily severed (think toxic marriage)
 - **Humanity:** How much of your mortal moral compass remains on a scale of 10–0
 - **Hunger:** How badly a vampire needs blood (or similar sustenance) on a scale of 0–5
 - **Harm:** How badly something hurts, tracked on a sequence of checkboxes

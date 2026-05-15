@@ -20,7 +20,7 @@ Choose 2 to start: [**Celerity**](../disciplines/celerity.md) **| [Potence](../d
 
 ## Bane: *Burning Blood*
 
-**When you witness an act that directly violates one of your Convictions**, you must immediately **Stay Chill** with a penalty equal to your Blood Potency. On a failure, you enter a furious Frenzy as the Beast takes over. You attack the source of the violation with everything you have and cannot stop until they're incapacitated, dead, driven off, or you're physically restrained by your Coterie.
+**When you witness an act that directly violates one of your Convictions**, you must immediately **Stay Chill** with a penalty equal to your Blood Potency (minimum 1). On a failure, you enter a furious Frenzy as the Beast takes over. You attack the source of the violation with everything you have and cannot stop until they're incapacitated, dead, driven off, or you're physically restrained by your Coterie.
 
 ## Compulsion: *Rebellion*
 
@@ -32,9 +32,9 @@ Until you meaningfully rebel against the source of control or the scene ends, ta
 
 You get 2 unique abilities:
 
-***Brutality:*** When you inflict Harm through hands-on violence (fists, claws, melee weapons, thrown objects, body slams, etc.) add your Blood Potency to the Harm dealt (minimum +1).
+***Brutality:*** **When you inflict Harm through hands-on violence** (fists, claws, melee weapons, thrown objects, body slams, etc.), add your Blood Potency to the Harm dealt (minimum +1).
 
-***Indomitable:*** You have Advantage when you **Stay Chill** to resist supernatural coercion or commands from other Kindred.
+***Indomitable:*** **When you *Stay Chill* to resist supernatural coercion or commands from other Kindred**, roll with Advantage.
 
 ## Clan Experience
 

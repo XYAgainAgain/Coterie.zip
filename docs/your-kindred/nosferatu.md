@@ -24,7 +24,7 @@ Your body is permanently warped into something inhuman. **You cannot pass as mor
 
 !!! note "Note"
 
-    *You may be one of the "lucky" Nosferatu who retain their more humanlike appearance after the Embrace, but no Nosferatu can escape the bloodline's alliances. If you decide this is the case, take the **Infestation** [Variant Bane](optional-extras.md#clan-bane-variants) instead. You win some, you lose some, you lose some more...*
+    *You may be one of the "lucky" Nosferatu who retain their more humanlike appearance after the Embrace, but no Nosferatu can escape the bloodline's afflictions. If you decide this is the case, take the **Infestation** [Variant Bane](optional-extras.md#clan-bane-variants) instead. You win some, you lose some, you lose some more...*
 
 ## Compulsion: *Cryptophilia*
 
@@ -36,9 +36,9 @@ Until you learn a secret significant enough to be useful (you or the Storyteller
 
 You get 2 unique abilities:
 
-***The Warrens:*** You maintain a sprawling network of informants, listening posts, and hidden routes throughout the city's forgotten infrastructure. When you **Catch the Scent** regarding anything happening in your territory, treat a roll of 6- as a 7-9. Intel always finds its way to you; the only question is how quickly.
+***The Warrens:*** You maintain a sprawling network of informants, listening posts, and hidden routes throughout the city's forgotten infrastructure. **When you *Catch the Scent* regarding anything happening in your territory**, treat a roll of 6- as a 7–9. Intel always finds its way to you; the only question is how quickly.
 
-***Face of Horror:*** When you deliberately reveal your true form to intimidate or terrify, roll **Influence** with Advantage using your highest stat and ignore your Bane penalty for that roll. Unprepared mortals who witness your true face flee or freeze in panic unless they have a compelling reason to stay.
+***Face of Horror:*** **When you deliberately reveal your true form to intimidate or terrify**, roll **Influence** with Advantage using your highest stat and ignore your Bane penalty for that roll. Unprepared mortals who witness your true face flee or freeze in panic unless they have a compelling reason to stay.
 
 ## Clan Experience
 

@@ -34,7 +34,7 @@ You get 2 unique abilities:
 
 ***Arcane Appraisal:*** You can identify the presence and general nature of supernatural effects, Blood Sorcery, active Disciplines, wards, and curses without rolling. You sense the fingerprints of the Blood the way a chemist reads a reaction. Determining specific details (who cast it, when, exact parameters) requires **Catch the Scent** or Discipline use.
 
-***A Warlock's Services:*** When you use Blood Sorcery or occult expertise to solve a problem for someone outside your Coterie, you automatically create a Debt over them. They may not acknowledge it, but the Blood remembers who owes whom. Within the Coterie, your services are technically free, but your Coterie members each owe you 1 starting Debt at character creation. Don't let them forget it.
+***A Warlock's Services:*** **When you use Blood Sorcery or occult expertise to solve a problem for someone outside your Coterie**, you automatically create a Debt over them. They may not acknowledge it, but the Blood remembers who owes whom. Within the Coterie, your services are technically free, but your Coterie members each owe you 1 starting Debt at character creation. Don't let them forget it.
 
 ## Clan Experience
 

@@ -20,7 +20,7 @@ Choose 2 to start: [**Obfuscate**](../disciplines/obfuscate.md) **| [Presence](.
 
 ## Bane: *Severe Light Allergy*
 
-**When you are exposed to bright, direct illumination** (spotlights, high beams, flashlights aimed at you, harsh fluorescent overheads), take a penalty equal to your Blood Potency (minimum 1) to all rolls while exposed. Sunlight inflicts additional Aggravated Harm equal to your Blood Potency on top of its normal effects. Candles, firelight, dim lamps, and ambient city glow don't trigger this; the light must be strong and directed.
+**When you are exposed to bright, direct illumination** (spotlights, high beams, flashlights aimed at you, harsh fluorescent overheads), take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls while exposed. Sunlight inflicts additional Aggravated Harm equal to your Blood Potency on top of its normal effects. Candles, firelight, dim lamps, and ambient city glow don't trigger this; the light must be strong and directed.
 
 ## Compulsion: *Transgression*
 
@@ -32,9 +32,9 @@ Until you entice someone into violating a Conviction (if they're a player charac
 
 You get 2 unique abilities:
 
-***Serpent's Tongue:*** When you **Influence** someone by appealing to a desire, vice, or need they're trying to suppress or hide, treat a roll of 6- as a 7–9.
+***Serpent's Tongue:*** **When you *Influence* someone by appealing to a desire, vice, or need they're trying to suppress or hide**, treat a roll of 6- as a 7–9.
 
-***Provider of Last Resort:*** When you give someone something they genuinely need and can't easily get elsewhere, you automatically gain a Debt over them, whether or not they acknowledge the obligation.
+***Provider of Last Resort:*** **When you give someone something they genuinely need and can't easily get elsewhere**, you automatically gain a Debt over them, whether or not they acknowledge the obligation.
 
 ## Clan Experience
 

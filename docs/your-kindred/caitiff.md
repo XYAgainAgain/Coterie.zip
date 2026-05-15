@@ -34,7 +34,7 @@ You get 2 unique abilities:
 
 ***Scrappy:*** You cannot have a negative modifier to any roll for any reason other than Hunger — the worst you can do is add nothing. Nobody covered your weaknesses for you, so you learned to cover them yourself.
 
-***Playing Possum:*** When another Kindred dismisses you as beneath their notice, irrelevant, or harmless, you may immediately ask the Storyteller one question from the **Discern Vibes** or **Catch the Scent** lists about that character without rolling or spending Hold. Their contempt makes them careless around you.
+***Playing Possum:*** **When another Kindred dismisses you as beneath their notice, irrelevant, or harmless**, you may immediately ask the Storyteller one question from the **Discern Vibes** or **Catch the Scent** lists about that character without rolling or spending Hold. Their contempt makes them careless around you.
 
 ## Clanless Experience
 

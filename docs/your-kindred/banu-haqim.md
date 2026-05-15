@@ -20,21 +20,21 @@ Choose 2 to start: [**Blood Sorcery**](../disciplines/blood-sorcery.md) **| [Cel
 
 ## Bane: *Diablerist's Thirst*
 
-**When you Feed from another vampire**, you must immediately **Stay Chill** or enter a feeding Frenzy, attempting to drain them completely and commit Diablerie. On a success, you stop yourself, but take an Ongoing penalty equal to your Blood Potency to **Stay Chill** and resist **Feeding** from them again until you're too far away to smell them. After 3 successes, you get a hold of yourself and shake off the urge.
+**When you *Feed* from another vampire**, you must immediately **Stay Chill** or enter a feeding Frenzy, attempting to drain them completely and commit Diablerie. On a success, you stop yourself, but take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Stay Chill** and resist **Feeding** from them again until you're too far away to smell them. After 3 successes, you get a hold of yourself and shake off the urge.
 
 ## Compulsion: *Judgment*
 
 **When someone violates one of your Convictions or personal codes in your presence**, you feel compelled to take their blood as punishment.
 
-Until you **Feed** from the transgressor or the scene ends, take an Ongoing penalty equal to your Blood Potency to all rolls except those directly working toward punishing them. If the transgressor is a vampire, your Bane will trigger should things get violent.
+Until you **Feed** from the transgressor or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls except those directly working toward punishing them. If the transgressor is a vampire, your Bane will trigger should things get violent.
 
 ## Clan Perks
 
 You get 2 unique abilities:
 
-***Righteous Hunger:*** When you **Feed** from someone you believe genuinely deserves punishment, slake an additional 1 Hunger. If you successfully Diablerize them, you don't lose any Humanity, and instead clear all Stains.
+***Righteous Hunger:*** **When you *Feed* from someone you believe genuinely deserves punishment**, slake an additional 1 Hunger. If you successfully Diablerize them, you don't lose any Humanity, and instead clear all Stains.
 
-***Arbiter's Eyes:*** When you **Discern Vibes** or **Catch the Scent** to determine if someone has recently committed a crime or transgression, you have Advantage on the roll.
+***Arbiter's Eyes:*** **When you *Discern Vibes* or *Catch the Scent* to determine if someone has recently committed a crime or transgression**, you have Advantage on the roll.
 
 ## Clan Experience
 

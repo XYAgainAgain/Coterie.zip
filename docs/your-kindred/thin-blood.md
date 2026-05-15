@@ -16,7 +16,7 @@ The cost is everything else. You are the lowest rung of recognized Kindred socie
 
 ## Disciplines
 
-You have exclusive access to [Thin-Blood Alchemy](../disciplines/thin-blood-alchemy.md), and you can temporarily access level 1 of any other Discipline by drinking the right Vitae.
+You have exclusive access to [**Thin-Blood Alchemy**](../disciplines/thin-blood-alchemy.md), and you can temporarily access level 1 of any other Discipline by drinking the right Vitae.
 
 ## Bane: *Diluted & Disliked*
 
@@ -32,11 +32,11 @@ You have no fixed Compulsion. You kinda just don't *get it,* man. Why is everyon
 
 You get 3 unique abilities:
 
-***Duskborn:*** You can walk in direct sunlight, taking only 1 Superficial Harm per scene of sustained exposure (cloud cover, heavy clothing, or thick gloopy sunscreen can reduce this further, at the Storyteller's discretion). You always count as having **Blush of Life** active at no cost. You can eat food, drink, use touchscreens without difficulty, and pass most medical examinations. You are, for almost all intents and purposes, still alive.
+***Duskborn:*** You can walk in direct sunlight, taking only 1 Superficial Harm per scene of sustained exposure (cloud cover, heavy clothing, or thick gloopy sunscreen can reduce this further, at the Storyteller's discretion). You always count as having **Blush of Life** active at no cost. You can eat food, drink, use touchscreens without difficulty, and pass most medical examinations. You are, for almost all intents and purposes, still alive. Kinda.
 
 ***Barely a Beast:*** Your Beast is a whisper, not a roar. You never Frenzy from Hunger alone. At 5 Hunger, you become desperate and afraid, but you retain full control of your actions; you choose what you do and who you hurt. You have Disadvantage on all rolls except **Hunt** and **Feed** until you slake your Hunger. Certain supernatural effects such as Animalism or Presence can still provoke Frenzy normally.
 
-***Just a Taste:*** When you **Feed** from a Kindred, you temporarily gain access to your choice of one of their Clan Disciplines and all its level 1 Powers and Perks. This borrowed Discipline lasts until you next slumber or reach 5 Hunger, whichever comes first.
+***Just a Taste:*** **When you *Feed* from a vampire**, you temporarily gain access to your choice of one of their Disciplines and all its level 1 Powers and Perks. This borrowed Discipline lasts until you next slumber or reach 5 Hunger, whichever comes first.
 
 ## Thin-Blood Experience
 
