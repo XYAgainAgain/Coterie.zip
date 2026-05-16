@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-16T04:10:38.068Z",
+  "data": {
+    "intro": "Vampires don't \"level up\" in the traditional sense. There are no experience tiers, no class features that unlock at level 7, no prestige paths. Instead, the Blood learns from what you do and processes it while you sleep. Every time you close your eyes at dawn, the night's events settle into your Vitae like sediment in wine. When you wake, you might find yourself a little faster, a little sharper, and a little more dangerous than you were the night before.\n\nMechanically, this means most of your experience is processed during slumber. At the start of each new night (or at the beginning of a session if the last one ended with the Coterie getting tucked into your coffins), the table briefly settles XP before play resumes. Any upgrades purchased during the previous night or while asleep take effect immediately upon waking — the Blood has done its work while you rested.",
+    "xpSources": [
+      {
+        "name": "Moves That Say So",
+        "maxPerSession": "No limit",
+        "description": "Sometimes a Move such as **Help or Hinder** or a Discipline Power will grant a small amount of XP. These are few and far between, and individually determine how much XP you can get and how often it can happen."
+      },
+      {
+        "name": "Playbook Triggers",
+        "maxPerSession": "3 XP per session",
+        "description": "Every Playbook includes three XP triggers tied to its themes. Each trigger can fire once per session, granting +1 XP immediately when it does. These represent the lessons your Blood is specifically built to absorb — a Brujah learns from defiance, a Nosferatu learns from secrets, a Toreador learns from beauty. Experience triggers are not affected by Blood Potency penalties. An Elder Ventrue who organizes their Coterie into a flawless operation earns the same XP as a Fledgling Ventrue doing it for the first time. The Blood always recognizes its own nature."
+      },
+      {
+        "name": "Slumber Reflections",
+        "maxPerSession": "2 XP per session",
+        "description": "As you drift into the deathlike slumber of day, the events of the previous night replay behind your eyelids. The table considers three questions (listed below) together; the Storyteller reads them aloud. For each question answered \"Yes,\" note it down. Slumber Reflections are affected by the Blood Potency penalty."
+      },
+      {
+        "name": "Storyteller Awards",
+        "maxPerSession": "3 XP per session",
+        "description": "Based on what the Coterie accomplished during the night, the Storyteller may award up to 3 XP to the group. This is the Storyteller's recognition of meaningful collective achievement: surviving a significant threat, pulling off a complex plan, making a consequential choice, or fundamentally changing the Coterie's position in the world. Not every night warrants an award; some nights are just nights. Storyteller Awards are affected by the Blood Potency penalty."
+      }
+    ],
+    "xpCosts": [
+      {
+        "name": "Blood Potency",
+        "cost": "10",
+        "description": "**XP Cost:** 10 | **Requires:** 0 Hunger at the time of slumber\n\nThe ultimate investment. Your Blood thickens and reshapes itself during a full day of uninterrupted rest, increasing your Blood Potency by 1. You wake stronger, hungrier, and more cursed. See the [Blood Potency](../the-vampiric-condition/blood-potency.md) section for the full implications of each level. This isn't always a good thing.\n\n!!! note \"Thin-Bloods & Ghouls\"\n\n    *You cannot increase Blood Potency through this method. Your advancement strategies are slightly more gruesome.*"
+      },
+      {
+        "name": "Stat Increases",
+        "cost": "8 per +1",
+        "description": "**XP Cost:** 8 per +1\n\nIncrease any one of your five stats (Blood, Shadow, Resolve, Demeanor, Wits) by 1. Your stats are capped based on your current Blood Potency:\n\n- **BP 0–2:** Stats cap at +3\n- **BP 3:** Stats cap at +4\n- **BP 4–5:** Stats cap at +5"
+      },
+      {
+        "name": "Advanced Moves",
+        "cost": "5 per Move",
+        "description": "**XP Cost:** 5 per Move\n\nUnlock the Advanced result (12+) for any single Basic Move. There are 12 Basic Moves, each upgraded individually. Unlocking an Advanced Move doesn't change how the Move works on other results, it just adds a helpful and/or powerful new outcome when you roll exceptionally well."
+      },
+      {
+        "name": "Discipline Access",
+        "cost": "3 (in-Clan) or 5 (out-of-Clan)",
+        "description": "**XP Cost:** 3 (in-Clan) or 5 (out-of-Clan)\n\nUnlock a Discipline tree you don't already have, gaining its Discipline Perk for free. This represents exposure to new Blood, mentorship from another Kindred, or the slow awakening of latent potential. Once a Discipline is unlocked, its Powers are purchased individually (see below).\n\nIn-Clan Disciplines are the three listed on your Playbook. Out-of-Clan covers everything else and requires a fictional justification: a teacher, a taste (or two) of the right Blood, a stolen grimoire, or similar. Some Disciplines are exclusive to certain Playbooks; for example, nobody besides Thin-Bloods may access Thin-Blood Alchemy, and nobody besides Devorari may access Psychotrophia.\n\n!!! note \"Caitiff\"\n\n    *Your Bane applies here and to the Powers below. Add your Blood Potency to the access cost (minimum 1 surcharge). At BP 1, out-of-Clan access costs 6; at BP 5, it costs 10. However, your 2 starting Disciplines are already unlocked and their Power costs are unaffected by this surcharge.*"
+      },
+      {
+        "name": "Discipline Powers",
+        "cost": "1 + the Power's level",
+        "description": "**XP Cost:** 1 + the Power's level\n\nLearn a single Power from a Discipline you've already unlocked. Level 1 Powers cost 2 XP; level 5 Powers cost 6 XP. Apart from Storyteller fiat, you cannot learn or activate Powers of a level higher than your current Blood Potency."
+      },
+      {
+        "name": "Other Improvements",
+        "cost": "Varies",
+        "description": "\\[A bunch more improvements are in the works, including equipment upgrades, Humanity recovery, Haven improvements, and the acquisition of extra Merits. These will be detailed later as their parent systems are expanded along with my brain.]"
+      }
+    ],
+    "sections": []
+  }
+}

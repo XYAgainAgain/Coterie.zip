@@ -1,0 +1,322 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-16T04:10:38.068Z",
+  "entries": [
+    {
+      "type": "standard",
+      "name": "Influence",
+      "trigger": "When you persuade, manipulate, deceive, or command an individual or group",
+      "rollStat": "appropriate to your intent",
+      "statOptions": [
+        "Intimidate, overrule, or command: +Resolve or +Demeanor",
+        "Whisper, gossip, or unsettle: +Shadow",
+        "Charm, soothe, or seduce: +Demeanor",
+        "Lie, trick, or deceive: +Shadow or +Wits"
+      ],
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you get the results you were looking for. You and one other member of your Coterie in the scene each gain +1 Forward if you follow up on your attempts."
+        },
+        {
+          "tier": "7-9",
+          "content": "you get the results as above, but the Storyteller chooses 1 complication:\n\n\n- They're more resilient (or less impressed) than you anticipated\n- They become suspicious of you and/or your Coterie\n- They quickly lose interest in you and move on afterwards\n- You hit a sore spot and they become irate or flighty\n- They don't take kindly to your attempts and call for reinforcements\n- They turn things back on you and reveal sensitive information they know about you/your Coterie"
+        },
+        {
+          "tier": "6-",
+          "content": "things don't go according to plan. The Storyteller chooses 2 complications from above, or 1 entirely unexpected/unlisted one that puts you in immediate danger."
+        },
+        {
+          "tier": "12+",
+          "content": "you get results as with **10+** and Hold 1 until the end of the scene. This Hold can be spent to **Influence** the same target (or one of their nearby subordinates) again without rolling as if you had gotten a **10**."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Discern Vibes",
+      "trigger": "When you examine a person or social situation",
+      "rollStat": "+Wits or +Demeanor (use higher)",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "Hold 3."
+        },
+        {
+          "tier": "7-9",
+          "content": "Hold 1. While in that scene, you can spend Hold 1-for-1 to ask the Storyteller these questions:\n\n- Have I met or heard of them before?\n- What do I think they aren't telling me?\n- How do they really feel about me/us?\n- What do they want most right now?\n- Who here has leverage over them?\n- What are they nervous about?\n- How can I get them to trust me?"
+        },
+        {
+          "tier": "6-",
+          "content": "you read the situation wrong — you can still ask 1 question from the list, but the answer may be misleading. You believe it."
+        },
+        {
+          "tier": "12+",
+          "content": "Hold 4. You can spend this normally, or spend 2 Hold to ask the Storyteller any question at all about the social vibe in the vicinity, and will receive actionable intel. If you **Influence** someone within that scene, you have +1 Forward to that roll."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Catch the Scent",
+      "trigger": "When you investigate a scene, track a target, or consult your knowledge or contacts for information",
+      "rollStat": "+Wits or +Blood (use higher)",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "Hold 3."
+        },
+        {
+          "tier": "7-9",
+          "content": "Hold 1. While in that scene, you can spend Hold 1-for-1 to ask the Storyteller these questions:\n\n- Who or what was here recently?\n- Have I encountered something like this before?\n- If we're familiar, what do I recall about it/them?\n- What happened here recently?\n- What evidence was left behind?\n- Where did they go from here?\n- What is being concealed here?\n- Are there any lurking dangers?\n- What's my best way in/out?\n\nIf you act on the answers, you get +1 Ongoing while the information is relevant. For example, if you're trying to sniff out a trespasser in your territory, the +1 bonus lasts until you either find them or you exit your territory."
+        },
+        {
+          "tier": "6-",
+          "content": "you might misread the situation or reveal vital information about yourself or your Coterie that could reasonably be gleaned through observation alone. The Storyteller can ask you any 1 question about the situation at hand, which you must answer honestly."
+        },
+        {
+          "tier": "12+",
+          "content": "Hold 4. You can spend this normally or spend 2 Hold to ask the Storyteller any question at all about the situation or your quarry, and will receive actionable intel. When acting on the answers as above, you get +2 Ongoing instead of +1."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Help or Hinder",
+      "trigger": "When you assist or interfere with another character's action",
+      "rollStat": "same stat as intended target",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you give them +1 or −2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP (maximum of 1 per night per ally)."
+        },
+        {
+          "tier": "7-9",
+          "content": "you give them +1 or −1 to their roll (your choice), but you put yourself at risk of danger or exposure."
+        },
+        {
+          "tier": "6-",
+          "content": "you get in the way and the intended bonus/penalty is inverted. The Storyteller takes an immediate Move against you."
+        },
+        {
+          "tier": "12+",
+          "content": "you give them +2 or −2 to their roll, and both you and your ally gain 1 XP (maximum of 1 each per night)."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Stay Chill",
+      "trigger": "When you act while stressed or in danger, or when you resist fear/Frenzy/manipulation",
+      "rollStat": "+Resolve",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you manage what you have to do with no complications. If you're resisting something, you're immune to that specific effect from the same source for the remainder of the scene."
+        },
+        {
+          "tier": "7-9",
+          "content": "you manage it, but just barely. The Storyteller will choose an appropriate complication: a suboptimal outcome, a difficult decision you have to make *right now*, or a price to pay."
+        },
+        {
+          "tier": "6-",
+          "content": "things go to hell."
+        },
+        {
+          "tier": "12+",
+          "content": "you not only handle the situation, you also gain insight into it. Hold 2 until the end of the scene. Spend these to ask questions from **Discern Vibes** or **Catch the Scent** in any combination."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Slip Away",
+      "trigger": "When you hide, sneak, or disappear from a scene",
+      "rollStat": "+Shadow",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you get away clean. Choose 1 extra effect:\n\n- You take one thing you could reasonably carry with you\n- You leave no mundane traces of your presence, including scents\n- You find the perfect hiding spot within eavesdropping range\n- You leave an ominous chill in the air or the shadows deepen, non-Coterie characters in the area have −1 Forward\n- A mortal who already noticed you thinks they're imagining things"
+        },
+        {
+          "tier": "7-9",
+          "content": "you just make it out. Choose 1 effect from above. The Storyteller chooses 1 complication:\n\n- You accidentally leave some evidence you were there\n- Your escape route or hiding spot is compromised\n- Somebody is pretty sure they noticed someone nearby and investigates\n- Your movement makes enough noise to set people on-edge\n- You don't look cool doing it at all, and may slip, trip, stumble, or fall"
+        },
+        {
+          "tier": "6-",
+          "content": "you still move, but your attempt to conceal it is unsuccessful. The Storyteller chooses 2 complications."
+        },
+        {
+          "tier": "12+",
+          "content": "treat it like you got a **10+**, but your presence/passing cannot be detected by any means short of targeted ***Clairvoyance*** (level 5 Auspex), and you can choose 1 additional effect from the list."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Reposition",
+      "trigger": "When you move quickly or break away from danger",
+      "rollStat": "+Blood or +Shadow (use higher)",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you reach your destination. Choose 2:\n\n- You move an additional Range\n- You don't draw unwanted attention\n- You perform superhuman acrobatics (scamper up drainpipes, leap between rooftops, dive through windows)\n- You grab something on the way\n- You end up in an advantageous position; take +1 Forward\n- You break away from pursuit or immediate danger"
+        },
+        {
+          "tier": "7-9",
+          "content": "you move but not cleanly. Choose 1 from the list above. The Storyteller chooses 1 complication:\n\n- You leave something behind or drop something\n- You miscalculated the safety or structural integrity of your destination\n- You're slightly off where you meant to be; take −1 Forward\n- The danger follows you or catches up partially"
+        },
+        {
+          "tier": "6-",
+          "content": "something blocks your path or interrupts your movement. You don't reach your destination and the Storyteller chooses 1 complication from above."
+        },
+        {
+          "tier": "12+",
+          "content": "treat it like a **10+** but move 1 extra Range. One Coterie member who can see or hear you can immediately move 1 Range for free."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Dirty Your Claws",
+      "trigger": "When you engage in physical violence",
+      "rollStat": "+Blood",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "inflict Harm according to the weapon used and choose 2 extra effects:\n\n- You inflict 1 additional Harm\n- You take an item from them\n- You force them where you want them\n- The next of your Coterie to attack them has +1 Forward"
+        },
+        {
+          "tier": "7-9",
+          "content": "inflict Harm as above and choose 1 effect. The Storyteller chooses 1 complication:\n\n- They also inflict Harm on you\n- They're tougher than you expected\n- You're off by a bit and have −1 Forward\n- The scuffle attracts unwanted attention\n- You leave clear evidence of your interaction"
+        },
+        {
+          "tier": "6-",
+          "content": "you inflict no Harm and the Storyteller chooses 2 complications from above."
+        },
+        {
+          "tier": "12+",
+          "content": "you gain the same benefits as 10+ and can also choose to inflict Aggravated Harm. Alternatively, if the target is worthy and appropriate prey, you can choose to forego the extra benefits to grab a snack and **Feed** as if you'd rolled a 7–9."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Hunt",
+      "trigger": "When you search for someone to feed on",
+      "rollStat": "dictated by your Predator Type (or +Blood otherwise)",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you find suitable prey. Choose 2:\n\n- You have time and privacy\n- Their memory of this will be hazy at best\n- They're genuinely into the idea\n- They don't see you coming\n- The prey has the Blood Resonance you want"
+        },
+        {
+          "tier": "7-9",
+          "content": "you find prey but choose only 1 from the list above. The Storyteller will tell you what complication arises — the options are too numerous to list here."
+        },
+        {
+          "tier": "6-",
+          "content": "you're hungry and desperate. The Storyteller makes a Move. You might find prey anyway, but it'll be risky or pose some unforeseen problems."
+        },
+        {
+          "tier": "12+",
+          "content": "you find the perfect vessel. Choose 3 from the 10+ list. They have 1 of the following:\n\n- A connection to something you're investigating (they know something useful).\n- The potential to become a Touchstone (if you want them to be).\n- A desirable material possession such a property, vehicle, accessory, weapon, or artifact.\n- The qualities of an excellent Blood Doll (they'd enthusiastically return for more). You can exploit this opportunity immediately or cultivate it for later. Either way, you've found someone significant."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Feed",
+      "trigger": "When you feed from a vessel",
+      "rollStat": "+Blood",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "reduce Hunger by 2 (or by 1 if feeding from animals/blood bags). No Masquerade breach. Choose 2:\n\n- You leave them in a warm haze, coherent enough to get home safely\n- You heal 2 Superficial Harm (or alternatively, use both choices to heal 1 Aggravated Harm)\n- You learn something intimate or important about them or their environment\n- You gain the temporary benefit from Resonant blood\n- They enjoy the experience and ask to meet up again sometime\n- Only animals/blood bags: You feel you made a wise choice and you remove 1 Stain"
+        },
+        {
+          "tier": "7-9",
+          "content": "reduce Hunger by 1. Choose 1 from the list above. The Storyteller chooses 1 complication:\n\n- You take too much (they're badly hurt or even dead)\n- They fight back and you take 1 Harm\n- Someone sees or hears something and makes a ruckus\n- Your Beast wants more (take +1 Hunger back)\n- You leave clear evidence (bite marks, blood trail, shredded clothing, etc.)\n- Only animals/blood bags: The blood was tainted somehow, you take 1 Aggravated Harm"
+        },
+        {
+          "tier": "6-",
+          "content": "you feed messily and violently. Reduce Hunger by 2, but the Storyteller chooses 2 complications and you mark 1 Stain."
+        },
+        {
+          "tier": "12+",
+          "content": "reduce Hunger by 3. Choose 2 from the 10+ list, OR choose to **Embrace** them: You drain them completely, slaking all your Hunger, and feed them your Vitae. They die and will rise as a vampire the following night. You become their sire, with all the political and personal consequences that entails. Mark 3 Stains."
+        }
+      ]
+    },
+    {
+      "type": "standard",
+      "name": "Protect the Coterie",
+      "trigger": "When you want to avoid a Storyteller Move",
+      "rollStat": "+Resolve",
+      "statOptions": null,
+      "outcomes": [
+        {
+          "tier": "10+",
+          "content": "you and one other character within Close Range avoid the immediate consequences of the Storyteller Move. After the Storyteller describes what's about to happen, you describe how you manage to avoid it."
+        },
+        {
+          "tier": "7-9",
+          "content": "you (and only you) narrowly avoid the worst of it, but the Storyteller chooses 2 complications:\n\n- You suffer 1 Harm (can be Aggravated)\n- You take −1 Forward\n- You lose any Hold you may have had\n- You gain +1 Hunger"
+        },
+        {
+          "tier": "6-",
+          "content": "you can't **Protect the Coterie**, let alone yourself; the resources are still spent, and you suffer the full force of whatever the Storyteller throws at you."
+        },
+        {
+          "tier": "12+",
+          "content": "things work just like a **10+**, but you can choose one additional character to protect OR immediately **Reposition** for free."
+        }
+      ]
+    },
+    {
+      "type": "blush-of-life",
+      "name": "Blush of Life",
+      "trigger": "When you want to pretend you're still alive",
+      "humanityThresholds": [
+        {
+          "threshold": "9-10 Humanity",
+          "description": "You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to Demeanor checks made to do Normal Human Activities™."
+        },
+        {
+          "threshold": "8",
+          "description": "You can use touchscreens, have sex and enjoy it, digest wine and light foods, and confidently pass as entirely human."
+        },
+        {
+          "threshold": "7",
+          "description": "You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — **on a 10+** you pull it off, **on a 7–9** it's awkward, **on a 6-** they notice something's wrong."
+        },
+        {
+          "threshold": "6",
+          "description": "You can use touchscreens; food makes you sick and you must **Stay Chill** to avoid vomiting. To fake sex as above, roll +Demeanor with −1 Forward."
+        },
+        {
+          "threshold": "5",
+          "description": "Same as 6 Humanity, but roll +Demeanor with −2 Forward to fake sex."
+        },
+        {
+          "threshold": "4",
+          "description": "You can use touchscreens. You cannot eat food or fake any intimacy."
+        },
+        {
+          "threshold": "3-",
+          "description": "You can use touchscreens, but you probably don't know what they are."
+        }
+      ],
+      "advanced": "you've mastered this façade so completely that you no longer need to make a Hunger Check. You simply appear human (as per your Humanity level) until you go to sleep, at no cost."
+    }
+  ]
+}

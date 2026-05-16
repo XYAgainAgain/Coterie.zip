@@ -1,0 +1,959 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-16T04:10:38.068Z",
+  "entries": [
+    {
+      "name": "Banu Haqim",
+      "category": "clan",
+      "tagline": "You are the knife in the dark and the final word on who deserves to continue existing.",
+      "whatAreYou": "![Banu Haqim symbol](../assets/images/vtm/bloodlines/banu-haqim.webp){ .bloodline-symbol }\n\nYou were Embraced because you understood that structure keeps chaos at bay. Whether you were a magistrate, an enforcer, a philosopher, or simply someone who saw the world's injustices and refused to look away, your blood now binds you to that purpose. You uphold codes — personal, moral, legal — because without them, the Beast wins and all is lost.\n\nMost Kindred know your reputation: assassins, contract killers, Sheriffs who clean up messes others won't touch. Some fear you. Some hire you. All respect that you take your work seriously. You're pragmatic about vampirism; it's a curse, yes, but also a magnificent tool. You seek out others who share your sense of morality and justice, building networks of those who understand that someone must stand between civilization and the Abyss.\n\nThe curse is that your blood craves the blood of other Kindred. When you taste the Vitae of any Kindred, but especially one guilty of a crime, stopping becomes nearly impossible. Some call it justice, others call it addiction. You call it the price of being right.",
+      "disciplines": "Choose 2 to start: [**Blood Sorcery**](../disciplines/blood-sorcery.md) **| [Celerity](../disciplines/celerity.md) | [Obfuscate](../disciplines/obfuscate.md)**",
+      "baneName": "Diablerist's Thirst",
+      "baneDescription": "**When you *Feed* from another vampire**, you must immediately **Stay Chill** or enter a feeding Frenzy, attempting to drain them completely and commit Diablerie. On a success, you stop yourself, but take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Stay Chill** and resist **Feeding** from them again until you're too far away to smell them. After 3 successes, you get a hold of yourself and shake off the urge.",
+      "compulsionName": "Judgment",
+      "compulsionDescription": "**When someone violates one of your Convictions or personal codes in your presence**, you feel compelled to take their blood as punishment.\n\nUntil you **Feed** from the transgressor or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls except those directly working toward punishing them. If the transgressor is a vampire, your Bane will trigger should things get violent.",
+      "perks": [
+        {
+          "name": "Righteous Hunger",
+          "description": "**When you *Feed* from someone you believe genuinely deserves punishment**, slake an additional 1 Hunger. If you successfully Diablerize them, you don't lose any Humanity, and instead clear all Stains."
+        },
+        {
+          "name": "Arbiter's Eyes",
+          "description": "**When you *Discern Vibes* or *Catch the Scent* to determine if someone has recently committed a crime or transgression**, you have Advantage on the roll."
+        }
+      ],
+      "xpTriggers": [
+        "**Deliver Final Death to a Kindred** you believe is irredeemable or too dangerous to exist",
+        "**Prevent violence or injustice** against mortals who cannot protect themselves",
+        "**Successfully resist your Bane** when drinking another vampire's blood"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Executioner",
+          "tagline": "You are the blade of fate that ends that which should not continue.",
+          "stats": "Blood +1 | Shadow +2 | Resolve +1 | Demeanor −1 | Wits +0"
+        },
+        {
+          "name": "Mediator",
+          "tagline": "You prefer firm words over violence, but you'll use both when necessary.",
+          "stats": "Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Watcher",
+          "tagline": "You observe, you wait, and you strike when the guilty think they're safe.",
+          "stats": "Blood +0 | Shadow +1 | Resolve +2 | Demeanor −1 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Brujah",
+      "category": "clan",
+      "tagline": "You weren't changed because you follow the rules, but because you'd burn them down and breakdance in the ashes.",
+      "whatAreYou": "![Brujah symbol](../assets/images/vtm/bloodlines/brujah.webp){ .bloodline-symbol }\n\nYou were Embraced because something in you refused to accept the world as it is. Maybe you were a street organizer, a disillusioned academic, a union rep who wouldn't back down, or just someone who looked at the powerful and were sickened by what they saw. Brujah are drawn to people who push back; against systems, against complacency, against anyone who would grind others underfoot. Whether you dismantle things with your fists or with your words, you were chosen because you couldn't sit still while something was wrong.\n\nThe stereotype is leather jackets and Molotovs, and sure, there's plenty of that, but the Clan runs deeper than its reputation. For every punk smashing windows, there's a Brujah infiltrating a corrupt institution from the inside, or a philosopher picking apart the social structures that prop up Kindred tyranny. The activists and the theorists don't always get along — passion and patience make uneasy bedfellows — but both sides agree on one thing: the way things are isn't good enough. Other Kindred call you rabble, and some of you wear that proudly. The ones who think before they swing are rare but valued amongst your kind.\n\nThe cost is the rage. Your blood runs hotter than any other Clan's, and the Beast inside you isn't just peckish, it's *furious*. Every slight, every injustice, every moment of disrespect is crispy kindling. Where other vampires can talk themselves down from a Frenzy, you feel it building like a violent sneeze you doubt you can contain. You tell yourself the anger serves the cause. Sometimes that's even true.",
+      "disciplines": "Choose 2 to start: [**Celerity**](../disciplines/celerity.md) **| [Potence](../disciplines/potence.md) | [Presence](../disciplines/presence.md)**",
+      "baneName": "Burning Blood",
+      "baneDescription": "**When you witness an act that directly violates one of your Convictions**, you must immediately **Stay Chill** with a penalty equal to your Blood Potency (minimum 1). On a failure, you enter a furious Frenzy as the Beast takes over. You attack the source of the violation with everything you have and cannot stop until they're incapacitated, dead, driven off, or you're physically restrained by your Coterie.",
+      "compulsionName": "Rebellion",
+      "compulsionDescription": "**When you perceive yourself under the thumb of authority, expectation, or control you didn't agree to**, you feel compelled to defy, subvert, or undermine whatever is constraining you.\n\nUntil you meaningfully rebel against the source of control or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls that don't directly work toward defiance.",
+      "perks": [
+        {
+          "name": "Brutality",
+          "description": "**When you inflict Harm through hands-on violence** (fists, claws, melee weapons, thrown objects, body slams, etc.), add your Blood Potency to the Harm dealt (minimum +1)."
+        },
+        {
+          "name": "Indomitable",
+          "description": "**When you *Stay Chill* to resist supernatural coercion or commands from other Kindred**, roll with Advantage."
+        }
+      ],
+      "xpTriggers": [
+        "**Openly defy or challenge an authority figure** abusing their power",
+        "**Take a hit meant for someone else**, mortal or Kindred",
+        "**Sacrifice something valuable** (safety, resources, reputation) to stand by your Convictions"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Musclehead",
+          "tagline": "The revolution needs muscle, and you've got plenty to spare.",
+          "stats": "Blood +2 | Shadow −1 | Resolve +1 | Demeanor +1 | Wits +0"
+        },
+        {
+          "name": "Street Bat",
+          "tagline": "You move through the gutters of the city like you were born in them (which is very possible).",
+          "stats": "Blood +0 | Shadow +2 | Resolve −1 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Activist",
+          "tagline": "Every cause needs someone who can keep the hotheads pointed in the right direction.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Gangrel",
+      "category": "clan",
+      "tagline": "You don't fight the Beast, you run with it.",
+      "whatAreYou": "![Gangrel symbol](../assets/images/vtm/bloodlines/gangrel.webp){ .bloodline-symbol }\n\nYou were Embraced because you survive. Not because you're necessarily clever or pretty about it, but because when the world tries to knock you down, you get up and bite back. Gangrel sires pick from the toughest fighters, rangers, and wanderers; people who treat the world as something to cross rather than something to hide from. Maybe you led a crew through impossible odds, maybe you lived rough and thrived on it, maybe you just refused to stay down no matter how many times life knocked you flat. The Clan doesn't care about your résumé or your mortal bloodline. They care about what you can endure, and they'll test you to find out. Pass the initiation, and you're family. Fail, and you're forgotten.\n\nMost Kindred see the Gangrel as ferals and loners, and that's not really wrong. Your Clan claims few permanent territories, defers to no Prince, and has largely turned its back on vampire politics entirely. But *uncivilized* doesn't mean *simple*. Gangrel have a deep oral tradition and often gather around fires to trade stories, honor the fallen, and remind each other where they came from. The Clan has a \"too many chiefs\" problem since it tends to Embrace natural leaders, but dominance disputes rarely end in Final Death. Rivalry is expected and even encouraged while holding grudges over it is not. You might find Gangrel bedding down in condemned buildings, squatting in storm drains, or running a freight logistics company out of sheer spite. They're everywhere that's inconvenient for the other Clans.\n\nThe cost is written on your body. Your Beast doesn't merely claw at you from the inside, it leaves marks on the way out. Every Frenzy brands you with bestial features like a forked tongue, a feral stench, claws that won't retract, twitchy ears that swivel toward sounds. They fade after a night or so, but the older and more potent you get, the more features surface at once. Most Gangrel learn to accept these marks as the price of the partnership they have with their Beast. Some even welcome them. But \"partnership\" is a generous word for something that's really a suspicious truce. You let the animal out, and it lets you keep your mind. Usually.",
+      "disciplines": "Choose 2 to start: [**Animalism**](../disciplines/animalism.md) **| [Fortitude](../disciplines/fortitude.md) | [Protean](../disciplines/protean.md)**",
+      "baneName": "Mark of the Beast",
+      "baneDescription": "**When you Frenzy**, the Beast brands your body with a number of bestial features as it surfaces equal to your Blood Potency (minimum 1). Take an Ongoing penalty of the same amount to all social rolls with characters who aren't familiar with you until you next sleep. These features cannot be concealed by mundane means, but entering a Frenzy multiple times in the same night does not stack your penalty or add more features.",
+      "compulsionName": "Feral Impulses",
+      "compulsionDescription": "**When someone directly challenges your strength, competence, or standing in front of others**, the Beast demands you prove yourself through action, not words.\n\nUntil you establish dominance through a physical display (force, intimidation, a show of primal power) or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls related to reason, logic, negotiation, or social grace rather than physicality.",
+      "perks": [
+        {
+          "name": "Sharpened Senses",
+          "description": "You can always sense the presence of mundane and supernatural creatures within Close Range, even in total darkness or while blinded, without needing to roll. **When you *Catch the Scent* to track prey or detect danger**, roll with Advantage."
+        },
+        {
+          "name": "Beast's Leash",
+          "description": "**When the Beast starts to rise due to Hunger or a mundane effect**, you can choose to let it loose instead of trying to **Stay Chill**. You Frenzy, but you retain enough control to choose your primary target and avoid harming your Coterie, and you always remember what happened. **When you Frenzy this way**, your Bane penalty is only −1 regardless of your Blood Potency. Afterwards, gain +1 Hunger (to a maximum of 4)."
+        }
+      ],
+      "xpTriggers": [
+        "**Endure significant Harm or hardship** without retreating or calling for help",
+        "**Use the wilderness, the underground, or your animal instincts** to give your Coterie an advantage they couldn't have found otherwise",
+        "**Willingly let the Beast surface** when doing so protects or benefits your Coterie"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Apex",
+          "tagline": "You are the top of the food chain, and everything below you should remember that.",
+          "stats": "Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0"
+        },
+        {
+          "name": "Nightrunner",
+          "tagline": "Every city is a wilderness once you know where the cracks are.",
+          "stats": "Blood +1 | Shadow +2 | Resolve +0 | Demeanor −1 | Wits +1"
+        },
+        {
+          "name": "Boardroom Beast",
+          "tagline": "You traded the forest floor for the corner office, but the fangs still fit.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Hecata",
+      "category": "clan",
+      "tagline": "Death isn't the end of anything. It's a phone line, and you've got it on speed dial.",
+      "whatAreYou": "![Hecata symbol](../assets/images/vtm/bloodlines/hecata.webp){ .bloodline-symbol }\n\nYou were Embraced into a family. A sprawling, centuries-old dynasty that happens to include the dead among its active members. The Hecata are a patchwork of necromantic bloodlines bound together by shared obsession: understanding death, commanding it, and profiting from both. Your sire chose you because you had the right temperament; pragmatic, morbid, maybe a little too comfortable around corpses. Many Hecata are pulled from the Clan's own mortal relatives, guilt-tripped, deceived, and obligated into service before they even understand what's happening.\n\nWhat you bring to the table is something no other Clan can quite match: the dead talk to you. Ghosts, corpses, spirits — the Hecata can interrogate them, command them, even send them out as spies. That kind of access to secrets that people assumed were safely buried makes the Clan very useful and very wealthy. Other Kindred often find the whole thing distasteful, but they still come knocking when they need a body silenced permanently or a long-dead witness dragged back to testify. The Hecata are happy to help... for a price.\n\nThe cost is in the feeding. Where other vampires deliver ecstasy with their bite, yours delivers agony. Your Kiss is pure pain; victims scream, thrash, and fight unless you pin them down or knock them out first. Willing donors exist, but even they have to steel themselves against it. Feeding is never subtle and never pleasant, meaning every meal is a logistical nightmare on top of a moral one.",
+      "disciplines": "Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Fortitude](../disciplines/fortitude.md) | [Oblivion](../disciplines/oblivion.md)**",
+      "baneName": "Agonizing Kiss",
+      "baneDescription": "**When you *Feed* from a living vessel**, your Kiss delivers searing pain instead of ecstasy. Conscious and unrestrained vessels scream, thrash, and resist. Take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Feed** rolls unless the vessel is restrained, unconscious, or willing despite the pain. Regardless of circumstances, every living vessel you **Feed** from suffers 1 Superficial Harm.",
+      "compulsionName": "Morbidity",
+      "compulsionDescription": "**When you encounter death, dying, or the boundary between it and life**, you feel an irresistible urge to move something across that threshold, to end something living or revive something dead, literally (an entity) or figuratively (an object, an idea, or a conversation point).\n\nUntil you transform something's state (kill, resurrect, conclude, rekindle — the scale doesn't matter, only the crossing) or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to enabling that transformation.",
+      "perks": [
+        {
+          "name": "Death's Confidant",
+          "description": "**When you encounter a corpse or sense a ghost's presence**, you can ask the dead one question and receive a truthful answer without rolling. The response may be cryptic, fragmented, or colored by the dead's own limited perspective. Anything beyond a single question requires Discipline use."
+        },
+        {
+          "name": "Wages of Pain",
+          "description": "**When you successfully *Feed* from a living vessel**, slake 1 additional Hunger. Your Kiss is agony, but agony runs deep. This Perk allows you to drop below the Hunger floor imposed by high Blood Potency levels."
+        }
+      ],
+      "xpTriggers": [
+        "**Uncover a meaningful secret** by consulting the dead or studying a corpse",
+        "**Clean up a dangerous mess** — dispose of bodies, destroy evidence, or silence a Masquerade breach — that your Coterie created",
+        "**Fulfill an obligation to your mortal family** at personal cost or inconvenience"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Medium",
+          "tagline": "The dead have plenty to say, and you're happy to listen.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2"
+        },
+        {
+          "name": "Undertaker",
+          "tagline": "Someone has to handle the bodies, and you're uncomfortably good at it.",
+          "stats": "Blood +1 | Shadow +1 | Resolve +2 | Demeanor −1 | Wits +0"
+        },
+        {
+          "name": "Scion",
+          "tagline": "The family's roots run deep; you carry every expectation that comes with them.",
+          "stats": "Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Lasombra",
+      "category": "clan",
+      "tagline": "You stand behind the throne because the person sitting on it is easier to replace than you are.",
+      "whatAreYou": "![Lasombra symbol](../assets/images/vtm/bloodlines/lasombra.webp){ .bloodline-symbol }\n\nYou were Embraced because you understand power; how to get it, how to wield it, and how to make sure nobody realizes you're the one pulling the strings. Lasombra sires prize ambition above everything else. They recruit from political operatives, criminal strategists, military officers, clergy, and anyone who's spent their mortal life learning how to make other people do what they want. Excellence is the baseline expectation. Your sire didn't Embrace you to be adequate.\n\nThe Lasombra are schemers, puppeteers, and shadow players. While other Clans fight over titles and territories, you prefer to be the voice whispering in the ear of whoever wears the crown. Princes, Barons, Archons, CEOs; they come and go, but the Keeper advising them stays put. Your Clan has a long history of switching allegiances whenever it's strategically convenient, which has earned them a well-deserved reputation for ruthlessness and flightiness. Every Lasombra in a Coterie considers themselves the most important member. Most of them are at least polite enough not to say so out loud.\n\nThe cost is your reflection. Mirrors warp your image, cameras distort your face, and phones glitch when you try to use them. You flicker on surveillance footage, your voice crackles through speakers, and touchscreens barely register your fingers. Every piece of modern technology is a small betrayal, a reminder that reality itself treats you as something that shouldn't quite exist. Most modern Lasombra learn to delegate their tech problems to Ghouls or other mortal assistants, which suits you fine. You were never the type to do your own busywork anyway.",
+      "disciplines": "Choose 2 to start: [**Dominate**](../disciplines/dominate.md) **| [Oblivion](../disciplines/oblivion.md) | [Potence](../disciplines/potence.md)**",
+      "baneName": "Distorted Image",
+      "baneDescription": "**When you interact with technology, digital communication, or electronic devices**, you have an Ongoing penalty equal to your Blood Potency (minimum 1). Your likeness refuses to be faithfully captured or reflected. Mirrors warp your features, cameras distort your image, and electronic devices glitch and stutter at your touch. Surveillance footage of you is always visibly corrupted. At BP 3+, touchscreens and voice-activated devices become functionally unusable in your hands, and **Blush of Life** doesn't help.",
+      "compulsionName": "Ruthlessness",
+      "compulsionDescription": "**When you fail any roll (6-)**, your prideful Vitae recoils from defeat and demands you succeed by any means necessary, escalating your methods as far as required.\n\nUntil you achieve the original objective through a subsequent roll, the objective becomes definitively impossible, or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls except those directly pursuing the failed objective.",
+      "perks": [
+        {
+          "name": "Shadow's Embrace",
+          "description": "Darkness is your element. **When you roll to *Slip Away* and shadows are available**, treat a roll of 6- as a 7–9."
+        },
+        {
+          "name": "Pulling Strings",
+          "description": "**When you *Influence* someone with whom you have a Debt** in either direction or if they are mortal and you're both shrouded in darkness, roll with Advantage."
+        }
+      ],
+      "xpTriggers": [
+        "**Position yourself as the power behind a decision** without visibly taking the credit or blame",
+        "**Cash In, Invoke, or otherwise leverage a Debt** to secure something your Coterie needs",
+        "**Make a cold, ruthless choice** that benefits the Coterie at clear cost to someone outside it"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Puppet Master",
+          "tagline": "The throne is just a chair. You decide who sits in it.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Slicing Shadow",
+          "tagline": "They never see you coming, and by the time they do, it's already over.",
+          "stats": "Blood +0 | Shadow +2 | Resolve −1 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Warlord",
+          "tagline": "Some situations call for subtlety. Others call for you.",
+          "stats": "Blood +2 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits −1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Malkavian",
+      "category": "clan",
+      "tagline": "See? You see everything. That's the problem. See?",
+      "whatAreYou": "![Malkavian symbol](../assets/images/vtm/bloodlines/malkavian.webp){ .bloodline-symbol }\n\nYou were Embraced because something about the way you perceive the world caught a Malkavian's attention. Maybe you interpreted dreams that came true, read people with freakish accuracy, or pursued questions so obsessively that you forgot to eat for days. The Clan of the Moon looks for mortals who already operate on a slightly different wavelength; people with piercing empathy, uncanny intuition, or a mind that simply works differently from everyone else's. Your sire saw potential in that, and the Embrace cranked it up to eleven.\n\nEvery Malkavian carries a supernatural affliction that warps their perception, emotions, and/or behavior. It might amplify something that was already there, or it might be entirely new. Either way, it's yours now, permanently woven into your Blood. The upside is genuine insight that other Kindred just can't replicate. You notice things they miss, sense dangers they can't feel, have meaningful and productive conversations with inanimate objects or corpses, and occasionally *just know* things you have no business knowing. Some Malkavians whisper about a shared psychic network connecting the entire Clan; a kind of static hum beneath conscious thought. Whether that's real or just another symptom depends on who you ask, what time of night it is, and whether you remembered to use words or not.\n\nThe cost is your stability. The same blood that sharpens your perception also destabilizes it. When the Beast presses in, your affliction flares; the world tilts, your senses betray you, and your mind stops cooperating. Other Kindred are never fully comfortable around you, and honestly, you can't always blame them. Your flashes of insight come along with episodes that can be frightening for everyone in the room, yourself included.",
+      "disciplines": "Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Dominate](../disciplines/dominate.md) | [Obfuscate](../disciplines/obfuscate.md)**",
+      "baneName": "Fractured Perception",
+      "baneDescription": "At character creation, work with your Storyteller to define your supernatural affliction; how the Blood has reshaped your mind, your senses, or your emotional landscape. This isn't a clinical diagnosis, it's a curse that amplifies, distorts, or creates something unique to you.\n\n**When the Beast presses in** (at Hunger 4+, during Frenzy, after a 6- to **Stay Chill**, under intense supernatural pressure, etc.), your affliction flares. Take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Discern Vibes** and **Catch the Scent** rolls until the episode passes (when the pressure eases or the scene ends). While active, the Storyteller may lie to your face to introduce one false detail per episode that your character perceives as true but isn't. You won't know which one.",
+      "compulsionName": "Delusion",
+      "compulsionDescription": "**When you catch a detail, pattern, or inconsistency that others overlook**, you become convinced it's the most important thing happening right now and feel compelled to pursue it immediately, regardless of timing or consequence.\n\nUntil you investigate the thread to your satisfaction or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to chasing the revelation. Whether the insight is genuine or a trick of your fractured perception is anyone's guess, including yours.",
+      "perks": [
+        {
+          "name": "The Cobweb",
+          "description": "Once per session, you receive a flash of insight from the psychic network connecting all Malkavians (whether or not people believe it's real is a moot point). You may ask the Storyteller a single yes-or-no question about anything in the past, present, or imminent future. The answer is always truthful but arrives filtered through your affliction; expect visions, whispers, or sensations rather than clear words."
+        },
+        {
+          "name": "Infectious Insight",
+          "description": "**When you share information gained from *Discern Vibes* or *Catch the Scent* with a Coterie member and they act on it**, they gain +1 Forward. Your perception is unconventional, but those who choose to trust you find it eerily reliable."
+        }
+      ],
+      "xpTriggers": [
+        "**Uncover something hidden using your unique perception**; anything buried, concealed, or deliberately obscured counts",
+        "**Suffer meaningful consequences from your affliction** — social, physical, or otherwise — without trying to hide what you are",
+        "**Provide insight to your Coterie** that meaningfully changes the course of their plans or actions"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Analyst",
+          "tagline": "You take the world apart, piece by piece, until the pattern reveals itself.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2"
+        },
+        {
+          "name": "Seer",
+          "tagline": "You know what's coming. The tricky bit is getting anyone to believe you in time.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +2 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Conversationalist",
+          "tagline": "Everyone and everything talks to you. The smart ones pay attention to what you say back.",
+          "stats": "Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Nosferatu",
+      "category": "clan",
+      "tagline": "Everyone else hides what they are on the inside. You don't get that luxury.",
+      "whatAreYou": "![Nosferatu symbol](../assets/images/vtm/bloodlines/nosferatu.webp){ .bloodline-symbol }\n\nYou were Embraced, and the blood ruined you. Every Nosferatu undergoes a transformation that warps their body towards the grotesque. Weeks of agonizing change that leave you looking like a horror movie extra, with such delights as tumorous growths, sunken features, weeping sores, translucent skin stretched over visible bone, and malformed but powerful limbs. The specifics vary, but the result is always the same: you cannot pass as human without supernatural help. Your sire chose you anyway; maybe because you were a survivor, a fighter, or just someone who already knew what it was like to be invisible or discarded. This Clan recruits from the margins. It figures, because who better to become a monster than someone society already treated like one?\n\nThe Nosferatu are the eyes and ears of Kindred society. When you can't walk among mortals, you learn to watch them from the cracks. Your Clan operates the most extensive information networks in the vampiric world, trading secrets, brokering deals, and knowing things that powerful Kindred would pay dearly to keep hidden. Every sewer tunnel, abandoned basement, overlooked office, and forgotten maintenance corridor is your highway. Other vampires come to you when they need to find someone, learn something, or make a problem quietly disappear, and they pay your price because the alternative is having you as an enemy. For all the disgust directed your way, nobody wants to be on the wrong side of a Clan that knows where the bodies are buried.\n\nThe cost is the face you see in every reflection. No amount of prosthetics, makeup, or clever clothing can fully conceal what you are from anyone *really* paying attention, and no supernatural disguise holds up perfectly under scrutiny. You are the most visibly cursed of all Kindred; every interaction with the mortal world is a Masquerade risk, every public space is hostile territory. Some Nosferatu rage against it. Others find a strange peace and freedom in it — when you can't pretend to be human, you stop wasting energy on upholding the lie.",
+      "disciplines": "Choose 2 to start: [**Animalism**](../disciplines/animalism.md) **| [Obfuscate](../disciplines/obfuscate.md) | [Potence](../disciplines/potence.md)**",
+      "baneName": "Monstrous Visage",
+      "baneDescription": "Your body is permanently warped into something inhuman. **You cannot pass as mortal by any mundane means**. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls with characters who can see your true form and are unfamiliar with you or don't like you (or Nosferatu in general). This penalty also applies when using supernatural disguises (as with some Obfuscate Powers); the further your true form is from human, the harder any mask is to maintain.\n\n!!! note \"Note\"\n\n    *You may be one of the \"lucky\" Nosferatu who retain their more humanlike appearance after the Embrace, but no Nosferatu can escape the bloodline's afflictions. If you decide this is the case, take the **Infestation** [Variant Bane](optional-extras.md#clan-bane-variants) instead. You win some, you lose some, you lose some more...*",
+      "compulsionName": "Cryptophilia",
+      "compulsionDescription": "**When you suspect someone nearby is hiding a secret**, you become consumed by the need to uncover it. Not knowing is intolerable.\n\nUntil you learn a secret significant enough to be useful (you or the Storyteller can decide what qualifies) or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to uncovering information.",
+      "perks": [
+        {
+          "name": "The Warrens",
+          "description": "You maintain a sprawling network of informants, listening posts, and hidden routes throughout the city's forgotten infrastructure. **When you *Catch the Scent* regarding anything happening in your territory**, treat a roll of 6- as a 7–9. Intel always finds its way to you; the only question is how quickly."
+        },
+        {
+          "name": "Face of Horror",
+          "description": "**When you deliberately reveal your true form to intimidate or terrify**, roll **Influence** with Advantage using your highest stat and ignore your Bane penalty for that roll. Unprepared mortals who witness your true face flee or freeze in panic unless they have a compelling reason to stay."
+        }
+      ],
+      "xpTriggers": [
+        "**Learn a secret** that shifts the balance of power in a situation",
+        "**Use the city's hidden infrastructure** to accomplish something the Coterie couldn't normally achieve",
+        "**Turn your appearance into an advantage** rather than a liability"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Broker",
+          "tagline": "You are the information hub. Your currency is secrets. And also money, probably.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2"
+        },
+        {
+          "name": "Stalker",
+          "tagline": "You are the shadow who follows, watches, listens, and remembers.",
+          "stats": "Blood +0 | Shadow +2 | Resolve +1 | Demeanor −1 | Wits +1"
+        },
+        {
+          "name": "Bruiser",
+          "tagline": "Folks sometimes forget that Nosferatu can rip holes in buildings. Why don't you remind them?",
+          "stats": "Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "The Ministry",
+      "category": "clan",
+      "tagline": "Everyone is chained to something. You just happen to hold the key.",
+      "whatAreYou": "![The Ministry symbol](../assets/images/vtm/bloodlines/the-ministry.webp){ .bloodline-symbol }\n\nYou were Embraced because you know how to make people question the things they take for granted. Maybe you were a cult deprogrammer who understood manipulation a little too well, a street vendor with real charisma, a dealer who kept clients coming back, or an activist who could make a crowd doubt everything they'd been taught. The Ministry recruits mortals who challenge prevailing morality; people with the confidence to ask \"why is this forbidden?\" and the nerve to then demonstrate the answer.\n\nThis Clan operates somewhere between faith and con artistry, and most Ministers live comfortably in the overlap. You present yourself as a liberator, someone who frees others from guilt, shame, and the invisible rules they never agreed to follow. Sometimes that's genuine, but liberation has a way of creating dependency, and the solutions you offer tend to generate new problems that only you can fix. Some Ministers build genuine congregations and shrines while others just run very sophisticated long games. Either way, other Kindred come to you when they need something they're too proud to get themselves, and you always have something to offer.\n\nThe cost is the light. Your blood recoils from illumination; bright lights burn your focus and your skin alike, and sunlight hits you harder than it hits anyone else. You're a creature of dingy back rooms, candlelit temples choked with incense, and conversations held in the shadows of the eaves. It's fitting, really, since everything you do works better when nobody can see it too clearly.",
+      "disciplines": "Choose 2 to start: [**Obfuscate**](../disciplines/obfuscate.md) **| [Presence](../disciplines/presence.md) | [Protean](../disciplines/protean.md)**",
+      "baneName": "Severe Light Allergy",
+      "baneDescription": "**When you are exposed to bright, direct illumination** (spotlights, high beams, flashlights aimed at you, harsh fluorescent overheads), take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls while exposed. Sunlight inflicts additional Aggravated Harm equal to your Blood Potency on top of its normal effects. Candles, firelight, dim lamps, and ambient city glow don't trigger this; the light must be strong and directed.",
+      "compulsionName": "Transgression",
+      "compulsionDescription": "**When you recognize a taboo, rule, or moral boundary that someone nearby holds sacred**, you feel a burning need to test it. You need to see what happens when the line is crossed.\n\nUntil you entice someone into violating a Conviction (if they're a player character) that causes at least 1 Stain or personal tenet of theirs (if they're an NPC) that causes mental distress, or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not directly working toward enabling that transgression. The target can be anyone present, including yourself.",
+      "perks": [
+        {
+          "name": "Serpent's Tongue",
+          "description": "**When you *Influence* someone by appealing to a desire, vice, or need they're trying to suppress or hide**, treat a roll of 6- as a 7–9."
+        },
+        {
+          "name": "Provider of Last Resort",
+          "description": "**When you give someone something they genuinely need and can't easily get elsewhere**, you automatically gain a Debt over them, whether or not they acknowledge the obligation."
+        }
+      ],
+      "xpTriggers": [
+        "**Tempt someone into crossing a line** they previously wouldn't have crossed",
+        "**Provide something forbidden, rare, or difficult to obtain** that someone needed for whatever reason",
+        "**Achieve a goal entirely through proxies**, with your direct involvement hidden from those affected"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Preacher",
+          "tagline": "Liberation starts with a sermon, and yours comes with complimentary refreshments.",
+          "stats": "Blood +0 | Shadow −1 | Resolve +1 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Dealer",
+          "tagline": "Everyone needs something. How convenient you just happen to have just the thing.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2"
+        },
+        {
+          "name": "Infiltrator",
+          "tagline": "You're already inside. They invited you in themselves.",
+          "stats": "Blood +0 | Shadow +2 | Resolve +1 | Demeanor +1 | Wits −1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Ravnos",
+      "category": "clan",
+      "tagline": "Baby, you were born to run. The Blood just made it mandatory.",
+      "whatAreYou": "![Ravnos symbol](../assets/images/vtm/bloodlines/ravnos.webp){ .bloodline-symbol }\n\nYou were Embraced because you're a survivor who travels light and thinks fast. The Ravnos recruit from con artists, messengers, drifters, pickpockets, spies, and anyone who's already comfortable living off the grid and burning bridges behind them. Your sire saw someone who could adapt to anything, charm their way through anything, and disappear before anyone figured out what happened. The Clan was nearly wiped out not long ago; every Ravnos walking tonight is proof that the line refused to die.\n\nYour people are wanderers, tricksters, and opportunists. You move between domains selling your services as a spy, a saboteur, a negotiator, or whatever else pays and keeps you reasonably safe. A secret network of signs and signals helps Ravnos find each other on the road, and when you do meet up, the tradition is storytelling; swapping rumors, trading intel, one-upping each other's exploits. Some of your Clan build identities around trickster mythology, treating their craft as something close to sacred. Others just like the thrill. Either way, your methods favor wit and illusion over brute force, and you'd rather vanish than fight a battle you didn't choose.\n\nThe cost is stillness. Your blood carries a fire that ignites if you stay in one place too long. Sleep in the same spot twice in the same week and you'll literally start burning from the inside out; no flame, no warning, just searing pain and scorched flesh. Every Ravnos maintains multiple Havens, fake identities, go-bags, and an exit strategy for the exit strategy. You can never truly settle down, and the moment you get comfortable somewhere is the moment you need to leave. What the hell are you doing in a Coterie?",
+      "disciplines": "Choose 2 to start: [**Animalism**](../disciplines/animalism.md) **| [Obfuscate](../disciplines/obfuscate.md) | [Presence](../disciplines/presence.md)**",
+      "baneName": "Doomed to Wander",
+      "baneDescription": "**You cannot sleep in the same location more than once per seven days** (locations must be at least a mile apart to count as different). Each time you violate this, take 1 Aggravated Harm as fire scorches you from within. At Blood Potency 3+, this increases to 2 Aggravated Harm. This applies even in Torpor. A mobile Haven (a big van, a boat, a train, etc.) is safe as long as it's parked in a different spot each day.",
+      "compulsionName": "Tempting Fate",
+      "compulsionDescription": "**When you're faced with a problem that has both a safe solution and a risky one**, the blood demands you take the dangerous path.\n\nUntil you commit to the most daring approach available or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls pursuing a cautious or conventional solution. If you go all-in on the riskiest option, gain +1 Ongoing when taking that approach instead.",
+      "perks": [
+        {
+          "name": "Lucky Devil",
+          "description": "Once per session, you may reroll any single roll you've just made and take either result. The dice of fate favor you! You just sometimes need to remind them."
+        },
+        {
+          "name": "Phantom Trick",
+          "description": "You can conjure brief, minor sensory illusions at will: a sound from the wrong direction, a flicker of movement in peripheral vision, a phantom scent on the breeze. **When you weave one into any Move as a distraction or misdirection**, gain +1 Forward to that roll. They dissolve under direct scrutiny."
+        }
+      ],
+      "xpTriggers": [
+        "**Pull off a plan so risky** that your Coterie questioned whether you'd survive it",
+        "**Provide someone with a crucial escape route, safehouse, or false identity** when they needed it most",
+        "**Deceive someone dangerous** in a way that directly benefits your Coterie's position"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Courier",
+          "tagline": "The package arrives on time, every time. Don't ask what's inside.",
+          "stats": "Blood +1 | Shadow +2 | Resolve +0 | Demeanor +1 | Wits −1"
+        },
+        {
+          "name": "Grifter",
+          "tagline": "The best cons are the ones where the mark thanks you afterward.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Antiquarian",
+          "tagline": "Everything has a history, a value, and an owner who doesn't deserve it.",
+          "stats": "Blood +0 | Shadow +1 | Resolve −1 | Demeanor +1 | Wits +2"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Salubri",
+      "category": "clan",
+      "tagline": "You were granted a second chance and a third eye. Make good use of them.",
+      "whatAreYou": "![Salubri symbol](../assets/images/vtm/bloodlines/salubri.webp){ .bloodline-symbol }\n\nYou were Embraced because another Salubri decided you deserved another shot at something. Maybe you were dying. Maybe you'd suffered a loss so terrible it hollowed you out. Maybe you had an unshakable drive to fix something broken in the world and just needed the tools to do it. Salubri sires are agonizingly selective; the Clan is tiny, possibly the smallest of all the bloodlines, and every Embrace is a deeply personal decision. There is no chance you were chosen on a whim. You were selected because your sire truly believed the curse would mean something in your hands.\n\nThe Salubri occupy a strange and precarious position among the Kindred. Centuries ago, the Tremere destroyed your Clan's founder and built their own legacy on the stolen blood, then spread rumors that Salubri are soul-thieves to justify it. The stigma stuck. Most Princes don't want you in their domain, most Kindred are suspicious of you, and the ones who know what your blood tastes like may already be behind you *right now.* Despite all of this, the Salubri persist; some as healers, easing the suffering of mortals and Kindred alike, others as hunters who stalk vampires who've surrendered to the Beast. All of them are trying, in their own way, to *solve* the problem of being a vampire rather than just enduring it.\n\nThe cost is impossible to hide. Every Salubri manifests a literal third eye in the center of their forehead. It opens when you use your Disciplines, and when it does, it weeps blood. Scarves, hats, and prosthetics can cover it physically, but no supernatural power can conceal it short of hiding your entire body. Oh, and your blood is a problem all on its own — other vampires who taste it find it almost impossible to stop drinking. You are rare, hunted, and lip-smackingly delicious. Good luck.",
+      "disciplines": "Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Dominate](../disciplines/dominate.md) | [Fortitude](../disciplines/fortitude.md)**",
+      "baneName": "Hunted Blood",
+      "baneDescription": "**A third eye sits in the center of your forehead.** No supernatural power can conceal it short of hiding your entire body; physical coverings (hats, scarves, bandages, masks, long bangs) work most of the time. When you use an Active Discipline Power, the eye opens and weeps blood. Nearby Kindred at 4+ Hunger who witness this must **Stay Chill** or feel drawn to **Feed** from you.\n\nYour Vitae is intoxicating to other Kindred. When a non-Salubri tastes your blood, they must **Stay Chill** with a penalty equal to your Blood Potency (minimum 1) or continue feeding until physically stopped. Kindred of the Blood Leech Predator Type have Disadvantage on this roll.",
+      "compulsionName": "Affective Empathy",
+      "compulsionDescription": "**When you perceive genuine suffering in someone nearby**, you feel overwhelmed by the need to ease their burden, regardless of timing, priorities, or personal cost.\n\nUntil you meaningfully alleviate the sufferer's pain, a more immediate crisis supersedes the urge, or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to helping them.",
+      "perks": [
+        {
+          "name": "Soul Sight",
+          "description": "Your third eye perceives what others cannot. **When you *Discern Vibes* on an entity**, you may ask \"What is their current Humanity?\", \"Do they intend to harm me?\", or \"Are they concealing their true nature?\" without spending Hold. These answers come through the third eye, not normal observation."
+        },
+        {
+          "name": "Mending Touch",
+          "description": "Once per scene, you can heal 2 Superficial Harm (or 1 Aggravated Harm) on a willing creature through sustained physical contact. Healing Superficial Harm costs you +1 Hunger, and healing Aggravated Harm costs +2 Hunger. No roll required."
+        }
+      ],
+      "xpTriggers": [
+        "**Heal or protect someone** at meaningful personal cost",
+        "**Choose restraint over violence** when violence would have been the easier path",
+        "**Survive an encounter** where being Salubri put you in direct danger"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Healer",
+          "tagline": "You mend what's broken because someone has to, and nobody else is volunteering.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +2 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Slayer",
+          "tagline": "Some vampires have surrendered to the Beast. You make sure they don't hurt anyone else.",
+          "stats": "Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0"
+        },
+        {
+          "name": "Seeker",
+          "tagline": "There has to be an answer to this curse. You will find it or die trying.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +1 | Demeanor +0 | Wits +2"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Toreador",
+      "category": "clan",
+      "tagline": "Beauty is a weapon, and sweetie, you're locked & loaded.",
+      "whatAreYou": "![Toreador symbol](../assets/images/vtm/bloodlines/toreador.webp){ .bloodline-symbol }\n\nYou were Embraced because something about you was exquisite. Perhaps it was talent; a voice, a brush, a stage presence that turned all eyes upon you. Perhaps it was just raw beauty — the kind that stops traffic and starts wars. The Toreador define \"art\" quite broadly. Painters and musicians, yes, but also dancers, potters, writers, cobblers, podcasters, designers, sex workers, filmmakers, social architects, and anyone who makes people *feel* something. Your sire saw you create or embody a moment of genuine beauty and thought it deserved to last forever. Sometimes that decision is carefully considered, sometimes it's an impulse they regret by next Tuesday.\n\nThe Clan of the Rose dominates nightlife, cultural scenes, festivals, galas, art galleries, and social networks. You know everyone worth knowing, you control who gets attention and who doesn't, and your ability to read and manipulate emotions is literally supernatural. Other Kindred underestimate you as shallow hedonists and decorative socialites, which is a mistake they tend to make exactly once. Beauty is power, desire is leverage, and a Toreador who wants something from you will make you want to give it willingly.\n\nThe cost is the obsession. Your blood craves beauty so intensely that ugliness physically diminishes you. Dull surroundings dull your abilities. Worse, when something truly gorgeous catches your attention, you can lose yourself in it completely. A perfect song, a stunning face, moonlight dancing across water; any of these can lock you in place, entranced and oblivious, until the moment passes or someone snaps you out of it. The same sensitivity that makes you extraordinary also makes you vulnerable in ways no other Clan has to worry about. But... c'mon, just *look* at it!",
+      "disciplines": "Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Celerity](../disciplines/celerity.md) | [Presence](../disciplines/presence.md)**",
+      "baneName": "Adversarial Aesthetics",
+      "baneDescription": "**When your surroundings are aesthetically hostile** (filthy, institutional, aggressively bland), you have an Ongoing penalty equal to your Blood Potency (minimum 1) to all Resolve and Discipline rolls. The Storyteller makes this call based on your character's personal aesthetic preferences.",
+      "compulsionName": "Obsession",
+      "compulsionDescription": "**When something of extraordinary beauty captures your attention** (a person, a performance, a piece of art, even a perfectly executed act of violence), you become consumed by it and cannot focus on anything else.\n\nUntil you can no longer perceive the object of your fixation or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not directly related to studying, appreciating, protecting, imitating, or possessing it. If spoken to, you can only talk about your fixation. If someone attempts to redirect your attention, you must **Stay Chill** or become completely entranced. While entranced, you cannot voluntarily look away, move, or take action unrelated to the object of your fixation. Another character can snap you out of it with a firm physical interruption or by removing the fixation (or you).",
+      "perks": [
+        {
+          "name": "Center of Gravity",
+          "description": "**When you are the focus of attention in a social scene**, all non-Coterie characters except Elder Kindred present take −1 Ongoing to notice anything that isn't you. You don't need to roll to hold a room; you simply command it. This effect lasts as long as you're actively engaging the crowd and ends the moment you stop performing, conversing, or otherwise captivating your audience."
+        },
+        {
+          "name": "Muse's Gift",
+          "description": "Once per session, you can spend a quiet moment with a willing character (Coterie or NPC) and inspire them. Describe what you do: sing for them, sketch them, tell them something they needed to hear, hold their hand in silent support, or whatever else they might need. They gain Advantage on the next roll they make that aligns with the emotional tone of your inspiration. If the target was a Coterie member and the roll succeeds, you both gain +1 XP."
+        }
+      ],
+      "xpTriggers": [
+        "**Create, perform, or curate something beautiful** that meaningfully affects a scene or character",
+        "**Leverage your social influence** to open a door for your Coterie that force or stealth couldn't",
+        "**Sacrifice something you find beautiful** (an object, a relationship, an opportunity) for the Coterie's benefit"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Artisan",
+          "tagline": "Your medium doesn't matter. What matters is that when you're finished, nobody can look away.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Impresario",
+          "tagline": "You don't just attend the party; you decide who gets in and who gets remembered.",
+          "stats": "Blood +1 | Shadow −1 | Resolve +0 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Muse",
+          "tagline": "You don't make art. You inspire others to create art they didn't know was inside them.",
+          "stats": "Blood +0 | Shadow +1 | Resolve +1 | Demeanor +2 | Wits −1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Tremere",
+      "category": "clan",
+      "tagline": "Knowledge is power. You stole both.",
+      "whatAreYou": "![Tremere symbol](../assets/images/vtm/bloodlines/tremere.webp){ .bloodline-symbol }\n\nYou were Embraced because you had the mind for it. The Tremere recruit from academics, occultists, researchers, surgeons, and anyone whose hunger for knowledge borders on compulsive. Your Clan was founded by a cabal of mortal sorcerers who couldn't accept their own mortality, so they stole the secret of vampirism through ritual experimentation, murdering thousands of mortals and vivisecting hundreds of Kindred to crack the formula. They got what they wanted, and it got them right back. Every Tremere carries that original sin in their blood, and the other Kindred Clans have never let them forget it.\n\nFor centuries, the Tremere maintained a rigid internal hierarchy called the Pyramid, enforced through magical Blood Bonds that chained every member to their superiors. Then the Second Inquisition found their headquarters in Vienna and burned it to the ground. The Pyramid shattered, the bonds broke, and the Clan scattered. Now the Warlocks operate as independent agents; some cling to the old ways, some embrace the chaos, and all of them are selling their services to whomever pays most handsomely. Blood Sorcery (particularly the Rituals) is the Tremere's unique currency, and the other Clans need it badly enough to tolerate the vampires who practice it. You are useful, mistrusted, and fully aware of both.\n\nThe cost is control; specifically, losing it. Your blood can no longer bind other Kindred. The very tool your Clan used to enforce loyalty for centuries simply stopped working, and nobody actually knows why. You can still be bound by others, which means the leash only works in one direction now. In a society built on leverage and obligation, that asymmetry is a serious vulnerability, and every Tremere feels it.",
+      "disciplines": "Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Blood Sorcery](../disciplines/blood-sorcery.md) | [Dominate](../disciplines/dominate.md)**",
+      "baneName": "Defanged Blood",
+      "baneDescription": "**Your Vitae cannot Blood Bond other Kindred.** The tool your Clan used in ages past holds little sway over others. You can still be Bound by Kindred from other Clans, but your blood offers no such leverage in return. You can still Bond mortals and Ghouls, but it takes an additional number of **Feedings** equal to your Blood Potency (minimum 1) beyond the normal requirement for the Blood Bond to take hold.",
+      "compulsionName": "Perfectionism",
+      "compulsionDescription": "**When you fail to meet your own exacting standards** (a roll result you consider beneath you, a sloppy outcome, an imprecise solution), you feel compelled to repeat the task until it's flawless.\n\nUntil you achieve a 12+ on any roll or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls. If you repeat an action you've already attempted in this scene, reduce the penalty by 1 (minimum 0) on rolls to do it right this time.",
+      "perks": [
+        {
+          "name": "Arcane Appraisal",
+          "description": "You can identify the presence and general nature of supernatural effects, Blood Sorcery, active Disciplines, wards, and curses without rolling. You sense the fingerprints of the Blood the way a chemist reads a reaction. Determining specific details (who cast it, when, exact parameters) requires **Catch the Scent** or Discipline use."
+        },
+        {
+          "name": "A Warlock's Services",
+          "description": "**When you use Blood Sorcery or occult expertise to solve a problem for someone outside your Coterie**, you automatically create a Debt over them. They may not acknowledge it, but the Blood remembers who owes whom. Within the Coterie, your services are technically free, but your Coterie members each owe you 1 starting Debt at character creation. Don't let them forget it."
+        }
+      ],
+      "xpTriggers": [
+        "**Acquire forbidden, rare, or dangerous knowledge** that no one else at the table possesses",
+        "**Perform Blood Sorcery or a ritual** that meaningfully advances the Coterie's goals",
+        "**Leverage your expertise** to extract payment, favors, or concessions from someone who needed your help"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Scholar",
+          "tagline": "The answer exists, you just haven't found the right book yet.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2"
+        },
+        {
+          "name": "Witcher",
+          "tagline": "Theory is useful. Practice is better. Results are everything.",
+          "stats": "Blood +2 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +0"
+        },
+        {
+          "name": "Iconoclast",
+          "tagline": "The Pyramid fell and the old guard failed. Time to build something that actually works.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Tzimisce",
+      "category": "clan",
+      "tagline": "Everything in this room belongs to you. Including the people and their bones.",
+      "whatAreYou": "![Tzimisce symbol](../assets/images/vtm/bloodlines/tzimisce.webp){ .bloodline-symbol }\n\nYou were Embraced because you understand and aim to experience ownership on a level that makes other people uncomfortable. The Tzimisce recruit from territorial obsessives; landlords, cult leaders, gang bosses, military commanders, hoarders of every stripe. Your sire didn't just want someone ambitious because ambition implies you're still reaching. They wanted someone who takes, keeps, and would sooner burn it all to ash than let a single piece fall into someone else's grubby hands. Many Tzimisce treat the Embrace itself as an act of possession — you are your sire's legacy. Whether that makes you an heir or property depends on the sire.\n\nThe Clan's signature is Vicissitude, a specialized form of fleshcrafting that lets you reshape living tissue like wet clay. Your own body or someone else's — skin, bone, muscle, fats, sinew, organs, all of it malleable under your talented fingers. Some Tzimisce sculpt themselves into their definition of flawless. Others go the other direction entirely, crafting forms that are deliberately alien, grotesque, or functional in ways that humanoid anatomy was never meant to be. It's the ultimate expression of the Tzimisce philosophy: if you own something, you can do *whatever* you want with it. This extends to everything else, too. Land, gangs, businesses, buildings, people; a Tzimisce claims a treasure (or charge) and guards it. The holdings don't need to be pretty or well-maintained, they just need to be *yours.*\n\nThe cost is the tether. You must slumber surrounded by your treasure; your domain, your people, whatever you've claimed as the center of your obsession. Historically, this meant literally bedding down in the soil of your homeland. These nights, it might mean sleeping in your tenement, your clubhouse, or a room full of your collection, and rotating which one you choose every night. Stray too far from that which you own and you wake diminished; your mind frayed, your will eroded. The dragon can never truly leave the hoard.",
+      "disciplines": "Choose 2 to start: [**Animalism**](../disciplines/animalism.md) **| [Dominate](../disciplines/dominate.md) | [Protean](../disciplines/protean.md)**",
+      "baneName": "Dragon's Tether",
+      "baneDescription": "**At character creation, define your treasure**: a physical domain or structure, a group of people, an organization, a collection, or something more esoteric but clearly bounded. You must slumber surrounded by your treasure each day. If you rest away from it, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all Resolve rolls until you next rest within your treasure. This penalty is cumulative for consecutive days spent away, up to a maximum of twice your Blood Potency.",
+      "compulsionName": "Covetousness",
+      "compulsionDescription": "**When you become aware of something valuable, rare, or desirable to your character in the scene**, you feel an overwhelming need to possess it. It could be an object, a piece of territory, a person, or even an intangible thing like someone's loyalty or trust.\n\nUntil you establish ownership over it (the Storyteller decides what qualifies), it becomes definitively unattainable, or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to acquiring it.",
+      "perks": [
+        {
+          "name": "Scrupulous Sentinel",
+          "description": "**When you are within your Haven or with your treasure and acting to defend, maintain, or control it**, treat any roll of 6- as a 7–9. You are nearly impossible to dislodge from that which belongs to you. This does not apply elsewhere, even if you bring some of your treasure with you — its resting place (and yours) are what matter."
+        },
+        {
+          "name": "Sculptor's Claws",
+          "description": "You can reshape your own physical features over the course of an uninterrupted scene without rolling: smoothing or texturing skin, reshaping bone structure, recoloring anything, altering height, limb actuation, or build within semi-human proportions. Changes are real and permanent until you reshape them again. **When you reveal a deliberately monstrous or alien alteration to intimidate or horrify**, roll **Influence** with Advantage."
+        }
+      ],
+      "xpTriggers": [
+        "**Expand your treasure** by acquiring new territory, people, or resources for your collection",
+        "**Defend your treasure** against a threat at personal cost or risk",
+        "**Reshape yourself or another** in a way that meaningfully changes how others perceive or interact with them"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Landlord",
+          "tagline": "This is yours. All of it. The buildings, the people, the rats in the walls. Every last piece.",
+          "stats": "Blood +0 | Shadow +1 | Resolve +2 | Demeanor +1 | Wits −1"
+        },
+        {
+          "name": "Sculptor",
+          "tagline": "The human form is a rough draft. You're trying to make the final edits.",
+          "stats": "Blood +1 | Shadow −1 | Resolve +1 | Demeanor +0 | Wits +2"
+        },
+        {
+          "name": "Hoarder",
+          "tagline": "You know exactly where every single thing you own is. Nobody is allowed to touch anything.",
+          "stats": "Blood +2 | Shadow +0 | Resolve +1 | Demeanor −1 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Ventrue",
+      "category": "clan",
+      "tagline": "You were born to rule, and your Embrace made it official.",
+      "whatAreYou": "![Ventrue symbol](../assets/images/vtm/bloodlines/ventrue.webp){ .bloodline-symbol }\n\nYou were Embraced because you already carried yourself like you were in charge. The Ventrue recruit from overachievers, power brokers, royalty, and people who've spent their mortal lives accumulating influence; politicians, executives, military officers, old money heirs, and anyone who treats authority as a natural state rather than something to be earned. Your sire chose you because the Clan's most sacred tradition is the Embrace itself, and a Ventrue who Embraces a weak link embarrasses the entire lineage. You are expected to lead. Anything else is beneath you.\n\nThe Ventrue are the establishment. They make the rules, enforce the rules, and punish anyone who breaks the rules, which conveniently keeps them at the top. For centuries, the Ventrue have held more positions of power than any other Clan and they will fight to keep it that way. These nights, open leadership is too dangerous; the smart ones operate as shadow directors, reclusive donors, and silent partners, influencing mortal institutions from just off-stage. They resent having to hide, but they're pragmatic enough to do it anyway. In a Coterie, every Ventrue considers themselves the natural leader, and they might even be right. They're also the ones most likely to keep the group functional through sheer force of organizational will.\n\nThe cost is your palate. Your blood is excruciatingly particular about what it will accept. Every Ventrue can only feed from a specific, narrow category of mortal that caters exactly to their taste. Anything outside your preference comes right back up. This turns every feeding into a logistical exercise, and the more obscure your requirement, the harder your nights get. You're the most powerful Clan at the table but you can be brought to your knees by not being able to find the right lunch.",
+      "disciplines": "Choose 2 to start: [**Dominate**](../disciplines/dominate.md) **| [Fortitude](../disciplines/fortitude.md) | [Presence](../disciplines/presence.md)**",
+      "baneName": "Rarefied Palate",
+      "baneDescription": "**At character creation, define your exclusive feeding preference**: a narrow, specific category of vessel (e.g., redheads, military veterans, people experiencing grief, individuals of noble descent, methamphetamine users, etc.) Blood from anyone outside your preference provides no sustenance; you vomit it back up within moments. Ventrue with the Blood Leech Predator Type are especially susceptible to going hungry.\n\nYou can sense whether a vessel matches your preference by spending a moment in close proximity and rolling +Wits. **On a 7+,** you know for certain if they fit the bill. It's like sniffing your food to check for mold.\n\nAt Blood Potency 3+, the dietary restriction narrows further — work with your Storyteller to define how. What was once \"soldiers\" might become \"combat veterans with active PTSD.\" What was once \"redheads\" might become \"natural redheads under 30.\" The pickier you are, the better they taste.",
+      "compulsionName": "Arrogance",
+      "compulsionDescription": "**When you perceive a situation as leaderless, disorganized, or poorly handled**, your blood demands you take command immediately and visibly.\n\nUntil someone obeys a direct order you've given without supernatural enforcement or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to establishing authority. The order must be genuine, not a technicality or contrivance (telling someone to pass the salt doesn't count).",
+      "perks": [
+        {
+          "name": "Tactical Command",
+          "description": "**When you give a direct, specific order to a Coterie member or another ally during a tense or dangerous situation and they follow it**, they gain Advantage and +1 Forward on the roll to execute it. You can only issue one such order per scene, so make it count."
+        },
+        {
+          "name": "Unyielding Privilege",
+          "description": "You have weathered many years of plots, betrayals, and attempts on your unlife (or you carry the blood of those who have). **When you *Stay Chill* to resist mundane or supernatural coercion, mental domination, or intimidation from any source**, treat a roll of 6- as a 7–9."
+        }
+      ],
+      "xpTriggers": [
+        "**Organize your Coterie's actions** in a way that leads to a measurably better outcome than individual effort would have",
+        "**Navigate or leverage mortal institutions** (finance, law, government, media) to advance your Coterie's position",
+        "**Maintain your composure and authority** in a situation where losing either would have had serious consequences"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Executive",
+          "tagline": "Decisions flow upstream. Consequences flow downstream. You manage both.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Commander",
+          "tagline": "Your Coterie is your unit, and you will drag them through hell and back whether they like it or not.",
+          "stats": "Blood +1 | Shadow −1 | Resolve +2 | Demeanor +1 | Wits +0"
+        },
+        {
+          "name": "Old Guard",
+          "tagline": "You remember when the rules meant something. You intend to remind everyone else.",
+          "stats": "Blood +0 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits +2"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Caitiff",
+      "category": "clanless",
+      "tagline": "No lineage. No legacy. No leash.",
+      "whatAreYou": "![Caitiff symbol](../assets/images/vtm/bloodlines/caitiff.webp){ .bloodline-symbol }\n\nYou're a vampire without a Clan, and there are a lot of ways that happens. Maybe you were Embraced by a Nosferatu but never grew hideous, or by a Ventrue but can feed from anyone without your tummy getting upset. Perhaps your sire was Caitiff themselves and chose you deliberately; someone tough, stubborn, and resourceful enough to survive at the bottom of a hierarchy that despises you. Either way, the blood of the ancients didn't mark you. No terribly specific curse shaped your transformation. You just woke up dead, hungry, and alone.\n\nWhat you lack in pedigree, you make up for in flexibility. Your blood has no built-in loyalties nor limitations; you can learn any Discipline from any source, given enough time and exposure. Some Caitiff lean into their independence, building alliances with other clanless Kindred and carving out a niche on their own terms. Others hide what they are entirely, faking clan membership and performing traditions they have no real connection to, because the alternative is being treated as disposable. Increasingly, the clanless are organizing; not into a clan, exactly, but into an amalgamation that watches out for its own.\n\nThe cost is respect. You have no supernatural curse or Compulsion. Regardless, other vampires look down on you by default. Princes barely tolerate you. Elders consider you a mistake. You start almost every interaction at the bottom of the barrel, and earning trust means working twice as hard for half the credit. Caitiff survive anyway, because that's what they've always done. Nobody handed you a legacy, so you'll make your own.",
+      "disciplines": "Choose any 2 Disciplines to start with. These are unaffected by your Bane.",
+      "baneName": "Lacking Lineage",
+      "baneDescription": "**You carry no supernatural curse, but Kindred society treats your existence as one**. Any Kindred who knows you're Caitiff may impose social consequences at their discretion; the Storyteller can apply a penalty of −1 to −2 Forward on Demeanor rolls with Kindred who look down on the clanless (which is most of them).\n\nAdditionally, Disciplines take more effort to advance, as your Blood must learn what the Clans inherit. When you spend XP on unlocking access to Disciplines, add your Blood Potency to the cost (minimum 1). When you spend XP on Discipline Powers from Disciplines other than your two starters, add half your Blood Potency (rounded up) instead.",
+      "compulsionName": null,
+      "compulsionDescription": "You have no fixed Compulsion. You just get to help with everybody else's.",
+      "perks": [
+        {
+          "name": "Scrappy",
+          "description": "You cannot have a negative modifier to any roll for any reason other than Hunger — the worst you can do is add nothing. Nobody covered your weaknesses for you, so you learned to cover them yourself."
+        },
+        {
+          "name": "Playing Possum",
+          "description": "**When another Kindred dismisses you as beneath their notice, irrelevant, or harmless**, you may immediately ask the Storyteller one question from the **Discern Vibes** or **Catch the Scent** lists about that character without rolling or spending Hold. Their contempt makes them careless around you."
+        }
+      ],
+      "xpTriggers": [
+        "**Prove yourself indispensable** to your Coterie in a way that has nothing to do with Clan prestige",
+        "**Turn your clanless status** from a disadvantage into a tactical or social advantage",
+        "**Forge a meaningful alliance or connection** with someone who initially dismissed you"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Freelancer",
+          "tagline": "No Clan means no obligations. You work for whoever pays, and you always deliver.",
+          "stats": "Blood +1 | Shadow +1 | Resolve +0 | Demeanor +2 | Wits +0"
+        },
+        {
+          "name": "Imposter",
+          "tagline": "You wear the mask of a Clan well enough that most never think to check underneath.",
+          "stats": "Blood +0 | Shadow +2 | Resolve +0 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Survivor",
+          "tagline": "You're still here. That's more than most Caitiff can say.",
+          "stats": "Blood +1 | Shadow +0 | Resolve +2 | Demeanor +0 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | +0"
+    },
+    {
+      "name": "Daughter of Cacophony",
+      "category": "clanless",
+      "tagline": "You open your mouth and the world listens... or else.",
+      "whatAreYou": "![Daughter of Cacophony symbol](../assets/images/vtm/bloodlines/daughter-of-cacophony.webp){ .bloodline-symbol }\n\nYou were Embraced because your voice did something to people. Maybe you were an opera singer who could make an audience weep on command, a defense attorney whose closing arguments changed verdicts without fail, a preacher whose virtuous sermons rippled through entire counties, or a podcaster whose sultry whisper kept millions up past midnight. The Daughters recruit from anyone whose voice is their primary weapon; what matters isn't volume or range or even technique, but the effect you have when you open your mouth. Your sire heard you speak, sing, or scream, and took you under her wing to teach you everything she knows. Daughters almost always maintain close relationships with their sires; mentor and student, collaborator and protégé, sometimes for decades after the Embrace. A Daughter alone is dangerous. A Daughter with her sire is terrifying. A whole Choir can very literally bring the house down. Make sure the band gets evacuated first.\n\nNobody is entirely sure where the Daughters came from. You're a young bloodline by Kindred standards, first appearing in the historical record only a few centuries ago; your origins are debated endlessly. A Toreador offshoot? A Malkavian mutation? A Tremere experiment gone sideways? Something older and stranger? The Daughters themselves don't dwell on it. What matters is the Choir — the loose, matriarchal networks of Daughters who find each other, perform together, and fiercely protect their own. The bloodline overwhelmingly Embraces women; the rare Sons of Discord exist but occupy an uneasy position in the hierarchy. Other Kindred seek you out for important performances and social events because a Daughter's song can move even the most jaded Elder to tears. They also avoid making enemies of you, because that same voice can shatter glass, shatter minds, and shatter the will to live.\n\nThe cost is the music you can never tune out. Every Daughter hears a piece of the same grand phantom melody inside her head — a constant, inescapable soundtrack that reflects her emotional state, her Hunger, and perhaps something deeper and older that none of you can quite explain. When things are calm, it's almost pleasant; a faint hum beneath your thoughts. When things go wrong, it becomes a cacophony, hence the name. Silence is your worst enemy, because without external noise to anchor you, the Inner Song fills every corner of your consciousness until nothing else exists. You learn to live in noisy places, surround yourself with sound, and to never, ever let the world go quiet.",
+      "disciplines": "You start with exclusive access to [**Melpominee**](../disciplines/melpominee.md). Choose 1 additional: [**Fortitude**](../disciplines/fortitude.md) **| [Presence](../disciplines/presence.md)**",
+      "baneName": "Inner Song",
+      "baneDescription": "You hear music that no one else can. A complex, polyphonic, polyrhythmic song plays endlessly in your mind; sometimes a gentle hum, sometimes a deafening wall of noise. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all Wits rolls. In overwhelmingly loud or overstimulating environments, this penalty also applies to **Stay Chill** rolls. In total silence, the Inner Song floods your consciousness; you must immediately **Stay Chill** or trigger your Compulsion.\n\nHowever, there are some sweet notes within all the dissonance: when you roll 12+ on any Wits roll (two sixes), your Bane penalty does not apply to that roll for a single, brief moment of clarity.",
+      "compulsionName": "Cacophony",
+      "compulsionDescription": "**When the sounds around you clash with your Inner Song** — overwhelming noise, oppressive silence, or music that grates against your soul — you feel compelled to drown out the noise with your own voice.\n\nUntil you perform, vocalize, or use Melpominee to impose your sound on the environment, or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to performing, singing, or using Melpominee. The Compulsion ends when the sonic environment aligns with your Inner Song again; whether because you overpowered it, escaped to somewhere the sound is right, or forced the offending noise to stop.",
+      "perks": [
+        {
+          "name": "Resonant Voice",
+          "description": "Your voice carries preternatural weight even without Discipline use. **When you *Influence* someone through direct speech, song, or vocalization**, treat a roll of 6- as a 7–9. Your words land even when your delivery falters; something in the timbre compels attention."
+        },
+        {
+          "name": "In Harmony",
+          "description": "**Once per scene, when you successfully use any Melpominee Power**, one ally of your choice who can hear you gains +1 Forward on their next roll as an afterglow of your performance that sharpens their focus. If one or more allied Daughters participate in the same performance, this bonus extends to all allies who can hear you, and you gain an Ongoing bonus to your Melpominee rolls per participating Daughter (maximum +3) until you stop performing or the scene ends."
+        }
+      ],
+      "xpTriggers": [
+        "**Drastically alter the course of a scene through your voice** in a way that other methods, even other Disciplines, couldn't replicate",
+        "**Open a door for your Coterie** through social connections, performance access, or the influence your reputation commands",
+        "**Suffer meaningful consequences from your Inner Song** at a moment when quiet or discretion would have served you better"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Prima Donna",
+          "tagline": "Every room has a star, and you're in every room.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Dirge",
+          "tagline": "Your song doesn't captivate, it devastates.",
+          "stats": "Blood +1 | Shadow −1 | Resolve +2 | Demeanor +1 | Wits +0"
+        },
+        {
+          "name": "Understudy",
+          "tagline": "They never suspect the quiet one has the most dangerous voice in the room.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +0 | Demeanor +1 | Wits +2"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Devorari",
+      "category": "clanless",
+      "tagline": "You're starving for something no one can see. Luckily, everyone you've ever touched has plenty to spare.",
+      "whatAreYou": "![Devorari symbol](../assets/images/missing.svg){ .bloodline-symbol .off-glb }\n\nNobody knows precisely what you are or how you work, including you. You might have been born this way, awakened through a ritual, cursed by something ancient, or simply changed one day with no explanation. You are not Kindred. You carry no lineage from Caine, no Beast clawing at your insides, no connection to the political machinations of vampire society. What you are is something older and stranger; a creature that exists in the folklore of nearly every culture on Earth under a thousand different names: Succubi and incubi. Kitsune. Huli jing. Yakshini. The Bebarlangs. The Evil Eye. Every civilization since humankind first crawled out of the mud and huddled around a fire has a story about something that drains the life force from the living through proximity or touch. You're one of those stories, walking around in business casual and carrying a smartphone.\n\nYou consume **ephemera** rather than blood; the raw emotional and psychic energy that radiates from all beings. Skin-to-skin contact is the primary channel; a lingering touch, an embrace, an intimate encounter. Your prey feels lethargic afterward, like the saturation has been turned down on everything. Most assume they're just having a bummer of a day. The Kindred with whom you share a Coterie can't sustain you (they have nothing to give), can't **Feed** from you (your Vitae provides no nourishment), but you *can* do something invaluable for them: you can manipulate a mortal's emotional state before they **Feed**, turning prey Choleric, Sanguine, Melancholic, or Phlegmatic on demand. You're also the only member of the Coterie who can drain ghosts and spirits, which makes you either useful or highly unsettling depending upon the context.\n\nThe cost is the distance. Every person you touch loses something, and the more frequently you feed from someone, the worse it gets. You leave a trail of exhausted friends, hollowed-out lovers, and relationships that wither for reasons nobody can articulate. You walk in daylight, you look perfectly human, and you'll stay young as long as you keep feeding... but you can't eat, you can't drink, and the closest you'll ever get to another person is the moment you're taking something from them forever.\n\n!!! warning \"Important Note\"\n\n    *Devorari use all the same Basic Moves as everyone else except **Blush of Life**, but treat any mention of blood as ephemera instead, and any Harm your victims take is purely coincidental — when you **Feed**, you usually don't hurt your prey unless something goes horribly wrong. You can still use Blood Surges, but the Beast holds no power over you whatsoever, and you never Frenzy unless forced by a Discipline Power.*",
+      "disciplines": "You start with exclusive access to [**Psychotrophia**](../disciplines/psychotrophia.md). Choose 1 additional: [**Auspex**](../disciplines/auspex.md) **| [Presence](../disciplines/presence.md)**",
+      "baneName": "The Wasting",
+      "baneDescription": "When you **Feed** from the same mortal more than once, start a 6-segment Wasting Clock for them. Each time you drain them, advance the Clock by a number of segments equal to 1 + your Blood Potency. At BP 0, that's a gentle tick of 1 per feeding; at BP 5, a single slurp of ephemera fills the entire Clock at once. Wasting Clocks fade at a rate of 1 segment per week of no contact.\n\nAs the Clock fills, the Storyteller may narrate escalating deterioration: mild fatigue at first, then chronic exhaustion, personality changes, memory loss, and worse. **When a Wasting Clock fills completely, the mortal's decline becomes impossible to hide** — they're hospitalized, investigated, or their condition is noticed by someone you don't want asking questions.",
+      "compulsionName": "Feelings Fixation",
+      "compulsionDescription": "**When you sense intense emotion from someone nearby**, you feel an overwhelming pull to get closer, to touch them, to taste whatever it is they're radiating.\n\nUntil you make prolonged contact to **Feed** from the source of the emotion or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls that aren't directly working toward reaching them. The stronger you become, the harder the pull is to resist.",
+      "perks": [
+        {
+          "name": "Psychic Predator",
+          "description": "You have no Beast, no Predator Type, and you never consume blood, but you can **Feed** from mortals as well as spirits of the dead — only vampires are a no-go. You can walk in daylight, age only if you stop feeding, and pass as human without effort. However, you cannot eat nor drink, and cannot use **Blush of Life**. You can still use the other Basic Moves (replacing blood with ephemera) and Blood Surge, but you cannot enter a Frenzy unless forced into one by certain Discipline Powers. Whenever any roll calls for +Blood, you may roll +Wits instead. At 5 Hunger, you begin to literally fade. Your presence becomes forgettable, your features indistinct, your voice easy to talk over. You lose access to your Disciplines and have Disadvantage on all rolls except **Hunt** and **Feed** until you consume ephemera."
+        },
+        {
+          "name": "Sanguine Sommelier",
+          "description": "**When you *Influence* a mortal's emotional state through conversation, intimidation, seduction, or comfort**, you can shift their Blood Resonance to match the emotion you're cultivating. This takes a few minutes of sustained interaction, and the Storyteller decides how intense it becomes. When a Kindred subsequently **Feeds** from that mortal, the Resonance you set is what they get."
+        }
+      ],
+      "xpTriggers": [
+        "**Feed from someone who trusts you**, knowing the cost it carries",
+        "**Use your abilities to directly benefit a Kindred** in your Coterie at personal risk or moral cost",
+        "**Uncover a meaningful clue** about what you are or where your kind comes from"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Intimate",
+          "tagline": "You crave closeness and you use every feeding as an excuse to find it.",
+          "stats": "Blood +1 | Shadow +0 | Resolve −1 | Demeanor +2 | Wits +1"
+        },
+        {
+          "name": "Ascetic",
+          "tagline": "Distance keeps people safe. You feed carefully, clinically, and leave before it gets personal.",
+          "stats": "Blood −1 | Shadow +1 | Resolve +2 | Demeanor +0 | Wits +1"
+        },
+        {
+          "name": "Puzzler",
+          "tagline": "You're much less interested in the feeding than in the question: what the hell are you?",
+          "stats": "Blood +0 | Shadow −1 | Resolve +1 | Demeanor +1 | Wits +2"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Gargoyle",
+      "category": "clanless",
+      "tagline": "Made, not born. Free, not forgiven.",
+      "whatAreYou": "![Gargoyle symbol](../assets/images/vtm/bloodlines/gargoyle.webp){ .bloodline-symbol }\n\nYou were built. Whether you were assembled from the stolen blood of Gangrel, Nosferatu, and Tzimisce through a terrible Tremere ritual, or Embraced by a Gargoyle who gained that ability through sheer evolutionary defiance, you woke up 7–9 feet tall with stone for skin, wings on your back, and no memory of who you were before. In the 12th century, the Tremere warlock Goratrix created the first of your kind as expendable shock troops; weapons to hurl at the enemies lining up to destroy the Tremere for what they'd done to the Salubri. Another Tremere, Virstania, took over your bloodline's development and called herself your \"mother.\" Her affection was real but deeply toxic. For three centuries, Gargoyles served as slaves: guards, soldiers, and disposable flying muscle for a Clan that considered them property.\n\nThen you woke up. Gradually, across generations, Gargoyles developed minds of their own; personalities, preferences, grudges, and eventually the ability to create more of your kind without Tremere assistance. Your creators hadn't planned for that. They hadn't planned for the revolt, either. One night, the weapons turned on their wielders, and the Gargoyles won their freedom through blood and fire. The Tremere were formally forbidden from making any more of you. They agreed, then quietly kept doing it anyway, because what else were they going to do with all that leftover Vitae? These nights, Gargoyles are rare, scattered, and fiercely independent. You organize into Flocks — tight-knit found families led communally or by the eldest member (not necessarily all Gargoyles). You're loyal to your Flock above all else and deeply suspicious of everyone outside it, especially anyone who smells like a library full of pennies and talks about *\"the greater good.\"*\n\nThe cost is everything they left inside you. Your body is a monument to someone else's ambition. Stone and wing and fang, magnificent and monstrous and impossible to hide. Your mind carries the programming your creators installed: a susceptibility to commands and coercion that even centuries of freedom haven't fully erased. And the gap between you and mortal Humanity is one you can narrow but never close. You weren't human before this, not really; you were either made from parts or Embraced into something that was never meant to be a person. Whatever you are, you're building it from scratch, one night at a time, surrounded by and protecting the only people who seem to understand: your Flock.",
+      "disciplines": "You start with exclusive access to [**Visceratika**](../disciplines/visceratika.md). Choose 1 additional: [**Potence**](../disciplines/potence.md) **| [Protean](../disciplines/protean.md)**",
+      "baneName": "Built to Serve",
+      "baneDescription": "Your body is permanently monstrous, stone-skinned, winged, and clearly inhuman. **You cannot pass as mortal by any mundane means.** You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls with characters who can see your true form and are unfamiliar with you or hostile toward you. However, if you remain perfectly still in an architectural context — perched on a building, crouched on a ledge, squatting on a rooftop — observers who don't already know you're alive assume you're a statue. This is, in fact, a perfectly viable surveillance method.\n\nAdditionally, your mind carries the fingerprints of your creators. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to **Stay Chill** rolls made to resist Dominate, Presence, or any other form of supernatural mental coercion. Against commands from Tremere specifically, this penalty is doubled.\n\nLastly, your Humanity can never exceed 6. You can claw toward it, but the gap between what you are and what humans are can never fully close.",
+      "compulsionName": "The Vigil",
+      "compulsionDescription": "**When you perceive a direct threat to your Haven, your Flock, or anyone you've sworn to protect**, you feel compelled to interpose yourself between the danger and your charge, regardless of tactical wisdom or personal safety.\n\nUntil you have physically positioned yourself between the threat and what you're protecting, neutralized the danger, or the scene ends, take an Ongoing penalty equal to your Blood Potency (minimum 1) to all rolls not dedicated to defending your charge. You cannot voluntarily retreat, disengage, or leave the threatened person or place unguarded while the Compulsion is active.",
+      "perks": [
+        {
+          "name": "Stone Hide",
+          "description": "Your skin is rock. You have always-active Armor equal to your Blood Potency (minimum 1). Unlike all other forms of Armor, Stone Hide also reduces incoming Aggravated Harm. You were very literally built to take hits, and your stone gets stronger with every blow it absorbs."
+        },
+        {
+          "name": "Living Rampart",
+          "description": "**When you *Protect the Coterie***, treat a roll of 6- as a 7–9. You ignore the once-per-scene usage limit; you can throw yourself in front of danger as many times as the fiction demands. Additionally, on a 7–9, you protect both yourself and one ally within Close Range rather than only yourself, usually by extending a stony wing."
+        }
+      ],
+      "xpTriggers": [
+        "**Shield your Coterie from Harm** by physically interposing yourself or absorbing an attack meant for someone else",
+        "**Resist or defy an attempt to control you** (supernatural or mundane) when compliance would have been easier",
+        "**Build or strengthen a bond** with someone who initially feared or distrusted you because of what you are"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Sentinel",
+          "tagline": "You guard what matters. Everything else can burn.",
+          "stats": "Blood +1 | Shadow +0 | Resolve +2 | Demeanor −1 | Wits +1"
+        },
+        {
+          "name": "Scout",
+          "tagline": "Every rooftop is your turf. Every ledge is a listening post. Every– wait, what was that?",
+          "stats": "Blood +0 | Shadow +2 | Resolve +1 | Demeanor −1 | Wits +1"
+        },
+        {
+          "name": "Warrior",
+          "tagline": "There is a very short list of things you cannot break. It gets shorter every night.",
+          "stats": "Blood +2 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits −1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Ghoul",
+      "category": "clanless",
+      "tagline": "You're not dead yet, but you're on the waiting list.",
+      "whatAreYou": "![Ghoul symbol](../assets/images/vtm/bloodlines/ghoul.webp){ .bloodline-symbol }\n\nYou're a mortal who drank a vampire's blood, and it changed you. You're stronger, tougher, and slower to age than any human has a right to be; you might even have access to a sliver of your patron's supernatural abilities. In exchange, you're bound whether you like it or not. The Blood Bond ties you to the vampire who feeds you their Vitae with a devotion that borders on worship; part gratitude, part addiction, part something deeper and uglier that you probably don't want to examine too closely. You might call this vampire your domitor, your patron, your boss, your partner, some other honorific, or just their name. Whatever the label, you belong to them, and there's not a lot you can do about it.\n\nGhouls exist in the margins of Kindred society. You handle daytime errands, maintain mortal cover stories, guard your patron's Haven while they sleep, and do whatever else needs doing while the sun is up. Some Ghouls are treasured confidants or collaborators. Others are disposable tools. Most fall somewhere in between, clinging to the hope that loyal service will eventually be rewarded with the Embrace. That hope keeps you obedient, and your patron knows it and depends upon it. In a Coterie, you're the one who can walk into a police station at noon, pick up groceries, and check whether that suspicious building is actually abandoned during working hours; all things your undead companions literally cannot do. You're indispensable during the day and completely outclassed after sunset.\n\nThe cost is the dependency. Without regular doses of Vitae, your borrowed gifts fade, your body starts aging again, and the withdrawal hits like nothing you've ever experienced. You are, at the most fundamental level, an addict whose dealer is also their landlord, their boss, and possibly the love of their life. Every Ghoul tells themselves the arrangement is temporary and that the Embrace is just around the corner. Most of them are wrong. Will you be?",
+      "disciplines": "Choose 1 Discipline from those available to your patron's Clan.",
+      "baneName": "Blood Bound",
+      "baneDescription": "**You are supernaturally bound to the vampire who feeds you their Vitae.** This manifests as an unbreakable Debt that your patron holds over you. They can **Cash In** this Debt a total number of times equal to their Blood Potency without depleting it, and can **Invoke** it just as many times per night. You cannot refuse, erase, or transfer this Debt by any normal means. The Blood Bond persists until you are Embraced or your patron meets Final Death.\n\nAdditionally, your stat array is reduced: distribute +1 | +1 | +0 | −1 | −1 instead of the standard spread. You are mortal. You are outmatched.",
+      "compulsionName": "Dark Devotion",
+      "compulsionDescription": "**When your patron expresses displeasure with you, or when you feel your position in their service is threatened**, you feel an overwhelming need to prove your worth and secure your place.\n\nUntil you perform a meaningful act of service for your patron or the perceived threat passes, take an Ongoing penalty equal to your patron's Blood Potency (minimum 1) to all rolls that don't directly work toward earning their approval.",
+      "perks": [
+        {
+          "name": "Still Kicking",
+          "description": "Your Blood Potency is 0 and cannot increase through normal advancement, but you're alive! You have a heartbeat, body heat, and a functioning digestive system. You can eat food, walk in direct sunlight, pass any medical examination (hopefully), and interact with mortal society without restriction. You cannot use **Blush of Life** because you don't need it."
+        },
+        {
+          "name": "Borrowed Time",
+          "description": "**When you consume Vitae from your patron**, they gain 1 Hunger, you reduce your Hunger by the usual amount, and choose one: heal Harm (Superficial or Aggravated) equal to their Blood Potency, or gain Advantage on the same number of rolls to use your Discipline until you sleep. The Vitae sustains you in ways that go far beyond slaking thirst — for a brief, intoxicating moment, you feel what it might be like to be one of them."
+        },
+        {
+          "name": "Unshackled Servant",
+          "description": "You have no Beast, no Predator Type, and you never Frenzy. **Stay Chill** still applies for stress, danger, and resisting manipulation, but never for rampage resistance. Your Hunger represents Vitae dependency, not a monster clawing at your insides. At 5 Hunger, instead of going wild, you enter withdrawal: you lose access to your Discipline and have Disadvantage on all rolls except those made to **Feed** until you consume Vitae (ideally from your patron)."
+        }
+      ],
+      "xpTriggers": [
+        "**Accomplish something for the Coterie** that required daylight, mortal access, or your Humanity to achieve",
+        "**Put yourself in genuine danger** to protect or serve your patron",
+        "**Resist the urge to obey your patron** when their demands conflict with your Convictions"
+      ],
+      "xpExtra": "### If You Are Embraced\n\nShould the fiction lead to your Embrace — whether through the Advanced **Feed** Move, a narrative milestone, or a dramatic turning point — retire this Playbook. Choose a Clan Playbook; your patron's Clan is the default, but others are possible if the fiction supports it.\n\nRebuild your character using that Clan's Playbook, transferring all your Convictions, Touchstones, and any Debts. The Blood Bond transforms into a standard Debt between you and your sire, or is erased entirely; your choice. Your stat array changes to the standard spread, and may be reassigned however you like. All XP you earned as a Ghoul carries over and may also be reassigned. Welcome to the night.",
+      "archetypes": [
+        {
+          "name": "Enthusiast",
+          "tagline": "You're here because you want to be, and you can't wait for the night they finally turn you.",
+          "stats": "Blood −1 | Shadow +0 | Resolve −1 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Pragmatist",
+          "tagline": "The arrangement has its perks. Whether you actually want the Embrace is a question you keep dodging.",
+          "stats": "Blood +0 | Shadow +1 | Resolve +1 | Demeanor −1 | Wits −1"
+        },
+        {
+          "name": "Captive",
+          "tagline": "You didn't choose this. The Bond chose it for you, and now you can't leave even if you wanted to.",
+          "stats": "Blood +1 | Shadow −1 | Resolve +1 | Demeanor −1 | Wits +0"
+        }
+      ],
+      "customStatSpread": "+1 | +1 | +0 | −1 | −1"
+    },
+    {
+      "name": "Osirian",
+      "category": "clanless",
+      "tagline": "You chose to stop being a monster. The monster hasn't agreed yet.",
+      "whatAreYou": "![Osirian symbol](../assets/images/vtm/bloodlines/osirian.webp){ .bloodline-symbol }\n\nYou were someone else first. You had a Clan, a sire, a Bane, the whole cursed inheritance. Then something changed. Maybe you saw what you were becoming and couldn't stomach it. Maybe you'd already become something terrible and wanted out. Maybe you just woke up one night and realized that centuries of feeding, scheming, and Frenzying had hollowed you into something you no longer recognized. However it happened, the Osirians found you, or you found them, and they offered something no other Kindred organization does: a way back. Deny the Beast. Practice discipline. Study the ancient art of Bardo. Reclaim, piece by piece, the Humanity you thought was gone forever.\n\nThe Osirians are ancient, secretive, and very nearly extinct. Their founder was Osiris, an ancient Egyptian vampire who discovered a path to mastering the Beast through spiritual discipline rather than feeding it; he taught his methods to others, forming a monastic order that has survived in hidden temples for millennia. Their enemies, The Ministry (who revere the founder's dark sibling, Set), have been trying to destroy the Osirians for just as long, and they've almost succeeded. In the modern nights, an Osirian is a ghost story most Kindred don't believe. Your order doesn't participate in vampire politics, doesn't seek alliances, and *doesn't Embrace* — every member is a vampire who already belonged to another Clan and chose to walk away from it. You keep what your Blood gave you (your Disciplines, your reflexes, the general shape of your curse's aftermath), but you shed the identity. You are no longer Nosferatu, Brujah, or Ventrue. You are Osirian, and the work is never finished.\n\nThe cost is the tightrope. Your power comes from your Humanity, and Humanity is fragile. Every Stain threatens to cut you off from the Discipline that defines you. And the Beast you've been starving through decades of meditation and denial? Yeah, it hasn't gone anywhere. It's waiting and lurking, coiled in the dark, hungrier and angrier than any other vampire's Beast because you've been refusing to feed it. When an Osirian Frenzies, it's a truly horrific eruption. Other Kindred lose control for a few minutes. You lose control like a dam breaking in a spring monsoon. The higher you climb, the further you can fall.",
+      "disciplines": "You start with exclusive access to [**Bardo**](../disciplines/bardo.md). Choose a former [Clan](creating-your-character.md#discipline-overview) and select 1 Discipline from that Clan's pool of 3.\n\nBardo does not follow normal Discipline access rules. Instead of requiring Blood Potency, each Bardo Power requires a **minimum amount of Humanity** to learn and use. If your Humanity drops below a Power's threshold, you lose access to it until your Humanity is restored.\n\n- Level 1 requires 5+ Humanity\n- Level 2 requires 6+\n- Level 3 requires 7+\n- Level 4 requires 8+\n- Level 5 requires 9+",
+      "baneName": "Denied Beast",
+      "baneDescription": "You have spent your unlife suppressing the Beast through ascetic discipline, and it has not forgiven you.\n\n**When you Frenzy**, the starved Beast erupts with devastating force. After any Frenzy, take an Ongoing penalty to **Stay Chill** rolls equal to half your missing Humanity, rounded up (minimum 1) for the remainder of the night. Your missing Humanity is 10 minus your current Humanity. (At Humanity 8, that's −1. At Humanity 5, that's −3.)\n\nYou cannot Embrace anyone. Any attempt to turn a mortal simply kills them; the blood of Osiris cannot create new unlife, only sustain the old.",
+      "compulsionName": "Intervention",
+      "compulsionDescription": "**When you witness cruelty, corruption, or someone succumbing to their base urges**, you feel compelled to intercede and guide them toward restraint peacefully, regardless of personal danger or tactical wisdom.\n\nUntil you meaningfully de-escalate the situation, convince someone to step back from the edge, or the scene ends, take an Ongoing penalty equal to half your missing Humanity, rounded up (minimum 1) to all rolls not dedicated to peaceful intervention. Violence to resolve a Compulsion of *Intervention* is a contradiction; if you resort to it, mark 1 Stain.",
+      "perks": [
+        {
+          "name": "Pillar of Osiris",
+          "description": "You can designate a fixed location (room, shrine, garden, cave, etc.) as your Pillar through one full night of uninterrupted meditation, creating a pleasant and persistent magical haze in the air that soothes everyone within it. While at your Pillar, you have +1 Ongoing to all Bardo Powers and **Stay Chill** rolls. **When you meditate at your Pillar for at least one full scene**, remove 1 Stain. You must return to your Pillar at least once per week; for each week you're away, take a cumulative −1 Ongoing to **Stay Chill** as the Beast inside you grows restless. Returning to your Pillar and meditating for one scene resets this penalty."
+        },
+        {
+          "name": "Gift of Apis",
+          "description": "Animal blood nourishes you as effectively as human blood, regardless of your Blood Potency. **When you *Feed* from animals**, ignore all BP-related feeding restrictions. A rat, bird, coyote, deer, or any other animal is as filling as a full-grown human and somehow tastes just as good (though they never have Blood Resonance). You may select the Farmer Predator Type at any Blood Potency, overriding the normal BP 3+ restriction."
+        }
+      ],
+      "xpTriggers": [
+        "**Resist your Beast or maintain your self-discipline** in a situation where giving in would have been easier and more effective",
+        "**Guide somebody toward restraint or redemption**, convincing them to choose a less destructive path",
+        "**Sacrifice power, safety, or a meaningful advantage** to protect your Humanity or uphold your Convictions"
+      ],
+      "xpExtra": null,
+      "archetypes": [
+        {
+          "name": "Ascetic",
+          "tagline": "The mind can only be at peace when the body is too.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +2 | Demeanor +1 | Wits +1"
+        },
+        {
+          "name": "Guardian",
+          "tagline": "You didn't swear off violence. You swore to use it only when nothing else will do.",
+          "stats": "Blood +2 | Shadow +0 | Resolve +1 | Demeanor −1 | Wits +1"
+        },
+        {
+          "name": "Shepherd",
+          "tagline": "You found the path. Now you help others find it too, one lost soul at a time.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +2 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    },
+    {
+      "name": "Thin-Blood",
+      "category": "clanless",
+      "tagline": "Too dead to go home. Too alive to be taken seriously.",
+      "whatAreYou": "![Thin-Blood symbol](../assets/images/vtm/bloodlines/thin-blood.webp){ .bloodline-symbol }\n\nYou exist in the gap between mortal and Kindred, and neither side wants to claim you. Thin-Bloods are created when a vampire whose blood is already stretched dangerously thin attempts the Embrace; sometimes on purpose, sometimes by accident, almost always against the advice of every Elder ever. The result is something that barely qualifies as a vampire. You have the Hunger, yes, and the fangs, but the curse didn't fully take. Your heart *almost* beats. Your skin *almost* feels warm. You can eat human food, walk in daylight, and pass as mortal without even trying. To a lot of Kindred, that makes you an abomination.\n\nWhat you lack in raw vampiric power, you make up for in ways nobody expected. Your people pioneered their own form of blood magic called Thin-Blood Alchemy; a filthy improvisational craft that mixes Vitae with emotions and raw ingredients to produce effects that rival more traditional Disciplines. You can even borrow other vampires' abilities temporarily by feeding from them, your diluted blood briefly taking on the flavor and power of theirs. The Beast barely whispers in your ear, which means you almost never devolve into a rageful menace. You're adaptable, inventive, and constantly underestimated.\n\nThe cost is everything else. You are the lowest rung of recognized Kindred society, beneath even the Caitiff. Elders view you as a sign of the end times. The fangs in charge have issued edicts to have Thin-Bloods branded with a crescent moon so they can be identified on sight. You can't reliably create Ghouls or Embrace others, which means building a power base the traditional way is nearly impossible. You survive on cleverness, solidarity with other Duskborn — the name your \"Clan\" chose for itself — and the fact that the monsters lording over you are usually too busy fighting each other to pay much attention to the dirt beneath their heels.",
+      "disciplines": "You have exclusive access to [**Thin-Blood Alchemy**](../disciplines/thin-blood-alchemy.md), and you can temporarily access level 1 of any other Discipline by drinking the right Vitae.",
+      "baneName": "Diluted & Disliked",
+      "baneDescription": "**You are barely a vampire.** Your Blood Potency is 0 and cannot increase through normal advancement — Diablerie is the one exception. You take Aggravated Harm from bladed weapons, bullets, and other sources that would only inflict Superficial Harm on full Kindred; your body is still mostly mortal. You cannot create Blood Bonds, and any attempt to Embrace a mortal has a high chance of simply killing them (the Storyteller decides the odds based on circumstances and must let you roll to determine the outcome).\n\nKindred society treats you as something between a nuisance and a bad omen. The Storyteller may apply a penalty of −1 to −2 Forward on social rolls with Kindred who know and care what you are, and many domains require Thin-Bloods to bear a crescent moon brand.",
+      "compulsionName": null,
+      "compulsionDescription": "You have no fixed Compulsion. You kinda just don't *get it,* man. Why is everyone so uptight?",
+      "perks": [
+        {
+          "name": "Duskborn",
+          "description": "You can walk in direct sunlight, taking only 1 Superficial Harm per scene of sustained exposure (cloud cover, heavy clothing, or thick gloopy sunscreen can reduce this further, at the Storyteller's discretion). You always count as having **Blush of Life** active at no cost. You can eat food, drink, use touchscreens without difficulty, and pass most medical examinations. You are, for almost all intents and purposes, still alive. Kinda."
+        },
+        {
+          "name": "Barely a Beast",
+          "description": "Your Beast is a whisper, not a roar. You never Frenzy from Hunger alone. At 5 Hunger, you become desperate and afraid, but you retain full control of your actions; you choose what you do and who you hurt. You have Disadvantage on all rolls except **Hunt** and **Feed** until you slake your Hunger. Certain supernatural effects such as Animalism or Presence can still provoke Frenzy normally."
+        },
+        {
+          "name": "Just a Taste",
+          "description": "**When you *Feed* from a vampire**, you temporarily gain access to your choice of one of their Disciplines and all its level 1 Powers and Perks. This borrowed Discipline lasts until you next slumber or reach 5 Hunger, whichever comes first."
+        }
+      ],
+      "xpTriggers": [
+        "**Accomplish something for the Coterie during daylight hours** that would have been impossible for a full Kindred",
+        "**Survive a situation** where your physical vulnerability nearly got you killed",
+        "**Use your mortal connections or appearance** to bypass an obstacle that stumped the rest of your Coterie"
+      ],
+      "xpExtra": "### If You Commit Diablerie\n\nShould the fiction lead to this ultimate transgression, the standard [Diablerie](../the-vampiric-condition/hunger.md#diablerie) rules apply with one critical addition: you absorb not just the victim's power, but their lineage. You become a full Kindred of the victim's Clan.\n\nRetire this Playbook. Inherit the victim's Clan Playbook and rebuild your character in it, replacing your Bane, Compulsion, Clan Perks, and Discipline options with theirs. Transfer all your Convictions, Touchstones, and any Debts. Your basic stat array remains the standard spread, but you may reassign them if you wish. All XP you earned as a Thin-Blood carries over and may also be reassigned. You lose access to Thin-Blood Alchemy permanently.\n\nYou are no longer a being straddling the worlds of life and death. You are Kindred, with all the power and terror that entails. Congratudolences!\n\n!!! warning \"Important Note\"\n\n    *There are whispers among the Duskborn of another way out: that destroying your sire severs the curse entirely and returns you to mortality. Whether this is true, and what \"mortality\" even means for someone who has tasted the Blood, is for your Storyteller to decide. Hmm...*",
+      "archetypes": [
+        {
+          "name": "Alchemist",
+          "tagline": "You can't do what they do, so you invented something they can't fathom.",
+          "stats": "Blood −1 | Shadow +0 | Resolve +1 | Demeanor +1 | Wits +2"
+        },
+        {
+          "name": "Daywalker",
+          "tagline": "The sun doesn't scare you. It's the things that come out at night that do.",
+          "stats": "Blood +1 | Shadow −1 | Resolve +2 | Demeanor +1 | Wits +0"
+        },
+        {
+          "name": "Chameleon",
+          "tagline": "You always taste like whatever you last consumed. Nobody's quite sure what you really are, including you.",
+          "stats": "Blood +0 | Shadow +2 | Resolve −1 | Demeanor +1 | Wits +1"
+        }
+      ],
+      "customStatSpread": "+2 | +1 | +1 | +0 | −1"
+    }
+  ]
+}

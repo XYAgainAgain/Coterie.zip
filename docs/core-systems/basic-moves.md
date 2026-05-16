@@ -50,7 +50,7 @@ Any time the fictional trigger occurs (the bold sentence at the beginning of a M
 
 ### Discern Vibes
 
-**When you examine a person or social situation**, roll +Wits or +Demeanor (whichever is higher).
+**When you examine a person or social situation**, roll +Wits or +Demeanor (use higher).
 
 **On a 10+,** Hold 3. **On a 7–9,** Hold 1. While in that scene, you can spend Hold 1-for-1 to ask the Storyteller these questions:
 
@@ -70,7 +70,7 @@ Any time the fictional trigger occurs (the bold sentence at the beginning of a M
 
 ### Catch the Scent
 
-**When you investigate a scene, track a target, or consult your knowledge or contacts for information**, roll +Wits or +Blood (your choice).
+**When you investigate a scene, track a target, or consult your knowledge or contacts for information**, roll +Wits or +Blood (use higher).
 
 **On a 10+,** Hold 3. **On a 7–9,** Hold 1. While in that scene, you can spend Hold 1-for-1 to ask the Storyteller these questions:
 
@@ -96,13 +96,13 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 **When you assist or interfere with another character's action**, roll with the same stat as your intended target after they roll but before the action is narrated or resolved.
 
-**On a 10+,** you give them +1 or −2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP.
+**On a 10+,** you give them +1 or −2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP (maximum of 1 per night per ally).
 
 **On a 7–9,** you give them +1 or −1 to their roll (your choice), but you put yourself at risk of danger or exposure.
 
 **On a 6-,** you get in the way and the intended bonus/penalty is inverted. The Storyteller takes an immediate Move against you.
 
-**Advanced: On a 12+,** you give them +2 or −2 to their roll, and both you and your ally gain 1 XP.
+**Advanced: On a 12+,** you give them +2 or −2 to their roll, and both you and your ally gain 1 XP (maximum of 1 each per night).
 
 ### Stay Chill
 
@@ -145,7 +145,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 ### Reposition
 
-**When you move quickly or break away from danger**, roll +Blood or +Shadow (whichever is higher). You move 1 Range by default.
+**When you move quickly or break away from danger**, roll +Blood or +Shadow (use higher). You move 1 Range by default.
 
 **On a 10+,** you reach your destination. Choose 2:
 

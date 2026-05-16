@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-16T04:10:38.068Z",
+  "data": {
+    "tables": [
+      {
+        "name": "Claim",
+        "rows": [
+          {
+            "score": "−3",
+            "description": "You're squatting somewhere that isn't yours and everyone knows it. Rivals are actively moving to take even that."
+          },
+          {
+            "score": "−2",
+            "description": "You have a room or a corner of a building, but it's contested. Someone else considers it theirs. They might be raccoons."
+          },
+          {
+            "score": "−1",
+            "description": "You have a place, but it's cramped, exposed, or in a location nobody else wanted. Rivals sniff around regularly."
+          },
+          {
+            "score": "+0",
+            "description": "A modest, defensible space. A house, a floor of a building, a warehouse. Unremarkable but functional."
+          },
+          {
+            "score": "+1",
+            "description": "A comfortable property with some breathing room. Neighbors and rival Kindred know it's yours."
+          },
+          {
+            "score": "+2",
+            "description": "A significant chunk of real estate; a block, a building complex, a stretch of waterfront. Other Kindred respect the boundary."
+          },
+          {
+            "score": "+3",
+            "description": "A whole neighborhood or borough answers to your Coterie. You are a landmark on the local Kindred political map."
+          }
+        ]
+      },
+      {
+        "name": "Currency",
+        "rows": [
+          {
+            "score": "−3",
+            "description": "You owe dangerous people real money. The kind of debt that gets kneecaps rearranged, mortal or otherwise."
+          },
+          {
+            "score": "−2",
+            "description": "Broke and in the hole. Can't cover emergencies. Pawning or stealing things to keep the lights on. Off is fine too, actually."
+          },
+          {
+            "score": "−1",
+            "description": "Scraping by. You can eat (figuratively) but a single unexpected expense is a crisis. Sound familiar?"
+          },
+          {
+            "score": "+0",
+            "description": "Stable. Bills get paid, gear gets maintained, nobody's starving. No luxuries. Not even overnight shipping."
+          },
+          {
+            "score": "+1",
+            "description": "Comfortable. You can bribe a bouncer, replace a burned safehouse, or buy a decent used car without sweating."
+          },
+          {
+            "score": "+2",
+            "description": "Flush. Lawyers on retainer, slush funds, a vehicle or two, equipment upgrades when you need them."
+          },
+          {
+            "score": "+3",
+            "description": "Loaded. Shell companies, investment portfolios, properties plural. Money is a tool you wield, not a thing you worry about."
+          }
+        ]
+      },
+      {
+        "name": "Clout",
+        "rows": [
+          {
+            "score": "−3",
+            "description": "You're a punchline, a cautionary tale, or actively Blood Hunted. Kindred avoid associating with you for their own safety."
+          },
+          {
+            "score": "−2",
+            "description": "Dismissed and disrespected. Other Coteries openly poach from your territory and talk over you at gatherings."
+          },
+          {
+            "score": "−1",
+            "description": "Known, but not taken seriously. You get tolerant nods at Elysium and nothing else."
+          },
+          {
+            "score": "+0",
+            "description": "You exist on the radar. Nobody goes out of their way to help or hinder you. Sometimes they say \"Hey.\""
+          },
+          {
+            "score": "+1",
+            "description": "Respected enough to get a seat at the table. Your name carries some weight in local politics."
+          },
+          {
+            "score": "+2",
+            "description": "A serious player. The Prince (or similar) knows your Coterie by name and considers you worth courting or watching."
+          },
+          {
+            "score": "+3",
+            "description": "Power brokers. Other Coteries actively seek your favor. Your endorsement or opposition shapes local Kindred politics."
+          }
+        ]
+      },
+      {
+        "name": "Charm",
+        "rows": [
+          {
+            "score": "−3",
+            "description": "Actively reviled. Mortals cross the street. Kindred assume the worst. Doors close before you even think about knocking."
+          },
+          {
+            "score": "−2",
+            "description": "Unpleasant reputation. People deal with you because they have to, not because they want to."
+          },
+          {
+            "score": "−1",
+            "description": "Offputting. First impressions go poorly. You have to work harder than most to earn basic goodwill."
+          },
+          {
+            "score": "+0",
+            "description": "Neutral. People form opinions based on direct interaction, not your reputation. You receive nods of acknowledgment sometimes."
+          },
+          {
+            "score": "+1",
+            "description": "Likable. People give you the benefit of the doubt. Strangers are inclined to help before they have a reason not to."
+          },
+          {
+            "score": "+2",
+            "description": "Magnetic. Your Coterie gets invited to things, remembered fondly, and forgiven for minor transgressions."
+          },
+          {
+            "score": "+3",
+            "description": "Beloved or fascinating. People (living and unliving) actively seek your company and make excuses for your behavior."
+          }
+        ]
+      },
+      {
+        "name": "Cohesion",
+        "rows": [
+          {
+            "score": "−3",
+            "description": "Actively fractured. Members are scheming against each other. The Coterie exists in name only; it could dissolve any night."
+          },
+          {
+            "score": "−2",
+            "description": "Deep mistrust. Members withhold information, watch their backs, and have contingency plans for betrayal."
+          },
+          {
+            "score": "−1",
+            "description": "Strained. Old grudges or unresolved Debts make cooperation feel like pulling fangs."
+          },
+          {
+            "score": "+0",
+            "description": "Functional. You work together when you have to. Nobody's planning a betrayal, but nobody's taking a bullet for you either."
+          },
+          {
+            "score": "+1",
+            "description": "Solid. You trust each other enough to split up, share resources, and have honest disagreements without everything fracturing."
+          },
+          {
+            "score": "+2",
+            "description": "Tight-knit. Shared history, inside jokes, genuine loyalty. Members make sacrifices for each other without being asked."
+          },
+          {
+            "score": "+3",
+            "description": "Unbreakable bond. You'd walk into fire for each other (metaphorically; actual fire is still pretty scary, actually). Immune to the haters but not the sun."
+          }
+        ]
+      }
+    ]
+  }
+}

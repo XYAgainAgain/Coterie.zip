@@ -1,0 +1,483 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-16T04:10:38.068Z",
+  "entries": [
+    {
+      "name": "Abductor",
+      "huntingStat": "+Shadow",
+      "discipline": "Potence",
+      "merit": "*Scouted Exit.* You always case a location before you grab anyone. **When you *Slip Away* after subduing prey**, roll with Advantage.",
+      "flaw": "*Missing Persons.* Your victims disappear, and people occasionally notice. You start with 1 Debt owed to someone who helped you cover up a botched abduction.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Alleycat",
+      "huntingStat": "+Blood",
+      "discipline": "Celerity",
+      "merit": "*I Know a Guy.* You have connections in the criminal underworld. **When you *Influence* criminals, dealers, fences, or street-level operatives**, take +1 Ongoing until your problem is resolved.",
+      "flaw": "*Catching Heat.* Your violent feeding style attracts attention. You have −1 Ongoing to **Influence** law enforcement or anyone investigating violent crimes in your hunting grounds.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Alu",
+      "huntingStat": "+Shadow",
+      "discipline": "Oblivion",
+      "merit": "*Paralytic Dread.* Your presence induces supernatural terror in the vulnerable. **When you *Feed* from a sleeping or resting target**, they cannot cry out or resist, and they remember the experience only as a vivid nightmare.",
+      "flaw": "*Night Terrors.* Your victims develop persistent sleep disorders and worsening paranoia. **If you *Feed* from the same mortal more than twice**, they become a Masquerade risk at the Storyteller's discretion.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Bagger",
+      "huntingStat": "+Shadow",
+      "discipline": "Obfuscate",
+      "merit": "*Cold Indifference.* You can easily stomach cold blood. **When you *Feed* from blood bags**, you reduce Hunger by 2 instead of 1.",
+      "flaw": "*Won't Happen Again.* Your blood procurement creates complications. You start with 1 Debt owed to someone connected to your blood source (a supplier, a hospital administrator, a fence, or similar).",
+      "humanity": null,
+      "feedingRules": "Ventrue cannot select this Predator Type."
+    },
+    {
+      "name": "Blood Leech",
+      "huntingStat": "+Shadow",
+      "discipline": "Protean",
+      "merit": "*Kindred Sense.* You can identify most other vampires on sight, even if they're using **Blush of Life**. **When you *Catch the Scent* to detect vampires or their activities**, take +1 Forward.",
+      "flaw": "*Marked & Made.* Your feeding habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time.",
+      "humanity": null,
+      "feedingRules": "You can only slake Hunger by feeding from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain."
+    },
+    {
+      "name": "Cardillac",
+      "huntingStat": "+Wits",
+      "discipline": "Presence",
+      "merit": "*Collector's Eye.* **When you *Hunt* by tracking a collector or buyer**, you automatically locate them without rolling. You always know who currently possesses your artwork. The hard part is getting inside.",
+      "flaw": "*The One That Got Away.* A former collector escaped you and suspects what you are. You start with 1 Debt owed to someone helping you manage this loose end, or you have a persistent mortal enemy who knows your face.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Catfish",
+      "huntingStat": "+Wits",
+      "discipline": "Obfuscate",
+      "merit": "*Burner Accounts.* You always have a fresh digital persona ready to deploy. **When you *Hunt* using dating apps or social platforms**, treat a roll of 6- as a 7–9.",
+      "flaw": "*Digital Breadcrumbs.* Your online activity creates a traceable pattern. You have −1 Ongoing to **Influence** anyone who investigates digital crimes or missing persons cases in your area.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Cazador",
+      "huntingStat": "+Resolve",
+      "discipline": "Potence",
+      "merit": "*Know Thine Enemy.* You've studied Hunter tactics extensively. **When you *Catch the Scent* or *Discern Vibes* to locate or assess Hunters**, take +1 Forward.",
+      "flaw": "*On the List.* A Hunter has your description and is actively looking for you. You have a persistent mortal enemy with the training and resources to be a genuine threat.",
+      "humanity": null,
+      "feedingRules": "You can only slake Hunger by **Feeding** from mortal Hunters. If you **Feed** from someone who isn't devoted to trying to slay your kind, you gain no benefit. It's just not worth it."
+    },
+    {
+      "name": "C.H.U.D.",
+      "huntingStat": "+Shadow",
+      "discipline": "Celerity",
+      "merit": "*Tunnel Rat.* You know every sewer, service tunnel, and sub-basement in your territory. **When you *Slip Away* underground**, roll with Advantage. Given enough time, you can travel between almost any two locations in the city without surfacing (Storyteller's discretion).",
+      "flaw": "*Surface Sickness.* The aboveground world feels hostile and overwhelming. You have −1 Ongoing to **Influence** mortals in well-lit or open environments.",
+      "humanity": null,
+      "feedingRules": "You can only comfortably **Feed** underground (sewers, tunnels, basements, warrens). If you try to **Hunt** or **Feed** while aboveground, you have Disadvantage on the rolls and can only ever slake a maximum of 1 Hunger this way."
+    },
+    {
+      "name": "Civic Disservant",
+      "huntingStat": "+Wits",
+      "discipline": "Auspex",
+      "merit": "*Load-Bearing Lunch.* You can spot the most critical person in any system. **When you successfully *Discern Vibes* about a workplace, business, company, or service**, you may ask the Storyteller \"Who here would cause the most disruption if they went missing?\"",
+      "flaw": "*Collateral Damage.* The disruptions you cause draw investigation. You have −1 Ongoing to **Influence** anyone looking into service failures or missing workers in your area. You fear OSHA almost as much as fire.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Cleaver",
+      "huntingStat": "+Demeanor",
+      "discipline": "Dominate",
+      "merit": "*Trusted Circle.* You maintain relationships with mortals who provide regular access to blood. **When you *Hunt* within your established circle** (family, close friends, dependents), you automatically find suitable prey without rolling.",
+      "flaw": "*Catastrophic Secret.* Your feeding method is a Masquerade breach waiting to happen. **If your family or friends discover the full truth of what you are and what you've done**, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it).",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Confessor",
+      "huntingStat": "+Resolve",
+      "discipline": "Dominate",
+      "merit": "*Secrets of the Flock.* People confess things to you they've never told anyone else (and probably never will). **When you *Hunt* through confession or pastoral counsel**, you may ask the Storyteller \"What are they most guilty about?\" or \"Which secret would destroy them?\"",
+      "flaw": "*Sacred Ground.* Your hunting ground is your sanctuary. **If your true nature is discovered by anyone in your congregation**, you will lose access to it entirely until you establish a new flock.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Consensualist",
+      "huntingStat": "+Demeanor",
+      "discipline": "Auspex",
+      "merit": "*Willing Donors.* You maintain relationships with mortals who knowingly consent to being fed upon; one or more of these must be one of your Touchstones. **When you *Feed* from a willing, consenting vessel**, choose 1 additional option from the 10+ list (even on a 7–9).",
+      "flaw": "*Ethical Spiral.* You feel wildly uncomfortable feeding from non-consenting victims. **If you *Feed* from someone who hasn't given genuine consent (except in self-defense)**, mark 2 Stains and take −1 Ongoing until your next consensual feeding due to the guilt and self-loathing. If you violate your own rule more than once in a row, the Ongoing penalty stacks.",
+      "humanity": "+1",
+      "feedingRules": null
+    },
+    {
+      "name": "Cucuy",
+      "huntingStat": "+Shadow",
+      "discipline": "Oblivion",
+      "merit": "*Tithe & Tribute.* Your community leaves regular blood offerings out of fear. **When you *Hunt* by collecting tribute**, treat a roll of 6- as a 7–9. Something is always waiting for you, and sometimes it's even pretty good.",
+      "flaw": "*Legend Maintenance.* **If you go more than a few nights without reinforcing the folklore** (leaving signs, punishing doubters, making your presence felt), the offerings dry up until your legendary status is restored.",
+      "humanity": null,
+      "feedingRules": "You must select a [Folkloric Bane](optional-extras.md#folkloric-banes) worth 2 or more XP at character creation. This Bane represents the folklore your community fears and is the reason they leave offerings in the first place. They believe that if you're appeased, they won't be harmed. Are they right?"
+    },
+    {
+      "name": "Extortionist",
+      "huntingStat": "+Demeanor",
+      "discipline": "Dominate",
+      "merit": "*Protection Racket.* You maintain a network of \"clients\" who owe you for services rendered (real or fabricated). You start with 3 Debts owed to you, distributed among your clients as you see fit.",
+      "flaw": "*Vengeful Mark.* Someone escaped your extortion scheme and either wants revenge or has gone to the authorities. You start with 1 Debt owed to someone helping you manage this problem, or you have a persistent enemy actively working against you (your choice).",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Extravagant",
+      "huntingStat": "+Demeanor",
+      "discipline": "Blood Sorcery",
+      "merit": "*Savoring the Kill.* **When you complete a full feast** (meeting your Blood Potency scene and vessel requirements), choose any Intense Blood Resonance from among your vessels and gain the associated Advantages for free.",
+      "flaw": "*Crime Scene.* Your feasts are enormous and conspicuous. Unless you have help and at least two hours to clean up, your **Feeding** always leaves unmistakable evidence. You start with 1 Debt owed to whoever cleaned up after your last one.",
+      "humanity": "−1",
+      "feedingRules": "**Feeding** always requires a minimum number of scenes equal to your Blood Potency and the same number of vessels. Every meal is a multi-course feast, just as you deserve."
+    },
+    {
+      "name": "Farmer",
+      "huntingStat": "+Blood",
+      "discipline": "Animalism",
+      "merit": "*Dastardly Doolittle.* You can call nearby animals to you. **When you *Hunt* for animal prey in an area where animals are present**, treat a roll of 6- as a 7–9.",
+      "flaw": "*Scorned Diet.* Other vampires view your nutritionary habits with pity and contempt. **When you *Influence* vampires who know about and judge your diet**, take −1 Ongoing until you exit the scene.",
+      "humanity": "+1",
+      "feedingRules": "You can only **Feed** from animals. If you **Feed** from a human, mark 2 Stains. Ventrue and vampires with Blood Potency 3+ (Ancillae and Elders) cannot select this Predator Type."
+    },
+    {
+      "name": "Gehenna Prepper",
+      "huntingStat": "+Resolve",
+      "discipline": "Fortitude",
+      "merit": "*Second Amendment.* You have an untraceable firearm \"just in case\". No serial numbers, no paper trail, and plenty of ammunition. Choose any gun you like that deals 3-Harm or less, and give it the Concealed and Reliable tags.",
+      "flaw": "*Bunker Mentality.* Your paranoia is palpable and off-putting. You have −1 Ongoing to **Influence** anyone you've known for less than a month. Trust is earned, never given.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Graverobber",
+      "huntingStat": "+Resolve",
+      "discipline": "Fortitude",
+      "merit": "*Iron Gullet.* **When you *Feed* from fresh human corpses as if they were blood bags** (dead less than 48 hours), they reduce Hunger by 2 instead of 1. You suffer no ill effects or Aggravated Harm from the consumption of diseased, drugged, or tainted blood.",
+      "flaw": "*Unsettling Presence.* Your intimate association with death makes mortals instinctively uneasy. **When you *Influence* healthy, happy humans who don't know you well**, take −1 Ongoing.",
+      "humanity": null,
+      "feedingRules": "**When you *Feed* from someone who isn't Melancholic, sad, grieving, dying, or dead**, reduce Hunger by a maximum of 1."
+    },
+    {
+      "name": "Grim Reaper",
+      "huntingStat": "+Wits",
+      "discipline": "Oblivion",
+      "merit": "*Grave Sense.* You can identify mortals approaching death. **When you *Hunt* or *Catch the Scent* to locate dying prey**, roll with Advantage.",
+      "flaw": "*Under Scrutiny.* Your pattern of appearing near deaths draws attention. **When you *Influence* medical staff, hospice workers, or investigators in your hunting grounds**, take −1 Ongoing.",
+      "humanity": "+1",
+      "feedingRules": "You can only slake Hunger by **Feeding** from those who are dying, terminally ill, or critically injured. **If you *Feed* from a healthy person**, mark 2 Stains."
+    },
+    {
+      "name": "Harvester",
+      "huntingStat": "+Resolve",
+      "discipline": "Animalism",
+      "merit": "*Untraceable.* Your feeding method creates no victims, no witnesses, and no bite marks. **When you *Hunt***, you never risk a Masquerade breach from the act of **Feeding** itself.",
+      "flaw": "*Stomach-Turning.* Any Kindred or mortal unfamiliar with you who witnesses your feeding method is (understandably) revolted. You have −3 Ongoing to **Influence** anyone who has watched you eat until at least a full week has passed.",
+      "humanity": "−1",
+      "feedingRules": "You can only slake Hunger by consuming uncomfortably large quantities of bugs swollen with partially-digested blood. This is horrific to watch, and anybody unused to your **Feeding** habits who witnesses it will want to leave at once, even Elders who thought they'd seen it all."
+    },
+    {
+      "name": "Kerubut",
+      "huntingStat": "+Resolve",
+      "discipline": "Fortitude",
+      "merit": "*Cadaveric Snap.* Your body reacts even in deathly sleep. **When you *Hunt* via your cadaveric spasm**, no roll is needed; if an animal wanders close enough, you catch it. Instead of **Feeding**, you can roll 1d6 every time you slumber and decrease your Hunger by half that amount (rounded down).",
+      "flaw": "*Stench of Death.* You permanently exude a faint odor of decomposition. You have −2 Ongoing to **Influence** mortals in close proximity unless you've taken extensive measures to mask the smell.",
+      "humanity": null,
+      "feedingRules": "When you **Hunt**, you must remain completely motionless. Your Coterie or other allies can help drive prey towards you, but until you **Feed** or give up, you just stay right where you are, stinking up the place."
+    },
+    {
+      "name": "Lurking Lure",
+      "huntingStat": "+Shadow",
+      "discipline": "Protean",
+      "merit": "*Come Closer.* Your bait is supernaturally convincing. **When you *Hunt* by luring prey into a dark or isolated location**, treat a roll of 6- as a 7–9.",
+      "flaw": "*Creature of Darkness.* You struggle in the light. You have −1 Ongoing to **Hunt** and **Feed** in well-lit or crowded areas where your methods simply don't work.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Mean Girl",
+      "huntingStat": "+Demeanor",
+      "discipline": "Presence",
+      "merit": "*Right Where It Hurts.* You instinctively know how to break someone down. **When you *Influence* someone by insulting, belittling, or humiliating them**, take +1 Forward.",
+      "flaw": "*Taste for Tears.* You struggle to feed on the emotionally healthy. **When you *Feed* from someone who isn't already Choleric, Melancholic, upset, frightened, humiliated, or grieving**, take −1 Forward.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Mephistopheles",
+      "huntingStat": "+Wits",
+      "discipline": "Blood Sorcery",
+      "merit": "*Devil's Due.* Your pacts hold weight. You start with 2 Debts owed to you by mortals or Kindred who have entered into agreements with you. One of these may be a Blood Bond, if your Storyteller agrees and it makes sense.",
+      "flaw": "*Breach of Contract.* A former client broke your pact and escaped the consequences. You have a persistent enemy who knows your methods and has warned others about making deals with you.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Montero",
+      "huntingStat": "None",
+      "discipline": "Dominate",
+      "merit": "*Jolly Cooperation.* **When someone else successfully uses *Hunt* to find prey for you**, you have +1 Forward when you **Feed** from that vessel. When the Coterie uses **Sate Your Hunger**, treat your own roll of 6- as a 7–9, or a 7–9 as a 10+.",
+      "flaw": "*Dependent.* You cannot use the **Hunt** Move yourself at all. You must rely on others (Coterie members, Touchstones, subordinates, contacts) to locate and deliver prey to you.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Mutualist",
+      "huntingStat": "+Blood",
+      "discipline": "Animalism",
+      "merit": "*Fetch!* Your trained or Ghouled animal is an excellent hunting partner. **When you *Hunt* with your animal's assistance**, roll with Advantage.",
+      "flaw": "*Codependency.* You've grown reliant on your partner. **When you *Hunt* without your animal companion**, take −2 Forward.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Opportunistic Host",
+      "huntingStat": "+Demeanor",
+      "discipline": "Dominate",
+      "merit": "*Guest List.* You control who enters and who doesn't. **When you *Hunt* at an event you organized or are hosting**, treat a roll of 6- as a 7–9. Additionally, if your Coterie is in attendance, their connection to the host gives them +1 Ongoing to **Influence** any first-time guests of yours.",
+      "flaw": "*High Maintenance.* Your events require resources and connections to pull off. You start with 3 Debts owed to suppliers, venue owners, or associates who help you maintain your rigorous social calendar. At least one of them is doggedly pursuing you for repayment at this very moment.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Orbiter",
+      "huntingStat": "+Shadow",
+      "discipline": "Obfuscate",
+      "merit": "*Devoted Watcher.* You know your obsession's routines almost better than they do. **When you *Hunt* or *Catch the Scent* in the vicinity of your obsession target**, roll with Advantage.",
+      "flaw": "*Fixation.* Your obsession controls you more than you control it. **If your obsession target dies, moves away, or becomes permanently inaccessible**, mark 2 Stains and take −1 Ongoing to all rolls until you designate a new target (requires a number of observation-only nights equal to your Blood Potency, minimum 1).",
+      "humanity": null,
+      "feedingRules": "You can only reach 0 Hunger by **Feeding** from your obsession target. Nothing and no one else fully satisfies your Beast."
+    },
+    {
+      "name": "Organovore",
+      "huntingStat": "+Blood",
+      "discipline": "Potence",
+      "merit": "*2-for-1 Special.* **When you successfully subdue fresh prey and bring them to your location of choice to *Feed***, one other vampire (usually a Coterie member) can drink the runoff blood and reduce their Hunger by 2 without rolling or receiving extra benefits.",
+      "flaw": "*Monstrous Appetite.* Your mealtime rituals require privacy, time, and tools. When you **Feed**, you always leave unmistakable evidence unless you have at least an hour and a secure location to clean up. Additionally, when you interact with other vampires who know of your diet but don't know you personally, they find you off-putting; you take −1 Ongoing to **Influence** them until relations improve.",
+      "humanity": null,
+      "feedingRules": "You can only reduce Hunger by consuming human flesh and organs; blood alone is insufficient. Unfortunately, this requires your prey to be dead or totally incapacitated in all cases, and you must eat multiple pounds (often several organs) each time you **Feed**. If another vampire has fed from your prey in the last 24 hours, you only reduce your Hunger by 1 no matter how much you eat."
+    },
+    {
+      "name": "Osiris",
+      "huntingStat": "+Demeanor",
+      "discipline": "Presence",
+      "merit": "*Adoring Fans.* You have a dedicated following of excitable, devoted mortals. **When you *Hunt* among your established herd**, treat a roll of 6- as a 7–9, or a 7–9 as a 10+.",
+      "flaw": "*Public Figure.* Your fame makes you recognizable and creates complications. **When you attempt to *Slip Away* or operate unnoticed in public spaces**, take −1 Forward. Additionally, your fans may spread rumors or become obsessive problems at the Storyteller's discretion.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Party Crasher",
+      "huntingStat": "+Demeanor",
+      "discipline": "Dominate",
+      "merit": "*Plus One.* You have a supernatural talent for getting into places uninvited. **When you *Slip Away* into or out of a social gathering you weren't invited to**, roll with Advantage. If you bring an ally, they also get this Advantage as long as you both make an effort to meet the dress code.",
+      "flaw": "*Usual Suspect.* You're becoming recognizable at events where things go horribly, TikTok-ably wrong. You have −1 Ongoing to **Influence** event security, bouncers, or anyone responsible for guest management in your city. You did this to yourself.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Patron of the Arts",
+      "huntingStat": "+Wits",
+      "discipline": "Presence",
+      "merit": "*Starving Artists.* Your herd relies on you for their livelihoods. **When you *Hunt* among artists or creatives you patronize**, you automatically find a willing (if reluctant) meal without rolling.",
+      "flaw": "*Aristocratic Rivalry.* Another Kindred is courting your artists. You have a persistent Kindred enemy who is actively poaching your herd and, unfortunately, is richer/stronger than you. For now.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Piscator",
+      "huntingStat": "+Shadow",
+      "discipline": "Oblivion",
+      "merit": "*Abyssal Sustenance.* You draw nourishment from darkness itself. **When you successfully *Hunt* while completely concealed in deep shadow**, you may slake 1 Hunger before you even **Feed**.",
+      "flaw": "*Just A Sec!* Your methods demand preparation and focus that your allies don't usually share. **When you and your Coterie *Sate Your Hunger***, take −1 Forward.",
+      "humanity": null,
+      "feedingRules": "Whenever possible, you must perform your rites for 1 full scene before **Feeding**. If you **Feed** without this preparation, you can never slake more than 1 Hunger regardless of the roll."
+    },
+    {
+      "name": "Poacher",
+      "huntingStat": "+Shadow",
+      "discipline": "Celerity",
+      "merit": "*Just a Wee B&E.* You've gotten very good at being where you shouldn't be. **When you *Hunt* in another Kindred's territory**, take +1 Forward.",
+      "flaw": "*Known Trespasser.* Your reputation (and scent) precedes you. You have −2 Ongoing to **Influence** any Kindred who manages or controls a Domain you've previously poached in.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Pursuer",
+      "huntingStat": "+Wits",
+      "discipline": "Auspex",
+      "merit": "*Unnatural Selection.* **When you *Hunt* carefully**, you must spend extra time (at least one scene) observing potential prey. When you do, ask the Storyteller one question: \"Are they dangerous?\", \"Will anyone miss them?\", or \"Are they being watched by anyone else?\"",
+      "flaw": "*Mega-Methodical.* You struggle to feed impulsively. **When you *Hunt* or *Sate Your Hunger* without having observed your prey for at least 1 full scene beforehand**, take −1 Forward.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Rat in the Walls",
+      "huntingStat": "+Shadow",
+      "discipline": "Obfuscate",
+      "merit": "*Squatter's Rights.* You know every crack, hole, creaky bit, and blind spot of your current nest. **When you *Hunt* or *Feed* inside a structure you've been nesting in for at least a week**, roll with Advantage.",
+      "flaw": "*Parasitic Bond.* You become attached to your nest and its occupants. **If you are forced to abandon your current nesting site**, mark 1 Stain and take −1 Ongoing to **Hunt** and **Feed** until you've established a new nest (at least one week in a new location).",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Rival",
+      "huntingStat": "+Blood",
+      "discipline": "Presence",
+      "merit": "*Competitive Edge.* The thrill of competition sharpens your instincts. **When you *Hunt* in direct competition with your rival**, take +2 Forward. If you feed before they do, slake an extra 1 Hunger. GG!",
+      "flaw": "*Sore Loser.* Losing stings more than it should, though you might never admit it. **If your rival *Feeds* from your co-target before you do**, take −1 Ongoing to **Feed** until your next successful **Hunt**.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Roadside Killer",
+      "huntingStat": "+Shadow",
+      "discipline": "Protean",
+      "merit": "*Long Haul.* You maintain a reliable vehicle and know every back road, rest stop, and dead zone within a night's drive. **When you *Hunt* along roads, highways, or rest areas**, roll with Advantage. You somehow always have enough money for gas.",
+      "flaw": "*Mile Markers.* Your feeding method creates a geographic trail of disappearances. You start with 1 Debt owed to someone who's helped you cover your tracks along your route; a corrupt cop, a fellow Kindred with a cleanup crew, or a mortal who saw too much and was paid off.",
+      "humanity": "−1",
+      "feedingRules": null
+    },
+    {
+      "name": "Romanticist",
+      "huntingStat": "+Demeanor",
+      "discipline": "Auspex",
+      "merit": "*Pillow Talk.* Your genuine emotional connection makes your victims more forthcoming. **When you *Discern Vibes* about someone you're romantically pursuing**, take +1 Forward and +1 extra Hold on a success.",
+      "flaw": "*Bleeding Heart.* You can't help getting attached. **If a mortal you've been romantically *Feeding* from is harmed, endangered, or killed** (by you or anyone else), mark 1 Stain and gain 1 Hunger.",
+      "humanity": null,
+      "feedingRules": "You gain no sustenance from animals, blood bags, or Blood Dolls. **Feeding** from anyone you aren't romantically pursuing can never slake more than 1 Hunger. Ugh, it's *so* dull."
+    },
+    {
+      "name": "Sacred Harlot",
+      "huntingStat": "+Demeanor",
+      "discipline": "Presence",
+      "merit": "*Crisis of Faith.* The pious are especially vulnerable to your allegedly god-fearing charms. **When you *Influence* or *Hunt* someone who is devoutly religious**, take +1 Forward.",
+      "flaw": "*Playing with Holy Fire.* The deeply faithful can be dangerously unpredictable when challenged. You start with 1 Debt owed to a religious figure who suspects what you are, or you have a number of persistent enemies among the clergy equal to your Blood Potency (minimum 1).",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Sandman",
+      "huntingStat": "+Shadow",
+      "discipline": "Obfuscate",
+      "merit": "*Bring Me a Dream.* **When you *Slip Away* to approach sleeping prey with intent to *Hunt* or *Feed* and when leaving the area afterwards**, roll with Advantage.",
+      "flaw": "*Non-Confrontational.* **When you *Feed* from someone who is awake and/or aware of you**, take −1 Forward.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Scene Queen",
+      "huntingStat": "+Demeanor",
+      "discipline": "Presence",
+      "merit": "*Hot Tea.* You know everyone and everything in your scene. **When you successfully *Discern Vibes* or *Catch the Scent* within your subculture**, you gain 1 extra Hold.",
+      "flaw": "*Tied to the Scene.* Your feeding pattern is dependent on your subculture. **When you *Hunt* outside your established scene**, take −1 Forward.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Sin-Eater",
+      "huntingStat": "+Blood",
+      "discipline": "Blood Sorcery",
+      "merit": "*Moral Compass.* You can sense the weight of someone's sins. **When you *Catch the Scent* or *Discern Vibes* to read a mortal's character**, you automatically know whether they've committed a serious crime or act of cruelty within the last month.",
+      "flaw": "*Sensitive Stomach.* You struggle to keep down the blood of the innocent. **When you *Feed* from someone who is genuinely virtuous or has done no harm**, mark 1 Stain and roll +Resolve. **On a 6-,** you vomit their blood back up and regain any slaked Hunger.",
+      "humanity": "+1",
+      "feedingRules": null
+    },
+    {
+      "name": "Siren",
+      "huntingStat": "+Demeanor",
+      "discipline": "Presence",
+      "merit": "*Touch-Starving.* **When you *Feed* during or immediately after sex or intimate physical contact**, you can choose to also heal 1 additional Superficial Harm. People you **Feed** from experience your bite as intensely pleasurable, much more so than the average vampire's bite.",
+      "flaw": "*Tangled Sheets & Hearts.* Your feeding creates complicated emotional bonds, even unintentionally. **Each time you *Feed* from the same person more than once**, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Spawn Farmer",
+      "huntingStat": "+Resolve",
+      "discipline": "Animalism",
+      "merit": "*Self-Sustaining.* Your pool provides a reliable food source that nobody else seems to want to snack from. **When you *Hunt* by harvesting from your spawning pool**, treat a roll of 6- as a 7–9. The pool always has something ready for you.",
+      "flaw": "*Feed Me, Seymour.* Your pool demands constant attention. **If you go more than 3 nights without tending it**, one of your creatures escapes, dies, or mutates further, and the pool's output decreases until you restore it (Storyteller's discretion).",
+      "humanity": "−1",
+      "feedingRules": "You can only slake Hunger by consuming creatures from your spawning pool. **Feeding** from anything else provides no sustenance, and tastes awful to your, um, *refined palate*."
+    },
+    {
+      "name": "Suliformes",
+      "huntingStat": "+Blood",
+      "discipline": "Animalism",
+      "merit": "*Plausible Deniability.* Your animals do the dirty work. **When you *Hunt* by sending your animals out to feed**, you never need to be present at the scene and your prey never sees your face.",
+      "flaw": "*Delayed Delivery.* Your feeding method takes *ages*. It takes at least six hours for your animals to return with enough blood to slake 1 Hunger, and you can never slake more than 2 Hunger per night this way.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Teardown",
+      "huntingStat": "+Wits",
+      "discipline": "Presence",
+      "merit": "*Power Dynamics.* You know what makes powerful people tick. **When you *Discern Vibes* about someone in a position of authority or influence**, you may ask the Storyteller \"What is the foundation of their confidence?\" or \"What would humiliate them most?\"",
+      "flaw": "*Punching Up.* You can't be bothered with the meek. **When you *Hunt* or *Feed* from someone who is humble, powerless, or already broken**, take −1 Forward and slake 1 less Hunger than usual.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Tithe Collector",
+      "huntingStat": "+Demeanor",
+      "discipline": "Dominate",
+      "merit": "*Regular Deliveries.* Other Kindred supply you with vessels as tribute. **When you *Hunt* from your established position of authority**, treat a roll of 6- as a 7–9; someone always manages to scrounge up a meal for you, even if it's not your first choice.",
+      "flaw": "*Resented Authority.* Your arrangement breeds quiet resentment. You start with 1 Debt owed to a Kindred or faction who delivers your tribute but deeply resents the obligation. They will look for any opportunity to renegotiate the terms or get you killed.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Tourist Hunter",
+      "huntingStat": "+Wits",
+      "discipline": "Obfuscate",
+      "merit": "*New in Town.* You can identify outsiders, travelers, and newcomers in your territory without rolling; they stand out to you like a wrong note in a familiar song. **When you *Hunt* within your established territory**, you always know whether viable transient prey is present before committing to the effort.",
+      "flaw": "*Invisible Locals.* Your predatory instincts are calibrated for outsiders. You have −1 Ongoing to **Hunt** anyone who lives in your territory; they just don't register as viable prey.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Trapdoor",
+      "huntingStat": "+Shadow",
+      "discipline": "Obfuscate",
+      "merit": "*I Don't Bite.* **When you *Hunt* by luring prey to your established location**, you can ask the Storyteller \"What would make them feel safest here?\" or \"How can I get them to trust me?\" before you roll. If you incorporate the answer, take +1 Ongoing until you've fed.",
+      "flaw": "*Homebody.* You struggle to tackle prey effectively away from your established location. **When you *Hunt* outside your chosen spot**, take −1 Forward.",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Vandewalt",
+      "huntingStat": "+Demeanor",
+      "discipline": "Dominate",
+      "merit": "*Scathing Review.* Your critical eye is devastatingly accurate. **When you *Influence* someone or *Discern Vibes* about them by critiquing their work, talent, or creative output**, take +1 Forward.",
+      "flaw": "*Insufferable Snob.* Your opinions are well-known and widely unpopular. You have −1 Ongoing to **Influence** anyone in the local arts community who disagrees with your assessments (which is most of them, through no fault of your own whatsoever).",
+      "humanity": null,
+      "feedingRules": null
+    },
+    {
+      "name": "Welch",
+      "huntingStat": "None",
+      "discipline": "Blood Sorcery",
+      "merit": "*One More Favor.* You have an uncanny ability to talk people into helping you. **When you *Influence* a Kindred to share their meal or provide you with a vessel**, take +1 Forward.",
+      "flaw": "*Bad Credit.* Your reputation for unpaid debts precedes you. You start with 2 Debts owed to Kindred who have helped you before and are growing impatient. You have −1 Ongoing to **Influence** any Kindred who has been burned by you in the past.",
+      "humanity": "+1",
+      "feedingRules": "You cannot use the **Hunt** Move yourself at all. You must rely on others (Coterie members, Touchstones, Ghouls, subordinates, contacts) to locate and deliver prey to you."
+    }
+  ]
+}

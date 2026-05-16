@@ -1,4 +1,4 @@
-# Build Output
+ # Build Output
 site/
 
 # Development Files; dev undotted so I can see it in Obsidian
@@ -32,3 +32,4 @@ Thumbs.db
 vamp/node_modules/
 vamp/dist/
 playtest/
+minions/
