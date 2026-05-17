@@ -10,6 +10,12 @@ export const editMode = signal(false);
 const dataReady = signal(false);
 const dataError = signal<string | null>(null);
 
+const redirectPath = sessionStorage.getItem('vamp-redirect');
+if (redirectPath) {
+  sessionStorage.removeItem('vamp-redirect');
+  history.replaceState(null, '', redirectPath);
+}
+
 loadAllGameData()
   .then(data => {
     gameData.value = data;

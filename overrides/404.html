@@ -1,0 +1,10 @@
+{% extends "main.html" %}
+{% block content %}
+  <script>
+    if (location.pathname.startsWith('/vamp/')) {
+      sessionStorage.setItem('vamp-redirect', location.pathname + location.search + location.hash);
+      location.replace('/vamp/');
+    }
+  </script>
+  <h1>404 - Not found</h1>
+{% endblock %}
