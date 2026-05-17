@@ -46,6 +46,7 @@ jobs:
       - run: zensical build --clean
       - run: npm run build --prefix vamp
       - run: cp -r vamp/dist site/vamp
+      - run: cp site/vamp/index.html site/vamp/404.html
 
       - uses: actions/upload-pages-artifact@v5
         with:
