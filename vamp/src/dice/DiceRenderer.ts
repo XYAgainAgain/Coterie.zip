@@ -144,13 +144,13 @@ export class DiceRenderer {
     });
   }
 
-  /* Place the spinner at the bottom-left of the camera frustum, inset by 1.5 units */
   private positionSpinnerInCorner(): void {
     if (!this.spinnerCube) return;
     const vFov = this.camera.fov * Math.PI / 180;
     const halfH = Math.tan(vFov / 2) * this.camera.position.y;
     const halfW = halfH * this.camera.aspect;
-    this.spinnerCube.position.set(-halfW + 1.5, 0.5, halfH - 1.5);
+    this.spinnerCube.position.set(-halfW + 1.8, 0.3, -halfH + 0.45);
+    this.spinnerCube.scale.setScalar(0.4);
   }
 
   updateSpinner(elapsed: number): void {

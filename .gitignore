@@ -32,4 +32,7 @@ Thumbs.db
 vamp/node_modules/
 vamp/dist/
 playtest/
-minions/
+minions/*
+!minions/vamp-swarm/
+minions/vamp-swarm/node_modules/
+minions/data-viewer.html

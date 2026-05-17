@@ -1,19 +1,29 @@
 import { useSignal } from '@preact/signals';
 import { SectionBox } from '../components/SectionBox';
+import { RightColumn } from '../components/RightColumn';
+import { RightPanelContent } from '../components/RightPanelTabs';
+import { DisciplinesTab } from '../components/DisciplinesTab';
+import { ClockDisplay } from '../components/ClockDisplay';
+import { NewClockWidget } from '../components/NewClockWidget';
+import { NotebookTab } from '../components/NotebookTab';
+import { ModifierBar } from '../components/ModifierBar';
+import { SceneTools } from '../components/SceneTools';
+import {
+  character, fillClockSegment, unfillClockSegment, removeClock,
+  setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
+} from '../state/character';
+import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
+import {
+  currentPlaybook, currentPredatorType,
+  moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
+} from '../state/derived';
+import { switchTab, openMove } from '../state/panel';
+import { renderGameMarkdown } from '../data/transforms';
+import type { StatName } from '../data/types';
 
-const STATS = [
-  { name: 'Blood', value: 2, moves: [['Dirty Your Claws'], ['Feed', 'Reposition']] },
-  { name: 'Shadow', value: 1, moves: [['Slip Away']] },
-  { name: 'Resolve', value: 0, moves: [['Protect the Coterie'], ['Stay Chill']] },
-  { name: 'Demeanor', value: 1, moves: [['Discern Vibes'], ['Hunt']] },
-  { name: 'Wits', value: -1, moves: [['Catch the Scent']] },
-] as const;
+// All rendered markdown comes from our own verified JSON parsers (trusted content)
 
-const OTHER_MOVES = [
-  'Blush of Life',
-  'Help or Hinder',
-  'Influence',
-] as const;
+const STAT_ORDER: StatName[] = ['Blood', 'Shadow', 'Resolve', 'Demeanor', 'Wits'];
 
 type PipState = 'empty' | 'slashed' | 'filled' | 'confirm';
 const PIP_CYCLE: PipState[] = ['empty', 'slashed', 'filled', 'confirm'];
@@ -40,25 +50,24 @@ function DualPhaseBox({ state, onAdvance, onReverse }: {
 function useDualPhase(initial: PipState[]) {
   const boxes = useSignal<PipState[]>(initial);
 
-  function advance(i: number) {
+  function advance(i: number): PipState[] {
     const next = [...boxes.value];
     const idx = PIP_CYCLE.indexOf(next[i]);
     next[i] = PIP_CYCLE[(idx + 1) % PIP_CYCLE.length];
     boxes.value = next;
+    return next;
   }
 
-  function reverse(i: number, e: Event) {
+  function reverse(i: number, e: Event): PipState[] {
     e.preventDefault();
     const next = [...boxes.value];
     const idx = PIP_CYCLE.indexOf(next[i]);
     next[i] = PIP_CYCLE[(idx - 1 + PIP_CYCLE.length) % PIP_CYCLE.length];
     boxes.value = next;
+    return next;
   }
 
-  const filled = () => boxes.value.filter(s => s === 'filled').length;
-  const slashed = () => boxes.value.filter(s => s === 'slashed').length;
-
-  return { boxes, advance, reverse, filled, slashed };
+  return { boxes, advance, reverse };
 }
 
 function DualPhasePips({ boxes, advance, reverse }: {
@@ -80,14 +89,10 @@ function DualPhasePips({ boxes, advance, reverse }: {
   );
 }
 
-function useClickPips(count: number, initial: number) {
-  const filled = useSignal(initial);
-  return { filled, count };
-}
-
-function ClickPipRow({ filled, count, muted, droplet }: {
-  filled: { value: number };
+function ClickPipRow({ value, count, onChange, muted, droplet }: {
+  value: number;
   count: number;
+  onChange?: (n: number) => void;
   muted?: boolean;
   droplet?: boolean;
 }) {
@@ -97,69 +102,87 @@ function ClickPipRow({ filled, count, muted, droplet }: {
       {Array.from({ length: count }, (_, i) => (
         <div
           key={i}
-          class={`vamp-pip ${shape} vamp-pip--small ${i < filled.value ? 'vamp-pip--filled' : ''} ${muted ? 'vamp-pip--muted' : ''}`}
-          onClick={() => { filled.value = i < filled.value ? i : i + 1; }}
+          class={`vamp-pip ${shape} vamp-pip--small ${i < value ? 'vamp-pip--filled' : ''} ${muted ? 'vamp-pip--muted' : ''}`}
+          onClick={() => onChange?.(i < value ? i : i + 1)}
         />
       ))}
     </>
   );
 }
 
-const HUNGER_LEVELS: Record<number, { name: string; text: string }> = {
-  0: { name: 'Sated', text: 'Just fed well. No penalties.' },
-  1: { name: 'Manageable', text: 'Cravings present but controllable. No penalties.' },
-  2: { name: 'Manageable', text: 'Cravings present but controllable. No penalties.' },
-  3: { name: 'Distracted', text: 'Blood is on your mind constantly. -1 Ongoing except Hunt, Feed, Dirty Your Claws.' },
-  4: { name: 'Ravenous', text: 'You need blood soon. -2 Ongoing except Hunt, Feed, Dirty Your Claws.' },
-  5: { name: 'Frenzy', text: 'The Beast is driving. You must Feed until you reach 0 Hunger.' },
-};
-
-const BP_LEVELS: Record<number, { hp: number; text: string }> = {
-  0: { hp: 6, text: '6 HP, no Blood Surges, no Powers, no feeding restrictions' },
-  1: { hp: 6, text: '6 HP, Blood Surge 1/night, level 1 Powers, no feeding restrictions' },
-  2: { hp: 9, text: '9 HP, Blood Surge 2/night, level 2 Powers, animals and bags slake 1 less' },
-  3: { hp: 12, text: '12 HP, Blood Surge 3/night, level 3 Powers, animals provide no sustenance. -1 XP penalty' },
-  4: { hp: 15, text: '15 HP, Blood Surge 4/night, level 4 Powers, below 2 Hunger must drain/kill. -2 XP penalty' },
-  5: { hp: 18, text: '18 HP, Blood Surge 5/night, level 5 Powers, below 3 Hunger requires lethal drain. -2 XP penalty' },
-};
-
 function HungerTracker() {
-  const { filled, count } = useClickPips(5, 2);
-  const level = HUNGER_LEVELS[filled.value] ?? HUNGER_LEVELS[5];
-  const isFrenzy = filled.value >= 5;
+  const hunger = character.value.hunger;
+
+  const level = (() => {
+    if (hunger === 0) return { name: 'Sated', text: 'Just fed well. No penalties.' };
+    if (hunger <= 2) return { name: 'Manageable', text: 'Cravings present but controllable. No penalties.' };
+    if (hunger === 3) return { name: 'Distracted', text: 'Blood is on your mind constantly. -1 Ongoing except Hunt, Feed, Dirty Your Claws.' };
+    if (hunger === 4) return { name: 'Ravenous', text: 'You need blood soon. -2 Ongoing except Hunt, Feed, Dirty Your Claws.' };
+    return { name: 'Frenzy', text: 'The Beast is driving. You must Feed until you reach 0 Hunger.' };
+  })();
 
   return (
     <div>
       <div class="vamp-pip-row">
-        <ClickPipRow filled={filled} count={count} droplet />
-        <span class="vamp-tracker-label">{filled.value}/5</span>
+        <ClickPipRow value={hunger} count={5} onChange={setHunger} droplet />
+        <span class="vamp-tracker-label">{hunger}/5</span>
       </div>
       <div class="vamp-tracker-note">
-        <strong class={isFrenzy ? 'vamp-frenzy-glow' : ''}>{level.name}:</strong>{' '}{level.text}
+        <strong class={hunger >= 5 ? 'vamp-frenzy-glow' : ''}>{level.name}:</strong>{' '}{level.text}
       </div>
     </div>
   );
 }
 
-function BPTracker({ filled }: { filled: { value: number } }) {
-  const level = BP_LEVELS[filled.value] ?? BP_LEVELS[1];
+function BPTracker() {
+  const bp = character.value.bp;
+  const hp = maxHP.value;
+
+  const bpText = bp === 0
+    ? `${hp} HP, no Blood Surges, no Powers, no feeding restrictions`
+    : `${hp} HP, Blood Surge ${bp}/night, level ${bp} Powers`;
 
   return (
     <div>
       <div class="vamp-pip-row">
-        <ClickPipRow filled={filled} count={5} muted droplet />
-        <span class="vamp-tracker-label">BP {filled.value}</span>
+        <ClickPipRow value={bp} count={5} onChange={setBP} muted droplet />
+        <span class="vamp-tracker-label">BP {bp}</span>
       </div>
-      <div class="vamp-tracker-note">{level.text}</div>
+      <div class="vamp-tracker-note">{bpText}</div>
     </div>
   );
 }
 
 function HumanityTracker() {
-  const { boxes, advance, reverse, filled, slashed } = useDualPhase(
-    ['filled', 'filled', 'filled', 'filled', 'filled', 'filled', 'filled', 'slashed', 'empty', 'empty']
-  );
-  const stainCount = slashed();
+  const char = character.value;
+  const filledCount = Math.max(0, char.humanity - char.stains);
+  const initial: PipState[] = Array.from({ length: 10 }, (_, i) => {
+    if (i < filledCount) return 'filled';
+    if (i < char.humanity) return 'slashed';
+    return 'empty';
+  });
+
+  const { boxes, advance: rawAdvance, reverse: rawReverse } = useDualPhase(initial);
+
+  function countFromArray(arr: PipState[]) {
+    const f = arr.filter(s => s === 'filled').length;
+    const sl = arr.filter(s => s === 'slashed').length;
+    return { f, sl };
+  }
+
+  function advance(i: number) {
+    const next = rawAdvance(i);
+    const { f, sl } = countFromArray(next);
+    setHumanity(f + sl, sl);
+  }
+
+  function reverse(i: number, e: Event) {
+    const next = rawReverse(i, e);
+    const { f, sl } = countFromArray(next);
+    setHumanity(f + sl, sl);
+  }
+
+  const stainCount = boxes.value.filter(s => s === 'slashed').length;
   const stainLabel = stainCount > 0
     ? ` (${stainCount} Stain${stainCount > 1 ? 's' : ''})`
     : '';
@@ -168,7 +191,7 @@ function HumanityTracker() {
     <div>
       <div class="vamp-pip-row">
         <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
-        <span class="vamp-tracker-label">{filled()}{stainLabel}</span>
+        <span class="vamp-tracker-label">{boxes.value.filter(s => s === 'filled').length}{stainLabel}</span>
       </div>
       <div class="vamp-tracker-note">
         Touchscreens, digest food ~1hr. Blush of Life with Advantage.
@@ -177,59 +200,72 @@ function HumanityTracker() {
   );
 }
 
-function HarmTracker({ maxHP }: { maxHP: number }) {
-  const { boxes, advance, reverse, filled, slashed } = useDualPhase(
-    ['slashed', 'slashed', 'filled', 'empty', 'empty', 'empty']
-  );
-  const sup = slashed();
-  const agg = filled();
-  const threshold = Math.ceil(maxHP / 2);
+function HarmTracker({ hp }: { hp: number }) {
+  const char = character.value;
+  const initial: PipState[] = Array.from({ length: hp }, (_, i) => {
+    if (i < char.harm.aggravated) return 'filled';
+    if (i < char.harm.aggravated + char.harm.superficial) return 'slashed';
+    return 'empty';
+  });
+
+  const { boxes, advance: rawAdvance, reverse: rawReverse } = useDualPhase(initial);
+
+  function advance(i: number) {
+    const next = rawAdvance(i);
+    setHarm(
+      next.filter(s => s === 'slashed').length,
+      next.filter(s => s === 'filled').length,
+    );
+  }
+
+  function reverse(i: number, e: Event) {
+    const next = rawReverse(i, e);
+    setHarm(
+      next.filter(s => s === 'slashed').length,
+      next.filter(s => s === 'filled').length,
+    );
+  }
+
+  const sup = boxes.value.filter(s => s === 'slashed').length;
+  const agg = boxes.value.filter(s => s === 'filled').length;
+  const threshold = Math.ceil(hp / 2);
 
   return (
     <div>
       <div class="vamp-pip-row">
         <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
-        <span class="vamp-tracker-label">{sup} Superficial | {agg} Aggravated</span>
       </div>
       <div class="vamp-tracker-note">
-        At 0 HP: &gt;{threshold} Aggravated = Final Death | &lt;{threshold} = Torpor
+        {sup} Superficial &amp; {agg} Aggravated. | At 0 HP: ≥{threshold} Agg. = Final Death | &lt;{threshold} = Torpor
       </div>
     </div>
   );
 }
 
 function XPTracker() {
-  const { filled, count } = useClickPips(10, 3);
-  const checks = useSignal<boolean[]>([false, false, false]);
-
-  function toggleCheck(i: number) {
-    if (checks.value[i]) return;
-    const next = [...checks.value];
-    next[i] = true;
-    checks.value = next;
-    filled.value = Math.min(filled.value + 1, count);
-  }
+  const char = character.value;
+  const playbook = currentPlaybook.value;
+  const triggers = playbook?.xpTriggers ?? [];
 
   return (
     <div>
       <div class="vamp-pip-row">
-        <ClickPipRow filled={filled} count={count} />
-        <span class="vamp-tracker-label">{filled.value}/{count}</span>
+        <ClickPipRow value={char.xp} count={10} onChange={setXP} />
+        <span class="vamp-tracker-label">{char.xp}/10</span>
       </div>
       <div class="vamp-xp-triggers">
         <div class="vamp-xp-triggers__heading">Once each per session, gain +1 XP when you...</div>
-        <label class="vamp-xp-trigger">
-          <input type="checkbox" checked={checks.value[0]} onChange={() => toggleCheck(0)} />
-          {' '}Deliver Final Death to a Kindred you believe is irredeemable or too dangerous to exist
-        </label>
-        <label class="vamp-xp-trigger">
-          <input type="checkbox" checked={checks.value[1]} onChange={() => toggleCheck(1)} />
-          {' '}Prevent violence or injustice against mortals who cannot protect themselves
-        </label>
-        <label class="vamp-xp-trigger">
-          <input type="checkbox" checked={checks.value[2]} onChange={() => toggleCheck(2)} />
-          {' '}Successfully resist your Bane when drinking another vampire's blood
-        </label>
+        {triggers.map((trigger, i) => (
+          <label class="vamp-xp-trigger" key={i}>
+            <input
+              type="checkbox"
+              checked={char.xpTriggers[i] ?? false}
+              onChange={() => fireXPTrigger(i)}
+            />
+            {/* Rendered markdown from our own verified JSON parsers (trusted content) */}
+            {' '}<span dangerouslySetInnerHTML={{ __html: renderGameMarkdown(trigger) }} />
+          </label>
+        ))}
       </div>
     </div>
   );
@@ -301,13 +337,13 @@ function DebtSection({ debts, advance, reverse, guarded }: {
 }
 
 function DebtPanel() {
-  const owed = useDebtList([
-    { who: 'Alejandro', text: 'You kept quiet about his unsanctioned feeding grounds', state: 'empty' },
-    { who: 'Nadia', text: 'You saved her ghoul from a Sabbat ambush', state: 'slashed' },
-  ]);
-  const youOwe = useDebtList([
-    { who: 'The Prince', text: 'Overlooked your Sire breaking Tradition when Embracing you', state: 'empty' },
-  ]);
+  const charDebts = character.value.debts;
+  const owed = useDebtList(
+    charDebts.filter(d => d.direction === 'owed').map(d => ({ who: d.who, text: d.text, state: d.state }))
+  );
+  const youOwe = useDebtList(
+    charDebts.filter(d => d.direction === 'owe').map(d => ({ who: d.who, text: d.text, state: d.state }))
+  );
 
   return (
     <div class="vamp-debts-split">
@@ -333,7 +369,7 @@ function DebtPanel() {
   );
 }
 
-const TABS = ['Basics', 'Disciplines', 'Possessions', 'Notebook', 'Clocks'] as const;
+const TABS = ['Vitals', 'Disciplines', 'Possessions', 'Clocks & Debts', 'Notebook'] as const;
 
 function ContentTabs() {
   const active = useSignal(0);
@@ -359,137 +395,221 @@ function ContentTabs() {
       </nav>
 
       <div class="vamp-tabs__panel" role="tabpanel">
-        {active.value === 0 && <BasicsTab />}
-        {active.value === 1 && (
-          <div class="vamp-placeholder">
-            Discipline Powers reference
-            <br /><span class="vamp-placeholder__note">Blood Sorcery, Celerity, Obfuscate</span>
-          </div>
-        )}
+        {active.value === 0 && <VitalsTab />}
+        {active.value === 1 && <DisciplinesTab />}
         {active.value === 2 && (
           <div class="vamp-placeholder">
             Possessions and inventory
             <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
           </div>
         )}
-        {active.value === 3 && (
-          <div class="vamp-placeholder">
-            Notebook
-            <br /><span class="vamp-placeholder__note">Draggable markdown sticky notes</span>
-          </div>
-        )}
-        {active.value === 4 && (
-          <div class="vamp-placeholder">
-            Clocks
-            <br /><span class="vamp-placeholder__note">4/6/8-segment named clocks with conditions</span>
-          </div>
-        )}
+        {active.value === 3 && <ClocksDebtsTab />}
+        {active.value === 4 && <NotebookTab />}
       </div>
     </div>
   );
 }
 
-function BasicsTab() {
+function ClocksDebtsTab() {
+  const mqc = masqueradeClock.value;
+  const clocks = character.value.clocks;
+
   return (
     <>
-      <div class="vamp-content-columns">
-        <SectionBox title="Perks">
-          <div class="vamp-perk">
-            <div class="vamp-perk__name">Righteous Hunger</div>
-            <div class="vamp-perk__text">When you <strong>Feed</strong> from someone you believe genuinely deserves punishment, slake an additional 1 Hunger. If you successfully Diablerize them, you don't lose any Humanity, and instead clear all Stains.</div>
-          </div>
-          <div class="vamp-perk">
-            <div class="vamp-perk__name">Arbiter's Eyes</div>
-            <div class="vamp-perk__text">When you <strong>Discern Vibes</strong> or <strong>Catch the Scent</strong> to determine if someone has recently committed a crime or transgression, you have Advantage on the roll.</div>
-          </div>
-        </SectionBox>
+      <SectionBox title="Debts">
+        <DebtPanel />
+      </SectionBox>
 
-        <div class="vamp-bane-compulsion">
-          <SectionBox title="Bane">
-            <div class="vamp-bane">
-              <div class="vamp-bane__name">Diablerist's Thirst</div>
-              <div class="vamp-bane__text">When you <strong>Feed</strong> from another vampire, you must immediately <strong>Stay Chill</strong> or enter a feeding Frenzy, attempting to drain them completely. On a success, take an Ongoing penalty equal to your BP to <strong>Stay Chill</strong> and resist <strong>Feeding</strong> from them again until you're too far away to smell them.</div>
-            </div>
-          </SectionBox>
-          <SectionBox title="Compulsion">
-            <div class="vamp-bane">
-              <div class="vamp-bane__name">Judgment</div>
-              <div class="vamp-bane__text">When someone violates one of your Convictions or personal codes in your presence, take an Ongoing penalty equal to your BP to all rolls except those directly working toward punishing them, until you <strong>Feed</strong> from the transgressor or the scene ends.</div>
-            </div>
-          </SectionBox>
+      <SectionBox title="Clocks">
+        <div class="vamp-clocks">
+          <ClockDisplay
+            clock={mqc}
+            gradient
+            onFill={fillMasquerade}
+            onUnfill={unfillMasquerade}
+          />
+          {clocks.map(c => (
+            <ClockDisplay
+              key={c.id}
+              clock={c}
+              onFill={() => fillClockSegment(c.id)}
+              onUnfill={() => unfillClockSegment(c.id)}
+              onRemove={() => removeClock(c.id)}
+            />
+          ))}
+          <NewClockWidget />
         </div>
-      </div>
-
-      <div class="vamp-content-columns">
-        <SectionBox title="Convictions & Touchstones">
-          <div class="vamp-paired">
-            <div class="vamp-paired__item">
-              <div class="vamp-paired__conviction">"I will never harm an innocent."</div>
-              <div class="vamp-paired__touchstone">Marcus — mortal friend, bartender at The Red Door</div>
-            </div>
-            <div class="vamp-paired__item">
-              <div class="vamp-paired__conviction">"The strong must protect the weak."</div>
-              <div class="vamp-paired__touchstone">Elena — former colleague, social worker</div>
-            </div>
-          </div>
-        </SectionBox>
-
-        <SectionBox title="Debts">
-          <DebtPanel />
-        </SectionBox>
-      </div>
+      </SectionBox>
     </>
   );
 }
 
+function VitalsTab() {
+  const playbook = currentPlaybook.value;
+  const pt = currentPredatorType.value;
+  const char = character.value;
+  const disciplines = accessibleDisciplineData.value;
+
+  const clanPerks = playbook?.perks ?? [];
+  const disciplinePerks = disciplines
+    .filter(d => d.perk)
+    .map(d => ({ name: d.perk!.name, body: d.perk!.body, source: d.name }));
+
+  return (
+    <div class="vamp-content-columns">
+      <SectionBox title="Perks">
+        {clanPerks.map(perk => (
+          <div class="vamp-perk" key={perk.name}>
+            <div class="vamp-perk__header">
+              <span class="vamp-perk__name">{perk.name}</span>
+              <span class="vamp-perk__pill">{playbook?.name}</span>
+            </div>
+            <div class="vamp-perk__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(perk.description) }} />
+          </div>
+        ))}
+        {disciplinePerks.map(perk => (
+          <div class="vamp-perk" key={perk.name}>
+            <div class="vamp-perk__header">
+              <span class="vamp-perk__name">{perk.name}</span>
+              <span class="vamp-perk__pill">{perk.source}</span>
+            </div>
+            <div class="vamp-perk__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(perk.body) }} />
+          </div>
+        ))}
+      </SectionBox>
+
+      <div class="vamp-basics-right">
+        <SectionBox title="Bane">
+          <div class="vamp-bane">
+            <div class="vamp-bane__name">{playbook?.baneName ?? 'Unknown'}</div>
+            <div class="vamp-bane__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(playbook?.baneDescription ?? '') }} />
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Compulsion">
+          <div class="vamp-bane">
+            <div class="vamp-bane__name vamp-bane__name--compulsion">{playbook?.compulsionName ?? 'None'}</div>
+            <div class="vamp-bane__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(playbook?.compulsionDescription ?? '') }} />
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Convictions & Touchstones">
+          <div class="vamp-paired">
+            {char.convictions.map((conviction, i) => (
+              <div class="vamp-paired__item" key={i}>
+                <div class="vamp-paired__conviction">{conviction}</div>
+                {char.touchstones[i] && (
+                  <div class="vamp-paired__touchstone">
+                    {char.touchstones[i].name} — {char.touchstones[i].description}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </SectionBox>
+
+        <SectionBox title="Merits & Flaws">
+          <div class="vamp-merits-flaws">
+            <div class="vamp-merits-flaws__col">
+              <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--merit">Merits</div>
+              {pt?.merit && (
+                <div class="vamp-merit" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.merit) }} />
+              )}
+            </div>
+            <div class="vamp-merits-flaws__divider" />
+            <div class="vamp-merits-flaws__col">
+              <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--flaw">Flaws</div>
+              {pt?.flaw && (
+                <div class="vamp-flaw" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.flaw) }} />
+              )}
+            </div>
+          </div>
+        </SectionBox>
+      </div>
+    </div>
+  );
+}
+
+
 export function CharacterSheet() {
-  const bpFilled = useSignal(1);
-  const maxHP = (BP_LEVELS[bpFilled.value] ?? BP_LEVELS[1]).hp;
+  const char = character.value;
+  const hp = maxHP.value;
+  const statMap = moveStatMap.value;
+  const others = otherMoves.value;
 
   return (
     <div class="vamp-sheet">
 
       <aside class="vamp-sheet__sidebar">
         <div class="vamp-identity">
-          <div class="vamp-identity__name">Johnny Fangs</div>
-          <div class="vamp-identity__portrait">portrait</div>
-          <div class="vamp-identity__meta">Banu Haqim <span class="vamp-identity__sep">|</span> Fledgling</div>
-          <div class="vamp-identity__meta">Consensualist <span class="vamp-identity__sep">|</span> Coterie: <span class="vamp-identity__code">???</span></div>
+          <div class="vamp-identity__name">{char.name}</div>
+          <div class="vamp-identity__portrait">
+            {char.portraitUrl
+              ? <img class="vamp-identity__portrait-img" src={char.portraitUrl} alt={char.name} />
+              : <span class="vamp-identity__portrait-placeholder">portrait</span>
+            }
+          </div>
+          <div class="vamp-identity__meta">
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.clan}</span>
+            <span class="vamp-identity__sep">|</span>
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket}</span>
+          </div>
+          <div class="vamp-identity__meta">
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
+            <span class="vamp-identity__sep">|</span>
+            Coterie: <span class="vamp-identity__code">???</span>
+          </div>
         </div>
 
         <div class="vamp-stat-list">
-          {STATS.map(s => (
-            <div class="vamp-stat" key={s.name}>
-              <div class="vamp-stat__header">
-                <div class="vamp-stat__circle">
-                  {s.value >= 0 ? `+${s.value}` : s.value}
+          {STAT_ORDER.map(statName => {
+            const value = char.stats[statName];
+            const entry = statMap.find(e => e.statName === statName);
+            const moves = entry?.moves ?? [];
+
+            return (
+              <div class="vamp-stat" key={statName}>
+                <div class="vamp-stat__header">
+                  <div class="vamp-stat__circle">
+                    {value >= 0 ? `+${value}` : value}
+                  </div>
+                  <div class="vamp-stat__name">{statName}</div>
                 </div>
-                <div class="vamp-stat__name">{s.name}</div>
-              </div>
-              <ul class="vamp-stat__moves">
-                {s.moves.map((line, li) => (
-                  <li key={li} class="vamp-stat__move">
-                    {line.map((m, mi) => (
-                      <span key={m}>
-                        {mi > 0 && <span class="vamp-stat__sep">|</span>}
-                        <strong>{m}</strong>
-                      </span>
+                {moves.length > 0 && (
+                  <ul class="vamp-stat__moves">
+                    {moves.map(m => (
+                      <li
+                        key={m.name}
+                        class="vamp-stat__move"
+                        onClick={() => openMove(m.name)}
+                      >
+                        <strong>{m.name}</strong>
+                        {m.altStat && <span class="vamp-stat__alt"> ({m.altStat})</span>}
+                      </li>
                     ))}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                  </ul>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        <div class="vamp-sidebar__universal">
-          <div class="vamp-stat__name">Other Basic Moves</div>
-          <ul class="vamp-stat__moves vamp-stat__moves--universal">
-            {OTHER_MOVES.map(m => (
-              <li key={m} class="vamp-stat__move"><strong>{m}</strong></li>
-            ))}
-          </ul>
-        </div>
+        {others.length > 0 && (
+          <div class="vamp-sidebar__universal">
+            <div class="vamp-stat__name">Other Basic Moves</div>
+            <ul class="vamp-stat__moves vamp-stat__moves--universal">
+              {others.map(m => (
+                <li
+                  key={m}
+                  class="vamp-stat__move"
+                  onClick={() => openMove(m)}
+                >
+                  <strong>{m}</strong>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </aside>
 
       <div class="vamp-sheet__right">
@@ -498,11 +618,11 @@ export function CharacterSheet() {
           <div class="vamp-vitals__grid">
 
             <SectionBox title="Blood Potency">
-              <BPTracker filled={bpFilled} />
+              <BPTracker />
             </SectionBox>
 
             <SectionBox title="Humanity">
-              <HumanityTracker />
+              <HumanityTracker key={`${char.humanity}-${char.stains}`} />
             </SectionBox>
 
             <SectionBox title="XP">
@@ -514,7 +634,7 @@ export function CharacterSheet() {
             </SectionBox>
 
             <SectionBox title="Harm">
-              <HarmTracker maxHP={maxHP} />
+              <HarmTracker key={hp} hp={hp} />
             </SectionBox>
 
           </div>
@@ -522,26 +642,17 @@ export function CharacterSheet() {
 
         <div class="vamp-sheet__content">
 
-          <div class="vamp-modifier-float">
-            <SectionBox title="Move Modifiers">
-              <div class="vamp-modifier-stack">
-                <div class="vamp-modifier">
-                  <span class="vamp-modifier__value">+1 Forward</span>
-                  <span>to <strong>Influence</strong></span>
-                  <span class="vamp-modifier__source">from Auspex: Premonition</span>
-                </div>
-                <div class="vamp-modifier">
-                  <span class="vamp-modifier__value">+1 Ongoing</span>
-                  <span>to <strong>Discern Vibes</strong></span>
-                  <span class="vamp-modifier__source">from Heightened Senses</span>
-                </div>
-                <div class="vamp-modifier">
-                  <span class="vamp-modifier__value">2 Hold</span>
-                  <span>from <strong>Discern Vibes</strong></span>
-                  <span class="vamp-modifier__source">spend to ask a question</span>
-                </div>
-              </div>
-            </SectionBox>
+          <div class="vamp-toolbar-row">
+            <div class="vamp-modifier-float">
+              <SectionBox title="Move Modifiers">
+                <ModifierBar />
+              </SectionBox>
+            </div>
+            <div class="vamp-scene-float">
+              <SectionBox title="Scene Tools">
+                <SceneTools />
+              </SectionBox>
+            </div>
           </div>
 
           <ContentTabs />
@@ -549,12 +660,9 @@ export function CharacterSheet() {
         </div>
       </div>
 
-      <aside class="vamp-sheet__panel-right">
-        <div class="vamp-placeholder">
-          Coterie Sheet
-          <br /><span class="vamp-placeholder__note">Advancement, Coterie Stats, Bloodline</span>
-        </div>
-      </aside>
+      <RightColumn>
+        <RightPanelContent />
+      </RightColumn>
     </div>
   );
 }

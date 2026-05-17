@@ -20,7 +20,7 @@ Choose 2 to start: [**Animalism**](../disciplines/animalism.md) **| [Obfuscate](
 
 ## Bane: *Monstrous Visage*
 
-Your body is permanently warped into something inhuman. **You cannot pass as mortal by any mundane means**. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls with characters who can see your true form and are unfamiliar with you or don't like you (or Nosferatu in general). This penalty also applies when using supernatural disguises (as with some Obfuscate Powers); the further your true form is from human, the harder any mask is to maintain.
+Your body is permanently warped into something inhuman. **You cannot pass as mortal by any usual means**. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls with characters who can see your true form and are unfamiliar with you or don't like you (or Nosferatu in general). This penalty also applies when using supernatural disguises (as with some Obfuscate Powers); the further your true form is from human, the harder any mask is to maintain.
 
 !!! note "Note"
 

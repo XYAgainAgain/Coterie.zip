@@ -25,9 +25,39 @@
   --v-dice-body: var(--_dice-body);
   --v-dice-numeral: var(--_dice-numeral);
 
+  --v-hold-1: var(--_hold-1);
+  --v-hold-2: var(--_hold-2);
+  --v-hold-3: var(--_hold-3);
+
+  --v-mqc-accent: #c4883a;
+
   --v-danger: #c62828;
   --v-warning: #e65100;
   --v-success: #2e7d32;
+
+  /* Outcome tier colors (fixed across themes, except 12+ which is accent) */
+  --v-tier-10-text: #66bb6a;
+  --v-tier-10-border: #2e7d32;
+  --v-tier-7-text: #ff9800;
+  --v-tier-7-border: #e65100;
+  --v-tier-6-text: #ef5350;
+  --v-tier-6-border: #c62828;
+  --v-tier-12-text: var(--v-accent);
+
+  /* Power level badge gradient (1=purple → 5=amber) */
+  --v-lvl-1: #6a5acd;
+  --v-lvl-2: #7b5ea7;
+  --v-lvl-3: #8c6282;
+  --v-lvl-4: #9d665c;
+  --v-lvl-5: #ae6a37;
+
+  /* Merit/Flaw/Compulsion semantic borders */
+  --v-merit-border: #4a7c59;
+  --v-merit-text: #6a9e78;
+  --v-flaw-border: #8c4444;
+  --v-flaw-text: #b05858;
+  --v-compulsion-border: #8c7a30;
+  --v-compulsion-text: #b09a40;
 
   --v-hunger-low: var(--_accent);
   --v-hunger-mid: var(--_primary);

@@ -4,8 +4,20 @@ import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
 import { EyeToggle } from './components/EyeToggle';
 import { DiceOverlay } from './dice/DiceOverlay';
+import { loadAllGameData } from './data/loader';
+import { gameData } from './state/derived';
+export const editMode = signal(false);
+const dataReady = signal(false);
+const dataError = signal<string | null>(null);
 
-const editMode = signal(false);
+loadAllGameData()
+  .then(data => {
+    gameData.value = data;
+    dataReady.value = true;
+  })
+  .catch(err => {
+    dataError.value = err instanceof Error ? err.message : String(err);
+  });
 
 function toggleEdit() {
   editMode.value = !editMode.value;
@@ -21,12 +33,6 @@ export function App() {
       <header class="vamp-header">
         <span class="vamp-header__title">Vamp</span>
         <div class="vamp-header__spacer" />
-        <button class="vamp-header__btn" onClick={() => {}}>
-          New Night
-        </button>
-        <button class="vamp-header__btn" onClick={() => {}}>
-          New Session
-        </button>
         <button
           class="vamp-header__lock"
           onClick={toggleEdit}
@@ -38,11 +44,19 @@ export function App() {
         <EyeToggle />
       </header>
       <main class="vamp-body">
-        <Router>
-          <Route path="/vamp/" component={CharacterList} />
-          <Route path="/vamp/new" component={CharacterSheet} />
-          <Route path="/vamp/:slug" component={CharacterSheet} />
-        </Router>
+        {dataError.value ? (
+          <div class="vamp-loading vamp-loading--error">
+            Failed to load game data: {dataError.value}
+          </div>
+        ) : !dataReady.value ? (
+          <div class="vamp-loading">Materializing...</div>
+        ) : (
+          <Router>
+            <Route path="/vamp/" component={CharacterList} />
+            <Route path="/vamp/new" component={CharacterSheet} />
+            <Route path="/vamp/:slug" component={CharacterSheet} />
+          </Router>
+        )}
       </main>
       <DiceOverlay />
     </div>

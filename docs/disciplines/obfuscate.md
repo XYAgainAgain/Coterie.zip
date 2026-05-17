@@ -10,7 +10,7 @@ The lower levels of Obfuscate offer no inherent protection against mechanical su
 
 ### *Cloak of Shadows (Discipline Perk)*
 
-As long as you have some kind of cover (a deep shadow, a doorway, a crowd of people, a pile of trash) you can remain perfectly still and become effectively invisible. Observers' minds refuse to register your presence. They'll step around you, look past you, and rationalize their behavior if pressed.
+**When you remain perfectly still in or around some kind of cover** (a deep shadow, a doorway, a crowd of people, a pile of trash), you become effectively invisible. Observers' minds refuse to register your presence. They'll step around you, look past you, and rationalize their behavior if pressed.
 
 The effect lasts for one scene or until you move, speak above a whisper, or take any action that would draw attention to yourself. Only mechanical surveillance or ***Sense the Unseen*** can detect you while cloaked.
 
@@ -20,7 +20,7 @@ The effect lasts for one scene or until you move, speak above a whisper, or take
 
 ### *Ensconce (Passive)*
 
-You can supernaturally conceal a number of small objects on your person equal to your Blood Potency (minimum 1). A "small object" is anything you could reasonably hold in one hand: a knife, a gun, a wallet, a banana, your friend's phone, Sephora products, etc. Mortal observers simply don't notice them, even during pat-downs or bag checks.
+**When you need to hide a small object**, you can supernaturally conceal a number of small objects on your person equal to your Blood Potency (minimum 1). A "small object" is anything you could reasonably hold in one hand: a knife, a gun, a wallet, a banana, your friend's phone, Sephora products, etc. Mortal observers simply don't notice them, even during pat-downs or bag checks.
 
 Objects must be on your person (in a pocket or sleeve, tucked in a waistband, palmed in a hand). Anything in plain view with no physical concealment can't be affected. ***Sense the Unseen*** can detect concealed objects as usual.
 
@@ -75,7 +75,7 @@ The other rules from ***Ensconce*** apply: mortals ignore the object and ***Sens
 
 *(Requires: Auspex access)*
 
-Once per scene, you can say one thing and secretly convey a completely different message to a single intended listener. The hidden message piggybacks on your spoken words; bystanders hear only what you actually said. The recipient hears both and knows which is which.
+**Once per scene, you can say one thing and secretly convey a completely different message to a single intended listener**. The hidden message piggybacks on your spoken words; bystanders hear only what you actually said. The recipient hears both and knows which is which.
 
 The secret message must be anything you (the presumably mortal player) could say in one breath. If you need to pause for air, it's too long.
 
@@ -96,7 +96,7 @@ The secret message must be anything you (the presumably mortal player) could say
 
 ### *Unseen Passage (Passive)*
 
-Once you've successfully **Slipped Away** or activated ***Cloak of Shadows***, you can make a Hunger Check to remain hidden while moving freely. Walk, run, or climb as much as you like. As long as you don't speak above a whisper, produce any overpowering odors, or take any action that forces observers to acknowledge your presence, you stay hidden for the rest of the scene.
+**After you've successfully *Slipped Away* or activated *Cloak of Shadows***, you can make a Hunger Check to remain hidden while moving freely. Walk, run, or climb as much as you like. As long as you don't speak above a whisper, produce any overpowering odors, or take any action that forces observers to acknowledge your presence, you stay hidden for the rest of the scene.
 
 You must already be hidden for ***Unseen Passage*** to function. You can't use it to disappear while under observation, so make sure to check your six before you try anything. And always remember to look up.
 
@@ -254,7 +254,7 @@ The target can still interact with the physical world: open doors, drive cars, e
 
 ### *Cloak the Coterie (Passive)*
 
-When you use any Obfuscate Power, you can make one additional Hunger Check with Disadvantage to extend it to your entire Coterie. Every member benefits from the Power as though they activated it themselves, using your capabilities when a roll is needed. Members of the Coterie can still perceive each other while under the effect.
+**When you use any Obfuscate Power**, you can make one additional Hunger Check with Disadvantage to extend it to your entire Coterie. Every member benefits from the Power as though they activated it themselves, using your capabilities when a roll is needed. Members of the Coterie can still perceive each other while under the effect.
 
 If a Coterie member is revealed through their own actions or a perceptive observer, the rest of the group remains hidden. If you are revealed, so is everyone else. Better not mess this up!
 

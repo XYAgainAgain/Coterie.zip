@@ -24,12 +24,29 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v6
+
       - uses: actions/setup-python@v6
         with:
           python-version: '3.12'
           cache: 'pip'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: |
+            minions/vamp-swarm/package-lock.json
+            vamp/package-lock.json
+
       - run: pip install -r requirements.txt
+      - run: npm ci --prefix minions/vamp-swarm
+      - run: npm ci --prefix vamp
+
+      - run: npm run parse --prefix minions/vamp-swarm
       - run: zensical build --clean
+      - run: npm run build --prefix vamp
+      - run: cp -r vamp/dist site/vamp
+
       - uses: actions/upload-pages-artifact@v5
         with:
           path: site

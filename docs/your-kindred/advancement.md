@@ -15,7 +15,7 @@ Experience Points, or XP, are tracked on a meter of 0–10. It does not roll ove
 There are four sources of XP:
 
 1. **Moves That Say So:** Sometimes a Move such as **Help or Hinder** or a Discipline Power will grant a small amount of XP. These are few and far between, and individually determine how much XP you can get and how often it can happen.
-    - *Maximum from this source: **No limit.** Not affected by Blood Potency XP penalty.*
+    - *Maximum from this source: **Limited per-Move.** Not affected by Blood Potency XP penalty.*
 2. **Playbook Triggers:** Every Playbook includes three XP triggers tied to its themes. Each trigger can fire once per session, granting +1 XP immediately when it does. These represent the lessons your Blood is specifically built to absorb — a Brujah learns from defiance, a Nosferatu learns from secrets, a Toreador learns from beauty. Experience triggers are not affected by Blood Potency penalties. An Elder Ventrue who organizes their Coterie into a flawless operation earns the same XP as a Fledgling Ventrue doing it for the first time. The Blood always recognizes its own nature.
     - *Maximum from this source: **3 XP per session.** Not affected by Blood Potency XP penalty.*
 3. **Slumber Reflections:** As you drift into the deathlike slumber of day, the events of the previous night replay behind your eyelids. The table considers three questions (listed below) together; the Storyteller reads them aloud. For each question answered "Yes," note it down. Slumber Reflections are affected by the Blood Potency penalty.

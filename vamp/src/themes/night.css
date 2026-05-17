@@ -25,5 +25,9 @@
   --_dice-body: #96031a;
   --_dice-numeral: #faa916;
 
+  --_hold-1: #e0a040;
+  --_hold-2: #40a0c0;
+  --_hold-3: #a060d0;
+
   color-scheme: dark;
 }
