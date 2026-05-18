@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-17T09:57:20.135Z",
+  "generatedAt": "2026-05-18T07:00:30.385Z",
   "data": {
     "clanBaneVariantsIntro": "Each of the 14 Clans has a variant Bane, which you may take as an alternative to the usual one with the approval of the Storyteller. For a bit of additional challenge, with the Storyteller's permission, you may opt to suffer from both of your Clan's Banes in exchange for 5 XP. All Banes are permanent and cannot be removed. This XP must be spent by the end of your first slumber or it is lost.",
     "clanBaneVariants": [
@@ -79,12 +79,12 @@
     "folkloricBanes": [
       {
         "baneName": "Noxious Garlic",
-        "consequences": "Touching garlic deals 1 Aggravated Harm to you. Eating it deals 3, but also reduces your Hunger to 0 and nauseates you, preventing you from **Feeding** until the next night.",
+        "consequences": "**Touching garlic** deals 1 Aggravated Harm to you. Eating it deals 3, but also reduces your Hunger to 0 and nauseates you, preventing you from **Feeding** until the next night.",
         "xpGain": "+1 XP"
       },
       {
         "baneName": "Holy Water",
-        "consequences": "Touching holy water deals 1 Aggravated Harm to you. Drinking it causes Final Death. Why would you do that?",
+        "consequences": "**Touching holy water** deals 1 Aggravated Harm to you. Drinking it causes Final Death. Why would you do that?",
         "xpGain": "+1 XP"
       },
       {
@@ -93,23 +93,108 @@
         "xpGain": "+1 XP"
       },
       {
+        "baneName": "Determined Detangler",
+        "consequences": "**When you encounter a tied knot, tangled net, or kinked-up rope**, you must **Stay Chill** or stop to untie it. On a failure, you cannot willingly move away from the knot until it is untied, cut by someone else, or the scene ends. Fishing nets over doors work. So do tangled shoelaces or earbuds.",
+        "xpGain": "+1 XP"
+      },
+      {
+        "baneName": "Jolly Juniper",
+        "consequences": "**You cannot willingly move closer to burning juniper**, and its smoke causes you to choke and retch. While within Close Range of burning juniper, you have Disadvantage on all rolls. If you touch the smoke directly, take 1 Aggravated Harm.",
+        "xpGain": "+1 XP"
+      },
+      {
+        "baneName": "Troublesome Tar",
+        "consequences": "**You cannot cross a threshold smeared or dabbed with tar, pitch, or resin** without spending a full turn tearing yourself free as if caught in a huge quagmire. While stuck, you're a sitting duck: anyone attacking you automatically acts first, and you can't **Reposition** or **Slip Away** until freed.",
+        "xpGain": "+1 XP"
+      },
+      {
+        "baneName": "Cock's Crow",
+        "consequences": "**When you hear a rooster crow** (live performances only, not recorded), you immediately take 1 Superficial Harm as your body tries to shut down for the day. If you hear it while at 4+ Hunger, you must **Stay Chill** or fall into involuntary Torpor until the next dusk. Roosters in the city are rare. Farms and Chinatowns, less so.",
+        "xpGain": "+1 XP"
+      },
+      {
+        "baneName": "Stressful Sunflowers",
+        "consequences": "**You cannot enter a room or enclosed space decorated with sunflowers** (living, dried, or depicted in number). A single painting doesn't count, but a field of them, a vase of them, or cheerful sunflower-print wallpaper does. While within Close Range of a mass of sunflowers, you take 1 Superficial Harm per round as your body protests. Look, it's close enough, alright?",
+        "xpGain": "+1 XP"
+      },
+      {
+        "baneName": "Little Pricks",
+        "consequences": "**You cannot cross a threshold lined with wild roses.** If a wild rose branch is placed atop your resting place during slumber, you cannot rise until it is removed. Cultivated roses from a florist do nothing. It has to be wild, thorny, and growing or freshly cut.",
+        "xpGain": "+1 XP"
+      },
+      {
+        "baneName": "Ironbound",
+        "consequences": "**You cannot easily cross a threshold framed in iron** (old buildings, wrought-iron gates, certain jail cells, some art galleries). For the rest of the scene after forcing your way through, you take −1 Ongoing to all rolls until you go out the same way you entered, as the iron lingers in your blood like poison.",
+        "xpGain": "+1 XP"
+      },
+      {
         "baneName": "Invitations",
-        "consequences": "You are physically unable to enter any private building unless invited in by somebody with sufficient authority.",
+        "consequences": "**You are physically unable to enter any private building** unless invited in by somebody with sufficient authority.",
         "xpGain": "+2 XP"
       },
       {
         "baneName": "Running Water",
-        "consequences": "You are physically unable to cross running water and must find a way around. This includes streams, brooks, rivers, sewer pipes, aqueducts, and loose garden hoses. Bodies of water such as ponds, lakes, oceans, etc. do not trigger this.",
+        "consequences": "**You are physically unable to cross running water** and must find a way around. This includes streams, brooks, rivers, sewer pipes, aqueducts, and loose garden hoses. Bodies of water such as ponds, lakes, oceans, etc. do not trigger this.",
         "xpGain": "+2 XP"
       },
       {
         "baneName": "Searing Silver",
-        "consequences": "Touching silver deals 2 Aggravated Harm to you. If incorporated into a weapon, all its damage is Aggravated.",
+        "consequences": "**Touching silver** deals 2 Aggravated Harm to you. If incorporated into a weapon, all its damage is Aggravated.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Arithmomania",
+        "consequences": "**When loose small objects are scattered in your presence** (seeds, beads, grains, coins, cards), you must **Stay Chill** or stop everything to count them. On a failure, you are frozen in place until you finish counting or someone physically moves you, whichever comes first. Enemies who know your weakness can trigger this deliberately with pocket lentils or similar.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "The Thin White Line",
+        "consequences": "**You are physically unable to cross an unbroken line of salt.** If salt is thrown directly onto your skin, it deals 1 Aggravated Harm. Dissolving it in water does nothing; it has to be dry and granular. Ouch! Delicious!",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Humbling Hawthorn",
+        "consequences": "**Touching hawthorn wood or its thorns** deals 1 Aggravated Harm to you. A weapon made from or incorporating hawthorn deals all its damage as Aggravated. Hawthorn stakes work as though you had the *Stake Bait* Bane, but only hawthorn; regular stakes still just incapacitate you as usual.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Coldest Iron",
+        "consequences": "**Touching wrought iron** (not steel, not alloys; specifically wrought iron, the good old stuff) deals 1 Aggravated Harm. If incorporated into a weapon, all its damage is Aggravated. While any Aggravated Harm from iron remains unhealed, you take −1 Ongoing to all Discipline rolls.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Ding-Dong Don't",
+        "consequences": "**When you hear church bells or a hand-bell rung with intent to ward**, you must **Stay Chill** or flee the sound. While the bells ring and you remain within Far Range, you take 1 Superficial Harm per round and cannot use Disciplines. Earplugs don't help, you feel it in your bones.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Reflectionless",
+        "consequences": "**You cast no reflection in mirrors, still water, polished metal, or glass.** This is a persistent low-level Masquerade threat; any mortal who notices gains irrefutable proof that something is wrong with you. You also cannot benefit from any Discipline Power or effect that requires you to make eye contact through a reflective surface.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Camera Cryptid",
+        "consequences": "**You do not appear on any visual recording medium**: cameras, video feeds, phone screens, CCTV, TikTok (thank Caine), etc. Live footage shows an empty space where you stand. This is a double-edged sword in the surveillance age: you can't be tracked by cameras, but you also can't prove you were anywhere, and any mortal reviewing footage of \"nobody there\" has a Masquerade problem on their hands. You have +1 Ongoing to **Slip Away** when fleeing surveillance, but −1 Ongoing to Demeanor rolls in any situation where someone might check a camera. You haven't seen yourself in years.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Confounding Crossroads",
+        "consequences": "**When you reach any junction of two or more roads** (intersections and roundabouts count), you must pause for a beat to orient yourself. In combat or a chase, this costs you your Movement for the turn. If you are currently being pursued and reach a crossroads, you must **Stay Chill** or become disoriented, choosing a random direction to travel in.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Smash & Shatter",
+        "consequences": "**Reflective surfaces crack, shatter, or crumble in your presence.** You have no control over this; it happens within seconds of proximity. Everyone in the room will probably notice — it's quite loud. This is a constant low-level Masquerade risk (you'll burn through cover stories fast), and you cannot use any Power or tool that requires an intact reflective surface.",
+        "xpGain": "+2 XP"
+      },
+      {
+        "baneName": "Land-Locked",
+        "consequences": "**You are unable to willingly leave land by boat, plane, helicopter, or any other means of transport.** If forced to (such as by being staked and packed into a shipping crate), you take 1 Aggravated Harm when you wake each night while in transit. This cannot be healed until you're back on solid ground again.",
         "xpGain": "+2 XP"
       },
       {
         "baneName": "Holy Symbols",
-        "consequences": "Being within 2 Ranges of a holy symbol (you select which apply to your character) deals 2 Aggravated Harm to you per round of exposure. Within 1 Range, it deals 3. If physical contact is made with the symbol, it deals 5.",
+        "consequences": "**Being within 2 Ranges of a holy symbol** (you select which apply to your character) deals 2 Aggravated Harm to you per round of exposure. Within 1 Range, it deals 3. If physical contact is made with the symbol, it deals 5.",
         "xpGain": "+3 XP"
       },
       {
@@ -119,12 +204,32 @@
       },
       {
         "baneName": "Stake Bait",
-        "consequences": "Being staked through the heart causes instant Final Death instead of incapacitating you. Oopsie-daisy! New vamp!",
+        "consequences": "**Being staked through the heart** causes instant Final Death instead of incapacitating you. Oopsie-daisy!",
         "xpGain": "+3 XP"
       },
       {
         "baneName": "Stigmata",
         "consequences": "**When at 4 Hunger or higher**, you bleed extensively from wounds on your hands, feet, and forehead. They never heal, and while bleeding, you have Disadvantage on all Demeanor rolls and are a walking Masquerade violation (unless it's Halloween and you're dressed as Jesus).",
+        "xpGain": "+3 XP"
+      },
+      {
+        "baneName": "Grave-Bound",
+        "consequences": "**You must spend your day sleeping in the soil of your homeland, your original grave, or consecrated earth from your burial site.** Sleeping anywhere else gives +3 Hunger upon awakening instead of +1. Three consecutive nights without your soil prevents you from reducing Hunger below 3 by any means until you return.",
+        "xpGain": "+3 XP"
+      },
+      {
+        "baneName": "Cruel Consecration",
+        "consequences": "**You cannot intentionally set foot on land consecrated to a faith** (churchyards, cemeteries blessed by clergy, temple grounds, mosques). The boundary is near-physical; you feel it like a wall of pressure. If forced onto consecrated ground, you take 2 Aggravated Harm per round until you get the hell out of there.",
+        "xpGain": "+3 XP"
+      },
+      {
+        "baneName": "Dark Betrayal",
+        "consequences": "**Your shadow moves independently of you at all times.** It might point the wrong direction, gesture when you're still, or loom larger than it should. You take −1 Ongoing to **Slip Away** in any lit environment because your shadow gives you away, but if Oblivion access would cost you 5 XP, it costs 3 instead. The Storyteller may occasionally have your shadow do something alarming in front of mortals.",
+        "xpGain": "+3 XP"
+      },
+      {
+        "baneName": "Tempestuous Temperament",
+        "consequences": "**When you Frenzy while it's precipitating** (raining, hailing, snowing, sleeting, etc.), your highest stat goes up by +1, but your Frenzy lasts until the weather abates. Not even reaching 0 Hunger ends it. Check the forecast.",
         "xpGain": "+3 XP"
       }
     ]

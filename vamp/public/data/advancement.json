@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-17T09:57:20.135Z",
+  "generatedAt": "2026-05-18T07:00:30.385Z",
   "data": {
     "intro": "Vampires don't \"level up\" in the traditional sense. There are no experience tiers, no class features that unlock at level 7, no prestige paths. Instead, the Blood learns from what you do and processes it while you sleep. Every time you close your eyes at dawn, the night's events settle into your Vitae like sediment in wine. When you wake, you might find yourself a little faster, a little sharper, and a little more dangerous than you were the night before.\n\nMechanically, this means most of your experience is processed during slumber. At the start of each new night (or at the beginning of a session if the last one ended with the Coterie getting tucked into your coffins), the table briefly settles XP before play resumes. Any upgrades purchased during the previous night or while asleep take effect immediately upon waking — the Blood has done its work while you rested.",
     "xpSources": [
@@ -43,13 +43,18 @@
       },
       {
         "name": "Discipline Access",
-        "cost": "3 (in-Clan) or 5 (out-of-Clan)",
-        "description": "**XP Cost:** 3 (in-Clan) or 5 (out-of-Clan)\n\nUnlock a Discipline tree you don't already have, gaining its Discipline Perk for free. This represents exposure to new Blood, mentorship from another Kindred, or the slow awakening of latent potential. Once a Discipline is unlocked, its Powers are purchased individually (see below).\n\nIn-Clan Disciplines are the three listed on your Playbook. Out-of-Clan covers everything else and requires a fictional justification: a teacher, a taste (or two) of the right Blood, a stolen grimoire, or similar. Some Disciplines are exclusive to certain Playbooks; for example, nobody besides Thin-Bloods may access Thin-Blood Alchemy, and nobody besides Devorari may access Psychotrophia.\n\n!!! note \"Caitiff\"\n\n    *Your Bane applies here and to the Powers below. Add your Blood Potency to the access cost (minimum 1 surcharge). At BP 1, out-of-Clan access costs 6; at BP 5, it costs 10. However, your 2 starting Disciplines are already unlocked and their Power costs are unaffected by this surcharge.*"
+        "cost": "3 (starting) or 5 (non-starting)",
+        "description": "**XP Cost:** 3 (starting) or 5 (non-starting)\n\nUnlock a Discipline tree you don't already have, gaining its Discipline Perk for free. This represents exposure to new Blood, mentorship from another Kindred, or the slow awakening of latent potential. Once a Discipline is unlocked, its Powers are purchased individually (see below).\n\nStarting Disciplines are the three listed on your Playbook. Non-starting covers everything else and requires a fictional justification: a teacher, a taste (or two) of the right Blood, a stolen grimoire, or similar. Some Disciplines are exclusive to certain Playbooks; for example, nobody besides Thin-Bloods may access Thin-Blood Alchemy, and nobody besides Devorari may access Psychotrophia.\n\n!!! note \"Caitiff\"\n\n    *Your Bane applies here and to the Powers below. Add your Blood Potency to the access cost (minimum 1 surcharge). At BP 1, non-starting Discipline access costs 6; at BP 5, it costs 10. However, your 2 starting Disciplines are already unlocked and their Power costs are unaffected by this supernatural surcharge.*"
       },
       {
         "name": "Discipline Powers",
         "cost": "1 + the Power's level",
         "description": "**XP Cost:** 1 + the Power's level\n\nLearn a single Power from a Discipline you've already unlocked. Level 1 Powers cost 2 XP; level 5 Powers cost 6 XP. Apart from Storyteller fiat, you cannot learn or activate Powers of a level higher than your current Blood Potency."
+      },
+      {
+        "name": "Merits & Flaws",
+        "cost": "Varies",
+        "description": "**XP Cost/Gain:** Per item\n\nCritically, Merits and Flaws may only be acquired with the explicit say-so of your Storyteller. They require you to have set it up the fiction beforehand — whether or not you can get anything past what you acquired at character creation is entirely dependent on how you've played."
       },
       {
         "name": "Other Improvements",

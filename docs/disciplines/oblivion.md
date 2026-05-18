@@ -153,7 +153,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 *(Requires: Auspex access)*
 
-**When you peel a piece of your own shadow free and give it purpose**, make a Hunger Check and roll +Shadow. The Shade travels across surfaces at running speed, slips under doors and through the smallest cracks, and follows your mental commands. It has no mind of its own but perceives everything around it. When it returns and merges back into your shadow, you receive everything it experienced. Shades cannot attack, manipulate objects, or interact with the physical world. They are destroyed by bright light (UV or otherwise) or direct sunlight.
+**When you peel a piece of your own shadow free and give it purpose**, make a Hunger Check and roll +Shadow. The Shade travels across surfaces at running speed, slips under doors and through the smallest cracks, and follows your mental commands. It has no mind of its own but perceives everything around it. When it returns and merges back into your shadow, you receive everything it experienced. Shades cannot attack, manipulate objects, or interact with the physical world (unless yours is allowed to by some other limited means). They are destroyed by bright light (UV or otherwise) or direct sunlight.
 
 **On a 12+,** the Shade lasts until dawn and can travel any distance. It returns vivid, detailed information.
 

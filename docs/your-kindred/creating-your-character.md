@@ -35,7 +35,7 @@ Your Clan is your vampiric lineage — the curse passed down through your sire's
 
 **What This Gives You:**
 
-- Access to 3 in-Clan Disciplines (choose 2 to start with)
+- Access to 3 starting Disciplines (choose 2 to start with)
 - A unique Bane (your Playbook's specific curse)
 - A Compulsion (urges that arise from your bloodline)
 - 2 Perks (special abilities only your Playbook gets)
@@ -118,7 +118,7 @@ Debts are favors owed and favors held. Some Predator Types give you starting Deb
 
 ### 7. Decide on Disciplines
 
-Disciplines are vampiric magic and abilities. Your Clan gives you access to 3 in-Clan Disciplines; you start with 2 of them at level 1. Your Predator Type gives you 1 additional Discipline (sometimes out-of-Clan). Each Discipline comes with a Discipline Perk that you get for free. Check out [the table at the end of this section](#discipline-overview) for further clarification. Clanless Playbooks start with slightly different Discipline access.
+Disciplines are vampiric magic and abilities. Your Clan gives you access to 3 starting Disciplines; you start with 2 of them at level 1. Your Predator Type gives you 1 additional Discipline (sometimes non-starting). Each Discipline comes with a Discipline Perk that you get for free. Check out [the table at the end of this section](#discipline-overview) for further clarification. Clanless Playbooks start with slightly different Discipline access.
 
 **What You Get:**
 

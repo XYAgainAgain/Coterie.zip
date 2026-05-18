@@ -77,21 +77,27 @@ Unlock the Advanced result (12+) for any single Basic Move. There are 12 Basic M
 
 ### Discipline Access
 
-**XP Cost:** 3 (in-Clan) or 5 (out-of-Clan)
+**XP Cost:** 3 (starting) or 5 (non-starting)
 
 Unlock a Discipline tree you don't already have, gaining its Discipline Perk for free. This represents exposure to new Blood, mentorship from another Kindred, or the slow awakening of latent potential. Once a Discipline is unlocked, its Powers are purchased individually (see below).
 
-In-Clan Disciplines are the three listed on your Playbook. Out-of-Clan covers everything else and requires a fictional justification: a teacher, a taste (or two) of the right Blood, a stolen grimoire, or similar. Some Disciplines are exclusive to certain Playbooks; for example, nobody besides Thin-Bloods may access Thin-Blood Alchemy, and nobody besides Devorari may access Psychotrophia.
+Starting Disciplines are the three listed on your Playbook. Non-starting covers everything else and requires a fictional justification: a teacher, a taste (or two) of the right Blood, a stolen grimoire, or similar. Some Disciplines are exclusive to certain Playbooks; for example, nobody besides Thin-Bloods may access Thin-Blood Alchemy, and nobody besides Devorari may access Psychotrophia.
 
 !!! note "Caitiff"
 
-    *Your Bane applies here and to the Powers below. Add your Blood Potency to the access cost (minimum 1 surcharge). At BP 1, out-of-Clan access costs 6; at BP 5, it costs 10. However, your 2 starting Disciplines are already unlocked and their Power costs are unaffected by this surcharge.*
+    *Your Bane applies here and to the Powers below. Add your Blood Potency to the access cost (minimum 1 surcharge). At BP 1, non-starting Discipline access costs 6; at BP 5, it costs 10. However, your 2 starting Disciplines are already unlocked and their Power costs are unaffected by this supernatural surcharge.*
 
 ### Discipline Powers
 
 **XP Cost:** 1 + the Power's level
 
 Learn a single Power from a Discipline you've already unlocked. Level 1 Powers cost 2 XP; level 5 Powers cost 6 XP. Apart from Storyteller fiat, you cannot learn or activate Powers of a level higher than your current Blood Potency.
+
+### Merits & Flaws
+
+**XP Cost/Gain:** Per item
+
+Critically, Merits and Flaws may only be acquired with the explicit say-so of your Storyteller. They require you to have set it up the fiction beforehand — whether or not you can get anything past what you acquired at character creation is entirely dependent on how you've played.
 
 ### Other Improvements
 
