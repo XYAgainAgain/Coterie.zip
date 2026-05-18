@@ -28,7 +28,7 @@ Each of the 14 Clans has a variant Bane, which you may take as an alternative to
 Folkloric Banes are entirely optional, but when creating your character, you may choose to take **up to 3** that make sense (or don't at all, for entertainment purposes) for your character. As with the other varieties, taking on a Folkloric Bane is permanent — you can never be rid of it until you meet Final Death — and the XP granted by taking them on is fleeting and must be spent by the end of your first slumber or it is lost.
 
 | BANE | CONSEQUENCES | GAIN |
-| :---: | :---: | :---: |
+| :---: | ----- | :---: |
 | *Noxious Garlic* | **Touching garlic** deals 1 Aggravated Harm to you. Eating it deals 3, but also reduces your Hunger to 0 and nauseates you, preventing you from **Feeding** until the next night. | +1 XP |
 | *Holy Water* | **Touching holy water** deals 1 Aggravated Harm to you. Drinking it causes Final Death. Why would you do that? | +1 XP |
 | *Pale Beasts* | **When you see an all-white animal of any kind**, you must **Stay Chill** with Disadvantage or flee the scene at once. | +1 XP |
