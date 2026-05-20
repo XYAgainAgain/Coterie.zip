@@ -22,7 +22,7 @@ Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Dominate](../disc
 
 **A third eye sits in the center of your forehead.** No supernatural power can conceal it short of hiding your entire body; physical coverings (hats, scarves, bandages, masks, long bangs) work most of the time. When you use an Active Discipline Power, the eye opens and weeps blood. Nearby Kindred at 4+ Hunger who witness this must **Stay Chill** or feel drawn to **Feed** from you.
 
-Your Vitae is intoxicating to other Kindred. When a non-Salubri tastes your blood, they must **Stay Chill** with a penalty equal to your Blood Potency (minimum 1) or continue feeding until physically stopped. Kindred of the Blood Leech Predator Type have Disadvantage on this roll.
+Your Vitae is intoxicating to other Kindred. When a non-Salubri tastes your blood, they must **Stay Chill** with a penalty equal to your Blood Potency (minimum 1) or continue feeding until physically stopped. Kindred of the *Blood Leech* Predator Type have Disadvantage on this roll.
 
 ## Compulsion: *Affective Empathy*
 

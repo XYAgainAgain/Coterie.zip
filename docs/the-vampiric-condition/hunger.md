@@ -30,7 +30,8 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 
 **5 Hunger: Frenzy**
 
-- You remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. This is something every Kindred experiences at least once.
+- **As soon as you reach 5 Hunger and at the start of every turn (every 5 seconds) while you're there,** you must **Stay Chill** or enter Frenzy.
+- In Frenzy, you remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. Some Discipline Powers can activate Frenzy, but most of the time you'll do it to yourself by getting reckless. This is something every Kindred experiences at least once.
 - When you reach 0 Hunger again, the Beast releases you. Your character may not remember exactly what happened during their rampage. They will soon find out.
 - **Age Scaling:**
     - **Thin-Blood:** Desperate, embarrassing. Starving wretch, not horror movie monster.
@@ -54,7 +55,7 @@ Some particularly taxing uses might require beating your Hunger by 2, or automat
 
 ## Feeding
 
-The actual process of a vampire bite, referred to as The Kiss, is ecstasy and violation wrapped into one. For the bloodsucker, it's pure satisfaction: warm blood flooding cold veins, the Hunger receding, the world snapping back into focus. For the mortal, it's overwhelming: a rush of endorphins that drowns out pain, fear, and reason. Most vampires' fangs carry a mild euphoric venom that makes victims pliant or even eager once they're connected. The experience leaves mortals dazed, often convinced it was a dream or that they wanted it all along. Vampires with the Siren Predator Type produce an especially potent Kiss, turning feeding into something mortals crave and chase.
+The actual process of a vampire bite, referred to as The Kiss, is ecstasy and violation wrapped into one. For the bloodsucker, it's pure satisfaction: warm blood flooding cold veins, the Hunger receding, the world snapping back into focus. For the mortal, it's overwhelming: a rush of endorphins that drowns out pain, fear, and reason. Most vampires' fangs carry a mild euphoric venom that makes victims pliant or even eager once they're connected. The experience leaves mortals dazed, often convinced it was a dream or that they wanted it all along. Vampires with the *Siren* Predator Type produce an especially potent Kiss, turning feeding into something mortals crave and chase.
 
 The danger isn't just in the act, it's in the aftermath. Mortals who've been fed upon often return, consciously or not, seeking that high again. Some become willing vessels (even Blood Dolls), growing increasingly addicted to the vampire's touch. Others rationalize it away, their minds unable to process what happened. Either way, careless feeding creates patterns, and patterns create problems. A vampire who feeds sloppily leaves trails: witnesses, security footage, missing persons reports, or worse — mortals who *remember*.
 

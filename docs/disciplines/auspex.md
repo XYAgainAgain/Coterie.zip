@@ -102,7 +102,7 @@ Additionally, when you use either Move, you may make one Hunger Check to gain +2
 
 *(Requires: Oblivion access)*
 
-**When you kill a mortal and read the secrets of the cosmos written in their cooling viscera**, make a Hunger Check and roll +Wits. The death must be fresh; this Power requires you to physically examine the remains within moments of their final breath. You gain 1 Stain (Organovore Predator Types are exempt; you've done this before).
+**When you kill a mortal and read the secrets of the cosmos written in their cooling viscera**, make a Hunger Check and roll +Wits. The death must be fresh; this Power requires you to physically examine the remains within moments of their final breath. You gain 1 Stain (*Organovore* Predator Types are exempt; you've done this before).
 
 **On a 10+,** the dying mind's final glimpse of the infinite becomes yours. Bank a number of Disadvantages equal to your Blood Potency. Until the next dawn, whenever someone acts against you (attacking, **Influencing**, using a Discipline Power, etc.), you may spend 1 banked Disadvantage to impose Disadvantage on their roll. You already saw this coming.
 

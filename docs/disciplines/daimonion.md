@@ -365,3 +365,9 @@ The rift stays open until someone closes it. A practitioner of Blood Sorcery, Ob
 - Something squirms through the rift that definitely isn't a Hellion; the Storyteller determines what it is but doesn't have to tell you, but it looks at you with gratitude before it acts, leaves, or worse
 
 **On a 6-,** the rift opens but it just won't close. It is, for the moment, permanent. The Harm still happens, the Hellions still spawn, but the rift persists until someone finds a way to seal it that the Storyteller deems sufficient. You have created a lasting and extremely obvious supernatural disaster. The domain will never be the same. Neither will you, assuming you survive what (or who) comes next.
+
+---
+
+## Daimonion Sacraments
+
+\[PLS HOLD, THEY'RE COOKIN' I PROMISE!!! :) THEY'RE YUCKY!]

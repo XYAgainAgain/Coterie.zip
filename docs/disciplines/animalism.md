@@ -18,7 +18,7 @@ You can bidirectionally communicate with any animal in a language you both under
 
 Animals know things. The bodega cat knows who comes and goes at 3 AM. The pigeons on the fire escape watched the whole robbery go down. The rats in the basement have opinions about the new tenants. Animals are limited by their perspective and intelligence, but they're excellent observers within their domain, and they don't lie. Except cats, who might do so just to mess with you unless you pony up a treat.
 
-**When you call out for a specific type of animal in the area**, make a Hunger Check. If you have the Farmer Predator Type, make this Hunger Check with Advantage. The animals must actually be present nearby to answer; nothing technically prevents you from trying to summon an orca in Central Park, but you should do the math on that idea before committing. Summoned animals listen to you and follow reasonable requests but scatter or turn hostile if seriously endangered. This is not a **Hunt**; ***Feral Whispers*** calls animals for utility, scouting, or companionship, not for getting eaten.
+**When you call out for a specific type of animal in the area**, make a Hunger Check. If you have the *Farmer* Predator Type, make this Hunger Check with Advantage. The animals must actually be present nearby to answer; nothing technically prevents you from trying to summon an orca in Central Park, but you should do the math on that idea before committing. Summoned animals listen to you and follow reasonable requests but scatter or turn hostile if seriously endangered. This is not a **Hunt**; ***Feral Whispers*** calls animals for utility, scouting, or companionship, not for getting eaten.
 
 ---
 

@@ -28,13 +28,13 @@ Your Harm Track starts at 6 HP at BP 0–1. For every BP level past 1, you gain 
 
 ### Bane Severity
 
-Every Clan Bane imposes penalties that scale with your Blood Potency. At BP 1, these are minor inconveniences. At BP 4–5, they become defining limitations that shape how you navigate every night. The specific penalties are described in each Clan's Playbook, but the principle is universal: the more potent your Blood, the heavier your curse weighs. Many Banes impose an Ongoing penalty "equal to your Blood Potency (minimum 1)" under their specified conditions.
+Just about every Bane imposes penalties that scale with your Blood Potency. At BP 1, these are minor inconveniences. At BP 4–5, they become defining limitations that shape how you navigate every night. The specific penalties are described in each Clan's Playbook, but the principle is universal: the more potent your Blood, the heavier your curse weighs. Many Banes impose an Ongoing penalty "equal to your Blood Potency (minimum 1)" under their specified conditions.
 
 This scaling also applies to some [Variant Banes](../your-kindred/optional-extras.md#clan-bane-variants) and the Devorari's *Wasting Clock* Bane, which advances BP + 1 segments per subsequent **Feed** upon the same mortal.
 
 ### Compulsion Intensity
 
-Like Bane Severity, an Ongoing penalty imposed by your Clan Compulsion scales with your Blood Potency. At BP 1, most triggered Compulsions are a −1 annoyance you can push through. At BP 4–5, it's a −4 or −5 penalty that makes anything other than satisfying the urge nearly impossible. Full Compulsion rules and Clan-specific triggers are in each Playbook.
+Like Bane Severity, an Ongoing penalty imposed by your Compulsion scales with your Blood Potency. At BP 1, most triggered Compulsions are a −1 annoyance you can push through. At BP 4–5, it's a −4 or −5 penalty that makes anything other than satisfying the urge nearly impossible. Full Compulsion rules and Clan-specific triggers are in each Playbook.
 
 ### Blood Surges
 

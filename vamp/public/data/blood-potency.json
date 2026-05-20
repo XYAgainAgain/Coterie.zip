@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-20T09:12:49.902Z",
+  "generatedAt": "2026-05-20T11:49:37.478Z",
   "data": {
     "intro": "The Blood thickens with age. A Fledgling's Vitae is thin and watery compared to the concentrated ichor running through an Elder's veins; more potent blood grants access to stronger Disciplines, more powerful Surges, and greater resilience, but it also deepens the curse. Your Bane bites harder, your Compulsions grow more demanding, and your feeding requirements become increasingly restrictive. Blood Potency is the double-edged sword at the center of vampiric existence: the stronger you become, the more the Beast owns you.Blood Potency is rated on a scale of 0–5. It can be increased by 1 by spending 10 XP and entering voluntary slumber at 0 Hunger; the transformation takes a full day of uninterrupted rest as the Blood reshapes itself. Your starting Blood Potency is determined by your Age Bracket, and BP 0 characters (Thin-Bloods & Ghouls) cannot increase it through normal advancement — Diablerie is the sole exception for Thin-Bloods, and the Embrace is the only way up for Ghouls.",
     "ageScaling": [
@@ -68,11 +68,11 @@
       },
       {
         "name": "Bane Severity",
-        "body": "Every Clan Bane imposes penalties that scale with your Blood Potency. At BP 1, these are minor inconveniences. At BP 4–5, they become defining limitations that shape how you navigate every night. The specific penalties are described in each Clan's Playbook, but the principle is universal: the more potent your Blood, the heavier your curse weighs. Many Banes impose an Ongoing penalty \"equal to your Blood Potency (minimum 1)\" under their specified conditions.\n\nThis scaling also applies to some [Variant Banes](../your-kindred/optional-extras.md#clan-bane-variants) and the Devorari's *Wasting Clock* Bane, which advances BP + 1 segments per subsequent **Feed** upon the same mortal."
+        "body": "Just about every Bane imposes penalties that scale with your Blood Potency. At BP 1, these are minor inconveniences. At BP 4–5, they become defining limitations that shape how you navigate every night. The specific penalties are described in each Clan's Playbook, but the principle is universal: the more potent your Blood, the heavier your curse weighs. Many Banes impose an Ongoing penalty \"equal to your Blood Potency (minimum 1)\" under their specified conditions.\n\nThis scaling also applies to some [Variant Banes](../your-kindred/optional-extras.md#clan-bane-variants) and the Devorari's *Wasting Clock* Bane, which advances BP + 1 segments per subsequent **Feed** upon the same mortal."
       },
       {
         "name": "Compulsion Intensity",
-        "body": "Like Bane Severity, an Ongoing penalty imposed by your Clan Compulsion scales with your Blood Potency. At BP 1, most triggered Compulsions are a −1 annoyance you can push through. At BP 4–5, it's a −4 or −5 penalty that makes anything other than satisfying the urge nearly impossible. Full Compulsion rules and Clan-specific triggers are in each Playbook."
+        "body": "Like Bane Severity, an Ongoing penalty imposed by your Compulsion scales with your Blood Potency. At BP 1, most triggered Compulsions are a −1 annoyance you can push through. At BP 4–5, it's a −4 or −5 penalty that makes anything other than satisfying the urge nearly impossible. Full Compulsion rules and Clan-specific triggers are in each Playbook."
       },
       {
         "name": "Blood Surges",

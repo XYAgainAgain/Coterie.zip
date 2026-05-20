@@ -12,7 +12,7 @@ Most Melpominee Powers work through general vocalization alone. Those that expli
 
 ### *Ventriloquism (Discipline Perk)*
 
-You can project your voice to any point within line of sight that's Distant or closer, making it sound as though you are speaking from that location: behind someone, around a corner, through a window, from an upper floor, off a distant rooftop. No roll is required.
+**Whenever you vocalize**, you can project your voice to any point within line of sight that's Distant or closer, making it sound as though you are speaking from that location: behind someone, around a corner, through a window, from an upper floor, off a distant rooftop. No roll is required.
 
 The voice carries at whatever volume you choose, from a whisper to a shout, and can be clearly heard by anyone within Close Range of the projected point. Your lips don't move unless you want them to, and even then, they don't have to match up with what you're actually saying.
 
@@ -24,7 +24,7 @@ You can use any other Melpominee Power through your projected voice as though yo
 
 ### *Cognitive Dissonance (Passive)*
 
-You lean into the music that never stops. While singing along with your Inner Song (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer −1 Ongoing to all rolls for as long as you keep singing and they can hear you.
+You lean into the music that never stops. **When you sing along with your Inner Song** (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer −1 Ongoing to all rolls for as long as you keep singing and they can hear you.
 
 While ***Cognitive Dissonance*** is active, you cannot use any other Discipline Power that requires vocalization; your voice is already spoken for. This Power works in combat, but ends if you take Harm equal to or greater than your Blood Potency — it's quite hard to get stabbed and keep singing. Ask me how I know.
 
@@ -161,7 +161,7 @@ You may weave any Discipline Power you possess into the echo. If you do, the Hun
 
 Your ***Piercing Wail*** evolves into something far more terrible; this Power expands upon it permanently, and you cannot diminish its effects. It now deals 4 + your Blood + your Demeanor in Aggravated Harm and shatters glass and minds, cracks stone and bone, and buckles metal and knees within the affected area.
 
-If used in the company of ordinary mortals, the sonic force is beyond what a human body can withstand. Their heads explode. Not "may explode." Not "at the Storyteller's discretion." They pop like bloody balloons. This is an automatic, catastrophic Masquerade breach and a Humanity crisis. Choose your venues carefully.
+**If used in the company of ordinary mortals, the sonic force is beyond what a human body can withstand.** Their heads explode. Not "may explode." Not "at the Storyteller's discretion." They pop like bloody balloons. This is an automatic, catastrophic Masquerade breach and a Humanity crisis. Choose your venues carefully.
 
 ---
 

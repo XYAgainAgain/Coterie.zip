@@ -20,7 +20,7 @@ Choose 2 to start: [**Dominate**](../disciplines/dominate.md) **| [Fortitude](..
 
 ## Bane: *Rarefied Palate*
 
-**At character creation, define your exclusive feeding preference**: a narrow, specific category of vessel (e.g., redheads, military veterans, people experiencing grief, individuals of noble descent, methamphetamine users, etc.) Blood from anyone outside your preference provides no sustenance; you vomit it back up within moments. Ventrue with the Blood Leech Predator Type are especially susceptible to going hungry.
+**At character creation, define your exclusive feeding preference**: a narrow, specific category of vessel (e.g., redheads, military veterans, people experiencing grief, individuals of noble descent, methamphetamine users, etc.) Blood from anyone outside your preference provides no sustenance; you vomit it back up within moments. Ventrue with the *Blood Leech* Predator Type are especially susceptible to going hungry.
 
 You can sense whether a vessel matches your preference by spending a moment in close proximity and rolling +Wits. **On a 7+,** you know for certain if they fit the bill. It's like sniffing your food to check for mold.
 
