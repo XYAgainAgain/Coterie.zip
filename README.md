@@ -22,17 +22,21 @@ It's also completely free, so if you somehow paid for this, you got scammed. If 
 
 - **PbtA Bones, VTM Fangs:** Fiction-first Moves and Playbooks with a chilled-out version of *Vampire: The Masquerade*'s Clans, Disciplines, Hunger, and Humanity systems
 - **Medium Crunchiness, Mild Lore:** ***Coterie*** does its best to strike a balance between the free-flowing fiction of *PbtA* and the excellent vampiric archetypes that VTM is known for but without all the dots and dice pools and messy stuff that can really make things drag. It's pretty snappy!
-- **21 Playbooks (for now):** 14 Clan and 7 Clanless, each with unique Perks, Compulsions, and Banes
-- **16 Disciplines:** Vampiric powers adapted from *VTM*, with a streamlined Power/Perk system
-- **5 Character Stats:** Blood, Shadow, Resolve, Demeanor, & Wits — nice & easy!
-- **5 Coterie Stats:** Your group has its own stats, Moves, and identity
-- **Build-a-Vamp Character Crafter (COMING SOON):** Built-in guided character creation & sheet management, with an export/import feature so you can use whatever format you prefer!
-- **Terminology Toggle (UNDER REPAIRS):** The site can swap all the *VTM* jargon for plain-language equivalents, so nobody needs to know what a "Nosferatu" is to play (but c'mon, just *look* at the word)
-- **4–7 players:** One Storyteller, the rest playing vamps until something dreadful happens to them!
+- **22 Playbooks (for now):** 14 Clan and 8 Clanless, each with unique Perks, Compulsions, Banes, & XP triggers; choose whichever flavor suits you!
+  - **Clans:** Banu Haqim, Brujah, Gangrel, Hecata, Lasombra, Malkavian, The Ministry, Nosferatu, Ravnos, Salubri, Toreador, Tremere, Tzimisce, & Ventrue (the classics!)
+  - **Clanless:** Baali (yes really), Caitiff, Daughter of Cacophony, Devorari (what?), Gargoyle, Ghoul, Osirian, & Thin-Blood (the weirdos!)
+
+- **17 Disciplines:** Vampiric powers adapted from *VTM*, retuned & rewritten from scratch to fit the PbtA vibes (there's consequences now, did you hear?)
+- **5 Character Stats:** Blood, Shadow, Resolve, Demeanor, & Wits. Nice & easy!
+- **5 Coterie Stats:** Clout, Cohesion, Charm, Claim, & Currency. The only things that *really* matter.
+- ***Vamp* Character Sheet (COMING SOON):** Built-in guided character creation & sheet management, with a built-in dice roller, custom theming, character art support, & trackers galore!
+- **Terminology Toggle (UNDER REPAIRS):** The site ~~can~~ *could formerly and will soon again be able to* swap all the *VTM* jargon for plain-language equivalents, so nobody needs to know what a Tzimisce is to play. (They're spooky!)
+- **4–7 players:** One Storyteller, the rest playing vamps (until something dreadful happens to them).
+- **FREE FOREVER!** CC0 1.0 Universal means this game will never be sold, bought, or paywalled for any reason under the moon. Tear it apart, hack it to pieces, add stuff, remove stuff, reduce, reuse, reanimate, change whatever you want, and pretty please let me know if you make some cool homebrew — *I might just put it in!*
 
 ## Feedback
 
-Got thoughts, suggestions, balance changes, or site bugs to report? Open an [Issue](../../issues) — all feedback is welcome! Hit me! Or I guess actually, please roll +Blood to see if you can **Dirty Your Claws**.
+Got thoughts, suggestions, balance changes, or site bugs to report? Open an [Issue](../../issues) — all feedback is welcome! Hit me! Or I guess actually, please roll +Blood to see if you can **Dirty Your Claws**. 
 
 ## Under the Coffin Lid
 
