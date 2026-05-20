@@ -26,7 +26,7 @@ The black eyes impose an Ongoing penalty equal to your Blood Potency to all soci
 
 ### *Ashes to Ashes*
 
-**When you press your palm to a corpse and force-feed some of your Vitae into it**, gain +1 Hunger. Over the next 30 seconds, the body and everything in or on it dissolves into fine grey ash, unless an item has the Holy, Magical, or Unbreakable tag. Nothing forensically useful remains, and it can be swept up in a bin or blown away by a light breeze.
+**When you press your palm to a corpse and force some of your Vitae into it**, gain +1 Hunger. Over the next 30 seconds, the body and everything in or on it dissolves into fine grey ash, unless an item has the Holy, Magical, or Unbreakable tag. Nothing forensically useful remains, and it can be swept up in a bin or blown away by a light breeze.
 
 This works on any mortal corpse, fresh or ancient, human or animal. It does not work on dead vampires or bodies still animated by supernatural means. This Power is impractical during combat but invaluable for cleanup afterward. Hope you brought a snack.
 

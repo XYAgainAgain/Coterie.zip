@@ -1,9 +1,9 @@
 import { computed, signal } from '@preact/signals';
-import { character } from './character';
+import { character, BP_HP } from './character';
 import { parseHuntingStat, parsePrerequisites } from '../data/transforms';
 import type {
   StatName, Playbook, PredatorType, Discipline,
-  Power, Prerequisite,
+  Power, Prerequisite, AgeBracket,
 } from '../data/types';
 import type { GameData } from '../data/loader';
 
@@ -21,12 +21,16 @@ export const currentPredatorType = computed<PredatorType | null>(() => {
   return data.predatorTypes.find(p => p.name === character.value.predatorType) ?? null;
 });
 
+export const currentAgeBracket = computed<AgeBracket | null>(() => {
+  const data = gameData.value;
+  if (!data) return null;
+  return data.ageBrackets.find(a => a.name === character.value.ageBracket) ?? null;
+});
+
 export const huntingStat = computed<StatName | null>(() => {
   const pt = currentPredatorType.value;
   if (!pt) return null;
-  const parsed = parseHuntingStat(pt.huntingStat);
-  if (parsed === 'None' as StatName) return null;
-  return parsed;
+  return parseHuntingStat(pt.huntingStat);
 });
 
 export const availableDisciplines = computed<string[]>(() => {
@@ -54,7 +58,6 @@ export const accessibleDisciplineData = computed<Discipline[]>(() => {
   return data.disciplines.filter(d => slugs.includes(d.slug));
 });
 
-const BP_HP: Record<number, number> = { 0: 6, 1: 6, 2: 9, 3: 12, 4: 15, 5: 18 };
 const BP_STAT_CAP: Record<number, number> = { 0: 3, 1: 3, 2: 3, 3: 4, 4: 5, 5: 5 };
 
 export const maxHP = computed(() => BP_HP[character.value.bp] ?? 6);

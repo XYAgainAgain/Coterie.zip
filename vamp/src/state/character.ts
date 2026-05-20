@@ -155,7 +155,7 @@ export function setHumanity(humanity: number, stains: number) {
   };
 }
 
-const BP_HP: Record<number, number> = { 0: 6, 1: 6, 2: 9, 3: 12, 4: 15, 5: 18 };
+export const BP_HP: Record<number, number> = { 0: 6, 1: 6, 2: 9, 3: 12, 4: 15, 5: 18 };
 
 export function setHarm(superficial: number, aggravated: number) {
   const hp = BP_HP[character.value.bp] ?? 6;

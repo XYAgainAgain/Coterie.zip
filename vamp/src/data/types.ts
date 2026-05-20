@@ -1,6 +1,8 @@
 export type StatName = 'Blood' | 'Shadow' | 'Resolve' | 'Demeanor' | 'Wits';
+export type CoterieStatName = 'Clout' | 'Cohesion' | 'Charm' | 'Claim' | 'Currency';
 
 export const STAT_NAMES: StatName[] = ['Blood', 'Shadow', 'Resolve', 'Demeanor', 'Wits'];
+export const COTERIE_STAT_NAMES: CoterieStatName[] = ['Clout', 'Cohesion', 'Charm', 'Claim', 'Currency'];
 
 export interface Archetype {
   name: string;

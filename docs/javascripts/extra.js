@@ -26,6 +26,21 @@ window.Coterie = window.Coterie || {};
 window.Coterie.theme = window.Coterie.theme || {};
 window.Coterie.batthew = window.Coterie.batthew || {};
 
+/* Guarded localStorage access for browsers that block storage (e.g. Safari private mode) */
+window.Coterie.storage = {
+  get: function(key, fallback) {
+    try {
+      const v = localStorage.getItem(key);
+      return v !== null ? v : (fallback !== undefined ? fallback : null);
+    }
+    catch (e) { console.warn('[Coterie] localStorage read failed:', e); return fallback !== undefined ? fallback : null; }
+  },
+  set: function(key, value) {
+    try { localStorage.setItem(key, value); }
+    catch (e) { console.warn('[Coterie] localStorage write failed:', e); }
+  }
+};
+
 /* Entity decoding, just in case (Zensical escapes cleanly but better safe) */
 (function() {
   'use strict';
@@ -324,8 +339,7 @@ window.Coterie.batthew = window.Coterie.batthew || {};
   const BAT_OFF_SRC = '/assets/images/bat-off.svg';
 
   function getBatState() {
-    try { return localStorage.getItem(BAT_KEY) !== 'off'; }
-    catch (e) { console.warn('[Coterie] localStorage read failed:', e); return true; }
+    return window.Coterie.storage.get(BAT_KEY, 'on') !== 'off';
   }
 
   function injectBatToggle() {
@@ -354,8 +368,7 @@ window.Coterie.batthew = window.Coterie.batthew || {};
         return;
       }
       const nowOn = !getBatState();
-      try { localStorage.setItem(BAT_KEY, nowOn ? 'on' : 'off'); }
-      catch (e) { console.warn('[Coterie] localStorage write failed:', e); }
+      window.Coterie.storage.set(BAT_KEY, nowOn ? 'on' : 'off');
       img.src = nowOn ? BAT_ON_SRC : BAT_OFF_SRC;
       btn.title = nowOn ? 'Batthew: on' : 'Batthew: off';
       btn.setAttribute('aria-label', btn.title);
@@ -612,7 +625,7 @@ window.Coterie.batthew = window.Coterie.batthew || {};
 })();
 
 /* Zensical search lives in shadow DOM; activeElement is the host, not the input */
-function isTypingContext(e) {
+window.Coterie.isTypingContext = function() {
   const ae = document.activeElement;
   if (!ae) return false;
   if (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'SELECT' || ae.isContentEditable) return true;
@@ -623,7 +636,7 @@ function isTypingContext(e) {
     if (inner && (inner.tagName === 'INPUT' || inner.tagName === 'TEXTAREA')) return true;
   }
   return false;
-}
+};
 
 /* Text-size rocker + font swapper, persists in localStorage */
 (function() {
@@ -643,10 +656,8 @@ function isTypingContext(e) {
   ];
 
   function getScale() {
-    try {
-      const v = parseFloat(localStorage.getItem(SCALE_KEY));
-      if (!isNaN(v) && v >= SCALE_MIN && v <= SCALE_MAX) return v;
-    } catch (e) { console.warn('[Coterie] localStorage read failed:', e); }
+    const v = parseFloat(window.Coterie.storage.get(SCALE_KEY));
+    if (!isNaN(v) && v >= SCALE_MIN && v <= SCALE_MAX) return v;
     return SCALE_DEFAULT;
   }
 
@@ -661,8 +672,7 @@ function isTypingContext(e) {
     const oldTop = anchor ? anchor.getBoundingClientRect().top : 0;
 
     applyScale(scale);
-    try { localStorage.setItem(SCALE_KEY, scale.toString()); }
-    catch (e) { console.warn('[Coterie] localStorage write failed:', e); }
+    window.Coterie.storage.set(SCALE_KEY, scale.toString());
 
     if (anchor) window.scrollBy(0, anchor.getBoundingClientRect().top - oldTop);
   }
@@ -676,10 +686,8 @@ function isTypingContext(e) {
   }
 
   function getFontIndex() {
-    try {
-      const v = parseInt(localStorage.getItem(FONT_KEY), 10);
-      if (!isNaN(v) && v >= 0 && v < FONTS.length) return v;
-    } catch (e) { console.warn('[Coterie] localStorage read failed:', e); }
+    const v = parseInt(window.Coterie.storage.get(FONT_KEY), 10);
+    if (!isNaN(v) && v >= 0 && v < FONTS.length) return v;
     return 0;
   }
 
@@ -689,8 +697,7 @@ function isTypingContext(e) {
 
   function cycleFont() {
     const next = (getFontIndex() + 1) % FONTS.length;
-    try { localStorage.setItem(FONT_KEY, next.toString()); }
-    catch (e) { console.warn('[Coterie] localStorage write failed:', e); }
+    window.Coterie.storage.set(FONT_KEY, next.toString());
     applyFont(next);
     updateFontButton();
   }
@@ -769,7 +776,7 @@ function isTypingContext(e) {
     kbBound = true;
 
     document.addEventListener('keydown', function(e) {
-      if (isTypingContext(e)) return;
+      if (window.Coterie.isTypingContext()) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
       switch (e.key) {
@@ -906,7 +913,7 @@ function isTypingContext(e) {
     navBound = true;
 
     document.addEventListener('keydown', function(e) {
-      if (isTypingContext(e)) return;
+      if (window.Coterie.isTypingContext()) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
       if (e.target.closest && e.target.closest('pre, code, .md-typeset__scrollwrap')) return;
       const digitMatch = e.code && e.code.match(/^Digit([1-5])$/);
@@ -956,13 +963,20 @@ function isTypingContext(e) {
     requestAnimationFrame(step);
   }
 
-  /* Capture phase fires before Zensical's own handler */
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.md-top')) return;
-    e.preventDefault();
-    e.stopPropagation();
-    smoothScrollToTop();
-  }, true);
+  let topBound = false;
+  function bindTop() {
+    if (topBound) return;
+    topBound = true;
+    /* Capture phase fires before Zensical's own handler */
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.md-top')) return;
+      e.preventDefault();
+      e.stopPropagation();
+      smoothScrollToTop();
+    }, true);
+  }
+
+  bindTop();
 })();
 
 /* Pronunciation audio player */

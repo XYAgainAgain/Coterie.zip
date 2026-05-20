@@ -6,7 +6,7 @@ import { EyeToggle } from './components/EyeToggle';
 import { DiceOverlay } from './dice/DiceOverlay';
 import { loadAllGameData } from './data/loader';
 import { gameData } from './state/derived';
-export const editMode = signal(false);
+import { editMode, toggleEditMode } from './state/ui';
 const dataReady = signal(false);
 const dataError = signal<string | null>(null);
 
@@ -25,11 +25,6 @@ loadAllGameData()
     dataError.value = err instanceof Error ? err.message : String(err);
   });
 
-function toggleEdit() {
-  editMode.value = !editMode.value;
-  document.documentElement.setAttribute('data-edit-mode', String(editMode.value));
-}
-
 export function App() {
   return (
     <div class="vamp-app">
@@ -41,7 +36,7 @@ export function App() {
         <div class="vamp-header__spacer" />
         <button
           class="vamp-header__lock"
-          onClick={toggleEdit}
+          onClick={toggleEditMode}
           aria-label={editMode.value ? 'Lock (switch to viewing)' : 'Unlock (switch to editing)'}
           aria-pressed={editMode.value}
         >

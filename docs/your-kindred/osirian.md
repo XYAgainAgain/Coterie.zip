@@ -30,7 +30,7 @@ Bardo does not follow normal Discipline access rules. Instead of requiring Blood
 
 You have spent your unlife suppressing the Beast through ascetic discipline, and it has not forgiven you.
 
-**When you Frenzy**, the starved Beast erupts with devastating force. After any Frenzy, take an Ongoing penalty to **Stay Chill** rolls equal to half your missing Humanity, rounded up (minimum 1) for the remainder of the night. Your missing Humanity is 10 minus your current Humanity. (At Humanity 8, that's −1. At Humanity 5, that's −3.)
+**When you Frenzy**, the starved Beast erupts with devastating force. After any Frenzy, take an Ongoing penalty to **Stay Chill** rolls equal to half your missing Humanity, rounded up (minimum 1) for the remainder of the night. Your missing Humanity is 10 minus your current Humanity (at 8 Humanity, that's −1; at 5 Humanity, that's −3).
 
 You cannot Embrace anyone. Any attempt to turn a mortal simply kills them; the blood of Osiris cannot create new unlife, only sustain the old.
 

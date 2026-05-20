@@ -1,5 +1,6 @@
 import { signal } from '@preact/signals';
 import type { Clock } from './character';
+import type { CoterieStatName } from '../data/types';
 
 export interface CoterieMember {
   name: string;
@@ -12,7 +13,7 @@ export interface CoterieMember {
 
 export interface CoterieState {
   typeName: string;
-  stats: Record<string, number>;
+  stats: Record<CoterieStatName, number>;
   havenDescription: string;
   havenPositives: string[];
   havenNegatives: string[];
@@ -37,7 +38,7 @@ export const coterieState = signal<CoterieState>({
   ],
 });
 
-export function setCoterieType(name: string, stats: Record<string, number>) {
+export function setCoterieType(name: string, stats: Record<CoterieStatName, number>) {
   coterieState.value = { ...coterieState.value, typeName: name, stats };
 }
 
@@ -45,7 +46,7 @@ export function setHavenDescription(text: string) {
   coterieState.value = { ...coterieState.value, havenDescription: text };
 }
 
-export function adjustCoterieStat(stat: string, delta: number) {
+export function adjustCoterieStat(stat: CoterieStatName, delta: number) {
   const current = coterieState.value.stats[stat] ?? 0;
   const next = Math.max(-3, Math.min(3, current + delta));
   coterieState.value = {

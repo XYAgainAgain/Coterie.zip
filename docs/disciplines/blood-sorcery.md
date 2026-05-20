@@ -45,7 +45,7 @@ Reinforced steel, titanium, and similarly hard metals resist the corrosion, scar
 
 ### *Transitive Bond (Passive)*
 
-**When you store your precious Vitae in a container or feed it to a Ghoul**, make a Hunger Check to ensure your Vitae retains its Blood Bonding properties after it leaves your body. That stored (or Ghoul-borne) blood now acts as a proxy: anyone who drinks it progresses a Blood Bond with you as if they'd drunk directly from you.
+**When you store your precious Vitae in a container or give it to a Ghoul**, make a Hunger Check to ensure your Vitae retains its Blood Bonding properties after it leaves your body. That stored (or Ghoul-borne) blood now acts as a proxy: anyone who drinks it progresses a Blood Bond with you as if they'd drunk directly from you.
 
 Your Ghoul doesn't need to know they're a delivery mechanism, and probably shouldn't.
 
@@ -80,7 +80,7 @@ You can hurl a single 1-Harm dagger at any target within Far Range as a Free Act
 
 **On a 12+,** the target gains +2 Hunger and the process is completely undetectable, even to Auspex users. **On a 10+,** the target gains +2 Hunger. **On a 7–9,** the target gains +1 Hunger, and the Storyteller chooses 1 complication:
 
-- The target feels your influence and knows exactly who just tampered with their body
+- The target feels you digging around in there and knows exactly who just tampered with their body
 - Your own Vitae rebels in sympathy; you gain +1 Hunger
 - Your gesture isn't as subtle as you thought; someone else in the room notices you concentrating
 - The target's Beast stirs from the provocation; they must **Stay Chill** immediately or possibly Frenzy
@@ -148,7 +148,7 @@ Spend Hold 1-for-1 to ask the Storyteller:
 
 **When you clench your fists and thicken the Vitae coursing through your undead veins**, make a number of Hunger Checks equal to the Blood Potency you're trying to reach. Your BP increases to the target level until the end of the scene. To extend the boost to a full night, make twice that number of Hunger Checks instead.
 
-You gain every benefit and every cost of the higher BP: more HP, less XP, stronger Blood Surges, tighter feeding restrictions, and worse Bane severity. If the Hunger Checks push you to 5 Hunger and you Frenzy, the temporary BP boost still takes effect. Good luck with that.
+You gain every benefit and every cost of the higher BP: more HP, less XP, stronger Blood Surges, tighter **Feeding** restrictions, and worse Bane consequences. If the Hunger Checks push you to 5 Hunger and you Frenzy, the temporary BP boost still takes effect. Good luck with that.
 
 ### *Ripples of the Heart*
 
@@ -176,7 +176,7 @@ The next Kindred who **Feeds** from the altered source inherits the effect. Alte
 
 ### *Theft of Vitae*
 
-**When you beckon toward a mortal you can see and command their blood to leap from their body into your open mouth**, make a Hunger Check and roll +Blood. An arterial wound opens on the target in your preferred drinking location and a stream of blood arcs through the air toward you. You can do nothing else while **Feeding** this way except move, though you must maintain line of sight, and the process takes 3 full turns (15 seconds) to complete. The wound seals itself when the feeding ends, leaving no trace. A target wearing full-body protection (hazmat suit, sealed armor) merely bleeds ecstatically into their own outfit.
+**When you beckon toward a mortal you can see and command their blood to leap from their body into your open mouth**, make a Hunger Check and roll +Blood. An arterial wound opens on the target in your preferred drinking location and a stream of blood arcs through the air toward you. You can do nothing else while **Feeding** this way except move, though you must maintain line of sight, and the process takes 3 full turns (15 seconds) to complete. The wound seals itself when the consumption ends, leaving no trace. A target wearing full-body protection (hazmat suit, sealed armor) merely bleeds ecstatically into their own outfit.
 
 Against supernatural creatures whose BP is half yours (rounded down) or lower, the Power works identically. If line of sight is broken at any time while you use this Power, the stream of blood splashes to the ground and you slake Hunger equal to how many turns you were able to hold it for; no other effects occur.
 
@@ -184,7 +184,7 @@ Against supernatural creatures whose BP is half yours (rounded down) or lower, t
 
 - The blood stream is spectacular and clearly visible to everyone in the area; if mortals are present, the Masquerade Clock advances
 - The target thrashes instead of going limp; they take 2 Superficial Harm from the wound
-- You can't stop cleanly; the feeding continues for 1 additional turn whether you want it to or not
+- You can't stop cleanly; the **Feeding** continues for 1 additional turn whether you want it to or not
 - Someone else's blood in the area responds to your call and contaminates the stream (gross)
 
 **On a 6-,** the wound opens but the blood goes everywhere except your mouth. The target takes 3 Superficial Harm from the rupture, you gain nothing but a dry cleaning bill, and the crime scene writes itself. If mortals are present, the Masquerade Clock advances by 2 segments. It still looked cool, at least.
@@ -210,7 +210,7 @@ You must maintain concentration throughout. Movement and Free Actions on your en
 
 **When you open your veins and command your Vitae to form a hovering shield of liquid crimson**, gain +1 Hunger. You gain 5 Temporary HP. The quivering crimson barrier moves on its own to intercept incoming attacks, spattering beautifully on impact.
 
-You can feed additional Vitae into the shield at 1 Hunger Check per reinforcement, each restoring 5 Temporary HP, up to a maximum pool equal to 3 × your Blood Potency. The Aegis lasts for 1 scene or until all Temporary HP is depleted. Once the shield breaks, inert blood splatters across the floor. Somebody's going to have to clean that up. Probably you, but preferably a freaky little Ghoul.
+You can push additional Vitae into the shield at 1 Hunger Check per reinforcement, each restoring 5 Temporary HP, up to a maximum pool equal to 3 × your Blood Potency. The Aegis lasts for 1 scene or until all Temporary HP is depleted. Once the shield breaks, inert blood splatters across the floor. Somebody's going to have to clean that up. Probably you, but preferably a freaky little Ghoul.
 
 ### *Fulminating Vitae*
 

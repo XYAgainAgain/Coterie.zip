@@ -165,7 +165,7 @@ The effect lasts for a number of scenes equal to your Blood Potency.
 
 ### *Suffuse the Edifice (Passive)*
 
-While you are present in a building or similar enclosed space, you can extend ***Awe***, ***Daunt***, or ***Majesty*** through the entire structure. Anyone inside the building or looking at it from outside is affected as though you were standing directly in front of them.
+**While you are present in a building or similar enclosed space**, you can extend ***Awe***, ***Daunt***, or ***Majesty*** through the entire structure. Anyone inside the building or looking at it from outside is affected as though you were standing directly in front of them.
 
 If used outdoors, the effect extends to Far Range instead.
 

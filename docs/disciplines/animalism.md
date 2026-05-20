@@ -91,7 +91,7 @@ This stat bonus does not stack with itself. Only one instance at a time is permi
 
 *(Requires: Auspex access)*
 
-**When you spend a few minutes gathering knowledge from a swarm of animals**, gain +1 Hunger and roll +Blood. You feed a trace of your Vitae to the flock, swarm, or school to momentarily link their collective awareness. They know things: the pigeons saw who entered the building, the rats heard the conversation through the walls, the stray cats know every face on the block (especially those that don't stop to scratch them).
+**When you spend a few minutes gathering knowledge from a swarm of animals**, gain +1 Hunger and roll +Blood. You dispense a trace of your Vitae to the flock, swarm, or school to momentarily link their collective awareness. They know things: the pigeons saw who entered the building, the rats heard the conversation through the walls, the stray cats know every face on the block (especially those that don't stop to scratch them).
 
 Regardless of the result, you may ask the Storyteller 1 question about anyone or anything within the city, filtered through what the targeted group of animals could reasonably have observed. The Storyteller answers by describing the image the swarm forms: murmurations of starlings tracing the shape of a building, cockroaches arranging themselves into a crude map, fish swimming a pattern that makes sense only to you (and maybe your Malkavian buddy).
 

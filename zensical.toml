@@ -58,6 +58,7 @@ nav = [
       { "Ventrue" = "your-kindred/ventrue.md" },
     ] },
     { "Clanless Playbooks" = [
+      { "Baali" = "your-kindred/baali.md" },
       { "Caitiff" = "your-kindred/caitiff.md" },
       { "Daughter of Cacophony" = "your-kindred/daughter-of-cacophony.md" },
       { "Devorari" = "your-kindred/devorari.md" },

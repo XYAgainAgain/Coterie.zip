@@ -1,4 +1,5 @@
 import { marked } from 'marked';
+import { STAT_NAMES } from './types';
 import type { StatName, Prerequisite } from './types';
 
 const LINK_RE = /\[.*?\]\(\.\.\/disciplines\/([\w-]+)\.md\)/g;
@@ -40,8 +41,10 @@ export function parsePrerequisites(body: string): Prerequisite[] {
   return prereqs;
 }
 
-export function parseHuntingStat(raw: string): StatName {
-  return raw.replace(/^\+/, '').trim() as StatName;
+export function parseHuntingStat(raw: string): StatName | null {
+  const cleaned = raw.replace(/^\+/, '').trim();
+  if (STAT_NAMES.includes(cleaned as StatName)) return cleaned as StatName;
+  return null;
 }
 
 const MD_LINK_RE = /\(\.\.\/([\w-]+)\/([\w-]+)\.md(#[\w-]*)?\)/g;
@@ -89,9 +92,15 @@ function processAdmonitions(text: string): string {
   return s;
 }
 
+const mdCache = new Map<string, string>();
+
 export function renderGameMarkdown(raw: string): string {
+  const cached = mdCache.get(raw);
+  if (cached) return cached;
   const admonitioned = processAdmonitions(raw);
   const rewritten = rewriteMarkdownLinks(admonitioned);
   const html = marked.parse(rewritten, { async: false }) as string;
-  return colorTierMarkers(html);
+  const result = colorTierMarkers(html);
+  mdCache.set(raw, result);
+  return result;
 }

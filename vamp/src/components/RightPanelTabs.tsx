@@ -7,14 +7,15 @@ import {
   type RPanelTab,
 } from '../state/panel';
 import {
-  currentPlaybook, currentPredatorType, currentBloodlineUrl, gameData,
+  currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
 } from '../state/derived';
 import { character, setXP } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription } from '../state/coterie';
-import { editMode } from '../app';
+import { editMode } from '../state/ui';
 import { EditableText } from './EditableText';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
-import type { AgeBracket, StatName, BasicMove, StandardMove, BlushOfLife } from '../data/types';
+import { COTERIE_STAT_NAMES } from '../data/types';
+import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife } from '../data/types';
 
 const STAT_ABBREV: Record<string, string> = {
   Blood: 'BLD', Shadow: 'SHA', Resolve: 'RES', Demeanor: 'DEM', Wits: 'WIT',
@@ -75,16 +76,8 @@ function TabBar() {
   );
 }
 
-function currentAgeBracket(): AgeBracket | null {
-  const data = gameData.value;
-  if (!data) return null;
-  return data.ageBrackets.find(a => a.name === character.value.ageBracket) ?? null;
-}
 
-
-const COTERIE_STAT_ORDER = ['Clout', 'Cohesion', 'Charm', 'Claim', 'Currency'];
-
-const COTERIE_STAT_DESC: Record<string, string> = {
+const COTERIE_STAT_DESC: Record<CoterieStatName, string> = {
   Clout: 'Reputation and influence among Kindred.',
   Cohesion: 'How well you work together. Modifies Coterie Move rolls.',
   Charm: 'How likable your Coterie is to mortals and Kindred.',
@@ -112,7 +105,7 @@ function CoteriePanel() {
 
       <CollapsibleSection title="Coterie Stats" defaultOpen>
         <div class="vamp-coterie-stats">
-          {COTERIE_STAT_ORDER.map(name => {
+          {COTERIE_STAT_NAMES.map(name => {
             const val = cot.stats[name] ?? 0;
             return (
               <div class="vamp-stat vamp-stat--coterie" key={name}>
@@ -263,7 +256,7 @@ function CollapsibleSection({ title, pill, defaultOpen, children }: {
 function CharacterPanel() {
   const pb = currentPlaybook.value;
   const pt = currentPredatorType.value;
-  const ab = currentAgeBracket();
+  const ab = currentAgeBracket.value;
 
   return (
     <div class="vamp-rpanel-scroll">
@@ -554,6 +547,9 @@ function AdvancementPanel() {
         <span class="vamp-advancement-xp__value">{char.xp}</span>
       </div>
       {costs.map(item => {
+        /* BUG: parseInt("2 (starting) or 3") yields 2, not NaN. Needs strict digits-only
+           check so conditional costs don't render an Acquire button. Costs now use
+           "(starting)" and "(non-starting)" instead of "(in-Clan)" and "(out-of-Clan)". */
         const numericCost = parseInt(item.cost, 10);
         const hasNumericCost = !isNaN(numericCost);
         const isFlashing = flashingRef.current[item.name];

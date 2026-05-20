@@ -97,26 +97,32 @@
     death2:     { loop: false, interrupt: false }
   };
 
-  let el, cvs, ctx;
+  // Shared state (single instance for all bats)
   const sheets = {};
-  let theme, anim, frame;
-  let animAccum = 0;
-  let animDone = false;
-  let animReverse = false;
-  let lastTime = 0;
-  let facingLeft = false;
-  let pendingFlip = false;
-
-  let px, py;
-  let jx = 0, jy = 0;
-  let prevPx = 0, prevPy = 0;
-  let tx = -1, ty = -1;
+  let theme;
   let mx = -1, my = -1;
   let pmx = -1, pmy = -1;
   let cSpeed = 0;
   let lastMove = 0;
   let hasCursor = false;
+  let reduced = false;
+  let lastTime = 0;
+  let rafId = null;
+  let _eventsBound = false;
+  let _themeWatching = false;
 
+  // Per-instance state (moves into createBat factory)
+  let el, cvs, ctx;
+  let anim, frame;
+  let animAccum = 0;
+  let animDone = false;
+  let animReverse = false;
+  let facingLeft = false;
+  let pendingFlip = false;
+  let px, py;
+  let jx = 0, jy = 0;
+  let prevPx = 0, prevPy = 0;
+  let tx = -1, ty = -1;
   let lives, deaths, tier, timesDisturbed;
   let state;
   let enabled = true;
@@ -140,14 +146,6 @@
   let roosts = [];
   let roostIdx = 0;
   let firstRoost = true;
-  let reduced = false;
-
-  // RAF loop state
-  let rafId = null;
-
-  // Re-execution guard
-  let _eventsBound = false;
-  let _themeWatching = false;
 
   function getTheme() {
     const s = document.body.getAttribute('data-md-color-scheme');
@@ -310,26 +308,20 @@
     }
   }
 
-  function enter(s) {
-    state = s;
-    wantCurious = false;
-    clearTimeout(curiousTid);
-    clearTimeout(autoRoostTid);
-    clearTimeout(tierDecayTid);
-    clearTimeout(echoFlyTid);
-
-    switch (s) {
-      case 'SPAWNING':
+  const STATES = {
+    SPAWNING: {
+      enter() {
         cvs.style.pointerEvents = '';
         fading = false;
         el.style.opacity = '1';
-        /* Spawn along bottom edge; reversed death1 looks like ground-based materialization */
         px = DISPLAY.DW + Math.random() * (window.innerWidth - DISPLAY.DW * 3);
         py = window.innerHeight - DISPLAY.DH;
         clampAndTransform();
         setAnim('death1', true);
-        break;
-      case 'ROOSTING':
+      }
+    },
+    ROOSTING: {
+      enter() {
         setAnim('idle1');
         scheduleCurious();
         if (tier > 0) {
@@ -340,12 +332,16 @@
             }
           }, TIMING.TIER_DECAY_MS);
         }
-        break;
-      case 'CURIOUS':
+      }
+    },
+    CURIOUS: {
+      enter() {
         setAnim('idle2');
         echoChance = Date.now() >= digestUntil && Math.random() < 0.75;
-        break;
-      case 'FLYING':
+      }
+    },
+    FLYING: {
+      enter() {
         setAnim('move1');
         boredStart = performance.now();
         scheduleEchoFly();
@@ -356,7 +352,7 @@
             if (state !== 'FLYING') return;
             flyToRoost();
           }, 2000 + Math.random() * 1000);
-          break;
+          return;
         }
         if (tier === 0) {
           pickWanderTarget();
@@ -366,41 +362,171 @@
             flyToRoost();
           }, 3000 + Math.random() * 4000);
         }
-        break;
-      case 'GRABBING':
+      },
+      update(dt, now) {
+        const j = jitter(now, JITTER.AMP[tier]);
+        const jf = 1 - Math.pow(1 - 0.03, dt / TIMING.REF_DT);
+        jx += (j.x - jx) * jf;
+        jy += (j.y - jy) * jf;
+
+        if (tier === 0) {
+          const dx = tx - px, dy = ty - py;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 40) {
+            const r = roosts[roostIdx];
+            const atRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
+            if (atRoost) {
+              px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
+              state = 'LANDING';
+              setAnim('appearance', true);
+              return;
+            }
+            pickWanderTarget();
+          }
+
+          const curDist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
+          if (curDist < 80) {
+            pickWanderTarget();
+            clearTimeout(autoRoostTid);
+            autoRoostTid = setTimeout(function () {
+              if (state !== 'FLYING' || tier !== 0) return;
+              flyToRoost();
+            }, 3000 + Math.random() * 4000);
+          } else if (curDist < 150 && now - lastWander > TIMING.WANDER_COOLDOWN) {
+            pickWanderTarget();
+          }
+
+          moveLerp(tx, ty, MOVEMENT.LERP_FLY[0], dt);
+          clampAndTransform();
+          return;
+        }
+
+        if (!hasCursor) {
+          const distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
+          if (distToTarget < 40 && now - lastWander > TIMING.WANDER_COOLDOWN) pickWanderTarget();
+          moveLerp(tx, ty, MOVEMENT.LERP_FLY[tier], dt);
+          clampAndTransform();
+          return;
+        }
+
+        const distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
+        if (distToTarget < DISTANCE.GRAB_RADIUS && now - lastMove > BEHAVIOR.GRAB_IDLE_MS[tier]) {
+          jx = jy = 0;
+          enter('GRABBING');
+          return;
+        }
+
+        if (cSpeed < 2 && now - boredStart > BEHAVIOR.BORED_MS[tier]) {
+          flyToRoost();
+          return;
+        }
+        if (cSpeed >= 2) boredStart = now;
+
+        moveLerp(tx, ty, MOVEMENT.LERP_FLY[tier], dt);
+        clampAndTransform();
+      }
+    },
+    GRABBING: {
+      enter() {
         stopAllDrips();
         setAnim('grab1');
         if (window.__kdrIncrement) window.__kdrIncrement('bites');
         biteSplash();
-        break;
-      case 'HIT':
+      },
+      update(dt) {
+        jx = jy = 0;
+        const spd = (anim === 'grab3') ? MOVEMENT.GRAB3_LERP : MOVEMENT.GRAB_LERP;
+        moveLerp(tx, ty, spd, dt);
+        clampAndTransform();
+      }
+    },
+    HIT: {
+      enter() {
         stopAllDrips();
         setAnim('hit');
         tier = Math.min(2, tier + 1);
         timesDisturbed = Math.max(timesDisturbed, tier);
-        break;
-      case 'DYING':
+      }
+    },
+    DYING: {
+      enter() {
         stopAllDrips();
         deaths++;
         if (window.__kdrIncrement) window.__kdrIncrement('deaths');
         setAnim(deaths >= 3 ? 'death1' : 'death2');
-        break;
-      case 'DEAD': {
+      }
+    },
+    DEAD: {
+      enter() {
         cvs.style.pointerEvents = 'none';
         clearTimeout(respawnTid);
         const delay = deaths >= 3
           ? TIMING.RESPAWN_LONG[0] + Math.random() * (TIMING.RESPAWN_LONG[1] - TIMING.RESPAWN_LONG[0])
           : TIMING.RESPAWN_QUICK;
         respawnTid = setTimeout(function () { enter('RESPAWNING'); }, delay);
-        break;
       }
-      case 'RESPAWNING':
+    },
+    RESPAWNING: {
+      enter() {
         if (deaths >= 3) { deaths = 0; tier = 0; timesDisturbed = 0; }
         lives = BEHAVIOR.MAX_LIVES;
         pickRoost();
         enter('SPAWNING');
-        break;
+      }
+    },
+    FLYOFF_WARMUP: {
+      update(dt) {
+        jx = jy = 0;
+        moveLerp(tx, ty, 0.008, dt);
+        clampAndTransform();
+      }
+    },
+    FLYOFF: {
+      update(dt) {
+        jx = jy = 0;
+        moveLerp(tx, ty, 0.03, dt);
+        clampAndTransform();
+        if (px < -DISPLAY.DW || px > window.innerWidth + DISPLAY.DW ||
+            py < -DISPLAY.DH || py > window.innerHeight + DISPLAY.DH) hideBat();
+      }
+    },
+    FLYIN: {
+      update(dt) {
+        jx = jy = 0;
+        const dx = tx - px, dy = ty - py;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        moveLerp(tx, ty, 0.008, dt);
+        clampAndTransform();
+        if (dist < 40) {
+          const r = roosts[roostIdx];
+          const headingToRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
+          if (headingToRoost) {
+            px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
+            state = 'LANDING';
+            setAnim('appearance', true);
+          } else {
+            enter('FLYING');
+            pickWanderTarget();
+            clearTimeout(autoRoostTid);
+            autoRoostTid = setTimeout(function () {
+              if (state !== 'FLYING' || tier !== 0) return;
+              flyToRoost();
+            }, 3000 + Math.random() * 4000);
+          }
+        }
+      }
     }
+  };
+
+  function enter(s) {
+    state = s;
+    wantCurious = false;
+    clearTimeout(curiousTid);
+    clearTimeout(autoRoostTid);
+    clearTimeout(tierDecayTid);
+    clearTimeout(echoFlyTid);
+    if (STATES[s] && STATES[s].enter) STATES[s].enter();
   }
 
   function scheduleCurious() {
@@ -444,122 +570,7 @@
   }
 
   function updatePos(dt, now) {
-    if (state === 'FLYOFF' || state === 'FLYIN' || state === 'FLYOFF_WARMUP') jx = jy = 0;
-
-    if (state === 'FLYOFF_WARMUP') {
-      moveLerp(tx, ty, 0.008, dt);
-      clampAndTransform();
-      return;
-    }
-
-    if (state === 'FLYOFF') {
-      moveLerp(tx, ty, 0.03, dt);
-      clampAndTransform();
-      if (px < -DISPLAY.DW || px > window.innerWidth + DISPLAY.DW ||
-          py < -DISPLAY.DH || py > window.innerHeight + DISPLAY.DH) hideBat();
-      return;
-    }
-
-    if (state === 'FLYIN') {
-      const dx = tx - px, dy = ty - py;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      moveLerp(tx, ty, 0.008, dt);
-      clampAndTransform();
-      if (dist < 40) {
-        const r = roosts[roostIdx];
-        const headingToRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
-        if (headingToRoost) {
-          px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
-          state = 'LANDING';
-          setAnim('appearance', true);
-        } else {
-          enter('FLYING');
-          pickWanderTarget();
-          clearTimeout(autoRoostTid);
-          autoRoostTid = setTimeout(function() {
-            if (state !== 'FLYING' || tier !== 0) return;
-            flyToRoost();
-          }, 3000 + Math.random() * 4000);
-        }
-      }
-      return;
-    }
-
-    const frozen = state === 'ROOSTING' || state === 'CURIOUS' || state === 'DEAD' ||
-                 state === 'DYING' || state === 'SPAWNING' || state === 'HIT' ||
-                 state === 'LANDING';
-    if (frozen) return;
-
-    /* Jitter is visual only, smoothed via lerp so it drifts not teleports.
-       px/py stay clean for grab detection. */
-    const j = jitter(now, JITTER.AMP[tier]);
-    if (state === 'GRABBING') { jx = jy = 0; }
-    else {
-      const jf = 1 - Math.pow(1 - 0.03, dt / TIMING.REF_DT);
-      jx += (j.x - jx) * jf;
-      jy += (j.y - jy) * jf;
-    }
-
-    if (tier === 0 && state === 'FLYING') {
-      const dx = tx - px, dy = ty - py;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-
-      if (dist < 40) {
-        const r = roosts[roostIdx];
-        const atRoost = Math.abs(tx - r.x) < 10 && Math.abs(ty - r.y) < 10;
-        if (atRoost) {
-          px = r.x; py = r.y; jx = jy = 0; clampAndTransform();
-          state = 'LANDING';
-          setAnim('appearance', true);
-          return;
-        }
-        pickWanderTarget();
-      }
-
-      const curDist = Math.sqrt((mx - px) * (mx - px) + (my - py) * (my - py));
-      if (curDist < 80) {
-        pickWanderTarget();
-        clearTimeout(autoRoostTid);
-        autoRoostTid = setTimeout(function () {
-          if (state !== 'FLYING' || tier !== 0) return;
-          flyToRoost();
-        }, 3000 + Math.random() * 4000);
-      } else if (curDist < 150 && now - lastWander > TIMING.WANDER_COOLDOWN) {
-        pickWanderTarget();
-      }
-
-      moveLerp(tx, ty, MOVEMENT.LERP_FLY[0], dt);
-      clampAndTransform();
-      return;
-    }
-
-    if (state === 'FLYING') {
-      if (!hasCursor) {
-        const distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
-        if (distToTarget < 40 && now - lastWander > TIMING.WANDER_COOLDOWN) pickWanderTarget();
-        moveLerp(tx, ty, MOVEMENT.LERP_FLY[tier], dt);
-        clampAndTransform();
-        return;
-      }
-
-      const distToTarget = Math.sqrt((tx - px) * (tx - px) + (ty - py) * (ty - py));
-      if (distToTarget < DISTANCE.GRAB_RADIUS && now - lastMove > BEHAVIOR.GRAB_IDLE_MS[tier]) {
-        jx = jy = 0;
-        enter('GRABBING');
-        return;
-      }
-
-      if (cSpeed < 2 && now - boredStart > BEHAVIOR.BORED_MS[tier]) {
-        flyToRoost();
-        return;
-      }
-      if (cSpeed >= 2) boredStart = now;
-    }
-
-    let spd = MOVEMENT.LERP_FLY[tier];
-    if (state === 'GRABBING') spd = (anim === 'grab3') ? MOVEMENT.GRAB3_LERP : MOVEMENT.GRAB_LERP;
-    moveLerp(tx, ty, spd, dt);
-    clampAndTransform();
+    if (STATES[state] && STATES[state].update) STATES[state].update(dt, now);
   }
 
   function clampAndTransform() {

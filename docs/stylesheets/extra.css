@@ -516,15 +516,6 @@ a, button, .md-nav__link, .md-footer__link {
 .md-header__source { order: 50; }
 
 
-.md-header__option label.md-header__button {
-  padding: 0.3rem;
-}
-
-.md-header__option label.md-header__button svg {
-  width: 1.3rem;
-  height: 1.3rem;
-}
-
 /* Hide Zensical's default palette toggle; custom eye toggle replaces it */
 .md-header__option { display: none; }
 
@@ -711,7 +702,6 @@ a, button, .md-nav__link, .md-footer__link {
   display: block;
   transform: scaleX(-1);
   mask: url('../assets/images/bat-bullet.svg') center/contain no-repeat;
-  -webkit-mask: url('../assets/images/bat-bullet.svg') center/contain no-repeat;
   background-color: var(--color-text);
   opacity: 0.7;
   transition: transform 300ms ease, opacity 200ms ease;
@@ -1042,7 +1032,7 @@ a, button, .md-nav__link, .md-footer__link {
   z-index: -1;
   opacity: 0.04;
   mix-blend-mode: overlay;
-  will-change: transform, rotate;
+  will-change: transform;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation:
     smoke-drift var(--anim-smoke-1) linear infinite,
@@ -1458,7 +1448,6 @@ a, button, .md-nav__link, .md-footer__link {
   width: 0.85em;
   height: 0.85em;
   mask: url('../assets/images/bat-bullet.svg') center/contain no-repeat;
-  -webkit-mask: url('../assets/images/bat-bullet.svg') center/contain no-repeat;
   background-color: var(--md-accent-fg-color);
 }
 .md-typeset ul:not(.task-list) ul > li::before {
@@ -1471,7 +1460,6 @@ a, button, .md-nav__link, .md-footer__link {
   margin: 1.5em 0;
   background-color: var(--md-accent-fg-color);
   mask: url('../assets/images/floral-divider.svg') center/contain no-repeat;
-  -webkit-mask: url('../assets/images/floral-divider.svg') center/contain no-repeat;
   opacity: 0.7;
   filter: drop-shadow(2px 3px 8px rgba(0, 0, 0, 0.7));
 }
@@ -1498,7 +1486,6 @@ a, button, .md-nav__link, .md-footer__link {
 }
 .md-header__button.md-logo::after {
   mask: url('../assets/images/fangs.svg') center/contain no-repeat;
-  -webkit-mask: url('../assets/images/fangs.svg') center/contain no-repeat;
   background-color: currentColor;
   background-image: none;
 }
@@ -1517,7 +1504,6 @@ a, button, .md-nav__link, .md-footer__link {
   position: absolute;
   inset: 0;
   mask: url('../assets/images/download.svg') center/contain no-repeat;
-  -webkit-mask: url('../assets/images/download.svg') center/contain no-repeat;
   background-color: currentColor;
   transform: scale(0.6);
 }
@@ -1862,6 +1848,16 @@ code,
   .md-typeset a::after { transition: none; }
 }
 
+/* Static blobs on tablets and below: kill animation, drop GPU layers, hide smoke */
+@media screen and (max-width: 1024px) {
+  .ambient-blob {
+    animation: none;
+    will-change: auto;
+    filter: blur(50px);
+  }
+  .ambient-smoke { display: none; }
+}
+
 /* Bump mobile ToC button above the floating footer */
 @media screen and (max-width: 59.984375em) {
   .md-sidebar--secondary {
@@ -1869,7 +1865,6 @@ code,
   }
   .md-nav--secondary {
     background-color: color-mix(in srgb, var(--color-bg) 92%, transparent);
-    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
   }
 }
