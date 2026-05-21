@@ -161,7 +161,7 @@ The trance takes at least as long as a full day of slumber, but when it ends, al
 
 ### *Boon of Anubis (Passive)*
 
-You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits of the *Feeding***, you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
+You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits of the *Feeding* **, you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
 
 You can protect a number of mortals up to half your current Humanity, rounded up. If your Humanity drops and you now exceed your limit, the mortal who received the Boon earliest loses their protection first.
 
