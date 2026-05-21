@@ -161,11 +161,11 @@ The trance takes at least as long as a full day of slumber, but when it ends, al
 
 ### *Boon of Anubis (Passive)*
 
-You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits you would normally gain**, you may grant them this Boon instead. You take a small sip of their blood and give back something better: a permanent ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
+You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits you would normally gain**, you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
 
 You can protect a number of mortals up to half your current Humanity, rounded up. If your Humanity drops and you now exceed your limit, the mortal who received the Boon earliest loses their protection first.
 
-**When any vampire attempts to *Feed* from a mortal under your Boon with or without the intent to Embrace**, two things happen. First, the blood tastes like liquid sunlight; the would-be sire takes Aggravated Harm equal to your Blood Potency. If they drink anyway and attempt the Embrace, the mortal simply falls asleep and wakes up roughly eight hours later feeling better than they have in years (every ache gone, every fog lifted, like the best day of their life). The Embrace does not occur. The would-be sire loses 1 Humanity and receives a brief, unmistakable psychic impression of your disapproving face and the absolute certainty that this mortal is spoken for. They know whose protection they just ran into.
+**When any vampire attempts to *Feed* from a mortal under your Boon**, two things happen. First, the blood tastes like liquid sunlight; the would-be sire takes Aggravated Harm equal to your Blood Potency. If they drink anyway and attempt the Embrace, the mortal simply falls asleep and wakes up roughly eight hours later feeling better than they have in years (every ache gone, every fog lifted, like the best day of their life). The Embrace does not occur. The would-be sire loses 1 Humanity and receives a brief, unmistakable psychic impression of your disapproving face and the absolute certainty that this mortal is spoken for. They know whose protection they just ran into.
 
 ### *A Moment of Reflection*
 

@@ -104,17 +104,9 @@ You can refuse to honor a Debt, but it costs the whole Coterie. When you refuse,
 
 ### Coterie Debts
 
-Coterie Debts are collective obligations. The entire Coterie owes or is owed as a group. These are big, story-driving Debts that shape your chronicle and can have long-lasting effects.
+Coterie Debts are collective obligations. The entire Coterie owes or is owed as a group. These are big, story-driving Debts that shape your chronicle and can have long-lasting effects. You'll start with at least 1, as explained further over in the [Creating Your Coterie](../your-coterie/what-is-a-coterie.md#creating-your-coterie) section.
 
 **Soft Cap:** 3 Coterie Debts (in either direction). If you're carrying more than 3, your group is drowning in obligations and something's gotta give.
-
-#### *Starting Debt*
-
-In Session Zero, your Coterie starts with 1 Debt you collectively owe. Work with the Storyteller to decide:
-
-- **Who do you owe?** A powerful Elder? A rival Coterie? A mortal crime boss? A supernatural entity? Someone's generous grandma?
-- **Why do you owe them?** Did they help you establish your Haven? Did you botch a job for them? Did they cover a Masquerade breach for you?
-- **What might they ask for?** This can be anything within reason (or slightly beyond reason), and sets the tone for your early sessions.
 
 #### *Creating New Coterie Debts*
 

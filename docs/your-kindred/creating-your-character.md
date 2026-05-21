@@ -159,7 +159,7 @@ Now make your character real. Give them a name, an apparent age (how old they lo
 
 ### 10. Create Your Coterie
 
-Now comes the hard part: unliving with other vampires. You'll need to work as a group to get through this part. All the guidance you could need is in [Coterie Creation](../your-coterie/coterie-creation.md) in Part 4. Have fun out there, creature of the night!
+Now comes the hard part: unliving with other vampires. You'll need to work as a group to get through this part. All the guidance you could need is in [Creating Your Coterie](../your-coterie/what-is-a-coterie.md#creating-your-coterie) in Part 4. Have fun out there, creature of the night!
 
 ## Discipline Overview
 
