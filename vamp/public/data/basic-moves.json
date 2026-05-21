@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-20T11:49:37.478Z",
+  "generatedAt": "2026-05-21T02:26:13.724Z",
   "entries": [
     {
       "type": "standard",
@@ -289,7 +289,7 @@
       "humanityThresholds": [
         {
           "threshold": "9-10 Humanity",
-          "description": "You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to Demeanor checks made to do Normal Human Activities™."
+          "description": "You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to rolls made to perform Normal Human Activities™."
         },
         {
           "threshold": "8",

@@ -274,7 +274,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 What you can accomplish while appearing alive depends on your Humanity:
 
-- **9–10 Humanity:** You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to Demeanor checks made to do Normal Human Activities™.
+- **9–10 Humanity:** You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to rolls made to perform Normal Human Activities™.
 - **8:** You can use touchscreens, have sex and enjoy it, digest wine and light foods, and confidently pass as entirely human.
 - **7:** You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — **on a 10+** you pull it off, **on a 7–9** it's awkward, **on a 6-** they notice something's wrong.
 - **6:** You can use touchscreens; food makes you sick and you must **Stay Chill** to avoid vomiting. To fake sex as above, roll +Demeanor with −1 Forward.
