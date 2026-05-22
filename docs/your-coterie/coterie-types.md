@@ -4,7 +4,7 @@ title: "Coterie Types"
 
 Your Coterie Type informs what kind of group you are, what your shared Haven looks like, and where your collective strengths and weaknesses lie. Pick one during Session Zero that more or less fits the story you want to tell together, mark down your starting stats on your Coterie sheet, and choose your Haven Features together. If none of these quite fit what you're going for, skip to the end for guidance on how to build your own!
 
-**Haven Stats** always sum to a total of +2 (at the beginning; they go up and down as you play). The typical starting range for each stat is ±1, with ±2 for types that lean heavily into one identity. Only the Cult starts with a +3 in anything, because cults are like that.
+**Coterie Stats** always sum to a total of +2 (at the beginning; they go up and down as you play). The typical starting range for each stat is ±1, with ±2 for types that lean heavily into one identity. Only the Cult starts with a +3 in anything, because cults are like that.
 
 **Haven Features** are the defining characteristics of your shared unliving space. Each Coterie Type lists how many Positives and Negatives to pick; most are 3 and 2, but some types get more or fewer depending on their circumstances. These aren't just flavor, they're hooks for the Storyteller to pull on and for you to leverage, exploit, or suffer through.
 
@@ -53,7 +53,7 @@ Your Coterie formed around shared devotion. Maybe it's genuine faith in somethin
 
 Most vampires are useless during the day. You're not. Your Coterie is composed of Kith and Kindred who can walk in sunlight (Thin-Bloods, Ghouls, Devorari, Osirians, or anyone else who's somehow figured it out), and that makes you indispensable to vampiric leadership that needs eyes, hands, and fangs operating while the rest of the city slumbers. You guard sleeping Elders, scout hunter movements, run daytime errands that would dust anyone else, and generally handle hours of the day that most vampires try to pretend don't exist. The thanks you receive is roughly proportional to how expendable they consider you.
 
-**Coterie Stats:** **Clout −1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
+**Coterie Stats:Clout −1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
 
 ##### *Haven Features*
 
@@ -118,7 +118,7 @@ You're criminals and you're damn good at it. Heists, shakedowns, smash-and-grabs
 
 Someone breached the Masquerade. Someone *always* breaches the Masquerade. That's where you come in. You clean up messes, manipulate media, redirect investigations, silence witnesses (preferably without adding to the body count), and make problems disappear before they become everybody's problems. Vampiric leadership gives you broad authority and expects results. Other Kindred are polite to your face because they know that one night they'll need you, and you'll remember exactly how polite they were.
 
-**Coterie Stats:** **Clout +2** | **Cohesion +1** | **Charm −1** | **Claim +0** | **Currency +0**
+**Coterie Stats::** **Clout +2** | **Cohesion +1** | **Charm −1** | **Claim +0** | **Currency +0**
 
 ##### *Haven Features*
 

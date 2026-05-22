@@ -20,9 +20,9 @@ Your Coterie Type is the archetype that best describes what your group actually 
 
 Pick one that excites the table! Don't overthink it; you're choosing a starting identity, not an unlife sentence. Your Coterie will evolve through play, and nothing stops a group of Fixers from slowly becoming Fugitives once they learn too much about the wrong people and inevitably piss them off. The Type is just a label for where you begin. Your stats will drift, your loyalties will shift, and local leadership will probably change unexpectedly one night. What your Coterie becomes is a question only the story can answer.
 
-If nothing fits, the Uncategorizable type lets you distribute your own Haven Stats and choose your own Haven Features. Talk to your Storyteller about what social niche your Coterie occupies and what your nights usually consist of. Then comes the rest!
+If nothing fits, the Uncategorizable type lets you distribute your own Coterie Stats and choose your own Haven Features. Talk to your Storyteller about what social niche your Coterie occupies and what your nights usually consist of. Then comes the rest!
 
-### 2: Record Your Haven Stats
+### 2: Record Your Coterie Stats
 
 Your Coterie Type comes with five starting stats: **Clout**, **Cohesion**, **Charm**, **Claim**, and **Currency**. Write them down on your Coterie sheet. These stats always sum to +2 at the start (before play changes them), and they'll go up and down as your story unfolds.
 
