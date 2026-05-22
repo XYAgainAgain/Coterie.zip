@@ -10,7 +10,7 @@ const HavenFeaturesSchema = z.object({
 export const CoterieTypeSchema = z.object({
   name: z.string().min(1),
   description: z.string().min(1),
-  havenStats: z.string().min(1),
+  coterieStats: z.string().min(1),
   havenFeatures: HavenFeaturesSchema,
 });
 

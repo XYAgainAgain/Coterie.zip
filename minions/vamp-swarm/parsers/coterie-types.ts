@@ -53,22 +53,22 @@ function extractDescription(tokens: Token[]): string {
   for (const t of tokens) {
     if (t.type === 'paragraph') {
       const raw = t.raw.trim();
-      if (raw.startsWith('**Haven Stats:**')) break;
+      if (raw.startsWith('**Coterie Stats:**') || raw.startsWith('**Coterie Stats:')) break;
       parts.push(raw);
     }
   }
   return parts.join('\n\n');
 }
 
-function extractHavenStats(tokens: Token[]): string | null {
+function extractCoterieStats(tokens: Token[]): string | null {
   for (const t of tokens) {
     if (t.type !== 'paragraph') continue;
     const raw = t.raw.trim();
-    if (raw.startsWith('**Haven Stats:**')) {
-      return raw.replace(/^\*\*Haven Stats:\*\*\s*/, '').replace(/\*\*/g, '').trim();
+    if (raw.startsWith('**Coterie Stats:**')) {
+      return raw.replace(/^\*\*Coterie Stats:\*\*\s*/, '').replace(/\*\*/g, '').trim();
     }
-    if (raw.startsWith('**Haven Stats:')) {
-      return raw.replace(/^\*\*Haven Stats:\s*/, '').replace(/\*\*/g, '').trim();
+    if (raw.startsWith('**Coterie Stats:')) {
+      return raw.replace(/^\*\*Coterie Stats:\s*/, '').replace(/\*\*/g, '').trim();
     }
   }
   return null;
@@ -82,10 +82,10 @@ export function parseCoterieTypes(repoRoot: string): CoterieType[] {
   return sections.map(section => {
     const ctx = `Coterie Types > ${section.name}`;
     const description = extractDescription(section.tokens);
-    const havenStats = extractHavenStats(section.tokens);
+    const coterieStats = extractCoterieStats(section.tokens);
 
-    if (!havenStats) {
-      throw new Error(`[${ctx}] No Haven Stats line found`);
+    if (!coterieStats) {
+      throw new Error(`[${ctx}] No Coterie Stats line found`);
     }
 
     const havenFeatures = parseFeatureList(section, ctx);
@@ -93,7 +93,7 @@ export function parseCoterieTypes(repoRoot: string): CoterieType[] {
     return {
       name: section.name,
       description,
-      havenStats,
+      coterieStats,
       havenFeatures,
     };
   });

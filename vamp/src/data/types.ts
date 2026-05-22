@@ -196,7 +196,7 @@ export interface HavenFeatures {
 export interface CoterieType {
   name: string;
   description: string;
-  havenStats: string;
+  coterieStats: string;
   havenFeatures: HavenFeatures;
 }
 

@@ -565,8 +565,8 @@ RENDERERS['disciplines'] = function(entry) {
 
 RENDERERS['coterie-types'] = function(entry) {
   var html = '<details class="flavor"><summary>Description</summary><div class="field-value">' + md(entry.description) + '</div></details>';
-  html += '<div class="field"><div class="field-label">Haven Stats</div><div class="stat-bar">';
-  var parts = entry.havenStats.split('|');
+  html += '<div class="field"><div class="field-label">Coterie Stats</div><div class="stat-bar">';
+  var parts = entry.coterieStats.split('|');
   for (var i = 0; i < parts.length; i++) {
     var chunk = parts[i].trim();
     var m = chunk.match(/^(.+?)\\s+([+\\-\\u2212]\\d+)$/);
@@ -803,7 +803,7 @@ function badge(entry, key) {
   }
   if (key === 'playbooks') return entry.category;
   if (key === 'disciplines') return entry.status + ' (' + entry.powers.length + ' powers)';
-  if (key === 'coterie-types') return entry.havenStats;
+  if (key === 'coterie-types') return entry.coterieStats;
   if (key === 'coterie-moves') return entry.holdOptions ? 'Hold' : '';
   return '';
 }
