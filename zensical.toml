@@ -72,6 +72,7 @@ nav = [
   ] },
   { "Your Coterie" = [
     { "What is a Coterie?" = "your-coterie/what-is-a-coterie.md" },
+    { "Creating Your Coterie" = "your-coterie/creating-your-coterie.md" },
     { "Coterie Stats" = "your-coterie/coterie-stats.md" },
     { "Coterie Moves" = "your-coterie/coterie-moves.md" },
     { "Coterie Types" = "your-coterie/coterie-types.md" },

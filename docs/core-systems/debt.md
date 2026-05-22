@@ -104,7 +104,7 @@ You can refuse to honor a Debt, but it costs the whole Coterie. When you refuse,
 
 ### Coterie Debts
 
-Coterie Debts are collective obligations. The entire Coterie owes or is owed as a group. These are big, story-driving Debts that shape your chronicle and can have long-lasting effects. You'll start with at least 1, as explained further over in the [Creating Your Coterie](../your-coterie/what-is-a-coterie.md#creating-your-coterie) section.
+Coterie Debts are collective obligations. The entire Coterie owes or is owed as a group. These are big, story-driving Debts that shape your chronicle and can have long-lasting effects. You'll start with at least 1, as explained further over in the [Creating Your Coterie](../your-coterie/creating-your-coterie.md) section.
 
 **Soft Cap:** 3 Coterie Debts (in either direction). If you're carrying more than 3, your group is drowning in obligations and something's gotta give.
 
