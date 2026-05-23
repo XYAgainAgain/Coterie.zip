@@ -1,4 +1,5 @@
-import { useSignal } from '@preact/signals';
+import { useEffect } from 'preact/hooks';
+import { signal, useSignal } from '@preact/signals';
 import { SectionBox } from '../components/SectionBox';
 import { RightColumn } from '../components/RightColumn';
 import { RightPanelContent } from '../components/RightPanelTabs';
@@ -8,8 +9,11 @@ import { NewClockWidget } from '../components/NewClockWidget';
 import { NotebookTab } from '../components/NotebookTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
+import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
+import { PortraitEditor } from '../components/PortraitEditor';
+import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH as MIN_RIGHT_WIDTH } from '../components/RightColumn';
 import {
-  character, fillClockSegment, unfillClockSegment, removeClock,
+  character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
 } from '../state/character';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
@@ -17,11 +21,27 @@ import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
 } from '../state/derived';
-import { switchTab, openMove } from '../state/panel';
+import { switchTab, openMove, activeRightTab } from '../state/panel';
 import { renderGameMarkdown } from '../data/transforms';
+import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
+import {
+  creationMode, creationStep, stepComplete, enterCreationMode, goToStep,
+  allStepsComplete, type CreationStep,
+} from '../state/creation';
+import {
+  tourMode, currentTourStep, startTour, nextTourStop, type TourZone,
+} from '../state/tour';
+import { TourOverlay } from '../components/creation/TourOverlay';
 import type { StatName } from '../data/types';
+import type { Touchstone, Bio, Clock } from '../state/character';
 
 // All rendered markdown comes from our own verified JSON parsers (trusted content)
+
+if (import.meta.env.DEV) {
+  (window as any).__startTour = startTour;
+  (window as any).__nextTour = nextTourStop;
+  import('../state/toasts').then(m => { (window as any).__toast = m.forceToast; });
+}
 
 const STAT_ORDER: StatName[] = ['Blood', 'Shadow', 'Resolve', 'Demeanor', 'Wits'];
 
@@ -370,9 +390,10 @@ function DebtPanel() {
 }
 
 const TABS = ['Vitals', 'Disciplines', 'Possessions', 'Clocks & Debts', 'Notebook'] as const;
+const activeContentTab = signal(0);
 
 function ContentTabs() {
-  const active = useSignal(0);
+  const active = activeContentTab;
 
   return (
     <div class="vamp-tabs">
@@ -413,6 +434,37 @@ function ContentTabs() {
 function ClocksDebtsTab() {
   const mqc = masqueradeClock.value;
   const clocks = character.value.clocks;
+  const isTourClocks = tourMode.value && currentTourStep.value.id === 'clocks-debts';
+
+  const demoFilled = useSignal(0);
+  const demoComplete = useSignal(false);
+  const demoPulse = useSignal(false);
+
+  useEffect(() => {
+    if (!isTourClocks || demoComplete.value) return;
+    if (demoFilled.value >= 8) {
+      demoPulse.value = true;
+      return;
+    }
+    const timer = setTimeout(() => {
+      demoFilled.value = demoFilled.value + 1;
+    }, 1_000);
+    return () => clearTimeout(timer);
+  }, [isTourClocks, demoFilled.value, demoComplete.value]);
+
+  const demoClock: Clock = {
+    id: 'mqc-demo',
+    name: 'The Masquerade',
+    segments: 8,
+    filled: demoFilled.value,
+  };
+
+  function handleDemoClick() {
+    if (!demoPulse.value) return;
+    demoFilled.value = 0;
+    demoPulse.value = false;
+    demoComplete.value = true;
+  }
 
   return (
     <>
@@ -422,12 +474,29 @@ function ClocksDebtsTab() {
 
       <SectionBox title="Clocks">
         <div class="vamp-clocks">
-          <ClockDisplay
-            clock={mqc}
-            gradient
-            onFill={fillMasquerade}
-            onUnfill={unfillMasquerade}
-          />
+          {isTourClocks && !demoComplete.value ? (
+            <div
+              class={`vamp-mqc-demo ${demoPulse.value ? 'vamp-mqc-demo--pulse' : ''}`}
+              onDblClick={handleDemoClick}
+            >
+              <ClockDisplay
+                clock={demoClock}
+                gradient
+                onFill={() => {}}
+                onUnfill={() => {}}
+              />
+              {demoPulse.value && (
+                <div class="vamp-mqc-demo__hint">Double-click to clear!</div>
+              )}
+            </div>
+          ) : (
+            <ClockDisplay
+              clock={mqc}
+              gradient
+              onFill={fillMasquerade}
+              onUnfill={unfillMasquerade}
+            />
+          )}
           {clocks.map(c => (
             <ClockDisplay
               key={c.id}
@@ -450,7 +519,7 @@ function VitalsTab() {
   const char = character.value;
   const disciplines = accessibleDisciplineData.value;
 
-  const clanPerks = playbook?.perks ?? [];
+  const playbookPerks = playbook?.perks ?? [];
   const disciplinePerks = disciplines
     .filter(d => d.perk)
     .map(d => ({ name: d.perk!.name, body: d.perk!.body, source: d.name }));
@@ -458,7 +527,7 @@ function VitalsTab() {
   return (
     <div class="vamp-content-columns">
       <SectionBox title="Perks">
-        {clanPerks.map(perk => (
+        {playbookPerks.map(perk => (
           <div class="vamp-perk" key={perk.name}>
             <div class="vamp-perk__header">
               <span class="vamp-perk__name">{perk.name}</span>
@@ -494,18 +563,25 @@ function VitalsTab() {
         </SectionBox>
 
         <SectionBox title="Convictions & Touchstones">
-          <div class="vamp-paired">
-            {char.convictions.map((conviction, i) => (
-              <div class="vamp-paired__item" key={i}>
-                <div class="vamp-paired__conviction">{conviction}</div>
-                {char.touchstones[i] && (
-                  <div class="vamp-paired__touchstone">
-                    {char.touchstones[i].name} — {char.touchstones[i].description}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          {creationMode.value && creationStep.value === 'convictions' ? (
+            <ConvictionsCreationPanel />
+          ) : (
+            <div class="vamp-paired">
+              {char.convictions.map((conviction, i) => (
+                <div class="vamp-paired__item" key={i}>
+                  <div class="vamp-paired__conviction">{conviction || '—'}</div>
+                  {char.touchstones[i] && char.touchstones[i].name && (
+                    <div class="vamp-paired__touchstone">
+                      {char.touchstones[i].name}
+                      {char.touchstones[i].pronouns[0] && ` (${char.touchstones[i].pronouns.filter(Boolean).join('/')})`}
+                      {char.touchstones[i].ageBracket && `, ${char.touchstones[i].ageBracket}`}
+                      {char.touchstones[i].description && ` — ${char.touchstones[i].description}`}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </SectionBox>
 
         <SectionBox title="Merits & Flaws">
@@ -531,26 +607,381 @@ function VitalsTab() {
 }
 
 
-export function CharacterSheet() {
+const HUMAN_AGE_BRACKETS = [
+  'Baby', 'Child', 'Youth', 'Teen', 'Young Adult', 'Mature Adult', 'Senior',
+  "Don't Ask", "Don't Know",
+];
+
+const MAX_CONVICTIONS = 3;
+
+function ConvictionForm({ index }: { index: number }) {
+  const char = character.value;
+  const conviction = char.convictions[index] ?? '';
+  const raw = char.touchstones[index];
+  const touchstone = {
+    name: raw?.name ?? '',
+    pronouns: raw?.pronouns ?? ['', ''],
+    ageBracket: raw?.ageBracket ?? '',
+    description: raw?.description ?? '',
+  };
+
+  const hasAlwaysNever = /\b(always|never)\b/i.test(conviction);
+  const showWarning = conviction.trim().length > 0 && !hasAlwaysNever;
+  const descWordCount = touchstone.description.trim().split(/\s+/).filter(Boolean).length;
+  const descTooShort = touchstone.description.trim().length > 0 && descWordCount < 3;
+
+  function updateConviction(text: string) {
+    const convictions = [...char.convictions];
+    while (convictions.length <= index) convictions.push('');
+    convictions[index] = text;
+    updateCharacter({ convictions });
+  }
+
+  function updateTouchstone(patch: Partial<Touchstone>) {
+    const touchstones = [...char.touchstones];
+    while (touchstones.length <= index) touchstones.push({ name: '', pronouns: ['', ''], ageBracket: '', description: '' });
+    touchstones[index] = { ...touchstones[index], ...patch };
+    updateCharacter({ touchstones });
+  }
+
+  const isEmpty = conviction.trim() === '' && touchstone.name.trim() === '';
+
+  return (
+    <div class={`vamp-conviction-form ${isEmpty ? 'vamp-conviction-form--empty' : ''}`}>
+      <div class="vamp-conviction-form__heading">Conviction {index + 1}</div>
+
+      <input
+        class={`vamp-input vamp-conviction-form__conviction ${showWarning ? 'vamp-conviction-form__conviction--warn' : ''}`}
+        type="text"
+        placeholder={`Write an "Always" or "Never" statement...`}
+        value={conviction}
+        onInput={(e) => updateConviction((e.target as HTMLInputElement).value)}
+      />
+      {showWarning && (
+        <div class="vamp-conviction-form__warning">
+          Convictions usually begin with "Always" or "Never."
+        </div>
+      )}
+
+      {conviction.trim() && (
+        <div class="vamp-conviction-form__preview">"{conviction}"</div>
+      )}
+
+      <div class="vamp-conviction-form__sub-heading">Linked Touchstone</div>
+
+      <input
+        class="vamp-input"
+        type="text"
+        placeholder="NPC name"
+        value={touchstone.name}
+        onInput={(e) => updateTouchstone({ name: (e.target as HTMLInputElement).value })}
+      />
+
+      <div class="vamp-conviction-form__row">
+        <input
+          class="vamp-input vamp-conviction-form__pronoun"
+          type="text"
+          placeholder="they"
+          value={touchstone.pronouns[0]}
+          onInput={(e) => updateTouchstone({ pronouns: [(e.target as HTMLInputElement).value, touchstone.pronouns[1]] })}
+        />
+        <span class="vamp-conviction-form__slash">/</span>
+        <input
+          class="vamp-input vamp-conviction-form__pronoun"
+          type="text"
+          placeholder="them"
+          value={touchstone.pronouns[1]}
+          onInput={(e) => updateTouchstone({ pronouns: [touchstone.pronouns[0], (e.target as HTMLInputElement).value] })}
+        />
+        <select
+          class="creation-dropdown"
+          value={touchstone.ageBracket}
+          onChange={(e) => updateTouchstone({ ageBracket: (e.target as HTMLSelectElement).value })}
+        >
+          <option value="">Age?</option>
+          {HUMAN_AGE_BRACKETS.map(ab => <option key={ab} value={ab}>{ab}</option>)}
+        </select>
+      </div>
+
+      <input
+        class={`vamp-input ${descTooShort ? 'vamp-conviction-form__conviction--warn' : ''}`}
+        type="text"
+        placeholder="Who are they to you? (at least a few words)"
+        value={touchstone.description}
+        onInput={(e) => updateTouchstone({ description: (e.target as HTMLInputElement).value })}
+      />
+    </div>
+  );
+}
+
+function ConvictionsCreationPanel() {
+  const char = character.value;
+  const filledCount = char.convictions.filter(c => c.trim() !== '').length;
+  const showCount = Math.min(MAX_CONVICTIONS, Math.max(1, filledCount + 1));
+
+  return (
+    <div class="vamp-convictions-creation">
+      <div class="vamp-convictions-creation__guide">
+        Write a moral code your character lives by, then link each to a mortal who embodies it.
+      </div>
+      {Array.from({ length: showCount }, (_, i) => (
+        <ConvictionForm key={i} index={i} />
+      ))}
+      {showCount < MAX_CONVICTIONS && (
+        <div class="vamp-convictions-creation__hint">
+          Fill in the above to add another (up to {MAX_CONVICTIONS}).
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* Closes editing only when focus leaves the field entirely, not when tabbing between sibling inputs */
+function handleBioBlur(e: FocusEvent, editing: { value: boolean }) {
+  const related = (e as FocusEvent).relatedTarget as HTMLElement | null;
+  const container = (e.currentTarget as HTMLElement).closest('.vamp-bio__field');
+  if (container?.contains(related)) return;
+  editing.value = false;
+}
+
+function handleBioKey(e: KeyboardEvent, editing: { value: boolean }, restore?: () => void) {
+  if (e.key === 'Enter') editing.value = false;
+  if (e.key === 'Escape') {
+    if (restore) restore();
+    editing.value = false;
+  }
+}
+
+function BioDualField({ label, bio, variant }: {
+  label: string;
+  bio: Bio;
+  variant: 'ages' | 'pronouns';
+}) {
+  const editing = useSignal(false);
+  const isAges = variant === 'ages';
+  const v1 = isAges ? bio.vampiricAge : bio.pronouns[0];
+  const v2 = isAges ? bio.apparentAge : bio.pronouns[1];
+  const display = v1 || v2
+    ? (isAges ? `${v1} (${v2})` : `${v1}/${v2}`)
+    : '';
+
+  const snapshot = useSignal({ v1, v2 });
+  if (!editing.value) snapshot.value = { v1, v2 };
+
+  function save(idx: 0 | 1, val: string) {
+    if (isAges) {
+      updateCharacter({ bio: { ...bio, [idx === 0 ? 'vampiricAge' : 'apparentAge']: val } });
+    } else {
+      const next: [string, string] = [...bio.pronouns];
+      next[idx] = val;
+      updateCharacter({ bio: { ...bio, pronouns: next } });
+    }
+  }
+
+  function restore() {
+    const current = character.value.bio;
+    if (isAges) {
+      updateCharacter({ bio: { ...current, vampiricAge: snapshot.value.v1, apparentAge: snapshot.value.v2 } });
+    } else {
+      updateCharacter({ bio: { ...current, pronouns: [snapshot.value.v1, snapshot.value.v2] } });
+    }
+  }
+
+  if (editing.value) {
+    return (
+      <div class="vamp-bio__field vamp-bio__field--dual">
+        <span class="vamp-bio__label">{label}</span>
+        <div class="vamp-bio__dual-row">
+          <input class="vamp-bio__input vamp-bio__input--half" value={v1}
+            placeholder={isAges ? 'actual' : 'any'} autoFocus
+            onInput={(e) => save(0, (e.target as HTMLInputElement).value)}
+            onBlur={(e) => handleBioBlur(e, editing)}
+            onKeyDown={(e) => handleBioKey(e as unknown as KeyboardEvent, editing, restore)}
+          />
+          <span class="vamp-bio__sep">{isAges ? '(' : '/'}</span>
+          <input class="vamp-bio__input vamp-bio__input--half" value={v2}
+            placeholder={isAges ? 'looks' : 'all'}
+            onInput={(e) => save(1, (e.target as HTMLInputElement).value)}
+            onBlur={(e) => handleBioBlur(e, editing)}
+            onKeyDown={(e) => handleBioKey(e as unknown as KeyboardEvent, editing, restore)}
+          />
+          {isAges && <span class="vamp-bio__sep">)</span>}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div class="vamp-bio__field" onDblClick={() => { editing.value = true; }}>
+      <span class="vamp-bio__label">{label}</span>
+      <span class="vamp-bio__value">{display || '—'}</span>
+    </div>
+  );
+}
+
+function BioField({ label, field, bio }: {
+  label: string;
+  field: keyof Bio;
+  bio: Bio;
+}) {
+  const editing = useSignal(false);
+  const value = bio[field] as string;
+  const snapshot = useSignal(value);
+  if (!editing.value) snapshot.value = value;
+
+  if (editing.value) {
+    return (
+      <div class="vamp-bio__field">
+        <span class="vamp-bio__label">{label}</span>
+        <input class="vamp-bio__input" value={value}
+          autoFocus
+          onInput={(e) => updateCharacter({ bio: { ...bio, [field]: (e.target as HTMLInputElement).value } })}
+          onBlur={() => { editing.value = false; }}
+          onKeyDown={(e) => {
+            const key = (e as unknown as KeyboardEvent).key;
+            if (key === 'Enter') editing.value = false;
+            if (key === 'Escape') {
+              updateCharacter({ bio: { ...character.value.bio, [field]: snapshot.value } });
+              editing.value = false;
+            }
+          }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div class="vamp-bio__field" onDblClick={() => { editing.value = true; }}>
+      <span class="vamp-bio__label">{label}</span>
+      <span class="vamp-bio__value">{value || '—'}</span>
+    </div>
+  );
+}
+
+
+const STEP_ZONE: Record<CreationStep, 'sidebar' | 'content' | 'right'> = {
+  name: 'sidebar',
+  playbook: 'right',
+  age: 'right',
+  predator: 'right',
+  disciplines: 'content',
+  convictions: 'content',
+  xp: 'right',
+};
+
+export function CharacterSheet({ slug }: { slug?: string }) {
+  const loading = useSignal(false);
+  const loadError = useSignal<string | null>(null);
+
+  useEffect(() => {
+    if (!slug || slug === 'new') return;
+
+    if (activeCharacterId.value === slug) {
+      if (!character.value.creationComplete) enterCreationMode();
+      return;
+    }
+
+    loading.value = true;
+    loadError.value = null;
+    loadCharacter(slug)
+      .then(() => {
+        if (!character.value.creationComplete) {
+          enterCreationMode();
+        }
+      })
+      .catch(err => { loadError.value = err instanceof Error ? err.message : String(err); })
+      .finally(() => { loading.value = false; });
+    return () => { flushSave(); };
+  }, [slug]);
+
+  if (loading.value) {
+    return <div class="vamp-loading">Materializing...</div>;
+  }
+  if (loadError.value) {
+    return <div class="vamp-loading vamp-loading--error">Failed to load character: {loadError.value}</div>;
+  }
+
   const char = character.value;
   const hp = maxHP.value;
   const statMap = moveStatMap.value;
   const others = otherMoves.value;
 
-  return (
-    <div class="vamp-sheet">
+  const isCreating = creationMode.value;
+  const step = creationStep.value;
+  const zone = isCreating ? STEP_ZONE[step] : null;
+  const statsDualHighlight = isCreating && step === 'playbook' && stepComplete.value.playbook;
 
-      <aside class="vamp-sheet__sidebar">
+  useEffect(() => {
+    if (!isCreating) return;
+    if (zone === 'right') {
+      switchTab(step === 'xp' ? 'advancement' : 'character');
+      rightColumnMinimized.value = false;
+      rightColumnWidth.value = rightColumnMaxWidth();
+    } else if (zone === 'content') {
+      rightColumnWidth.value = MIN_RIGHT_WIDTH;
+      if (step === 'convictions') activeContentTab.value = 0;
+      else if (step === 'disciplines') activeContentTab.value = 1;
+    } else if (zone === 'sidebar') {
+      rightColumnWidth.value = MIN_RIGHT_WIDTH;
+    }
+  }, [zone, step, isCreating]);
+
+  const creationDone = allStepsComplete.value;
+  useEffect(() => {
+    if (!isCreating || !creationDone) return;
+    updateCharacter({ creationComplete: true });
+    creationMode.value = false;
+    startTour();
+  }, [isCreating, creationDone]);
+
+  const isTour = tourMode.value;
+  const tourStep = isTour ? currentTourStep.value : null;
+  const tourZone: TourZone | null = tourStep?.zone ?? null;
+
+  useEffect(() => {
+    if (!isTour || !tourStep) return;
+    if (tourStep.rightTab) {
+      switchTab(tourStep.rightTab!);
+      rightColumnMinimized.value = false;
+      rightColumnWidth.value = rightColumnMaxWidth();
+    } else {
+      rightColumnWidth.value = MIN_RIGHT_WIDTH;
+    }
+    if (tourStep.contentTab !== null) {
+      activeContentTab.value = tourStep.contentTab;
+    }
+  }, [isTour, tourStep?.id]);
+
+  const sidebarSpotlight = zone === 'sidebar' || statsDualHighlight;
+
+  const sheetClass = [
+    'vamp-sheet',
+    isCreating && 'vamp-sheet--creating',
+    isTour && 'vamp-sheet--touring',
+  ].filter(Boolean).join(' ');
+
+  return (
+    <div class={sheetClass}>
+      {(isCreating || isTour) && <SpotlightOverlay />}
+      {isTour && <TourOverlay />}
+
+      <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? 'creation-spotlight' : ''}`}>
         <div class="vamp-identity">
-          <div class="vamp-identity__name">{char.name}</div>
-          <div class="vamp-identity__portrait">
-            {char.portraitUrl
-              ? <img class="vamp-identity__portrait-img" src={char.portraitUrl} alt={char.name} />
-              : <span class="vamp-identity__portrait-placeholder">portrait</span>
-            }
-          </div>
+          {isCreating && step === 'name' ? (
+            <input
+              class="vamp-identity__name-input"
+              type="text"
+              placeholder="Inscribe a name..."
+              value={char.name}
+              onInput={(e) => updateCharacter({ name: (e.target as HTMLInputElement).value })}
+              autoFocus
+            />
+          ) : (
+            <div class="vamp-identity__name">{char.name || 'Unnamed'}</div>
+          )}
+          <PortraitEditor portraits={char.portraits} name={char.name} />
           <div class="vamp-identity__meta">
-            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.clan}</span>
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook}</span>
             <span class="vamp-identity__sep">|</span>
             <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket}</span>
           </div>
@@ -558,6 +989,15 @@ export function CharacterSheet() {
             <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
             <span class="vamp-identity__sep">|</span>
             Coterie: <span class="vamp-identity__code">???</span>
+          </div>
+
+          <div class="vamp-bio">
+            <BioDualField label="Ages" bio={char.bio} variant="ages" />
+            <BioDualField label="Pronouns" bio={char.bio} variant="pronouns" />
+            <BioField label="Height" field="height" bio={char.bio} />
+            <BioField label="Weight" field="weight" bio={char.bio} />
+            <BioField label="Style" field="style" bio={char.bio} />
+            <BioField label="Occupation" field="occupation" bio={char.bio} />
           </div>
         </div>
 
@@ -571,7 +1011,7 @@ export function CharacterSheet() {
               <div class="vamp-stat" key={statName}>
                 <div class="vamp-stat__header">
                   <div class="vamp-stat__circle">
-                    {value >= 0 ? `+${value}` : value}
+                    {isNaN(value) ? '+0' : value >= 0 ? `+${value}` : value}
                   </div>
                   <div class="vamp-stat__name">{statName}</div>
                 </div>
@@ -610,11 +1050,18 @@ export function CharacterSheet() {
             </ul>
           </div>
         )}
+
+        {statsDualHighlight && (
+          <div class="vamp-sidebar__creation-hint">
+            <p>This is your <strong>stat panel</strong>. Your five stats and their linked <strong>Basic Moves</strong> live here.</p>
+            <p>When you roll dice, you'll click these to add your stat bonus. Try picking a different Archetype on the right and watch the numbers change!</p>
+          </div>
+        )}
       </aside>
 
-      <div class="vamp-sheet__right">
+      <div class={`vamp-sheet__right ${zone === 'content' ? 'creation-spotlight' : ''}`}>
 
-        <div class="vamp-vitals">
+        <div class={`vamp-vitals ${tourZone === 'vitals' ? 'tour-spotlight' : ''}`}>
           <div class="vamp-vitals__grid">
 
             <SectionBox title="Blood Potency">
@@ -641,26 +1088,25 @@ export function CharacterSheet() {
         </div>
 
         <div class="vamp-sheet__content">
-
           <div class="vamp-toolbar-row">
-            <div class="vamp-modifier-float">
+            <div class={`vamp-modifier-float ${tourZone === 'toolbar-left' ? 'tour-spotlight' : ''}`}>
               <SectionBox title="Move Modifiers">
                 <ModifierBar />
               </SectionBox>
             </div>
-            <div class="vamp-scene-float">
+            <div class={`vamp-scene-float ${tourZone === 'toolbar-right' ? 'tour-spotlight' : ''}`}>
               <SectionBox title="Scene Tools">
                 <SceneTools />
               </SectionBox>
             </div>
           </div>
-
-          <ContentTabs />
-
+          <div class={`vamp-content-area ${tourZone === 'content' ? 'tour-spotlight' : ''}`}>
+            <ContentTabs />
+          </div>
         </div>
       </div>
 
-      <RightColumn>
+      <RightColumn class={zone === 'right' ? 'creation-spotlight' : tourZone === 'right' ? 'tour-spotlight' : undefined}>
         <RightPanelContent />
       </RightColumn>
     </div>

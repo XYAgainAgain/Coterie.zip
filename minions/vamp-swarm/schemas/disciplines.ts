@@ -24,7 +24,7 @@ export const DisciplineSchema = z.object({
 export const DisciplinesFileSchema = z.object({
   version: z.literal(1),
   generatedAt: z.string().datetime(),
-  entries: z.array(DisciplineSchema).min(16),
+  entries: z.array(DisciplineSchema).min(17),
 });
 
 export type Power = z.infer<typeof PowerSchema>;

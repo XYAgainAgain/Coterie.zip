@@ -12,7 +12,7 @@ export const gameData = signal<GameData | null>(null);
 export const currentPlaybook = computed<Playbook | null>(() => {
   const data = gameData.value;
   if (!data) return null;
-  return data.playbooks.find(p => p.name === character.value.clan) ?? null;
+  return data.playbooks.find(p => p.name === character.value.playbook) ?? null;
 });
 
 export const currentPredatorType = computed<PredatorType | null>(() => {
@@ -39,7 +39,7 @@ export const availableDisciplines = computed<string[]>(() => {
   const char = character.value;
   if (!data) return [];
 
-  const slugs = new Set(char.clanDisciplines);
+  const slugs = new Set(char.unlockedDisciplines);
 
   if (pt) {
     const ptDisc = data.disciplines.find(

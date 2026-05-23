@@ -33,7 +33,7 @@ export function PowerCard({ entry }: { entry: PowerWithStatus }) {
         {status === 'locked' && lockReason && (
           <span class="vamp-power__lock" title={lockReason} />
         )}
-        <span class={`vamp-power__chevron ${expanded.value ? 'vamp-power__chevron--open' : ''}`}>&#9662;</span>
+        <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
       </div>
       {expanded.value && (
         <div class="vamp-power__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(power.body) }} />

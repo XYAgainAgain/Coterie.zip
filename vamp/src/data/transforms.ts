@@ -20,6 +20,7 @@ export function parseStatString(raw: string): Record<StatName, number> {
     const m = piece.trim().match(STAT_PIECE_RE);
     if (!m) continue;
     const name = m[1] as StatName;
+    if (!STAT_NAMES.includes(name)) continue;
     const sign = m[2] === '+' ? 1 : -1;
     result[name] = sign * parseInt(m[3], 10);
   }
@@ -73,6 +74,14 @@ export function colorTierMarkers(html: string): string {
     const inner = match.replace(/<\/?strong>/g, '');
     return `<strong class="${cls}">${inner}</strong>`;
   });
+}
+
+const SPREAD_PIECE_RE = /[+\-−]?\d+/g;
+
+export function parseCustomSpread(raw: string): number[] {
+  return [...raw.matchAll(SPREAD_PIECE_RE)].map(m =>
+    parseInt(m[0].replace(/−/g, '-'), 10)
+  );
 }
 
 export function capitalizeFirst(text: string): string {

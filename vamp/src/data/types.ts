@@ -261,11 +261,29 @@ export interface FolkloricBane {
   xpGain: string;
 }
 
+export interface Merit {
+  name: string;
+  category: string;
+  limit: string;
+  description: string;
+  xpCost: string;
+}
+
+export interface Flaw {
+  name: string;
+  category: string;
+  limit: string;
+  description: string;
+  xpGain: string;
+}
+
 export interface OptionalExtrasData {
   clanBaneVariantsIntro: string;
   clanBaneVariants: ClanBaneVariant[];
   folkloricBanesIntro: string;
   folkloricBanes: FolkloricBane[];
+  merits: Merit[];
+  flaws: Flaw[];
 }
 
 export interface SnippetEntry {

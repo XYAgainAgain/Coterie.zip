@@ -3,10 +3,16 @@ import { signal } from '@preact/signals';
 import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
 import { EyeToggle } from './components/EyeToggle';
+import { CreationProgress } from './components/creation/CreationProgress';
 import { DiceOverlay } from './dice/DiceOverlay';
+import { ToastStack } from './components/ToastStack';
 import { loadAllGameData } from './data/loader';
 import { gameData } from './state/derived';
 import { editMode, toggleEditMode } from './state/ui';
+import { creationMode } from './state/creation';
+import { authReady } from './firebase';
+import { startAutoSave } from './state/persistence';
+
 const dataReady = signal(false);
 const dataError = signal<string | null>(null);
 
@@ -16,9 +22,13 @@ if (redirectPath) {
   history.replaceState(null, '', redirectPath);
 }
 
-loadAllGameData()
-  .then(data => {
+Promise.all([
+  loadAllGameData(),
+  authReady,
+])
+  .then(([data]) => {
     gameData.value = data;
+    startAutoSave();
     dataReady.value = true;
   })
   .catch(err => {
@@ -34,6 +44,7 @@ export function App() {
       <header class="vamp-header">
         <span class="vamp-header__title">Vamp</span>
         <div class="vamp-header__spacer" />
+        {creationMode.value && <CreationProgress />}
         <button
           class="vamp-header__lock"
           onClick={toggleEditMode}
@@ -54,12 +65,12 @@ export function App() {
         ) : (
           <Router>
             <Route path="/vamp/" component={CharacterList} />
-            <Route path="/vamp/new" component={CharacterSheet} />
             <Route path="/vamp/:slug" component={CharacterSheet} />
           </Router>
         )}
       </main>
       <DiceOverlay />
+      <ToastStack />
     </div>
   );
 }

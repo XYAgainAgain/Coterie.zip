@@ -45,6 +45,8 @@ export function parseSnippets(repoRoot: string): SnippetEntry[] {
 
     if (currentType && currentName) {
       bodyLines.push(line);
+    } else if (currentType && !currentName && line.trim()) {
+      throw new Error(`[Snippets] Body content under "## ${currentType}" without an ### H3 name`);
     }
   }
 

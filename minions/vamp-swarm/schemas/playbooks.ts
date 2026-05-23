@@ -31,7 +31,7 @@ export const PlaybookSchema = z.object({
 export const PlaybooksFileSchema = z.object({
   version: z.literal(1),
   generatedAt: z.string().datetime(),
-  entries: z.array(PlaybookSchema).min(21),
+  entries: z.array(PlaybookSchema).min(22),
 });
 
 export type Archetype = z.infer<typeof ArchetypeSchema>;

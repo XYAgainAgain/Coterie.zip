@@ -3,7 +3,7 @@
 import type { ComponentChildren } from 'preact';
 import { signal } from '@preact/signals';
 
-const MIN_WIDTH = 280;
+export const MIN_WIDTH = 280;
 const DEFAULT_WIDTH = 320;
 
 export const rightColumnWidth = signal(DEFAULT_WIDTH);
@@ -30,7 +30,11 @@ function maxWidthRatio(viewport: number): number {
   return RATIO_ANCHORS[RATIO_ANCHORS.length - 1][1];
 }
 
-export function RightColumn({ children }: { children: ComponentChildren }) {
+export function rightColumnMaxWidth(): number {
+  return window.innerWidth * maxWidthRatio(window.innerWidth);
+}
+
+export function RightColumn({ children, class: extraClass }: { children: ComponentChildren; class?: string }) {
   if (rightColumnMinimized.value) {
     return (
       <aside
@@ -46,8 +50,11 @@ export function RightColumn({ children }: { children: ComponentChildren }) {
 
   function onPointerDown(e: PointerEvent) {
     e.preventDefault();
-    const target = e.currentTarget as HTMLElement;
-    target.setPointerCapture(e.pointerId);
+    const handle = e.currentTarget as HTMLElement;
+    const col = handle.parentElement;
+    if (!col) return;
+    handle.setPointerCapture(e.pointerId);
+    col.classList.add('vamp-right-col--dragging');
 
     const startX = e.clientX;
     const startWidth = rightColumnWidth.value;
@@ -59,18 +66,19 @@ export function RightColumn({ children }: { children: ComponentChildren }) {
     }
 
     function onPointerUp() {
-      target.removeEventListener('pointermove', onPointerMove);
-      target.removeEventListener('pointerup', onPointerUp);
-      target.removeEventListener('pointercancel', onPointerUp);
+      col?.classList.remove('vamp-right-col--dragging');
+      handle.removeEventListener('pointermove', onPointerMove);
+      handle.removeEventListener('pointerup', onPointerUp);
+      handle.removeEventListener('pointercancel', onPointerUp);
     }
 
-    target.addEventListener('pointermove', onPointerMove);
-    target.addEventListener('pointerup', onPointerUp);
-    target.addEventListener('pointercancel', onPointerUp);
+    handle.addEventListener('pointermove', onPointerMove);
+    handle.addEventListener('pointerup', onPointerUp);
+    handle.addEventListener('pointercancel', onPointerUp);
   }
 
   return (
-    <aside class="vamp-right-col" style={{ width: `${rightColumnWidth.value}px` }}>
+    <aside class={`vamp-right-col ${extraClass ?? ''}`} style={{ width: `${rightColumnWidth.value}px` }}>
       <div class="vamp-right-col__handle" onPointerDown={onPointerDown} />
       <div class="vamp-right-col__content">
         {children}

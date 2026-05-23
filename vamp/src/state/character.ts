@@ -19,6 +19,8 @@ export interface Modifier {
 
 export interface Touchstone {
   name: string;
+  pronouns: [string, string];
+  ageBracket: string;
   description: string;
 }
 
@@ -39,15 +41,44 @@ export interface Note {
 export const MANUAL_SOURCE = '(manual)';
 export const MAX_HOLD_COUNTERS = 3;
 
+export interface Bio {
+  apparentAge: string;
+  vampiricAge: string;
+  pronouns: [string, string];
+  height: string;
+  weight: string;
+  style: string;
+  occupation: string;
+}
+
+export interface GhoulPatron {
+  type: 'npc' | 'pc';
+  bloodline: string;
+  bp: number;
+  vampUrl: string;
+}
+
+export interface Portrait {
+  url: string;
+  x: number; /* object-position x%, default 50 */
+  y: number; /* object-position y%, default 50 */
+  scale: number; /* zoom factor, default 1 */
+}
+
+/* TODO: drag-to-reposition + scroll-to-zoom crop UI for portraits.
+   Data model is ready (x/y/scale per portrait). gLightbox shows full uncropped image;
+   the crop only affects the 1:1 square display. */
+
 export interface CharacterState {
   name: string;
-  portraitUrl: string | null;
-  clan: string;
+  portraits: Portrait[];
+  playbook: string;
   predatorType: string;
   ageBracket: string;
+  bio: Bio;
   archetypeName: string;
   stats: Record<StatName, number>;
-  clanDisciplines: string[];
+  unlockedDisciplines: string[];
   knownPowers: string[];
   bp: number;
   hunger: number;
@@ -60,19 +91,86 @@ export interface CharacterState {
   modifiers: Modifier[];
   convictions: string[];
   touchstones: Touchstone[];
+  merits: { name: string; xpCost: string }[];
+  flaws: { name: string; xpGain: string }[];
+  folkloricBanes: { baneName: string; xpGain: string; fromPlaybookBane: boolean }[];
+  baneChoice: 'standard' | 'variant' | 'both';
+  ghoulPatron: GhoulPatron | null;
+  creationComplete: boolean;
+  creationStep: string;
+  tourComplete: boolean;
   clocks: Clock[];
   notes: Note[];
 }
 
+export const NOTEBOOK_HELP_ID = '1998';
+
+const NOTEBOOK_HELP_BODY = `# Notebook Help
+
+Your Notebook tab is a scratchpad for anything you want to track during a ***Coterie*** session. Notes support **markdown formatting**, so you can keep things organized and import/export at will. Here's a guide!
+
+## Quick Reference
+
+| You Type | You Get |
+|--------|--------|
+| \`#\`, \`##\`, \`###\`, or \`####\` | headers 1–4 (higher number = smaller text) |
+| \`\`*1 asterisk*\`\` | *italic* |
+| \`**2 asterisks**\` | **bold** |
+| \`***3 asterisks***\` | ***bold italics*** |
+| \`~~2 tildes~~\` | ~~strikethrough~~ |
+| \`- hyphen w/ space\` | • bulleted lists (I faked this one lol) |
+| \`1. number w/ period & space\` | 1. numbered lists |
+| \`\` \\\`tilde ticks\\\` \`\` | \`inline code\` |
+| \`> right arrow w/ space\` | blockquote |
+| \`---\` | horizontal divider |
+
+### Lists
+
+As above, use bullet lists for loose notes:
+
+- Talk to someone about something
+- Check if that thing is still a *major problem*
+- ~~Mount tablet on inside of coffin lid~~ Bad idea
+
+Numbered lists for plans or sequences (you can indent with spaces too):
+
+1. Scope out the warehouse
+   1. Bring binoculars
+   2. Pick up
+
+2. Decide whether to tell the Coterie
+3. Drink blood and go to bed
+
+### Blockquotes
+
+Use blockquotes for dramatic moments, ridiculous quotes, or things you want to remember:
+
+> "Some motherfuckers are always trying to ice-skate uphill." —Blade, *Blade (1998)*
+
+---
+
+#### Tips
+
+- **This reference note resets when you click New Session.** Your other notes are safe, private, and synced to this character. You can mess around in this one as much as you want!
+- Create separate notes for *NPCs*, **locations**, or ***session logs*** (or whatever). Use the notebook however works best for you.
+- Keep session notes concise & evocative. You can delete old stuff, but once it's gone, it's **gone!**`;
+
+export const NOTEBOOK_HELP_NOTE: Note = {
+  id: NOTEBOOK_HELP_ID,
+  title: 'Notebook Help',
+  body: NOTEBOOK_HELP_BODY,
+};
+
 const JOHNNY_FANGS: CharacterState = {
   name: 'Johnny Fangs',
-  portraitUrl: 'https://i.imgur.com/ELvdOgp.jpeg',
-  clan: 'Banu Haqim',
+  portraits: [{ url: 'https://i.imgur.com/ELvdOgp.jpeg', x: 50, y: 50, scale: 1 }],
+  playbook: 'Banu Haqim',
   predatorType: 'Consensualist',
   ageBracket: 'Fledgling',
+  bio: { apparentAge: '28', vampiricAge: '3', pronouns: ['he', 'him'], height: '5\'10"', weight: '165 lbs', style: 'Leather jacket, slicked-back hair', occupation: 'Bouncer' },
   archetypeName: 'Greaser',
   stats: { Blood: 1, Shadow: 1, Resolve: -1, Demeanor: 0, Wits: 2 },
-  clanDisciplines: ['celerity', 'obfuscate'],
+  unlockedDisciplines: ['celerity', 'obfuscate'],
   knownPowers: [
     'Sense the Unseen',
     'Rapid Reflexes',
@@ -103,14 +201,23 @@ const JOHNNY_FANGS: CharacterState = {
     '"The strong must protect the weak."',
   ],
   touchstones: [
-    { name: 'Marcus', description: 'mortal friend, bartender at The Red Door' },
-    { name: 'Elena', description: 'former colleague, social worker' },
+    { name: 'Marcus', pronouns: ['he', 'him'], ageBracket: 'Mature Adult', description: 'mortal friend, bartender at The Red Door' },
+    { name: 'Elena', pronouns: ['she', 'her'], ageBracket: 'Young Adult', description: 'former colleague, social worker' },
   ],
+  merits: [],
+  flaws: [],
+  folkloricBanes: [],
+  baneChoice: 'standard',
+  ghoulPatron: null,
+  creationComplete: true,
+  creationStep: 'name',
+  tourComplete: true,
   clocks: [
     { id: 'c1', name: 'Find the Sabbat Safe House', segments: 6, filled: 2 },
     { id: 'c2', name: 'Blood Bond to Alejandro', segments: 4, filled: 0, condition: 'Fully Bound at 4' },
   ],
   notes: [
+    { ...NOTEBOOK_HELP_NOTE },
     { id: 'n1', title: 'Session 1', body: 'Met Katie at the house party. She knows about us.\n\nNeed to figure out how to handle this.' },
     { id: 'n2', title: 'Safe House Intel', body: 'Alejandro mentioned a warehouse on **Pier 7**. Sabbat presence suspected.' },
   ],
@@ -334,14 +441,22 @@ export function quickToggleDisadvantage() {
   }
 }
 
+
 export function newNight() {
   setHunger(character.value.hunger + 1);
 }
 
 export function newSession() {
+  const notes = character.value.notes.map(n =>
+    n.id === NOTEBOOK_HELP_ID ? { ...NOTEBOOK_HELP_NOTE } : n,
+  );
+  if (!notes.some(n => n.id === NOTEBOOK_HELP_ID)) {
+    notes.unshift({ ...NOTEBOOK_HELP_NOTE });
+  }
   character.value = {
     ...character.value,
     xpTriggers: character.value.xpTriggers.map(() => false),
+    notes,
   };
 }
 

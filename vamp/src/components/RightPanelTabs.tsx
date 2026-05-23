@@ -1,6 +1,6 @@
 /* All rendered markdown is from Coterie's verified JSON parsers (trusted content, duh) */
 
-import { useRef } from 'preact/hooks';
+import { useRef, useEffect } from 'preact/hooks';
 import { useSignal, useSignalEffect } from '@preact/signals';
 import {
   RPANEL_TABS, TAB_TOOLTIPS, activeRightTab, scrollToMove, switchTab,
@@ -9,9 +9,11 @@ import {
 import {
   currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
 } from '../state/derived';
-import { character, setXP } from '../state/character';
+import { character, setXP, updateCharacter, type GhoulPatron } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription } from '../state/coterie';
 import { editMode } from '../state/ui';
+import { creationMode, creationStep } from '../state/creation';
+import { activeCoterie, createCoterie, joinCoterie, BLANK_CHARACTER } from '../state/persistence';
 import { EditableText } from './EditableText';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
 import { COTERIE_STAT_NAMES } from '../data/types';
@@ -20,6 +22,9 @@ import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife } 
 const STAT_ABBREV: Record<string, string> = {
   Blood: 'BLD', Shadow: 'SHA', Resolve: 'RES', Demeanor: 'DEM', Wits: 'WIT',
 };
+
+const CUSTOM_SPREAD = [2, 1, 1, 0, -1] as const;
+const ALL_STATS: StatName[] = ['Blood', 'Shadow', 'Resolve', 'Demeanor', 'Wits'];
 
 function formatStatChip(name: StatName, val: number): string {
   const sign = val >= 0 ? '+' : '';
@@ -33,12 +38,11 @@ function formatRollStat(raw: string): string {
   return raw;
 }
 
-const TAB_ICONS: Record<RPanelTab, string> = {
-  coterie: 'C',
-  character: '',
-  moves: 'M',
-  advancement: 'A',
-  rules: 'R',
+const TAB_SVGS: Partial<Record<RPanelTab, string>> = {
+  coterie: '/assets/images/vamp/group.svg',
+  moves: '/assets/images/vamp/2d6.svg',
+  advancement: '/assets/images/vamp/upgrade.svg',
+  rules: '/assets/images/vamp/rulebook.svg',
 };
 
 function TabBar() {
@@ -63,12 +67,17 @@ function TabBar() {
         >
           {id === 'character' && bloodlineUrl ? (
             <img
-              class="vamp-rpanel-bar__clan-img"
+              class="vamp-rpanel-bar__playbook-img"
               src={bloodlineUrl}
               alt={TAB_TOOLTIPS[id]}
             />
+          ) : TAB_SVGS[id] ? (
+            <span
+              class="vamp-rpanel-bar__icon"
+              style={`-webkit-mask-image: url(${TAB_SVGS[id]}); mask-image: url(${TAB_SVGS[id]})`}
+            />
           ) : (
-            TAB_ICONS[id] || '?'
+            '?'
           )}
         </button>
       ))}
@@ -85,16 +94,130 @@ const COTERIE_STAT_DESC: Record<CoterieStatName, string> = {
   Currency: 'Abstracted monetary wealth.',
 };
 
+function CoterieSetup() {
+  const data = gameData.value;
+  const selectedType = useSignal<string | null>(null);
+  const mode = useSignal<'idle' | 'create' | 'join'>('idle');
+  const joinId = useSignal('');
+  const busy = useSignal(false);
+  const error = useSignal<string | null>(null);
+
+  async function handleCreate() {
+    const typeName = selectedType.value;
+    if (!typeName || !data) return;
+    const ct = data.coterieTypes.find(t => t.name === typeName);
+    if (!ct) return;
+    busy.value = true;
+    error.value = null;
+    try {
+      const parsed: Record<string, number> = {};
+      for (const piece of ct.coterieStats.split('|')) {
+        const m = piece.trim().match(/(\w+)\s*([+\-−])(\d+)/);
+        if (m) parsed[m[1]] = (m[2] === '+' ? 1 : -1) * parseInt(m[3], 10);
+      }
+      await createCoterie({
+        typeName,
+        stats: {
+          Clout: parsed['Clout'] ?? 0, Cohesion: parsed['Cohesion'] ?? 0,
+          Charm: parsed['Charm'] ?? 0, Claim: parsed['Claim'] ?? 0, Currency: parsed['Currency'] ?? 0,
+        },
+        havenPositives: [], havenNegatives: [], havenDescription: '', members: [],
+      });
+    } catch (err) {
+      error.value = err instanceof Error ? err.message : String(err);
+    }
+    busy.value = false;
+  }
+
+  async function handleJoin() {
+    const id = joinId.value.trim();
+    if (!id) return;
+    busy.value = true;
+    error.value = null;
+    try { await joinCoterie(id); }
+    catch (err) { error.value = err instanceof Error ? err.message : String(err); }
+    busy.value = false;
+  }
+
+  if (mode.value === 'idle') {
+    return (
+      <div class="vamp-rpanel-scroll" style="padding: 1rem;">
+        <p style="color: var(--v-text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">
+          No Coterie linked. Create one or join by ID.
+        </p>
+        <button class="vamp-btn vamp-btn--primary" style="width:100%; margin-bottom: 0.5rem;"
+          onClick={() => { mode.value = 'create'; }}>Create Coterie</button>
+        <button class="vamp-btn" style="width:100%;"
+          onClick={() => { mode.value = 'join'; }}>Join by ID</button>
+      </div>
+    );
+  }
+
+  if (mode.value === 'join') {
+    return (
+      <div class="vamp-rpanel-scroll" style="padding: 1rem;">
+        <p style="color: var(--v-text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">
+          Enter the Coterie ID shared by another player.
+        </p>
+        <input class="vamp-input" type="text" placeholder="Coterie ID"
+          value={joinId.value} onInput={(e) => { joinId.value = (e.target as HTMLInputElement).value; }} />
+        {error.value && <p style="color: #cc3333; font-size: 0.8rem; margin-top: 0.5rem;">{error.value}</p>}
+        <div style="display:flex; gap:0.5rem; margin-top: 0.75rem;">
+          <button class="vamp-btn" onClick={() => { mode.value = 'idle'; }}>Back</button>
+          <button class="vamp-btn vamp-btn--primary" disabled={busy.value || !joinId.value.trim()} onClick={handleJoin}>Join</button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div class="vamp-rpanel-scroll" style="padding: 1rem;">
+      <p style="color: var(--v-text-secondary); font-size: 0.85rem; margin-bottom: 0.75rem;">
+        Pick a Coterie Type. Stats are set automatically.
+      </p>
+      <div style="max-height: 22rem; overflow-y: auto;">
+        {data?.coterieTypes.map(ct => (
+          <div key={ct.name} class={`creation-card ${selectedType.value === ct.name ? 'creation-card--selected' : ''}`}
+            onClick={() => { selectedType.value = ct.name; }}>
+            <div class="creation-card__name">{ct.name}</div>
+            <div class="creation-card__tagline">{ct.coterieStats}</div>
+          </div>
+        ))}
+      </div>
+      {error.value && <p style="color: #cc3333; font-size: 0.8rem; margin-top: 0.5rem;">{error.value}</p>}
+      <div style="display:flex; gap:0.5rem; margin-top: 0.75rem;">
+        <button class="vamp-btn" onClick={() => { mode.value = 'idle'; }}>Back</button>
+        <button class="vamp-btn vamp-btn--primary" disabled={busy.value || !selectedType.value} onClick={handleCreate}>Create</button>
+      </div>
+    </div>
+  );
+}
+
 function CoteriePanel() {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return <CoterieSetup />;
+
   const cot = coterieState.value;
   const data = gameData.value;
   const isEditing = editMode.value;
   const coterieType = data?.coterieTypes.find(t => t.name === cot.typeName) ?? null;
   const coterieMoves = data?.coterieMoves ?? [];
   const expandedMove = useSignal<string | null>(null);
+  const copied = useSignal(false);
+
+  function copyId() {
+    navigator.clipboard.writeText(coterieId!).then(() => {
+      copied.value = true;
+      setTimeout(() => { copied.value = false; }, 2000);
+    });
+  }
 
   return (
     <div class="vamp-rpanel-scroll">
+      <div style="padding: 0.4rem 0.6rem; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
+        <span style="font-size:0.85rem; color:var(--v-text-accent); font-family:var(--v-font-display); letter-spacing:0.15em;">{coterieId}</span>
+        <button class="wiz-card__toggle" onClick={copyId}>{copied.value ? 'Copied!' : 'Copy'}</button>
+      </div>
       <CollapsibleSection title={cot.typeName} pill="Coterie Type">
         {coterieType && (
           <div class="vamp-rpanel-field__body"
@@ -253,131 +376,414 @@ function CollapsibleSection({ title, pill, defaultOpen, children }: {
   );
 }
 
-function CharacterPanel() {
+function CustomStatAllocator() {
+  const char = character.value;
+
+  /* Which stat is assigned to each spread slot (index into CUSTOM_SPREAD) */
+  const slotAssignments: (StatName | null)[] = CUSTOM_SPREAD.map(() => null);
+  for (const stat of ALL_STATS) {
+    const val = char.stats[stat];
+    if (isNaN(val)) continue;
+    /* Find the first unoccupied slot with this value */
+    const idx = CUSTOM_SPREAD.findIndex((sv, i) => sv === val && slotAssignments[i] === null);
+    if (idx !== -1) slotAssignments[idx] = stat;
+  }
+
+  const assignedStats = new Set(slotAssignments.filter(Boolean) as StatName[]);
+
+  function assignSlot(slotIndex: number, stat: string) {
+    const newStats = { ...char.stats };
+    const prev = slotAssignments[slotIndex];
+    if (prev) newStats[prev] = NaN;
+    if (stat) {
+      newStats[stat as StatName] = CUSTOM_SPREAD[slotIndex];
+    }
+    updateCharacter({ stats: newStats });
+  }
+
+  return (
+    <div class="vamp-custom-allocator" onClick={(e) => e.stopPropagation()}>
+      {CUSTOM_SPREAD.map((val, i) => {
+        const current = slotAssignments[i];
+        return (
+          <div class="vamp-custom-allocator__slot" key={i}>
+            <span class="vamp-custom-allocator__value">{val >= 0 ? `+${val}` : val}</span>
+            <select
+              class="creation-dropdown creation-dropdown--stat"
+              value={current ?? ''}
+              onChange={(e) => assignSlot(i, (e.target as HTMLSelectElement).value)}
+            >
+              <option value="">Stat</option>
+              {ALL_STATS.map(s => {
+                const taken = assignedStats.has(s) && s !== current;
+                return !taken && <option key={s} value={s}>{s}</option>;
+              })}
+            </select>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function PlaybookDropdown() {
+  const data = gameData.value;
+  const char = character.value;
+  if (!data) return null;
+
+  const clanPlaybooks = data.playbooks.filter(p => p.category === 'clan');
+  const clanless = data.playbooks.filter(p => p.category === 'clanless');
+
+  return (
+    <select
+      class="creation-dropdown"
+      value={char.playbook}
+      onClick={(e) => e.stopPropagation()}
+      onChange={(e) => {
+        const val = (e.target as HTMLSelectElement).value;
+        if (val === char.playbook) return;
+        updateCharacter({
+          playbook: val,
+          archetypeName: '',
+          stats: { ...BLANK_CHARACTER.stats },
+          predatorType: '',
+          unlockedDisciplines: [],
+          knownPowers: [],
+          merits: [],
+          flaws: [],
+          folkloricBanes: [],
+          baneChoice: 'standard',
+        });
+      }}
+    >
+      <option value="">Choose Playbook</option>
+      <optgroup label="Clan Playbooks">
+        {clanPlaybooks.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
+      </optgroup>
+      <optgroup label="Clanless Playbooks">
+        {clanless.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
+      </optgroup>
+    </select>
+  );
+}
+
+const PATRON_EXCLUDED = new Set(['Ghoul', 'Thin-Blood', 'Devorari', 'Osirian', 'Baali']);
+
+function GhoulPatronPrompt() {
+  const char = character.value;
+  const patron = char.ghoulPatron;
+  const data = gameData.value;
+  const allPlaybooks = data?.playbooks ?? [];
+  const eligible = allPlaybooks.filter(p => !PATRON_EXCLUDED.has(p.name));
+
+  function setPatronType(type: 'npc' | 'pc') {
+    if (patron?.type === type) return;
+    updateCharacter({
+      ghoulPatron: { type, bloodline: '', bp: 1, vampUrl: '' },
+      unlockedDisciplines: [],
+      knownPowers: [],
+    });
+  }
+
+  function updatePatron(patch: Partial<GhoulPatron>) {
+    if (!patron) return;
+    updateCharacter({ ghoulPatron: { ...patron, ...patch } });
+  }
+
+  return (
+    <div class="vamp-ghoul-patron">
+      <div class="vamp-ghoul-patron__title">Who's your patron?</div>
+      <div class="vamp-ghoul-patron__buttons">
+        <button
+          class={`vamp-btn ${patron?.type === 'npc' ? 'vamp-btn--active' : ''}`}
+          onClick={() => setPatronType('npc')}
+        >NPC</button>
+        <button
+          class={`vamp-btn ${patron?.type === 'pc' ? 'vamp-btn--active' : ''}`}
+          onClick={() => setPatronType('pc')}
+        >PC</button>
+      </div>
+
+      {patron?.type === 'npc' && (
+        <div class="vamp-ghoul-patron__fields">
+          <label class="vamp-ghoul-patron__label">
+            Bloodline
+            <select
+              class="vamp-input"
+              value={patron.bloodline}
+              onChange={e => updatePatron({ bloodline: (e.target as HTMLSelectElement).value })}
+            >
+              <option value="">Choose...</option>
+              {eligible.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
+            </select>
+          </label>
+          <label class="vamp-ghoul-patron__label">
+            Blood Potency
+            <select
+              class="vamp-input"
+              value={patron.bp}
+              onChange={e => updatePatron({ bp: parseInt((e.target as HTMLSelectElement).value, 10) })}
+            >
+              {[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </label>
+        </div>
+      )}
+
+      {patron?.type === 'pc' && (
+        <div class="vamp-ghoul-patron__fields">
+          <label class="vamp-ghoul-patron__label">
+            Patron's Vamp URL
+            <input
+              class="vamp-input"
+              type="text"
+              placeholder="Paste URL or invite code..."
+              value={patron.vampUrl}
+              onInput={e => updatePatron({ vampUrl: (e.target as HTMLInputElement).value })}
+            />
+          </label>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function PlaybookSection({ creating }: { creating: boolean }) {
   const pb = currentPlaybook.value;
-  const pt = currentPredatorType.value;
+  const char = character.value;
+
+  const sectionTitle = creating ? <PlaybookDropdown /> : pb?.name;
+  const showContent = creating || !!pb;
+  if (!showContent) return null;
+
+  return (
+    <details class="vamp-rpanel-section" open={creating || undefined}>
+      <summary class="vamp-rpanel-section__bar">
+        {sectionTitle}
+        <span class="vamp-rpanel-section__pill">Playbook</span>
+      </summary>
+      <div class="vamp-rpanel-section__content">
+        {pb ? (
+          <>
+            <div class="vamp-rpanel-field__tagline">{pb.tagline}</div>
+            <details class="vamp-detail__collapsible" open={creating || undefined}>
+              <summary class="vamp-detail__summary">What Are You?</summary>
+              <div class="vamp-detail__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.whatAreYou) }} />
+            </details>
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Disciplines</span>
+              <div class="vamp-rpanel-field__value" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.disciplines) }} />
+              {creating && <div class="vamp-rpanel-field__aside">(Click for full details. You'll pick yours soon!)</div>}
+            </div>
+            <div class="vamp-rpanel-tier vamp-rpanel-tier--flaw">
+              <div class="vamp-rpanel-tier__label">Bane: <em>{pb.baneName}</em></div>
+              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.baneDescription) }} />
+            </div>
+            <div class="vamp-rpanel-tier vamp-rpanel-tier--compulsion">
+              <div class="vamp-rpanel-tier__label">Compulsion: <em>{pb.compulsionName ?? 'None'}</em></div>
+              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.compulsionDescription) }} />
+            </div>
+            {creating && char.playbook === 'Ghoul' && <GhoulPatronPrompt />}
+            {pb.archetypes.length > 0 && (
+              <div class="vamp-rpanel-field">
+                <span class="vamp-rpanel-field__label">Archetypes</span>
+                <div class="vamp-detail__archetypes">
+                  {pb.archetypes.map(arch => {
+                    const stats = parseStatString(arch.stats);
+                    const isActive = char.archetypeName === arch.name;
+                    return (
+                      <div
+                        class={`vamp-archetype ${creating ? 'vamp-archetype--selectable' : ''} ${isActive ? 'vamp-archetype--active' : ''}`}
+                        key={arch.name}
+                        onClick={creating ? () => updateCharacter({ archetypeName: arch.name, stats: parseStatString(arch.stats) as Record<StatName, number> }) : undefined}
+                      >
+                        {creating && <input type="radio" name="archetype" checked={isActive} readOnly class="vamp-archetype__radio" />}
+                        <div class="vamp-archetype__name">{arch.name}</div>
+                        <div class="vamp-archetype__tagline">{arch.tagline}</div>
+                        <div class="vamp-archetype__stats">
+                          {(Object.entries(stats) as [StatName, number][]).map(([name, val]) => (
+                            <span class="vamp-archetype__chip" key={name}>{formatStatChip(name, val)}</span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            <div
+              class={`vamp-archetype ${creating ? 'vamp-archetype--selectable' : ''} ${char.archetypeName === 'Custom' ? 'vamp-archetype--active' : ''}`}
+              onClick={creating && char.archetypeName !== 'Custom' ? () => updateCharacter({ archetypeName: 'Custom', stats: { Blood: NaN, Shadow: NaN, Resolve: NaN, Demeanor: NaN, Wits: NaN } }) : undefined}
+            >
+              {creating && <input type="radio" name="archetype" checked={char.archetypeName === 'Custom'} readOnly class="vamp-archetype__radio" />}
+              <div class="vamp-archetype__name">Custom Archetype</div>
+              <div class="vamp-archetype__tagline">Your concept, your spread.</div>
+              {creating && char.archetypeName === 'Custom' ? (
+                <CustomStatAllocator />
+              ) : (
+                <div class="vamp-archetype__stats">
+                  <span class="vamp-archetype__chip">+2</span>
+                  <span class="vamp-archetype__chip">+1</span>
+                  <span class="vamp-archetype__chip">+1</span>
+                  <span class="vamp-archetype__chip">+0</span>
+                  <span class="vamp-archetype__chip">-1</span>
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <div class="vamp-rpanel-field__tagline">Select a Playbook to see its details.</div>
+        )}
+      </div>
+    </details>
+  );
+}
+
+function AgeBracketSection({ creating }: { creating: boolean }) {
   const ab = currentAgeBracket.value;
+  const data = gameData.value;
+  const char = character.value;
+
+  const title = creating ? (
+    <select
+      class="creation-dropdown"
+      value={char.ageBracket}
+      onClick={(e) => e.stopPropagation()}
+      onChange={(e) => {
+        const val = (e.target as HTMLSelectElement).value;
+        const bracket = data?.ageBrackets.find(b => b.name === val);
+        if (!bracket) return;
+        const h = bracket.startingHumanity.split(/[^0-9]+/).map(Number).filter(n => !isNaN(n));
+        updateCharacter({
+          ageBracket: val,
+          bp: bracket.startingBloodPotency,
+          humanity: h.length > 0 ? Math.max(...h) : 7,
+          predatorType: '',
+        });
+      }}
+    >
+      <option value="">Choose Age</option>
+      {data?.ageBrackets.map(b => <option key={b.name} value={b.name}>{b.name}</option>)}
+    </select>
+  ) : ab?.name;
+
+  if (!creating && !ab) return null;
+
+  return (
+    <details class="vamp-rpanel-section" open={creating || undefined}>
+      <summary class="vamp-rpanel-section__bar">
+        {title}
+        <span class="vamp-rpanel-section__pill">Age Bracket</span>
+      </summary>
+      <div class="vamp-rpanel-section__content">
+        {ab ? (
+          <>
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Embraced</span>
+              <span class="vamp-rpanel-field__value">{ab.embraced}</span>
+            </div>
+            {ab.flavor && (
+              <div class="vamp-rpanel-field__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(ab.flavor) }} />
+            )}
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Starting BP/Humanity</span>
+              <span class="vamp-rpanel-field__value">BP {ab.startingBloodPotency}/{ab.startingHumanity}</span>
+            </div>
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Advancement</span>
+              <span class="vamp-rpanel-field__value">{ab.advancement}</span>
+            </div>
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Narrative Feel</span>
+              <span class="vamp-rpanel-field__value">{ab.narrativeFeel}</span>
+            </div>
+          </>
+        ) : (
+          <div class="vamp-rpanel-field__tagline">Select an Age Bracket to see its details.</div>
+        )}
+      </div>
+    </details>
+  );
+}
+
+function PredatorTypeSection({ creating }: { creating: boolean }) {
+  const pt = currentPredatorType.value;
+  const data = gameData.value;
+  const char = character.value;
+
+  const canSkip = char.ageBracket === 'Fledgling' || char.ageBracket === 'Thin-Blood'
+    || char.playbook === 'Devorari' || char.playbook === 'Ghoul';
+
+  const title = creating ? (
+    <select
+      class="creation-dropdown"
+      value={char.predatorType}
+      onClick={(e) => e.stopPropagation()}
+      onChange={(e) => {
+        updateCharacter({ predatorType: (e.target as HTMLSelectElement).value });
+      }}
+    >
+      <option value="">{canSkip ? 'None (optional)' : 'Choose Predator Type'}</option>
+      {data?.predatorTypes.map(p => <option key={p.name} value={p.name}>{p.name}</option>)}
+    </select>
+  ) : pt?.name;
+
+  if (!creating && !pt) return null;
+
+  return (
+    <details class="vamp-rpanel-section" open={creating || undefined}>
+      <summary class="vamp-rpanel-section__bar">
+        {title}
+        <span class="vamp-rpanel-section__pill">Predator Type</span>
+      </summary>
+      <div class="vamp-rpanel-section__content">
+        {pt ? (
+          <>
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Hunting Stat</span>
+              <span class="vamp-rpanel-field__value vamp-rpanel-field__value--accent">{pt.huntingStat}</span>
+            </div>
+            <div class="vamp-rpanel-field">
+              <span class="vamp-rpanel-field__label">Discipline</span>
+              <span class="vamp-rpanel-field__value vamp-rpanel-field__value--accent">{pt.discipline}</span>
+            </div>
+            <div class="vamp-rpanel-tier vamp-rpanel-tier--merit">
+              <div class="vamp-rpanel-tier__label">Merit</div>
+              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.merit) }} />
+            </div>
+            <div class="vamp-rpanel-tier vamp-rpanel-tier--flaw">
+              <div class="vamp-rpanel-tier__label">Flaw</div>
+              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.flaw) }} />
+            </div>
+            {pt.humanity && (
+              <div class="vamp-rpanel-field">
+                <span class="vamp-rpanel-field__label">Humanity</span>
+                <span class="vamp-rpanel-field__value">{pt.humanity}</span>
+              </div>
+            )}
+            {pt.feedingRules && (
+              <div class="vamp-rpanel-field">
+                <span class="vamp-rpanel-field__label">Feeding Rules</span>
+                <div class="vamp-rpanel-field__value" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.feedingRules) }} />
+              </div>
+            )}
+          </>
+        ) : (
+          <div class="vamp-rpanel-field__tagline">Select a Predator Type to see its details.</div>
+        )}
+      </div>
+    </details>
+  );
+}
+
+function CharacterPanel() {
+  const creating = creationMode.value;
 
   return (
     <div class="vamp-rpanel-scroll">
-      {pb && (
-        <CollapsibleSection title={pb.name} pill="Playbook" defaultOpen>
-          <div class="vamp-rpanel-field__tagline">{pb.tagline}</div>
-
-          <details class="vamp-detail__collapsible">
-            <summary class="vamp-detail__summary">What Are You?</summary>
-            <div class="vamp-detail__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.whatAreYou) }} />
-          </details>
-
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Disciplines</span>
-            <div class="vamp-rpanel-field__value" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.disciplines) }} />
-          </div>
-
-          <div class="vamp-rpanel-tier vamp-rpanel-tier--flaw">
-            <div class="vamp-rpanel-tier__label">Bane: <em>{pb.baneName}</em></div>
-            <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.baneDescription) }} />
-          </div>
-
-          <div class="vamp-rpanel-tier vamp-rpanel-tier--compulsion">
-            <div class="vamp-rpanel-tier__label">Compulsion: <em>{pb.compulsionName ?? 'None'}</em></div>
-            <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pb.compulsionDescription) }} />
-          </div>
-
-          {pb.archetypes.length > 0 && (
-            <div class="vamp-rpanel-field">
-              <span class="vamp-rpanel-field__label">Archetypes</span>
-              <div class="vamp-detail__archetypes">
-                {pb.archetypes.map(arch => {
-                  const stats = parseStatString(arch.stats);
-                  return (
-                    <div class="vamp-archetype" key={arch.name}>
-                      <div class="vamp-archetype__name">{arch.name}</div>
-                      <div class="vamp-archetype__tagline">{arch.tagline}</div>
-                      <div class="vamp-archetype__stats">
-                        {(Object.entries(stats) as [StatName, number][]).map(([name, val]) => (
-                          <span class="vamp-archetype__chip" key={name}>
-                            {formatStatChip(name, val)}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          <div class="vamp-archetype">
-            <div class="vamp-archetype__name">Custom Archetype</div>
-            <div class="vamp-archetype__tagline">Your concept, your spread.</div>
-            <div class="vamp-archetype__stats">
-              <span class="vamp-archetype__chip">+2</span>
-              <span class="vamp-archetype__chip">+1</span>
-              <span class="vamp-archetype__chip">+1</span>
-              <span class="vamp-archetype__chip">+0</span>
-              <span class="vamp-archetype__chip">-1</span>
-            </div>
-          </div>
-        </CollapsibleSection>
-      )}
-
-      {ab && (
-        <CollapsibleSection title={ab.name} pill="Age Bracket">
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Embraced</span>
-            <span class="vamp-rpanel-field__value">{ab.embraced}</span>
-          </div>
-          {ab.flavor && (
-            <div class="vamp-rpanel-field__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(ab.flavor) }} />
-          )}
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Starting BP/Humanity</span>
-            <span class="vamp-rpanel-field__value">BP {ab.startingBloodPotency}/{ab.startingHumanity}</span>
-          </div>
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Advancement</span>
-            <span class="vamp-rpanel-field__value">{ab.advancement}</span>
-          </div>
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Narrative Feel</span>
-            <span class="vamp-rpanel-field__value">{ab.narrativeFeel}</span>
-          </div>
-        </CollapsibleSection>
-      )}
-
-      {pt && (
-        <CollapsibleSection title={pt.name} pill="Predator Type">
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Hunting Stat</span>
-            <span class="vamp-rpanel-field__value vamp-rpanel-field__value--accent">{pt.huntingStat}</span>
-          </div>
-          <div class="vamp-rpanel-field">
-            <span class="vamp-rpanel-field__label">Discipline</span>
-            <span class="vamp-rpanel-field__value vamp-rpanel-field__value--accent">{pt.discipline}</span>
-          </div>
-          <div class="vamp-rpanel-tier vamp-rpanel-tier--merit">
-            <div class="vamp-rpanel-tier__label">Merit</div>
-            <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.merit) }} />
-          </div>
-          <div class="vamp-rpanel-tier vamp-rpanel-tier--flaw">
-            <div class="vamp-rpanel-tier__label">Flaw</div>
-            <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.flaw) }} />
-          </div>
-          {pt.humanity && (
-            <div class="vamp-rpanel-field">
-              <span class="vamp-rpanel-field__label">Humanity</span>
-              <span class="vamp-rpanel-field__value">{pt.humanity}</span>
-            </div>
-          )}
-          {pt.feedingRules && (
-            <div class="vamp-rpanel-field">
-              <span class="vamp-rpanel-field__label">Feeding Rules</span>
-              <div class="vamp-rpanel-field__value" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.feedingRules) }} />
-            </div>
-          )}
-        </CollapsibleSection>
-      )}
+      <PlaybookSection creating={creating} />
+      <AgeBracketSection creating={creating} />
+      <PredatorTypeSection creating={creating} />
     </div>
   );
 }
@@ -526,6 +932,12 @@ function AdvancementPanel() {
   const costs = data?.advancement.xpCosts ?? [];
   const flashingRef = useRef<Record<string, boolean>>({});
   const flashSignal = useSignal(0);
+  const isCreation = creationMode.value && creationStep.value === 'xp';
+  const startingXP = Math.min(10, Math.max(1, char.bp) * 2);
+
+  useEffect(() => {
+    if (isCreation && char.xp === 0) setXP(startingXP);
+  }, []);
 
   function handleAcquire(name: string, cost: number) {
     if (char.xp >= cost) {
@@ -542,20 +954,26 @@ function AdvancementPanel() {
 
   return (
     <div class="vamp-rpanel-scroll">
+      {isCreation && (
+        <div class="vamp-advancement-creation">
+          <p class="vamp-advancement-creation__title">Starting XP</p>
+          <p class="vamp-advancement-creation__formula">
+            BP {char.bp} (min 1) x 2 = <strong>{startingXP} XP</strong>
+          </p>
+          <p class="vamp-advancement-creation__hint">
+            Spend your starting XP below. Anything unspent carries over into play. You can also gain XP by taking on Folkloric Banes or Flaws.
+          </p>
+        </div>
+      )}
       <div class="vamp-advancement-xp">
         <span class="vamp-advancement-xp__label">Available XP</span>
         <span class="vamp-advancement-xp__value">{char.xp}</span>
       </div>
       {costs.map(item => {
-        /* BUG: parseInt("2 (starting) or 3") yields 2, not NaN. Needs strict digits-only
-           check so conditional costs don't render an Acquire button. Costs now use
-           "(starting)" and "(non-starting)" instead of "(in-Clan)" and "(out-of-Clan)". */
-        const numericCost = parseInt(item.cost, 10);
+        const numericCost = /^\d+$/.test(item.cost.trim()) ? parseInt(item.cost, 10) : NaN;
         const hasNumericCost = !isNaN(numericCost);
         const isFlashing = flashingRef.current[item.name];
         const pillText = item.cost
-          .replace('(in-Clan) or ', 'or ')
-          .replace(' (out-of-Clan)', '')
           .replace('1 + the Power\'s level', '1 + level');
 
         return (

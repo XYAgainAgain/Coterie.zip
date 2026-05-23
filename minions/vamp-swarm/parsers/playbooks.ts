@@ -17,7 +17,7 @@ const CLAN_FILES = [
 ];
 
 const CLANLESS_FILES = [
-  'caitiff', 'daughter-of-cacophony', 'devorari',
+  'baali', 'caitiff', 'daughter-of-cacophony', 'devorari',
   'gargoyle', 'ghoul', 'osirian', 'thin-blood',
 ];
 
