@@ -35,20 +35,11 @@ export function rightColumnMaxWidth(): number {
 }
 
 export function RightColumn({ children, class: extraClass }: { children: ComponentChildren; class?: string }) {
-  if (rightColumnMinimized.value) {
-    return (
-      <aside
-        class="vamp-right-col vamp-right-col--minimized"
-        onClick={() => { rightColumnMinimized.value = false; }}
-      >
-        <div class="vamp-right-col__mini-btn">
-          <span class="vamp-right-col__mini-chevron">&#9666;</span>
-        </div>
-      </aside>
-    );
-  }
+  const minimized = rightColumnMinimized.value;
+  const width = minimized ? 32 : rightColumnWidth.value;
 
   function onPointerDown(e: PointerEvent) {
+    if (minimized) return;
     e.preventDefault();
     const handle = e.currentTarget as HTMLElement;
     const col = handle.parentElement;
@@ -78,7 +69,15 @@ export function RightColumn({ children, class: extraClass }: { children: Compone
   }
 
   return (
-    <aside class={`vamp-right-col ${extraClass ?? ''}`} style={{ width: `${rightColumnWidth.value}px` }}>
+    <aside
+      class={`vamp-right-col ${minimized ? 'vamp-right-col--minimized' : ''} ${extraClass ?? ''}`}
+      style={{ width: `${width}px` }}
+    >
+      {minimized && (
+        <div class="vamp-right-col__mini-btn" onClick={() => { rightColumnMinimized.value = false; }}>
+          <span class="vamp-right-col__mini-chevron">&#9666;</span>
+        </div>
+      )}
       <div class="vamp-right-col__handle" onPointerDown={onPointerDown} />
       <div class="vamp-right-col__content">
         {children}

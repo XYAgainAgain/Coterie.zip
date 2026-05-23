@@ -16,7 +16,7 @@ The cost is the dependency. Without regular doses of Vitae, your borrowed gifts 
 
 ## Disciplines
 
-Choose 1 Discipline from those available to your patron's Clan.
+Choose 1 Discipline from those available to your patron. For the purposes of learning and using Powers from that Discipline, your Blood Potency is treated as if it were 1. You can only learn more Disciplines by being gifted the Vitae and knowledge of your patron, and then spending XP as normal. You are limited to whatever Disciplines your patron can access, and cannot learn Disciplines from other sources.
 
 ## Bane: *Blood Bound*
 

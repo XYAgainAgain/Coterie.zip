@@ -1,5 +1,5 @@
 import { useSignal } from '@preact/signals';
-import { accessibleDisciplineData, getPowerStatus, gameData, currentPlaybook, currentPredatorType } from '../state/derived';
+import { accessibleDisciplineData, getPowerStatus, gameData, currentPlaybook, currentPredatorType, effectiveDisciplineBP } from '../state/derived';
 import { character, updateCharacter } from '../state/character';
 import { creationMode, creationStep } from '../state/creation';
 import { PowerCard } from './PowerCard';
@@ -8,9 +8,11 @@ import type { Discipline } from '../data/types';
 
 /* All rendered markdown is from Coterie's verified JSON parsers (trusted content) */
 
-function DisciplineSection({ discipline, creationToggle }: {
+function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverlapBonus }: {
   discipline: Discipline;
   creationToggle?: { selected: boolean; granted: boolean; disabled: boolean; onToggle: () => void };
+  maxFreePowers?: number;
+  hasOverlapBonus?: boolean;
 }) {
   const isCreation = !!creationToggle;
   const isSelected = creationToggle?.selected ?? false;
@@ -22,6 +24,25 @@ function DisciplineSection({ discipline, creationToggle }: {
   const known = powers.filter(p => p.status === 'known');
   const available = powers.filter(p => p.status === 'available');
   const locked = powers.filter(p => p.status === 'locked');
+  const atPickLimit = isCreation && maxFreePowers != null && known.length >= maxFreePowers;
+
+  /* Per-level pick tracking: 1 Power per accessible level, overlap bonus allows 1 extra at any level */
+  const filledLevels = new Map<number, number>();
+  for (const k of known) {
+    filledLevels.set(k.power.level, (filledLevels.get(k.power.level) ?? 0) + 1);
+  }
+  const overlapBonusUsed = hasOverlapBonus
+    ? [...filledLevels.values()].some(count => count > 1)
+    : true;
+
+  function isLevelFull(level: number): boolean {
+    if (!isCreation) return false;
+    const count = filledLevels.get(level) ?? 0;
+    if (count === 0) return false;
+    if (count >= 2) return true;
+    if (hasOverlapBonus && !overlapBonusUsed) return false;
+    return true;
+  }
 
   return (
     <div class={`vamp-disc ${isSelected ? 'vamp-disc--selected' : ''}`}>
@@ -92,8 +113,18 @@ function DisciplineSection({ discipline, creationToggle }: {
                 Available ({available.length})
               </button>
               {showAvailable.value && available.map(entry => (
-                <PowerCard key={entry.power.name} entry={entry} />
+                <PowerCard
+                  key={entry.power.name}
+                  entry={entry}
+                  atPickLimit={atPickLimit || isLevelFull(entry.power.level)}
+                />
               ))}
+            </div>
+          )}
+
+          {isCreation && maxFreePowers != null && (
+            <div class={`vamp-disc__pick-count ${atPickLimit ? 'vamp-disc__pick-count--full' : ''}`}>
+              {known.length}/{maxFreePowers} free Powers selected
             </div>
           )}
 
@@ -133,9 +164,36 @@ interface DisciplineConfig {
 function getDisciplineConfig(
   pb: { name: string; disciplines: string; category: 'clan' | 'clanless' },
   allSlugs: string[],
+  patronPlaybook?: { name: string; disciplines: string; category: 'clan' | 'clanless' } | null,
 ): DisciplineConfig {
   const raw = pb.disciplines;
   const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
+
+  /* Ghoul: resolve Disciplines from patron's Playbook */
+  if (pb.name === 'Ghoul') {
+    if (!patronPlaybook) {
+      return { options: [], minRequired: 1, maxPicks: 1, hint: 'Select a patron first' };
+    }
+    const patronConfig = getDisciplineConfig(patronPlaybook, allSlugs);
+    const patronSlugs = patronConfig.options.map(o => o.slug);
+    return {
+      options: patronSlugs.map(s => ({ slug: s, exclusive: false, granted: false })),
+      minRequired: 1,
+      maxPicks: 1,
+      hint: `Choose 1 from your patron's Disciplines (${patronPlaybook.name})`,
+    };
+  }
+
+  /* Thin-Blood: exclusive Thin-Blood Alchemy, no creation picks needed */
+  if (pb.name === 'Thin-Blood') {
+    const tbaSlug = slugify('Thin-Blood Alchemy');
+    return {
+      options: [{ slug: tbaSlug, exclusive: true, granted: true }],
+      minRequired: 0,
+      maxPicks: 0,
+      hint: 'Thin-Blood Alchemy is granted exclusively. Other Disciplines can be temporarily accessed through Vitae in play.',
+    };
+  }
 
   const linkedNames: string[] = [];
   for (const match of raw.matchAll(/\[([^\]]+)\]\([^)]+\)/g)) {
@@ -192,20 +250,36 @@ function CreationDisciplineList() {
   const data = gameData.value;
   const pb = currentPlaybook.value;
   const pt = currentPredatorType.value;
+  const char = character.value;
   if (!data || !pb) return <div class="vamp-placeholder">Select a Playbook first</div>;
 
-  const config = getDisciplineConfig(pb, data.disciplines.map(d => d.slug));
-  const selected = character.value.unlockedDisciplines;
-  const grantedSlugs = config.options.filter(o => o.granted).map(o => o.slug);
+  const allSlugs = data.disciplines.map(d => d.slug);
 
-  if (grantedSlugs.length > 0 && !grantedSlugs.every(s => selected.includes(s))) {
-    const merged = [...new Set([...grantedSlugs, ...selected])];
-    updateCharacter({ unlockedDisciplines: merged });
+  /* Resolve Ghoul patron's Playbook for Discipline lookup */
+  let patronPb: typeof pb | null = null;
+  if (pb.name === 'Ghoul' && char.ghoulPatron?.bloodline) {
+    patronPb = data.playbooks.find(p => p.name === char.ghoulPatron!.bloodline) ?? null;
   }
 
+  const config = getDisciplineConfig(pb, allSlugs, patronPb);
+
+  if (pb.name === 'Ghoul' && !patronPb) {
+    return (
+      <div class="vamp-disc-list">
+        <div class="vamp-disc-creation__hint">
+          Choose a patron bloodline first (in the Playbook step) to see available Disciplines.
+        </div>
+      </div>
+    );
+  }
+
+  const selected = char.unlockedDisciplines;
+  const grantedSlugs = config.options.filter(o => o.granted).map(o => o.slug);
+
+  /* Resolve Predator Type discipline (Ghouls don't get one) */
   let ptSlug: string | null = null;
   let ptOverlaps = false;
-  if (pt) {
+  if (pt && pb.name !== 'Ghoul') {
     const ptDisc = data.disciplines.find(
       d => d.name.toLowerCase() === pt.discipline.toLowerCase()
     );
@@ -215,14 +289,30 @@ function CreationDisciplineList() {
     }
   }
 
+  /* Combine granted slugs: Playbook granted + PT granted (if not overlapping) */
+  const allGranted = [...grantedSlugs];
+  if (ptSlug && !ptOverlaps) allGranted.push(ptSlug);
+
+  /* Auto-include all granted Disciplines */
+  if (allGranted.length > 0 && !allGranted.every(s => selected.includes(s))) {
+    const merged = [...new Set([...allGranted, ...selected])];
+    updateCharacter({ unlockedDisciplines: merged });
+  }
+
+  /* Build the full options list: Playbook options + PT discipline if it doesn't overlap */
+  const displayOptions = [...config.options];
+  if (ptSlug && !ptOverlaps && !displayOptions.some(o => o.slug === ptSlug)) {
+    displayOptions.push({ slug: ptSlug, exclusive: false, granted: true });
+  }
+
   function toggle(slug: string) {
-    if (grantedSlugs.includes(slug)) return;
+    if (allGranted.includes(slug)) return;
     const current = [...selected];
     const idx = current.indexOf(slug);
     if (idx >= 0) {
       current.splice(idx, 1);
     } else {
-      if (current.length >= config.maxPicks) return;
+      if (current.length >= config.maxPicks + (ptSlug && !ptOverlaps ? 1 : 0)) return;
       current.push(slug);
     }
     updateCharacter({ unlockedDisciplines: current, knownPowers: [] });
@@ -233,25 +323,31 @@ function CreationDisciplineList() {
       <div class="vamp-disc-creation__hint">{config.hint}</div>
       {ptSlug && !ptOverlaps && (
         <div class="vamp-disc-creation__hint">
-          Your Predator Type also grants {pt!.discipline}.
+          Your Predator Type also grants access to {pt!.discipline}. It appears below as granted.
         </div>
       )}
       {ptSlug && ptOverlaps && (
         <div class="vamp-disc-creation__hint">
-          Your Predator Type's Discipline ({pt!.discipline}) overlaps with your starting options; pick another free {pt!.discipline} Power of any level you can access!
+          Your Predator Type's Discipline ({pt!.discipline}) overlaps with your starting options. Pick an extra free Power of any level you can access!
         </div>
       )}
-      {config.options.map(opt => {
+      {displayOptions.map(opt => {
         const disc = data.disciplines.find(d => d.slug === opt.slug);
         if (!disc) return null;
+        const isGranted = allGranted.includes(opt.slug);
         const isSelected = selected.includes(opt.slug);
-        const isGranted = opt.granted;
-        const atMax = selected.length >= config.maxPicks && !isSelected;
+        const userPickCount = selected.filter(s => !allGranted.includes(s)).length;
+        const atMax = userPickCount >= config.maxPicks && !isSelected && !isGranted;
+        const discBP = effectiveDisciplineBP.value;
+        const overlapBonus = ptSlug === opt.slug && ptOverlaps;
+        const freePowers = discBP + (overlapBonus ? 1 : 0);
 
         return (
           <DisciplineSection
             key={disc.slug}
             discipline={disc}
+            maxFreePowers={freePowers}
+            hasOverlapBonus={overlapBonus}
             creationToggle={{
               selected: isSelected || isGranted,
               granted: isGranted,
@@ -262,7 +358,7 @@ function CreationDisciplineList() {
         );
       })}
       <div class="vamp-disc-creation__count">
-        {selected.length}/{config.minRequired} selected
+        {selected.filter(s => !allGranted.includes(s)).length}/{config.minRequired} selected
       </div>
     </div>
   );

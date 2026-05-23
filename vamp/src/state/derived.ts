@@ -33,6 +33,45 @@ export const huntingStat = computed<StatName | null>(() => {
   return parseHuntingStat(pt.huntingStat);
 });
 
+/* Disciplines auto-granted by Playbook text (e.g. "granted", "exclusive access") */
+export const grantedDisciplineSlugs = computed<Set<string>>(() => {
+  const pb = currentPlaybook.value;
+  const pt = currentPredatorType.value;
+  const data = gameData.value;
+  if (!pb || !data) return new Set();
+
+  const granted = new Set<string>();
+  const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
+  const raw = pb.disciplines;
+
+  /* Extract linked discipline names */
+  const linkedNames: string[] = [];
+  for (const match of raw.matchAll(/\[([^\]]+)\]\([^)]+\)/g)) {
+    linkedNames.push(match[1].replace(/\*\*/g, ''));
+  }
+
+  if (pb.name === 'Thin-Blood') {
+    granted.add(slugify('Thin-Blood Alchemy'));
+  } else if (/granted|automatically\s+receive|exclusive\s+access/i.test(raw) && linkedNames.length >= 1) {
+    granted.add(slugify(linkedNames[0]));
+  }
+
+  /* PT discipline counts as granted if it doesn't overlap with Playbook options */
+  if (pt && pb.name !== 'Ghoul') {
+    const ptDisc = data.disciplines.find(
+      d => d.name.toLowerCase() === pt.discipline.toLowerCase()
+    );
+    if (ptDisc) {
+      const pbOptionSlugs = linkedNames.map(n => slugify(n));
+      if (!pbOptionSlugs.includes(ptDisc.slug)) {
+        granted.add(ptDisc.slug);
+      }
+    }
+  }
+
+  return granted;
+});
+
 export const availableDisciplines = computed<string[]>(() => {
   const data = gameData.value;
   const pt = currentPredatorType.value;
@@ -72,19 +111,27 @@ export interface PowerWithStatus {
   prerequisites: Prerequisite[];
 }
 
+/* Ghouls treat their BP as 1 for Discipline access per Playbook rules */
+export const effectiveDisciplineBP = computed(() => {
+  const char = character.value;
+  if (char.playbook === 'Ghoul' && char.bp === 0) return 1;
+  return char.bp;
+});
+
 export function getPowerStatus(power: Power, disciplineSlug: string): PowerWithStatus {
   const char = character.value;
   const prereqs = parsePrerequisites(power.body);
+  const discBP = effectiveDisciplineBP.value;
 
   if (char.knownPowers.includes(power.name)) {
     return { power, status: 'known', lockReason: null, prerequisites: prereqs };
   }
 
-  if (power.level > char.bp) {
+  if (power.level > discBP) {
     return {
       power,
       status: 'locked',
-      lockReason: `Requires BP ${power.level} (current: ${char.bp})`,
+      lockReason: `Requires BP ${power.level} (current: ${discBP})`,
       prerequisites: prereqs,
     };
   }

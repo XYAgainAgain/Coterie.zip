@@ -50,6 +50,18 @@ function TabBar() {
   const idx = RPANEL_TABS.indexOf(current);
   const bloodlineUrl = currentBloodlineUrl.value;
 
+  useEffect(() => {
+    if (!bloodlineUrl) return;
+    const existing = document.querySelector(`link[rel="preload"][href="${bloodlineUrl}"]`);
+    if (existing) return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = bloodlineUrl;
+    document.head.appendChild(link);
+    return () => { link.remove(); };
+  }, [bloodlineUrl]);
+
   return (
     <nav
       class="vamp-rpanel-bar"
@@ -70,6 +82,7 @@ function TabBar() {
               class="vamp-rpanel-bar__playbook-img"
               src={bloodlineUrl}
               alt={TAB_TOOLTIPS[id]}
+              loading="eager"
             />
           ) : TAB_SVGS[id] ? (
             <span
@@ -176,13 +189,34 @@ function CoterieSetup() {
         Pick a Coterie Type. Stats are set automatically.
       </p>
       <div style="max-height: 22rem; overflow-y: auto;">
-        {data?.coterieTypes.map(ct => (
-          <div key={ct.name} class={`creation-card ${selectedType.value === ct.name ? 'creation-card--selected' : ''}`}
-            onClick={() => { selectedType.value = ct.name; }}>
-            <div class="creation-card__name">{ct.name}</div>
-            <div class="creation-card__tagline">{ct.coterieStats}</div>
-          </div>
-        ))}
+        {data?.coterieTypes.map(ct => {
+          const isSelected = selectedType.value === ct.name;
+          return (
+            <div key={ct.name} class={`creation-card ${isSelected ? 'creation-card--selected' : ''}`}
+              onClick={() => { selectedType.value = ct.name; }}>
+              <div class="creation-card__name">{ct.name}</div>
+              <div class="creation-card__tagline">{ct.coterieStats}</div>
+              {isSelected && (
+                <div class="creation-card__detail">
+                  {/* Rendered markdown from Coterie's verified JSON parsers (trusted content, duh) */}
+                  <div class="vamp-rpanel-field__body"
+                    dangerouslySetInnerHTML={{ __html: renderGameMarkdown(ct.description) }}
+                  />
+                  <div class="creation-card__haven">
+                    <span class="creation-card__haven-label creation-card__haven-label--pos">
+                      Pick {ct.havenFeatures.positiveCount}: </span>
+                    {ct.havenFeatures.positiveOptions.join(', ')}
+                  </div>
+                  <div class="creation-card__haven">
+                    <span class="creation-card__haven-label creation-card__haven-label--neg">
+                      Pick {ct.havenFeatures.negativeCount}: </span>
+                    {ct.havenFeatures.negativeOptions.join(', ')}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
       {error.value && <p style="color: #cc3333; font-size: 0.8rem; margin-top: 0.5rem;">{error.value}</p>}
       <div style="display:flex; gap:0.5rem; margin-top: 0.75rem;">

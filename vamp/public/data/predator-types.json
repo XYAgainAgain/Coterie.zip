@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-22T21:07:40.773Z",
+  "generatedAt": "2026-05-23T05:48:16.951Z",
   "entries": [
     {
       "name": "Abductor",
@@ -16,7 +16,7 @@
       "huntingStat": "+Blood",
       "discipline": "Celerity",
       "merit": "*I Know a Guy.* You have connections in the criminal underworld. **When you *Influence* criminals, dealers, fences, or street-level operatives**, take +1 Ongoing until your problem is resolved.",
-      "flaw": "*Catching Heat.* Your violent feeding style attracts attention. You have −1 Ongoing to **Influence** law enforcement or anyone investigating violent crimes in your hunting grounds.",
+      "flaw": "*Catching Heat.* Your violent feeding style attracts attention. **When you attempt to *Influence* law enforcement or anyone investigating violent crimes in your territory**, you have −1 Ongoing.",
       "humanity": "−1",
       "feedingRules": null
     },
@@ -61,7 +61,7 @@
       "huntingStat": "+Wits",
       "discipline": "Obfuscate",
       "merit": "*Burner Accounts.* You always have a fresh digital persona ready to deploy. **When you *Hunt* using dating apps or social platforms**, treat a roll of 6- as a 7–9.",
-      "flaw": "*Digital Breadcrumbs.* Your online activity creates a traceable pattern. You have −1 Ongoing to **Influence** anyone who investigates digital crimes or missing persons cases in your area.",
+      "flaw": "*Digital Breadcrumbs.* Your online activity creates a traceable pattern. **When you attempt to *Influence* anyone who investigates digital crimes or missing persons cases in your area**, you have −1 Ongoing.",
       "humanity": null,
       "feedingRules": null
     },
@@ -70,7 +70,7 @@
       "huntingStat": "+Resolve",
       "discipline": "Potence",
       "merit": "*Know Thine Enemy.* You've studied Hunter tactics extensively. **When you *Catch the Scent* or *Discern Vibes* to locate or assess Hunters**, take +1 Forward.",
-      "flaw": "*On the List.* A Hunter has your description and is actively looking for you. You have a persistent mortal enemy with the training and resources to be a genuine threat.",
+      "flaw": "*On the List.* A Hunter has your description and is actively looking for you. **You have a persistent mortal enemy with the training and resources to be a genuine threat.**",
       "humanity": null,
       "feedingRules": "You can only slake Hunger by **Feeding** from mortal Hunters. If you **Feed** from someone who isn't devoted to trying to slay your kind, you gain no benefit. It's just not worth it."
     },
@@ -79,7 +79,7 @@
       "huntingStat": "+Shadow",
       "discipline": "Celerity",
       "merit": "*Tunnel Rat.* You know every sewer, service tunnel, and sub-basement in your territory. **When you *Slip Away* underground**, roll with Advantage. Given enough time, you can travel between almost any two locations in the city without surfacing (Storyteller's discretion).",
-      "flaw": "*Surface Sickness.* The aboveground world feels hostile and overwhelming. You have −1 Ongoing to **Influence** mortals in well-lit or open environments.",
+      "flaw": "*Surface Sickness.* The aboveground world feels hostile and overwhelming. **You have −1 Ongoing to *Influence* mortals in well-lit or open environments.**",
       "humanity": null,
       "feedingRules": "You can only comfortably **Feed** underground (sewers, tunnels, basements, warrens). If you try to **Hunt** or **Feed** while aboveground, you have Disadvantage on the rolls and can only ever slake a maximum of 1 Hunger this way."
     },
@@ -88,7 +88,7 @@
       "huntingStat": "+Wits",
       "discipline": "Auspex",
       "merit": "*Load-Bearing Lunch.* You can spot the most critical person in any system. **When you successfully *Discern Vibes* about a workplace, business, company, or service**, you may ask the Storyteller \"Who here would cause the most disruption if they went missing?\"",
-      "flaw": "*Collateral Damage.* The disruptions you cause draw investigation. You have −1 Ongoing to **Influence** anyone looking into service failures or missing workers in your area. You fear OSHA almost as much as fire.",
+      "flaw": "*Collateral Damage.* The disruptions you cause draw investigation. **You have −1 Ongoing to *Influence* anyone looking into service failures or missing workers in your area.** You fear OSHA almost as much as fire.",
       "humanity": "−1",
       "feedingRules": null
     },

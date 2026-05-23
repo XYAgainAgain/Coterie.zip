@@ -28,7 +28,6 @@ function extractIntro(allTokens: Token[]): string | null {
   for (const t of allTokens) {
     if (t.type === 'heading') break;
     if (t.type === 'hr') break;
-    if (t.type === 'space') continue;
     parts.push(t.raw);
   }
   const text = parts.join('').trim();

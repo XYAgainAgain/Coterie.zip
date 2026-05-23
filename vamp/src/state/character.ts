@@ -2,6 +2,7 @@ import { signal } from '@preact/signals';
 import type { StatName } from '../data/types';
 
 export interface Debt {
+  id: string;
   who: string;
   text: string;
   direction: 'owed' | 'owe';
@@ -109,6 +110,8 @@ const NOTEBOOK_HELP_BODY = `# Notebook Help
 
 Your Notebook tab is a scratchpad for anything you want to track during a ***Coterie*** session. Notes support **markdown formatting**, so you can keep things organized and import/export at will. Here's a guide!
 
+***DOUBLE-CLICK ME TO EDIT!***
+
 ## Quick Reference
 
 | You Type | You Get |
@@ -185,9 +188,9 @@ const JOHNNY_FANGS: CharacterState = {
   xp: 3,
   xpTriggers: [false, false, false],
   debts: [
-    { who: 'Alejandro', text: 'You kept quiet about his unsanctioned feeding grounds', direction: 'owed', state: 'empty' },
-    { who: 'Nadia', text: 'You saved her ghoul from a Sabbat ambush', direction: 'owed', state: 'slashed' },
-    { who: 'The Prince', text: 'Overlooked your Sire breaking Tradition when Embracing you', direction: 'owe', state: 'empty' },
+    { id: 'd1', who: 'Alejandro', text: 'You kept quiet about his unsanctioned feeding grounds', direction: 'owed', state: 'empty' },
+    { id: 'd2', who: 'Nadia', text: 'You saved her ghoul from a Sabbat ambush', direction: 'owed', state: 'slashed' },
+    { id: 'd3', who: 'The Prince', text: 'Overlooked your Sire breaking Tradition when Embracing you', direction: 'owe', state: 'empty' },
   ],
   modifiers: [
     { id: 'm1', type: 'forward', value: 1, target: 'Influence', source: 'Auspex: Premonition' },
@@ -238,6 +241,13 @@ export function learnPower(powerName: string) {
   character.value = {
     ...character.value,
     knownPowers: [...character.value.knownPowers, powerName],
+  };
+}
+
+export function unlearnPower(powerName: string) {
+  character.value = {
+    ...character.value,
+    knownPowers: character.value.knownPowers.filter(p => p !== powerName),
   };
 }
 
@@ -427,6 +437,44 @@ export function quickToggleAdvantage() {
     if (existingDis) removeModifier(existingDis.id);
     addModifier({ type: 'advantage', target: null, source: MANUAL_SOURCE });
   }
+}
+
+export function addDebt(direction: 'owed' | 'owe', who: string, text: string) {
+  character.value = {
+    ...character.value,
+    debts: [...character.value.debts, { id: crypto.randomUUID(), who, text, direction, state: 'empty' }],
+  };
+}
+
+export function removeDebt(id: string) {
+  character.value = {
+    ...character.value,
+    debts: character.value.debts.filter(d => d.id !== id),
+  };
+}
+
+export function updateDebt(id: string, patch: Partial<Pick<Debt, 'who' | 'text'>>) {
+  character.value = {
+    ...character.value,
+    debts: character.value.debts.map(d =>
+      d.id === id ? { ...d, ...patch } : d
+    ),
+  };
+}
+
+export function cycleDebtState(id: string, reverse: boolean) {
+  const cycle: Debt['state'][] = ['empty', 'slashed', 'filled'];
+  character.value = {
+    ...character.value,
+    debts: character.value.debts.map(d => {
+      if (d.id !== id) return d;
+      const idx = cycle.indexOf(d.state);
+      const next = reverse
+        ? cycle[(idx - 1 + cycle.length) % cycle.length]
+        : cycle[(idx + 1) % cycle.length];
+      return { ...d, state: next };
+    }),
+  };
 }
 
 export function quickToggleDisadvantage() {

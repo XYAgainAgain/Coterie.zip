@@ -15,17 +15,19 @@ import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH 
 import {
   character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
+  addDebt, removeDebt, updateDebt, cycleDebtState,
 } from '../state/character';
+import { editMode } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
 import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
 } from '../state/derived';
-import { switchTab, openMove, activeRightTab } from '../state/panel';
+import { switchTab, openMove } from '../state/panel';
 import { renderGameMarkdown } from '../data/transforms';
 import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
 import {
-  creationMode, creationStep, stepComplete, enterCreationMode, goToStep,
+  creationMode, creationStep, stepComplete, enterCreationMode,
   allStepsComplete, type CreationStep,
 } from '../state/creation';
 import {
@@ -47,9 +49,6 @@ const STAT_ORDER: StatName[] = ['Blood', 'Shadow', 'Resolve', 'Demeanor', 'Wits'
 
 type PipState = 'empty' | 'slashed' | 'filled' | 'confirm';
 const PIP_CYCLE: PipState[] = ['empty', 'slashed', 'filled', 'confirm'];
-
-type DebtState = 'empty' | 'slashed' | 'filled';
-const DEBT_PIP_CYCLE: DebtState[] = ['empty', 'slashed', 'filled'];
 
 function DualPhaseBox({ state, onAdvance, onReverse }: {
   state: PipState;
@@ -157,6 +156,7 @@ function HungerTracker() {
 function BPTracker() {
   const bp = character.value.bp;
   const hp = maxHP.value;
+  const isEdit = editMode.value;
 
   const bpText = bp === 0
     ? `${hp} HP, no Blood Surges, no Powers, no feeding restrictions`
@@ -165,7 +165,7 @@ function BPTracker() {
   return (
     <div>
       <div class="vamp-pip-row">
-        <ClickPipRow value={bp} count={5} onChange={setBP} muted droplet />
+        <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} muted droplet />
         <span class="vamp-tracker-label">BP {bp}</span>
       </div>
       <div class="vamp-tracker-note">{bpText}</div>
@@ -291,99 +291,181 @@ function XPTracker() {
   );
 }
 
-type Debt = { who: string; text: string; state: DebtState };
+function DebtEntry({ debtId, guarded }: { debtId: string; guarded?: boolean }) {
+  const d = character.value.debts.find(x => x.id === debtId);
+  if (!d) return null;
 
-function useDebtList(initial: Debt[]) {
-  const debts = useSignal<Debt[]>(initial);
+  const isEdit = editMode.value;
+  const confirming = useSignal(false);
+  const editingField = useSignal<'who' | 'text' | null>(null);
 
-  function advance(i: number) {
-    const next = [...debts.value];
-    const idx = DEBT_PIP_CYCLE.indexOf(next[i].state);
-    next[i] = { ...next[i], state: DEBT_PIP_CYCLE[(idx + 1) % DEBT_PIP_CYCLE.length] };
-    debts.value = next;
-  }
+  useEffect(() => {
+    if (!editMode.value) editingField.value = null;
+  }, [editMode.value]);
 
-  function reverse(i: number, e: Event) {
-    e.preventDefault();
-    const next = [...debts.value];
-    const idx = DEBT_PIP_CYCLE.indexOf(next[i].state);
-    next[i] = { ...next[i], state: DEBT_PIP_CYCLE[(idx - 1 + DEBT_PIP_CYCLE.length) % DEBT_PIP_CYCLE.length] };
-    debts.value = next;
-  }
-
-  return { debts, advance, reverse };
-}
-
-function DebtSection({ debts, advance, reverse, guarded }: {
-  debts: Debt[];
-  advance: (i: number) => void;
-  reverse: (i: number, e: Event) => void;
-  guarded?: boolean;
-}) {
-  const confirming = useSignal<number | null>(null);
-
-  function handleAdvance(i: number) {
-    if (!guarded) return advance(i);
-    if (confirming.value === i) {
-      confirming.value = null;
-      advance(i);
+  function handleAdvance() {
+    if (guarded) {
+      if (confirming.value) {
+        confirming.value = false;
+        cycleDebtState(debtId, false);
+      } else {
+        confirming.value = true;
+      }
     } else {
-      confirming.value = i;
+      cycleDebtState(debtId, false);
     }
   }
 
+  function handleReverse(e: Event) {
+    e.preventDefault();
+    if (guarded && !confirming.value) { confirming.value = true; return; }
+    confirming.value = false;
+    cycleDebtState(debtId, true);
+  }
+
+  function handleFieldKey(e: KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === 'Escape') editingField.value = null;
+  }
+
+  return (
+    <div class="vamp-debt">
+      <div
+        class={`vamp-pip vamp-pip--${confirming.value ? 'confirm' : d.state} ${guarded ? 'vamp-pip--muted' : ''}`}
+        onClick={handleAdvance}
+        onContextMenu={handleReverse}
+      >
+        {confirming.value && <span class="vamp-pip__confirm">?</span>}
+      </div>
+      <span class="vamp-debt__body">
+        {editingField.value === 'who' ? (
+          <input
+            class="vamp-debt__edit-input vamp-debt__edit-input--who"
+            value={d.who}
+            autoFocus
+            onInput={(e) => updateDebt(debtId, { who: (e.target as HTMLInputElement).value })}
+            onBlur={() => { editingField.value = null; }}
+            onKeyDown={handleFieldKey}
+          />
+        ) : (
+          <span
+            class={`vamp-debt__who ${d.state === 'filled' ? 'vamp-debt__who--cashed' : ''}`}
+            onDblClick={() => { if (isEdit) editingField.value = 'who'; }}
+          >{d.who || '(name)'}</span>
+        )}
+        {editingField.value === 'text' ? (
+          <input
+            class="vamp-debt__edit-input"
+            value={d.text}
+            autoFocus
+            onInput={(e) => updateDebt(debtId, { text: (e.target as HTMLInputElement).value })}
+            onBlur={() => { editingField.value = null; }}
+            onKeyDown={handleFieldKey}
+          />
+        ) : (
+          <span
+            class={`vamp-debt__text ${d.state === 'filled' ? 'vamp-debt__text--cashed' : ''}`}
+            onDblClick={() => { if (isEdit) editingField.value = 'text'; }}
+          >{d.text || '(description)'}</span>
+        )}
+      </span>
+      {isEdit && (
+        <button
+          class="vamp-debt__remove"
+          onClick={() => removeDebt(debtId)}
+          aria-label="Remove debt"
+        >&times;</button>
+      )}
+    </div>
+  );
+}
+
+function NewDebtForm({ direction, onDone }: { direction: 'owed' | 'owe'; onDone: () => void }) {
+  const who = useSignal('');
+  const text = useSignal('');
+  const done = useSignal(false);
+
+  function save() {
+    if (done.value) return;
+    done.value = true;
+    if (who.value.trim()) {
+      addDebt(direction, who.value.trim(), text.value.trim());
+    }
+    onDone();
+  }
+
+  return (
+    <div class="vamp-debt vamp-debt--new">
+      <div class="vamp-pip vamp-pip--empty" />
+      <span class="vamp-debt__body">
+        <input
+          class="vamp-debt__edit-input vamp-debt__edit-input--who"
+          placeholder="Who?"
+          value={who.value}
+          autoFocus
+          onInput={(e) => { who.value = (e.target as HTMLInputElement).value; }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') save();
+            if (e.key === 'Escape') onDone();
+          }}
+        />
+        <input
+          class="vamp-debt__edit-input"
+          placeholder="What for?"
+          value={text.value}
+          onInput={(e) => { text.value = (e.target as HTMLInputElement).value; }}
+          onBlur={save}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') save();
+            if (e.key === 'Escape') onDone();
+          }}
+        />
+      </span>
+    </div>
+  );
+}
+
+function DebtColumn({ direction, guarded }: { direction: 'owed' | 'owe'; guarded?: boolean }) {
+  const allDebts = character.value.debts;
+  const isEdit = editMode.value;
+  const adding = useSignal(false);
+  const filtered = allDebts.filter(d => d.direction === direction);
+
+  useEffect(() => {
+    if (!editMode.value) adding.value = false;
+  }, [editMode.value]);
+
   return (
     <div class="vamp-debt-list">
-      {debts.length === 0 && (
+      {filtered.length === 0 && !adding.value && (
         <div class="vamp-debt-list__empty">None</div>
       )}
-      {debts.map((d, i) => (
-        <div class="vamp-debt" key={i}>
-          <div
-            class={`vamp-pip vamp-pip--${confirming.value === i ? 'confirm' : d.state} ${guarded ? 'vamp-pip--muted' : ''}`}
-            onClick={() => handleAdvance(i)}
-            onContextMenu={(e) => { confirming.value = null; reverse(i, e); }}
-          >
-            {confirming.value === i && <span class="vamp-pip__confirm">?</span>}
-          </div>
-          <span class="vamp-debt__body">
-            <span class={`vamp-debt__who ${d.state === 'filled' ? 'vamp-debt__who--cashed' : ''}`}>{d.who}</span>
-            <span class={`vamp-debt__text ${d.state === 'filled' ? 'vamp-debt__text--cashed' : ''}`}>{d.text}</span>
-          </span>
-        </div>
+      {filtered.map(d => (
+        <DebtEntry key={d.id} debtId={d.id} guarded={guarded} />
       ))}
+      {adding.value && (
+        <NewDebtForm direction={direction} onDone={() => { adding.value = false; }} />
+      )}
+      {isEdit && !adding.value && (
+        <button
+          class="vamp-debt-list__add"
+          onClick={() => { adding.value = true; }}
+        >+ Add</button>
+      )}
     </div>
   );
 }
 
 function DebtPanel() {
-  const charDebts = character.value.debts;
-  const owed = useDebtList(
-    charDebts.filter(d => d.direction === 'owed').map(d => ({ who: d.who, text: d.text, state: d.state }))
-  );
-  const youOwe = useDebtList(
-    charDebts.filter(d => d.direction === 'owe').map(d => ({ who: d.who, text: d.text, state: d.state }))
-  );
-
   return (
     <div class="vamp-debts-split">
       <div class="vamp-debts-split__col">
         <div class="vamp-debts-split__heading">Owed to you</div>
-        <DebtSection
-          debts={owed.debts.value}
-          advance={owed.advance}
-          reverse={owed.reverse}
-        />
+        <DebtColumn direction="owed" />
       </div>
       <div class="vamp-debts-split__divider" />
       <div class="vamp-debts-split__col">
         <div class="vamp-debts-split__heading">You owe</div>
-        <DebtSection
-          debts={youOwe.debts.value}
-          advance={youOwe.advance}
-          reverse={youOwe.reverse}
-          guarded
-        />
+        <DebtColumn direction="owe" guarded />
       </div>
     </div>
   );
@@ -758,6 +840,7 @@ function BioDualField({ label, bio, variant }: {
   variant: 'ages' | 'pronouns';
 }) {
   const editing = useSignal(false);
+  const isEdit = editMode.value;
   const isAges = variant === 'ages';
   const v1 = isAges ? bio.vampiricAge : bio.pronouns[0];
   const v2 = isAges ? bio.apparentAge : bio.pronouns[1];
@@ -812,7 +895,7 @@ function BioDualField({ label, bio, variant }: {
   }
 
   return (
-    <div class="vamp-bio__field" onDblClick={() => { editing.value = true; }}>
+    <div class="vamp-bio__field" onDblClick={() => { if (isEdit) editing.value = true; }}>
       <span class="vamp-bio__label">{label}</span>
       <span class="vamp-bio__value">{display || '—'}</span>
     </div>
@@ -825,6 +908,7 @@ function BioField({ label, field, bio }: {
   bio: Bio;
 }) {
   const editing = useSignal(false);
+  const isEdit = editMode.value;
   const value = bio[field] as string;
   const snapshot = useSignal(value);
   if (!editing.value) snapshot.value = value;
@@ -851,13 +935,42 @@ function BioField({ label, field, bio }: {
   }
 
   return (
-    <div class="vamp-bio__field" onDblClick={() => { editing.value = true; }}>
+    <div class="vamp-bio__field" onDblClick={() => { if (isEdit) editing.value = true; }}>
       <span class="vamp-bio__label">{label}</span>
       <span class="vamp-bio__value">{value || '—'}</span>
     </div>
   );
 }
 
+
+function NameField({ name, isCreating }: { name: string; isCreating: boolean }) {
+  const editing = useSignal(false);
+  const isEdit = editMode.value;
+
+  if (isCreating || editing.value) {
+    return (
+      <input
+        class="vamp-identity__name-input"
+        type="text"
+        placeholder="Inscribe a name..."
+        value={name}
+        onInput={(e) => updateCharacter({ name: (e.target as HTMLInputElement).value })}
+        onBlur={() => { editing.value = false; }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === 'Escape') editing.value = false;
+        }}
+        autoFocus={!isCreating}
+      />
+    );
+  }
+
+  return (
+    <div
+      class="vamp-identity__name"
+      onDblClick={() => { if (isEdit) editing.value = true; }}
+    >{name || 'Unnamed'}</div>
+  );
+}
 
 const STEP_ZONE: Record<CreationStep, 'sidebar' | 'content' | 'right'> = {
   name: 'sidebar',
@@ -952,7 +1065,8 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     }
   }, [isTour, tourStep?.id]);
 
-  const sidebarSpotlight = zone === 'sidebar' || statsDualHighlight;
+  const sidebarTourSpotlight = isTour && tourStep?.id === 'basic-moves';
+  const sidebarSpotlight = zone === 'sidebar' || statsDualHighlight || sidebarTourSpotlight;
 
   const sheetClass = [
     'vamp-sheet',
@@ -965,20 +1079,9 @@ export function CharacterSheet({ slug }: { slug?: string }) {
       {(isCreating || isTour) && <SpotlightOverlay />}
       {isTour && <TourOverlay />}
 
-      <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? 'creation-spotlight' : ''}`}>
+      <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? (sidebarTourSpotlight ? 'tour-spotlight' : 'creation-spotlight') : ''}`}>
         <div class="vamp-identity">
-          {isCreating && step === 'name' ? (
-            <input
-              class="vamp-identity__name-input"
-              type="text"
-              placeholder="Inscribe a name..."
-              value={char.name}
-              onInput={(e) => updateCharacter({ name: (e.target as HTMLInputElement).value })}
-              autoFocus
-            />
-          ) : (
-            <div class="vamp-identity__name">{char.name || 'Unnamed'}</div>
-          )}
+          <NameField name={char.name} isCreating={isCreating && step === 'name'} />
           <PortraitEditor portraits={char.portraits} name={char.name} />
           <div class="vamp-identity__meta">
             <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook}</span>

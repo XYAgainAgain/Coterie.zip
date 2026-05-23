@@ -1,5 +1,6 @@
 import { signal, computed } from '@preact/signals';
 import { character, updateCharacter } from './character';
+import { grantedDisciplineSlugs } from './derived';
 
 export type CreationStep =
   | 'name'
@@ -35,6 +36,21 @@ function predatorSkippable(ageBracket: string, playbook: string): boolean {
   return PREDATOR_SKIP_AGE.has(ageBracket) || PREDATOR_SKIP_PLAYBOOK.has(playbook);
 }
 
+/* Minimum user picks required (excluding auto-granted Disciplines) */
+function minUserPicks(playbook: string): number {
+  if (playbook === 'Thin-Blood') return 0;
+  if (playbook === 'Ghoul') return 1;
+  return 2;
+}
+
+function disciplineStepDone(c: { playbook: string; unlockedDisciplines: string[] }): boolean {
+  const required = minUserPicks(c.playbook);
+  if (required === 0) return true;
+  const granted = grantedDisciplineSlugs.value;
+  const userPicks = c.unlockedDisciplines.filter(s => !granted.has(s)).length;
+  return userPicks >= required;
+}
+
 export const stepComplete = computed<Record<CreationStep, boolean>>(() => {
   const c = character.value;
   const statsAssigned = c.archetypeName !== '' && !Object.values(c.stats).some(v => isNaN(v));
@@ -43,7 +59,7 @@ export const stepComplete = computed<Record<CreationStep, boolean>>(() => {
     playbook: c.playbook !== '' && statsAssigned,
     age: c.ageBracket !== '',
     predator: c.predatorType !== '' || predatorSkippable(c.ageBracket, c.playbook),
-    disciplines: c.unlockedDisciplines.length >= 2,
+    disciplines: disciplineStepDone(c),
     convictions: c.convictions.some(cv => cv.trim() !== '')
       && c.touchstones.some(t => t.name.trim() !== ''),
     xp: true,
