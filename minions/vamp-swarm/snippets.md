@@ -1,7 +1,16 @@
 ## perks
 
+### Abyssal Sight
+You suffer no penalties from darkness (including supernatural). **When you let the Abyss bleed into your eyes** (Free Action, eyes go solid black), you can see ghosts that aren't actively concealing themselves. Ghosts don't automatically know you can see them. Black eyes impose -{{bp@min:1}} Ongoing to social rolls with mortals who see your face.
+
+### A Taste for Blood
+**You can telekinetically command spilled blood** within Close Range as a Free Action (no roll, no Hunger Check). Move, shape, clean, or direct it; can't weaponize or affect blood inside a body. **When you taste a drop of blood while *Discerning Vibes* or *Catching the Scent***, gain access to extra questions (creature type, Resonance, relative BP, tampering). **On a 12+**, also ask about Diablerie, Blood Bonds, or specific bloodline.
+
 ### A Warlock's Services
 **When you use Blood Sorcery or occult expertise to solve a problem for someone outside your Coterie**, you automatically create a Debt over them. Coterie members start each owing you 1 Debt for services "freely" rendered.
+
+### Awe/Daunt
+**1/Scene, choose one** (no Hunger Check): ***Awe*** grants {{bp@min:1}} at-will +1 Forward bonuses to charm/persuasion/performance rolls; ***Daunt*** grants the same to intimidation/coercion rolls and forces creatures considering attacking you to **Stay Chill** first. Either ends when you use another Presence Power/scene ends.
 
 ### Arbiter's Eyes
 **When you *Discern Vibes* or *Catch the Scent* to determine if someone has recently committed a crime or transgression**, you have Advantage on the roll.
@@ -21,20 +30,50 @@
 ### Brutality
 **When you inflict Harm through hands-on violence** (fists, claws, melee weapons, thrown objects, etc.), add {{bp@min:1}} to the Harm dealt.
 
+### Cat's Grace
+Your balance and agility are superhuman. No roll needed for any feat of balance, acrobatics, or agility regardless of how absurd, as long the surface supports your weight. You always land on your feet, never fumble catches, and can catch thrown objects without thinking.
+
+### Cloak of Shadows
+**When you remain perfectly still in or around cover** (shadow, doorway, crowd, etc.), you become effectively invisible. Observers' minds refuse to register you. Lasts for the scene or until you move, speak above a whisper, or take attention-drawing action. Only mechanical surveillance or ***Sense the Unseen*** can detect you.
+
+### Compel
+**When you lock eyes with someone and speak a single commanding word**, they obey immediately. Must be physical and completable in one action ("Stop," "Run," "Release"). Unprepared mortals comply automatically. Against supernatural targets, make a Hunger Check and roll +Demeanor or +Resolve. **On a 10+**, instant obedience, no memory. **On a 7–9**, they obey with 1 complication. **On a 6-**, they recoil and become hostile.
+
 ### Center of Gravity
 **When you are the focus of attention in a social scene**, all non-Coterie characters (except Elders) take -1 Ongoing to notice anything that isn't you. No roll needed; lasts as long as you're actively engaging the crowd.
 
 ### Death's Confidant
 **When you encounter a corpse or sense a ghost's presence**, ask it 1 question and receive a truthful (if cryptic) answer without rolling. Anything beyond requires Discipline use.
 
+### Dark Sacrament
+**When you maintain your connection to the Outer Dark by voluntarily marking a Stain** (per your Bane), choose a dedication: **Outer Dark** ({{1+bp}} free Daimonion Power uses, no Hunger Checks); **The Beast** ({{1+bp}} free Blood Surges); or **Your Coterie** (each Coterie member may remove the Hunger cost from 1 Discipline Power use that night).
+
 ### Duskborn
 **You can walk in sunlight** (take 1 Sup. Harm/scene of sustained exposure; reducible). You always count as having **Blush of Life** active at no cost. You can eat, drink, use touchscreens, and pass medical exams.
+
+### Eyes of the Beast
+You suffer no penalties from darkness (including supernatural). Your vision is preternaturally sharp at any distance. **When you summon a red glow in your eyes** (Free Action), you have Advantage when you **Influence** mortals and Kindred below your BP.
 
 ### Face of Horror
 **When you deliberately reveal your true form to intimidate or terrify**, roll **Influence** with Advantage using your highest stat; ignore your Bane penalty for that roll. Unprepared mortals flee or freeze.
 
+### Feral Whispers
+You can speak with any animal in a language you both understand (no roll, no Hunger Check). Animals are limited by their perspective and intelligence but don't lie. Except cats. **When you call out for a specific type of animal in the area**, make a Hunger Check (*Farmer* Pred. Types have Advantage). Summoned animals follow reasonable requests but scatter if endangered.
+
+### Flight
+**You have wings and can fly.** No roll needed. In flight, move between 2 Range bands per turn instead of 1. Carry {{bp@min:1}} willing passengers (or {{(bp/2)@rounddown,min:1}} unwilling).
+
+### Focus Shift
+**When you spend a scene meditating with a willing ally at your Pillar**, you or your ally may exchange one purchased Discipline Power for a different Power of the same level from the same Discipline. Change takes hold after your next slumber.
+
 ### Gift of Apis
 **Animal blood nourishes you as effectively as human blood regardless of BP.** Ignore all BP-related **Feeding** restrictions from animals. Animals never have Resonance. You may select the Farmer Predator Type at any BP.
+
+### Heightened Senses
+**When you *Discern Vibes* or *Catch the Scent***, take +1 Forward. However, **when exposed to extreme sensations** (loud bangs, intense light, overpowering smells), **Stay Chill** or take -1 Ongoing to Wits rolls for the scene.
+
+### Hidden Devil
+Choose a cover Clan at creation. **When someone uses Auspex, Blood Sorcery diagnostics, or any supernatural method of identifying your bloodline**, they read you as your cover Clan unless they roll **12+** on a check strong enough to pierce the disguise. You may change your cover Clan with a night of unbroken focus after **Feeding** to satiation.
 
 ### In Harmony
 **1/Scene, when you successfully use any Melpominee Power**, one ally who can hear you takes +1 Forward. If other Daughters participate, bonus extends to all allies who hear you; you take +1 Ongoing to Melpominee per participating Daughter (max +3) until you stop/scene ends.
@@ -44,6 +83,9 @@
 
 ### Infectious Insight
 **When you share info from *Discern Vibes* or *Catch the Scent* with a Coterie member and they act on it**, they take +1 Forward.
+
+### It Calls and It Answers
+**When you witness an act of cruelty or moral compromise**, ask the Storyteller 1 question about the situation. The answer comes from the Outer Dark: always true, always relevant, always colored by an unknowable agenda. **When you focus on someone within Close Range**, you sense their most pressing unfulfilled desire without rolling (not emotional reading; the thing they'd kill for).
 
 ### Just a Taste
 **When you *Feed* from a vampire**, temporarily gain 1 of their Disciplines (your choice), its Perk, and all its level 1 Powers. Lasts until you slumber or reach 5 Hunger.
@@ -66,6 +108,9 @@ You can conjure brief, minor sensory illusions at will (wrong-direction sound, p
 ### Pillar of Osiris
 **You can designate a location as your Pillar** (1 full night of meditation). While there: +1 Ongoing to Bardo Powers and **Stay Chill**. Meditating for 1 full scene removes 1 Stain. Must return 1/week; each week away, take cumulative -1 Ongoing to **Stay Chill** (reset by meditating for 1 scene).
 
+### Pithos
+**When someone sincerely asks you to help them change**, grant them 1 Merit or remove 1 Flaw via infernal bargain. They also gain a Dark Bargain of your choice and owe you a Debt. Start a 6-segment Corruption Clock (advances 1/month while Debt unpaid). At 2 segments: they gain a free L1 Daimonion Power. At 4: a free L2 Power. At 6: they must choose Apostasy, Sacrifice, or Trial by Balefire. Max active Clocks: {{(humanity-lost/2)@roundup,min:1}}.
+
 ### Playing Possum
 **When another Kindred dismisses you as beneath notice or harmless**, immediately ask the Storyteller 1 question from **Discern Vibes** or **Catch the Scent** about them without rolling or spending Hold.
 
@@ -77,6 +122,9 @@ You can conjure brief, minor sensory illusions at will (wrong-direction sound, p
 
 ### Pulling Strings
 **When you *Influence* someone you have a Debt with** (in either direction), or a mortal while you're both in darkness, roll with Advantage.
+
+### Resilience
+Your maximum HP increases by {{bp@min:1}}. Always active; adjusts automatically when your BP changes.
 
 ### Resonant Voice
 **When you *Influence* someone through direct speech, song, or vocalization**, treat a **6-** as a **7–9**.
@@ -105,6 +153,9 @@ You can reshape your own physical features (skin, bone, coloring, height, build)
 ### Sharpened Senses
 **You always sense mundane and supernatural creatures within Close Range** (even in darkness/while blinded) without rolling. **When you *Catch the Scent* to track prey or detect danger**, roll with Advantage.
 
+### Soaring Leap
+You can leap to any point within Far Range in a single bound. Rooftop to rooftop, ground to third-story window; if you can see it and it's within Far Range, you can reach it. No roll, no Hunger Check. Landing is always clean; takeoff may leave a mark.
+
 ### Soul Sight
 **When you *Discern Vibes* on an entity**, you may ask "What is their current Humanity?", "Do they intend to harm me?", or "Are they concealing their true nature?" without spending Hold.
 
@@ -129,6 +180,9 @@ You can reshape your own physical features (skin, bone, coloring, height, build)
 ### Unyielding Privilege
 **When you *Stay Chill* to resist coercion, mental domination, or intimidation from any source**, treat a **6-** as a **7–9**.
 
+### Ventriloquism
+**When you vocalize**, you can project your voice to any point within line of sight (Distant or closer). No roll needed. Voice carries at any volume you choose; lips don't move unless you want them to. You can use any Melpominee Power through your projected voice as though you were standing at that point.
+
 ### Wages of Pain
 **When you successfully *Feed* from a living vessel**, slake 1 additional Hunger. This can drop you below the Hunger floor imposed by high BP.
 
@@ -139,6 +193,9 @@ You can reshape your own physical features (skin, bone, coloring, height, build)
 
 ### Agonizing Empathy
 **Whenever your *Feeding* causes Harm to the vessel**, you suffer the same amount as Agg. Harm, up to {{bp@min:1}} max. Manifests as vivid internal bruising at the bite location.
+
+### Arithmomania
+**When loose small objects are scattered in your presence** (seeds, beads, coins, cards), **Stay Chill** or stop everything to count them. On failure, frozen in place until you finish counting or someone physically moves you. Enemies who know your weakness can trigger this deliberately. (+2 XP)
 
 ### Agonizing Kiss
 **When you *Feed* from a living vessel**, your Kiss is agony, not ecstasy. Take -{{bp@min:1}} Ongoing to **Feed** rolls unless vessel is restrained/unconscious/willing. All living vessels you **Feed** from take 1 Sup. Harm regardless.
@@ -158,11 +215,29 @@ You can reshape your own physical features (skin, bone, coloring, height, build)
 ### Callousness
 **When you make a Remorse Check**, roll with Disadvantage. The Beast eats your guilt before you can feel it.
 
+### Camera Cryptid
+**You do not appear on any visual recording medium** (cameras, video, phone screens, CCTV). Live footage shows empty space. +1 Ongoing to **Slip Away** when fleeing surveillance, but -1 Ongoing to Demeanor rolls when someone might check a camera. (+2 XP)
+
+### Cock's Crow
+**When you hear a rooster crow** (live only, not recorded), take 1 Sup. Harm as your body tries to shut down. At 4+ Hunger, **Stay Chill** or fall into involuntary Torpor until next dusk. (+1 XP)
+
 ### Cold-Blooded
 You can only use **Blush of Life** if you've **Fed** from a living vessel in the current or previous scene. **When you do**, make {{bp@min:1}} Hunger Checks instead of 1. If any would bring you to 5 Hunger, **Blush of Life** fails and you stabilize at 4.
 
+### Coldest Iron
+**Touching wrought iron** (not steel, not alloys; the old stuff specifically) deals 1 Agg. Harm. If incorporated into a weapon, all its damage is Agg. While any Agg. Harm from iron remains unhealed, take -1 Ongoing to all Discipline rolls. (+2 XP)
+
+### Confounding Crossroads
+**When you reach any junction of two or more roads** (intersections, roundabouts), you must pause to orient yourself. In combat or a chase, this costs your Movement for the turn. If being pursued, **Stay Chill** or become disoriented and choose a random direction. (+2 XP)
+
+### Cruel Consecration
+**You cannot intentionally set foot on consecrated ground** (churchyards, blessed cemeteries, temple grounds, mosques). If forced onto it, take 2 Agg. Harm/round until you leave. (+3 XP)
+
 ### Cursed Courtesy
 **You cannot willingly enter a private residence unless invited.** Forcing entry: gain +1 Hunger and take -{{bp@min:1}} Ongoing to all Discipline rolls for the duration. Public/abandoned buildings unaffected; apartments count as separate residences. Cannot take the *Invitations* Folkloric Bane.
+
+### Dark Betrayal
+**Your shadow moves independently of you at all times** (pointing wrong, gesturing when you're still, looming too large). Take -1 Ongoing to **Slip Away** in any lit environment. If Oblivion access would cost 5 XP, it costs 3 instead. The Storyteller may have your shadow do something alarming in front of mortals. (+3 XP)
 
 ### Decay
 **When you move into your Coterie's Haven**, distribute -1 to Coterie stats for each Touchstone you have (no stat below -3). If a Touchstone visits the Haven, lose them permanently and mark 1 Stain, but remove that -1 penalty. New Touchstones during play assign a new -1 immediately.
@@ -171,13 +246,19 @@ You can only use **Blush of Life** if you've **Fed** from a living vessel in the
 **Your Vitae cannot Blood Bond other Kindred.** You can still be Bound by others. Can still Blood Bond mortals/Ghouls/animals, but requires {{bp@min:1}} additional **Feedings** beyond the normal 3.
 
 ### Denied Beast
-**When you Frenzy**, the starved Beast erupts. Take -{{osirian-penalty}} Ongoing to **Stay Chill** for the rest of the night. You also cannot Embrace anyone; attempts simply kill the mortal.
+**When you Frenzy**, the starved Beast erupts. Take -{{osirian-penalty}} Ongoing to **Stay Chill** for the rest of the night. You cannot Embrace anyone; attempts simply kill the mortal.
+
+### Determined Detangler
+**When you encounter a tied knot, tangled net, or kinked-up rope**, **Stay Chill** or stop to untie it. On failure, you cannot willingly move away until it's untied, cut by someone else, or the scene ends. Fishing nets, tangled shoelaces, and earbuds all work. (+1 XP)
 
 ### Diablerist's Thirst
 **When you *Feed* from another vampire**, you must **Stay Chill** or enter a feeding Frenzy and try to drain them. **7+** to resist, then take -{{bp@min:1}} Ongoing to continue resisting (3 successes ends it).
 
 ### Diluted & Disliked
 **Your BP is 0 and cannot increase** (except via Diablerie). You take Agg. Harm from blades/bullets/sources that are only Sup. for full Kindred. Cannot create Blood Bonds. Embrace attempts usually kill the mortal. Storyteller may apply -1 to -2 Forward on social rolls with Kindred.
+
+### Ding-Dong Don't
+**When you hear church bells or a hand-bell rung with intent to ward**, **Stay Chill** or flee the sound. While the bells ring and you remain within Far Range, take 1 Sup. Harm/round and cannot use Disciplines. Earplugs don't help; you feel it in your bones. (+2 XP)
 
 ### Distorted Image
 **When you interact with technology or electronic devices**, take -{{bp@min:1}} Ongoing. Mirrors warp, cameras distort, surveillance corrupts. At BP 3+, touchscreens and voice-activated devices are unusable; **Blush of Life** doesn't help.
@@ -191,6 +272,9 @@ You can only use **Blush of Life** if you've **Fed** from a living vessel in the
 ### Fractured Perception
 **You have a supernatural affliction** (defined at creation). When the Beast presses in (Hunger 4+, Frenzy, **6-** on **Stay Chill**, etc.), take -{{bp@min:1}} Ongoing to **Discern Vibes** and **Catch the Scent** until pressure eases/scene ends. Storyteller may introduce 1 false detail while active that you believe is true.
 
+### Grave-Bound
+**You must sleep in the soil of your homeland, your original grave, or consecrated earth from your burial site.** Sleeping elsewhere gives +3 Hunger upon waking instead of +1. Three consecutive nights without your soil prevents reducing Hunger below 3 by any means until you return. (+3 XP)
+
 ### Hierarchy
 **When you use a Discipline Power against a Kindred with higher BP than yours**, roll with Disadvantage. To physically attack such a Kindred, first **Stay Chill** or find yourself unable to raise a hand. Failure means no violence against them for the scene (unless they start it).
 
@@ -200,11 +284,17 @@ You can only use **Blush of Life** if you've **Fed** from a living vessel in the
 ### Holy Water
 Touching holy water deals 1 Agg. Harm. Drinking it causes Final Death. Why would you do that? (+1 XP)
 
+### Humbling Hawthorn
+**Touching hawthorn wood or its thorns** deals 1 Agg. Harm. A hawthorn weapon deals all its damage as Agg. Hawthorn stakes cause instant Final Death (as if you had *Stake Bait*); regular stakes still just incapacitate. (+2 XP)
+
 ### Hunted Blood
 **You have a third eye on your forehead**; physical coverings work, no supernatural Power can hide it. Opens and weeps blood when you use Active Powers. Nearby Kindred at 4+ Hunger must **Stay Chill** or try to **Feed** from you. Non-Salubri who taste your blood must **Stay Chill** at -{{bp@min:1}} or keep going; Blood Leeches have Disadvantage.
 
 ### Infestation
 Vermin follow you constantly and infest any enclosed space you inhabit. Everyone in your Haven (including you) takes -2 Ongoing to social rolls & anything requiring patience/focus. At other enclosed locations where you spend ≥1 scene, -1 Ongoing to the same. Animalism attempts on the vermin have Disadvantage.
+
+### Infernal Infiltration
+Three curses woven into your infernal blood: **Holy Repulsion** grants 3 mandatory Folkloric Banes (*Holy Water*, *Ding-Dong Don't*, *Holy Symbols*) at half XP (+3 total). **Eternal Sacrifice** lets you voluntarily mark 1 Stain/session to sustain the Outer Dark (fuels ***Dark Sacrament***); skipping it means all Hunger Checks are doubled until you perform a Sacrament. **Adaptive Identity** requires you to pass as another Clan; being exposed as Baali means Blood Hunt, exile, or worse.
 
 ### Inner Song
 **You always hear music no one else can.** Take -{{bp@min:1}} Ongoing to all Wits rolls (always active). In loud/overstimulating environments, also applies to **Stay Chill**. In total silence, **Stay Chill** or trigger Compulsion. On any **12+** Wits roll, penalty doesn't apply.
@@ -212,8 +302,20 @@ Vermin follow you constantly and infest any enclosed space you inhabit. Everyone
 ### Invitations
 **You are physically unable to enter any private building** unless invited by someone with sufficient authority. (+2 XP)
 
+### Ironbound
+**You cannot easily cross a threshold framed in iron** (old buildings, wrought-iron gates, jail cells). After forcing through, take -1 Ongoing to all rolls for the scene until you exit the same way. (+1 XP)
+
+### Jolly Juniper
+**You cannot willingly move closer to burning juniper**, and its smoke makes you choke and retch. While within Close Range of burning juniper, Disadvantage on all rolls. Direct contact with the smoke: 1 Agg. Harm. (+1 XP)
+
 ### Lacking Lineage
 **You carry no supernatural curse, but Kindred society stigmatizes you.** Storyteller may apply -1 to -2 Forward on Demeanor rolls with Kindred who know. Discipline XP costs: +{{bp@min:1}} to unlock access; +{{(bp/2)@roundup}} for non-starter Powers.
+
+### Land-Locked
+**You are unable to willingly leave land by boat, plane, helicopter, or any transport.** If forced (staked in a shipping crate, etc.), take 1 Agg. Harm each night while in transit. Cannot be healed until you're back on solid ground. (+2 XP)
+
+### Little Pricks
+**You cannot cross a threshold lined with wild roses.** A wild rose branch placed on your resting place during slumber prevents you from rising until removed. Cultivated roses do nothing; they must be wild, thorny, and growing or freshly cut. (+1 XP)
 
 ### Mark of the Beast
 **When you Frenzy**, your body gains {{bp@min:1}} bestial features. Take -{{bp@min:1}} Ongoing to social rolls with unfamiliar characters until you sleep. Cannot be concealed by mundane means; doesn't stack from multiple Frenzies per night.
@@ -233,6 +335,9 @@ Touching garlic deals 1 Agg. Harm. Eating it deals 3 Agg. Harm but sets Hunger t
 ### Rarefied Palate
 **You have an exclusive *Feeding* preference**, and blood outside it provides zero sustenance. Roll +Wits in close proximity to sense a match (**7+** = certain). At BP 3+, restriction narrows further (define with Storyteller).
 
+### Reflectionless
+**You cast no reflection in mirrors, still water, polished metal, or glass.** Any mortal who notices gains proof something is wrong. You cannot benefit from any Power or effect requiring eye contact through a reflective surface. (+2 XP)
+
 ### Running Water
 **You are physically unable to cross running water** (streams, rivers, sewer pipes, aqueducts, garden hoses). Bodies of water (ponds, lakes, oceans) don't trigger this. (+2 XP)
 
@@ -241,6 +346,9 @@ Touching garlic deals 1 Agg. Harm. Eating it deals 3 Agg. Harm but sets Hunger t
 
 ### Severe Light Allergy
 **When you are exposed to bright, direct light** (spotlights, high beams, harsh fluorescents), take -{{bp@min:1}} Ongoing to all rolls. Sunlight deals +{{bp}} extra Agg. Harm on top of normal effects. Candles/dim lamps/ambient glow don't trigger this.
+
+### Smash & Shatter
+**Reflective surfaces crack, shatter, or crumble in your presence** within seconds. You have no control over this; it's quite loud. Constant low-level Masquerade risk. You cannot use any Power or tool requiring an intact reflective surface. (+2 XP)
 
 ### Stake Bait
 **Being staked through the heart** causes instant Final Death instead of incapacitation. Oops! (+3 XP)
@@ -251,11 +359,23 @@ Touching garlic deals 1 Agg. Harm. Eating it deals 3 Agg. Harm but sets Hunger t
 ### Stolen Blood
 **When you Blood Surge**, make {{bp@min:1}} additional Hunger Checks on top of the normal one. If any would bring you to 5 Hunger, choose to cancel the Surge (keep gained Hunger, max 4) or complete it and immediately Frenzy at 5.
 
+### Stressful Sunflowers
+**You cannot enter a room or enclosed space decorated with sunflowers** (living, dried, or depicted in number). A single painting doesn't count, but a field, a vase, or sunflower-print wallpaper does. While within Close Range of a mass of sunflowers, take 1 Sup. Harm/round. (+1 XP)
+
 ### Survival Instincts
 **When you *Stay Chill* against fear** (fire, sunlight, genuine survival threats), roll with Disadvantage. Take -{{bp@min:1}} Ongoing to all rolls until you are guaranteed safe from whatever triggered it. Your Beast would rather run than fight.
 
+### Tempestuous Temperament
+**When you Frenzy while it's precipitating** (rain, hail, snow, sleet), your highest stat goes up by +1, but your Frenzy lasts until the weather abates. Not even reaching 0 Hunger ends it. Check the forecast. (+3 XP)
+
+### The Thin White Line
+**You are physically unable to cross an unbroken line of salt.** Salt thrown directly onto your skin deals 1 Agg. Harm. Must be dry and granular; dissolved in water does nothing. (+2 XP)
+
 ### The Wasting
 **When you *Feed* from the same mortal more than once**, start a 6-segment Wasting Clock. Each **Feeding** advances {{1+bp}} segments. Fades 1 segment/week of no contact. Full Clock = their decline becomes impossible to hide.
+
+### Troublesome Tar
+**You cannot cross a threshold smeared with tar, pitch, or resin** without spending a full turn tearing yourself free. While stuck: anyone attacking you automatically acts first, and you can't **Reposition** or **Slip Away** until freed. (+1 XP)
 
 ### Unbirth Name
 You have a secret mortal name you cannot forget. Anyone who learns it gains a Debt over you. **If they speak it to your face**, they gain Advantage to resist your Discipline Powers for the scene, and you have Disadvantage to resist theirs.
@@ -291,6 +411,9 @@ You have a secret mortal name you cannot forget. Anyone who learns it gains a De
 
 ### Delusion
 **When you catch a detail or pattern others overlook**, you become convinced it's the most important thing happening. Take -{{bp@min:1}} Ongoing to all rolls not dedicated to chasing it until you investigate to your satisfaction/scene ends.
+
+### Devil's Bargain
+**When the Outer Dark stirs and you refuse its demands that night**, take -{{osirian-penalty}} Ongoing to all rolls. **On any 6-**, you may upgrade the result to a **7–9** with overtly demonic interference. The Storyteller chooses 1 infernal complication (environmental horror, innocent bystander affected, shadow acting independently, animal panic, or nearby corruption). Ends after the demonic bailout resolves.
 
 ### Feelings Fixation
 **When you sense intense emotion from someone nearby**, take -{{bp@min:1}} Ongoing to all rolls not working toward reaching them to **Feed**. Ends when you make prolonged contact/scene ends.

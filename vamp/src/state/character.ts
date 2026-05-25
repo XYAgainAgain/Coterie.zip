@@ -66,6 +66,14 @@ export interface Portrait {
   scale: number; /* zoom factor, default 1 */
 }
 
+export interface PendingUpgrade {
+  id: string;
+  type: 'bp' | 'discipline-access' | 'discipline-power';
+  slug?: string; /* Discipline slug for access/power */
+  powerName?: string; /* Power name for discipline-power */
+  xpCost: number;
+}
+
 /* TODO: drag-to-reposition + scroll-to-zoom crop UI for portraits.
    Data model is ready (x/y/scale per portrait). gLightbox shows full uncropped image;
    the crop only affects the 1:1 square display. */
@@ -80,7 +88,10 @@ export interface CharacterState {
   archetypeName: string;
   stats: Record<StatName, number>;
   unlockedDisciplines: string[];
+  startingDisciplines: string[];
   knownPowers: string[];
+  advancedMoves: string[];
+  pendingUpgrades: PendingUpgrade[];
   bp: number;
   hunger: number;
   humanity: number;
@@ -174,12 +185,15 @@ const JOHNNY_FANGS: CharacterState = {
   archetypeName: 'Greaser',
   stats: { Blood: 1, Shadow: 1, Resolve: -1, Demeanor: 0, Wits: 2 },
   unlockedDisciplines: ['celerity', 'obfuscate'],
+  startingDisciplines: ['celerity', 'obfuscate'],
   knownPowers: [
     'Sense the Unseen',
     'Rapid Reflexes',
     'Traversal',
     'Silence of Death',
   ],
+  advancedMoves: [],
+  pendingUpgrades: [],
   bp: 1,
   hunger: 2,
   humanity: 8,
@@ -490,7 +504,55 @@ export function quickToggleDisadvantage() {
 }
 
 
+export function addPendingUpgrade(upgrade: Omit<PendingUpgrade, 'id'>) {
+  character.value = {
+    ...character.value,
+    pendingUpgrades: [
+      ...character.value.pendingUpgrades,
+      { ...upgrade, id: crypto.randomUUID() },
+    ],
+  };
+}
+
+export function removePendingUpgrade(id: string) {
+  const upgrade = character.value.pendingUpgrades.find(u => u.id === id);
+  if (!upgrade) return;
+  character.value = {
+    ...character.value,
+    xp: Math.min(10, Math.max(0, character.value.xp + upgrade.xpCost)),
+    pendingUpgrades: character.value.pendingUpgrades.filter(u => u.id !== id),
+  };
+}
+
+function applyPendingUpgrades() {
+  const pending = character.value.pendingUpgrades;
+  if (pending.length === 0) return;
+
+  let newBP = character.value.bp;
+  const newDisciplines = [...character.value.unlockedDisciplines];
+  const newPowers = [...character.value.knownPowers];
+
+  for (const u of pending) {
+    if (u.type === 'bp') {
+      newBP = Math.min(5, newBP + 1);
+    } else if (u.type === 'discipline-access' && u.slug && !newDisciplines.includes(u.slug)) {
+      newDisciplines.push(u.slug);
+    } else if (u.type === 'discipline-power' && u.powerName && !newPowers.includes(u.powerName)) {
+      newPowers.push(u.powerName);
+    }
+  }
+
+  character.value = {
+    ...character.value,
+    bp: newBP,
+    unlockedDisciplines: newDisciplines,
+    knownPowers: newPowers,
+    pendingUpgrades: [],
+  };
+}
+
 export function newNight() {
+  applyPendingUpgrades();
   setHunger(character.value.hunger + 1);
 }
 

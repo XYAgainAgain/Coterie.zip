@@ -1,23 +1,30 @@
 import { useSignal } from '@preact/signals';
-import { accessibleDisciplineData, getPowerStatus, gameData, currentPlaybook, currentPredatorType, effectiveDisciplineBP } from '../state/derived';
-import { character, updateCharacter } from '../state/character';
+import {
+  accessibleDisciplineData, getPowerStatus, gameData, currentPlaybook,
+  currentPredatorType, effectiveDisciplineBP, isExclusiveDiscipline,
+  disciplineAccessCost, powerXPCost, startingDisciplineSlugs,
+} from '../state/derived';
+import { character, updateCharacter, setXP, learnPower, addPendingUpgrade } from '../state/character';
 import { creationMode, creationStep } from '../state/creation';
-import { PowerCard } from './PowerCard';
+import { disciplineBuyMode, exitDisciplineBuyMode } from '../state/ui';
+import { PowerCard, type PowerBuyInfo } from './PowerCard';
 import { renderGameMarkdown } from '../data/transforms';
 import type { Discipline } from '../data/types';
 
 /* All rendered markdown is from Coterie's verified JSON parsers (trusted content) */
 
-function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverlapBonus }: {
+function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverlapBonus, buyMode }: {
   discipline: Discipline;
   creationToggle?: { selected: boolean; granted: boolean; disabled: boolean; onToggle: () => void };
   maxFreePowers?: number;
   hasOverlapBonus?: boolean;
+  buyMode?: { onBuyPower: (powerName: string, level: number, disciplineSlug: string) => void };
 }) {
   const isCreation = !!creationToggle;
+  const isBuying = !!buyMode;
   const isSelected = creationToggle?.selected ?? false;
-  const expanded = useSignal(isCreation);
-  const showAvailable = useSignal(isCreation && isSelected);
+  const expanded = useSignal(isCreation || isBuying);
+  const showAvailable = useSignal((isCreation && isSelected) || isBuying);
   const showLocked = useSignal(false);
 
   const powers = discipline.powers.map(p => getPowerStatus(p, discipline.slug));
@@ -112,13 +119,21 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
                 <span class={`vamp-disc__bat vamp-disc__bat--sm ${showAvailable.value ? 'vamp-disc__bat--open' : ''}`} />
                 Available ({available.length})
               </button>
-              {showAvailable.value && available.map(entry => (
-                <PowerCard
-                  key={entry.power.name}
-                  entry={entry}
-                  atPickLimit={atPickLimit || isLevelFull(entry.power.level)}
-                />
-              ))}
+              {showAvailable.value && available.map(entry => {
+                const pbi: PowerBuyInfo | undefined = buyMode ? {
+                  cost: powerXPCost(entry.power.level, discipline.slug),
+                  onBuy: buyMode.onBuyPower,
+                  disciplineSlug: discipline.slug,
+                } : undefined;
+                return (
+                  <PowerCard
+                    key={entry.power.name}
+                    entry={entry}
+                    atPickLimit={atPickLimit || isLevelFull(entry.power.level)}
+                    buyInfo={pbi}
+                  />
+                );
+              })}
             </div>
           )}
 
@@ -214,18 +229,26 @@ function getDisciplineConfig(
     };
   }
 
-  if (/granted|automatically\s+receive/i.test(raw) && linkedNames.length >= 1) {
+  if (/granted|automatically\s+receive|exclusive\s+access/i.test(raw) && linkedNames.length >= 1) {
     const grantedSlug = slugify(linkedNames[0]);
-    const options = linkedNames.map(n => ({
+    /* Only include linked names that are actual Discipline slugs (Osirian links to "Clan" page) */
+    const discNames = linkedNames.filter(n => allSlugs.includes(slugify(n)));
+    const options = discNames.map(n => ({
       slug: slugify(n),
-      exclusive: hasExclusive && !allSlugs.includes(slugify(n)),
+      exclusive: hasExclusive && slugify(n) === grantedSlug,
       granted: slugify(n) === grantedSlug,
     }));
+    const chooseMatch = raw.match(/choose\s+(\d+)/i);
+    const nonGrantedOptions = discNames.filter(n => slugify(n) !== grantedSlug).length;
+    const additionalPicks = nonGrantedOptions === 0 ? 0
+      : chooseMatch ? parseInt(chooseMatch[1], 10) : 1;
     return {
       options,
-      minRequired: 2,
-      maxPicks: 2,
-      hint: `${linkedNames[0]} is granted. Choose 1 more.`,
+      minRequired: 1 + additionalPicks,
+      maxPicks: 1 + additionalPicks,
+      hint: additionalPicks > 0
+        ? `${linkedNames[0]} is granted. Choose ${additionalPicks} more.`
+        : `${linkedNames[0]} is granted exclusively.`,
     };
   }
 
@@ -358,16 +381,105 @@ function CreationDisciplineList() {
         );
       })}
       <div class="vamp-disc-creation__count">
-        {selected.filter(s => !allGranted.includes(s)).length}/{config.minRequired} selected
+        {selected.filter(s => !allGranted.includes(s)).length}/{Math.max(0, config.minRequired - allGranted.length)} selected
       </div>
+    </div>
+  );
+}
+
+function BuyModeDisciplineList() {
+  const data = gameData.value;
+  const char = character.value;
+  if (!data) return null;
+
+  const allDisciplines = data.disciplines;
+  const unlocked = new Set(char.unlockedDisciplines);
+
+  function handleBuyAccess(slug: string) {
+    if (isExclusiveDiscipline(slug)) return;
+    const cost = disciplineAccessCost(slug);
+    const cur = character.value;
+    if (cur.xp < cost) return;
+    setXP(cur.xp - cost);
+    if (creationMode.value) {
+      updateCharacter({ unlockedDisciplines: [...character.value.unlockedDisciplines, slug] });
+    } else {
+      addPendingUpgrade({ type: 'discipline-access', slug, xpCost: cost });
+    }
+  }
+
+  function handleBuyPower(powerName: string, level: number, disciplineSlug: string) {
+    const cost = powerXPCost(level, disciplineSlug);
+    const cur = character.value;
+    if (cur.xp < cost) return;
+    setXP(cur.xp - cost);
+    if (creationMode.value) {
+      learnPower(powerName);
+    } else {
+      addPendingUpgrade({ type: 'discipline-power', powerName, xpCost: cost });
+    }
+  }
+
+  return (
+    <div class="vamp-disc-list">
+      <div class="vamp-disc-buy__header">
+        <span>Discipline Access</span>
+        <button class="vamp-btn vamp-btn--sm" onClick={exitDisciplineBuyMode}>Done</button>
+      </div>
+      {allDisciplines.map(disc => {
+        if (isExclusiveDiscipline(disc.slug)) {
+          /* Exclusive: show name but no purchase option */
+          return (
+            <div key={disc.slug} class="vamp-disc vamp-disc--exclusive">
+              <div class="vamp-disc__header">
+                <span class="vamp-disc__bat" />
+                <span class="vamp-disc__name">{disc.name}</span>
+                <span class="vamp-disc__badge vamp-disc__badge--exclusive">Exclusive</span>
+              </div>
+            </div>
+          );
+        }
+
+        const isUnlocked = unlocked.has(disc.slug);
+        const cost = disciplineAccessCost(disc.slug);
+        const isStarting = startingDisciplineSlugs.value.has(disc.slug);
+
+        if (isUnlocked) {
+          return (
+            <DisciplineSection
+              key={disc.slug}
+              discipline={disc}
+              buyMode={{ onBuyPower: handleBuyPower }}
+            />
+          );
+        }
+
+        return (
+          <div key={disc.slug} class="vamp-disc">
+            <div class="vamp-disc__header">
+              <span class="vamp-disc__bat" />
+              <span class="vamp-disc__name">{disc.name}</span>
+              <button
+                class="vamp-btn vamp-btn--sm vamp-btn--buy"
+                disabled={char.xp < cost}
+                onClick={() => handleBuyAccess(disc.slug)}
+              >
+                {cost} XP{isStarting ? '' : ' (non-starting)'}
+              </button>
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 export function DisciplinesTab() {
   const creating = creationMode.value && creationStep.value === 'disciplines';
+  const buying = disciplineBuyMode.value;
 
   if (creating) return <CreationDisciplineList />;
+  if (buying) return <BuyModeDisciplineList />;
 
   const disciplines = accessibleDisciplineData.value;
 

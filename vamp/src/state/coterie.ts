@@ -3,6 +3,8 @@ import type { Clock } from './character';
 import type { CoterieStatName } from '../data/types';
 
 export interface CoterieMember {
+  characterId: string;
+  slug: string;
   name: string;
   pronouns: string;
   portraitUrl: string | null;
@@ -28,6 +30,8 @@ export const coterieState = signal<CoterieState>({
   havenNegatives: ['rival territory', 'persistent detective'],
   members: [
     {
+      characterId: 'mock-bridget',
+      slug: 'bridget-cavanaugh',
       name: 'Bridget Cavanaugh',
       pronouns: 'she/her',
       portraitUrl: 'https://i.imgur.com/tJbArZo.jpeg',

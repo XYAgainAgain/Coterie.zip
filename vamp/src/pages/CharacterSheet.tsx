@@ -1,5 +1,5 @@
 import { useEffect } from 'preact/hooks';
-import { signal, useSignal } from '@preact/signals';
+import { useSignal } from '@preact/signals';
 import { SectionBox } from '../components/SectionBox';
 import { RightColumn } from '../components/RightColumn';
 import { RightPanelContent } from '../components/RightPanelTabs';
@@ -10,6 +10,7 @@ import { NotebookTab } from '../components/NotebookTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
+import { CreationOverlay } from '../components/creation/CreationOverlay';
 import { PortraitEditor } from '../components/PortraitEditor';
 import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH as MIN_RIGHT_WIDTH } from '../components/RightColumn';
 import {
@@ -17,18 +18,19 @@ import {
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
   addDebt, removeDebt, updateDebt, cycleDebtState,
 } from '../state/character';
-import { editMode } from '../state/ui';
+import { editMode, viewingOtherSheet } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
 import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
+  getSnippet,
 } from '../state/derived';
-import { switchTab, openMove } from '../state/panel';
-import { renderGameMarkdown } from '../data/transforms';
+import { switchTab, openMove, activeContentTab } from '../state/panel';
+import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
 import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
 import {
   creationMode, creationStep, stepComplete, enterCreationMode,
-  allStepsComplete, type CreationStep,
+  STEP_ZONE,
 } from '../state/creation';
 import {
   tourMode, currentTourStep, startTour, nextTourStop, type TourZone,
@@ -471,20 +473,23 @@ function DebtPanel() {
   );
 }
 
-const TABS = ['Vitals', 'Disciplines', 'Possessions', 'Clocks & Debts', 'Notebook'] as const;
-const activeContentTab = signal(0);
+const ALL_TABS = ['Vitals', 'Disciplines', 'Possessions', 'Clocks & Debts', 'Notebook'] as const;
 
 function ContentTabs() {
   const active = activeContentTab;
+  const isViewing = viewingOtherSheet.value;
+  const tabs = isViewing
+    ? ALL_TABS.filter(t => t !== 'Notebook')
+    : ALL_TABS;
 
   return (
     <div class="vamp-tabs">
       <nav
         class="vamp-tabs__bar"
         role="tablist"
-        style={`--tab-count: ${TABS.length}; --tab-active-idx: ${active.value}`}
+        style={`--tab-count: ${tabs.length}; --tab-active-idx: ${active.value}`}
       >
-        {TABS.map((tab, i) => (
+        {tabs.map((tab, i) => (
           <button
             key={tab}
             role="tab"
@@ -507,7 +512,7 @@ function ContentTabs() {
           </div>
         )}
         {active.value === 3 && <ClocksDebtsTab />}
-        {active.value === 4 && <NotebookTab />}
+        {!isViewing && active.value === 4 && <NotebookTab />}
       </div>
     </div>
   );
@@ -595,6 +600,56 @@ function ClocksDebtsTab() {
   );
 }
 
+function useSnippetContext(): SnippetContext {
+  const char = character.value;
+  const hp = maxHP.value;
+  return {
+    blood: char.stats.Blood,
+    shadow: char.stats.Shadow,
+    resolve: char.stats.Resolve,
+    wits: char.stats.Wits,
+    demeanor: char.stats.Demeanor,
+    bp: char.bp,
+    humanity: char.humanity,
+    maxHp: hp,
+    patronBp: char.ghoulPatron?.bp ?? 0,
+  };
+}
+
+function SnippetBlock({ type, name, fullText, pill, nameClass }: {
+  type: string;
+  name: string;
+  fullText: string;
+  pill?: string;
+  nameClass?: string;
+}) {
+  const expanded = useSignal(false);
+  const ctx = useSnippetContext();
+  const rawSnippet = getSnippet(type, name);
+  const snippet = rawSnippet ? resolveSnippetTokens(rawSnippet, ctx) : null;
+  const hasSnippet = snippet && snippet !== fullText;
+
+  // All rendered content comes from our own verified JSON parsers (trusted)
+  return (
+    <div
+      class={`vamp-perk ${hasSnippet ? 'vamp-perk--expandable' : ''} ${expanded.value ? 'vamp-perk--expanded' : ''}`}
+      onClick={hasSnippet ? () => { expanded.value = !expanded.value; } : undefined}
+    >
+      <div class="vamp-perk__header">
+        <span class={`vamp-perk__name ${nameClass ?? ''}`}>{name}</span>
+        {pill && <span class="vamp-perk__pill">{pill}</span>}
+        {hasSnippet && <span class="vamp-perk__chevron" />}
+      </div>
+      {hasSnippet && !expanded.value && (
+        <div class="vamp-perk__text vamp-perk__text--snippet" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(snippet) }} />
+      )}
+      {(!hasSnippet || expanded.value) && (
+        <div class="vamp-perk__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(fullText) }} />
+      )}
+    </div>
+  );
+}
+
 function VitalsTab() {
   const playbook = currentPlaybook.value;
   const pt = currentPredatorType.value;
@@ -610,38 +665,41 @@ function VitalsTab() {
     <div class="vamp-content-columns">
       <SectionBox title="Perks">
         {playbookPerks.map(perk => (
-          <div class="vamp-perk" key={perk.name}>
-            <div class="vamp-perk__header">
-              <span class="vamp-perk__name">{perk.name}</span>
-              <span class="vamp-perk__pill">{playbook?.name}</span>
-            </div>
-            <div class="vamp-perk__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(perk.description) }} />
-          </div>
+          <SnippetBlock
+            key={perk.name}
+            type="perks"
+            name={perk.name}
+            pill={playbook?.name ?? ''}
+            fullText={perk.description}
+          />
         ))}
         {disciplinePerks.map(perk => (
-          <div class="vamp-perk" key={perk.name}>
-            <div class="vamp-perk__header">
-              <span class="vamp-perk__name">{perk.name}</span>
-              <span class="vamp-perk__pill">{perk.source}</span>
-            </div>
-            <div class="vamp-perk__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(perk.body) }} />
-          </div>
+          <SnippetBlock
+            key={perk.name}
+            type="perks"
+            name={perk.name}
+            pill={perk.source}
+            fullText={perk.body}
+          />
         ))}
       </SectionBox>
 
       <div class="vamp-basics-right">
         <SectionBox title="Bane">
-          <div class="vamp-bane">
-            <div class="vamp-bane__name">{playbook?.baneName ?? 'Unknown'}</div>
-            <div class="vamp-bane__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(playbook?.baneDescription ?? '') }} />
-          </div>
+          <SnippetBlock
+            type="banes"
+            name={playbook?.baneName ?? 'Unknown'}
+            fullText={playbook?.baneDescription ?? ''}
+          />
         </SectionBox>
 
         <SectionBox title="Compulsion">
-          <div class="vamp-bane">
-            <div class="vamp-bane__name vamp-bane__name--compulsion">{playbook?.compulsionName ?? 'None'}</div>
-            <div class="vamp-bane__text" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(playbook?.compulsionDescription ?? '') }} />
-          </div>
+          <SnippetBlock
+            type="compulsions"
+            name={playbook?.compulsionName ?? 'None'}
+            fullText={playbook?.compulsionDescription ?? ''}
+            nameClass="vamp-bane__name--compulsion"
+          />
         </SectionBox>
 
         <SectionBox title="Convictions & Touchstones">
@@ -841,6 +899,7 @@ function BioDualField({ label, bio, variant }: {
 }) {
   const editing = useSignal(false);
   const isEdit = editMode.value;
+  const isCreatingName = creationMode.value && creationStep.value === 'name';
   const isAges = variant === 'ages';
   const v1 = isAges ? bio.vampiricAge : bio.pronouns[0];
   const v2 = isAges ? bio.apparentAge : bio.pronouns[1];
@@ -895,7 +954,7 @@ function BioDualField({ label, bio, variant }: {
   }
 
   return (
-    <div class="vamp-bio__field" onDblClick={() => { if (isEdit) editing.value = true; }}>
+    <div class="vamp-bio__field" onDblClick={() => { if (isEdit || isCreatingName) editing.value = true; }}>
       <span class="vamp-bio__label">{label}</span>
       <span class="vamp-bio__value">{display || '—'}</span>
     </div>
@@ -909,6 +968,7 @@ function BioField({ label, field, bio }: {
 }) {
   const editing = useSignal(false);
   const isEdit = editMode.value;
+  const isCreatingName = creationMode.value && creationStep.value === 'name';
   const value = bio[field] as string;
   const snapshot = useSignal(value);
   if (!editing.value) snapshot.value = value;
@@ -935,7 +995,7 @@ function BioField({ label, field, bio }: {
   }
 
   return (
-    <div class="vamp-bio__field" onDblClick={() => { if (isEdit) editing.value = true; }}>
+    <div class="vamp-bio__field" onDblClick={() => { if (isEdit || isCreatingName) editing.value = true; }}>
       <span class="vamp-bio__label">{label}</span>
       <span class="vamp-bio__value">{value || '—'}</span>
     </div>
@@ -972,21 +1032,13 @@ function NameField({ name, isCreating }: { name: string; isCreating: boolean }) 
   );
 }
 
-const STEP_ZONE: Record<CreationStep, 'sidebar' | 'content' | 'right'> = {
-  name: 'sidebar',
-  playbook: 'right',
-  age: 'right',
-  predator: 'right',
-  disciplines: 'content',
-  convictions: 'content',
-  xp: 'right',
-};
-
 export function CharacterSheet({ slug }: { slug?: string }) {
   const loading = useSignal(false);
   const loadError = useSignal<string | null>(null);
+  const isViewing = viewingOtherSheet.value;
 
   useEffect(() => {
+    if (isViewing) return;
     if (!slug || slug === 'new') return;
 
     if (activeCharacterId.value === slug) {
@@ -1005,7 +1057,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
       .catch(err => { loadError.value = err instanceof Error ? err.message : String(err); })
       .finally(() => { loading.value = false; });
     return () => { flushSave(); };
-  }, [slug]);
+  }, [slug, isViewing]);
 
   if (loading.value) {
     return <div class="vamp-loading">Materializing...</div>;
@@ -1019,7 +1071,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
   const statMap = moveStatMap.value;
   const others = otherMoves.value;
 
-  const isCreating = creationMode.value;
+  const isCreating = isViewing ? false : creationMode.value;
   const step = creationStep.value;
   const zone = isCreating ? STEP_ZONE[step] : null;
   const statsDualHighlight = isCreating && step === 'playbook' && stepComplete.value.playbook;
@@ -1039,15 +1091,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     }
   }, [zone, step, isCreating]);
 
-  const creationDone = allStepsComplete.value;
-  useEffect(() => {
-    if (!isCreating || !creationDone) return;
-    updateCharacter({ creationComplete: true });
-    creationMode.value = false;
-    startTour();
-  }, [isCreating, creationDone]);
-
-  const isTour = tourMode.value;
+  const isTour = isViewing ? false : tourMode.value;
   const tourStep = isTour ? currentTourStep.value : null;
   const tourZone: TourZone | null = tourStep?.zone ?? null;
 
@@ -1077,6 +1121,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
   return (
     <div class={sheetClass}>
       {(isCreating || isTour) && <SpotlightOverlay />}
+      {isCreating && <CreationOverlay />}
       {isTour && <TourOverlay />}
 
       <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? (sidebarTourSpotlight ? 'tour-spotlight' : 'creation-spotlight') : ''}`}>

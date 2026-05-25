@@ -2,15 +2,17 @@ import Router, { Route } from 'preact-router';
 import { signal } from '@preact/signals';
 import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
+import { CharacterViewer } from './pages/CharacterViewer';
 import { EyeToggle } from './components/EyeToggle';
+import { EmailLinkPrompt } from './components/EmailLinkPrompt';
 import { CreationProgress } from './components/creation/CreationProgress';
 import { DiceOverlay } from './dice/DiceOverlay';
 import { ToastStack } from './components/ToastStack';
 import { loadAllGameData } from './data/loader';
 import { gameData } from './state/derived';
-import { editMode, toggleEditMode } from './state/ui';
+import { editMode, toggleEditMode, viewingOtherSheet } from './state/ui';
 import { creationMode } from './state/creation';
-import { authReady } from './firebase';
+import { authReady, handleEmailLinkRedirect } from './firebase';
 import { startAutoSave } from './state/persistence';
 
 const dataReady = signal(false);
@@ -26,7 +28,8 @@ Promise.all([
   loadAllGameData(),
   authReady,
 ])
-  .then(([data]) => {
+  .then(async ([data]) => {
+    await handleEmailLinkRedirect();
     gameData.value = data;
     startAutoSave();
     dataReady.value = true;
@@ -45,14 +48,20 @@ export function App() {
         <span class="vamp-header__title">Vamp</span>
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
-        <button
-          class="vamp-header__lock"
-          onClick={toggleEditMode}
-          aria-label={editMode.value ? 'Lock (switch to viewing)' : 'Unlock (switch to editing)'}
-          aria-pressed={editMode.value}
-        >
-          <span class={`vamp-header__lock-icon ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
-        </button>
+        {!viewingOtherSheet.value && (
+          <button
+            class="vamp-header__lock"
+            onClick={toggleEditMode}
+            aria-label={editMode.value ? 'Lock (switch to viewing)' : 'Unlock (switch to editing)'}
+            aria-pressed={editMode.value}
+          >
+            <span class={`vamp-header__lock-icon ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
+          </button>
+        )}
+        {viewingOtherSheet.value && (
+          <span class="vamp-header__viewing-label">Viewing</span>
+        )}
+        {!viewingOtherSheet.value && <EmailLinkPrompt />}
         <EyeToggle />
       </header>
       <main class="vamp-body">
@@ -65,6 +74,7 @@ export function App() {
         ) : (
           <Router>
             <Route path="/vamp/" component={CharacterList} />
+            <Route path="/vamp/:coterieCode/:charSlug" component={CharacterViewer} />
             <Route path="/vamp/:slug" component={CharacterSheet} />
           </Router>
         )}

@@ -8,11 +8,14 @@ import {
 } from '../state/panel';
 import {
   currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
+  statCap, parseXPValue, disciplineAccessCost, isExclusiveDiscipline,
+  startingDisciplineSlugs,
 } from '../state/derived';
-import { character, setXP, updateCharacter, type GhoulPatron } from '../state/character';
+import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription } from '../state/coterie';
-import { editMode } from '../state/ui';
+import { editMode, enterDisciplineBuyMode } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
+import { switchContentTab } from '../state/panel';
 import { activeCoterie, createCoterie, joinCoterie, BLANK_CHARACTER } from '../state/persistence';
 import { EditableText } from './EditableText';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
@@ -297,20 +300,32 @@ function CoteriePanel() {
 
       <CollapsibleSection title="Members" defaultOpen>
         <div class="vamp-coterie-members">
-          {cot.members.map(m => (
-            <div class="vamp-coterie-member" key={m.name}>
-              <div class="vamp-coterie-member__portrait">
-                {m.portraitUrl
-                  ? <img src={m.portraitUrl} alt={m.name} />
-                  : <span class="vamp-coterie-member__placeholder">?</span>
-                }
+          {cot.members.map(m => {
+            const viewUrl = coterieId && m.slug
+              ? `/vamp/${coterieId}/${m.slug}`
+              : null;
+
+            return (
+              <div class="vamp-coterie-member" key={m.characterId || m.name}>
+                <div class="vamp-coterie-member__portrait">
+                  {m.portraitUrl
+                    ? <img src={m.portraitUrl} alt={m.name} />
+                    : <span class="vamp-coterie-member__placeholder">?</span>
+                  }
+                </div>
+                <div class="vamp-coterie-member__info">
+                  <div class="vamp-coterie-member__name">
+                    {viewUrl
+                      ? <a href={viewUrl} target="_blank" rel="noopener" class="vamp-coterie-member__link">{m.name}</a>
+                      : m.name
+                    }
+                    {' '}<span class="vamp-coterie-member__pronouns">({m.pronouns})</span>
+                  </div>
+                  <div class="vamp-coterie-member__meta">{m.playbook} | {m.ageBracket} | BP {m.bp}</div>
+                </div>
               </div>
-              <div class="vamp-coterie-member__info">
-                <div class="vamp-coterie-member__name">{m.name} <span class="vamp-coterie-member__pronouns">({m.pronouns})</span></div>
-                <div class="vamp-coterie-member__meta">{m.playbook} | {m.ageBracket} | BP {m.bp}</div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </CollapsibleSection>
 
@@ -482,7 +497,9 @@ function PlaybookDropdown() {
           stats: { ...BLANK_CHARACTER.stats },
           predatorType: '',
           unlockedDisciplines: [],
+          startingDisciplines: [],
           knownPowers: [],
+          xpTriggers: [],
           merits: [],
           flaws: [],
           folkloricBanes: [],
@@ -960,31 +977,157 @@ function MovesPanel() {
 }
 
 
+/* All rendered markdown here is from Coterie's verified JSON parsers (trusted content) */
 function AdvancementPanel() {
   const data = gameData.value;
   const char = character.value;
-  const costs = data?.advancement.xpCosts ?? [];
-  const flashingRef = useRef<Record<string, boolean>>({});
-  const flashSignal = useSignal(0);
+  const pb = currentPlaybook.value;
   const isCreation = creationMode.value && creationStep.value === 'xp';
-  const startingXP = Math.min(10, Math.max(1, char.bp) * 2);
+  const isEdit = editMode.value;
+  const cap = statCap.value;
 
+  /* Snapshot starting Disciplines + set initial XP on first visit to XP step.
+     Uses startingDisciplines as the persistence guard so remounting the panel
+     (switching tabs) doesn't clobber XP. Reset when Playbook changes. */
   useEffect(() => {
-    if (isCreation && char.xp === 0) setXP(startingXP);
-  }, []);
+    if (!isCreation) return;
+    const cur = character.value;
+    if (cur.startingDisciplines.length === 0 && cur.unlockedDisciplines.length > 0) {
+      const base = Math.min(10, Math.max(1, cur.bp) * 2);
+      updateCharacter({
+        startingDisciplines: [...cur.unlockedDisciplines],
+        xp: base,
+      });
+    }
+  }, [isCreation, char.unlockedDisciplines.length]);
 
-  function handleAcquire(name: string, cost: number) {
-    if (char.xp >= cost) {
-      setXP(char.xp - cost);
+  /* Display-only formula breakdown (XP itself is managed imperatively by each toggle/purchase) */
+  const bpBase = Math.max(1, char.bp) * 2;
+  const flawXP = char.flaws.reduce((sum, f) => sum + parseXPValue(f.xpGain), 0);
+  const baneXP = char.folkloricBanes.reduce((sum, b) => sum + parseXPValue(b.xpGain), 0);
+  const variantXP = char.baneChoice === 'both' ? 5 : 0;
+  const rawStarting = bpBase + flawXP + baneXP + variantXP;
+  const startingXP = Math.min(10, rawStarting);
+
+  /* Merits + Flaws combined cap: 2 + max(1, BP) during creation */
+  const meritFlawCap = 2 + Math.max(1, char.bp);
+  const meritFlawCount = char.merits.length + char.flaws.length;
+  const atMeritFlawCap = isCreation && meritFlawCount >= meritFlawCap;
+
+  /* Folkloric Bane cap: 3 user-chosen (Baali auto-grants don't count) */
+  const isBaali = char.playbook === 'Baali';
+  const userBaneCount = char.folkloricBanes.filter(b => !b.fromPlaybookBane).length;
+  const atBaneCap = isCreation && userBaneCount >= 3;
+
+  const isClan = pb?.category === 'clan';
+  const optExtras = data?.optionalExtras;
+
+  /* All handlers read fresh signal values to avoid stale-closure bugs on rapid clicks */
+
+  function toggleMerit(name: string, xpCost: string) {
+    const cost = parseXPValue(xpCost);
+    const cur = character.value;
+    const existing = cur.merits.find(m => m.name === name);
+    if (existing) {
+      updateCharacter({
+        merits: cur.merits.filter(m => m.name !== name),
+        ...(isCreation ? { xp: Math.min(10, cur.xp + cost) } : {}),
+      });
     } else {
-      flashingRef.current[name] = true;
-      flashSignal.value++;
-      setTimeout(() => {
-        flashingRef.current[name] = false;
-        flashSignal.value++;
-      }, 600);
+      if (isCreation && cur.xp < cost) return;
+      updateCharacter({
+        merits: [...cur.merits, { name, xpCost }],
+        ...(isCreation ? { xp: cur.xp - cost } : {}),
+      });
     }
   }
+
+  function toggleFlaw(name: string, xpGain: string) {
+    const gain = parseXPValue(xpGain);
+    const cur = character.value;
+    const existing = cur.flaws.find(f => f.name === name);
+    if (existing) {
+      if (isCreation && cur.xp < gain) return;
+      updateCharacter({
+        flaws: cur.flaws.filter(f => f.name !== name),
+        ...(isCreation ? { xp: Math.max(0, cur.xp - gain) } : {}),
+      });
+    } else {
+      updateCharacter({
+        flaws: [...cur.flaws, { name, xpGain }],
+        ...(isCreation ? { xp: Math.min(10, cur.xp + gain) } : {}),
+      });
+    }
+  }
+
+  function toggleFolkloricBane(baneName: string, xpGain: string) {
+    const gain = parseXPValue(xpGain);
+    const cur = character.value;
+    const existing = cur.folkloricBanes.find(b => b.baneName === baneName);
+    if (existing) {
+      if (isCreation && cur.xp < gain) return;
+      updateCharacter({
+        folkloricBanes: cur.folkloricBanes.filter(b => b.baneName !== baneName),
+        ...(isCreation ? { xp: Math.max(0, cur.xp - gain) } : {}),
+      });
+    } else {
+      updateCharacter({
+        folkloricBanes: [
+          ...cur.folkloricBanes,
+          { baneName, xpGain, fromPlaybookBane: false },
+        ],
+        ...(isCreation ? { xp: Math.min(10, cur.xp + gain) } : {}),
+      });
+    }
+  }
+
+  function setLocalBaneChoice(choice: 'standard' | 'variant' | 'both') {
+    const cur = character.value;
+    const oldBonus = cur.baneChoice === 'both' ? 5 : 0;
+    const newBonus = choice === 'both' ? 5 : 0;
+    const delta = newBonus - oldBonus;
+    if (isCreation && delta < 0 && cur.xp < Math.abs(delta)) return;
+    updateCharacter({
+      baneChoice: choice,
+      ...(isCreation && delta !== 0 ? { xp: Math.min(10, Math.max(0, cur.xp + delta)) } : {}),
+    });
+  }
+
+  function purchaseStat(stat: StatName) {
+    const cur = character.value;
+    if (cur.xp < 8 || cur.stats[stat] >= cap) return;
+    updateCharacter({
+      stats: { ...cur.stats, [stat]: cur.stats[stat] + 1 },
+      xp: cur.xp - 8,
+    });
+  }
+
+  function purchaseAdvancedMove(moveName: string) {
+    const cur = character.value;
+    if (cur.xp < 5 || cur.advancedMoves.includes(moveName)) return;
+    updateCharacter({
+      advancedMoves: [...cur.advancedMoves, moveName],
+      xp: cur.xp - 5,
+    });
+  }
+
+  function purchaseBP() {
+    const cur = character.value;
+    if (cur.xp < 10 || cur.bp >= 5 || cur.hunger !== 0) return;
+    if (isCreation) {
+      updateCharacter({ bp: Math.min(5, cur.bp + 1), xp: cur.xp - 10 });
+    } else {
+      setXP(cur.xp - 10);
+      addPendingUpgrade({ type: 'bp', xpCost: 10 });
+    }
+  }
+
+  function handleUnlockAccess() {
+    enterDisciplineBuyMode();
+    switchContentTab(1);
+  }
+
+  const basicMoves = data?.basicMoves ?? [];
 
   return (
     <div class="vamp-rpanel-scroll">
@@ -992,40 +1135,312 @@ function AdvancementPanel() {
         <div class="vamp-advancement-creation">
           <p class="vamp-advancement-creation__title">Starting XP</p>
           <p class="vamp-advancement-creation__formula">
-            BP {char.bp} (min 1) x 2 = <strong>{startingXP} XP</strong>
+            BP {char.bp} (min 1) x 2 = {bpBase}
+            {flawXP > 0 && <> + {flawXP} Flaws</>}
+            {baneXP > 0 && <> + {baneXP} Banes</>}
+            {variantXP > 0 && <> + {variantXP} Both Banes</>}
+            {' '}= <strong>{startingXP} XP</strong>
+            {rawStarting > 10 && <span class="vamp-advancement-creation__cap"> (capped at 10)</span>}
           </p>
           <p class="vamp-advancement-creation__hint">
-            Spend your starting XP below. Anything unspent carries over into play. You can also gain XP by taking on Folkloric Banes or Flaws.
+            Spend your starting XP below. Anything unspent carries over into play.
           </p>
         </div>
       )}
+
       <div class="vamp-advancement-xp">
         <span class="vamp-advancement-xp__label">Available XP</span>
         <span class="vamp-advancement-xp__value">{char.xp}</span>
       </div>
-      {costs.map(item => {
-        const numericCost = /^\d+$/.test(item.cost.trim()) ? parseInt(item.cost, 10) : NaN;
-        const hasNumericCost = !isNaN(numericCost);
-        const isFlashing = flashingRef.current[item.name];
-        const pillText = item.cost
-          .replace('1 + the Power\'s level', '1 + level');
 
-        return (
-          <CollapsibleSection key={item.name} title={item.name} pill={pillText}>
-            <div class="vamp-rpanel-field__body"
-              dangerouslySetInnerHTML={{ __html: renderGameMarkdown(item.description) }}
-            />
-            {hasNumericCost && (
-              <button
-                class={`vamp-advancement-acquire ${isFlashing ? 'vamp-advancement-acquire--flash' : ''}`}
-                onClick={() => handleAcquire(item.name, numericCost)}
-              >
-                Acquire ({numericCost} XP)
-              </button>
+      {char.pendingUpgrades.length > 0 && (
+        <CollapsibleSection title="Pending (New Night)" defaultOpen>
+          <div class="vamp-adv-pending">
+            {char.pendingUpgrades.map(u => (
+              <div key={u.id} class="vamp-adv-pending__item">
+                <span>{u.type === 'bp' ? 'Blood Potency +1' : u.type === 'discipline-access' ? `Unlock ${u.slug}` : `Learn ${u.powerName}`}</span>
+                <span class="vamp-adv-pending__cost">{u.xpCost} XP</span>
+              </div>
+            ))}
+            <p class="vamp-adv-pending__note">These apply when you click New Night.</p>
+          </div>
+        </CollapsibleSection>
+      )}
+
+      {isClan && (isCreation || isEdit) && optExtras && (
+        <CollapsibleSection title="Clan Bane" pill={char.baneChoice === 'both' ? '+5 XP' : char.baneChoice} defaultOpen={isCreation}>
+          <div class="vamp-adv-bane-variant">
+            {(['standard', 'variant', 'both'] as const).map(opt => {
+              const variant = optExtras.clanBaneVariants.find(v => v.clan === char.playbook);
+              const label = opt === 'standard' ? 'Standard Bane'
+                : opt === 'variant' ? (variant?.baneName ?? 'Variant Bane')
+                : 'Both (+5 XP)';
+              return (
+                <label key={opt} class={`vamp-adv-radio ${char.baneChoice === opt ? 'vamp-adv-radio--active' : ''}`}>
+                  <input
+                    type="radio"
+                    name="bane-variant"
+                    checked={char.baneChoice === opt}
+                    onChange={() => setLocalBaneChoice(opt)}
+                  />
+                  {label}
+                </label>
+              );
+            })}
+            {char.baneChoice === 'variant' || char.baneChoice === 'both' ? (() => {
+              const variant = optExtras.clanBaneVariants.find(v => v.clan === char.playbook);
+              if (!variant) return null;
+              return (
+                <div class="vamp-adv-bane-variant__desc"
+                  dangerouslySetInnerHTML={{ __html: renderGameMarkdown(variant.consequences) }}
+                />
+              );
+            })() : null}
+          </div>
+        </CollapsibleSection>
+      )}
+
+      {(isCreation || isEdit) && optExtras && (
+        <CollapsibleSection title="Folkloric Banes" pill={`${char.folkloricBanes.length} chosen`} defaultOpen={isCreation}>
+          <div class="vamp-adv-extras-list">
+            {isCreation && (
+              <p class="vamp-adv-extras-list__cap">
+                {userBaneCount}/3 chosen {isBaali && '(auto-grants do not count)'}
+              </p>
             )}
-          </CollapsibleSection>
-        );
-      })}
+            {optExtras.folkloricBanes.map(bane => {
+              const selected = char.folkloricBanes.some(b => b.baneName === bane.baneName);
+              const disabled = !selected && atBaneCap;
+              return (
+                <FolkloricBaneRow
+                  key={bane.baneName}
+                  bane={bane}
+                  selected={selected}
+                  disabled={disabled}
+                  onToggle={() => toggleFolkloricBane(bane.baneName, bane.xpGain)}
+                />
+              );
+            })}
+          </div>
+        </CollapsibleSection>
+      )}
+
+      {(isCreation || isEdit) && optExtras && (
+        <CollapsibleSection title="Merits" pill={`${char.merits.length} chosen`} defaultOpen={isCreation}>
+          <div class="vamp-adv-extras-list">
+            {isCreation && (
+              <p class="vamp-adv-extras-list__cap">
+                {meritFlawCount}/{meritFlawCap} Merits + Flaws combined
+              </p>
+            )}
+            {optExtras.merits.map(merit => {
+              const selected = char.merits.some(m => m.name === merit.name);
+              const disabled = !selected && (atMeritFlawCap || (isCreation && char.xp < parseXPValue(merit.xpCost)));
+              return (
+                <MeritRow
+                  key={merit.name}
+                  merit={merit}
+                  selected={selected}
+                  disabled={disabled}
+                  onToggle={() => toggleMerit(merit.name, merit.xpCost)}
+                />
+              );
+            })}
+          </div>
+        </CollapsibleSection>
+      )}
+
+      {(isCreation || isEdit) && optExtras && (
+        <CollapsibleSection title="Flaws" pill={`${char.flaws.length} chosen`} defaultOpen={isCreation}>
+          <div class="vamp-adv-extras-list">
+            {isCreation && (
+              <p class="vamp-adv-extras-list__cap">
+                {meritFlawCount}/{meritFlawCap} Merits + Flaws combined
+              </p>
+            )}
+            {optExtras.flaws.map(flaw => {
+              const selected = char.flaws.some(f => f.name === flaw.name);
+              const disabled = !selected && atMeritFlawCap;
+              return (
+                <FlawRow
+                  key={flaw.name}
+                  flaw={flaw}
+                  selected={selected}
+                  disabled={disabled}
+                  onToggle={() => toggleFlaw(flaw.name, flaw.xpGain)}
+                />
+              );
+            })}
+          </div>
+        </CollapsibleSection>
+      )}
+
+      <CollapsibleSection title="Discipline Access" pill="3 or 5 XP">
+        <p class="vamp-adv-extras-list__hint">
+          Unlock new Disciplines on the Disciplines tab.
+        </p>
+        <button class="vamp-advancement-acquire" onClick={handleUnlockAccess}>
+          Unlock Access
+        </button>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Stat Increases" pill="8 XP per +1">
+        <div class="vamp-adv-stats">
+          {ALL_STATS.map(stat => {
+            const val = char.stats[stat];
+            const atCap = val >= cap;
+            return (
+              <button
+                key={stat}
+                class={`vamp-adv-stat-btn ${atCap ? 'vamp-adv-stat-btn--capped' : ''}`}
+                disabled={atCap || char.xp < 8}
+                onClick={() => purchaseStat(stat)}
+              >
+                <span class="vamp-adv-stat-btn__name">{stat}</span>
+                <span class="vamp-adv-stat-btn__val">
+                  {val >= 0 ? '+' : ''}{val} {atCap ? '(max)' : `→ +${val + 1}`}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Advanced Moves" pill="5 XP per Move">
+        <div class="vamp-adv-moves">
+          {basicMoves.map(move => {
+            const unlocked = char.advancedMoves.includes(move.name);
+            return (
+              <button
+                key={move.name}
+                class={`vamp-adv-move-btn ${unlocked ? 'vamp-adv-move-btn--unlocked' : ''}`}
+                disabled={unlocked || char.xp < 5}
+                onClick={() => purchaseAdvancedMove(move.name)}
+              >
+                {unlocked && <span class="vamp-adv-move-btn__check">{'✓'}</span>}
+                {move.name}
+              </button>
+            );
+          })}
+        </div>
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Blood Potency" pill="10 XP">
+        <div class="vamp-adv-bp">
+          <button
+            class="vamp-advancement-acquire"
+            disabled={char.xp < 10 || char.bp >= 5 || char.hunger !== 0}
+            onClick={purchaseBP}
+          >
+            Increase to BP {char.bp + 1}
+          </button>
+          {char.bp >= 5 && <p class="vamp-adv-bp__note">Blood Potency is at maximum.</p>}
+          {char.hunger !== 0 && char.bp < 5 && (
+            <p class="vamp-adv-bp__note">Requires 0 Hunger.</p>
+          )}
+          {!isCreation && char.bp < 5 && char.hunger === 0 && char.xp >= 10 && (
+            <p class="vamp-adv-bp__note">Applies on New Night.</p>
+          )}
+        </div>
+      </CollapsibleSection>
+    </div>
+  );
+}
+
+function FolkloricBaneRow({ bane, selected, disabled, onToggle }: {
+  bane: { baneName: string; consequences: string; xpGain: string };
+  selected: boolean;
+  disabled: boolean;
+  onToggle: () => void;
+}) {
+  const expanded = useSignal(false);
+  return (
+    <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
+      <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
+        <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
+        <span class="vamp-adv-extra-row__name">{bane.baneName}</span>
+        <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">{bane.xpGain}</span>
+        <button
+          class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
+          disabled={disabled && !selected}
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+        >
+          {selected ? 'Remove' : 'Take'}
+        </button>
+      </div>
+      {expanded.value && (
+        <div class="vamp-adv-extra-row__body"
+          dangerouslySetInnerHTML={{ __html: renderGameMarkdown(bane.consequences) }}
+        />
+      )}
+    </div>
+  );
+}
+
+function MeritRow({ merit, selected, disabled, onToggle }: {
+  merit: { name: string; category: string; limit: string; description: string; xpCost: string };
+  selected: boolean;
+  disabled: boolean;
+  onToggle: () => void;
+}) {
+  const expanded = useSignal(false);
+  return (
+    <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
+      <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
+        <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
+        <span class="vamp-adv-extra-row__name">{merit.name}</span>
+        <span class="vamp-adv-extra-row__cost">{merit.xpCost} XP</span>
+        <button
+          class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
+          disabled={disabled && !selected}
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+        >
+          {selected ? 'Remove' : 'Take'}
+        </button>
+      </div>
+      {expanded.value && (
+        <div class="vamp-adv-extra-row__body">
+          <div class="vamp-adv-extra-row__meta">
+            <span>{merit.category}</span>
+            {merit.limit !== '—' && <span>{merit.limit}</span>}
+          </div>
+          <div dangerouslySetInnerHTML={{ __html: renderGameMarkdown(merit.description) }} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FlawRow({ flaw, selected, disabled, onToggle }: {
+  flaw: { name: string; category: string; limit: string; description: string; xpGain: string };
+  selected: boolean;
+  disabled: boolean;
+  onToggle: () => void;
+}) {
+  const expanded = useSignal(false);
+  return (
+    <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
+      <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
+        <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
+        <span class="vamp-adv-extra-row__name">{flaw.name}</span>
+        <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">{flaw.xpGain}</span>
+        <button
+          class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
+          disabled={disabled && !selected}
+          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+        >
+          {selected ? 'Remove' : 'Take'}
+        </button>
+      </div>
+      {expanded.value && (
+        <div class="vamp-adv-extra-row__body">
+          <div class="vamp-adv-extra-row__meta">
+            <span>{flaw.category}</span>
+            {flaw.limit !== '—' && <span>{flaw.limit}</span>}
+          </div>
+          <div dangerouslySetInnerHTML={{ __html: renderGameMarkdown(flaw.description) }} />
+        </div>
+      )}
     </div>
   );
 }

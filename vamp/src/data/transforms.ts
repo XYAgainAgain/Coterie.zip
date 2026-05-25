@@ -101,6 +101,104 @@ function processAdmonitions(text: string): string {
   return s;
 }
 
+export interface SnippetContext {
+  blood: number;
+  shadow: number;
+  resolve: number;
+  wits: number;
+  demeanor: number;
+  bp: number;
+  humanity: number;
+  maxHp: number;
+  patronBp: number;
+}
+
+const SHORTHANDS: Record<string, string> = {
+  'osirian-penalty': '(humanity-lost/2)@roundup,min:1',
+};
+
+const TOKEN_RE = /\{\{(.+?)\}\}/g;
+
+/* Resolve a bare code to a number from the context */
+function resolveCode(code: string, ctx: SnippetContext): number {
+  switch (code) {
+    case 'blood': return ctx.blood;
+    case 'shadow': return ctx.shadow;
+    case 'resolve': return ctx.resolve;
+    case 'wits': return ctx.wits;
+    case 'demeanor': return ctx.demeanor;
+    case 'bp': return ctx.bp;
+    case 'humanity': return ctx.humanity;
+    case 'humanity-lost': return 10 - ctx.humanity;
+    case 'max-hp': return ctx.maxHp;
+    case 'patron-bp': return ctx.patronBp;
+    default: return 0;
+  }
+}
+
+/* Evaluate an expression string (no modifiers) against character context */
+function evaluateExpr(expr: string, ctx: SnippetContext): number {
+  const stripped = expr.replace(/[()]/g, '').trim();
+
+  /* Try as bare code first */
+  if (/^[a-z-]+$/.test(stripped)) return resolveCode(stripped, ctx);
+
+  /* Binary arithmetic: split at the LAST operator not inside a code name.
+     The regex finds the rightmost +, -, *, / that isn't part of a hyphenated code. */
+  const binMatch = stripped.match(/^(.+?)([+\-*/])([^+\-*/]+)$/);
+  if (binMatch) {
+    const left = evaluateExpr(binMatch[1], ctx);
+    const right = evaluateExpr(binMatch[3], ctx);
+    switch (binMatch[2]) {
+      case '+': return left + right;
+      case '-': return left - right;
+      case '*': return left * right;
+      case '/': return right !== 0 ? left / right : 0;
+    }
+  }
+
+  /* Plain number */
+  const num = parseFloat(stripped);
+  return isNaN(num) ? 0 : num;
+}
+
+/* Resolve a single {{...}} token */
+function resolveToken(raw: string, ctx: SnippetContext): string {
+  let token = raw.trim();
+
+  /* Expand shorthands */
+  if (SHORTHANDS[token]) token = SHORTHANDS[token];
+
+  /* Split expression from modifiers: everything before first @ or # is the expression */
+  const modSplit = token.match(/^([^@#]+)(.*)$/);
+  if (!modSplit) return '**?**';
+
+  const exprPart = modSplit[1].trim();
+  const modPart = modSplit[2].trim();
+
+  let value = evaluateExpr(exprPart, ctx);
+
+  /* Parse modifiers */
+  let signed = false;
+  for (const mod of modPart.split(/[,@#]/).filter(Boolean)) {
+    const m = mod.trim();
+    if (m === 'roundup') value = Math.ceil(value);
+    else if (m === 'rounddown') value = Math.floor(value);
+    else if (m.startsWith('min:')) value = Math.max(value, parseFloat(m.slice(4)));
+    else if (m.startsWith('max:')) value = Math.min(value, parseFloat(m.slice(4)));
+    else if (m === 'signed') signed = true;
+  }
+
+  value = Math.round(value);
+  const display = signed && value >= 0 ? `+${value}` : `${value}`;
+  return `**${display}**`;
+}
+
+/* Replace all {{...}} tokens in snippet text with resolved values */
+export function resolveSnippetTokens(text: string, ctx: SnippetContext): string {
+  return text.replace(TOKEN_RE, (_, inner: string) => resolveToken(inner, ctx));
+}
+
 const mdCache = new Map<string, string>();
 
 export function renderGameMarkdown(raw: string): string {
@@ -108,7 +206,7 @@ export function renderGameMarkdown(raw: string): string {
   if (cached) return cached;
   const admonitioned = processAdmonitions(raw);
   const rewritten = rewriteMarkdownLinks(admonitioned);
-  const html = marked.parse(rewritten, { async: false }) as string;
+  const html = marked.parse(rewritten, { async: false, breaks: true }) as string;
   const result = colorTierMarkers(html);
   mdCache.set(raw, result);
   return result;

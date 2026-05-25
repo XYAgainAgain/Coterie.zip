@@ -72,6 +72,73 @@ export const grantedDisciplineSlugs = computed<Set<string>>(() => {
   return granted;
 });
 
+/* All Discipline slugs listed on the Playbook text + PT Discipline = "starting" for XP cost */
+export const startingDisciplineSlugs = computed<Set<string>>(() => {
+  const pb = currentPlaybook.value;
+  const pt = currentPredatorType.value;
+  const data = gameData.value;
+  if (!pb || !data) return new Set();
+
+  const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, '-');
+  const slugs = new Set<string>();
+
+  /* Extract all linked Discipline names from Playbook text */
+  const allSlugs = data.disciplines.map(d => d.slug);
+  for (const match of pb.disciplines.matchAll(/\[([^\]]+)\]\([^)]+\)/g)) {
+    const name = match[1].replace(/\*\*/g, '');
+    const slug = slugify(name);
+    if (allSlugs.includes(slug)) slugs.add(slug);
+  }
+
+  /* Caitiff "Choose any 2": their creation picks are starting Disciplines */
+  if (/choose\s+any\s+\d+/i.test(pb.disciplines)) {
+    for (const s of character.value.startingDisciplines) slugs.add(s);
+  }
+
+  /* PT Discipline also counts as starting */
+  if (pt && pb.name !== 'Ghoul') {
+    const ptDisc = data.disciplines.find(
+      d => d.name.toLowerCase() === pt.discipline.toLowerCase()
+    );
+    if (ptDisc) slugs.add(ptDisc.slug);
+  }
+
+  return slugs;
+});
+
+/* Exclusive Disciplines can never be purchased */
+const EXCLUSIVE_DISCIPLINES = new Set([
+  'melpominee', 'daimonion', 'bardo', 'thin-blood-alchemy', 'psychotrophia',
+]);
+
+export function isExclusiveDiscipline(slug: string): boolean {
+  return EXCLUSIVE_DISCIPLINES.has(slug);
+}
+
+export function disciplineAccessCost(slug: string): number {
+  const isStarting = startingDisciplineSlugs.value.has(slug);
+  const base = isStarting ? 3 : 5;
+  const char = character.value;
+  if (char.playbook === 'Caitiff' && !isStarting) {
+    return base + Math.max(1, char.bp);
+  }
+  return base;
+}
+
+export function powerXPCost(level: number, disciplineSlug: string): number {
+  const base = 1 + level;
+  const char = character.value;
+  const isStarting = startingDisciplineSlugs.value.has(disciplineSlug);
+  if (char.playbook === 'Caitiff' && !isStarting) {
+    return base + Math.max(1, char.bp);
+  }
+  return base;
+}
+
+export function parseXPValue(str: string): number {
+  return parseInt(str.replace(/[^0-9-]/g, ''), 10) || 0;
+}
+
 export const availableDisciplines = computed<string[]>(() => {
   const data = gameData.value;
   const pt = currentPredatorType.value;

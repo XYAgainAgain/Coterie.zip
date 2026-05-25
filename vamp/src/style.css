@@ -293,6 +293,96 @@ a:hover {
   background-color: var(--v-bg-primary);
 }
 
+.vamp-email-btn {
+  background: none;
+  border: 1px solid var(--v-text-secondary);
+  border-radius: 0.25rem;
+  color: var(--v-text-secondary);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.vamp-email-btn:hover {
+  border-color: var(--v-accent);
+  color: var(--v-accent);
+}
+
+.vamp-email-btn--linked {
+  border-color: var(--v-accent);
+  color: var(--v-accent);
+  opacity: 0.6;
+  cursor: default;
+}
+
+.vamp-email-btn__icon::before {
+  content: '\2709';
+  font-size: 0.9rem;
+}
+
+.vamp-email-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.vamp-email-prompt__input {
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border);
+  border-radius: 0.25rem;
+  color: var(--v-text-primary);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.4rem;
+  inline-size: 10rem;
+  font-family: inherit;
+}
+
+.vamp-email-prompt__input:focus {
+  outline: 1px solid var(--v-accent);
+  border-color: var(--v-accent);
+}
+
+.vamp-email-prompt__send {
+  background: var(--v-accent);
+  border: none;
+  border-radius: 0.25rem;
+  color: var(--v-bg-primary);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+}
+
+.vamp-email-prompt__send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vamp-email-prompt__close {
+  background: none;
+  border: none;
+  color: var(--v-text-muted);
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0;
+  line-height: 1;
+}
+
+.vamp-header__viewing-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v-text-secondary);
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--v-text-secondary);
+  border-radius: 0.25rem;
+  opacity: 0.7;
+}
+
 .vamp-body {
   flex: 1;
   min-block-size: 0;
@@ -2820,10 +2910,41 @@ textarea.vamp-editable__input {
   font-style: italic;
 }
 
+.vamp-perk--expandable {
+  cursor: pointer;
+}
+
+.vamp-perk--expandable:hover .vamp-perk__name {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.15em;
+}
+
+.vamp-perk__chevron {
+  margin-left: auto;
+  flex-shrink: 0;
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  background-color: var(--v-text-muted);
+  transform: rotate(90deg);
+  transition: transform 0.15s ease;
+}
+
+.vamp-perk--expanded .vamp-perk__chevron {
+  transform: rotate(-90deg);
+}
+
 .vamp-perk__text {
   font-size: 0.85rem;
   color: var(--v-text-secondary);
   line-height: 1.5;
+}
+
+.vamp-perk__text--snippet {
+  font-style: italic;
+  opacity: 0.85;
 }
 
 
@@ -3492,6 +3613,11 @@ details[open] > .vamp-detail__summary::before {
   color: var(--v-text-primary);
 }
 
+.vamp-power__body--snippet {
+  font-style: italic;
+  opacity: 0.85;
+}
+
 /* Inline outcome tier colors in Power descriptions */
 
 .tier-inline-10 {
@@ -3954,6 +4080,106 @@ details[open] > .vamp-detail__summary::before {
   color: var(--v-text-primary);
 }
 
+
+.creation-guide {
+  position: fixed;
+  z-index: 52;
+  max-width: 26rem;
+  padding: 1rem 1.25rem;
+  background: var(--v-glass-bg);
+  backdrop-filter: blur(1.5rem);
+  -webkit-backdrop-filter: blur(1.5rem);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-lg);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--v-accent) 25%, transparent),
+    0 8px 32px oklch(0% 0 0 / 0.5);
+  animation: creation-guide-enter 0.3s ease both;
+}
+
+@keyframes creation-guide-enter {
+  from { opacity: 0; translate: 0 0.5rem; }
+}
+
+.creation-guide--sidebar {
+  inset-block-end: 1.5rem;
+  inset-inline-start: 1rem;
+}
+
+.creation-guide--content {
+  inset-block-end: 1.5rem;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+}
+
+.creation-guide--right {
+  inset-block-end: 1.5rem;
+  inset-inline-end: 1.5rem;
+}
+
+.creation-guide__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.creation-guide__label {
+  font-family: var(--v-font-display);
+  font-size: 1.25rem;
+  color: var(--v-text-accent);
+}
+
+.creation-guide__count {
+  font-size: 0.75rem;
+  color: var(--v-text-muted);
+}
+
+.creation-guide__body {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--v-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.creation-guide__body p {
+  margin: 0;
+}
+
+.creation-guide__body p + p {
+  margin-top: 0.4rem;
+}
+
+.creation-guide__nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.creation-guide__nav-left {
+  flex: 0 0 auto;
+}
+
+.creation-guide__nav-right {
+  flex: 0 0 auto;
+  margin-inline-start: auto;
+}
+
+.creation-guide__nav-right--prompt {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.creation-guide__btn {
+  padding: 0.35rem 1rem;
+  font-size: 0.8rem;
+}
+
+.creation-guide__btn--next {
+  background: var(--v-accent);
+  color: var(--v-bg-primary);
+}
 
 
 /* Creation step content */
@@ -5121,6 +5347,15 @@ details[open] > .vamp-detail__summary::before {
   color: var(--v-text-primary);
 }
 
+.vamp-coterie-member__link {
+  color: var(--v-accent);
+  text-decoration: none;
+}
+
+.vamp-coterie-member__link:hover {
+  text-decoration: underline;
+}
+
 .vamp-coterie-member__pronouns {
   font-weight: 400;
   font-size: 0.75rem;
@@ -5249,11 +5484,281 @@ details[open] > .vamp-detail__summary::before {
   animation: acquire-flash 0.6s ease;
 }
 
+.vamp-advancement-acquire:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 @keyframes acquire-flash {
   0%, 100% { border-color: var(--v-accent); background: var(--v-accent-subtle); }
   25%, 75% { border-color: var(--v-danger); background: color-mix(in srgb, var(--v-danger) 15%, transparent); color: var(--v-danger); }
 }
 
+.vamp-advancement-creation__cap {
+  color: var(--v-danger);
+  font-size: 0.8rem;
+}
+
+.vamp-adv-radio {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--v-radius-sm);
+  font-size: 0.85rem;
+  color: var(--v-text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.vamp-adv-radio input[type="radio"] {
+  accent-color: var(--v-accent);
+}
+
+.vamp-adv-radio--active {
+  color: var(--v-text-accent);
+  font-weight: 600;
+}
+
+.vamp-adv-bane-variant__desc {
+  margin-top: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--v-text-primary);
+  background: color-mix(in srgb, var(--v-accent) 6%, transparent);
+  border-radius: var(--v-radius-sm);
+}
+
+.vamp-adv-bane-variant__desc strong {
+  color: var(--v-text-accent);
+}
+
+.vamp-adv-extras-list__cap {
+  font-size: 0.8rem;
+  color: var(--v-text-muted);
+  margin: 0 0 0.35rem;
+}
+
+.vamp-adv-extras-list__hint {
+  font-size: 0.8rem;
+  color: var(--v-text-muted);
+  margin: 0 0 0.35rem;
+  line-height: 1.45;
+}
+
+.vamp-adv-extra-row {
+  border-radius: var(--v-radius-sm);
+  transition: background 0.15s ease;
+}
+
+.vamp-adv-extra-row + .vamp-adv-extra-row {
+  margin-top: 0.15rem;
+}
+
+.vamp-adv-extra-row--selected {
+  background: color-mix(in srgb, var(--v-accent) 8%, transparent);
+}
+
+.vamp-adv-extra-row__header {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.35rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.vamp-adv-extra-row__name {
+  flex: 1;
+  color: var(--v-text-primary);
+  font-weight: 500;
+}
+
+.vamp-adv-extra-row__cost {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--v-text-accent);
+  white-space: nowrap;
+}
+
+.vamp-adv-extra-row__cost--gain {
+  color: var(--v-merit-text, #7ec87e);
+}
+
+.vamp-adv-extra-row__body {
+  padding: 0.3rem 0.5rem 0.4rem 1.4rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--v-text-secondary);
+}
+
+.vamp-adv-extra-row__body p {
+  margin: 0 0 0.3rem;
+}
+
+.vamp-adv-extra-row__body p:last-child {
+  margin-bottom: 0;
+}
+
+.vamp-adv-extra-row__meta {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--v-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.vamp-adv-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.vamp-adv-stat-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--v-border-muted);
+  border-radius: var(--v-radius-sm);
+  background: transparent;
+  color: var(--v-text-primary);
+  font-family: var(--v-font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.vamp-adv-stat-btn:hover:not(:disabled) {
+  border-color: var(--v-accent);
+  background: var(--v-accent-subtle);
+}
+
+.vamp-adv-stat-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.vamp-adv-stat-btn__name {
+  font-weight: 600;
+}
+
+.vamp-adv-stat-btn__val {
+  font-size: 0.8rem;
+  color: var(--v-text-muted);
+}
+
+.vamp-adv-stat-btn--capped .vamp-adv-stat-btn__val {
+  color: var(--v-text-accent);
+}
+
+.vamp-adv-moves {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.vamp-adv-move-btn {
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--v-border-muted);
+  border-radius: var(--v-radius-sm);
+  background: transparent;
+  color: var(--v-text-primary);
+  font-family: var(--v-font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.vamp-adv-move-btn:hover:not(:disabled) {
+  border-color: var(--v-accent);
+  background: var(--v-accent-subtle);
+}
+
+.vamp-adv-move-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.vamp-adv-move-btn--unlocked {
+  border-color: var(--v-accent);
+  opacity: 1 !important;
+}
+
+.vamp-adv-move-btn__check {
+  color: var(--v-text-accent);
+  margin-right: 0.2rem;
+}
+
+.vamp-adv-bp__note {
+  font-size: 0.8rem;
+  color: var(--v-text-muted);
+  margin: 0.3rem 0 0;
+}
+
+.vamp-adv-pending {
+  font-size: 0.85rem;
+}
+
+.vamp-adv-pending__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0;
+  color: var(--v-text-primary);
+}
+
+.vamp-adv-pending__cost {
+  color: var(--v-text-accent);
+  font-weight: 600;
+}
+
+.vamp-adv-pending__note {
+  font-size: 0.75rem;
+  color: var(--v-text-muted);
+  margin: 0.3rem 0 0;
+}
+
+.vamp-btn--buy {
+  background: color-mix(in srgb, var(--v-accent) 15%, transparent);
+  border-color: var(--v-accent);
+  color: var(--v-text-accent);
+  font-weight: 700;
+}
+
+.vamp-btn--buy:hover:not(:disabled) {
+  background: var(--v-accent);
+  color: var(--v-bg-primary);
+}
+
+.vamp-btn--buy:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.vamp-disc--exclusive {
+  opacity: 0.5;
+}
+
+.vamp-disc__badge--exclusive {
+  font-size: 0.7rem;
+  padding: 0.1rem 0.3rem;
+  border-radius: var(--v-radius-sm);
+  background: color-mix(in srgb, var(--v-danger) 15%, transparent);
+  color: var(--v-danger);
+  font-weight: 600;
+}
+
+.vamp-disc-buy__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.5rem;
+  margin-bottom: 0.3rem;
+  font-family: var(--v-font-display);
+  font-size: 1rem;
+  color: var(--v-text-accent);
+}
 
 .vamp-move-section {
   border-block-end: 2px solid transparent;

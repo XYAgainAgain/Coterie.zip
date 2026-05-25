@@ -12,6 +12,7 @@ export const TAB_TOOLTIPS: Record<RPanelTab, string> = {
 };
 
 export const activeRightTab = signal<RPanelTab>('coterie');
+export const activeContentTab = signal(0);
 
 export const scrollToMove = signal<string | null>(null);
 
@@ -19,9 +20,12 @@ export function switchTab(tab: RPanelTab) {
   activeRightTab.value = tab;
 }
 
+export function switchContentTab(index: number) {
+  activeContentTab.value = index;
+}
+
 export function openMove(moveName: string) {
   activeRightTab.value = 'moves';
-  /* Force a new signal value even if same move, so the effect always fires */
   scrollToMove.value = null;
   scrollToMove.value = moveName;
 }

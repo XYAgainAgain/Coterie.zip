@@ -1,16 +1,42 @@
 import { signal, effect } from '@preact/signals';
 import {
   collection, doc, getDoc, getDocs, setDoc, deleteDoc,
-  query, where, serverTimestamp, onSnapshot,
+  query, where, serverTimestamp, onSnapshot, runTransaction,
 } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import { character, type CharacterState, NOTEBOOK_HELP_NOTE } from './character';
 import { coterieState, masqueradeClock } from './coterie';
-import type { CoterieState } from './coterie';
+import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
 
 export const MAX_CHARACTERS = 12;
+
+/* Kebab-case slug from character name, safe for URLs */
+export function generateNameSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    || 'unnamed';
+}
+
+/* Append -2, -3 etc. if slug collides with existing members in the same Coterie */
+function dedupeSlug(slug: string, ownCharacterId: string, members: Array<{ slug?: string; characterId?: string }>): string {
+  const taken = new Set(
+    members
+      .filter(m => m.characterId !== ownCharacterId)
+      .map(m => m.slug)
+      .filter(Boolean),
+  );
+  if (!taken.has(slug)) return slug;
+  for (let i = 2; i <= 99; i++) {
+    const candidate = `${slug}-${i}`;
+    if (!taken.has(candidate)) return candidate;
+  }
+  return `${slug}-${Date.now()}`;
+}
 
 export interface CharacterSummary {
   id: string;
@@ -73,7 +99,10 @@ export const BLANK_CHARACTER: CharacterState = {
   archetypeName: '',
   stats: { Blood: 0, Shadow: 0, Resolve: 0, Demeanor: 0, Wits: 0 },
   unlockedDisciplines: [],
+  startingDisciplines: [],
   knownPowers: [],
+  advancedMoves: [],
+  pendingUpgrades: [],
   bp: 0,
   hunger: 0,
   humanity: 7,
@@ -254,32 +283,40 @@ async function saveCharacter(
   const json = JSON.stringify(state);
   if (json === lastSavedJson) return;
 
-  /* Read existing IDB record to preserve metadata (slug, schemaVersion, etc.) */
   let idbOk = false;
   try {
     const existing = await idbGet<IDBCharacterRecord>('characters', id);
+    const newSlug = generateNameSlug(state.name);
     await idbPut('characters', {
       ...state,
       id,
       ownerId: uid,
       coterieId,
-      slug: existing?.slug ?? '',
-      public: existing?.public ?? false,
+      slug: newSlug,
+      public: existing?.public ?? !!coterieId,
       schemaVersion: existing?.schemaVersion ?? 1,
       updatedAt: Date.now(),
       pendingSync: true,
     } satisfies IDBCharacterRecord);
     idbOk = true;
+
+    /* Sync member data to Coterie doc when character changes */
+    if (coterieId) {
+      await syncMemberToCoterie(id, state, coterieId, newSlug);
+    }
   } catch {}
 
   /* Only mark as saved once at least one storage path has the data */
   if (idbOk) lastSavedJson = json;
 
   try {
+    const slug = generateNameSlug(state.name);
     await setDoc(doc(db, 'characters', id), {
       ...state,
       ownerId: uid,
       coterieId,
+      slug,
+      public: !!coterieId,
       updatedAt: serverTimestamp(),
     }, { merge: true });
 
@@ -306,10 +343,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
 
   const state: CharacterState = { ...BLANK_CHARACTER, ...initial };
   const ref = doc(collection(db, 'characters'));
-  const slug = Array.from(
-    crypto.getRandomValues(new Uint8Array(6)),
-    b => b.toString(36),
-  ).join('').slice(0, 8);
+  const slug = generateNameSlug(state.name);
 
   const record: IDBCharacterRecord = {
     ...state,
@@ -410,6 +444,55 @@ async function syncPending(): Promise<void> {
   }
 }
 
+/* Upsert this character's entry in the Coterie's members array.
+   Uses a transaction to avoid read-modify-write races when multiple players save simultaneously. */
+async function syncMemberToCoterie(
+  characterId: string,
+  state: CharacterState,
+  coterieId: string,
+  slug: string,
+): Promise<void> {
+  try {
+    const coterieRef = doc(db, 'coteries', coterieId);
+
+    await runTransaction(db, async (txn) => {
+      const coterieSnap = await txn.get(coterieRef);
+      if (!coterieSnap.exists()) return;
+
+      const data = coterieSnap.data();
+      const members: CoterieMember[] = data.members ?? [];
+      const firstPortrait = state.portraits[0]?.url ?? null;
+      const pronouns = state.bio.pronouns.filter(Boolean).join('/');
+
+      const dedupedSlug = dedupeSlug(slug, characterId, members);
+
+      const entry: CoterieMember = {
+        characterId,
+        slug: dedupedSlug,
+        name: state.name || 'Unnamed',
+        pronouns: pronouns || '?/?',
+        portraitUrl: firstPortrait,
+        ageBracket: state.ageBracket,
+        bp: state.bp,
+        playbook: state.playbook,
+      };
+
+      const idx = members.findIndex(m => m.characterId === characterId);
+      const updated = [...members];
+      if (idx >= 0) {
+        updated[idx] = entry;
+      } else {
+        updated.push(entry);
+      }
+
+      txn.update(coterieRef, {
+        members: updated,
+        updatedAt: serverTimestamp(),
+      });
+    });
+  } catch {}
+}
+
 let charSaveTimer: ReturnType<typeof setTimeout> | null = null;
 let coterieSaveTimer: ReturnType<typeof setTimeout> | null = null;
 let charDisposer: (() => void) | null = null;
@@ -453,6 +536,37 @@ export async function flushSave(): Promise<void> {
   const state = character.peek();
   const coterie = activeCoterie.peek();
   await saveCharacter(id ?? undefined, state, coterie);
+}
+
+/* Load a character for read-only viewing via Coterie-scoped slug.
+   Resolves coterieCode + slug → character doc. Verifies membership. */
+export async function loadCharacterForViewing(
+  rawCoterieCode: string,
+  charSlug: string,
+): Promise<{ state: CharacterState; coterieId: string; isOwner: boolean }> {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error('Not authenticated');
+
+  const coterieCode = rawCoterieCode.trim().toUpperCase();
+  const coterieSnap = await getDoc(doc(db, 'coteries', coterieCode));
+  if (!coterieSnap.exists()) throw new Error(`Coterie "${coterieCode}" not found`);
+
+  const coterieData = coterieSnap.data();
+  const memberUids: string[] = coterieData.memberUids ?? [];
+  if (!memberUids.includes(uid)) throw new Error('You are not a member of this Coterie');
+
+  const members: CoterieMember[] = coterieData.members ?? [];
+  const member = members.find(m => m.slug === charSlug);
+  if (!member) throw new Error(`No character "${charSlug}" found in this Coterie`);
+
+  const charSnap = await getDoc(doc(db, 'characters', member.characterId));
+  if (!charSnap.exists()) throw new Error('Character document not found');
+
+  const raw = charSnap.data();
+  const state = stripMetadata(raw);
+  const isOwner = raw.ownerId === uid;
+
+  return { state, coterieId: coterieCode, isOwner };
 }
 
 let coterieUnsub: (() => void) | null = null;
@@ -542,6 +656,14 @@ export async function createCoterie(initial: Partial<CoterieState> = {}): Promis
   coterieState.value = state;
   masqueradeClock.value = defaultClock;
   activeCoterie.value = code;
+
+  /* Sync this character's member entry into the new Coterie */
+  const charId = activeCharacterId.value;
+  if (charId) {
+    const slug = generateNameSlug(character.value.name);
+    await syncMemberToCoterie(charId, character.value, code, slug);
+  }
+
   return code;
 }
 
