@@ -81,7 +81,7 @@ The blood does not count toward a Blood Bond, cannot inflict Harm upon you, cann
 
 **When you decide to reshape your own flesh and bone to suit your needs**, make a Hunger Check and roll +Resolve. You can never have more total ***Vicissitude*** changes active than your Blood Potency. All changes are permanent until reshaped.
 
-**On a 10+,** Hold 3. **On a 7–9,** Hold 2 and the Storyteller chooses a complication. **On a 6-,** Hold 1 and the Storyteller makes a Move that interrupts, inhibits, ruins, or causes big problems with your transformation.
+**On a 10+,** Hold 3. **On a 7–9,** Hold 2 and the Storyteller chooses 1 complication. **On a 6-,** Hold 1 and the Storyteller makes a Move that interrupts, inhibits, ruins, or causes big problems with your transformation.
 
 Spend Hold 1-for-1 on the following adaptations:
 
@@ -106,7 +106,7 @@ Spend Hold 1-for-1 on the following adaptations:
 
 **When you surrender your body to the earth**, make a Hunger Check and roll +Resolve. You must be touching natural terrain: soil, rock, sand, grass, mud, anything not made by human hands. Concrete, asphalt, and other artificial surfaces won't work.
 
-**On a 10+,** you sink fully into the ground in one turn, leaving no trace. While melded, you're aware of your surroundings within Close Range, you're immune to physical harm, fire, and sunlight, and you may rise from the earth at will. You can remain melded indefinitely; it's a perfectly fine way to sleep through the day.
+**On a 10+,** you sink fully into the ground in one turn, leaving no trace. While melded, you're aware of your surroundings within Close Range, you're immune to physical Harm, fire, and sunlight, and you may rise from the earth at will. You can remain melded indefinitely; it's a perfectly fine way to sleep through the day.
 
 **On a 7–9,** you meld, but the Storyteller chooses 1 complication:
 
@@ -238,7 +238,7 @@ To reinsert your heart, you must make a number of Hunger Checks equal to your Bl
 
 **When you dissolve your body into a billowing cloud of mist**, make a Hunger Check and roll +Resolve.
 
-**On a 10+,** you disperse fully; you're untouchable by physical attacks, can pass through any gap air can fit through, and perceive your surroundings normally. Only fire, sunlight, and supernatural attacks can harm you. You move at walking pace and reform at will. Lasts one scene or until ended voluntarily.
+**On a 10+,** you disperse fully; you're untouchable by physical attacks, can pass through any gap air can fit through, and perceive your surroundings normally. Only fire, sunlight, and supernatural attacks can hurt you. You move at walking pace and reform at will. Lasts one scene or until ended voluntarily.
 
 **On a 7–9,** you become mist, but the Storyteller chooses 1 complication:
 
@@ -258,7 +258,7 @@ To reinsert your heart, you must make a number of Hunger Checks equal to your Bl
 - **2 Hunger Checks:** As above, plus you can focus on specific events or conversations within Distant Range, perceiving it as clearly as if you were right there.
 - **3 Hunger Checks:** As above, and you remain melded indefinitely, rising only when you choose.
 
-While melded you're immune to physical harm, fire, and sunlight. Rising takes one full turn, and when you emerge, you're absolutely filthy. Sorry, there's nothing to be done about that. It's the price you pay.
+While melded, you're immune to physical Harm, fire, and sunlight. Rising takes one full turn, and when you emerge, you're absolutely filthy. Sorry, there's nothing to be done about that. It's the price you pay.
 
 ### *Swarm*
 

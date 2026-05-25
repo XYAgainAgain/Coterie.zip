@@ -12,11 +12,11 @@ Humanity is not a spendable resource. You always want as much of it as possible,
 
 **Age Scaling:**
 
-- **Semimortals** (Thin-Bloods & Ghouls) start at Humanity 9
-- **Fledglings** start at Humanity 7–8
-- **Neonates** start at Humanity 6
-- **Ancillae** start at Humanity 4–5
-- **Elders** start at Humanity 3
+- **Semimortals** (Thin-Bloods & Ghouls) start at 9 Humanity
+- **Fledglings** start at 7–8 Humanity
+- **Neonates** start at 6 Humanity
+- **Ancillae** start at 4–5 Humanity
+- **Elders** start at 3 Humanity
 
 **What Humanity Affects:**
 
@@ -31,17 +31,17 @@ Certain Playbooks interact with Humanity in unique ways. The Osirian's signature
 
 As your Humanity drops, the fiction changes around you. You become more dangerous as well as less *present*. Mortal relationships fray, your body betrays its nature more readily, and your capacity for genuine feeling narrows until the only emotions that remain are hunger and fury. The **Blush of Life** Move already tracks what your body can and can't fake at each Humanity level; the consequences below cover everything else.
 
-**7–10 Humanity :** No mechanical penalties. You're close enough to human that mortals don't notice anything off unless they're looking for it. You might be pale, a little too still, or unsettlingly intense, but nothing that screams "undead." Your Touchstones feel like real relationships. You can lie to yourself about what you are and mostly believe it.
+**7–10 Humanity:** No mechanical penalties. You're close enough to human that mortals don't notice anything off unless they're looking for it. You might be pale, a little too still, or unsettlingly intense, but nothing that screams "undead." Your Touchstones feel like real relationships. You can lie to yourself about what you are and mostly believe it.
 
-**5–6 Humanity :** The mask is slipping. You're visibly detached from mortal concerns in ways that make people uncomfortable — not cruel, necessarily, just absent in a way that's hard for most folks to articulate. You might forget to blink, stand too still in conversations, or react to genuine tragedy with a flicker of annoyance rather than sympathy. Mortals sense something is off even if they can't name it. No mechanical penalty, but this is the Storyteller's cue to start making mortal interactions feel slightly *off* in the fiction.
+**5–6 Humanity:** The mask is slipping. You're visibly detached from mortal concerns in ways that make people uncomfortable — not cruel, necessarily, just absent in a way that's hard for most folks to articulate. You might forget to blink, stand too still in conversations, or react to genuine tragedy with a flicker of annoyance rather than sympathy. Mortals sense something is off even if they can't name it. No mechanical penalty, but this is the Storyteller's cue to start making mortal interactions feel slightly *off* in the fiction.
 
-**4 Humanity :** The predator is visible. You look and act like something that hurts people; your eyes are too flat, your movements too precise, your interest in others too obviously transactional. Your Touchstones require active effort to maintain — the Storyteller should periodically ask how you're keeping the relationship alive, and failure to engage will strain or damage the Touchstone over time. Mortals who spend extended time around you start making excuses to leave. Still no mechanical penalty, but the narrative pressure is real and the Storyteller should be leaning into it *hard*.
+**4 Humanity:** The predator is visible. You look and act like something that hurts people; your eyes are too flat, your movements too precise, your interest in others too obviously transactional. Your Touchstones require active effort to maintain — the Storyteller should periodically ask how you're keeping the relationship alive, and failure to engage will strain or damage the Touchstone over time. Mortals who spend extended time around you start making excuses to leave. Still no mechanical penalty, but the narrative pressure is real and the Storyteller should be leaning into it *hard*.
 
-**3 Humanity :** You are a monster wearing a memory of a person. Empathy is an intellectual exercise at best. Take −1 Ongoing to social rolls with mortals who aren't already afraid of you or supernaturally compelled. Additionally, take −1 Ongoing to **Stay Chill** because the Beast is much closer to the surface now, and it takes less to set you off. Your Touchstones are in genuine danger; maintaining them requires significant, visible sacrifice, and the Storyteller is within their rights to introduce complications that threaten them directly.
+**3 Humanity:** You are a monster wearing a memory of a person. Empathy is an intellectual exercise at best. Take −1 Ongoing to social rolls with mortals who aren't already afraid of you or supernaturally compelled. Additionally, take −1 Ongoing to **Stay Chill** because the Beast is much closer to the surface now, and it takes less to set you off. Your Touchstones are in genuine danger; maintaining them requires significant, visible sacrifice, and the Storyteller is within their rights to introduce complications that threaten them directly.
 
-**2 Humanity :** Almost gone. You struggle to distinguish between people and objects; both are just things that exist for your use. Take −2 Ongoing to social rolls with mortals and −2 Ongoing to **Stay Chill**. Your Touchstones are hanging by a thread. If you haven't done something meaningful to protect or connect with them recently, the Storyteller may rule that the Touchstone is damaged or destroyed through neglect. Losing a Touchstone at this level does not grant a new Stain... you're past feeling it.
+**2 Humanity:** Almost gone. You struggle to distinguish between people and objects; both are just things that exist for your use. Take −2 Ongoing to social rolls with mortals and −2 Ongoing to **Stay Chill**. Your Touchstones are hanging by a thread. If you haven't done something meaningful to protect or connect with them recently, the Storyteller may rule that the Touchstone is damaged or destroyed through neglect. Losing a Touchstone at this level does not grant a new Stain... you're past feeling it.
 
-**1 Humanity :** You are barely a person. You exist to eat, sleep, and occasionally lash out at things that irritate you. Take −3 Ongoing to social rolls with mortals and −3 Ongoing to **Stay Chill**. You cannot maintain Touchstones at all, and any remaining Touchstones are lost, along with their associated Convictions. You do not gain Stains from their loss. There is only one more step down from here, and it's into a deep, dark hole.
+**1 Humanity:** You are barely a person. You exist to eat, sleep, and occasionally lash out at things that irritate you. Take −3 Ongoing to social rolls with mortals and −3 Ongoing to **Stay Chill**. You cannot maintain Touchstones at all, and any remaining Touchstones are lost, along with their associated Convictions. You do not gain Stains from their loss. There is only one more step down from here, and it's into a deep, dark hole.
 
 **0 Humanity — The Wight:** You are gone. The Beast has won completely, and whatever was left of the person you used to be has been consumed. Your body still moves, still hunts, still kills, but there's nobody home. The character is permanently under Storyteller control and cannot be recovered. Retire the character. Build a new one. Mourn if you want to. The Wight won't.
 

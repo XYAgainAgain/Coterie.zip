@@ -66,7 +66,7 @@ Go around the table. Each player should answer a minimum of two of the following
 
 *About the group:*
 
-- How did this Coterie form? Were you thrown together by circumstance, brought together by a shared sire, assigned by local leadership, or did you seek each other out?
+- How did this Coterie form? Were you thrown together by circumstance, brought together by a shared Sire, assigned by local leadership, or did you seek each other out?
 - What's the oldest relationship in the Coterie? Who's known each other the longest, and what does that history look like (AKA how messy is it)?
 - What's one thing the whole Coterie agrees on? (A rule, a value, a shared enemy, a policy about feeding in the Haven, the chore chart distribution patterns, etc.)
 - What's one thing the Coterie will *never* agree on?
@@ -120,4 +120,4 @@ Now that your Coterie exists on paper (or, y'know, digitally), here's what it ca
 
 Cohesion is the stat that comes up the most frequently because it modifies every Coterie Move roll. If your Cohesion is high, the group functions well; if it's negative, everything your Coterie tries to do together becomes much harder. Protecting Cohesion (or rebuilding it when it drops via the **Talk It Out** Move) is one of the central challenges of long-term play, and it is strongly recommended that you try to play your relationships with other player characters as such.
 
-For the full definitions and reference tables for Coterie Stats, see [Coterie Stats](http://coterie-stats.md) and the [Reference Tables](http://coterie-stat-reference-tables.md). For the six Coterie Moves and their complete outcome tiers, see [Coterie Moves](http://coterie-moves.md) (you probably could have guessed that).
+For the full definitions and reference tables for Coterie Stats, see [Coterie Stats](coterie-stats.md) and the [Reference Tables](coterie-stat-reference-tables.md). For the six Coterie Moves and their complete outcome tiers, see [Coterie Moves](coterie-moves.md) (you probably could have guessed that).

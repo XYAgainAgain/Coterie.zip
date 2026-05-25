@@ -10,7 +10,7 @@ The Followers of Set have been trying to stamp it out for just as long, and they
 
 **Ministry Sensitivity:** The ancient war between Osiris and Set echoes in the Blood. Bardo Powers that target or affect followers of The Ministry (or any Kindred carrying Set's lineage) are heightened: treat any successful roll (7+) as one tier higher for the purpose of effect strength, duration, or scope. This does not change the roll result itself or affect Hunger Checks. The Ministry, naturally, considers this extremely unfair.
 
-There is no inherent counter to Bardo. Vampires who want to resist its effects can **Stay Chill**, but Bardo rarely does anything worth resisting unless you're the sort of person who finds inner peace threatening.
+There is no inherent counter to Bardo. Vampires who want to resist its effects can **Stay Chill**, but Bardo rarely does anything worth resisting unless you're the sort of person who finds inner peace threatening. Few Bardo Powers carry any Masquerade risk at all; those that do will say so.
 
 ### *Focus Shift (Discipline Perk)*
 
@@ -165,7 +165,7 @@ You can extend the protection of Osiris to those who cannot protect themselves. 
 
 You can protect a number of mortals up to half your current Humanity, rounded up. If your Humanity drops and you now exceed your limit, the mortal who received the Boon earliest loses their protection first.
 
-**When any vampire attempts to *Feed* from a mortal under your Boon**, two things happen. First, the blood tastes like liquid sunlight; the would-be sire takes Aggravated Harm equal to your Blood Potency. If they drink anyway and attempt the Embrace, the mortal simply falls asleep and wakes up roughly eight hours later feeling better than they have in years (every ache gone, every fog lifted, like the best day of their life). The Embrace does not occur. The would-be sire loses 1 Humanity and receives a brief, unmistakable psychic impression of your disapproving face and the absolute certainty that this mortal is spoken for. They know whose protection they just ran into.
+**When any vampire attempts to *Feed* from a mortal under your Boon**, two things happen. First, the blood tastes like liquid sunlight; the would-be Sire takes Aggravated Harm equal to twice your Blood Potency (minimum 2). If they survive, drink anyway, and attempt the Embrace, the mortal simply falls asleep and wakes up roughly eight hours later feeling better than they have in years (every ache gone, every fog lifted, like the best day of their life). The Embrace does not occur. The would-be Sire loses 1 Humanity and receives a brief, unmistakable psychic impression of your disapproving face and the absolute certainty that this mortal is spoken for. They know whose protection they just ran into.
 
 ### *A Moment of Reflection*
 

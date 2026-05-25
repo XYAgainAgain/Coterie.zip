@@ -28,7 +28,7 @@ If you also have ***Skin of the Chameleon*** and remain perfectly still, your aw
 
 Your stone skin automatically shifts to match your surroundings: granite grey with moss on a rooftop, ruddy brick against a tenement, dark and cloudy against the night sky.
 
-**When you Slip Away while perched on architecture, posing as a statue, or flying at night**, treat a roll of 6- as a 7–9. Observers who aren't actively searching for you assume you're part of the scenery.
+**When you *Slip Away* while perched on architecture, posing as a statue, or flying at night**, treat a roll of 6- as a 7–9. Observers who aren't actively searching for you assume you're part of the scenery.
 
 ---
 

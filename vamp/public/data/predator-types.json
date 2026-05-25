@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T09:51:41.886Z",
+  "generatedAt": "2026-05-25T22:15:48.383Z",
   "entries": [
     {
       "name": "Abductor",
@@ -45,7 +45,7 @@
       "merit": "*Kindred Sense.* You can identify most other vampires on sight, even if they're using **Blush of Life**. **When you *Catch the Scent* to detect vampires or their activities**, take +1 Forward.",
       "flaw": "*Marked & Made.* Your feeding habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time.",
       "humanity": null,
-      "feedingRules": "You can only slake Hunger by feeding from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain."
+      "feedingRules": "You can only slake Hunger by **Feeding** from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain."
     },
     {
       "name": "Cardillac",
@@ -70,7 +70,7 @@
       "huntingStat": "+Resolve",
       "discipline": "Potence",
       "merit": "*Know Thine Enemy.* You've studied Hunter tactics extensively. **When you *Catch the Scent* or *Discern Vibes* to locate or assess Hunters**, take +1 Forward.",
-      "flaw": "*On the List.* A Hunter has your description and is actively looking for you. **You have a persistent mortal enemy with the training and resources to be a genuine threat.**",
+      "flaw": "*On the List.* **A Hunter has your description and is actively looking for you.** You have a persistent mortal enemy with the training and resources to be a genuine threat.",
       "humanity": null,
       "feedingRules": "You can only slake Hunger by **Feeding** from mortal Hunters. If you **Feed** from someone who isn't devoted to trying to slay your kind, you gain no benefit. It's just not worth it."
     },
@@ -268,9 +268,9 @@
       "huntingStat": "+Blood",
       "discipline": "Potence",
       "merit": "*2-for-1 Special.* **When you successfully subdue fresh prey and bring them to your location of choice to *Feed***, one other vampire (usually a Coterie member) can drink the runoff blood and reduce their Hunger by 2 without rolling or receiving extra benefits.",
-      "flaw": "*Monstrous Appetite.* Your mealtime rituals require privacy, time, and tools. When you **Feed**, you always leave unmistakable evidence unless you have at least an hour and a secure location to clean up. Additionally, when you interact with other vampires who know of your diet but don't know you personally, they find you off-putting; you take −1 Ongoing to **Influence** them until relations improve.",
+      "flaw": "*Monstrous Appetite.* Your mealtime rituals require privacy, time, and tools. **When you *Feed***, you always leave unmistakable evidence unless you have at least an hour and a secure location to clean up. Additionally, when you interact with other vampires who know of your diet but don't know you personally, they find you off-putting; you take −1 Ongoing to **Influence** them until relations improve.",
       "humanity": null,
-      "feedingRules": "You can only reduce Hunger by consuming human flesh and organs; blood alone is insufficient. Unfortunately, this requires your prey to be dead or totally incapacitated in all cases, and you must eat multiple pounds (often several organs) each time you **Feed**. If another vampire has fed from your prey in the last 24 hours, you only reduce your Hunger by 1 no matter how much you eat."
+      "feedingRules": "You can only reduce Hunger by consuming human flesh and organs; blood alone is insufficient. Unfortunately, this requires your prey to be dead or totally incapacitated in all cases, and you must eat multiple pounds (often several organs) each time you **Feed**. **If another vampire has *Fed* from your prey in the last 24 hours**, you only reduce your Hunger by 1 no matter how much you eat."
     },
     {
       "name": "Osiris",
@@ -339,7 +339,7 @@
       "name": "Rival",
       "huntingStat": "+Blood",
       "discipline": "Presence",
-      "merit": "*Competitive Edge.* The thrill of competition sharpens your instincts. **When you *Hunt* in direct competition with your rival**, take +2 Forward. If you feed before they do, slake an extra 1 Hunger. GG!",
+      "merit": "*Competitive Edge.* The thrill of competition sharpens your instincts. **When you *Hunt* in direct competition with your rival**, take +2 Forward. If you **Feed** before they do, slake an extra 1 Hunger. GG!",
       "flaw": "*Sore Loser.* Losing stings more than it should, though you might never admit it. **If your rival *Feeds* from your co-target before you do**, take −1 Ongoing to **Feed** until your next successful **Hunt**.",
       "humanity": null,
       "feedingRules": null
@@ -456,7 +456,7 @@
       "name": "Trapdoor",
       "huntingStat": "+Shadow",
       "discipline": "Obfuscate",
-      "merit": "*I Don't Bite.* **When you *Hunt* by luring prey to your established location**, you can ask the Storyteller \"What would make them feel safest here?\" or \"How can I get them to trust me?\" before you roll. If you incorporate the answer, take +1 Ongoing until you've fed.",
+      "merit": "*I Don't Bite.* **When you *Hunt* by luring prey to your established location**, you can ask the Storyteller \"What would make them feel safest here?\" or \"How can I get them to trust me?\" before you roll. If you incorporate the answer, take +1 Ongoing until you've **Fed**.",
       "flaw": "*Homebody.* You struggle to tackle prey effectively away from your established location. **When you *Hunt* outside your chosen spot**, take −1 Forward.",
       "humanity": null,
       "feedingRules": null

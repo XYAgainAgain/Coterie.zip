@@ -91,7 +91,7 @@ Your mind is sealed behind walls of supernatural granite. Any Power that attempt
 - If the Power's level is lower than your Blood Potency, it simply fails. Your mind registers as blank and unreadable, your aura as flat and unremarkable. The user learns nothing and doesn't know you're using this Power.
 - If the Power's level equals or exceeds your Blood Potency, the user rolls with Disadvantage and has some notion that you have some mental defenses but can't confirm unless their attempt succeeds.
 
-***Fortify the Inner Façade*** protects against Powers that *read* you. It offers no defense against Powers that *control* you (Dominate, Presence, Melpominee, etc.) For those, ***Unswayable Mind*** is your shield.
+***Fortify the Inner Façade*** protects against Powers that *read* you. It offers no defense against Powers that *control* you (Dominate, Presence, Melpominee, etc.). For those, ***Unswayable Mind*** is your shield.
 
 ### *Seal the Beast's Maw*
 

@@ -30,7 +30,7 @@ Objects must be on your person (in a pocket or sleeve, tucked in a waistband, pa
 
 Instead of vanishing, you become someone who belongs here. A night guard at the warehouse, a stagehand at the venue, a commuter on the train. Your features blur into something nondescript — same approximate height and build, forgettable face, clothes that match the environment. You can talk, interact, and move freely as long as your presence is at all plausible.
 
-**On a 10+,** you're a perfect nobody who is clearly going about their business. Anyone attempting to identify you or see through the disguise rolls with a Forward penalty equal to your BP. Lasts one scene.
+**On a 10+,** you're a perfect nobody who is clearly going about their business. Anyone attempting to identify you or see through the disguise rolls with a Forward penalty equal to your Blood Potency (minimum 1). Lasts until the scene ends.
 
 **On a 7–9,** the mask holds, but the Storyteller chooses 1 complication:
 
@@ -118,7 +118,7 @@ Illusions can't mask or disguise real objects, can't block line of sight, can't 
 
 **When you project an elaborate illusion into the minds of everyone nearby**, roll +Shadow.
 
-**On a 10+,** the illusion is flawless and persists for one scene. Mortals can only disbelieve it through direct physical interaction that proves it false (walking through the "wall" or touching the "flames"). Supernatural creatures roll to disbelieve with a Forward penalty equal to your BP.
+**On a 10+,** the illusion is flawless and persists for one scene. Mortals can only disbelieve it through direct physical interaction that proves it false (walking through the "wall" or touching the "flames"). Supernatural creatures roll to disbelieve with a Forward penalty equal to your Blood Potency (minimum 1).
 
 **On a 7–9,** the illusion holds, but the Storyteller chooses 1 complication:
 
@@ -130,7 +130,7 @@ Illusions can't mask or disguise real objects, can't block line of sight, can't 
 
 ### *Ghost in the Machine (Passive)*
 
-Your Obfuscate now extends through electronic media. **When you use any Obfuscate Power that visually conceals you**, live surveillance feeds are affected just like human observers. Recordings and photographs taken during active Obfuscation are degraded: blurred, distorted, and maddeningly hard to identify. Anyone attempting to ID you from such footage takes an Ongoing penalty equal to your BP.
+Your Obfuscate now extends through electronic media. **When you use any Obfuscate Power that visually conceals you**, live surveillance feeds are affected just like human observers. Recordings and photographs taken during active Obfuscation are degraded: blurred, distorted, and maddeningly hard to identify. Anyone attempting to ID you from such footage takes an Ongoing penalty equal to your Blood Potency (minimum 1).
 
 You also gain Advantage on any roll to circumvent automated surveillance: CCTV cameras, motion sensors, facial recognition, security networks, and the like.
 

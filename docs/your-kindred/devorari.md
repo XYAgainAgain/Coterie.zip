@@ -24,7 +24,7 @@ You start with exclusive access to [**Psychotrophia**](../disciplines/psychotrop
 
 ## Bane: *The Wasting*
 
-When you **Feed** from the same mortal more than once, start a 6-segment Wasting Clock for them. Each time you drain them, advance the Clock by a number of segments equal to 1 + your Blood Potency. At BP 0, that's a gentle tick of 1 per feeding; at BP 5, a single slurp of ephemera fills the entire Clock at once. Wasting Clocks fade at a rate of 1 segment per week of no contact.
+**When you *Feed* from the same mortal more than once**, start a 6-segment Wasting Clock for them. Each time you drain them, advance the Clock by a number of segments equal to 1 + your Blood Potency. At BP 0, that's a gentle tick of 1 per feeding; at BP 5, a single slurp of ephemera fills the entire Clock at once. Wasting Clocks fade at a rate of 1 segment per week of no contact.
 
 As the Clock fills, the Storyteller may narrate escalating deterioration: mild fatigue at first, then chronic exhaustion, personality changes, memory loss, and worse. **When a Wasting Clock fills completely, the mortal's decline becomes impossible to hide** — they're hospitalized, investigated, or their condition is noticed by someone you don't want asking questions.
 

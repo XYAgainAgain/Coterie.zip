@@ -2,13 +2,13 @@
 title: "Dominate"
 ---
 
-Dominate requires eye contact and a spoken command in a language the target understands. Without both, most powers simply don't work; ***Ancestral Dominion*** is the sole exception within this Discipline, though other Powers may alter it too. In combat or other chaotic situations, you can only Dominate someone directly engaging with you. Catching the gaze of someone actively avoiding your eyes is its own challenge.
+Dominate requires eye contact and a spoken command in a language the target understands. Without both, most Powers simply don't work; ***Ancestral Dominion*** is the sole exception within this Discipline, though other Powers may alter it too. In combat or other chaotic situations, you can only Dominate someone directly engaging with you. Catching the gaze of someone actively avoiding your eyes is its own challenge.
 
 Dominate cannot extract information. Dominated targets are puppets, not conversationalists. "Tell me everything" produces word salad but "unlock the door" works just fine. If you want someone's secrets, try Auspex, a well-placed **Influence**, or honest conversation.
 
 **Blood Potency Resistance:** Using any Dominate Power against a target with higher Blood Potency than yours imposes Disadvantage on your roll. If the target's BP is 5 or higher and yours is not, the attempt fails outright.
 
-**Botched Domination:** On a 6- with any Dominate Power, all future Dominate rolls you make against that specific target suffer a permanent penalty equal to your current Blood Potency, in addition to whatever the specific Power's 6- consequence is. Dominate does not forgive sloppy work.
+**Botched Domination:** On a 6- with any Dominate Power, all future Dominate rolls you make against that specific target suffer a permanent penalty equal to your current Blood Potency (minimum 1), in addition to whatever the specific Power's 6- consequence is. Dominate does not forgive sloppy work.
 
 ### *Compel (Discipline Perk)*
 
@@ -40,7 +40,7 @@ Against supernatural creatures, this still requires the usual ***Compel*** roll.
 
 ### *Devotion (Passive)*
 
-Anyone currently under the effect of one of your Dominate powers is shielded from other attempts to Dominate them. When another vampire uses a Dominate Power against one of your subjects, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.
+Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. When another vampire uses a Dominate Power against one of your subjects, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.
 
 Your mental hold comes first. Everybody else can wait in line.
 
@@ -226,7 +226,7 @@ Where ***The Forgetful Mind*** is a surgeon's scalpel, this Power is a pressure 
 
 ### *Mass Manipulation (Passive)*
 
-Any of your Dominate powers can now target a group instead of a single individual. Everyone who can see your eyes and hear your voice is a valid target. Make one roll; the result applies to the entire group. If the group contains anyone with higher Blood Potency than yours, the standard Dominate Disadvantage applies to your roll.
+Any of your Dominate Powers can now target a group instead of a single individual. Everyone who can see your eyes and hear your voice is a valid target. Make one roll; the result applies to the entire group. If the group contains anyone with higher Blood Potency than yours, the standard Dominate Disadvantage applies to your roll.
 
 ### *Terminal Decree (Passive)*
 

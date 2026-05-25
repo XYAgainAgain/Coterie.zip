@@ -26,27 +26,27 @@ You remember the mortal world perfectly because you're still in it. Your friends
 
 !!! warning "Important Note"
 
-    *This is for the [**Thin-Blood**](../your-kindred/thin-blood.md) and [**Ghoul**](../your-kindred/ghoul.md) Playbooks (and possibly others to come later). If you wish to play a full vampire that was Embraced within the Thin-Blood timeline, choose Fledgling and don't worry about it — you lucked out with your sire! Since Ghouls haven't been Embraced yet and Thin-Bloods have what their name implies, their BP cannot increase. If you're playing a Ghoul, just pick a regular numeric age!*
+    *This is for the [**Thin-Blood**](../your-kindred/thin-blood.md) and [**Ghoul**](../your-kindred/ghoul.md) Playbooks (and possibly others to come later). If you wish to play a full vampire that was Embraced within the Thin-Blood timeline, choose Fledgling and don't worry about it — you lucked out with your Sire! Since Ghouls haven't been Embraced yet and Thin-Bloods have what their name implies, their BP cannot increase. If you're playing a Ghoul, just pick a regular numeric age!*
 
 ## Fledgling
 
 **Embraced:** Within the last 25 years (~2000–present)
 
-You're new to this, but you've gotten past the initial shock. You know how to **Feed** without killing (most of the time), you've figured out the basics of your Clan's abilities, and you're starting to understand the rules of Kindred society. You're still under your sire's protection, whether that's a blessing or a curse. Officially, you're not considered a full member of Kindred society until you undergo "The Becoming", a ritual where your sire and the local Prince (or equivalent authority) formally recognize your independence. Think of it like getting your driver's license.
+You're new to this, but you've gotten past the initial shock. You know how to **Feed** without killing (most of the time), you've figured out the basics of your Clan's abilities, and you're starting to understand the rules of Kindred society. You're still under your Sire's protection, whether that's a blessing or a curse. Officially, you're not considered a full member of Kindred society until you undergo "The Becoming", a ritual where your Sire and the local Prince (or equivalent authority) formally recognize your independence. Think of it like getting your driver's license.
 
 You were Embraced in the 21st century. You probably remember 9/11, know how smartphones work, witnessed the rise of social media platforms, and maybe even the most recent global pandemic. The mortal world still feels close because it *was* your world just a few years ago, but it's already starting to feel distant as your loved ones age and life moves on without you.
 
 - **Starting Humanity:** 7–8
 - **Starting Blood Potency:** 1
 - **Advancement:** Fast; you're still growing rapidly but the easy gains are slowing down
-- **Predator Type:** Not chosen at character creation, but earned through play; you haven't settled into a pattern yet; likely copying your sire
+- **Predator Type:** Can be skipped at character creation, and instead earned through play; you may not have settled into a pattern yet and are likely copying your Sire
 - **Narrative Feel:** You're finding your place in the night. You've got plans and ambitions, but you're also realizing they come with costs. The Beast within is getting louder. Humanity is slipping through your claws. You're at a crossroads, kind of like right after you graduated college (if you made it that far...)
 
 ## Neonate
 
 **Embraced:** 25–100 years ago (~1925–2000)
 
-You're an established Kindred. You've weathered decades of unlife, adapted to massive changes in the mortal world, and earned a reputation (for better or worse). You've undergone The Becoming and are recognized as a full member of Kindred society, no longer requiring your sire's protection or permission. You've seen friends and family age and die, watched cities transform, and survived conflicts that would've destroyed a younger vampire.
+You're an established Kindred. You've weathered decades of unlife, adapted to massive changes in the mortal world, and earned a reputation (for better or worse). You've undergone The Becoming and are recognized as a full member of Kindred society, no longer requiring your Sire's protection or permission. You've seen friends and family age and die, watched cities transform, and survived conflicts that would've destroyed a younger vampire.
 
 Depending on when you were Embraced, you might remember...
 

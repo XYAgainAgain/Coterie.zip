@@ -16,7 +16,7 @@ Presence affects emotions, not minds. Targets retain their free will but their f
 
 **Once per scene when you wish to impose your will upon the social situation**, choose one effect (no Hunger Check required):
 
-- ***Awe:*** Your supernatural charisma draws every eye and softens every heart. You have a number of +1 Forward bonuses equal to your Blood Potency to social rolls involving charm, persuasion, or performance until the scene ends or until you use another Presence Power. Use these whenever you like; they are lost when the scene or *Awe/Daunt* ends.
+- ***Awe:*** Your supernatural charisma draws every eye and softens every heart. You have a number of +1 Forward bonuses equal to your Blood Potency to social rolls involving charm, persuasion, or performance until the scene ends or until you use another Presence Power. Use these whenever you like; they are lost when the scene or ***Awe/Daunt*** ends.
 - ***Daunt:*** You radiate menace and authority. As above, you gain at-will +1 Forward bonuses to social rolls involving intimidation or coercion until the scene ends or until you use another Presence Power. While ***Daunt*** is active, a creature that is considering attacking you in this scene must successfully **Stay Chill** first or find themselves unable to act against you. If they manage it and combat begins, ***Daunt*** ends.
 
 ---
@@ -73,7 +73,7 @@ Mortals who witness this display flee, freeze, or crumple. No mortal can stand a
 
 **Against Supernatural Creatures:**
 
-**On a 10+,** the target must immediately **Stay Chill** with a Forward penalty equal to your Blood Potency or succumb to fearful Frenzy. If they Frenzy, they flee from you by any means necessary and their Frenzy ends only when you are out of sight and earshot.
+**On a 10+,** the target must immediately **Stay Chill** with a Forward penalty equal to your Blood Potency (minimum 1) or succumb to fearful Frenzy. If they Frenzy, they flee from you by any means necessary and their Frenzy ends only when you are out of sight and earshot.
 
 **On a 7–9,** the target is visibly shaken and has Disadvantage on their next roll. The Storyteller chooses 1 complication:
 

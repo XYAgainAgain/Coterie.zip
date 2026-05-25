@@ -40,7 +40,7 @@ You can freely alter your own voice in any way: deeper, higher, accented, aged, 
 
 - Something is slightly off: an inflection, a vocal tic, a cadence that doesn't match, vocabulary, etc.
 - The mimicry is perfect but you can only maintain it for a few sentences before your natural voice bleeds through
-- Someone who knows the voice exceptionally well (lover, sire, longtime ally) catches the discrepancy
+- Someone who knows the voice exceptionally well (lover, Sire, longtime ally) catches the discrepancy
 
 **On a 6-,** the impression is obviously wrong. Anyone hearing it knows immediately that it's fake, and they'll remember your real voice underneath the attempt. The person you were impersonating will eventually hear about this. Plus it's kind of cringe-inducing for everyone around you. Yikes, girl.
 

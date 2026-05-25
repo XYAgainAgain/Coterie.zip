@@ -44,7 +44,7 @@ This does not stack with Celerity Powers that already modify your movement dista
 
 **When you burn Vitae to move at impossible speed for the purposes of multitasking**, make a Hunger Check and roll +Blood.
 
-**On a 10+,** for the rest of the scene, you can handle two physically demanding tasks simultaneously; a Discipline Power and a Basic Move, or any other combination the fiction supports. You choose which task suffers from the split attention (-2 Forward).
+**On a 10+,** for the rest of the scene, you can handle two physically demanding tasks simultaneously; a Discipline Power and a Basic Move, or any other combination the fiction supports. You choose which task suffers from the split attention (−2 Forward).
 
 **On a 7–9,** you manage it as above, but the Storyteller chooses which task suffers each time.
 
@@ -127,7 +127,7 @@ On a 7–9 ***Blink*** result, the Storyteller may choose from two additional co
 
 ### *Unerring Aim (Passive)*
 
-Your preternatural speed governs your aim as thoroughly as it governs your mobility. **When you Dirty Your Claws with a ranged weapon** (firearms, thrown weapons, bows, or anything shot, hurled, or fired), treat a roll of 6- as 7–9. Your target may find cover or dodge, but *you* don't miss. That would be silly.
+Your preternatural speed governs your aim as thoroughly as it governs your mobility. **When you *Dirty Your Claws* with a ranged weapon** (firearms, thrown weapons, bows, or anything shot, hurled, or fired), treat a roll of 6- as 7–9. Your target may find cover or dodge, but *you* don't miss. That would be silly.
 
 ### *Unseen Strike (Passive)*
 

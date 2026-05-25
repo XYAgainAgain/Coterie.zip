@@ -4,7 +4,7 @@ title: "General Rules"
 
 ## Discipline Moves
 
-Disciplines are vampiric abilities, preternatural or magical, organized into categories. Each character has access to specific Disciplines based on their Clan and Predator Type, but can learn other Disciplines with an extra XP cost. Discipline Powers beyond the first ones selected at character creation will cost XP equal to 1 + their level (e.g., only 2 XP for a level 1 power, but 6 XP for a level 5 Power).
+Disciplines are vampiric abilities, preternatural or magical, organized into categories. Each character has access to specific Disciplines based on their Clan and Predator Type, but can learn other Disciplines with an extra XP cost. Discipline Powers beyond the first ones selected at character creation will cost XP equal to 1 + their level (e.g., only 2 XP for a level 1 Power, but 6 XP for a level 5 Power).
 
 ### The Four Flavors
 

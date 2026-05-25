@@ -8,7 +8,7 @@ title: "Lasombra"
 
 ![Lasombra symbol](../assets/images/vtm/bloodlines/lasombra.webp){ .bloodline-symbol }
 
-You were Embraced because you understand power; how to get it, how to wield it, and how to make sure nobody realizes you're the one pulling the strings. Lasombra sires prize ambition above everything else. They recruit from political operatives, criminal strategists, military officers, clergy, and anyone who's spent their mortal life learning how to make other people do what they want. Excellence is the baseline expectation. Your sire didn't Embrace you to be adequate.
+You were Embraced because you understand power; how to get it, how to wield it, and how to make sure nobody realizes you're the one pulling the strings. Lasombra Sires prize ambition above everything else. They recruit from political operatives, criminal strategists, military officers, clergy, and anyone who's spent their mortal life learning how to make other people do what they want. Excellence is the baseline expectation. Your Sire didn't Embrace you to be adequate.
 
 The Lasombra are schemers, puppeteers, and shadow players. While other Clans fight over titles and territories, you prefer to be the voice whispering in the ear of whoever wears the crown. Princes, Barons, Archons, CEOs; they come and go, but the Keeper advising them stays put. Your Clan has a long history of switching allegiances whenever it's strategically convenient, which has earned them a well-deserved reputation for ruthlessness and flightiness. Every Lasombra in a Coterie considers themselves the most important member. Most of them are at least polite enough not to say so out loud.
 

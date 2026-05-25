@@ -52,7 +52,7 @@ Once each per session, gain +1 XP when you...
 
 Should the fiction lead to your Embrace — whether through the Advanced **Feed** Move, a narrative milestone, or a dramatic turning point — retire this Playbook. Choose a Clan Playbook; your patron's Clan is the default, but others are possible if the fiction supports it.
 
-Rebuild your character using that Clan's Playbook, transferring all your Convictions, Touchstones, and any Debts. The Blood Bond transforms into a standard Debt between you and your sire, or is erased entirely; your choice. Your stat array changes to the standard spread, and may be reassigned however you like. All XP you earned as a Ghoul carries over and may also be reassigned. Welcome to the night.
+Rebuild your character using that Clan's Playbook, transferring all your Convictions, Touchstones, and any Debts. The Blood Bond transforms into a standard Debt between you and your Sire, or is erased entirely; your choice. Your stat array changes to the standard spread, and may be reassigned however you like. All XP you earned as a Ghoul carries over and may also be reassigned. Welcome to the night.
 
 ## Archetypes
 

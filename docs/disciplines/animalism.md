@@ -81,7 +81,7 @@ One or two short sentences is ideal; longer messages are possible but the Famili
 
 ### *Animal Succulence (Passive)*
 
-Feeding from animals nourishes you more than it does for most Kindred. **When you Feed from an animal**, slake 1 additional Hunger beyond what the roll provides. Your Blood Potency counts as 2 lower (minimum 0) for the purposes of any **Feeding** restrictions or penalties related to animal blood.
+Feeding from animals nourishes you more than it does for most Kindred. **When you *Feed* from an animal**, slake 1 additional Hunger beyond what the roll provides. Your Blood Potency counts as 2 lower (minimum 0) for the purposes of any **Feeding** restrictions or penalties related to animal blood.
 
 You may also choose to consume your Familiar entirely, draining every drop of its supernaturally enriched Vitae. This is permanent and irreversible; the animal dies, the Bond is severed, and something quiet and important inside you goes with it. Slake 4 Hunger. Additionally, the Storyteller determines which of your stats is most closely associated with the consumed animal, and you gain +2 to that stat until the next dawn. A consumed cat might raise Wits or Shadow, a dog might raise Resolve or Blood, a raven might raise Wits or Demeanor. The Storyteller has final say.
 
@@ -219,7 +219,7 @@ Your body collapses into a kind of Torpor. You have no awareness of it while pos
 
 **On a 6-,** the animal rejects you. You slam back into your own body with a splitting psychic headache that deals 1 Superficial Harm, and the animal bolts. If it was your Familiar, it returns eventually on its own and may not be called until then. If it wasn't, it avoids you and tells its loved ones weird stories about you.
 
-**Daylight Operations:** If you wish to remain inside the animal past dawn, roll +Resolve. **On a 7+,** you stay in control through the day. **On a 6-,** the sun drags your consciousness back to your sleeping body and the animal regains control. Seeing sunlight through the animal's eyes requires you to **Stay Chill** (your instincts scream even though the animal is perfectly safe), but the sunlight does not damage the animal or you. On a 6-, you just have to flee to the nearest shadow and cower for a while.
+**Daylight Operations:** If you wish to remain inside the animal past dawn, roll +Resolve. **On a 7+,** you stay in control through the day. **On a 6-,** the sun drags your consciousness back to your sleeping body and the animal regains control. Seeing sunlight through the animal's eyes requires you to **Stay Chill** (your instincts scream even though the animal is perfectly safe), but the sunlight does not damage the animal or you. **On a 6-,** you just have to flee to the nearest shadow and cower for a while.
 
 ### *Sway the Flock*
 

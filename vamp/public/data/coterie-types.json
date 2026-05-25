@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T09:51:41.886Z",
+  "generatedAt": "2026-05-25T22:15:48.383Z",
   "entries": [
     {
       "name": "The Champions",
@@ -34,7 +34,7 @@
     },
     {
       "name": "The Circumstantials",
-      "description": "Nobody here chose this. A shared sire who couldn't pick favorites, a mandated arrangement from local vampiric leadership, a mutual enemy who forced your hands, or just catastrophically bad timing. Half of you can barely stand the other half. The question isn't whether your Coterie will succeed, it's whether it'll survive long enough to figure out if it even should. On the upside, you've been set up with a decent unliving space. If you tear each other apart, everyone who survives gets more room for themselves. Have fun!",
+      "description": "Nobody here chose this. A shared Sire who couldn't pick favorites, a mandated arrangement from local vampiric leadership, a mutual enemy who forced your hands, or just catastrophically bad timing. Half of you can barely stand the other half. The question isn't whether your Coterie will succeed, it's whether it'll survive long enough to figure out if it even should. On the upside, you've been set up with a decent unliving space. If you tear each other apart, everyone who survives gets more room for themselves. Have fun!",
       "coterieStats": "Clout +0 | Cohesion −2 | Charm +1 | Claim +1 | Currency +2",
       "havenFeatures": {
         "positiveCount": 2,
@@ -187,7 +187,7 @@
     },
     {
       "name": "The Family",
-      "description": "You're related. By Clan, by Blood Marriage, by sire, by some tangled combination of mortal lineage and vampiric dynasty that makes your family tree look more like a mangrove patch and less like a noble oak or whatever. The bond is older than your Coterie and runs deeper than politics; you've been dealing with each other's nonsense since before some of you died. Family Coteries often fight viciously, forgive quickly but reluctantly, and close ranks against outsiders with terrifying speed. The dysfunction is a feature, not a bug.",
+      "description": "You're related. By Clan, by Blood Marriage, by Sire, by some tangled combination of mortal lineage and vampiric dynasty that makes your family tree look more like a mangrove patch and less like a noble oak or whatever. The bond is older than your Coterie and runs deeper than politics; you've been dealing with each other's nonsense since before some of you died. Family Coteries often fight viciously, forgive quickly but reluctantly, and close ranks against outsiders with terrifying speed. The dysfunction is a feature, not a bug.",
       "coterieStats": "Clout +1 | Cohesion +0 | Charm −1 | Claim +1 | Currency +1",
       "havenFeatures": {
         "positiveCount": 3,

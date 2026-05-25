@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T09:51:41.886Z",
+  "generatedAt": "2026-05-25T22:15:48.383Z",
   "entries": [
     {
       "name": "Semimortal",
@@ -15,17 +15,17 @@
     {
       "name": "Fledgling",
       "embraced": "Within the last 25 years (~2000–present)",
-      "flavor": "You're new to this, but you've gotten past the initial shock. You know how to **Feed** without killing (most of the time), you've figured out the basics of your Clan's abilities, and you're starting to understand the rules of Kindred society. You're still under your sire's protection, whether that's a blessing or a curse. Officially, you're not considered a full member of Kindred society until you undergo \"The Becoming\", a ritual where your sire and the local Prince (or equivalent authority) formally recognize your independence. Think of it like getting your driver's license.\n\nYou were Embraced in the 21st century. You probably remember 9/11, know how smartphones work, witnessed the rise of social media platforms, and maybe even the most recent global pandemic. The mortal world still feels close because it *was* your world just a few years ago, but it's already starting to feel distant as your loved ones age and life moves on without you.",
+      "flavor": "You're new to this, but you've gotten past the initial shock. You know how to **Feed** without killing (most of the time), you've figured out the basics of your Clan's abilities, and you're starting to understand the rules of Kindred society. You're still under your Sire's protection, whether that's a blessing or a curse. Officially, you're not considered a full member of Kindred society until you undergo \"The Becoming\", a ritual where your Sire and the local Prince (or equivalent authority) formally recognize your independence. Think of it like getting your driver's license.\n\nYou were Embraced in the 21st century. You probably remember 9/11, know how smartphones work, witnessed the rise of social media platforms, and maybe even the most recent global pandemic. The mortal world still feels close because it *was* your world just a few years ago, but it's already starting to feel distant as your loved ones age and life moves on without you.",
       "startingHumanity": "7–8",
       "startingBloodPotency": 1,
       "advancement": "Fast; you're still growing rapidly but the easy gains are slowing down",
-      "predatorType": "Not chosen at character creation, but earned through play; you haven't settled into a pattern yet; likely copying your sire",
+      "predatorType": "Can be skipped at character creation, and instead earned through play; you may not have settled into a pattern yet and are likely copying your Sire",
       "narrativeFeel": "You're finding your place in the night. You've got plans and ambitions, but you're also realizing they come with costs. The Beast within is getting louder. Humanity is slipping through your claws. You're at a crossroads, kind of like right after you graduated college (if you made it that far...)"
     },
     {
       "name": "Neonate",
       "embraced": "25–100 years ago (~1925–2000)",
-      "flavor": "You're an established Kindred. You've weathered decades of unlife, adapted to massive changes in the mortal world, and earned a reputation (for better or worse). You've undergone The Becoming and are recognized as a full member of Kindred society, no longer requiring your sire's protection or permission. You've seen friends and family age and die, watched cities transform, and survived conflicts that would've destroyed a younger vampire.\n\nDepending on when you were Embraced, you might remember...\n\n- **1990s–2000:** The early internet, grunge music, the end of the Cold War\n- **1970s–1980s:** Disco being cool, punk rock, the AIDS crisis, video game arcades\n- **1950s–1960s:** The American Civil Rights Movement, the Space Race, the Vietnam War, the birth of rock & roll\n- **1930s–1940s:** The Great Depression, World War II, film noir, swing music being new & hip\n\nThe mortal world is increasingly alien. You remember a time before smartphones, maybe before computers entirely. Younger Kindred treat you with respect (or wariness), but Elders still see you as inexperienced.",
+      "flavor": "You're an established Kindred. You've weathered decades of unlife, adapted to massive changes in the mortal world, and earned a reputation (for better or worse). You've undergone The Becoming and are recognized as a full member of Kindred society, no longer requiring your Sire's protection or permission. You've seen friends and family age and die, watched cities transform, and survived conflicts that would've destroyed a younger vampire.\n\nDepending on when you were Embraced, you might remember...\n\n- **1990s–2000:** The early internet, grunge music, the end of the Cold War\n- **1970s–1980s:** Disco being cool, punk rock, the AIDS crisis, video game arcades\n- **1950s–1960s:** The American Civil Rights Movement, the Space Race, the Vietnam War, the birth of rock & roll\n- **1930s–1940s:** The Great Depression, World War II, film noir, swing music being new & hip\n\nThe mortal world is increasingly alien. You remember a time before smartphones, maybe before computers entirely. Younger Kindred treat you with respect (or wariness), but Elders still see you as inexperienced.",
       "startingHumanity": "6",
       "startingBloodPotency": 2,
       "advancement": "Moderate; growth is steady but no longer rapid",

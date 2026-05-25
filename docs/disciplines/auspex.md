@@ -10,7 +10,7 @@ The flip side: everything hits a hell of a lot harder. ***Heightened Senses*** m
 
 ### *Heightened Senses (Discipline Perk)*
 
-**When you Discern Vibes or Catch the Scent**, you have +1 Forward to those rolls.
+**When you *Discern Vibes* or *Catch the Scent***, you have +1 Forward to those rolls.
 
 However, if you're exposed to extreme sensations (loud bangs, intense light, overpowering smells), you must **Stay Chill** or suffer −1 Ongoing to all Wits rolls for the rest of the scene as your heightened senses overload.
 
@@ -32,7 +32,7 @@ However, if you're exposed to extreme sensations (loud bangs, intense light, ove
 
 Your awareness pierces the veil between worlds. Cloaked vampires, distant watchers, lingering spirits, and woven enchantments all register to your expanded perception — you know what hides in the spaces between reality.
 
-**When you successfully Discern Vibes or Catch the Scent**, you gain +1 additional Hold. The following questions can also be asked regardless of which Move you used:
+**When you successfully *Discern Vibes* or *Catch the Scent***, you gain +1 additional Hold. The following questions can also be asked regardless of which Move you used:
 
 - Is anything supernatural concealed here?
 - What occult powers are active nearby?
@@ -88,7 +88,7 @@ Your awareness occasionally slips forward in time. The Storyteller may give you 
 
 ### *Fatal Flaw (Passive)*
 
-**When you successfully Discern Vibes or Catch the Scent on a particular person**, the following questions can also be asked regardless of which Move you used:
+**When you successfully *Discern Vibes* or *Catch the Scent* on a particular person**, the following questions can also be asked regardless of which Move you used:
 
 - What is this person most vulnerable to right now?
 - What would break their composure in this moment?
@@ -110,7 +110,7 @@ Additionally, when you use either Move, you may make one Hunger Check to gain +2
 
 - The vision was fragmentary; you can only use the banked Disadvantages against threats you've already identified, not surprises
 - The death attracted attention; someone heard, saw, or will find the body sooner than you'd like
-- The cosmic insight came with a price; you suffer a vivid, involuntary vision of your own Final Death that haunts you for the rest of the night (-1 Forward on your next **Stay Chill** roll)
+- The cosmic insight came with a price; you suffer a vivid, involuntary vision of your own Final Death that haunts you for the rest of the night (−1 Forward on your next **Stay Chill** roll)
 
 **On a 6-,** the dying mind's final vision crashes into you unfiltered. You see something true, terrible, and deeply personal about your own future. The Storyteller describes it. No Disadvantages are banked. You must immediately **Stay Chill** or be overwhelmed by what you saw.
 
@@ -184,7 +184,7 @@ You must remain in the area while ***Clairvoyance*** is active. Taking Harm ends
 
 **On a 10+,** you see into their subconscious. The Storyteller reveals the target's deepest fear or desire (chosen at activation), including things the target may not be consciously aware of, complete with context and history. If the object of that fear or desire is physically present or was mentioned in conversation, the insight is even sharper.
 
-**On a 7–9,** you get a general impression: a category, a theme, a direction ("wealth," "abandonment," "power," "their sire"); enough to work with, not enough to leverage precisely.
+**On a 7–9,** you get a general impression: a category, a theme, a direction ("wealth," "abandonment," "power," "their Sire"); enough to work with, not enough to leverage precisely.
 
 **On a 6-,** the connection inverts. You reveal a deep fear or desire of your own to the target; the Storyteller decides what slipped out, and it should be something true that you'd prefer stayed buried. The target gains +2 Ongoing whenever they act upon that information against you, lasting indefinitely. Secrets are currency, and you just went bankrupt.
 

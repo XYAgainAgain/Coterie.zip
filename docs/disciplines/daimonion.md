@@ -4,7 +4,7 @@ title: "Daimonion"
 
 Daimonion is a direct connection to the Outer Dark, the domain past the Abyss and farthest from reality, which most Kindred dismiss as rumor, myth, or just someone else's problem. Every use of Daimonion is a transaction with something older and hungrier than you or anyone you know. Sometimes you understand what it says. Sometimes you understand what it wants. Sometimes you open the door just wide enough to let a little of it through, and then you spend the rest of the night wishing you hadn't.
 
-The Discipline operates on two axes. The first is **communion**: sensing moral vulnerability, reading desire, understanding forbidden languages, and receiving whispers from entities that don't think the way you do. The second is **devastation**: Balefire, flesh-born parasites, insect swarms, area denial, and the destructive output of channeling energy from a place that hates all of creation. Communion Powers tend to be quiet and deceptive in nature. Devastation Powers tend to leave evidence, Stains, and lots of screaming.
+The Discipline operates on two axes. The first is **communion**: sensing moral vulnerability, reading desire, understanding forbidden languages, and receiving whispers from entities that don't think the way you do. The second is **devastation**: Balefire, flesh-born parasites, insect swarms, area denial, and the destructive output of channeling energy from a place that hates all of creation. Communion Powers tend to be quiet and deceptive in nature. Devastation Powers tend to leave evidence, Stains, and lots of screaming; these are the ones that risk a Masquerade breach.
 
 **Infernal Taint:** When you roll a Bestial Failure on any Daimonion roll, the Storyteller can choose 1 infernal complication from the list in your *Devil's Bargain* Compulsion. This happens whether or not you're currently under its effects.
 
@@ -20,7 +20,7 @@ You carry an open line to the Outer Dark, and the things on the other end are al
 
 **When you witness an act of cruelty or moral compromise, no matter how small**, you may ask the Storyteller one question about the situation, the people involved, or the circumstances. The answer comes from something in the Outer Dark; a whisper at the base of your skull, a flash of alien insight, letters rearranging themselves, an animal talking only to you for a moment, or a sudden gut feeling you can't explain but know to be correct. The answer is always true, always relevant, and always colored by an agenda you can't fully grasp. The Storyteller determines the tone and framing. Demonic sources are not known for their warmth or their straightforward delivery.
 
-**Additionally, when you focus on someone within Close Range,** you can clearly sense their most pressing unfulfilled desire without rolling. You learn the thing they'd kill for, the need they're pretending doesn't exist, the itch they can't quite scratch. This is not emotional reading (that's Auspex) nor sin detection (that's keen observation; just sniff them and draw your own conclusions). It works on mortals and vampires alike, though older or more guarded subjects may present murkier readings.
+**Additionally, when you focus on someone within Close Range**, you can clearly sense their most pressing unfulfilled desire without rolling. You learn the thing they'd kill for, the need they're pretending doesn't exist, the itch they can't quite scratch. This is not emotional reading (that's Auspex) nor sin detection (that's keen observation; just sniff them and draw your own conclusions). It works on mortals and vampires alike, though older or more guarded subjects may present murkier readings.
 
 ---
 
@@ -79,8 +79,6 @@ If you have access to level 4 of Daimonion or higher, the cost drops to 1 Hunger
 - The swarm's appetite is indiscriminate; after it finishes with the target (or if the target escapes), it turns on the nearest warm body for its remaining duration
 
 **On a 6-,** the swarm erupts but you can't aim it at all. The Storyteller chooses a random target within Close Range (ally, bystander, your actual enemy, someone's emotional support animal). It deals its Harm to the wrong target for the duration. If nobody else is in range, the swarm turns on you and deals 2 Superficial Harm (Ignore-Armor) before dispersing with a disappointed skittering sound.
-
----
 
 ---
 
@@ -152,8 +150,6 @@ If any mortals witness this, it is an automatic, non-negotiable, spectacular Mas
 
 ---
 
----
-
 ## Level 3
 
 ### *Coiling Spite*
@@ -211,7 +207,7 @@ Removing the parasite is the host's problem. They have two options: **Stay Chill
 
 **When you expose your Vitae to open air and speak the words that set it ablaze**, gain +1 Hunger automatically. If you have already taken Harm this scene, the infernal blood ignites eagerly on its own and no Hunger is gained. Either way, two sickly green-black whips of Balefire now extend from your wrists.
 
-**While the Balefire burns, your unarmed *Dirty Your Claws* rolls can target anyone within Close Range.** The attack deals Aggravated Harm equal to 3 + your Blood stat. Anyone damaged by the Balefire (other than you) ignites; they take 1 Aggravated Harm at the start of each of their turns until the scene ends or the fire is extinguished by supernatural means.
+**While the Balefire burns**, your unarmed **Dirty Your Claws** rolls can target anyone within Close Range. The attack deals Aggravated Harm equal to 3 + your Blood stat. Anyone damaged by the Balefire (other than you) ignites; they take 1 Aggravated Harm at the start of each of their turns until the scene ends or the fire is extinguished by supernatural means.
 
 When a target's total Aggravated Harm meets or exceeds half their maximum HP, they must immediately **Stay Chill** or Frenzy, fleeing from your hellish presence at top speed on a failure. If you slay someone with Balefire, you instantly slake 1 Hunger as it vaporizes their blood and passes it along to you.
 
@@ -227,7 +223,7 @@ Against unprepared mortals, a result of 6- is treated as a 7–9 instead. Nightm
 
 **On a 12+,** the target's psyche cracks open like a dropped egg. They take Aggravated Harm equal to 3 + your missing Humanity from the psychic assault and are left shaking, incoherent, and traumatized. The 10+ results also apply.
 
-**On a 10+,** the nightmares take root. The target suffers an Ongoing penalty equal to your Blood Potency on all rolls and takes 1 Aggravated Harm at the start of each of their turns while you maintain concentration.
+**On a 10+,** the nightmares take root. The target suffers an Ongoing penalty equal to your Blood Potency (minimum 1) on all rolls and takes 1 Aggravated Harm at the start of each of their turns while you maintain concentration.
 
 **On a 7–9,** the nightmares take hold as above, but the Storyteller chooses 1 complication:
 
@@ -237,8 +233,6 @@ Against unprepared mortals, a result of 6- is treated as a 7–9 instead. Nightm
 - The nightmares pull imagery from your own psyche; the target learns something about you that you would very much prefer they didn't know
 
 **On a 6-,** the channel reverses. You see your own worst nightmare, vivid and inescapable. Take 3 Aggravated Harm and −1 Forward. You and your Storyteller collaboratively describe what horrors you saw. The target knows exactly what you just tried to do and is now fully aware that it didn't work.
-
----
 
 ---
 

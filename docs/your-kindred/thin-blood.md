@@ -56,7 +56,7 @@ You are no longer a being straddling the worlds of life and death. You are Kindr
 
 !!! warning "Important Note"
 
-    *There are whispers among the Duskborn of another way out: that destroying your sire severs the curse entirely and returns you to mortality. Whether this is true, and what "mortality" even means for someone who has tasted the Blood, is for your Storyteller to decide. Hmm...*
+    *There are whispers among the Duskborn of another way out: that destroying your Sire severs the curse entirely and returns you to mortality. Whether this is true, and what "mortality" even means for someone who has tasted the Blood, is for your Storyteller to decide. Hmm...*
 
 ## Archetypes
 

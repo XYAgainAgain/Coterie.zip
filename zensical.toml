@@ -168,4 +168,4 @@ alternate_style = true
 skip_classes = ["darkpack-logo", "pron-btn"]
 
 [project.validation]
-invalid_links = false
+invalid_links = true

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T09:51:41.886Z",
+  "generatedAt": "2026-05-25T22:15:48.383Z",
   "data": {
     "clanBaneVariantsIntro": "Each of the 14 Clans has a variant Bane, which you may take as an alternative to the usual one with the approval of the Storyteller. For a bit of additional challenge, with the Storyteller's permission, you may opt to suffer from both of your Clan's Banes in exchange for 5 XP. All Banes are permanent and cannot be removed. This XP must be spent by the end of your first slumber or it is lost.",
     "clanBaneVariants": [
@@ -179,7 +179,7 @@
       },
       {
         "baneName": "Confounding Crossroads",
-        "consequences": "**When you reach any junction of two or more roads** (intersections and roundabouts count), you must pause for a beat to orient yourself. In combat or a chase, this costs you your Movement for the turn. If you are currently being pursued and reach a crossroads, you must **Stay Chill** or become disoriented, choosing a random direction to travel in.",
+        "consequences": "**When you reach any junction of two or more roads** (intersections and roundabouts count), you must pause for a beat to orient yourself. In combat or a chase, this costs you your Movement for the turn. **If you are currently being pursued and reach a crossroads**, you must **Stay Chill** or become disoriented, choosing a random direction to travel in.",
         "xpGain": "+2 XP"
       },
       {
@@ -490,7 +490,7 @@
         "name": "Consanguineous Sense",
         "category": "Blood & Bonding",
         "limit": "—",
-        "description": "**When you are within Close Range of another Kindred**, you can sense whether they share your bloodline (same Clan, progeny of your sire, your own progeny, etc.), no roll required. The recognition is gentle, like a faint tug at the wrist and someone picking them out of a crowd for you.",
+        "description": "**When you are within Close Range of another Kindred**, you can sense whether they share your bloodline (same Clan, progeny of your Sire, your own progeny, etc.), no roll required. The recognition is gentle, like a faint tug at the wrist and someone picking them out of a crowd for you.",
         "xpCost": "1"
       },
       {
@@ -532,7 +532,7 @@
         "name": "Consanguineous Influence",
         "category": "Blood & Bonding",
         "limit": "—",
-        "description": "Blood calls to blood. **When you use a Discipline Power against a Kindred who shares your bloodline** (same Clan, your progeny, your sire's other progeny, etc.), take +1 Forward. Your Vitae resonates with theirs in ways that make supernatural manipulation easier. Fair warning: they may have the same leg up against you!",
+        "description": "Blood calls to blood. **When you use a Discipline Power against a Kindred who shares your bloodline** (same Clan, your progeny, your Sire's other progeny, etc.), take +1 Forward. Your Vitae resonates with theirs in ways that make supernatural manipulation easier. Fair warning: they may have the same leg up against you!",
         "xpCost": "3"
       },
       {
@@ -912,7 +912,7 @@
         "name": "Hopeless Dependant",
         "category": "The Beast",
         "limit": "—",
-        "description": "You need your people. **When you are alone** (no Coterie members or trusted allies present in the scene) **and must *Stay Chill***, roll with Disadvantage. The isolation amplifies every bad impulse. Going solo can be legitimately dangerous. Hope you have your phone on you.",
+        "description": "You need your people. **When you are alone and must *Stay Chill*** (no Coterie members or trusted allies present in the scene), roll with Disadvantage. The isolation amplifies every bad impulse. Going solo can be legitimately dangerous. Hope you have your phone on you.",
         "xpGain": "3"
       },
       {
@@ -989,7 +989,7 @@
         "name": "Ravenous Thirst",
         "category": "Meal Deals",
         "limit": "—",
-        "description": "Your minimum Hunger is 1, not 0. **You can never be fully Sated.** Even immediately after **Feeding** to your absolute limit, one little pip of Hunger always remains. Your Beast is never quiet and constantly on the prowl. As some kind of sick consolation prize, **the first time each night you need to make a Hunger Check**, you succeed without rolling.",
+        "description": "Your minimum Hunger is 1, not 0. **You can never be fully Sated.** Even immediately after **Feeding** to your absolute limit, one little pip of Hunger always remains. Your Beast is never quiet and constantly on the prowl. **The first time each night you need to make a Hunger Check**, you succeed without rolling as some kind of sick consolation prize.",
         "xpGain": "4"
       },
       {
@@ -1038,7 +1038,7 @@
         "name": "Inherited Bane",
         "category": "Blood & Bonding",
         "limit": "—",
-        "description": "Someone else's curse lives in your blood! Dang it, how'd that get in there? **At character creation, choose a second Clan Bane from any Playbook besides your own that also applies to you.** It scales just like your other one. Work with your Storyteller to determine the source: a sire from a different Clan, a botched Embrace, Diablerie gone wrong, or just supremely bad luck in the bloodline lottery.",
+        "description": "Someone else's curse lives in your blood! Dang it, how'd that get in there? **At character creation, choose a second Clan Bane from any Playbook besides your own that also applies to you.** It scales just like your other one. Work with your Storyteller to determine the source: a Sire from a different Clan, a botched Embrace, Diablerie gone wrong, or just supremely bad luck in the bloodline lottery.",
         "xpGain": "3"
       },
       {
@@ -1269,7 +1269,7 @@
         "name": "Abusive Sire",
         "category": "Other Folks",
         "limit": "—",
-        "description": "Your sire is alive (or undead, rather) and they're quite cruel. **The Storyteller controls your sire as a recurring character** who manipulates, berates, threatens, or exploits you. They may invoke your Blood Bond (if one exists), guilt trip you about not calling, show up at the worst times, or demand favors through Debt. The relationship is toxic and your Coterie probably has a lot of opinions about it. Working with the Storyteller on the sire's personality and goals is a hard requirement.",
+        "description": "Your Sire is alive (or undead, rather) and they're quite cruel. **The Storyteller controls your Sire as a recurring character** who manipulates, berates, threatens, or exploits you. They may invoke your Blood Bond (if one exists), guilt trip you about not calling, show up at the worst times, or demand favors through Debt. The relationship is toxic and your Coterie probably has a lot of opinions about it. Working with the Storyteller on the Sire's personality and goals is a hard requirement.",
         "xpGain": "2"
       },
       {
@@ -1304,7 +1304,7 @@
         "name": "Hollowing Curse",
         "category": "Dark Bargains",
         "limit": "—",
-        "description": "Your body resists mending at its core. **Your last 2 HP boxes cannot be healed by normal means** (end-of-scene Hunger Checks, slumber, or **Feeding**). Only specific Perks or Discipline Powers (***Valeren***, ***Mending Touch***) or extraordinary fictional circumstances can restore them. You are permanently operating with a smaller margin for error. Tread *so* carefully.",
+        "description": "Your body resists mending at its core. **Your last 2 HP boxes cannot be healed by normal means** (end-of-scene Hunger Checks, slumber, or **Feeding**). Only specific Perks or Discipline Powers (***Mending Touch***, ***Valeren***) or extraordinary fictional circumstances can restore them. You are permanently operating with a smaller margin for error. Tread *so* carefully.",
         "xpGain": "2"
       },
       {

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T09:51:41.886Z",
+  "generatedAt": "2026-05-25T22:15:48.383Z",
   "entries": [
     {
       "type": "standard",
@@ -91,11 +91,11 @@
       "outcomes": [
         {
           "tier": "10+",
-          "content": "you give them +1 or −2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP (maximum of 1 per night per ally)."
+          "content": "you give them +1 or −2 Forward to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP (maximum of 1 per night per ally)."
         },
         {
           "tier": "7-9",
-          "content": "you give them +1 or −1 to their roll (your choice), but you put yourself at risk of danger or exposure."
+          "content": "you give them +1 or −1 Forward to their roll (your choice), but you put yourself at risk of danger or exposure."
         },
         {
           "tier": "6-",
@@ -103,7 +103,7 @@
         },
         {
           "tier": "12+",
-          "content": "you give them +2 or −2 to their roll, and both you and your ally gain 1 XP (maximum of 1 each per night)."
+          "content": "you give them +2 or −2 Forward to their roll, and both you and your ally gain 1 XP (maximum of 1 each per night)."
         }
       ]
     },
@@ -253,7 +253,7 @@
         },
         {
           "tier": "12+",
-          "content": "reduce Hunger by 3. Choose 2 from the 10+ list, OR choose to **Embrace** them: You drain them completely, slaking all your Hunger, and feed them your Vitae. They die and will rise as a vampire the following night. You become their sire, with all the political and personal consequences that entails. Mark 3 Stains."
+          "content": "reduce Hunger by 3. Choose 2 from the 10+ list, OR choose to **Embrace** them: You drain them completely, slaking all your Hunger, and feed them your Vitae. They die and will rise as a vampire the following night. You become their Sire, with all the political and personal consequences that entails. Mark 3 Stains."
         }
       ]
     },
@@ -297,7 +297,7 @@
         },
         {
           "threshold": "7",
-          "description": "You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — **on a 10+** you pull it off, **on a 7–9** it's awkward, **on a 6-** they notice something's wrong."
+          "description": "You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — **on a 10+,** you pull it off, **on a 7–9,** it's awkward, **on a 6-,** they notice something's wrong."
         },
         {
           "threshold": "6",

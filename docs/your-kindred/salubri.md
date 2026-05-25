@@ -8,7 +8,7 @@ title: "Salubri"
 
 ![Salubri symbol](../assets/images/vtm/bloodlines/salubri.webp){ .bloodline-symbol }
 
-You were Embraced because another Salubri decided you deserved another shot at something. Maybe you were dying. Maybe you'd suffered a loss so terrible it hollowed you out. Maybe you had an unshakable drive to fix something broken in the world and just needed the tools to do it. Salubri sires are agonizingly selective; the Clan is tiny, possibly the smallest of all the bloodlines, and every Embrace is a deeply personal decision. There is no chance you were chosen on a whim. You were selected because your sire truly believed the curse would mean something in your hands.
+You were Embraced because another Salubri decided you deserved another shot at something. Maybe you were dying. Maybe you'd suffered a loss so terrible it hollowed you out. Maybe you had an unshakable drive to fix something broken in the world and just needed the tools to do it. Salubri Sires are agonizingly selective; the Clan is tiny, possibly the smallest of all the bloodlines, and every Embrace is a deeply personal decision. There is no chance you were chosen on a whim. You were selected because your Sire truly believed the curse would mean something in your hands.
 
 The Salubri occupy a strange and precarious position among the Kindred. Centuries ago, the Tremere destroyed your Clan's founder and built their own legacy on the stolen blood, then spread rumors that Salubri are soul-thieves to justify it. The stigma stuck. Most Princes don't want you in their domain, most Kindred are suspicious of you, and the ones who know what your blood tastes like may already be behind you *right now.* Despite all of this, the Salubri persist; some as healers, easing the suffering of mortals and Kindred alike, others as hunters who stalk vampires who've surrendered to the Beast. All of them are trying, in their own way, to *solve* the problem of being a vampire rather than just enduring it.
 
@@ -20,9 +20,9 @@ Choose 2 to start: [**Auspex**](../disciplines/auspex.md) **| [Dominate](../disc
 
 ## Bane: *Hunted Blood*
 
-**A third eye sits in the center of your forehead.** No supernatural power can conceal it short of hiding your entire body; physical coverings (hats, scarves, bandages, masks, long bangs) work most of the time. When you use an Active Discipline Power, the eye opens and weeps blood. Nearby Kindred at 4+ Hunger who witness this must **Stay Chill** or feel drawn to **Feed** from you.
+**A third eye sits in the center of your forehead.** No supernatural power can conceal it short of hiding your entire body; physical coverings (hats, scarves, bandages, masks, long bangs) work most of the time. **When you use an Active Discipline Power**, the eye opens and weeps blood. Nearby Kindred at 4+ Hunger who witness this must **Stay Chill** or feel drawn to **Feed** from you.
 
-Your Vitae is intoxicating to other Kindred. When a non-Salubri tastes your blood, they must **Stay Chill** with a penalty equal to your Blood Potency (minimum 1) or continue feeding until physically stopped. Kindred of the *Blood Leech* Predator Type have Disadvantage on this roll.
+Your Vitae is intoxicating to other Kindred. **When a non-Salubri tastes your blood**, they must **Stay Chill** with a penalty equal to your Blood Potency (minimum 1) or continue feeding until physically stopped. Kindred of the *Blood Leech* Predator Type have Disadvantage on this roll.
 
 ## Compulsion: *Affective Empathy*
 

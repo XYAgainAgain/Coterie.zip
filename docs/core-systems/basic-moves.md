@@ -96,13 +96,13 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 **When you assist or interfere with another character's action**, roll with the same stat as your intended target after they roll but before the action is narrated or resolved.
 
-**On a 10+,** you give them +1 or −2 to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP (maximum of 1 per night per ally).
+**On a 10+,** you give them +1 or −2 Forward to their roll (your choice) and if your **Help** makes the roll of a Coterie member succeed, they gain 1 XP (maximum of 1 per night per ally).
 
-**On a 7–9,** you give them +1 or −1 to their roll (your choice), but you put yourself at risk of danger or exposure.
+**On a 7–9,** you give them +1 or −1 Forward to their roll (your choice), but you put yourself at risk of danger or exposure.
 
 **On a 6-,** you get in the way and the intended bonus/penalty is inverted. The Storyteller takes an immediate Move against you.
 
-**Advanced: On a 12+,** you give them +2 or −2 to their roll, and both you and your ally gain 1 XP (maximum of 1 each per night).
+**Advanced: On a 12+,** you give them +2 or −2 Forward to their roll, and both you and your ally gain 1 XP (maximum of 1 each per night).
 
 ### Stay Chill
 
@@ -247,7 +247,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 **On a 6-,** you feed messily and violently. Reduce Hunger by 2, but the Storyteller chooses 2 complications and you mark 1 Stain.
 
 
-**Advanced: On a 12+,** reduce Hunger by 3. Choose 2 from the 10+ list, OR choose to **Embrace** them: You drain them completely, slaking all your Hunger, and feed them your Vitae. They die and will rise as a vampire the following night. You become their sire, with all the political and personal consequences that entails. Mark 3 Stains.
+**Advanced: On a 12+,** reduce Hunger by 3. Choose 2 from the 10+ list, OR choose to **Embrace** them: You drain them completely, slaking all your Hunger, and feed them your Vitae. They die and will rise as a vampire the following night. You become their Sire, with all the political and personal consequences that entails. Mark 3 Stains.
 
 ### Protect the Coterie
 
@@ -276,7 +276,7 @@ What you can accomplish while appearing alive depends on your Humanity:
 
 - **9–10 Humanity:** You don't need **Blush of Life** — you already look pale but healthy (10) or sickly but alive (9). You can eat, drink, and have sex normally. While using **Blush of Life** anyway, you have +2 Ongoing to rolls made to perform Normal Human Activities™.
 - **8:** You can use touchscreens, have sex and enjoy it, digest wine and light foods, and confidently pass as entirely human.
-- **7:** You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — **on a 10+** you pull it off, **on a 7–9** it's awkward, **on a 6-** they notice something's wrong.
+- **7:** You can use touchscreens and digest food for about an hour. To fake sex, roll +Demeanor — **on a 10+,** you pull it off, **on a 7–9,** it's awkward, **on a 6-,** they notice something's wrong.
 - **6:** You can use touchscreens; food makes you sick and you must **Stay Chill** to avoid vomiting. To fake sex as above, roll +Demeanor with −1 Forward.
 - **5:** Same as 6 Humanity, but roll +Demeanor with −2 Forward to fake sex.
 - **4:** You can use touchscreens. You cannot eat food or fake any intimacy.

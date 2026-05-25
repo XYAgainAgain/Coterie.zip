@@ -25,7 +25,7 @@ You protect the neighborhood. Muggers, predatory landlords, corrupt cops, drug o
 
 ## The Circumstantials
 
-Nobody here chose this. A shared sire who couldn't pick favorites, a mandated arrangement from local vampiric leadership, a mutual enemy who forced your hands, or just catastrophically bad timing. Half of you can barely stand the other half. The question isn't whether your Coterie will succeed, it's whether it'll survive long enough to figure out if it even should. On the upside, you've been set up with a decent unliving space. If you tear each other apart, everyone who survives gets more room for themselves. Have fun!
+Nobody here chose this. A shared Sire who couldn't pick favorites, a mandated arrangement from local vampiric leadership, a mutual enemy who forced your hands, or just catastrophically bad timing. Half of you can barely stand the other half. The question isn't whether your Coterie will succeed, it's whether it'll survive long enough to figure out if it even should. On the upside, you've been set up with a decent unliving space. If you tear each other apart, everyone who survives gets more room for themselves. Have fun!
 
 **Coterie Stats:** **Clout +0** | **Cohesion −2** | **Charm +1** | **Claim +1** | **Currency +2**
 
@@ -53,7 +53,7 @@ Your Coterie formed around shared devotion. Maybe it's genuine faith in somethin
 
 Most vampires are useless during the day. You're not. Your Coterie is composed of Kith and Kindred who can walk in sunlight (Thin-Bloods, Ghouls, Devorari, Osirians, or anyone else who's somehow figured it out), and that makes you indispensable to vampiric leadership that needs eyes, hands, and fangs operating while the rest of the city slumbers. You guard sleeping Elders, scout hunter movements, run daytime errands that would dust anyone else, and generally handle hours of the day that most vampires try to pretend don't exist. The thanks you receive is roughly proportional to how expendable they consider you.
 
-**Coterie Stats: Clout −1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
+**Coterie Stats:** **Clout −1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
 
 ##### *Haven Features*
 
@@ -90,7 +90,7 @@ You exist in the gaps between factions that would rather kill each other. Mediat
 
 ## The Family
 
-You're related. By Clan, by Blood Marriage, by sire, by some tangled combination of mortal lineage and vampiric dynasty that makes your family tree look more like a mangrove patch and less like a noble oak or whatever. The bond is older than your Coterie and runs deeper than politics; you've been dealing with each other's nonsense since before some of you died. Family Coteries often fight viciously, forgive quickly but reluctantly, and close ranks against outsiders with terrifying speed. The dysfunction is a feature, not a bug.
+You're related. By Clan, by Blood Marriage, by Sire, by some tangled combination of mortal lineage and vampiric dynasty that makes your family tree look more like a mangrove patch and less like a noble oak or whatever. The bond is older than your Coterie and runs deeper than politics; you've been dealing with each other's nonsense since before some of you died. Family Coteries often fight viciously, forgive quickly but reluctantly, and close ranks against outsiders with terrifying speed. The dysfunction is a feature, not a bug.
 
 **Coterie Stats:** **Clout +1** | **Cohesion +0** | **Charm −1** | **Claim +1** | **Currency +1**
 

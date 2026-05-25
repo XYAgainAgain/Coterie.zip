@@ -31,7 +31,7 @@ Your age determines how long you've been undead and how much power you've accumu
 
 ### 2. Choose (or Eschew) Your Clan
 
-Your Clan is your vampiric lineage — the curse passed down through your sire's blood. It shapes your Disciplines, your Bane, your Compulsion, and how other Kindred see you. Some Clans are respected. Others are reviled. All carry baggage. Select whichever Playbook seems the most fun!
+Your Clan is your vampiric lineage — the curse passed down through your Sire's blood. It shapes your Disciplines, your Bane, your Compulsion, and how other Kindred see you. Some Clans are respected. Others are reviled. All carry baggage. Select whichever Playbook seems the most fun!
 
 **What This Gives You:**
 
@@ -51,7 +51,7 @@ Your Clan is your vampiric lineage — the curse passed down through your sire's
 
 ### 3. Choose Your Predator Type
 
-Your Predator Type is how you hunt. It's the method you've developed to feed without getting caught, killed, or losing yourself entirely. It affects your Disciplines, gives you a Merit and a Flaw, and may saddle you with starting Debts.
+Your Predator Type is how you **Hunt**. It's the method you've developed to get your nightly nutrients without getting caught, killed, or losing yourself entirely. It affects your Disciplines, gives you a Merit and a Flaw, and may saddle you with starting Debts.
 
 **What This Gives You:**
 
@@ -61,11 +61,11 @@ Your Predator Type is how you hunt. It's the method you've developed to feed wit
 - A Flaw (complication or restriction)
 - Sometimes starting Debts (obligations to NPCs or factions)
 
-**Available Types:** Alleycat, Bagger, Blood Leech, Cleaver, Consensualist, Extortionist, Farmer, Graverobber, Grim Reaper, Montero, Organovore, Osiris, Roadside Killer, Pursuer, Sandman, Scene Queen, Siren, Tithe Collector, Tourist Hunter, Trapdoor
+**Available Types:** There's over 50 of them, so just go read the [Predator Types](predator-types.md) section here.
 
 !!! tip "Guidance"
 
-    *Your Predator Type should feel sustainable but flawed. If it seems too easy or too safe, you're probably going to get bored. Complications make better stories than clean solutions. Note that some Clanless Playbooks do not select a Predator Type — they will say so.*
+    *Your Predator Type should feel sustainable but flawed. If it seems too easy or too safe, you're probably going to get bored. Complications make better stories than clean solutions. Note that some Clanless Playbooks do not select a Predator Type, specifically Ghoul and Devorari.*
 
 ### 4. Establish Convictions
 
@@ -114,7 +114,7 @@ Debts are favors owed and favors held. Some Predator Types give you starting Deb
 
 !!! tip "Guidance"
 
-    *Debts are story hooks just as much as they are mechanics. "You owe me" should come with a reason: I covered up your feeding Frenzy, I introduced you to my sire, I lied to the Sheriff for you. Make them specific and make them hurt.*
+    *Debts are story hooks just as much as they are mechanics. "You owe me" should come with a reason: I covered up your feeding Frenzy, I introduced you to my Sire, I lied to the Sheriff for you. Make them specific and make them hurt.*
 
 ### 7. Decide on Disciplines
 
@@ -151,7 +151,7 @@ Now make your character real. Give them a name, an apparent age (how old they lo
 - **Name:** What do people call you? Did you used to be called something different?
 - **Apparent Age:** How old do you look? You were frozen at the age you were Embraced.
 - **Presentation:** Gender, pronouns, style, physical description.
-- **The Embrace:** Who was your sire? Why were you chosen (or cursed)? What did you lose?
+- **The Embrace:** Who was your Sire? Why were you chosen (or cursed)? What did you lose?
 
 !!! tip "Guidance"
 
@@ -167,18 +167,18 @@ Now comes the hard part: unliving with other vampires. You'll need to work as a 
 | :---: | ----- | :---: |
 | **[Animalism](../disciplines/animalism.md)** | Utilized by those who desire a close and supernatural bond with the animal world as well as a vampire's own Beast. | [Gangrel](gangrel.md), [Nosferatu](nosferatu.md), [Ravnos](ravnos.md), [Tzimisce](tzimisce.md) |
 | **[Auspex](../disciplines/auspex.md)** | Enables users to hone their senses both physical and psychic in order to bolster their awareness, perceptions, or even see visions of the future. | [Devorari](devorari.md), [Hecata](hecata.md), [Malkavian](malkavian.md), [Salubri](salubri.md), [Toreador](toreador.md), [Tremere](tremere.md) |
-| **[Bardo](../disciplines/bardo.md)** | An ancient meditative art that draws power from the practitioner's Humanity rather than Blood, working to suppress the Beast, ward off supernatural corruption, and sustain the body without harm to mortals. | [Osirians](osirian.md) |
+| **[Bardo](../disciplines/bardo.md)** | An ancient meditative art that draws power from the practitioner's Humanity rather than Blood, working to suppress the Beast, ward off supernatural corruption, and sustain the body without harm to mortals. | [Osirian](osirian.md) |
 | **[Blood Sorcery](../disciplines/blood-sorcery.md)** | A type of blood magic that allows the practitioners to manipulate the blood, mortal or vampiric. (Rituals are an extension of this that only Tremere may access.) | [Baali](baali.md), [Banu Haqim](banu-haqim.md), [Tremere](tremere.md) |
 | **[Celerity](../disciplines/celerity.md)** | Powers up the movement of the user, enabling them to have unnatural quickness in their movement and tremendous reflexes. If you want to Matrix dodge, this is the Discipline for you. | [Banu Haqim](banu-haqim.md), [Brujah](brujah.md), [Toreador](toreador.md) |
 | **[Daimonion](../disciplines/daimonion.md)** | It's demons. Demons and much, much worse. Don't look in here if you value your sanity. | [Baali](baali.md) |
 | **[Dominate](../disciplines/dominate.md)** | Allows the user to use mind control through eye contact and spoken word as well as manipulate memories of their victims. | [Lasombra](lasombra.md), [Malkavian](malkavian.md), [Salubri](salubri.md), [Tremere](tremere.md), [Tzimisce](tzimisce.md), [Ventrue](ventrue.md) |
-| **[Fortitude](../disciplines/fortitude.md)** | Strengthens the user's physical and mental resistance, and grants extra HP. | [Daughters of Cacophony](daughter-of-cacophony.md), [Gangrel](gangrel.md), [Hecata](hecata.md), [Salubri](salubri.md), [Ventrue](ventrue.md) |
-| **[Melpominee](../disciplines/melpominee.md)** | The art of the supernatural voice, allowing practitioners to weaponize speech, song, and sound itself; from throwing phantom whispers across a city to shattering glass and minds alike with a firm note. | [Daughters of Cacophony](daughter-of-cacophony.md) |
+| **[Fortitude](../disciplines/fortitude.md)** | Strengthens the user's physical and mental resistance, and grants extra HP. | [Daughter of Cacophony](daughter-of-cacophony.md), [Gangrel](gangrel.md), [Hecata](hecata.md), [Salubri](salubri.md), [Ventrue](ventrue.md) |
+| **[Melpominee](../disciplines/melpominee.md)** | The art of the supernatural voice, allowing practitioners to weaponize speech, song, and sound itself; from throwing phantom whispers across a city to shattering glass and minds alike with a firm note. | [Daughter of Cacophony](daughter-of-cacophony.md) |
 | **[Obfuscate](../disciplines/obfuscate.md)** | The art of invisibility, even in crowds, either through being wholly unseen or by blending in. | [Banu Haqim](banu-haqim.md), [Malkavian](malkavian.md), [The Ministry](the-ministry.md), [Nosferatu](nosferatu.md), [Ravnos](ravnos.md) |
 | **[Oblivion](../disciplines/oblivion.md)** | Has two branches: one allows the user to manipulate shadows at will and the other enables necromancy or usage of spirits, though both tap into the Abyss. (Ceremonies are an extension of this.) | [Baali](baali.md), [Hecata](hecata.md), [Lasombra](lasombra.md) |
-| **[Potence](../disciplines/potence.md)** | Strengthens the user's physical prowess. By, like, a LOT. You're goin' *down*, bucko. | [Brujah](brujah.md), [Gargoyles](gargoyle.md), [Nosferatu](nosferatu.md), [Lasombra](lasombra.md) |
-| **[Presence](../disciplines/presence.md)** | Enables the user to use subtle manipulation, control, and swaying of emotions to guide others towards a goal. Probably the most commonly-used Discipline, but don't dismiss it — it's quite strong. | [Baali](baali.md), [Brujah](brujah.md), [Daughters of Cacophony](daughter-of-cacophony.md), [Devorari](devorari.md), [Ravnos](ravnos.md), [Toreador](toreador.md), [The Ministry](the-ministry.md), [Ventrue](ventrue.md) |
-| **[Protean](../disciplines/protean.md)** | Grants the ability to change one's shape, grow vicious claws, meld into the earth, or become fog. | [Gangrel](gangrel.md), [Gargoyles](gargoyle.md), [The Ministry](the-ministry.md), [Tzimisce](tzimisce.md) |
+| **[Potence](../disciplines/potence.md)** | Strengthens the user's physical prowess. By, like, a LOT. You're goin' *down*, bucko. | [Brujah](brujah.md), [Gargoyle](gargoyle.md), [Nosferatu](nosferatu.md), [Lasombra](lasombra.md) |
+| **[Presence](../disciplines/presence.md)** | Enables the user to use subtle manipulation, control, and swaying of emotions to guide others towards a goal. Probably the most commonly-used Discipline, but don't dismiss it — it's quite strong. | [Baali](baali.md), [Brujah](brujah.md), [Daughter of Cacophony](daughter-of-cacophony.md), [Devorari](devorari.md), [Ravnos](ravnos.md), [Toreador](toreador.md), [The Ministry](the-ministry.md), [Ventrue](ventrue.md) |
+| **[Protean](../disciplines/protean.md)** | Grants the ability to change one's shape, grow vicious claws, meld into the earth, or become fog. | [Gangrel](gangrel.md), [Gargoyle](gargoyle.md), [The Ministry](the-ministry.md), [Tzimisce](tzimisce.md) |
 | **[Psychotrophia](../disciplines/psychotrophia.md)** | The ill-studied and frighteningly powerful psionic magic available only to vampires that consume ephemera. It seems able to touch all things except for Kindred, so most don't concern themselves. | [Devorari](devorari.md) |
-| **[Thin-Blood Alchemy](../disciplines/thin-blood-alchemy.md)** | The creation of mixtures of blood, emotions, and other varied ingredients to activate unique effects or even copy other Disciplines. | [Thin-Bloods](../the-vampiric-condition/age-brackets.md#semimortal) |
-| **[Visceratika](../disciplines/visceratika.md)** | An extension of the Gargoyles' unnatural bond with stone, granting mastery over rock, earth, and architectural spaces, from chameleon-like camouflage to flowing through solid walls. Oh, and flight. | [Gargoyles](gargoyle.md) |
+| **[Thin-Blood Alchemy](../disciplines/thin-blood-alchemy.md)** | The creation of mixtures of blood, emotions, and other varied ingredients to activate unique effects or even copy other Disciplines. | [Thin-Blood](../the-vampiric-condition/age-brackets.md#semimortal) |
+| **[Visceratika](../disciplines/visceratika.md)** | An extension of the Gargoyles' unnatural bond with stone, granting mastery over rock, earth, and architectural spaces, from chameleon-like camouflage to flowing through solid walls. Oh, and flight. | [Gargoyle](gargoyle.md) |

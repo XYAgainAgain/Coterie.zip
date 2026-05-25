@@ -18,7 +18,7 @@ Your senses sharpen far beyond mortal limits. You suffer no penalties from darkn
 
 Whenever you like, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. While your eyes are black, you can see ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.
 
-The black eyes impose an Ongoing penalty equal to your Blood Potency to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both.
+The black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both.
 
 ---
 
@@ -248,7 +248,7 @@ Unprepared mortals are catatonic with shock for the rest of the scene. Vampires 
 
 *(Requires: **Shade Servant**)*
 
-**When you reach into a creature's shadow and rip out the darkest parts of their psyche**, make 2 Hunger Checks and roll +Shadow. You must have clear sight of the target (***Shadow Perception*** works nicely).
+**When you reach into a creature's shadow and rip out the darkest parts of their psyche**, make 2 Hunger Checks and roll +Shadow. You must have clear sight of the target (***Shadow Perspective*** works nicely).
 
 **On a success (7+),** a shadowy doppelgänger erupts from the target's shadow constructed of their suppressed impulses, their cruelty, and their darkest instincts, all given physical form. The dark entity matches its host's stats, equipment, HP, and Discipline access, but it has no allies (not even you) and no interest in self-preservation. Its only purpose is the destruction of its other half. It fights mercilessly until the end of the scene or until it or its host is destroyed.
 
@@ -330,7 +330,7 @@ Against vampires, instead of dealing Harm, you consume Humanity equal to your Bl
 - Fragments of the target's memories leak into yours permanently; you carry pieces of a dead person's life from now on
 - The Abyss takes notice of this level of destruction; mark 1 additional Stain
 
-**On a 6-,** the entropy rebounds through the connection. Take Aggravated Harm equal to your Blood Potency. The target is shaken but unharmed, and now they (and if they're a vampire, their sire as well as anyone they may have Embraced) know exactly what you just tried to do to their soul. Expect swift retribution and no mercy whatsoever.
+**On a 6-,** the entropy rebounds through the connection. Take Aggravated Harm equal to your Blood Potency. The target is shaken but unharmed, and now they (and if they're a vampire, their Sire as well as anyone they may have Embraced) know exactly what you just tried to do to their soul. Expect swift retribution and no mercy whatsoever.
 
 ---
 

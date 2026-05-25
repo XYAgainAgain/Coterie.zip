@@ -2,9 +2,9 @@
 title: "Predator Types"
 ---
 
-*Every* vampire is a predator. They are inherently carnivorous (almost entirely hematophagous), but as in nature, their exact methods differ vastly from vamp to vamp. They can be broadly broken down into the categories below, though there will always be outliers. Older vampires almost never stray from their established hunting and feeding rituals, while younger ones may experiment with various methods until they find one that feels right for them. Often, this is a messy and distressing process for everyone involved, so the sooner you figure this out, the better.
+Every vampire is a predator. They are inherently carnivorous (almost entirely hematophagous), but as in nature, their exact methods differ vastly from vamp to vamp. They can be broadly broken down into the categories below, though there will always be outliers. Older vampires almost never stray from their established hunting and feeding rituals, while younger ones may experiment with various methods until they find one that feels right for them. Often, this is a messy and distressing process for everyone involved, so the sooner you figure this out, the better.
 
-Your Predator Type dictates what stat you roll with when you **Hunt** and grants access to a Discipline. It does not unlock any Powers other than the associated Discipline Perk, unless the Discipline overlaps with one you select in your Playbook, in which case you receive a free level 1 Power of your choice from that Discipline.
+Your Predator Type dictates what stat you roll with when you **Hunt** and grants access to a Discipline. It does not unlock any Powers other than the associated Discipline Perk, unless the Discipline overlaps with one you select in your Playbook, in which case you receive a free Power of your choice from that Discipline of any level you can access.
 
 Additionally, each one comes with a Merit and a Flaw, some of which are more impactful than others by design. They may also include a Humanity modifier, which applies only to your base/starting Humanity level (e.g., an Elder Alleycat would start at Humanity 2 instead of 3). Some come with Feeding Rules or restrictions; you'll notice Ventrue cannot select several of them. They're a bit snobby.
 
@@ -64,7 +64,7 @@ You are a peculiar type of parasite who drinks only from other vampires, which s
 - **Discipline:** Protean
 - **Merit:** *Kindred Sense.* You can identify most other vampires on sight, even if they're using **Blush of Life**. **When you *Catch the Scent* to detect vampires or their activities**, take +1 Forward.
 - **Flaw:** *Marked & Made.* Your feeding habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time.
-- **Feeding Rules:** You can only slake Hunger by feeding from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain.
+- **Feeding Rules:** You can only slake Hunger by **Feeding** from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain.
 
 ---
 
@@ -97,7 +97,7 @@ You **Hunt** the Hunters. While most Kindred flee from mortals who know too much
 - **Hunting Stat:** +Resolve
 - **Discipline:** Potence
 - **Merit:** *Know Thine Enemy.* You've studied Hunter tactics extensively. **When you *Catch the Scent* or *Discern Vibes* to locate or assess Hunters**, take +1 Forward.
-- **Flaw:** *On the List.* A Hunter has your description and is actively looking for you. **You have a persistent mortal enemy with the training and resources to be a genuine threat.**
+- **Flaw:** *On the List.* **A Hunter has your description and is actively looking for you.** You have a persistent mortal enemy with the training and resources to be a genuine threat.
 - **Feeding Rules:** You can only slake Hunger by **Feeding** from mortal Hunters. If you **Feed** from someone who isn't devoted to trying to slay your kind, you gain no benefit. It's just not worth it.
 
 ---
@@ -198,7 +198,7 @@ Drinking blood must be an *event*. You surround yourself with vessels, transform
 
 ## Farmer
 
-You exclusively feed from animals. You have learned to tolerate the constant gnawing of Hunger, but you haven't killed any humans so far (except maybe that one time) and you intend to stay the course. This choice is normally only made by those who were obsessed with or deeply affected by morality in life, such as an activist, social worker, or member of the clergy. Most other vampires who learn of your "veganism" will likely think you are varying degrees of foolish, insane, or masochistic.
+You exclusively **Feed** from animals. You have learned to tolerate the constant gnawing of Hunger, but you haven't killed any humans so far (except maybe that one time) and you intend to stay the course. This choice is normally only made by those who were obsessed with or deeply affected by morality in life, such as an activist, social worker, or member of the clergy. Most other vampires who learn of your "veganism" will likely think you are varying degrees of foolish, insane, or masochistic.
 
 - **Hunting Stat:** +Blood
 - **Discipline:** Animalism
@@ -357,8 +357,8 @@ You are a monster among monsters. Human blood does little to satiate your hunger
 - **Hunting Stat:** +Blood
 - **Discipline:** Potence
 - **Merit:** *2-for-1 Special.* **When you successfully subdue fresh prey and bring them to your location of choice to *Feed***, one other vampire (usually a Coterie member) can drink the runoff blood and reduce their Hunger by 2 without rolling or receiving extra benefits.
-- **Flaw:** *Monstrous Appetite.* Your mealtime rituals require privacy, time, and tools. When you **Feed**, you always leave unmistakable evidence unless you have at least an hour and a secure location to clean up. Additionally, when you interact with other vampires who know of your diet but don't know you personally, they find you off-putting; you take −1 Ongoing to **Influence** them until relations improve.
-- **Feeding Rules:** You can only reduce Hunger by consuming human flesh and organs; blood alone is insufficient. Unfortunately, this requires your prey to be dead or totally incapacitated in all cases, and you must eat multiple pounds (often several organs) each time you **Feed**. If another vampire has fed from your prey in the last 24 hours, you only reduce your Hunger by 1 no matter how much you eat.
+- **Flaw:** *Monstrous Appetite.* Your mealtime rituals require privacy, time, and tools. **When you *Feed***, you always leave unmistakable evidence unless you have at least an hour and a secure location to clean up. Additionally, when you interact with other vampires who know of your diet but don't know you personally, they find you off-putting; you take −1 Ongoing to **Influence** them until relations improve.
+- **Feeding Rules:** You can only reduce Hunger by consuming human flesh and organs; blood alone is insufficient. Unfortunately, this requires your prey to be dead or totally incapacitated in all cases, and you must eat multiple pounds (often several organs) each time you **Feed**. **If another vampire has *Fed* from your prey in the last 24 hours**, you only reduce your Hunger by 1 no matter how much you eat.
 
 ---
 
@@ -447,7 +447,7 @@ Blood tastes sweeter when flavored by competition. You have a rival (maybe frien
 
 - **Hunting Stat:** +Blood
 - **Discipline:** Presence
-- **Merit:** *Competitive Edge.* The thrill of competition sharpens your instincts. **When you *Hunt* in direct competition with your rival**, take +2 Forward. If you feed before they do, slake an extra 1 Hunger. GG!
+- **Merit:** *Competitive Edge.* The thrill of competition sharpens your instincts. **When you *Hunt* in direct competition with your rival**, take +2 Forward. If you **Feed** before they do, slake an extra 1 Hunger. GG!
 - **Flaw:** *Sore Loser.* Losing stings more than it should, though you might never admit it. **If your rival *Feeds* from your co-target before you do**, take −1 Ongoing to **Feed** until your next successful **Hunt**.
 
 ---
@@ -595,7 +595,7 @@ You have a special spot that you'd just *love* to show someone. Like the inimita
 
 - **Hunting Stat:** +Shadow
 - **Discipline:** Obfuscate
-- **Merit:** *I Don't Bite.* **When you *Hunt* by luring prey to your established location**, you can ask the Storyteller "What would make them feel safest here?" or "How can I get them to trust me?" before you roll. If you incorporate the answer, take +1 Ongoing until you've fed.
+- **Merit:** *I Don't Bite.* **When you *Hunt* by luring prey to your established location**, you can ask the Storyteller "What would make them feel safest here?" or "How can I get them to trust me?" before you roll. If you incorporate the answer, take +1 Ongoing until you've **Fed**.
 - **Flaw:** *Homebody.* You struggle to tackle prey effectively away from your established location. **When you *Hunt* outside your chosen spot**, take −1 Forward.
 
 ---

@@ -53,7 +53,7 @@ Before making a social or investigative roll involving someone you have a Debt w
 **Information & Access:**
 
 - Answer a question honestly (even if it's incriminating or embarrassing)
-- Introduce you to someone useful (their sire, a contact, someone in power, etc.)
+- Introduce you to someone useful (their Sire, a contact, someone in power, etc.)
 - Give you access to a restricted location or resource
 - Share intelligence they've gathered
 
