@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T00:59:09.267Z",
+  "generatedAt": "2026-05-25T09:51:41.886Z",
   "entries": [
     {
-      "name": "Thin-Blood",
-      "embraced": "Within the last decade (~2015–present)",
-      "flavor": "You're just barely a vampire. Caine's blood is so diluted in your veins that other Kindred dismiss you as a mistake, a fluke, or a harbinger of the end times. You don't have the same strengths as proper vampires, but you also don't burn quite as easily in sunlight. You can even eat food without immediately vomiting blood! Other vampires treat you like garbage stuck to the bottom of their shoes, but you're modern, adaptable, and you've got nothing to lose.\n\nYou remember the mortal world perfectly because you literally just left it. Your friends are probably still alive, your family may still think you exist, and you're desperately trying to figure out what the hell happened to your life. Technology isn't a mystery to you; social media, smartphones, and streaming services are all second nature.",
+      "name": "Semimortal",
+      "embraced": "Within the last decade (~2015–present) or not at all (yet)",
+      "flavor": "You're either just barely a vampire or on your way to becoming one. If the latter applies, ignore the next paragraph.\n\nIf the former, Caine's blood is so diluted in your veins that other Kindred dismiss you as a mistake, a fluke, or a harbinger of the end times. You don't have the same strengths as proper vampires, but you also don't burn quite as easily in sunlight. You can even eat food without immediately vomiting blood! Other vampires treat you like garbage stuck to the bottom of their shoes, but you're modern, adaptable, and you've got nothing to lose.\n\nYou remember the mortal world perfectly because you're still in it. Your friends are probably still alive, your family may still think you exist, and you're desperately trying to figure out what the hell happened to your life. Technology isn't a mystery to you; social media, smartphones, and streaming services are all second nature.",
       "startingHumanity": "9",
       "startingBloodPotency": 0,
       "advancement": "Very fast; you're learning rapidly and developing your own unique tricks",
-      "predatorType": "Not chosen at character creation, but earned through play; you haven't settled into a pattern yet",
+      "predatorType": "If playing a Thin-Blood, choose one; if Ghoul, do not",
       "narrativeFeel": "You're scared, hungry, and just trying to survive. Other vampires either ignore you or actively try to kill you (often just for fun). You're probably motivated by some of the same things that drove you in life, and that gives you an edge the older monsters have long forgotten."
     },
     {

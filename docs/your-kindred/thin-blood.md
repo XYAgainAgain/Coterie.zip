@@ -16,7 +16,7 @@ The cost is everything else. You are the lowest rung of recognized Kindred socie
 
 ## Disciplines
 
-You have exclusive access to [**Thin-Blood Alchemy**](../disciplines/thin-blood-alchemy.md), and you can temporarily access level 1 of any other Discipline by drinking the right Vitae.
+You have exclusive access to [**Thin-Blood Alchemy**](../disciplines/thin-blood-alchemy.md), you get another Discipline from your Predator Type, and you can temporarily access level 1 of any other Discipline by drinking the right Vitae.
 
 ## Bane: *Diluted & Disliked*
 

@@ -11,7 +11,6 @@ export type TourStop =
   | 'notebook'
   | 'coterie'
   | 'basic-moves'
-  | 'advancement'
   | 'rules'
   | 'edit-mode';
 
@@ -90,14 +89,6 @@ export const TOUR_STEPS: TourStepDef[] = [
     rightTab: 'moves',
     label: 'Basic Moves',
     message: 'This panel tab lists all 12 of the Basic Moves that you will constantly be using during gameplay. You will be referencing these often. Clicking on one on the left panel will open it here.',
-  },
-  {
-    id: 'advancement',
-    zone: 'right',
-    contentTab: null,
-    rightTab: 'advancement',
-    label: 'Advancement',
-    message: 'This panel tab is where you go to spend your hard-earned XP! Acquire whatever you like whenever you like. New Disciplines and Powers, stat and BP upgrades, and lots more. Everything has its cost listed. Remember, you can only ever have 10 XP at a time, and upgrades do not apply until after your next slumber. Buy before bed.',
   },
   {
     id: 'rules',

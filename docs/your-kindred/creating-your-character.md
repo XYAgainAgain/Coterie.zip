@@ -12,7 +12,7 @@ Your age determines how long you've been undead and how much power you've accumu
 
 **Age Brackets:**
 
-1. Thin-Blood
+1. Semimortal
 2. Fledgling
 3. Neonate
 4. Ancilla
@@ -27,7 +27,7 @@ Your age determines how long you've been undead and how much power you've accumu
 
 !!! tip "Guidance"
 
-    *Most first-time players should start as Fledglings or Neonates. Thin-Bloods are interesting but mechanically fragile. Elders are powerful but require careful roleplay of profound alienation from the modern world. Age diversity within a Coterie is not uncommon.*
+    *Most first-time players should start as Fledglings or Neonates. Semimortals are interesting but mechanically fragile. Elders are powerful but require careful roleplay of profound alienation from the modern world. Age diversity within a Coterie is not uncommon.*
 
 ### 2. Choose (or Eschew) Your Clan
 
@@ -180,5 +180,5 @@ Now comes the hard part: unliving with other vampires. You'll need to work as a 
 | **[Presence](../disciplines/presence.md)** | Enables the user to use subtle manipulation, control, and swaying of emotions to guide others towards a goal. Probably the most commonly-used Discipline, but don't dismiss it — it's quite strong. | [Baali](baali.md), [Brujah](brujah.md), [Daughters of Cacophony](daughter-of-cacophony.md), [Devorari](devorari.md), [Ravnos](ravnos.md), [Toreador](toreador.md), [The Ministry](the-ministry.md), [Ventrue](ventrue.md) |
 | **[Protean](../disciplines/protean.md)** | Grants the ability to change one's shape, grow vicious claws, meld into the earth, or become fog. | [Gangrel](gangrel.md), [Gargoyles](gargoyle.md), [The Ministry](the-ministry.md), [Tzimisce](tzimisce.md) |
 | **[Psychotrophia](../disciplines/psychotrophia.md)** | The ill-studied and frighteningly powerful psionic magic available only to vampires that consume ephemera. It seems able to touch all things except for Kindred, so most don't concern themselves. | [Devorari](devorari.md) |
-| **[Thin-Blood Alchemy](../disciplines/thin-blood-alchemy.md)** | The creation of mixtures of blood, emotions, and other varied ingredients to activate unique effects or even copy other Disciplines. | [Thin-Bloods](thin-blood.md) |
+| **[Thin-Blood Alchemy](../disciplines/thin-blood-alchemy.md)** | The creation of mixtures of blood, emotions, and other varied ingredients to activate unique effects or even copy other Disciplines. | [Thin-Bloods](../the-vampiric-condition/age-brackets.md#semimortal) |
 | **[Visceratika](../disciplines/visceratika.md)** | An extension of the Gargoyles' unnatural bond with stone, granting mastery over rock, earth, and architectural spaces, from chameleon-like camouflage to flowing through solid walls. Oh, and flight. | [Gargoyles](gargoyle.md) |

@@ -1,12 +1,12 @@
-import { creationMode, allStepsComplete } from '../../state/creation';
-import { tourMode } from '../../state/tour';
+import { allStepsComplete } from '../../state/creation';
+import { guideActive, isCreationPhase } from '../../state/guide';
 
 export function SpotlightOverlay() {
-  if (!creationMode.value && !tourMode.value) return null;
+  if (!guideActive.value) return null;
 
   return (
     <div
-      class={`spotlight-overlay ${allStepsComplete.value && !tourMode.value ? 'spotlight-overlay--fading' : ''}`}
+      class={`spotlight-overlay ${allStepsComplete.value && isCreationPhase.value ? 'spotlight-overlay--fading' : ''}`}
     />
   );
 }

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T00:59:09.267Z",
+  "generatedAt": "2026-05-25T09:51:41.886Z",
   "data": {
     "intro": "Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Maybe it's like soup? That would be a terrible texture. Let's move on.!!! warning \"Important Note\"    *Waking from slumber gives you +1 Hunger automatically. Waking from voluntary Torpor sets your Hunger to 5. Yikes!*",
     "tiers": [
@@ -27,7 +27,7 @@
       {
         "level": "5 Hunger",
         "label": "Frenzy",
-        "description": "- **As soon as you reach 5 Hunger and at the start of every turn (every 5 seconds) while you're there,** you must **Stay Chill** or enter Frenzy.\n- In Frenzy, you remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. Some Discipline Powers can activate Frenzy, but most of the time you'll do it to yourself by getting reckless. This is something every Kindred experiences at least once.\n- When you reach 0 Hunger again, the Beast releases you. Your character may not remember exactly what happened during their rampage. They will soon find out.\n- **Age Scaling:**\n    - **Thin-Blood:** Desperate, embarrassing. Starving wretch, not horror movie monster.\n    - **Fledgling:** Violent and dangerous. You will hurt someone.\n    - **Neonate:** Focused and highly dangerous. You will hurt multiple people.\n    - **Ancilla:** Horrifying and efficient. Mortals are like cattle for the slaughter.\n    - **Elder:** Apex predator, a terror in the night. The neighborhood should be afraid."
+        "description": "- **As soon as you reach 5 Hunger and at the start of every turn (every 5 seconds) while you're there,** you must **Stay Chill** or enter Frenzy.\n- In Frenzy, you remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. Some Discipline Powers can activate Frenzy, but most of the time you'll do it to yourself by getting reckless. This is something every Kindred experiences at least once.\n- When you reach 0 Hunger again, the Beast releases you. Your character may not remember exactly what happened during their rampage. They will soon find out.\n- **Age Scaling:**\n    - **Semimortal:** Desperate, embarrassing. May not even happen.\n    - **Fledgling:** Violent and dangerous. You will hurt someone.\n    - **Neonate:** Focused and highly dangerous. You will hurt multiple people.\n    - **Ancilla:** Horrifying and efficient. Mortals are like cattle for the slaughter.\n    - **Elder:** Apex predator, a terror in the night. The neighborhood should be afraid."
       }
     ],
     "sections": [

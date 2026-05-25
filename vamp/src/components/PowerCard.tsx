@@ -29,6 +29,7 @@ export function PowerCard({ entry, atPickLimit, buyInfo }: {
 }) {
   const { power, status, lockReason } = entry;
   const isKnown = status === 'known';
+  const isPending = status === 'pending';
   const rawSnippet = isKnown ? getSnippet('powers', power.name) : null;
   const char = character.value;
   const snippet = rawSnippet ? resolveSnippetTokens(rawSnippet, {
@@ -69,7 +70,10 @@ export function PowerCard({ entry, atPickLimit, buyInfo }: {
         >
           {power.level}
         </span>
-        <span class="vamp-power__name">{power.name}</span>
+        <span class="vamp-power__name">
+          {power.name}
+          {isPending && <span class="vamp-power__pending-note"> (after resting)</span>}
+        </span>
         {power.tags.map(tag => (
           <span class="vamp-power__tag" key={tag}>{tag}</span>
         ))}

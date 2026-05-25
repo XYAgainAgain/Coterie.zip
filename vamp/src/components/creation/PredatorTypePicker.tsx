@@ -12,7 +12,7 @@ export function PredatorTypePicker() {
   const ageBracket = character.value.ageBracket;
 
   const playbook = character.value.playbook;
-  const canSkip = ageBracket === 'Fledgling' || ageBracket === 'Thin-Blood'
+  const canSkip = ageBracket === 'Fledgling'
     || playbook === 'Devorari' || playbook === 'Ghoul';
 
   const filtered = data.predatorTypes.filter(pt =>

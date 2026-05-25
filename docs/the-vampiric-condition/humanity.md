@@ -12,7 +12,7 @@ Humanity is not a spendable resource. You always want as much of it as possible,
 
 **Age Scaling:**
 
-- **Thin-Bloods** & **Ghouls** start at Humanity 9
+- **Semimortals** (Thin-Bloods & Ghouls) start at Humanity 9
 - **Fledglings** start at Humanity 7–8
 - **Neonates** start at Humanity 6
 - **Ancillae** start at Humanity 4–5
@@ -129,4 +129,4 @@ Once triggered, a Compulsion doesn't force specific actions — you still choose
 A Compulsion persists until one of two things happens: you satisfy the urge as described in the specific Compulsion, or the scene ends naturally. You can absolutely choose to tough it out and eat the penalties for an entire scene if your character has the gumption to do so. Just remember that higher Blood Potency means the Beast's influence is harder to ignore.
 
 **Who Gets What:**
-Each Clan Playbook includes its own Compulsion. Some Clanless Playbooks such as Caitiff and Thin-Bloods simply do not have a Compulsion. They already have it rough enough.
+Each Clan Playbook includes its own Compulsion. Some Clanless Playbooks such as Caitiff, Ghoul and Thin-Blood simply do not have a Compulsion. They already have it rough enough.

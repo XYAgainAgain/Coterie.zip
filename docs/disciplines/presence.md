@@ -43,7 +43,7 @@ Against most mortals, no roll is required; they are utterly enraptured.
 
 ### *Lingering Kiss (Passive)*
 
-Mortals you **Feed** on become addicted to your Kiss, even if it stings. They obsess over the experience, seek you out, and go to increasingly desperate lengths to feel it again. The addiction fades slowly over weeks without contact, but a single additional **Feeding** resets the addiction entirely.
+**Mortals you *Feed* on become addicted to your Kiss, even if it stings.** They obsess over the experience, seek you out, and go to increasingly desperate lengths to feel it again. The addiction fades slowly over weeks without contact, but a single additional **Feeding** resets the addiction entirely.
 
 You have Advantage on all social rolls against mortals craving your sweet Kiss. The Storyteller is encouraged to introduce addicted mortals as recurring complications, willing accomplices, or inconvenient admirers at dramatically appropriate moments.
 

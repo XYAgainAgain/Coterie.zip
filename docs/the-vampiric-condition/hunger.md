@@ -34,7 +34,7 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 - In Frenzy, you remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. Some Discipline Powers can activate Frenzy, but most of the time you'll do it to yourself by getting reckless. This is something every Kindred experiences at least once.
 - When you reach 0 Hunger again, the Beast releases you. Your character may not remember exactly what happened during their rampage. They will soon find out.
 - **Age Scaling:**
-    - **Thin-Blood:** Desperate, embarrassing. Starving wretch, not horror movie monster.
+    - **Semimortal:** Desperate, embarrassing. May not even happen.
     - **Fledgling:** Violent and dangerous. You will hurt someone.
     - **Neonate:** Focused and highly dangerous. You will hurt multiple people.
     - **Ancilla:** Horrifying and efficient. Mortals are like cattle for the slaughter.

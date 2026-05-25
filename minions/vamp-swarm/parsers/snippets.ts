@@ -38,7 +38,7 @@ export function parseSnippets(repoRoot: string): SnippetEntry[] {
     const h3 = line.match(H3_RE);
     if (h3) {
       flush();
-      currentName = h3[1].trim();
+      currentName = h3[1].trim().replace(/\s*\(Passive\)\s*$/, '');
       bodyLines = [];
       continue;
     }

@@ -8,23 +8,25 @@ Your age as a vampire determines far more than just how many decades of darkness
 
     *These ages (and some other rules) assume you are playing **Coterie** in the Western world and modern era with smartphones, the internet, and similar parts of our current real lives. If your game takes place in a different setting, ignore the set dates and adjust as-needed.*
 
-## Thin-Blood
+## Semimortal
 
-**Embraced:** Within the last decade (~2015–present)
+**Embraced:** Within the last decade (~2015–present) or not at all (yet)
 
-You're just barely a vampire. Caine's blood is so diluted in your veins that other Kindred dismiss you as a mistake, a fluke, or a harbinger of the end times. You don't have the same strengths as proper vampires, but you also don't burn quite as easily in sunlight. You can even eat food without immediately vomiting blood! Other vampires treat you like garbage stuck to the bottom of their shoes, but you're modern, adaptable, and you've got nothing to lose.
+You're either just barely a vampire or on your way to becoming one. If the latter applies, ignore the next paragraph.
 
-You remember the mortal world perfectly because you literally just left it. Your friends are probably still alive, your family may still think you exist, and you're desperately trying to figure out what the hell happened to your life. Technology isn't a mystery to you; social media, smartphones, and streaming services are all second nature.
+If the former, Caine's blood is so diluted in your veins that other Kindred dismiss you as a mistake, a fluke, or a harbinger of the end times. You don't have the same strengths as proper vampires, but you also don't burn quite as easily in sunlight. You can even eat food without immediately vomiting blood! Other vampires treat you like garbage stuck to the bottom of their shoes, but you're modern, adaptable, and you've got nothing to lose.
+
+You remember the mortal world perfectly because you're still in it. Your friends are probably still alive, your family may still think you exist, and you're desperately trying to figure out what the hell happened to your life. Technology isn't a mystery to you; social media, smartphones, and streaming services are all second nature.
 
 - **Starting Humanity:** 9
 - **Starting Blood Potency:** 0
 - **Advancement:** Very fast; you're learning rapidly and developing your own unique tricks
-- **Predator Type:** Not chosen at character creation, but earned through play; you haven't settled into a pattern yet
+- **Predator Type:** If playing a Thin-Blood, choose one; if Ghoul, do not
 - **Narrative Feel:** You're scared, hungry, and just trying to survive. Other vampires either ignore you or actively try to kill you (often just for fun). You're probably motivated by some of the same things that drove you in life, and that gives you an edge the older monsters have long forgotten.
 
 !!! warning "Important Note"
 
-    *The [**Thin-Blood**](#thin-blood) is both an age bracket AND a Clanless Playbook. If you wish to play a full vampire that was Embraced within the Thin-Blood timeline, choose Fledgling and don't worry about it — you lucked out with your sire! The [**Ghoul**](../your-kindred/ghoul.md) Playbook inherits the Thin-Blood's Humanity and Blood Potency, but since they haven't been Embraced yet, their BP cannot increase. More details can be found in that Playbook.*
+    *This is for the [**Thin-Blood**](../your-kindred/thin-blood.md) and [**Ghoul**](../your-kindred/ghoul.md) Playbooks (and possibly others to come later). If you wish to play a full vampire that was Embraced within the Thin-Blood timeline, choose Fledgling and don't worry about it — you lucked out with your sire! Since Ghouls haven't been Embraced yet and Thin-Bloods have what their name implies, their BP cannot increase. If you're playing a Ghoul, just pick a regular numeric age!*
 
 ## Fledgling
 

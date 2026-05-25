@@ -10,7 +10,7 @@ Blood Potency is rated on a scale of 0–5. It can be increased by 1 by spending
 
 Blood Potency is tied directly to how long you've been undead (or in the Devorari's case, how long you've been slurping down ephemera like noodles). Younger vampires start weaker but grow quickly; older ones start powerful but plateau hard. The starting values are:
 
-- **Thin-Blood/Ghoul:** BP 0
+- **Semimortal:** BP 0
 - **Fledgling:** BP 1
 - **Neonate:** BP 2
 - **Ancilla:** BP 3

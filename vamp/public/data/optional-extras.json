@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T00:59:09.267Z",
+  "generatedAt": "2026-05-25T09:51:41.886Z",
   "data": {
     "clanBaneVariantsIntro": "Each of the 14 Clans has a variant Bane, which you may take as an alternative to the usual one with the approval of the Storyteller. For a bit of additional challenge, with the Storyteller's permission, you may opt to suffer from both of your Clan's Banes in exchange for 5 XP. All Banes are permanent and cannot be removed. This XP must be spent by the end of your first slumber or it is lost.",
     "clanBaneVariants": [
@@ -573,7 +573,7 @@
       {
         "name": "Nuit Mode",
         "category": "The Curse",
-        "limit": "BP 1 or lower",
+        "limit": "BP 2 or lower",
         "description": "Your body still responds to deliberate cosmetic changes. **Haircuts, tattoos, piercings, dye jobs, and similar modifications persist** instead of reverting when you sleep. Higher-BP vamps revert to their state at the time of the Embrace, but you get to keep evolving your look. Small mercy, big deal. Go tat Shrek on your knee, I dare you.",
         "xpCost": "1"
       },
@@ -761,28 +761,28 @@
       },
       {
         "name": "Unseemly Aura",
-        "category": "Low-Potency Playbooks (Ghoul)",
+        "category": "Semimortal Playbooks (Ghoul)",
         "limit": "Only Ghouls",
         "description": "**Your aura reads as Kindred to anyone using Auspex or similar perception abilities**, not mortal. You register as a vampire even though you aren't one. This can be useful for blending in at Kindred gatherings, but dangerous if a real vampire decides to test whether you're actually one of them. Or you're into that sort of thing. What do I know? I'm just a sassy rulebook.",
         "xpCost": "1"
       },
       {
         "name": "Blood Empathy",
-        "category": "Low-Potency Playbooks (Ghoul)",
+        "category": "Semimortal Playbooks (Ghoul)",
         "limit": "Only Ghouls",
         "description": "**When your patron is in physical danger**, you feel it as a spike of adrenaline, a phantom pain, and a sudden overwhelming dread. The sensation is vague (no location, no details) but unmistakable. You always know when they're in trouble, regardless of distance. Whether you can get to them in time is another matter entirely.",
         "xpCost": "2"
       },
       {
         "name": "Vampiric Resilience",
-        "category": "Low-Potency Playbooks (Thin-Blood)",
+        "category": "Semimortal Playbooks (Thin-Blood)",
         "limit": "Only Thin-Bloods",
         "description": "**You take Harm like a full vampire.** Bullets, blades, and blunt trauma inflict Superficial Harm on you instead of the Aggravated Harm that normally applies to Thin-Bloods. You still take Aggravated from fire, sunlight, and supernatural sources like everyone else you try to hang out with. You're tougher than you look, which is good because you look like a soft breeze could kill you. *Twerp.*",
         "xpCost": "2"
       },
       {
         "name": "Day Drinker",
-        "category": "Low-Potency Playbooks (Thin-Blood)",
+        "category": "Semimortal Playbooks (Thin-Blood)",
         "limit": "Only Thin-Bloods",
         "description": "**You can walk in sunlight without taking any Harm at all.** Your Blood is dilute enough that the sun can't burn you. While in direct sunlight, your maximum HP is halved (round down) and you cannot use any Discipline Powers. You are, for all practical purposes, a fragile mortal who happens to need blood instead of beef jerky and cheese. But you can watch the sun rise, so that's pretty cool.",
         "xpCost": "3"
@@ -975,7 +975,7 @@
         "name": "Cormorant",
         "category": "Meal Deals",
         "limit": "—",
-        "description": "You just don't know when to stop, or possibly don't care. **When you *Feed* and roll a 7–9 or 6-**, the Storyteller always applies \"you take too much\" as a complication. On a 6-, you drain them to the point of serious injury or death automatically. The Beast relishes every sip.",
+        "description": "You just don't know when to stop, or possibly don't care. **When you *Feed* and roll a 7–9 or 6-**, the Storyteller always applies \"you take too much\" as a complication. **On a 6-,** you drain them to the point of serious injury or death automatically. The Beast relishes every sip.",
         "xpGain": "3"
       },
       {
@@ -1386,35 +1386,35 @@
       },
       {
         "name": "Distressing Fangs",
-        "category": "Low-Potency Playbooks (Ghoul)",
+        "category": "Semimortal Playbooks (Ghoul)",
         "limit": "Only Ghouls",
         "description": "You've developed small but visible fangs from prolonged Vitae consumption. **When you smile, speak, or eat in front of mortals**, the Storyteller may impose −1 Forward to social rolls if your teeth are noticeable. They're not as dramatic as a Kindred's, but they're definitely not normal. Four out of five dentists will text their dentist friends about it.",
         "xpGain": "1"
       },
       {
         "name": "Baneful Blood",
-        "category": "Low-Potency Playbooks (Ghoul)",
+        "category": "Semimortal Playbooks (Ghoul)",
         "limit": "Only Ghouls",
         "description": "You carry your patron's curse in your veins. **Your patron's Bane applies to you** as if your BP were 1, and it scales with their Blood Potency, not yours. If your patron is a Nosferatu, you're a little uglier. If they're Ventrue, you're a little pickier about things. If they're Toreador, you like opera now. The gift that keeps on giving.",
         "xpGain": "2"
       },
       {
         "name": "Crone's Curse",
-        "category": "Low-Potency Playbooks (Ghoul)",
+        "category": "Semimortal Playbooks (Ghoul)",
         "limit": "Only Ghouls",
         "description": "Contrary to the usual Ghoul age-stagnation, your body has aged decades beyond your actual years. **You appear elderly or frail regardless of your real age**, and your maximum HP is reduced by 2 (to a minimum of 4). Mortals assume you're just old and in rough shape. Kindred assume you've been a Ghoul for a very, very, *very* long time. Neither assumption is necessarily wrong; that's up to you to decide!",
         "xpGain": "2"
       },
       {
         "name": "Dead Flesh",
-        "category": "Low-Potency Playbooks (Thin-Blood)",
+        "category": "Semimortal Playbooks (Thin-Blood)",
         "limit": "Only Thin-Bloods",
         "description": "**Medical examination identifies you as deceased, as it turns out.** No heartbeat, no body heat, no vital signs, no sputum. Unlike most Thin-Bloods (who can usually pass basic medical checks), your body reads as a corpse to any trained professional. Blood tests, autopsies, and hospital visits are all off the table unless you want to become somebody's PhD.",
         "xpGain": "1"
       },
       {
         "name": "Bestial Temper",
-        "category": "Low-Potency Playbooks (Thin-Blood)",
+        "category": "Semimortal Playbooks (Thin-Blood)",
         "limit": "Only Thin-Bloods",
         "description": "**You Frenzy like a full vampire.** When your Hunger reaches 5, the Beast takes over just as it would for a full-blooded Kindred. Most Thin-Bloods simply get desperate and pathetic at 5 Hunger; you get violent and dangerous like all the cool vamps do. This is a Flaw for the people around you but arguably a Merit for your survival odds. Have fun!",
         "xpGain": "2"

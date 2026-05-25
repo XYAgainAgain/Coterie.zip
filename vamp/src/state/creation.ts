@@ -43,7 +43,7 @@ export const STEP_MESSAGES: Record<CreationStep, string> = {
   predator: "Now you must select how you **Hunt** for prey. This will give you access to an additional Discipline, or possibly duplicate one of the ones already available to you, and will determine which stat you use for the **Hunt** Basic Move. They also grant a Merit and a Flaw each, and some even affect your starting Humanity.",
   disciplines: "These are the categories of vampiric abilities you have access to. Select as many as you are allowed to — many Clanless Playbooks grant exclusive Discipline access plus allow you other choices. You will also receive one (or have one duplicated) by your Predator Type. You may choose **one Power per level you can access!** If a Discipline is duplicated by your Predator Type, you can select one additional Power of any level you can access for free, as long as you meet its requirements.",
   convictions: "These are Always or Never statements that align with the morals of your character. Each one has an associated Touchstone, a mortal who represents or embodies each Conviction. These are critical to keeping your Humanity at a decent level, and for injecting drama into lots of scenes. Come up with 1–3, but no more.",
-  xp: "Depending upon your Blood Potency, you will receive a budget of starting XP. You can get more by voluntarily taking on Flaws or Folkloric Banes, and spend it on lots of different things, like BP increases, Advanced versions of Basic Moves, Discipline access and Powers, and lots more.",
+  xp: "Depending upon your Blood Potency, you will receive a budget of starting XP. You can get more by voluntarily taking on Flaws or Folkloric Banes, and spend it on lots of different things, like BP increases, Advanced versions of Basic Moves, Discipline access and Powers, and lots more. This is the Advancement panel; you will return here during play to spend XP as you earn it. Remember: you can only ever hold 10 XP at a time, and upgrades do not apply until after your next slumber.",
 };
 
 export const STEP_WARNINGS: Record<CreationStep, string> = {
@@ -60,7 +60,7 @@ export const creationMode = signal(false);
 export const creationStep = signal<CreationStep>('name');
 export const namePromptAnswered = signal(false);
 
-const PREDATOR_SKIP_AGE = new Set(['Fledgling', 'Thin-Blood']);
+const PREDATOR_SKIP_AGE = new Set(['Fledgling']);
 const PREDATOR_SKIP_PLAYBOOK = new Set(['Devorari', 'Ghoul']);
 
 function predatorSkippable(ageBracket: string, playbook: string): boolean {

@@ -12,7 +12,7 @@ export interface Toast {
 export const toasts = signal<Toast[]>([]);
 
 let nextToastId = 1;
-const DISMISS_MS = 5_000;
+const DISMISS_MS = 8_000;
 
 export function showToast(message: string, type: 'error' | 'warning' = 'error') {
   const id = nextToastId++;

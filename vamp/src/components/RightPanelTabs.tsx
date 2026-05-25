@@ -20,7 +20,131 @@ import { activeCoterie, createCoterie, joinCoterie, BLANK_CHARACTER } from '../s
 import { EditableText } from './EditableText';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
 import { COTERIE_STAT_NAMES } from '../data/types';
-import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife } from '../data/types';
+import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife, Merit, Flaw } from '../data/types';
+import type { CharacterState } from '../state/character';
+
+function groupByCategory<T extends { category: string }>(items: T[]): [string, T[]][] {
+  const map = new Map<string, T[]>();
+  for (const item of items) {
+    const list = map.get(item.category);
+    if (list) list.push(item);
+    else map.set(item.category, [item]);
+  }
+  return [...map.entries()];
+}
+
+function checkLimitEligibility(
+  limit: string,
+  char: CharacterState,
+): boolean {
+  if (limit === '—' || limit === '—') return true;
+
+  /* "Requires X access" */
+  const reqAccess = limit.match(/^Requires\s+(.+?)\s+access$/i);
+  if (reqAccess) {
+    const disc = reqAccess[1].toLowerCase().replace(/\s+/g, '-');
+    return char.unlockedDisciplines.some(d => d.toLowerCase().replace(/\s+/g, '-') === disc);
+  }
+
+  /* "BP N or lower" / "BP N or higher" / "BP N+" */
+  const bpLow = limit.match(/^BP\s+(\d+)\s+or\s+lower$/i);
+  if (bpLow) return char.bp <= parseInt(bpLow[1]);
+  const bpHigh = limit.match(/^BP\s+(\d+)(?:\s+or\s+higher|\+)$/i);
+  if (bpHigh) return char.bp >= parseInt(bpHigh[1]);
+
+  /* "Unavailable to X" (Playbook or Predator Type name) */
+  const unavail = limit.match(/^Unavailable to\s+(.+)$/i);
+  if (unavail) {
+    const targets = unavail[1].split(/(?:,\s*|\s+(?:and|&)\s+)/i)
+      .map(s => s.replace(/\*/g, '').replace(/\s+Predator\s+Type$/i, '').trim());
+    for (const t of targets) {
+      if (t.toLowerCase() === char.playbook.toLowerCase()) return false;
+      if (t.toLowerCase() === char.predatorType.toLowerCase()) return false;
+      /* "Nosferatu with *Monstrous Visage* Bane" */
+      const withBane = t.match(/^(.+?)\s+with\s+(?:the\s+)?(.+?)\s+(?:Variant\s+)?Bane$/i);
+      if (withBane) {
+        const pb = withBane[1].trim();
+        if (pb.toLowerCase() === char.playbook.toLowerCase() && char.baneChoice !== 'standard') return false;
+      }
+      /* "anyone incapable of the Embrace" */
+      if (/incapable of the Embrace/i.test(t)) {
+        if (['Ghoul', 'Thin-Blood', 'Osirian'].includes(char.playbook)) return false;
+      }
+    }
+    return true;
+  }
+
+  /* "Requires *X* or *Y* Predator Type" */
+  const reqPT = limit.match(/^Requires\s+(.+?)\s+Predator\s+Type$/i);
+  if (reqPT) {
+    const pts = reqPT[1].split(/(?:,\s*|\s+or\s+)/i).map(s => s.replace(/\*/g, '').trim());
+    return pts.some(p => p.toLowerCase() === char.predatorType.toLowerCase());
+  }
+
+  /* "Requires Toreador or Daughter of Cacophony" (Playbook requirement) */
+  const reqPB = limit.match(/^Requires\s+(.+)$/i);
+  if (reqPB && !reqPB[1].includes('access') && !reqPB[1].includes('Predator')) {
+    const pbs = reqPB[1].split(/(?:,\s*|\s+or\s+)/i).map(s => s.replace(/\*/g, '').trim());
+    return pbs.some(p => p.toLowerCase() === char.playbook.toLowerCase());
+  }
+
+  /* "X Only" */
+  const onlyMatch = limit.match(/^(.+?)\s+Only$/i);
+  if (onlyMatch) return onlyMatch[1].replace(/\*/g, '').trim().toLowerCase() === char.playbook.toLowerCase();
+
+  /* "Can't have *X* Merit/Flaw" */
+  const cantHave = limit.match(/^Can'?t\s+have\s+\*?(.+?)\*?\s+(?:Merit|Flaw)$/i);
+  if (cantHave) {
+    const name = cantHave[1].trim();
+    return !char.merits.some(m => m.name === name) && !char.flaws.some(f => f.name === name);
+  }
+
+  /* "Requires *X*" (prerequisite: another Merit, Flaw, or Folkloric Bane) */
+  const reqItem = limit.match(/^Requires\s+\*(.+?)\*(?:\s+Folkloric\s+Bane)?$/i);
+  if (reqItem) {
+    const name = reqItem[1].trim();
+    return char.merits.some(m => m.name === name)
+      || char.flaws.some(f => f.name === name)
+      || char.folkloricBanes.some(b => b.baneName === name);
+  }
+
+  /* Combined rules like "BP 3+, unavailable to *Orbiter* Predator Type" */
+  if (limit.includes(',')) {
+    return limit.split(',').map(s => s.trim()).every(part => checkLimitEligibility(part, char));
+  }
+
+  return true;
+}
+
+function checkMeritEligibility(merit: Merit, char: CharacterState): boolean {
+  return checkLimitEligibility(merit.limit, char);
+}
+
+function checkFlawEligibility(flaw: Flaw, char: CharacterState): boolean {
+  return checkLimitEligibility(flaw.limit, char);
+}
+
+const CLAN_PLAYBOOKS = [
+  'Banu Haqim', 'Brujah', 'Gangrel', 'Hecata', 'Lasombra', 'Malkavian',
+  'The Ministry', 'Nosferatu', 'Ravnos', 'Salubri', 'Toreador', 'Tremere',
+  'Tzimisce', 'Ventrue',
+];
+
+type SubSelectionDef = { options: string[] | ((char: CharacterState) => string[]) };
+
+const SUB_SELECTIONS: Record<string, SubSelectionDef> = {
+  'Fight or Flight': { options: ['Fight', 'Flight'] },
+  'Peculiarly Off-Putting': { options: (char) => CLAN_PLAYBOOKS.filter(c => c !== char.playbook) },
+  'Inherited Bane': { options: (char) => CLAN_PLAYBOOKS.filter(c => c !== char.playbook) },
+  'Narrow Appetence': { options: ['Choleric', 'Melancholic', 'Sanguine', 'Phlegmatic'] },
+  'Baneful Blood': { options: [...CLAN_PLAYBOOKS] },
+};
+
+function getSubSelectionOptions(name: string, char: CharacterState): string[] | null {
+  const def = SUB_SELECTIONS[name];
+  if (!def) return null;
+  return typeof def.options === 'function' ? def.options(char) : def.options;
+}
 
 const STAT_ABBREV: Record<string, string> = {
   Blood: 'BLD', Shadow: 'SHA', Resolve: 'RES', Demeanor: 'DEM', Wits: 'WIT',
@@ -762,7 +886,7 @@ function PredatorTypeSection({ creating }: { creating: boolean }) {
   const data = gameData.value;
   const char = character.value;
 
-  const canSkip = char.ageBracket === 'Fledgling' || char.ageBracket === 'Thin-Blood'
+  const canSkip = char.ageBracket === 'Fledgling'
     || char.playbook === 'Devorari' || char.playbook === 'Ghoul';
 
   const title = creating ? (
@@ -855,11 +979,14 @@ function tierLabel(tier: string): string {
 
 const BLUSH_COLORS = ['#e8a0b0', '#d8a0b8', '#c8a4c0', '#b8a8c0', '#a8acc0', '#a0b0c8', '#c8c8d0'];
 
-function MoveSection({ move, expanded, onToggle, sectionRef }: {
+function MoveSection({ move, expanded, onToggle, sectionRef, isAdvanced, onBuy, onAdd }: {
   move: BasicMove;
   expanded: boolean;
   onToggle: () => void;
   sectionRef?: (el: HTMLElement | null) => void;
+  isAdvanced: boolean;
+  onBuy?: () => void;
+  onAdd?: () => void;
 }) {
   const isBlush = move.type === 'blush-of-life';
   const std = isBlush ? null : move as StandardMove;
@@ -868,9 +995,20 @@ function MoveSection({ move, expanded, onToggle, sectionRef }: {
   return (
     <div class={`vamp-move-section ${expanded ? 'vamp-move-section--open' : ''}`} ref={sectionRef}>
       <div class="vamp-move-section__bar" onClick={onToggle}>
-        <span class="vamp-move-section__name">{move.name}</span>
+        <span class={`vamp-move-section__name ${isAdvanced ? 'vamp-move-section__name--advanced' : ''}`}>{move.name}</span>
         {std?.rollStat && <span class="vamp-move-section__badge">{formatRollStat(std.rollStat)}</span>}
         {isBlush && <span class="vamp-move-section__badge">Special</span>}
+        {!isAdvanced && onBuy && (
+          <button class="vamp-btn vamp-btn--sm vamp-btn--buy vamp-move-section__buy"
+            disabled={character.value.xp < 5}
+            onClick={(e) => { e.stopPropagation(); onBuy(); }}
+          >BUY (5 XP)</button>
+        )}
+        {!isAdvanced && onAdd && (
+          <button class="vamp-btn vamp-btn--sm vamp-move-section__add"
+            onClick={(e) => { e.stopPropagation(); onAdd(); }}
+          >ADD (via ST)</button>
+        )}
       </div>
 
       {expanded && (
@@ -898,15 +1036,22 @@ function MoveSection({ move, expanded, onToggle, sectionRef }: {
             </div>
           )}
 
-          {std?.outcomes && std.outcomes.map(o => (
-            <div class={`vamp-move-tier ${tierClass(o.tier)}`} key={o.tier}>
-              <div class="vamp-move-tier__label">{tierLabel(o.tier)}</div>
-              <div
-                class="vamp-move-tier__content"
-                dangerouslySetInnerHTML={{ __html: renderGameMarkdown(capitalizeFirst(o.content)) }}
-              />
-            </div>
-          ))}
+          {std?.outcomes && std.outcomes.map(o => {
+            const is12 = o.tier.startsWith('12');
+            const locked12 = is12 && !isAdvanced;
+            return (
+              <div class={`vamp-move-tier ${tierClass(o.tier)} ${locked12 ? 'vamp-move-tier--locked' : ''}`} key={o.tier}>
+                <div class="vamp-move-tier__label">
+                  {tierLabel(o.tier)}
+                  {locked12 && <span class="vamp-move-tier__lock-note"> (requires Advancement)</span>}
+                </div>
+                <div
+                  class="vamp-move-tier__content"
+                  dangerouslySetInnerHTML={{ __html: renderGameMarkdown(capitalizeFirst(o.content)) }}
+                />
+              </div>
+            );
+          })}
 
           {blush && blush.humanityThresholds.map((t, i) => (
             <div
@@ -925,8 +1070,11 @@ function MoveSection({ move, expanded, onToggle, sectionRef }: {
           ))}
 
           {blush?.advanced && (
-            <div class="vamp-move-tier vamp-move-tier--12">
-              <div class="vamp-move-tier__label">Advanced: 12+</div>
+            <div class={`vamp-move-tier vamp-move-tier--12 ${!isAdvanced ? 'vamp-move-tier--locked' : ''}`}>
+              <div class="vamp-move-tier__label">
+                Advanced: 12+
+                {!isAdvanced && <span class="vamp-move-tier__lock-note"> (requires Advancement)</span>}
+              </div>
               <div
                 class="vamp-move-tier__content"
                 dangerouslySetInnerHTML={{ __html: renderGameMarkdown(capitalizeFirst(blush.advanced)) }}
@@ -961,6 +1109,24 @@ function MovesPanel() {
     expandedMove.value = expandedMove.value === name ? null : name;
   }
 
+  const isEdit = editMode.value;
+  const char = character.value;
+
+  function buyAdvancedMove(name: string) {
+    const cur = character.value;
+    if (cur.xp < 5 || cur.advancedMoves.includes(name)) return;
+    updateCharacter({
+      advancedMoves: [...cur.advancedMoves, name],
+      xp: cur.xp - 5,
+    });
+  }
+
+  function addAdvancedMove(name: string) {
+    const cur = character.value;
+    if (cur.advancedMoves.includes(name)) return;
+    updateCharacter({ advancedMoves: [...cur.advancedMoves, name] });
+  }
+
   return (
     <div class="vamp-rpanel-scroll" ref={scrollRef}>
       {moves.map(m => (
@@ -970,6 +1136,9 @@ function MovesPanel() {
           expanded={expandedMove.value === m.name}
           onToggle={() => toggle(m.name)}
           sectionRef={el => { sectionRefs.current[m.name] = el; }}
+          isAdvanced={char.advancedMoves.includes(m.name)}
+          onBuy={isEdit ? () => buyAdvancedMove(m.name) : undefined}
+          onAdd={isEdit ? () => addAdvancedMove(m.name) : undefined}
         />
       ))}
     </div>
@@ -1058,6 +1227,16 @@ function AdvancementPanel() {
         ...(isCreation ? { xp: Math.min(10, cur.xp + gain) } : {}),
       });
     }
+  }
+
+  function setMeritSelection(name: string, selection: string) {
+    const cur = character.value;
+    updateCharacter({ merits: cur.merits.map(m => m.name === name ? { ...m, selection } : m) });
+  }
+
+  function setFlawSelection(name: string, selection: string) {
+    const cur = character.value;
+    updateCharacter({ flaws: cur.flaws.map(f => f.name === name ? { ...f, selection } : f) });
   }
 
   function toggleFolkloricBane(baneName: string, xpGain: string) {
@@ -1233,17 +1412,34 @@ function AdvancementPanel() {
                 {meritFlawCount}/{meritFlawCap} Merits + Flaws combined
               </p>
             )}
-            {optExtras.merits.map(merit => {
-              const selected = char.merits.some(m => m.name === merit.name);
-              const disabled = !selected && (atMeritFlawCap || (isCreation && char.xp < parseXPValue(merit.xpCost)));
+            {groupByCategory(optExtras.merits).map(([cat, items]) => {
+              const visible = items.filter(m =>
+                char.merits.some(x => x.name === m.name) || checkMeritEligibility(m, char),
+              );
+              if (visible.length === 0) return null;
               return (
-                <MeritRow
-                  key={merit.name}
-                  merit={merit}
-                  selected={selected}
-                  disabled={disabled}
-                  onToggle={() => toggleMerit(merit.name, merit.xpCost)}
-                />
+                <div key={cat} class="vamp-adv-category-group">
+                  <div class="vamp-adv-category-group__heading">{cat}</div>
+                  {visible.map(merit => {
+                    const sel = char.merits.find(m => m.name === merit.name);
+                    const selected = !!sel;
+                    const eligible = checkMeritEligibility(merit, char);
+                    const disabled = !selected && (!eligible || atMeritFlawCap || (isCreation && char.xp < parseXPValue(merit.xpCost)));
+                    const opts = getSubSelectionOptions(merit.name, char);
+                    return (
+                      <MeritRow
+                        key={merit.name}
+                        merit={merit}
+                        selected={selected}
+                        disabled={disabled}
+                        onToggle={() => toggleMerit(merit.name, merit.xpCost)}
+                        subOptions={opts}
+                        selection={sel?.selection}
+                        onSelectionChange={(v) => setMeritSelection(merit.name, v)}
+                      />
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -1258,17 +1454,34 @@ function AdvancementPanel() {
                 {meritFlawCount}/{meritFlawCap} Merits + Flaws combined
               </p>
             )}
-            {optExtras.flaws.map(flaw => {
-              const selected = char.flaws.some(f => f.name === flaw.name);
-              const disabled = !selected && atMeritFlawCap;
+            {groupByCategory(optExtras.flaws).map(([cat, items]) => {
+              const visible = items.filter(f =>
+                char.flaws.some(x => x.name === f.name) || checkFlawEligibility(f, char),
+              );
+              if (visible.length === 0) return null;
               return (
-                <FlawRow
-                  key={flaw.name}
-                  flaw={flaw}
-                  selected={selected}
-                  disabled={disabled}
-                  onToggle={() => toggleFlaw(flaw.name, flaw.xpGain)}
-                />
+                <div key={cat} class="vamp-adv-category-group">
+                  <div class="vamp-adv-category-group__heading">{cat}</div>
+                  {visible.map(flaw => {
+                    const sel = char.flaws.find(f => f.name === flaw.name);
+                    const selected = !!sel;
+                    const eligible = checkFlawEligibility(flaw, char);
+                    const disabled = !selected && (!eligible || atMeritFlawCap);
+                    const opts = getSubSelectionOptions(flaw.name, char);
+                    return (
+                      <FlawRow
+                        key={flaw.name}
+                        flaw={flaw}
+                        selected={selected}
+                        disabled={disabled}
+                        onToggle={() => toggleFlaw(flaw.name, flaw.xpGain)}
+                        subOptions={opts}
+                        selection={sel?.selection}
+                        onSelectionChange={(v) => setFlawSelection(flaw.name, v)}
+                      />
+                    );
+                  })}
+                </div>
               );
             })}
           </div>
@@ -1377,18 +1590,44 @@ function FolkloricBaneRow({ bane, selected, disabled, onToggle }: {
   );
 }
 
-function MeritRow({ merit, selected, disabled, onToggle }: {
-  merit: { name: string; category: string; limit: string; description: string; xpCost: string };
+function SubSelectionDropdown({ options, selection, onChange }: {
+  options: string[];
+  selection?: string;
+  onChange: (val: string) => void;
+}) {
+  return (
+    <div class="vamp-adv-extra-row__sub-select">
+      <select
+        class="creation-dropdown creation-dropdown--sm"
+        value={selection || ''}
+        onClick={(e) => e.stopPropagation()}
+        onChange={(e) => onChange((e.target as HTMLSelectElement).value)}
+      >
+        <option value="" disabled>Choose...</option>
+        {options.map(o => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </div>
+  );
+}
+
+function MeritRow({ merit, selected, disabled, onToggle, subOptions, selection, onSelectionChange }: {
+  merit: Merit;
   selected: boolean;
   disabled: boolean;
   onToggle: () => void;
+  subOptions?: string[] | null;
+  selection?: string;
+  onSelectionChange?: (val: string) => void;
 }) {
   const expanded = useSignal(false);
   return (
     <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
       <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
         <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
-        <span class="vamp-adv-extra-row__name">{merit.name}</span>
+        <span class="vamp-adv-extra-row__name">
+          {merit.name}
+          {selected && selection && <span class="vamp-adv-extra-row__selection"> ({selection})</span>}
+        </span>
         <span class="vamp-adv-extra-row__cost">{merit.xpCost} XP</span>
         <button
           class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
@@ -1398,6 +1637,9 @@ function MeritRow({ merit, selected, disabled, onToggle }: {
           {selected ? 'Remove' : 'Take'}
         </button>
       </div>
+      {selected && subOptions && subOptions.length > 0 && onSelectionChange && (
+        <SubSelectionDropdown options={subOptions} selection={selection} onChange={onSelectionChange} />
+      )}
       {expanded.value && (
         <div class="vamp-adv-extra-row__body">
           <div class="vamp-adv-extra-row__meta">
@@ -1411,18 +1653,24 @@ function MeritRow({ merit, selected, disabled, onToggle }: {
   );
 }
 
-function FlawRow({ flaw, selected, disabled, onToggle }: {
-  flaw: { name: string; category: string; limit: string; description: string; xpGain: string };
+function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, onSelectionChange }: {
+  flaw: Flaw;
   selected: boolean;
   disabled: boolean;
   onToggle: () => void;
+  subOptions?: string[] | null;
+  selection?: string;
+  onSelectionChange?: (val: string) => void;
 }) {
   const expanded = useSignal(false);
   return (
     <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
       <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
         <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
-        <span class="vamp-adv-extra-row__name">{flaw.name}</span>
+        <span class="vamp-adv-extra-row__name">
+          {flaw.name}
+          {selected && selection && <span class="vamp-adv-extra-row__selection"> ({selection})</span>}
+        </span>
         <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">{flaw.xpGain}</span>
         <button
           class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
@@ -1432,6 +1680,9 @@ function FlawRow({ flaw, selected, disabled, onToggle }: {
           {selected ? 'Remove' : 'Take'}
         </button>
       </div>
+      {selected && subOptions && subOptions.length > 0 && onSelectionChange && (
+        <SubSelectionDropdown options={subOptions} selection={selection} onChange={onSelectionChange} />
+      )}
       {expanded.value && (
         <div class="vamp-adv-extra-row__body">
           <div class="vamp-adv-extra-row__meta">

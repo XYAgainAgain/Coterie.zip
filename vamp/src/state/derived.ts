@@ -169,7 +169,7 @@ const BP_STAT_CAP: Record<number, number> = { 0: 3, 1: 3, 2: 3, 3: 4, 4: 5, 5: 5
 export const maxHP = computed(() => BP_HP[character.value.bp] ?? 6);
 export const statCap = computed(() => BP_STAT_CAP[character.value.bp] ?? 3);
 
-export type PowerStatus = 'known' | 'available' | 'locked';
+export type PowerStatus = 'known' | 'pending' | 'available' | 'locked';
 
 export interface PowerWithStatus {
   power: Power;
@@ -192,6 +192,10 @@ export function getPowerStatus(power: Power, disciplineSlug: string): PowerWithS
 
   if (char.knownPowers.includes(power.name)) {
     return { power, status: 'known', lockReason: null, prerequisites: prereqs };
+  }
+
+  if (char.pendingUpgrades.some(u => u.type === 'discipline-power' && u.powerName === power.name)) {
+    return { power, status: 'pending', lockReason: null, prerequisites: prereqs };
   }
 
   if (power.level > discBP) {

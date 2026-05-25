@@ -6,7 +6,7 @@ import {
 } from '../state/derived';
 import { character, updateCharacter, setXP, learnPower, addPendingUpgrade } from '../state/character';
 import { creationMode, creationStep } from '../state/creation';
-import { disciplineBuyMode, exitDisciplineBuyMode } from '../state/ui';
+import { editMode, disciplineBuyMode, enterDisciplineBuyMode, exitDisciplineBuyMode } from '../state/ui';
 import { PowerCard, type PowerBuyInfo } from './PowerCard';
 import { renderGameMarkdown } from '../data/transforms';
 import type { Discipline } from '../data/types';
@@ -29,6 +29,7 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
 
   const powers = discipline.powers.map(p => getPowerStatus(p, discipline.slug));
   const known = powers.filter(p => p.status === 'known');
+  const pending = powers.filter(p => p.status === 'pending');
   const available = powers.filter(p => p.status === 'available');
   const locked = powers.filter(p => p.status === 'locked');
   const atPickLimit = isCreation && maxFreePowers != null && known.length >= maxFreePowers;
@@ -105,6 +106,15 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
             <div class="vamp-disc__group">
               <div class="vamp-disc__group-label">Known</div>
               {known.map(entry => (
+                <PowerCard key={entry.power.name} entry={entry} />
+              ))}
+            </div>
+          )}
+
+          {pending.length > 0 && (
+            <div class="vamp-disc__group vamp-disc__group--pending">
+              <div class="vamp-disc__group-label">Available After Resting</div>
+              {pending.map(entry => (
                 <PowerCard key={entry.power.name} entry={entry} />
               ))}
             </div>
@@ -424,21 +434,10 @@ function BuyModeDisciplineList() {
     <div class="vamp-disc-list">
       <div class="vamp-disc-buy__header">
         <span>Discipline Access</span>
-        <button class="vamp-btn vamp-btn--sm" onClick={exitDisciplineBuyMode}>Done</button>
+        <button class="vamp-btn vamp-btn--sm vamp-btn--done" onClick={exitDisciplineBuyMode}>Done Shopping</button>
       </div>
       {allDisciplines.map(disc => {
-        if (isExclusiveDiscipline(disc.slug)) {
-          /* Exclusive: show name but no purchase option */
-          return (
-            <div key={disc.slug} class="vamp-disc vamp-disc--exclusive">
-              <div class="vamp-disc__header">
-                <span class="vamp-disc__bat" />
-                <span class="vamp-disc__name">{disc.name}</span>
-                <span class="vamp-disc__badge vamp-disc__badge--exclusive">Exclusive</span>
-              </div>
-            </div>
-          );
-        }
+        if (isExclusiveDiscipline(disc.slug)) return null;
 
         const isUnlocked = unlocked.has(disc.slug);
         const cost = disciplineAccessCost(disc.slug);
@@ -487,8 +486,18 @@ export function DisciplinesTab() {
     return <div class="vamp-placeholder">No Disciplines available</div>;
   }
 
+  const isEdit = editMode.value;
+
   return (
     <div class="vamp-disc-list">
+      {isEdit && (
+        <div class="vamp-disc-buy__header">
+          <span>Your Disciplines</span>
+          <button class="vamp-btn vamp-btn--sm vamp-btn--buy" onClick={enterDisciplineBuyMode}>
+            Unlock Access
+          </button>
+        </div>
+      )}
       {disciplines.map(d => (
         <DisciplineSection key={d.slug} discipline={d} />
       ))}

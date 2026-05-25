@@ -10,40 +10,37 @@ import { NotebookTab } from '../components/NotebookTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
-import { CreationOverlay } from '../components/creation/CreationOverlay';
+import { GuideCard } from '../components/creation/GuideCard';
 import { PortraitEditor } from '../components/PortraitEditor';
 import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH as MIN_RIGHT_WIDTH } from '../components/RightColumn';
 import {
   character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
-  addDebt, removeDebt, updateDebt, cycleDebtState,
+  addDebt, removeDebt, updateDebt, cycleDebtState, adjustStat,
 } from '../state/character';
 import { editMode, viewingOtherSheet } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
 import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
-  getSnippet,
+  getSnippet, gameData, statCap,
 } from '../state/derived';
 import { switchTab, openMove, activeContentTab } from '../state/panel';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
 import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
+import { creationStep, stepComplete, STEP_ZONE } from '../state/creation';
+import { type TourZone } from '../state/tour';
 import {
-  creationMode, creationStep, stepComplete, enterCreationMode,
-  STEP_ZONE,
-} from '../state/creation';
-import {
-  tourMode, currentTourStep, startTour, nextTourStop, type TourZone,
-} from '../state/tour';
-import { TourOverlay } from '../components/creation/TourOverlay';
+  guideActive, currentGuideStep, isCreationPhase, isTourPhase,
+  startGuide,
+} from '../state/guide';
 import type { StatName } from '../data/types';
 import type { Touchstone, Bio, Clock } from '../state/character';
 
 // All rendered markdown comes from our own verified JSON parsers (trusted content)
 
 if (import.meta.env.DEV) {
-  (window as any).__startTour = startTour;
-  (window as any).__nextTour = nextTourStop;
+  (window as any).__startGuide = startGuide;
   import('../state/toasts').then(m => { (window as any).__toast = m.forceToast; });
 }
 
@@ -159,6 +156,7 @@ function BPTracker() {
   const bp = character.value.bp;
   const hp = maxHP.value;
   const isEdit = editMode.value;
+  const pendingBP = character.value.pendingUpgrades.filter(u => u.type === 'bp').length;
 
   const bpText = bp === 0
     ? `${hp} HP, no Blood Surges, no Powers, no feeding restrictions`
@@ -169,6 +167,15 @@ function BPTracker() {
       <div class="vamp-pip-row">
         <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} muted droplet />
         <span class="vamp-tracker-label">BP {bp}</span>
+        {isEdit && (
+          <span class="vamp-tracker-adj">
+            <button class="vamp-adj-btn" disabled={bp <= 0} onClick={() => setBP(bp - 1)}>-</button>
+            <button class="vamp-adj-btn" disabled={bp >= 5} onClick={() => setBP(bp + 1)}>+</button>
+          </span>
+        )}
+        {pendingBP > 0 && (
+          <span class="vamp-tracker-pending">+{pendingBP} pending</span>
+        )}
       </div>
       <div class="vamp-tracker-note">{bpText}</div>
     </div>
@@ -521,11 +528,20 @@ function ContentTabs() {
 function ClocksDebtsTab() {
   const mqc = masqueradeClock.value;
   const clocks = character.value.clocks;
-  const isTourClocks = tourMode.value && currentTourStep.value.id === 'clocks-debts';
+  const isTourClocks = guideActive.value && isTourPhase.value
+    && currentGuideStep.value.id === 'tour-clocks-debts';
 
   const demoFilled = useSignal(0);
   const demoComplete = useSignal(false);
   const demoPulse = useSignal(false);
+
+  useEffect(() => {
+    if (isTourClocks) {
+      demoFilled.value = 0;
+      demoComplete.value = false;
+      demoPulse.value = false;
+    }
+  }, [isTourClocks]);
 
   useEffect(() => {
     if (!isTourClocks || demoComplete.value) return;
@@ -650,6 +666,17 @@ function SnippetBlock({ type, name, fullText, pill, nameClass }: {
   );
 }
 
+function MeritFlawEntry({ name, pill, text }: { name?: string; pill?: string; text?: string }) {
+  if (!text) return null;
+  return (
+    <div class="vamp-mf-entry">
+      {name && <div class="vamp-mf-entry__name">{name}</div>}
+      {pill && <div class="vamp-mf-entry__pill">{pill}</div>}
+      <div dangerouslySetInnerHTML={{ __html: renderGameMarkdown(text) }} />
+    </div>
+  );
+}
+
 function VitalsTab() {
   const playbook = currentPlaybook.value;
   const pt = currentPredatorType.value;
@@ -703,7 +730,7 @@ function VitalsTab() {
         </SectionBox>
 
         <SectionBox title="Convictions & Touchstones">
-          {creationMode.value && creationStep.value === 'convictions' ? (
+          {guideActive.value && isCreationPhase.value && creationStep.value === 'convictions' ? (
             <ConvictionsCreationPanel />
           ) : (
             <div class="vamp-paired">
@@ -729,14 +756,42 @@ function VitalsTab() {
             <div class="vamp-merits-flaws__col">
               <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--merit">Merits</div>
               {pt?.merit && (
-                <div class="vamp-merit" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.merit) }} />
+                <MeritFlawEntry key="pt-merit" pill="Predator Type" text={pt.merit} />
+              )}
+              {char.merits.map(m => {
+                const full = gameData.value?.optionalExtras?.merits.find(x => x.name === m.name);
+                return (
+                  <MeritFlawEntry
+                    key={m.name}
+                    name={m.name}
+                    pill={full?.category}
+                    text={full?.description}
+                  />
+                );
+              })}
+              {!pt?.merit && char.merits.length === 0 && (
+                <div class="vamp-mf-empty">None</div>
               )}
             </div>
             <div class="vamp-merits-flaws__divider" />
             <div class="vamp-merits-flaws__col">
               <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--flaw">Flaws</div>
               {pt?.flaw && (
-                <div class="vamp-flaw" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.flaw) }} />
+                <MeritFlawEntry key="pt-flaw" pill="Predator Type" text={pt.flaw} />
+              )}
+              {char.flaws.map(f => {
+                const full = gameData.value?.optionalExtras?.flaws.find(x => x.name === f.name);
+                return (
+                  <MeritFlawEntry
+                    key={f.name}
+                    name={f.name}
+                    pill={full?.category}
+                    text={full?.description}
+                  />
+                );
+              })}
+              {!pt?.flaw && char.flaws.length === 0 && (
+                <div class="vamp-mf-empty">None</div>
               )}
             </div>
           </div>
@@ -899,7 +954,7 @@ function BioDualField({ label, bio, variant }: {
 }) {
   const editing = useSignal(false);
   const isEdit = editMode.value;
-  const isCreatingName = creationMode.value && creationStep.value === 'name';
+  const isCreatingName = guideActive.value && isCreationPhase.value && creationStep.value === 'name';
   const isAges = variant === 'ages';
   const v1 = isAges ? bio.vampiricAge : bio.pronouns[0];
   const v2 = isAges ? bio.apparentAge : bio.pronouns[1];
@@ -968,7 +1023,7 @@ function BioField({ label, field, bio }: {
 }) {
   const editing = useSignal(false);
   const isEdit = editMode.value;
-  const isCreatingName = creationMode.value && creationStep.value === 'name';
+  const isCreatingName = guideActive.value && isCreationPhase.value && creationStep.value === 'name';
   const value = bio[field] as string;
   const snapshot = useSignal(value);
   if (!editing.value) snapshot.value = value;
@@ -1042,7 +1097,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     if (!slug || slug === 'new') return;
 
     if (activeCharacterId.value === slug) {
-      if (!character.value.creationComplete) enterCreationMode();
+      if (!character.value.creationComplete) startGuide();
       return;
     }
 
@@ -1051,7 +1106,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     loadCharacter(slug)
       .then(() => {
         if (!character.value.creationComplete) {
-          enterCreationMode();
+          startGuide();
         }
       })
       .catch(err => { loadError.value = err instanceof Error ? err.message : String(err); })
@@ -1071,72 +1126,57 @@ export function CharacterSheet({ slug }: { slug?: string }) {
   const statMap = moveStatMap.value;
   const others = otherMoves.value;
 
-  const isCreating = isViewing ? false : creationMode.value;
+  const guideOn = isViewing ? false : guideActive.value;
+  const isCreating = guideOn && isCreationPhase.value;
+  const isTour = guideOn && isTourPhase.value;
+  const guideStep = guideOn ? currentGuideStep.value : null;
   const step = creationStep.value;
   const zone = isCreating ? STEP_ZONE[step] : null;
+  const guideZone: TourZone | null = guideStep?.zone as TourZone | null ?? null;
   const statsDualHighlight = isCreating && step === 'playbook' && stepComplete.value.playbook;
 
   useEffect(() => {
-    if (!isCreating) return;
-    if (zone === 'right') {
-      switchTab(step === 'xp' ? 'advancement' : 'character');
+    if (!guideOn || !guideStep) return;
+    if (guideStep.rightTab) {
+      switchTab(guideStep.rightTab);
       rightColumnMinimized.value = false;
       rightColumnWidth.value = rightColumnMaxWidth();
-    } else if (zone === 'content') {
-      rightColumnWidth.value = MIN_RIGHT_WIDTH;
-      if (step === 'convictions') activeContentTab.value = 0;
-      else if (step === 'disciplines') activeContentTab.value = 1;
-    } else if (zone === 'sidebar') {
+    } else if (guideStep.zone === 'content' || guideStep.zone === 'sidebar') {
       rightColumnWidth.value = MIN_RIGHT_WIDTH;
     }
-  }, [zone, step, isCreating]);
-
-  const isTour = isViewing ? false : tourMode.value;
-  const tourStep = isTour ? currentTourStep.value : null;
-  const tourZone: TourZone | null = tourStep?.zone ?? null;
-
-  useEffect(() => {
-    if (!isTour || !tourStep) return;
-    if (tourStep.rightTab) {
-      switchTab(tourStep.rightTab!);
-      rightColumnMinimized.value = false;
-      rightColumnWidth.value = rightColumnMaxWidth();
-    } else {
-      rightColumnWidth.value = MIN_RIGHT_WIDTH;
+    if (guideStep.contentTab !== null) {
+      activeContentTab.value = guideStep.contentTab;
     }
-    if (tourStep.contentTab !== null) {
-      activeContentTab.value = tourStep.contentTab;
-    }
-  }, [isTour, tourStep?.id]);
+  }, [guideOn, guideStep?.id]);
 
-  const sidebarTourSpotlight = isTour && tourStep?.id === 'basic-moves';
-  const sidebarSpotlight = zone === 'sidebar' || statsDualHighlight || sidebarTourSpotlight;
+  const sidebarGuideSpotlight = isTour && guideStep?.id === 'tour-basic-moves';
+  const sidebarSpotlight = zone === 'sidebar' || statsDualHighlight || sidebarGuideSpotlight;
 
   const sheetClass = [
     'vamp-sheet',
-    isCreating && 'vamp-sheet--creating',
-    isTour && 'vamp-sheet--touring',
+    guideOn && 'vamp-sheet--guided',
   ].filter(Boolean).join(' ');
 
   return (
     <div class={sheetClass}>
-      {(isCreating || isTour) && <SpotlightOverlay />}
-      {isCreating && <CreationOverlay />}
-      {isTour && <TourOverlay />}
+      {guideOn && <SpotlightOverlay />}
+      {guideOn && <GuideCard />}
 
-      <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? (sidebarTourSpotlight ? 'tour-spotlight' : 'creation-spotlight') : ''}`}>
+      <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? 'guide-spotlight' : ''}`}>
         <div class="vamp-identity">
           <NameField name={char.name} isCreating={isCreating && step === 'name'} />
           <PortraitEditor portraits={char.portraits} name={char.name} />
           <div class="vamp-identity__meta">
-            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook}</span>
-            <span class="vamp-identity__sep">|</span>
-            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket}</span>
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook || 'No Playbook'}</span>
           </div>
           <div class="vamp-identity__meta">
-            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
-            <span class="vamp-identity__sep">|</span>
-            Coterie: <span class="vamp-identity__code">???</span>
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket || '?'}</span>
+            {char.predatorType && (
+              <>
+                <span class="vamp-identity__sep">|</span>
+                <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
+              </>
+            )}
           </div>
 
           <div class="vamp-bio">
@@ -1155,26 +1195,45 @@ export function CharacterSheet({ slug }: { slug?: string }) {
             const entry = statMap.find(e => e.statName === statName);
             const moves = entry?.moves ?? [];
 
+            const isEdit = editMode.value && !isCreating;
+            const cap = statCap.value;
             return (
               <div class="vamp-stat" key={statName}>
                 <div class="vamp-stat__header">
+                  {isEdit && (
+                    <button
+                      class="vamp-stat__adj vamp-stat__adj--minus"
+                      disabled={value <= -1}
+                      onClick={() => adjustStat(statName, -1, cap)}
+                    />
+                  )}
                   <div class="vamp-stat__circle">
                     {isNaN(value) ? '+0' : value >= 0 ? `+${value}` : value}
                   </div>
+                  {isEdit && (
+                    <button
+                      class="vamp-stat__adj vamp-stat__adj--plus"
+                      disabled={value >= cap}
+                      onClick={() => adjustStat(statName, 1, cap)}
+                    />
+                  )}
                   <div class="vamp-stat__name">{statName}</div>
                 </div>
                 {moves.length > 0 && (
                   <ul class="vamp-stat__moves">
-                    {moves.map(m => (
-                      <li
-                        key={m.name}
-                        class="vamp-stat__move"
-                        onClick={() => openMove(m.name)}
-                      >
-                        <strong>{m.name}</strong>
-                        {m.altStat && <span class="vamp-stat__alt"> ({m.altStat})</span>}
-                      </li>
-                    ))}
+                    {moves.map(m => {
+                      const adv = char.advancedMoves.includes(m.name);
+                      return (
+                        <li
+                          key={m.name}
+                          class={`vamp-stat__move ${adv ? 'vamp-stat__move--advanced' : ''}`}
+                          onClick={() => openMove(m.name)}
+                        >
+                          <strong>{m.name}</strong>
+                          {m.altStat && <span class="vamp-stat__alt"> ({m.altStat})</span>}
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </div>
@@ -1186,15 +1245,18 @@ export function CharacterSheet({ slug }: { slug?: string }) {
           <div class="vamp-sidebar__universal">
             <div class="vamp-stat__name">Other Basic Moves</div>
             <ul class="vamp-stat__moves vamp-stat__moves--universal">
-              {others.map(m => (
-                <li
-                  key={m}
-                  class="vamp-stat__move"
-                  onClick={() => openMove(m)}
-                >
-                  <strong>{m}</strong>
-                </li>
-              ))}
+              {others.map(m => {
+                const adv = char.advancedMoves.includes(m);
+                return (
+                  <li
+                    key={m}
+                    class={`vamp-stat__move ${adv ? 'vamp-stat__move--advanced' : ''}`}
+                    onClick={() => openMove(m)}
+                  >
+                    <strong>{m}</strong>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         )}
@@ -1207,9 +1269,9 @@ export function CharacterSheet({ slug }: { slug?: string }) {
         )}
       </aside>
 
-      <div class={`vamp-sheet__right ${zone === 'content' ? 'creation-spotlight' : ''}`}>
+      <div class={`vamp-sheet__right ${zone === 'content' || guideZone === 'content' ? 'guide-spotlight' : ''}`}>
 
-        <div class={`vamp-vitals ${tourZone === 'vitals' ? 'tour-spotlight' : ''}`}>
+        <div class={`vamp-vitals ${guideZone === 'vitals' ? 'guide-spotlight' : ''}`}>
           <div class="vamp-vitals__grid">
 
             <SectionBox title="Blood Potency">
@@ -1237,24 +1299,24 @@ export function CharacterSheet({ slug }: { slug?: string }) {
 
         <div class="vamp-sheet__content">
           <div class="vamp-toolbar-row">
-            <div class={`vamp-modifier-float ${tourZone === 'toolbar-left' ? 'tour-spotlight' : ''}`}>
+            <div class={`vamp-modifier-float ${guideZone === 'toolbar-left' ? 'guide-spotlight' : ''}`}>
               <SectionBox title="Move Modifiers">
                 <ModifierBar />
               </SectionBox>
             </div>
-            <div class={`vamp-scene-float ${tourZone === 'toolbar-right' ? 'tour-spotlight' : ''}`}>
+            <div class={`vamp-scene-float ${guideZone === 'toolbar-right' ? 'guide-spotlight' : ''}`}>
               <SectionBox title="Scene Tools">
                 <SceneTools />
               </SectionBox>
             </div>
           </div>
-          <div class={`vamp-content-area ${tourZone === 'content' ? 'tour-spotlight' : ''}`}>
+          <div class={`vamp-content-area ${guideZone === 'content' && isTour ? 'guide-spotlight' : ''}`}>
             <ContentTabs />
           </div>
         </div>
       </div>
 
-      <RightColumn class={zone === 'right' ? 'creation-spotlight' : tourZone === 'right' ? 'tour-spotlight' : undefined}>
+      <RightColumn class={guideZone === 'right' || zone === 'right' ? 'guide-spotlight' : undefined}>
         <RightPanelContent />
       </RightColumn>
     </div>

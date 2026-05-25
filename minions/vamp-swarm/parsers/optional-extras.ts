@@ -103,7 +103,7 @@ function parseMeritsAndFlaws(tokens: Token[]): { merits: Merit[]; flaws: Flaw[] 
       continue;
     }
 
-    if (cat.name === 'Low-Potency Playbooks') {
+    if (cat.name === 'Semimortal Playbooks') {
       let playbooks: { name: string; tokens: Token[] }[];
       try { playbooks = splitByHeading(cat.tokens, 4); } catch { continue; }
 

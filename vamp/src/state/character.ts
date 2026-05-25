@@ -103,8 +103,8 @@ export interface CharacterState {
   modifiers: Modifier[];
   convictions: string[];
   touchstones: Touchstone[];
-  merits: { name: string; xpCost: string }[];
-  flaws: { name: string; xpGain: string }[];
+  merits: { name: string; xpCost: string; selection?: string }[];
+  flaws: { name: string; xpGain: string; selection?: string }[];
   folkloricBanes: { baneName: string; xpGain: string; fromPlaybookBane: boolean }[];
   baneChoice: 'standard' | 'variant' | 'both';
   ghoulPatron: GhoulPatron | null;
@@ -248,6 +248,12 @@ export function updateCharacter(patch: Partial<CharacterState>) {
 
 export function setStats(stats: Record<StatName, number>) {
   character.value = { ...character.value, stats };
+}
+
+export function adjustStat(stat: StatName, delta: number, cap: number) {
+  const next = { ...character.value.stats };
+  next[stat] = Math.max(-1, Math.min(cap, next[stat] + delta));
+  character.value = { ...character.value, stats: next };
 }
 
 export function learnPower(powerName: string) {
