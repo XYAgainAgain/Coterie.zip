@@ -37,22 +37,22 @@ export const STEP_LABELS: Record<CreationStep, string> = {
 };
 
 export const STEP_MESSAGES: Record<CreationStep, string> = {
-  name: '[SAM: Write a welcome message for the name step. This appears when the player first starts creating a character.]',
-  playbook: '[SAM: Write a message explaining Playbooks and Archetypes. Players pick their Playbook here, then choose an Archetype or assign stats manually.]',
-  age: '[SAM: Write a message about Age Brackets. Explains the five tiers and what they mean for the character.]',
-  predator: '[SAM: Write a message about Predator Types. How your character hunts, what it says about them, and that Fledglings/Thin-Bloods/Ghouls/Devorari can skip this.]',
-  disciplines: '[SAM: Write a message about Discipline selection. Granted vs. chosen, Powers per level, overlap bonuses from Predator Type.]',
-  convictions: '[SAM: Write a message about Convictions and Touchstones. What they are, why they matter for Humanity, the 1-3 range.]',
-  xp: '[SAM: Write a message about starting XP. The formula, what you can spend it on in the Advancement panel, and that unspent XP carries over.]',
+  name: "Do you know who you are creating? If so, enter a name and a URL for a character portrait. It must point to an image (Discord URLs work just fine!), and you can also enter any other personal info you would like to include in the fields below by double-clicking them.",
+  playbook: "If you have not yet chosen a Playbook, you must do that. There are 22 to choose from; feel free to explore them here or on the main site, and select one that suits your character. This will give you access to Disciplines, along with assigning a Bane, Compulsion, and XP triggers.",
+  age: "You will need to determine your age (which also determines your starting Blood Potency). Semimortal works only for Ghouls and Thin-Bloods. If you choose to play any other type of character, feel free to choose whichever one makes the most sense, but remember: higher BP does not always equal better! There are major trade-offs!",
+  predator: "Now you must select how you **Hunt** for prey. This will give you access to an additional Discipline, or possibly duplicate one of the ones already available to you, and will determine which stat you use for the **Hunt** Basic Move. They also grant a Merit and a Flaw each, and some even affect your starting Humanity.",
+  disciplines: "These are the categories of vampiric abilities you have access to. Select as many as you are allowed to — many Clanless Playbooks grant exclusive Discipline access plus allow you other choices. You will also receive one (or have one duplicated) by your Predator Type. You may choose **one Power per level you can access!** If a Discipline is duplicated by your Predator Type, you can select one additional Power of any level you can access for free, as long as you meet its requirements.",
+  convictions: "These are Always or Never statements that align with the morals of your character. Each one has an associated Touchstone, a mortal who represents or embodies each Conviction. These are critical to keeping your Humanity at a decent level, and for injecting drama into lots of scenes. Come up with 1–3, but no more.",
+  xp: "Depending upon your Blood Potency, you will receive a budget of starting XP. You can get more by voluntarily taking on Flaws or Folkloric Banes, and spend it on lots of different things, like BP increases, Advanced versions of Basic Moves, Discipline access and Powers, and lots more.",
 };
 
 export const STEP_WARNINGS: Record<CreationStep, string> = {
-  name: "You haven't named your character yet.",
-  playbook: "You haven't picked a Playbook yet.",
-  age: "You haven't chosen an Age Bracket yet.",
-  predator: "You haven't chosen a Predator Type yet.",
-  disciplines: "You haven't finished picking Disciplines yet.",
-  convictions: "You haven't added any Convictions or Touchstones yet.",
+  name: "You haven't named your character yet!",
+  playbook: "You haven't picked a Playbook yet!",
+  age: "You haven't chosen an Age Bracket yet!",
+  predator: "You haven't chosen a Predator Type yet!",
+  disciplines: "You haven't finished picking Disciplines yet!",
+  convictions: "You haven't added any Convictions or Touchstones yet!",
   xp: '',
 };
 
