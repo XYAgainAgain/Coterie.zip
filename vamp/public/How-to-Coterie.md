@@ -8,8 +8,8 @@ Just about everything resolves by rolling **2d6 + Stat**. Describe what your cha
 
 - **Bestial Failure** = all 1s on every die you rolled (2d6 or more). Something primal & ugly happens: you gain a point of Hunger, the Beast surfaces in a way you can't hide, or worse. Think of it as a critical failure with fangs.
 - **6-** = Failure; the Storyteller makes a Move against you (things get worse, never "nothing happens")
-- **7–9** = Mixed Success; you get what you wanted, but with a cost, complication, or hard choice
-- **10+** = Success; you get what you wanted, nice & clean, good job!
+- **7–9** = Mixed Success; you do the thing, but with a cost, complication, or hard choice
+- **10+** = Success; you do the thing, nice & clean, good job!
 - **12+** = Critical Success; many Discipline Powers and other abilities include a 12+ result by default. Basic Moves only get one if you've purchased the Advanced upgrade for that specific Move.
 
 **Advantage** means roll 3d6 and ignore the lowest die roll. **Disadvantage** means roll 3d6 and ignore the highest die roll. Multiple sources of either cancel one another out (you still only ever roll 3d6), meaning if you have one or more of each from any source, you roll "flat" (just 2d6).
@@ -40,7 +40,7 @@ The Coterie has its own little "character sheet" with another 5 stats (**Clout**
 
 ## XP
 
-Your character is not static despite technically being dead. Each Playbook comes with 3 XP triggers, each granting +1 XP per night if the conditions are met. Some Moves, such as **Help or Hinder**, can also grant XP (with limits). You might also be granted **Storyteller Awards** of a few XP when your Coterie accomplishes something important or overcame a challenge.
+Your character is not static despite technically being dead. Each Playbook comes with 3 XP triggers, each granting +1 XP per night if the conditions are met. Some Moves, such as **Help or Hinder**, can also grant XP (with limits). You might also be granted **Storyteller Awards** of a few XP when your Coterie accomplishes something important or overcomes a challenge.
 
 Additionally, whenever your Coterie rests, the Storyteller will ask the group 3 Yes/No questions, called **Slumber Reflections**:
 
@@ -86,7 +86,7 @@ Humanity is a 10-to-0 scale tracking how much of "you" is left versus how much b
 
 A **Remorse Check** happens at the end of each night when you climb into your coffin: roll 1d6 and try to roll over your current Stain count. Success clears all Stains and doesn't reduce your Humanity (good). Failure also clears all Stains, but reduces your Humanity by 1 (bad).
 
-Low Humanity has serious penalties. At **3 Humanity**, take −1 Ongoing to social rolls with mortals and −1 Ongoing to **Stay Chill**. At **2 Humanity**, both worsen to −2. At **1 Humanity**, both worsen to −3 and you lose all remaining Touchstones and Convictions. If your character is a Baali, you already know all of this.
+Low Humanity has serious penalties. At **3 Humanity**, take −1 Ongoing to social rolls with mortals and −1 Ongoing to **Stay Chill**. At **2 Humanity**, both worsen to −2. At **1 Humanity**, both worsen to −3 and you lose all remaining Touchstones and Convictions. If your character is a Baali, you already know all of this, you rascal.
 
 ## Blood Potency
 
