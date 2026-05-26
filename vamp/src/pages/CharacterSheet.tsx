@@ -23,12 +23,12 @@ import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/cote
 import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
-  getSnippet, gameData, statCap,
+  getSnippet, gameData, statCap, startingDisciplineSlugs,
 } from '../state/derived';
 import { switchTab, openMove, activeContentTab } from '../state/panel';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
 import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
-import { creationStep, stepComplete, STEP_ZONE } from '../state/creation';
+import { creationMode, creationStep, stepComplete, STEP_ZONE } from '../state/creation';
 import { type TourZone } from '../state/tour';
 import {
   guideActive, currentGuideStep, isCreationPhase, isTourPhase,
@@ -165,7 +165,7 @@ function BPTracker() {
   return (
     <div>
       <div class="vamp-pip-row">
-        <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} muted droplet />
+        <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} droplet />
         <span class="vamp-tracker-label">BP {bp}</span>
         {isEdit && (
           <span class="vamp-tracker-adj">
@@ -488,6 +488,7 @@ function ContentTabs() {
   const tabs = isViewing
     ? ALL_TABS.filter(t => t !== 'Notebook')
     : ALL_TABS;
+  if (active.value >= tabs.length) active.value = 0;
 
   return (
     <div class="vamp-tabs">
@@ -510,16 +511,16 @@ function ContentTabs() {
       </nav>
 
       <div class="vamp-tabs__panel" role="tabpanel">
-        {active.value === 0 && <VitalsTab />}
-        {active.value === 1 && <DisciplinesTab />}
-        {active.value === 2 && (
+        <div style={{ display: active.value === 0 ? undefined : 'none' }}><VitalsTab /></div>
+        <div style={{ display: active.value === 1 ? undefined : 'none' }}><DisciplinesTab /></div>
+        <div style={{ display: active.value === 2 ? undefined : 'none' }}>
           <div class="vamp-placeholder">
             Possessions and inventory
             <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
           </div>
-        )}
-        {active.value === 3 && <ClocksDebtsTab />}
-        {!isViewing && active.value === 4 && <NotebookTab />}
+        </div>
+        <div style={{ display: active.value === 3 ? undefined : 'none' }}><ClocksDebtsTab /></div>
+        {!isViewing && <div style={{ display: active.value === 4 ? undefined : 'none' }}><NotebookTab /></div>}
       </div>
     </div>
   );
@@ -632,18 +633,20 @@ function useSnippetContext(): SnippetContext {
   };
 }
 
-function SnippetBlock({ type, name, fullText, pill, nameClass }: {
+function SnippetBlock({ type, name, fullText, pill, nameClass, label }: {
   type: string;
   name: string;
   fullText: string;
   pill?: string;
   nameClass?: string;
+  label?: { text: string; className?: string };
 }) {
   const expanded = useSignal(false);
   const ctx = useSnippetContext();
   const rawSnippet = getSnippet(type, name);
   const snippet = rawSnippet ? resolveSnippetTokens(rawSnippet, ctx) : null;
-  const hasSnippet = snippet && snippet !== fullText;
+  const isEditing = editMode.value || creationMode.value;
+  const hasSnippet = !isEditing && snippet && snippet !== fullText;
 
   // All rendered content comes from our own verified JSON parsers (trusted)
   return (
@@ -652,8 +655,10 @@ function SnippetBlock({ type, name, fullText, pill, nameClass }: {
       onClick={hasSnippet ? () => { expanded.value = !expanded.value; } : undefined}
     >
       <div class="vamp-perk__header">
+        {label && <span class={`vamp-perk__label ${label.className ?? ''}`}>{label.text}</span>}
         <span class={`vamp-perk__name ${nameClass ?? ''}`}>{name}</span>
         {pill && <span class="vamp-perk__pill">{pill}</span>}
+        {hasSnippet && !expanded.value && <span class="vamp-snippet-label">Summary</span>}
         {hasSnippet && <span class="vamp-perk__chevron" />}
       </div>
       {hasSnippet && !expanded.value && (
@@ -684,119 +689,137 @@ function VitalsTab() {
   const disciplines = accessibleDisciplineData.value;
 
   const playbookPerks = playbook?.perks ?? [];
+  const startingSlugs = startingDisciplineSlugs.value;
+  const ptDiscipline = pt?.discipline ?? '';
   const disciplinePerks = disciplines
     .filter(d => d.perk)
-    .map(d => ({ name: d.perk!.name, body: d.perk!.body, source: d.name }));
+    .map(d => ({ name: d.perk!.name, body: d.perk!.body, source: d.name, slug: d.slug }))
+    .sort((a, b) => {
+      const aPlaybook = startingSlugs.has(a.slug) ? 0 : 1;
+      const bPlaybook = startingSlugs.has(b.slug) ? 0 : 1;
+      if (aPlaybook !== bPlaybook) return aPlaybook - bPlaybook;
+      const aPT = a.source === ptDiscipline ? 0 : 1;
+      const bPT = b.source === ptDiscipline ? 0 : 1;
+      return aPT - bPT;
+    });
 
   return (
-    <div class="vamp-content-columns">
-      <SectionBox title="Perks">
-        {playbookPerks.map(perk => (
-          <SnippetBlock
-            key={perk.name}
-            type="perks"
-            name={perk.name}
-            pill={playbook?.name ?? ''}
-            fullText={perk.description}
-          />
-        ))}
-        {disciplinePerks.map(perk => (
-          <SnippetBlock
-            key={perk.name}
-            type="perks"
-            name={perk.name}
-            pill={perk.source}
-            fullText={perk.body}
-          />
-        ))}
-      </SectionBox>
-
-      <div class="vamp-basics-right">
-        <SectionBox title="Bane">
+    <div class="vamp-vitals-stack">
+      <div class="vamp-bane-compulsion">
+        <div class="vamp-bane-compulsion__col">
           <SnippetBlock
             type="banes"
             name={playbook?.baneName ?? 'Unknown'}
             fullText={playbook?.baneDescription ?? ''}
+            nameClass="vamp-bane__name"
+            label={{ text: 'Bane:', className: 'vamp-perk__label--bane' }}
           />
-        </SectionBox>
-
-        <SectionBox title="Compulsion">
+        </div>
+        <div class="vamp-merits-flaws__divider" />
+        <div class="vamp-bane-compulsion__col">
           <SnippetBlock
             type="compulsions"
             name={playbook?.compulsionName ?? 'None'}
             fullText={playbook?.compulsionDescription ?? ''}
             nameClass="vamp-bane__name--compulsion"
+            label={{ text: 'Compulsion:', className: 'vamp-perk__label--compulsion' }}
           />
-        </SectionBox>
-
-        <SectionBox title="Convictions & Touchstones">
-          {guideActive.value && isCreationPhase.value && creationStep.value === 'convictions' ? (
-            <ConvictionsCreationPanel />
-          ) : (
-            <div class="vamp-paired">
-              {char.convictions.map((conviction, i) => (
-                <div class="vamp-paired__item" key={i}>
-                  <div class="vamp-paired__conviction">{conviction || '—'}</div>
-                  {char.touchstones[i] && char.touchstones[i].name && (
-                    <div class="vamp-paired__touchstone">
-                      {char.touchstones[i].name}
-                      {char.touchstones[i].pronouns[0] && ` (${char.touchstones[i].pronouns.filter(Boolean).join('/')})`}
-                      {char.touchstones[i].ageBracket && `, ${char.touchstones[i].ageBracket}`}
-                      {char.touchstones[i].description && ` — ${char.touchstones[i].description}`}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </SectionBox>
-
-        <SectionBox title="Merits & Flaws">
-          <div class="vamp-merits-flaws">
-            <div class="vamp-merits-flaws__col">
-              <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--merit">Merits</div>
-              {pt?.merit && (
-                <MeritFlawEntry key="pt-merit" pill="Predator Type" text={pt.merit} />
-              )}
-              {char.merits.map(m => {
-                const full = gameData.value?.optionalExtras?.merits.find(x => x.name === m.name);
-                return (
-                  <MeritFlawEntry
-                    key={m.name}
-                    name={m.name}
-                    pill={full?.category}
-                    text={full?.description}
-                  />
-                );
-              })}
-              {!pt?.merit && char.merits.length === 0 && (
-                <div class="vamp-mf-empty">None</div>
-              )}
-            </div>
-            <div class="vamp-merits-flaws__divider" />
-            <div class="vamp-merits-flaws__col">
-              <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--flaw">Flaws</div>
-              {pt?.flaw && (
-                <MeritFlawEntry key="pt-flaw" pill="Predator Type" text={pt.flaw} />
-              )}
-              {char.flaws.map(f => {
-                const full = gameData.value?.optionalExtras?.flaws.find(x => x.name === f.name);
-                return (
-                  <MeritFlawEntry
-                    key={f.name}
-                    name={f.name}
-                    pill={full?.category}
-                    text={full?.description}
-                  />
-                );
-              })}
-              {!pt?.flaw && char.flaws.length === 0 && (
-                <div class="vamp-mf-empty">None</div>
-              )}
-            </div>
-          </div>
-        </SectionBox>
+        </div>
       </div>
+
+      <SectionBox title="Convictions & Touchstones">
+        {editMode.value || (guideActive.value && isCreationPhase.value && creationStep.value === 'convictions') ? (
+          <ConvictionsCreationPanel />
+        ) : (
+          <div class="vamp-paired vamp-paired--grid">
+            {char.convictions.map((conviction, i) => (
+              <div class="vamp-paired__item" key={i}>
+                <div class="vamp-paired__conviction">{conviction || '—'}</div>
+                {char.touchstones[i] && char.touchstones[i].name && (
+                  <div class="vamp-paired__touchstone">
+                    {char.touchstones[i].name}
+                    {char.touchstones[i].pronouns[0] && ` (${char.touchstones[i].pronouns.filter(Boolean).join('/')})`}
+                    {char.touchstones[i].ageBracket && `, ${char.touchstones[i].ageBracket}`}
+                    {char.touchstones[i].description && ` — ${char.touchstones[i].description}`}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </SectionBox>
+
+      {(() => {
+        const allPerks = [
+          ...playbookPerks.map(p => ({ key: p.name, type: 'perks' as const, name: p.name, pill: playbook?.name ?? '', fullText: p.description })),
+          ...disciplinePerks.map(p => ({ key: p.name, type: 'perks' as const, name: p.name, pill: p.source, fullText: p.body })),
+        ];
+        const left = allPerks.filter((_, i) => i % 2 === 0);
+        const right = allPerks.filter((_, i) => i % 2 === 1);
+        return (
+          <SectionBox title="Perks" collapsible collapsedLabel={`Perks (${allPerks.length})`}>
+            <div class="vamp-perks-split">
+              <div class="vamp-perks-split__col">
+                {left.map(p => <SnippetBlock key={p.key} type={p.type} name={p.name} pill={p.pill} fullText={p.fullText} />)}
+              </div>
+              <div class="vamp-merits-flaws__divider" />
+              <div class="vamp-perks-split__col">
+                {right.map(p => <SnippetBlock key={p.key} type={p.type} name={p.name} pill={p.pill} fullText={p.fullText} />)}
+              </div>
+            </div>
+          </SectionBox>
+        );
+      })()}
+
+      <SectionBox
+        title="Merits & Flaws"
+        collapsible
+        collapsedLabel={`Merits & Flaws (${(pt?.merit ? 1 : 0) + char.merits.length} & ${(pt?.flaw ? 1 : 0) + char.flaws.length})`}
+      >
+        <div class="vamp-merits-flaws">
+          <div class="vamp-merits-flaws__col">
+            <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--merit">Merits</div>
+            {pt?.merit && (
+              <MeritFlawEntry key="pt-merit" name={pt.merit.name} pill="Predator Type" text={pt.merit.description} />
+            )}
+            {char.merits.map(m => {
+              const full = gameData.value?.optionalExtras?.merits.find(x => x.name === m.name);
+              return (
+                <MeritFlawEntry
+                  key={m.name}
+                  name={m.name}
+                  pill={full?.category}
+                  text={full?.description}
+                />
+              );
+            })}
+            {!pt?.merit && char.merits.length === 0 && (
+              <div class="vamp-mf-empty">None</div>
+            )}
+          </div>
+          <div class="vamp-merits-flaws__divider" />
+          <div class="vamp-merits-flaws__col">
+            <div class="vamp-merits-flaws__heading vamp-merits-flaws__heading--flaw">Flaws</div>
+            {pt?.flaw && (
+              <MeritFlawEntry key="pt-flaw" name={pt.flaw.name} pill="Predator Type" text={pt.flaw.description} />
+            )}
+            {char.flaws.map(f => {
+              const full = gameData.value?.optionalExtras?.flaws.find(x => x.name === f.name);
+              return (
+                <MeritFlawEntry
+                  key={f.name}
+                  name={f.name}
+                  pill={full?.category}
+                  text={full?.description}
+                />
+              );
+            })}
+            {!pt?.flaw && char.flaws.length === 0 && (
+              <div class="vamp-mf-empty">None</div>
+            )}
+          </div>
+        </div>
+      </SectionBox>
     </div>
   );
 }
@@ -807,7 +830,7 @@ const HUMAN_AGE_BRACKETS = [
   "Don't Ask", "Don't Know",
 ];
 
-const MAX_CONVICTIONS = 3;
+const MAX_CONVICTIONS = 4;
 
 function ConvictionForm({ index }: { index: number }) {
   const char = character.value;
@@ -912,16 +935,18 @@ function ConvictionForm({ index }: { index: number }) {
 function ConvictionsCreationPanel() {
   const char = character.value;
   const filledCount = char.convictions.filter(c => c.trim() !== '').length;
-  const showCount = Math.min(MAX_CONVICTIONS, Math.max(1, filledCount + 1));
+  const showCount = Math.min(MAX_CONVICTIONS, Math.max(2, filledCount + 1));
 
   return (
     <div class="vamp-convictions-creation">
       <div class="vamp-convictions-creation__guide">
         Write a moral code your character lives by, then link each to a mortal who embodies it.
       </div>
-      {Array.from({ length: showCount }, (_, i) => (
-        <ConvictionForm key={i} index={i} />
-      ))}
+      <div class="vamp-paired vamp-paired--grid">
+        {Array.from({ length: showCount }, (_, i) => (
+          <ConvictionForm key={i} index={i} />
+        ))}
+      </div>
       {showCount < MAX_CONVICTIONS && (
         <div class="vamp-convictions-creation__hint">
           Fill in the above to add another (up to {MAX_CONVICTIONS}).
@@ -1122,6 +1147,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
   }
 
   const char = character.value;
+  document.title = char.name ? `Vamp: ${char.name}` : 'Vamp: Coterie Character Sheet';
   const hp = maxHP.value;
   const statMap = moveStatMap.value;
   const others = otherMoves.value;
@@ -1139,18 +1165,32 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     if (!guideOn || !guideStep) return;
     if (guideStep.rightTab) {
       switchTab(guideStep.rightTab);
-      rightColumnMinimized.value = false;
-      rightColumnWidth.value = rightColumnMaxWidth();
-    } else if (guideStep.zone === 'content' || guideStep.zone === 'sidebar') {
+      if (rightColumnMinimized.value) {
+        rightColumnMinimized.value = false;
+        requestAnimationFrame(() => {
+          rightColumnWidth.value = rightColumnMaxWidth();
+        });
+      } else {
+        rightColumnWidth.value = rightColumnMaxWidth();
+      }
+    } else {
       rightColumnWidth.value = MIN_RIGHT_WIDTH;
     }
     if (guideStep.contentTab !== null) {
       activeContentTab.value = guideStep.contentTab;
     }
+    let forcedEditOn = false;
+    if (guideStep.id === 'tour-clocks-debts' && !editMode.value) {
+      editMode.value = true;
+      forcedEditOn = true;
+    }
+    return () => {
+      if (forcedEditOn) editMode.value = false;
+    };
   }, [guideOn, guideStep?.id]);
 
   const sidebarGuideSpotlight = isTour && guideStep?.id === 'tour-basic-moves';
-  const sidebarSpotlight = zone === 'sidebar' || statsDualHighlight || sidebarGuideSpotlight;
+  const sidebarSpotlight = zone === 'sidebar' || zone === 'beside-sidebar' || statsDualHighlight || sidebarGuideSpotlight;
 
   const sheetClass = [
     'vamp-sheet',
@@ -1269,9 +1309,9 @@ export function CharacterSheet({ slug }: { slug?: string }) {
         )}
       </aside>
 
-      <div class={`vamp-sheet__right ${zone === 'content' || guideZone === 'content' ? 'guide-spotlight' : ''}`}>
+      <div class="vamp-sheet__right">
 
-        <div class={`vamp-vitals ${guideZone === 'vitals' ? 'guide-spotlight' : ''}`}>
+        <div class={`vamp-vitals ${guideStep?.id === 'tour-vitals' ? 'guide-spotlight' : ''}`}>
           <div class="vamp-vitals__grid">
 
             <SectionBox title="Blood Potency">
@@ -1299,24 +1339,30 @@ export function CharacterSheet({ slug }: { slug?: string }) {
 
         <div class="vamp-sheet__content">
           <div class="vamp-toolbar-row">
-            <div class={`vamp-modifier-float ${guideZone === 'toolbar-left' ? 'guide-spotlight' : ''}`}>
+            <div class={`vamp-modifier-float ${guideZone === 'toolbar-left' || guideStep?.id === 'tour-modifiers' ? 'guide-spotlight' : ''}`}>
               <SectionBox title="Move Modifiers">
                 <ModifierBar />
               </SectionBox>
             </div>
-            <div class={`vamp-scene-float ${guideZone === 'toolbar-right' ? 'guide-spotlight' : ''}`}>
+            <div class={`vamp-scene-float ${guideZone === 'toolbar-right' || guideStep?.id === 'tour-scene-tools' ? 'guide-spotlight' : ''}`}>
               <SectionBox title="Scene Tools">
                 <SceneTools />
               </SectionBox>
             </div>
           </div>
-          <div class={`vamp-content-area ${guideZone === 'content' && isTour ? 'guide-spotlight' : ''}`}>
+          <div class={`vamp-content-area ${
+            guideZone === 'content'
+            || guideStep?.creationStep === 'disciplines'
+            || guideStep?.creationStep === 'convictions'
+            || guideStep?.id === 'tour-vitals'
+              ? 'guide-spotlight' : ''
+          }`}>
             <ContentTabs />
           </div>
         </div>
       </div>
 
-      <RightColumn class={guideZone === 'right' || zone === 'right' ? 'guide-spotlight' : undefined}>
+      <RightColumn class={guideZone === 'right' || guideZone === 'beside-right' || guideZone === 'beside-right-center' || zone === 'right' || zone === 'beside-right' || zone === 'beside-right-center' ? 'guide-spotlight' : undefined}>
         <RightPanelContent />
       </RightColumn>
     </div>

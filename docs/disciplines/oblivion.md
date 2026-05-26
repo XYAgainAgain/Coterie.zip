@@ -14,9 +14,9 @@ There is no inherent counter to Oblivion. ***Sense the Unseen*** (Auspex) can de
 
 ### *Abyssal Sight (Discipline Perk)*
 
-Your senses sharpen far beyond mortal limits. You suffer no penalties from darkness of any kind, including supernatural, and your awareness extends into spaces that most minds instinctively refuse to perceive.
+Your senses sharpen far beyond mortal limits. **You suffer no penalties from darkness of any kind, including supernatural, and your awareness extends into spaces that most minds instinctively refuse to perceive.**
 
-Whenever you like, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. While your eyes are black, you can see ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.
+**Whenever you like**, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. **While your eyes are black**, you can see ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.
 
 The black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both.
 

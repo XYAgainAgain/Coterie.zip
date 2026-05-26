@@ -64,7 +64,7 @@ export const masqueradeClock = signal<Clock>({
   id: 'masquerade',
   name: 'The Masquerade',
   segments: 8,
-  filled: 3,
+  filled: 0,
 });
 
 export function fillMasquerade() {

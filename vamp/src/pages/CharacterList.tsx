@@ -6,15 +6,17 @@ import {
   loadCharacterList,
   createCharacter,
   deleteCharacter,
+  activeCharacterId,
   MAX_CHARACTERS,
 } from '../state/persistence';
-import { editMode } from '../state/ui';
 
 export function CharacterList() {
   const loading = useSignal(true);
   const deleting = useSignal<string | null>(null);
 
   useEffect(() => {
+    activeCharacterId.value = null;
+    document.title = 'Vamp: Coterie Character Sheet';
     loadCharacterList().finally(() => { loading.value = false; });
   }, []);
 
@@ -33,8 +35,8 @@ export function CharacterList() {
     }
   }
 
-  async function handleDelete(id: string, name: string) {
-    if (!confirm(`Delete ${name || 'this character'}? This cannot be undone.`)) return;
+  async function handleDelete(id: string) {
+    if (!confirm("Are you sure you want to delete this character? They'll meet Final Death and be gone forever!")) return;
     deleting.value = id;
     try {
       await deleteCharacter(id);
@@ -47,13 +49,13 @@ export function CharacterList() {
 
   return (
     <div class="vamp-character-list">
-      <h2 style={{ fontFamily: 'var(--v-font-display)', color: 'var(--v-text-accent)', marginBottom: '1.5rem', textAlign: 'center', fontSize: '1.6rem' }}>
-        Your Kindred
+      <h2 style={{ fontFamily: 'var(--v-font-display)', color: 'var(--v-text-accent)', marginBottom: '1.5rem', textAlign: 'center', fontSize: '2rem' }}>
+        Your <em><strong>Coterie</strong></em> Vamps
       </h2>
 
       {list.length === 0 && (
         <div class="vamp-character-list__empty">
-          No characters yet. Create your first Kindred below.
+          No characters yet. Create one below.
         </div>
       )}
 
@@ -63,6 +65,22 @@ export function CharacterList() {
           key={c.id}
           onClick={() => route(`/vamp/${c.id}`)}
         >
+          <button
+            class="vamp-character-list__delete"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleDelete(c.id);
+            }}
+            disabled={deleting.value === c.id}
+            aria-label={`Delete ${c.name || 'character'}`}
+          >
+            {deleting.value === c.id ? '...' : (
+              <svg viewBox="0 0 16 16" width="10" height="10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                <line x1="2" y1="2" x2="14" y2="14" />
+                <line x1="14" y1="2" x2="2" y2="14" />
+              </svg>
+            )}
+          </button>
           {c.portraitUrl && (
             <img
               class="vamp-character-list__portrait"
@@ -77,19 +95,6 @@ export function CharacterList() {
               {[c.playbook, c.ageBracket].filter(Boolean).join(' · ')}
             </div>
           </div>
-          {editMode.value && (
-            <button
-              class="vamp-character-list__delete"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDelete(c.id, c.name);
-              }}
-              disabled={deleting.value === c.id}
-              aria-label={`Delete ${c.name || 'character'}`}
-            >
-              {deleting.value === c.id ? '...' : '×'}
-            </button>
-          )}
         </div>
       ))}
 
@@ -98,7 +103,7 @@ export function CharacterList() {
           class="vamp-character-list__new"
           onClick={handleCreate}
         >
-          + Create New Kindred
+          + New Character
         </div>
       )}
 

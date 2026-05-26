@@ -70,6 +70,13 @@ a:hover {
   flex-direction: column;
   height: 100dvh;
   overflow: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-accent-subtle) transparent;
+}
+
+.vamp-app * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-accent-subtle) transparent;
 }
 
 
@@ -256,9 +263,10 @@ a:hover {
 .vamp-header__lock {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 2rem;
+  gap: 0.35rem;
+  padding-inline: 0.5rem;
   height: 2rem;
+  min-width: 4.5rem;
   background: var(--v-accent-subtle);
   border: 1px solid var(--v-border-accent);
   border-radius: var(--v-radius-md);
@@ -269,17 +277,35 @@ a:hover {
 
 .vamp-header__lock:hover { border-color: var(--v-accent); }
 
-.vamp-header__lock[aria-pressed="true"] {
+.vamp-header__lock--editing {
   background: var(--v-accent);
   border-color: var(--v-accent);
 }
 
+.vamp-header__lock-label {
+  font-family: var(--v-font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--v-text-primary);
+}
+
+.vamp-header__lock--editing .vamp-header__lock-label { color: var(--v-bg-primary); }
+
+.vamp-header__lock-label--hover,
+.vamp-header__lock-icon--hover { display: none; }
+
+.vamp-header__lock:hover .vamp-header__lock-label--active,
+.vamp-header__lock:hover .vamp-header__lock-icon--active { display: none; }
+
+.vamp-header__lock:hover .vamp-header__lock-label--hover,
+.vamp-header__lock:hover .vamp-header__lock-icon--hover { display: block; }
+
 .vamp-header__lock-icon {
-  display: block;
   width: 1.1rem;
   height: 1.1rem;
   background-color: var(--v-text-accent);
-  transition: background-color var(--v-transition);
+  flex-shrink: 0;
 }
 
 .vamp-header__lock-icon--locked {
@@ -290,8 +316,9 @@ a:hover {
 .vamp-header__lock-icon--unlocked {
   mask: url('/assets/images/unlocked.svg') center/contain no-repeat;
   -webkit-mask: url('/assets/images/unlocked.svg') center/contain no-repeat;
-  background-color: var(--v-bg-primary);
 }
+
+.vamp-header__lock--editing .vamp-header__lock-icon { background-color: var(--v-bg-primary); }
 
 .vamp-email-btn {
   background: none;
@@ -299,11 +326,10 @@ a:hover {
   border-radius: 0.25rem;
   color: var(--v-text-secondary);
   cursor: pointer;
-  padding: 0.25rem 0.5rem;
+  padding: 0.15rem 0.35rem;
   font-size: 0.7rem;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  display: grid;
+  place-items: center;
   transition: border-color 0.2s, color 0.2s;
 }
 
@@ -321,7 +347,7 @@ a:hover {
 
 .vamp-email-btn__icon::before {
   content: '\2709';
-  font-size: 0.9rem;
+  font-size: 1.15rem;
 }
 
 .vamp-email-prompt {
@@ -441,7 +467,8 @@ a:hover {
   border: 1px solid var(--v-glass-border);
   border-radius: var(--v-radius-lg);
   flex-shrink: 0;
-  transition: width 500ms ease;
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: width;
   overflow: hidden;
 }
 
@@ -575,11 +602,12 @@ a:hover {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: opacity 1s ease;
+  grid-area: 1 / 1;
 }
 
-.vamp-identity__portrait-img--fading {
+.vamp-identity__portrait-img--outgoing {
   opacity: 0;
+  transition: opacity 1s ease;
 }
 
 .vamp-identity__portrait-placeholder {
@@ -809,7 +837,8 @@ a:hover {
 }
 
 .vamp-stat__move--advanced {
-  color: var(--v-text-accent);
+  color: var(--v-accent-hover);
+  text-shadow: 0 0 0.4rem color-mix(in srgb, var(--v-glow-bright) 50%, transparent);
 }
 
 .vamp-stat__sep {
@@ -932,36 +961,18 @@ a:hover {
   text-wrap: balance;
 }
 
-.vamp-section__gear {
-  position: absolute;
-  top: -0.5rem;
-  right: 0.75rem;
-  width: 0.85rem;
-  height: 0.85rem;
-  opacity: 0;
-  transition: opacity var(--v-transition);
+.vamp-section__legend--collapsible {
   cursor: pointer;
-  color: var(--v-text-muted);
+  transition: color 0.15s ease;
 }
 
-.vamp-section__gear:hover { color: var(--v-text-accent); }
-
-[data-edit-mode="true"] .vamp-section__gear { opacity: 1; }
-
-@keyframes gear-spin {
-  to { transform: rotate(360deg); }
+.vamp-section__legend--collapsible:hover {
+  color: var(--v-text-primary);
 }
 
-[data-edit-mode="true"] .vamp-section__gear svg {
-  animation: gear-spin 4s linear infinite;
+.vamp-section--collapsed {
+  padding-block: 0.15rem;
 }
-
-@media (prefers-reduced-motion: reduce) {
-  [data-edit-mode="true"] .vamp-section__gear svg {
-    animation: none;
-  }
-}
-
 
 /* Pip/box system */
 
@@ -1136,7 +1147,7 @@ a:hover {
   backdrop-filter: blur(0.75rem);
   -webkit-backdrop-filter: blur(0.75rem);
   border-color: var(--v-border-accent);
-  padding: 0 0.4rem 0;
+  padding: 0 0.4rem 0.35rem;
   margin-bottom: 0.4rem;
 }
 
@@ -2945,26 +2956,79 @@ textarea.vamp-editable__input {
 
 /* Content columns — pairs sections side by side */
 
-.vamp-content-columns {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
-  margin-bottom: 0.6rem;
-  align-items: start;
-}
-
-.vamp-content-columns > .vamp-section {
-  margin-bottom: 0;
-}
-
-.vamp-basics-right {
+.vamp-vitals-stack {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  margin-bottom: 0.6rem;
 }
 
-.vamp-basics-right > .vamp-section {
+.vamp-vitals-stack > .vamp-section {
   margin-bottom: 0;
+}
+
+
+/* Bane & Compulsion conjoined */
+
+.vamp-bane-compulsion {
+  display: flex;
+  gap: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--v-border) 60%, transparent);
+  border-radius: var(--v-radius-md);
+  padding: 0.35rem 0.65rem;
+  background: color-mix(in srgb, var(--v-bg-sunken) 40%, transparent);
+}
+
+.vamp-bane-compulsion__col {
+  flex: 1;
+  min-width: 0;
+}
+
+.vamp-bane-compulsion__col > .vamp-perk {
+  padding: 0;
+  border-bottom: none;
+}
+
+.vamp-bane-compulsion__col .vamp-perk__header {
+  gap: 0.3rem;
+}
+
+.vamp-perk__label {
+  font-family: var(--v-font-heading);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--v-text-muted);
+}
+
+.vamp-perk__label--bane {
+  color: var(--v-flaw-text);
+}
+
+.vamp-perk__label--compulsion {
+  color: var(--v-compulsion-text);
+}
+
+
+/* Convictions 2-column grid */
+
+.vamp-paired--grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+
+/* Perks 2-wide split */
+
+.vamp-perks-split {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.vamp-perks-split__col {
+  flex: 1;
+  min-inline-size: 0;
 }
 
 
@@ -3022,21 +3086,29 @@ textarea.vamp-editable__input {
 .vamp-perk__text--snippet {
   border-inline-start: 2px solid color-mix(in srgb, var(--v-text-accent) 40%, transparent);
   padding-inline-start: 0.5rem;
+  transition: border-color 0.15s ease;
 }
 
-.vamp-perk__text--snippet::after {
-  content: "Summary";
-  display: block;
+.vamp-perk--expandable:hover .vamp-perk__text--snippet {
+  border-color: var(--v-text-accent);
+}
+
+.vamp-snippet-label {
   font-size: 0.65rem;
   color: var(--v-text-muted);
-  text-align: right;
-  margin-top: 0.3rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+  margin-left: auto;
   transition: color var(--v-transition);
 }
 
-.vamp-perk--expandable:hover .vamp-perk__text--snippet::after {
+.vamp-snippet-label ~ .vamp-perk__chevron,
+.vamp-snippet-label ~ .vamp-disc__bat {
+  margin-inline-start: 0;
+}
+
+.vamp-perk--expandable:hover .vamp-snippet-label,
+.vamp-power:hover .vamp-snippet-label {
   color: var(--v-text-accent);
 }
 
@@ -3122,7 +3194,7 @@ textarea.vamp-editable__input {
 
 .vamp-merits-flaws__heading {
   font-family: var(--v-font-heading);
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 0.3rem;
@@ -3139,19 +3211,13 @@ textarea.vamp-editable__input {
 
 .vamp-merits-flaws__divider {
   width: 2px;
-  opacity: 0.4;
-  background: linear-gradient(
-    0deg,
-    currentColor 0% 6%,
-    transparent 6% 12%,
-    currentColor 12% 30%,
-    transparent 30% 36%,
-    currentColor 36% 54%,
-    transparent 54% 60%,
-    currentColor 60% 66%,
-    transparent 66% 72%,
-    currentColor 72% 90%,
-    transparent 90% 100%
+  opacity: 0.35;
+  background: repeating-linear-gradient(0deg,
+    var(--v-text-secondary) 0 3px, transparent 3px 6px,
+    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
+    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
+    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
+    var(--v-text-secondary) 38px 48px, transparent 48px 51px
   );
   flex-shrink: 0;
 }
@@ -3231,7 +3297,12 @@ textarea.vamp-editable__input {
 
 .vamp-perk__text p,
 .vamp-bane__text p {
-  margin: 0;
+  margin: 0 0 0.4rem;
+}
+
+.vamp-perk__text p:last-child,
+.vamp-bane__text p:last-child {
+  margin-bottom: 0;
 }
 
 .vamp-perk__text strong,
@@ -3530,9 +3601,9 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-disc__bat--sm {
-  inline-size: 0.5rem;
-  block-size: 0.5rem;
-  margin-inline-end: 0.3rem;
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  margin-inline-start: auto;
 }
 
 .vamp-disc--selected {
@@ -3719,22 +3790,19 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-power__name {
   font-size: 0.85rem;
+  font-weight: 700;
+  font-style: italic;
   color: var(--v-text-primary);
-  flex: 1;
-}
-
-.vamp-power--known .vamp-power__name {
-  font-weight: 600;
 }
 
 .vamp-power__tag {
-  font-size: 0.6rem;
-  padding: 0.05rem 0.3rem;
+  font-size: 0.65rem;
+  padding: 0.1rem 0.4rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--v-accent) 20%, transparent);
+  background: var(--v-accent-subtle);
   color: var(--v-text-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .vamp-power__lock {
@@ -3766,10 +3834,27 @@ details[open] > .vamp-detail__summary::before {
   color: var(--v-text-primary);
 }
 
-.vamp-power__body--snippet {
-  font-style: italic;
-  opacity: 0.85;
+.vamp-power__body ul,
+.vamp-power__body ol {
+  margin: 0.3rem 0;
+  padding-inline-start: 1.2rem;
 }
+
+.vamp-power__body li {
+  margin-block-end: 0.15rem;
+}
+
+.vamp-power__body--snippet {
+  border-inline-start: 2px solid color-mix(in srgb, var(--v-text-accent) 40%, transparent);
+  padding-inline-start: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.vamp-power__body--snippet:hover {
+  border-color: var(--v-text-accent);
+}
+
 
 /* Inline outcome tier colors in Power descriptions */
 
@@ -3931,6 +4016,7 @@ details[open] > .vamp-detail__summary::before {
   border-radius: var(--v-radius-md);
   margin-bottom: 0.6rem;
   cursor: pointer;
+  position: relative;
   transition: all var(--v-transition);
 }
 
@@ -3941,13 +4027,45 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-character-list__name {
   font-family: var(--v-font-heading);
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   color: var(--v-text-accent);
 }
 
 .vamp-character-list__playbook {
   font-size: 0.9rem;
   color: var(--v-text-secondary);
+}
+
+.vamp-character-list__delete {
+  position: absolute;
+  top: -0.4rem;
+  right: -0.4rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  border: none;
+  background: oklch(45% 0.2 25);
+  color: #fff;
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.vamp-character-list__card:hover .vamp-character-list__delete {
+  opacity: 1;
+}
+
+.vamp-character-list__delete:hover {
+  background: oklch(50% 0.25 25);
+}
+
+.vamp-character-list__delete:disabled {
+  opacity: 0.5;
+  cursor: wait;
 }
 
 .vamp-character-list__empty {
@@ -4049,36 +4167,31 @@ details[open] > .vamp-detail__summary::before {
 }
 
 
-/* Spotlight overlay */
+/* Spotlight overlay (fallback when no cutout target found) */
 
 .spotlight-overlay {
   position: fixed;
   inset: 0;
   z-index: 40;
   background: oklch(0% 0 0 / 0.6);
-  backdrop-filter: blur(1px);
   pointer-events: none;
-  transition: opacity 0.4s ease;
 }
 
-.spotlight-overlay--fading {
-  opacity: 0;
+/* Spotlight cutout: transparent center, box-shadow dims everything else */
+
+.spotlight-cutout {
+  position: fixed;
+  z-index: 40;
+  border-radius: var(--v-radius-lg);
+  box-shadow: 0 0 0 9999px oklch(0% 0 0 / 0.6);
+  pointer-events: none;
+  transition: top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease;
 }
 
-
-/* Guide overlay: all panels behind overlay, spotlighted zone punches through */
-
-.vamp-sheet--guided .vamp-sheet__sidebar,
-.vamp-sheet--guided .vamp-sheet__right,
-.vamp-sheet--guided .vamp-right-col {
-  position: relative;
-  z-index: 39;
-}
-
-.vamp-sheet--guided .vamp-sheet__right,
-.vamp-sheet--guided .vamp-right-col {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-cutout {
+    transition: none;
+  }
 }
 
 .vamp-content-area {
@@ -4086,22 +4199,6 @@ details[open] > .vamp-detail__summary::before {
   min-height: 0;
   display: flex;
   flex-direction: column;
-}
-
-.vamp-sheet--guided .vamp-vitals,
-.vamp-sheet--guided .vamp-modifier-float,
-.vamp-sheet--guided .vamp-scene-float,
-.vamp-sheet--guided .vamp-content-area {
-  position: relative;
-  z-index: 39;
-}
-
-.vamp-sheet--guided .guide-spotlight {
-  z-index: 41;
-  box-shadow:
-    0 0 0 2px color-mix(in srgb, var(--v-accent) 40%, transparent),
-    0 0 30px 8px oklch(0% 0 0 / 0.3);
-  transition: box-shadow 0.3s ease;
 }
 
 .guide-spotlight .vamp-section {
@@ -4132,20 +4229,43 @@ details[open] > .vamp-detail__summary::before {
   from { opacity: 0; translate: 0 0.5rem; }
 }
 
-.guide-card--sidebar {
-  inset-block-end: 1.5rem;
-  inset-inline-start: 1rem;
+.guide-card--beside-sidebar {
+  inset-block-start: 5rem;
+  inset-inline-start: 17.5rem;
+}
+
+.guide-card--beside-right {
+  inset-block-start: 4rem;
+  inset-inline-end: calc(var(--v-right-col-w, 320px) + 1rem);
+}
+
+.guide-card--beside-right-center {
+  inset-block-start: 50%;
+  inset-inline-end: calc(var(--v-right-col-w, 320px) + 1rem);
+  translate: 0 -50%;
 }
 
 .guide-card--vitals {
-  inset-block-start: 12rem;
+  inset-block-start: 5rem;
   inset-inline-start: 50%;
   translate: -50% 0;
 }
 
-.guide-card--toolbar-left,
-.guide-card--toolbar-right,
+.guide-card--center {
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+}
+
 .guide-card--content {
+  inset-block-end: 1.5rem;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+}
+
+.guide-card--sidebar,
+.guide-card--toolbar-left,
+.guide-card--toolbar-right {
   inset-block-end: 1.5rem;
   inset-inline-start: 50%;
   translate: -50% 0;
@@ -4697,7 +4817,7 @@ details[open] > .vamp-detail__summary::before {
   border-radius: var(--v-radius-sm);
   color: var(--v-text-accent);
   font-family: var(--v-font-heading);
-  font-size: inherit;
+  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -4711,6 +4831,7 @@ details[open] > .vamp-detail__summary::before {
 
 .creation-dropdown option {
   font-family: var(--v-font-body);
+  font-size: 0.85rem;
   text-transform: none;
   letter-spacing: 0;
 }
@@ -5059,7 +5180,6 @@ details[open] > .vamp-detail__summary::before {
   flex-shrink: 0;
   position: relative;
   border-radius: var(--v-radius-md) var(--v-radius-md) 0 0;
-  overflow: hidden;
 }
 
 .vamp-rpanel-bar::after {
@@ -5105,28 +5225,53 @@ details[open] > .vamp-detail__summary::before {
   transition: opacity 0.15s ease, filter 0.15s ease;
 }
 
-.vamp-rpanel-bar__tab--active .vamp-rpanel-bar__playbook-img,
-.vamp-rpanel-bar__tab--active .vamp-rpanel-bar__icon {
+.vamp-rpanel-bar__tab--active .vamp-rpanel-bar__playbook-img {
   opacity: 1;
   filter: drop-shadow(0 0 0.25rem var(--v-glow, rgba(255,255,255,0.5)));
 }
 
+.vamp-rpanel-bar__tab--active .vamp-rpanel-bar__icon {
+  opacity: 1;
+  color: #fff;
+  filter: drop-shadow(0 0 0.35rem var(--v-glow, rgba(255,255,255,0.5)));
+}
+
 .vamp-rpanel-bar__icon {
   display: inline-block;
-  inline-size: 1.1rem;
-  block-size: 1.1rem;
+  inline-size: 1.3rem;
+  block-size: 1.3rem;
   background: currentColor;
+  opacity: 0.4;
   mask-size: contain;
   -webkit-mask-size: contain;
   mask-repeat: no-repeat;
   -webkit-mask-repeat: no-repeat;
   mask-position: center;
   -webkit-mask-position: center;
+  transition: opacity 0.15s ease, filter 0.15s ease;
 }
 
 .vamp-rpanel-bar__tab:hover {
-  color: var(--v-text-primary);
+  color: var(--v-text-accent);
   background: var(--v-accent-subtle);
+}
+
+.vamp-rpanel-bar__tab:hover .vamp-rpanel-bar__icon {
+  opacity: 0.75;
+}
+
+.vamp-rpanel-bar__tab:hover .vamp-rpanel-bar__playbook-img {
+  opacity: 0.75;
+}
+
+.vamp-rpanel-bar__tab--active:hover .vamp-rpanel-bar__playbook-img,
+.vamp-rpanel-bar__tab--active:hover .vamp-rpanel-bar__icon {
+  opacity: 1;
+}
+
+.vamp-rpanel-bar__tab[data-tab="moves"] .vamp-rpanel-bar__icon {
+  inline-size: 1.45rem;
+  block-size: 1.45rem;
 }
 
 .vamp-rpanel-bar__tab:active {
@@ -5249,6 +5394,10 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-rpanel-field__value strong {
   color: var(--v-text-primary);
+}
+
+.vamp-rpanel-field__value a strong {
+  color: inherit;
 }
 
 .vamp-rpanel-field__value--accent {
@@ -5599,6 +5748,13 @@ details[open] > .vamp-detail__summary::before {
   margin: 0 0 0.35rem;
 }
 
+.vamp-adv-extras-list__note {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--v-accent);
+  margin: 0 0 0.5rem;
+}
+
 .vamp-adv-extras-list__hint {
   font-size: 0.8rem;
   color: var(--v-text-muted);
@@ -5612,7 +5768,7 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-adv-category-group__heading {
   font-family: var(--v-font-heading);
-  font-size: 0.85rem;
+  font-size: 1.25rem;
   letter-spacing: 0.05em;
   color: var(--v-text-accent);
   padding: 0.5rem 0 0.15rem;
@@ -5623,6 +5779,11 @@ details[open] > .vamp-detail__summary::before {
 .vamp-adv-extra-row {
   border-radius: var(--v-radius-sm);
   transition: background 0.15s ease;
+  cursor: pointer;
+}
+
+.vamp-adv-extra-row:hover {
+  background: var(--v-accent-subtle);
 }
 
 .vamp-adv-extra-row + .vamp-adv-extra-row {
@@ -5649,6 +5810,7 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-adv-extra-row__cost {
+  font-family: var(--v-font-body);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--v-text-accent);
@@ -5694,6 +5856,12 @@ details[open] > .vamp-detail__summary::before {
 .vamp-adv-extra-row__sub-select .creation-dropdown--sm {
   font-size: 0.75rem;
   padding: 0.2em 0.5em;
+}
+
+.creation-dropdown--xp {
+  font-size: 0.7rem;
+  padding: 0.15em 0.3em;
+  min-width: 4rem;
 }
 
 .vamp-adv-stats {
@@ -5875,7 +6043,7 @@ details[open] > .vamp-detail__summary::before {
 .vamp-move-section__bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.35rem;
   padding-block: 0.45rem;
   cursor: pointer;
   user-select: none;
@@ -5887,6 +6055,7 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-move-section__name {
+  flex: 1;
   font-family: var(--v-font-heading);
   font-size: 1.25rem;
   color: var(--v-text-primary);
@@ -5897,7 +6066,8 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-move-section__name--advanced {
-  color: var(--v-text-accent);
+  color: var(--v-accent-hover);
+  text-shadow: 0 0 0.4rem color-mix(in srgb, var(--v-glow-bright) 50%, transparent);
 }
 
 .vamp-move-section__badge {
@@ -5913,7 +6083,6 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-move-section__buy,
 .vamp-move-section__add {
-  margin-inline-start: auto;
   flex-shrink: 0;
   font-size: 0.65rem;
   padding: 0.15rem 0.5rem;
@@ -5931,6 +6100,69 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-move-section__body {
   padding-block-end: 0.5rem;
+}
+
+.vamp-rules-title {
+  padding: 0.6rem 0.75rem 0;
+  font-family: var(--v-font-heading);
+  font-size: 1.4rem;
+  color: var(--v-text-primary);
+  text-align: center;
+}
+
+.vamp-rules-title p {
+  margin: 0;
+}
+
+.vamp-rules-intro {
+  padding: 0.25rem 0.75rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+  line-height: 1.55;
+  border-block-end: 1px solid var(--v-border);
+  margin-block-end: 0.25rem;
+}
+
+.vamp-rules-intro p {
+  margin: 0 0 0.35rem;
+}
+
+.vamp-rules-intro a {
+  color: var(--v-accent);
+}
+
+.vamp-rules-body {
+  padding: 0.25rem 0.75rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+  line-height: 1.55;
+}
+
+.vamp-rules-body p {
+  margin: 0 0 0.4rem;
+}
+
+.vamp-rules-body p:last-child {
+  margin-block-end: 0;
+}
+
+.vamp-rules-body strong {
+  color: var(--v-text-primary);
+}
+
+.vamp-rules-body ul,
+.vamp-rules-body ol {
+  margin: 0.3rem 0;
+  padding-inline-start: 1.2rem;
+}
+
+.vamp-rules-body li {
+  margin-block-end: 0.15rem;
+}
+
+.vamp-rules-body em {
+  color: var(--v-text-primary);
+  font-style: italic;
 }
 
 
@@ -6043,7 +6275,15 @@ details[open] > .vamp-detail__summary::before {
     padding-left: 0;
   }
 
-  .vamp-content-columns {
+  .vamp-perks-split {
+    flex-direction: column;
+  }
+
+  .vamp-perks-split > .vamp-merits-flaws__divider {
+    display: none;
+  }
+
+  .vamp-paired--grid {
     grid-template-columns: 1fr;
   }
 

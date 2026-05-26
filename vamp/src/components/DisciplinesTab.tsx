@@ -13,12 +13,16 @@ import type { Discipline } from '../data/types';
 
 /* All rendered markdown is from Coterie's verified JSON parsers (trusted content) */
 
-function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverlapBonus, buyMode }: {
+function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverlapBonus, buyMode, onRemove }: {
   discipline: Discipline;
   creationToggle?: { selected: boolean; granted: boolean; disabled: boolean; onToggle: () => void };
   maxFreePowers?: number;
   hasOverlapBonus?: boolean;
-  buyMode?: { onBuyPower: (powerName: string, level: number, disciplineSlug: string) => void };
+  buyMode?: {
+    onBuyPower: (powerName: string, level: number, disciplineSlug: string) => void;
+    onAddPower?: (powerName: string) => void;
+  };
+  onRemove?: { canRemove: boolean; handler: () => void };
 }) {
   const isCreation = !!creationToggle;
   const isBuying = !!buyMode;
@@ -74,7 +78,19 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
             </button>
           )
         ) : (
-          <span class="vamp-disc__count">{known.length}/{powers.length}</span>
+          <>
+            <span class="vamp-disc__count">{known.length}/{powers.length}</span>
+            {onRemove && (
+              <button
+                class="vamp-btn vamp-btn--sm vamp-btn--unselect"
+                disabled={!onRemove.canRemove}
+                title={onRemove.canRemove ? 'Remove this Discipline' : 'Remove all Powers first'}
+                onClick={(e) => { e.stopPropagation(); onRemove.handler(); }}
+              >
+                Remove
+              </button>
+            )}
+          </>
         )}
       </div>
 
@@ -105,9 +121,17 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
           {known.length > 0 && (
             <div class="vamp-disc__group">
               <div class="vamp-disc__group-label">Known</div>
-              {known.map(entry => (
-                <PowerCard key={entry.power.name} entry={entry} />
-              ))}
+              {known.map(entry => {
+                const knownBuyInfo: PowerBuyInfo | undefined = buyMode ? {
+                  cost: powerXPCost(entry.power.level, discipline.slug),
+                  onBuy: buyMode.onBuyPower,
+                  onAdd: buyMode.onAddPower,
+                  disciplineSlug: discipline.slug,
+                } : undefined;
+                return (
+                  <PowerCard key={entry.power.name} entry={entry} buyInfo={knownBuyInfo} />
+                );
+              })}
             </div>
           )}
 
@@ -133,6 +157,7 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
                 const pbi: PowerBuyInfo | undefined = buyMode ? {
                   cost: powerXPCost(entry.power.level, discipline.slug),
                   onBuy: buyMode.onBuyPower,
+                  onAdd: buyMode.onAddPower,
                   disciplineSlug: discipline.slug,
                 } : undefined;
                 return (
@@ -391,7 +416,7 @@ function CreationDisciplineList() {
         );
       })}
       <div class="vamp-disc-creation__count">
-        {selected.filter(s => !allGranted.includes(s)).length}/{Math.max(0, config.minRequired - allGranted.length)} selected
+        {selected.filter(s => !allGranted.includes(s)).length}/{Math.max(0, config.minRequired - grantedSlugs.length)} selected
       </div>
     </div>
   );
@@ -448,7 +473,7 @@ function BuyModeDisciplineList() {
             <DisciplineSection
               key={disc.slug}
               discipline={disc}
-              buyMode={{ onBuyPower: handleBuyPower }}
+              buyMode={{ onBuyPower: handleBuyPower, onAddPower: (name) => learnPower(name) }}
             />
           );
         }
@@ -488,6 +513,18 @@ export function DisciplinesTab() {
 
   const isEdit = editMode.value;
 
+  function handleEditBuyPower(powerName: string, level: number, disciplineSlug: string) {
+    const cost = powerXPCost(level, disciplineSlug);
+    const cur = character.value;
+    if (cur.xp < cost) return;
+    setXP(cur.xp - cost);
+    addPendingUpgrade({ type: 'discipline-power', powerName, xpCost: cost });
+  }
+
+  function handleEditAddPower(powerName: string) {
+    learnPower(powerName);
+  }
+
   return (
     <div class="vamp-disc-list">
       {isEdit && (
@@ -498,9 +535,31 @@ export function DisciplinesTab() {
           </button>
         </div>
       )}
-      {disciplines.map(d => (
-        <DisciplineSection key={d.slug} discipline={d} />
-      ))}
+      {disciplines.map(d => {
+        const isStarting = startingDisciplineSlugs.value.has(d.slug);
+        const knownInDisc = d.powers.filter(p =>
+          character.value.knownPowers.includes(p.name)
+        ).length;
+
+        return (
+          <DisciplineSection
+            key={d.slug}
+            discipline={d}
+            buyMode={isEdit ? {
+              onBuyPower: handleEditBuyPower,
+              onAddPower: handleEditAddPower,
+            } : undefined}
+            onRemove={isEdit && !isStarting ? {
+              canRemove: knownInDisc === 0,
+              handler: () => {
+                updateCharacter({
+                  unlockedDisciplines: character.value.unlockedDisciplines.filter(s => s !== d.slug),
+                });
+              },
+            } : undefined}
+          />
+        );
+      })}
     </div>
   );
 }

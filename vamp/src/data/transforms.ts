@@ -48,14 +48,34 @@ export function parseHuntingStat(raw: string): StatName | null {
   return null;
 }
 
-const MD_LINK_RE = /\(\.\.\/([\w-]+)\/([\w-]+)\.md(#[\w-]*)?\)/g;
+const RELATIVE_LINK_RE = /\(\.\.\/([\w-]+)\/([\w-]+)\.md(#[\w-]*)?\)/g;
+const BARE_LINK_RE = /\]\(([\w-]+)\.md(#[\w-]*)?\)/g;
 const IMG_PATH_RE = /\(\.\.\/assets\//g;
 const ATTR_LIST_RE = /\{\s*\.[a-zA-Z0-9_-]+(?:\s+\.[a-zA-Z0-9_-]+)*\s*\}/g;
 
+/* Bare-filename links lack a section prefix; map known slugs to their section */
+const SLUG_TO_SECTION: Record<string, string> = {
+  'optional-extras': 'your-kindred',
+  'creating-your-character': 'your-kindred',
+  'predator-types': 'your-kindred',
+  'advancement': 'your-kindred',
+  'coterie-stat-reference-tables': 'your-coterie',
+  'creating-your-coterie': 'your-coterie',
+  'coterie-moves': 'your-coterie',
+  'coterie-stats': 'your-coterie',
+  'coterie-types': 'your-coterie',
+  'general-rules': 'disciplines',
+};
+
 export function rewriteMarkdownLinks(md: string): string {
   return md
-    .replace(MD_LINK_RE, (_match, section: string, slug: string, fragment?: string) => {
-      return `(https://coterie.zip/${section}/${slug}/${fragment ?? ''})`;
+    .replace(RELATIVE_LINK_RE, (_m, section: string, slug: string, frag?: string) =>
+      `(https://coterie.zip/${section}/${slug}/${frag ?? ''})`,
+    )
+    .replace(BARE_LINK_RE, (_m, slug: string, frag?: string) => {
+      const section = SLUG_TO_SECTION[slug];
+      if (!section) return _m;
+      return `](https://coterie.zip/${section}/${slug}/${frag ?? ''})`;
     })
     .replace(IMG_PATH_RE, '(https://coterie.zip/assets/')
     .replace(ATTR_LIST_RE, '');
@@ -117,7 +137,7 @@ const SHORTHANDS: Record<string, string> = {
   'osirian-penalty': '(humanity-lost/2)@roundup,min:1',
 };
 
-const TOKEN_RE = /\{\{(.+?)\}\}/g;
+const TOKEN_RE = /([+\-−])?\{\{(.+?)\}\}/g;
 
 /* Resolve a bare code to a number from the context */
 function resolveCode(code: string, ctx: SnippetContext): number {
@@ -196,17 +216,30 @@ function resolveToken(raw: string, ctx: SnippetContext): string {
 
 /* Replace all {{...}} tokens in snippet text with resolved values */
 export function resolveSnippetTokens(text: string, ctx: SnippetContext): string {
-  return text.replace(TOKEN_RE, (_, inner: string) => resolveToken(inner, ctx));
+  return text.replace(TOKEN_RE, (_match, sign: string | undefined, inner: string) => {
+    const resolved = resolveToken(inner, ctx);
+    if (!sign) return resolved;
+    const num = resolved.replace(/\*\*/g, '').replace(/^[+\-−]/, '');
+    return `**${sign}${num}**`;
+  });
 }
 
 const mdCache = new Map<string, string>();
+
+const renderer = new marked.Renderer();
+renderer.link = ({ href, text }: { href: string; text: string }) => {
+  if (href.startsWith('https://coterie.zip')) {
+    return `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+  }
+  return `<a href="${href}">${text}</a>`;
+};
 
 export function renderGameMarkdown(raw: string): string {
   const cached = mdCache.get(raw);
   if (cached) return cached;
   const admonitioned = processAdmonitions(raw);
   const rewritten = rewriteMarkdownLinks(admonitioned);
-  const html = marked.parse(rewritten, { async: false, breaks: true }) as string;
+  const html = marked.parse(rewritten, { async: false, breaks: true, renderer }) as string;
   const result = colorTierMarkers(html);
   mdCache.set(raw, result);
   return result;

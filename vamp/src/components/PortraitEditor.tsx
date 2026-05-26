@@ -3,6 +3,7 @@ import { useSignal } from '@preact/signals';
 import { updateCharacter, type Portrait } from '../state/character';
 import { editMode } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
+import { showToast } from '../state/toasts';
 
 const CYCLE_MS = 59_000;
 const FADE_MS = 1_000;
@@ -25,7 +26,8 @@ interface Props {
 export function PortraitEditor({ portraits, name }: Props) {
   const editing = useSignal(false);
   const activeIndex = useSignal(0);
-  const fading = useSignal(false);
+  const prevIndex = useSignal(-1);
+  const transitioning = useSignal(false);
 
   const isEdit = editMode.value;
   const isCreationName = creationMode.value && creationStep.value === 'name';
@@ -33,18 +35,17 @@ export function PortraitEditor({ portraits, name }: Props) {
 
   useEffect(() => {
     if (portraits.length < 2) return;
-    let fadeTimer: ReturnType<typeof setTimeout> | null = null;
     const timer = setInterval(() => {
-      fading.value = true;
-      fadeTimer = setTimeout(() => {
-        activeIndex.value = (activeIndex.value + 1) % portraits.length;
-        fading.value = false;
+      prevIndex.value = activeIndex.value;
+      transitioning.value = true;
+      activeIndex.value = (activeIndex.value + 1) % portraits.length;
+      const fadeTimer = setTimeout(() => {
+        transitioning.value = false;
+        prevIndex.value = -1;
       }, FADE_MS);
+      return () => clearTimeout(fadeTimer);
     }, CYCLE_MS);
-    return () => {
-      clearInterval(timer);
-      if (fadeTimer) clearTimeout(fadeTimer);
-    };
+    return () => clearInterval(timer);
   }, [portraits]);
 
   if (showForm) {
@@ -57,6 +58,7 @@ export function PortraitEditor({ portraits, name }: Props) {
 
   const idx = activeIndex.value % Math.max(1, portraits.length);
   const current = portraits[idx];
+  const prev = prevIndex.value >= 0 ? portraits[prevIndex.value % portraits.length] : null;
 
   return (
     <div
@@ -64,12 +66,22 @@ export function PortraitEditor({ portraits, name }: Props) {
       onDblClick={() => { editing.value = true; }}
     >
       {current ? (
-        <img
-          class={`vamp-identity__portrait-img ${fading.value ? 'vamp-identity__portrait-img--fading' : ''}`}
-          src={current.url}
-          alt={name}
-          style={`object-position: ${current.x}% ${current.y}%`}
-        />
+        <>
+          <img
+            class="vamp-identity__portrait-img"
+            src={current.url}
+            alt={name}
+            style={`object-position: ${current.x}% ${current.y}%`}
+          />
+          {prev && transitioning.value && (
+            <img
+              class="vamp-identity__portrait-img vamp-identity__portrait-img--outgoing"
+              src={prev.url}
+              alt=""
+              style={`object-position: ${prev.x}% ${prev.y}%`}
+            />
+          )}
+        </>
       ) : (
         <span
           class="vamp-identity__portrait-placeholder"
@@ -116,10 +128,23 @@ function PortraitUrlForm({ portraits, onDone }: { portraits: Portrait[]; onDone:
     onDone();
   }
 
+  function validateAndSave() {
+    const snapshot = drafts.value.filter(u => u.trim());
+    if (snapshot.length === 0) { save(); return; }
+    Promise.all(snapshot.map(u => validateImageUrl(u))).then(results => {
+      const invalid = snapshot.filter((_, i) => !results[i]);
+      if (invalid.length > 0) {
+        showToast('That portrait URL doesn\'t point to a valid image. Try a different one.', 'error');
+        return;
+      }
+      save();
+    });
+  }
+
   function handleKey(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       e.preventDefault();
-      save();
+      validateAndSave();
     }
     if (e.key === 'Escape') {
       e.preventDefault();
@@ -127,6 +152,13 @@ function PortraitUrlForm({ portraits, onDone }: { portraits: Portrait[]; onDone:
       validity.value = {};
       onDone();
     }
+  }
+
+  function handleFormBlur(e: FocusEvent) {
+    const related = e.relatedTarget as HTMLElement | null;
+    const container = (e.currentTarget as HTMLElement);
+    if (container.contains(related)) return;
+    validateAndSave();
   }
 
   function removeUrl(idx: number) {
@@ -143,7 +175,7 @@ function PortraitUrlForm({ portraits, onDone }: { portraits: Portrait[]; onDone:
   }
 
   return (
-    <div class="vamp-portrait-form" ref={listRef}>
+    <div class="vamp-portrait-form" ref={listRef} onBlur={handleFormBlur}>
       {drafts.value.map((url, i) => {
         const valid = validity.value[i];
         const isInvalid = valid === false;

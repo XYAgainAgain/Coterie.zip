@@ -32,12 +32,17 @@ export interface Playbook {
   customStatSpread: string;
 }
 
+export interface PTMeritFlaw {
+  name: string;
+  description: string;
+}
+
 export interface PredatorType {
   name: string;
   huntingStat: string;
   discipline: string;
-  merit: string;
-  flaw: string;
+  merit: PTMeritFlaw;
+  flaw: PTMeritFlaw;
   humanity: string | null;
   feedingRules: string | null;
 }

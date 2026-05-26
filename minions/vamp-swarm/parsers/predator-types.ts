@@ -24,6 +24,13 @@ const KNOWN_LABELS = new Set([
   'Feeding Rules',
 ]);
 
+/* Splits "*Name.* Description..." into { name, description } */
+function parseMeritFlaw(raw: string, ctx: string, label: string): { name: string; description: string } {
+  const match = raw.match(/^\*{1,3}(.+?)\*{1,3}\.?\s*/);
+  if (!match) throw new Error(`[${ctx}] ${label} missing italic name prefix: "${raw.slice(0, 60)}..."`);
+  return { name: match[1].replace(/[.]$/, ''), description: raw.slice(match[0].length) };
+}
+
 export function parsePredatorTypes(repoRoot: string): PredatorType[] {
   const src = readMarkdown(resolve(repoRoot, SOURCE));
   const tokens = tokenize(src);
@@ -49,8 +56,8 @@ export function parsePredatorTypes(repoRoot: string): PredatorType[] {
       name: section.name,
       huntingStat: requireField(fields, 'Hunting Stat', ctx),
       discipline: requireField(fields, 'Discipline', ctx),
-      merit: requireField(fields, 'Merit', ctx),
-      flaw: requireField(fields, 'Flaw', ctx),
+      merit: parseMeritFlaw(requireField(fields, 'Merit', ctx), ctx, 'Merit'),
+      flaw: parseMeritFlaw(requireField(fields, 'Flaw', ctx), ctx, 'Flaw'),
       humanity: fields.get('Humanity') ?? null,
       feedingRules: fields.get('Feeding Rules') ?? null,
     };

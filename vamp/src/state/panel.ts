@@ -1,6 +1,6 @@
 import { signal } from '@preact/signals';
 
-export const RPANEL_TABS = ['coterie', 'character', 'moves', 'advancement', 'rules'] as const;
+export const RPANEL_TABS = ['coterie', 'character', 'advancement', 'moves', 'rules'] as const;
 export type RPanelTab = (typeof RPANEL_TABS)[number];
 
 export const TAB_TOOLTIPS: Record<RPanelTab, string> = {

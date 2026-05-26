@@ -1,13 +1,18 @@
 /* Resizable right panel with drag handle. Ported from Deva's RightColumn. */
 
 import type { ComponentChildren } from 'preact';
-import { signal } from '@preact/signals';
+import { signal, effect } from '@preact/signals';
 
 export const MIN_WIDTH = 280;
 const DEFAULT_WIDTH = 320;
 
 export const rightColumnWidth = signal(DEFAULT_WIDTH);
 export const rightColumnMinimized = signal(false);
+
+effect(() => {
+  const w = rightColumnMinimized.value ? 32 : rightColumnWidth.value;
+  document.documentElement.style.setProperty('--v-right-col-w', `${w}px`);
+});
 
 const RATIO_ANCHORS: [number, number][] = [
   [1280, 0.22],

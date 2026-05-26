@@ -135,8 +135,17 @@ export function powerXPCost(level: number, disciplineSlug: string): number {
   return base;
 }
 
+/* For range values like "1–5", returns the minimum; for fixed values like "3", returns 3 */
 export function parseXPValue(str: string): number {
-  return parseInt(str.replace(/[^0-9-]/g, ''), 10) || 0;
+  const range = str.match(/(\d+)\s*[–\-]\s*(\d+)/);
+  if (range) return parseInt(range[1], 10);
+  return parseInt(str.replace(/[^0-9]/g, ''), 10) || 0;
+}
+
+export function xpRange(str: string): [number, number] | null {
+  const m = str.match(/(\d+)\s*[–\-]\s*(\d+)/);
+  if (!m) return null;
+  return [parseInt(m[1], 10), parseInt(m[2], 10)];
 }
 
 export const availableDisciplines = computed<string[]>(() => {

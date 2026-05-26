@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-25T22:15:48.383Z",
+  "generatedAt": "2026-05-26T06:34:07.169Z",
   "entries": [
     {
       "name": "Animalism",
@@ -759,7 +759,7 @@
           "tags": [
             "Passive"
           ],
-          "body": "Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. When another vampire uses a Dominate Power against one of your subjects, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.\n\nYour mental hold comes first. Everybody else can wait in line."
+          "body": "Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. **When another vampire uses a Dominate Power against one of your subjects**, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.\n\nYour mental hold comes first. Everybody else can wait in line."
         },
         {
           "name": "Dementation",
@@ -773,7 +773,7 @@
           "tags": [
             "Passive"
           ],
-          "body": "Your command over the Blood Bond is ironclad:\n\n- Blood Bonds you hold over mortals never degrade. As long as the mortal lives, the Bond endures without maintenance.\n- Maintaining Blood Bonds over other Kindred requires half the normal effort and Vitae.\n- If you and another vampire share a mutual Blood Bond and either of you has this Power, you both have +1 Ongoing to all rolls when acting together in the same scene."
+          "body": "Your command over the Blood Bond is ironclad. You gain the following benefits:\n\n- Blood Bonds you hold over mortals never degrade. As long as the mortal lives, the Bond endures without maintenance.\n- Maintaining Blood Bonds over other Kindred requires half the normal effort and Vitae.\n- **If you and another vampire share a mutual Blood Bond and either of you has this Power**, you both have +1 Ongoing to all rolls when acting together in the same scene."
         },
         {
           "name": "Mesmerize",
@@ -1202,7 +1202,7 @@
       "intro": "Oblivion is the Discipline of entropy, absence, and the space between the living and the dead. It draws from the Abyss — a howling nowhere beneath reality, equal parts darkness and death, and not a popular tourist destination by any measure. Lasombra favor it for commanding darkness as a weapon. Hecata favor it for dragging the dead back through the door. Any Kindred willing to pay the price can learn Oblivion, but those two Clans have had centuries to perfect its cruelties.\n\nThe Discipline operates on two axes. The first is **shadow**: darkness as a physical substance to be manipulated, sensory projection through shade, and eventually becoming the shadows yourself. The second is **necromancy**: communication with the dead, decay, and the boundary between worlds. Shadow Powers tend to be tactical. Necromantic Powers tend to be investigative and social. Both corrode the user's soul.\n\n**Oblivion Stains:** When you roll a Bestial Failure on any Oblivion roll, you gain 2 Stains instead of the usual 1. The void doesn't care what you were trying to accomplish. Individual Powers may also impose their own Stain costs for particularly dark applications.\n\n**Light Sensitivity:** Oblivion requires darkness to function. Powers cannot be activated in bright light or daylight. In well-lit environments (fluorescent offices, stadium lights, IKEA, a room with every lamp on), all Oblivion rolls are made with Disadvantage that cannot be flattened by Advantage from any source. The magic itself is weakened, not the caster. Turn the lights off (or break the bulbs) and the problem goes away.\n\nThere is no inherent counter to Oblivion. ***Sense the Unseen*** (Auspex) can detect some shadow effects, as noted per Power. Beyond that, your best defense is to bring a very bright flashlight or leave.",
       "perk": {
         "name": "Abyssal Sight",
-        "body": "Your senses sharpen far beyond mortal limits. You suffer no penalties from darkness of any kind, including supernatural, and your awareness extends into spaces that most minds instinctively refuse to perceive.\n\nWhenever you like, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. While your eyes are black, you can see ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.\n\nThe black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both."
+        "body": "Your senses sharpen far beyond mortal limits. **You suffer no penalties from darkness of any kind, including supernatural, and your awareness extends into spaces that most minds instinctively refuse to perceive.**\n\n**Whenever you like**, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. **While your eyes are black**, you can see ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.\n\nThe black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both."
       },
       "powers": [
         {

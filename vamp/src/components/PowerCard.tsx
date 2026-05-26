@@ -2,14 +2,16 @@
 
 import { useSignal } from '@preact/signals';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
-import { learnPower, unlearnPower, character } from '../state/character';
+import { learnPower, unlearnPower, removePendingUpgrade, character } from '../state/character';
 import { creationMode } from '../state/creation';
+import { editMode } from '../state/ui';
 import { getSnippet, maxHP } from '../state/derived';
 import type { PowerWithStatus } from '../state/derived';
 
 export interface PowerBuyInfo {
   cost: number;
   onBuy: (powerName: string, level: number, disciplineSlug: string) => void;
+  onAdd?: (powerName: string) => void;
   disciplineSlug: string;
 }
 
@@ -30,7 +32,8 @@ export function PowerCard({ entry, atPickLimit, buyInfo }: {
   const { power, status, lockReason } = entry;
   const isKnown = status === 'known';
   const isPending = status === 'pending';
-  const rawSnippet = isKnown ? getSnippet('powers', power.name) : null;
+  const isEditing = editMode.value || creationMode.value;
+  const rawSnippet = isKnown && !isEditing ? getSnippet('powers', power.name) : null;
   const char = character.value;
   const snippet = rawSnippet ? resolveSnippetTokens(rawSnippet, {
     blood: char.stats.Blood, shadow: char.stats.Shadow, resolve: char.stats.Resolve,
@@ -75,7 +78,7 @@ export function PowerCard({ entry, atPickLimit, buyInfo }: {
           {isPending && <span class="vamp-power__pending-note"> (after resting)</span>}
         </span>
         {power.tags.map(tag => (
-          <span class="vamp-power__tag" key={tag}>{tag}</span>
+          <span class="vamp-power__tag" key={tag}>{tag.charAt(0) + tag.slice(1).toLowerCase()}</span>
         ))}
         {status === 'locked' && lockReason && (
           <span class="vamp-power__lock" title={lockReason} />
@@ -89,19 +92,45 @@ export function PowerCard({ entry, atPickLimit, buyInfo }: {
           </button>
         )}
         {buyInfo && status === 'available' && (
+          <>
+            <button
+              class="vamp-btn vamp-btn--sm vamp-btn--buy"
+              disabled={!canBuy}
+              onClick={handleBuy}
+            >
+              BUY ({buyInfo.cost} XP)
+            </button>
+            {buyInfo.onAdd && (
+              <button
+                class="vamp-btn vamp-btn--sm vamp-move-section__add"
+                onClick={(e) => { e.stopPropagation(); buyInfo.onAdd!(power.name); }}
+              >
+                ADD
+              </button>
+            )}
+          </>
+        )}
+        {buyInfo && isKnown && (
           <button
-            class="vamp-btn vamp-btn--sm vamp-btn--buy"
-            disabled={!canBuy}
-            onClick={handleBuy}
+            class="vamp-btn vamp-btn--sm vamp-btn--unselect"
+            onClick={(e) => {
+              e.stopPropagation();
+              const pending = character.value.pendingUpgrades.find(
+                u => u.type === 'discipline-power' && u.powerName === power.name,
+              );
+              if (pending) removePendingUpgrade(pending.id);
+              unlearnPower(power.name);
+            }}
           >
-            {buyInfo.cost} XP
+            Remove
           </button>
         )}
+        {isKnown && snippet && !expanded.value && <span class="vamp-snippet-label">Summary</span>}
         <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
       </div>
-      {/* Snippet for known Powers: compact quick-ref when collapsed. All content is from verified JSON parsers. */}
       {isKnown && snippet && !expanded.value && (
         <div class="vamp-power__body vamp-power__body--snippet"
+          onClick={() => { expanded.value = true; }}
           dangerouslySetInnerHTML={{ __html: renderGameMarkdown(snippet) }}
         />
       )}

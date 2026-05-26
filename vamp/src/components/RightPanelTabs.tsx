@@ -8,7 +8,7 @@ import {
 } from '../state/panel';
 import {
   currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
-  statCap, parseXPValue, disciplineAccessCost, isExclusiveDiscipline,
+  statCap, parseXPValue, xpRange, disciplineAccessCost, isExclusiveDiscipline,
   startingDisciplineSlugs,
 } from '../state/derived';
 import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
@@ -88,9 +88,13 @@ function checkLimitEligibility(
     return pbs.some(p => p.toLowerCase() === char.playbook.toLowerCase());
   }
 
-  /* "X Only" */
-  const onlyMatch = limit.match(/^(.+?)\s+Only$/i);
-  if (onlyMatch) return onlyMatch[1].replace(/\*/g, '').trim().toLowerCase() === char.playbook.toLowerCase();
+  /* "X Only" or "Only X" (data uses plural like "Only Ghouls" for Playbook "Ghoul") */
+  const onlyMatch = limit.match(/^(.+?)\s+Only$/i) ?? limit.match(/^Only\s+(.+)$/i);
+  if (onlyMatch) {
+    const target = onlyMatch[1].replace(/\*/g, '').trim().toLowerCase();
+    const pb = char.playbook.toLowerCase();
+    return target === pb || target === pb + 's';
+  }
 
   /* "Can't have *X* Merit/Flaw" */
   const cantHave = limit.match(/^Can'?t\s+have\s+\*?(.+?)\*?\s+(?:Merit|Flaw)$/i);
@@ -201,6 +205,7 @@ function TabBar() {
           role="tab"
           aria-selected={current === id}
           class={`vamp-rpanel-bar__tab ${current === id ? 'vamp-rpanel-bar__tab--active' : ''}`}
+          data-tab={id}
           onClick={() => switchTab(id)}
           title={TAB_TOOLTIPS[id]}
         >
@@ -723,16 +728,22 @@ function GhoulPatronPrompt() {
   );
 }
 
-function PlaybookSection({ creating }: { creating: boolean }) {
+function PlaybookSection({ creating, focused }: { creating: boolean; focused: boolean }) {
   const pb = currentPlaybook.value;
   const char = character.value;
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    if (!creating || !detailsRef.current) return;
+    detailsRef.current.open = focused;
+  }, [focused, creating]);
 
   const sectionTitle = creating ? <PlaybookDropdown /> : pb?.name;
   const showContent = creating || !!pb;
   if (!showContent) return null;
 
   return (
-    <details class="vamp-rpanel-section" open={creating || undefined}>
+    <details class="vamp-rpanel-section" ref={detailsRef}>
       <summary class="vamp-rpanel-section__bar">
         {sectionTitle}
         <span class="vamp-rpanel-section__pill">Playbook</span>
@@ -814,10 +825,16 @@ function PlaybookSection({ creating }: { creating: boolean }) {
   );
 }
 
-function AgeBracketSection({ creating }: { creating: boolean }) {
+function AgeBracketSection({ creating, focused }: { creating: boolean; focused: boolean }) {
   const ab = currentAgeBracket.value;
   const data = gameData.value;
   const char = character.value;
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    if (!creating || !detailsRef.current) return;
+    detailsRef.current.open = focused;
+  }, [focused, creating]);
 
   const title = creating ? (
     <select
@@ -829,23 +846,32 @@ function AgeBracketSection({ creating }: { creating: boolean }) {
         const bracket = data?.ageBrackets.find(b => b.name === val);
         if (!bracket) return;
         const h = bracket.startingHumanity.split(/[^0-9]+/).map(Number).filter(n => !isNaN(n));
+        const bp = bracket.startingBloodPotency;
         updateCharacter({
           ageBracket: val,
-          bp: bracket.startingBloodPotency,
+          bp,
+          xp: Math.min(10, Math.max(1, bp) * 2),
           humanity: h.length > 0 ? Math.max(...h) : 7,
           predatorType: '',
         });
       }}
     >
       <option value="">Choose Age</option>
-      {data?.ageBrackets.map(b => <option key={b.name} value={b.name}>{b.name}</option>)}
+      {data?.ageBrackets
+        .filter(b => {
+          const isSemimortalOnly = char.playbook === 'Ghoul' || char.playbook === 'Thin-Blood';
+          if (isSemimortalOnly) return b.name === 'Semimortal';
+          if (char.playbook) return b.name !== 'Semimortal';
+          return true;
+        })
+        .map(b => <option key={b.name} value={b.name}>{b.name}</option>)}
     </select>
   ) : ab?.name;
 
   if (!creating && !ab) return null;
 
   return (
-    <details class="vamp-rpanel-section" open={creating || undefined}>
+    <details class="vamp-rpanel-section" ref={detailsRef}>
       <summary class="vamp-rpanel-section__bar">
         {title}
         <span class="vamp-rpanel-section__pill">Age Bracket</span>
@@ -881,10 +907,16 @@ function AgeBracketSection({ creating }: { creating: boolean }) {
   );
 }
 
-function PredatorTypeSection({ creating }: { creating: boolean }) {
+function PredatorTypeSection({ creating, focused }: { creating: boolean; focused: boolean }) {
   const pt = currentPredatorType.value;
   const data = gameData.value;
   const char = character.value;
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    if (!creating || !detailsRef.current) return;
+    detailsRef.current.open = focused;
+  }, [focused, creating]);
 
   const canSkip = char.ageBracket === 'Fledgling'
     || char.playbook === 'Devorari' || char.playbook === 'Ghoul';
@@ -906,7 +938,7 @@ function PredatorTypeSection({ creating }: { creating: boolean }) {
   if (!creating && !pt) return null;
 
   return (
-    <details class="vamp-rpanel-section" open={creating || undefined}>
+    <details class="vamp-rpanel-section" ref={detailsRef}>
       <summary class="vamp-rpanel-section__bar">
         {title}
         <span class="vamp-rpanel-section__pill">Predator Type</span>
@@ -923,12 +955,12 @@ function PredatorTypeSection({ creating }: { creating: boolean }) {
               <span class="vamp-rpanel-field__value vamp-rpanel-field__value--accent">{pt.discipline}</span>
             </div>
             <div class="vamp-rpanel-tier vamp-rpanel-tier--merit">
-              <div class="vamp-rpanel-tier__label">Merit</div>
-              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.merit) }} />
+              <div class="vamp-rpanel-tier__label">Merit: <em>{pt.merit.name}</em></div>
+              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.merit.description) }} />
             </div>
             <div class="vamp-rpanel-tier vamp-rpanel-tier--flaw">
-              <div class="vamp-rpanel-tier__label">Flaw</div>
-              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.flaw) }} />
+              <div class="vamp-rpanel-tier__label">Flaw: <em>{pt.flaw.name}</em></div>
+              <div class="vamp-rpanel-tier__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.flaw.description) }} />
             </div>
             {pt.humanity && (
               <div class="vamp-rpanel-field">
@@ -953,12 +985,13 @@ function PredatorTypeSection({ creating }: { creating: boolean }) {
 
 function CharacterPanel() {
   const creating = creationMode.value;
+  const step = creationStep.value;
 
   return (
     <div class="vamp-rpanel-scroll">
-      <PlaybookSection creating={creating} />
-      <AgeBracketSection creating={creating} />
-      <PredatorTypeSection creating={creating} />
+      <PlaybookSection creating={creating} focused={creating && step === 'playbook'} />
+      <AgeBracketSection creating={creating} focused={creating && step === 'age'} />
+      <PredatorTypeSection creating={creating} focused={creating && step === 'predator'} />
     </div>
   );
 }
@@ -1193,37 +1226,41 @@ function AdvancementPanel() {
 
   /* All handlers read fresh signal values to avoid stale-closure bugs on rapid clicks */
 
-  function toggleMerit(name: string, xpCost: string) {
-    const cost = parseXPValue(xpCost);
+  function toggleMerit(name: string, xpCost: string, chosenXP?: string) {
+    const effectiveCost = chosenXP ?? xpCost;
+    const cost = parseXPValue(effectiveCost);
     const cur = character.value;
     const existing = cur.merits.find(m => m.name === name);
     if (existing) {
+      const refund = parseXPValue(existing.xpCost);
       updateCharacter({
         merits: cur.merits.filter(m => m.name !== name),
-        ...(isCreation ? { xp: Math.min(10, cur.xp + cost) } : {}),
+        ...(isCreation ? { xp: Math.min(10, cur.xp + refund) } : {}),
       });
     } else {
       if (isCreation && cur.xp < cost) return;
       updateCharacter({
-        merits: [...cur.merits, { name, xpCost }],
+        merits: [...cur.merits, { name, xpCost: effectiveCost }],
         ...(isCreation ? { xp: cur.xp - cost } : {}),
       });
     }
   }
 
-  function toggleFlaw(name: string, xpGain: string) {
-    const gain = parseXPValue(xpGain);
+  function toggleFlaw(name: string, xpGain: string, chosenXP?: string) {
+    const effectiveGain = chosenXP ?? xpGain;
+    const gain = parseXPValue(effectiveGain);
     const cur = character.value;
     const existing = cur.flaws.find(f => f.name === name);
     if (existing) {
-      if (isCreation && cur.xp < gain) return;
+      const storedGain = parseXPValue(existing.xpGain);
+      if (isCreation && cur.xp < storedGain) return;
       updateCharacter({
         flaws: cur.flaws.filter(f => f.name !== name),
-        ...(isCreation ? { xp: Math.max(0, cur.xp - gain) } : {}),
+        ...(isCreation ? { xp: Math.max(0, cur.xp - storedGain) } : {}),
       });
     } else {
       updateCharacter({
-        flaws: [...cur.flaws, { name, xpGain }],
+        flaws: [...cur.flaws, { name, xpGain: effectiveGain }],
         ...(isCreation ? { xp: Math.min(10, cur.xp + gain) } : {}),
       });
     }
@@ -1314,12 +1351,18 @@ function AdvancementPanel() {
         <div class="vamp-advancement-creation">
           <p class="vamp-advancement-creation__title">Starting XP</p>
           <p class="vamp-advancement-creation__formula">
-            BP {char.bp} (min 1) x 2 = {bpBase}
-            {flawXP > 0 && <> + {flawXP} Flaws</>}
-            {baneXP > 0 && <> + {baneXP} Banes</>}
-            {variantXP > 0 && <> + {variantXP} Both Banes</>}
-            {' '}= <strong>{startingXP} XP</strong>
-            {rawStarting > 10 && <span class="vamp-advancement-creation__cap"> (capped at 10)</span>}
+            {(() => {
+              const hasExtras = flawXP > 0 || baneXP > 0 || variantXP > 0;
+              return <>
+                BP {char.bp}{char.bp === 0 ? ' (min 1)' : ''} × 2
+                {hasExtras ? <> = {bpBase}</> : null}
+                {flawXP > 0 && <> + {flawXP} Flaws</>}
+                {baneXP > 0 && <> + {baneXP} Banes</>}
+                {variantXP > 0 && <> + {variantXP} Both Banes</>}
+                {' '}= <strong>{startingXP} XP</strong>
+                {rawStarting > 10 && <span class="vamp-advancement-creation__cap"> (capped at 10)</span>}
+              </>;
+            })()}
           </p>
           <p class="vamp-advancement-creation__hint">
             Spend your starting XP below. Anything unspent carries over into play.
@@ -1387,6 +1430,9 @@ function AdvancementPanel() {
                 {userBaneCount}/3 chosen {isBaali && '(auto-grants do not count)'}
               </p>
             )}
+            {char.predatorType === 'Cucuy' && (
+              <p class="vamp-adv-extras-list__note">Required: at least 1 Folkloric Bane worth 2 XP or more.</p>
+            )}
             {optExtras.folkloricBanes.map(bane => {
               const selected = char.folkloricBanes.some(b => b.baneName === bane.baneName);
               const disabled = !selected && atBaneCap;
@@ -1432,10 +1478,12 @@ function AdvancementPanel() {
                         merit={merit}
                         selected={selected}
                         disabled={disabled}
-                        onToggle={() => toggleMerit(merit.name, merit.xpCost)}
+                        onToggle={(chosen) => toggleMerit(merit.name, merit.xpCost, chosen)}
                         subOptions={opts}
                         selection={sel?.selection}
                         onSelectionChange={(v) => setMeritSelection(merit.name, v)}
+                        storedXP={sel?.xpCost}
+                        xpAvailable={isCreation ? char.xp : undefined}
                       />
                     );
                   })}
@@ -1474,10 +1522,11 @@ function AdvancementPanel() {
                         flaw={flaw}
                         selected={selected}
                         disabled={disabled}
-                        onToggle={() => toggleFlaw(flaw.name, flaw.xpGain)}
+                        onToggle={(chosen) => toggleFlaw(flaw.name, flaw.xpGain, chosen)}
                         subOptions={opts}
                         selection={sel?.selection}
                         onSelectionChange={(v) => setFlawSelection(flaw.name, v)}
+                        storedXP={sel?.xpGain}
                       />
                     );
                   })}
@@ -1578,7 +1627,7 @@ function FolkloricBaneRow({ bane, selected, disabled, onToggle }: {
           disabled={disabled && !selected}
           onClick={(e) => { e.stopPropagation(); onToggle(); }}
         >
-          {selected ? 'Remove' : 'Take'}
+          {selected ? 'Drop' : 'Take'}
         </button>
       </div>
       {expanded.value && (
@@ -1610,16 +1659,24 @@ function SubSelectionDropdown({ options, selection, onChange }: {
   );
 }
 
-function MeritRow({ merit, selected, disabled, onToggle, subOptions, selection, onSelectionChange }: {
+function MeritRow({ merit, selected, disabled, onToggle, subOptions, selection, onSelectionChange, storedXP, xpAvailable }: {
   merit: Merit;
   selected: boolean;
   disabled: boolean;
-  onToggle: () => void;
+  onToggle: (chosenXP?: string) => void;
   subOptions?: string[] | null;
   selection?: string;
   onSelectionChange?: (val: string) => void;
+  storedXP?: string;
+  xpAvailable?: number;
 }) {
   const expanded = useSignal(false);
+  const range = xpRange(merit.xpCost);
+  const chosenXP = useSignal(range ? range[0] : 0);
+
+  const displayCost = selected && storedXP ? parseXPValue(storedXP) : null;
+  const cantAfford = !selected && !!range && xpAvailable != null && chosenXP.value > xpAvailable;
+
   return (
     <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
       <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
@@ -1628,13 +1685,28 @@ function MeritRow({ merit, selected, disabled, onToggle, subOptions, selection, 
           {merit.name}
           {selected && selection && <span class="vamp-adv-extra-row__selection"> ({selection})</span>}
         </span>
-        <span class="vamp-adv-extra-row__cost">{merit.xpCost} XP</span>
+        {range && !selected ? (
+          <span class="vamp-adv-extra-row__cost">
+            <select
+              class="creation-dropdown creation-dropdown--xp"
+              value={chosenXP.value}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => { chosenXP.value = parseInt((e.target as HTMLSelectElement).value, 10); }}
+            >
+              {Array.from({ length: range[1] - range[0] + 1 }, (_, i) => range[0] + i).map(n => (
+                <option key={n} value={n}>{n} XP</option>
+              ))}
+            </select>
+          </span>
+        ) : (
+          <span class="vamp-adv-extra-row__cost">{displayCost ?? merit.xpCost} XP</span>
+        )}
         <button
           class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
-          disabled={disabled && !selected}
-          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+          disabled={(disabled || cantAfford) && !selected}
+          onClick={(e) => { e.stopPropagation(); onToggle(range ? String(chosenXP.value) : undefined); }}
         >
-          {selected ? 'Remove' : 'Take'}
+          {selected ? 'Drop' : 'Take'}
         </button>
       </div>
       {selected && subOptions && subOptions.length > 0 && onSelectionChange && (
@@ -1642,10 +1714,11 @@ function MeritRow({ merit, selected, disabled, onToggle, subOptions, selection, 
       )}
       {expanded.value && (
         <div class="vamp-adv-extra-row__body">
-          <div class="vamp-adv-extra-row__meta">
-            <span>{merit.category}</span>
-            {merit.limit !== '—' && <span>{merit.limit}</span>}
-          </div>
+          {merit.limit !== '—' && (
+            <div class="vamp-adv-extra-row__meta">
+              <span dangerouslySetInnerHTML={{ __html: renderGameMarkdown(merit.limit) }} />
+            </div>
+          )}
           <div dangerouslySetInnerHTML={{ __html: renderGameMarkdown(merit.description) }} />
         </div>
       )}
@@ -1653,16 +1726,22 @@ function MeritRow({ merit, selected, disabled, onToggle, subOptions, selection, 
   );
 }
 
-function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, onSelectionChange }: {
+function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, onSelectionChange, storedXP }: {
   flaw: Flaw;
   selected: boolean;
   disabled: boolean;
-  onToggle: () => void;
+  onToggle: (chosenXP?: string) => void;
   subOptions?: string[] | null;
   selection?: string;
   onSelectionChange?: (val: string) => void;
+  storedXP?: string;
 }) {
   const expanded = useSignal(false);
+  const range = xpRange(flaw.xpGain);
+  const chosenXP = useSignal(range ? range[0] : 0);
+
+  const displayGain = selected && storedXP ? parseXPValue(storedXP) : null;
+
   return (
     <div class={`vamp-adv-extra-row ${selected ? 'vamp-adv-extra-row--selected' : ''}`}>
       <div class="vamp-adv-extra-row__header" onClick={() => { expanded.value = !expanded.value; }}>
@@ -1671,13 +1750,30 @@ function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, on
           {flaw.name}
           {selected && selection && <span class="vamp-adv-extra-row__selection"> ({selection})</span>}
         </span>
-        <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">{flaw.xpGain}</span>
+        {range && !selected ? (
+          <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">
+            <select
+              class="creation-dropdown creation-dropdown--xp"
+              value={chosenXP.value}
+              onClick={(e) => e.stopPropagation()}
+              onChange={(e) => { chosenXP.value = parseInt((e.target as HTMLSelectElement).value, 10); }}
+            >
+              {Array.from({ length: range[1] - range[0] + 1 }, (_, i) => range[0] + i).map(n => (
+                <option key={n} value={n}>+{n} XP</option>
+              ))}
+            </select>
+          </span>
+        ) : (
+          <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">
+            +{displayGain != null ? displayGain : flaw.xpGain} XP
+          </span>
+        )}
         <button
           class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
           disabled={disabled && !selected}
-          onClick={(e) => { e.stopPropagation(); onToggle(); }}
+          onClick={(e) => { e.stopPropagation(); onToggle(range ? String(chosenXP.value) : undefined); }}
         >
-          {selected ? 'Remove' : 'Take'}
+          {selected ? 'Drop' : 'Take'}
         </button>
       </div>
       {selected && subOptions && subOptions.length > 0 && onSelectionChange && (
@@ -1685,10 +1781,11 @@ function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, on
       )}
       {expanded.value && (
         <div class="vamp-adv-extra-row__body">
-          <div class="vamp-adv-extra-row__meta">
-            <span>{flaw.category}</span>
-            {flaw.limit !== '—' && <span>{flaw.limit}</span>}
-          </div>
+          {flaw.limit !== '—' && (
+            <div class="vamp-adv-extra-row__meta">
+              <span dangerouslySetInnerHTML={{ __html: renderGameMarkdown(flaw.limit) }} />
+            </div>
+          )}
           <div dangerouslySetInnerHTML={{ __html: renderGameMarkdown(flaw.description) }} />
         </div>
       )}
@@ -1696,13 +1793,52 @@ function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, on
   );
 }
 
+interface RulesSection { title: string; body: string }
+
+function parseRulesMarkdown(raw: string): { title: string; intro: string; sections: RulesSection[] } {
+  const parts = raw.split(/\n(?=## )/);
+  const titleMatch = parts[0].match(/^#\s+(.+)/);
+  const title = titleMatch ? titleMatch[1].trim() : '';
+  const intro = parts[0].replace(/^#\s+.*\n+/, '');
+  const sections = parts.slice(1).map(chunk => {
+    const newline = chunk.indexOf('\n');
+    return {
+      title: chunk.slice(3, newline > 0 ? newline : undefined).trim(),
+      body: newline > 0 ? chunk.slice(newline + 1).trim() : '',
+    };
+  });
+  return { title, intro, sections };
+}
+
 function RulesPanel() {
+  const markdown = useSignal<string | null>(null);
+  const expanded = useSignal<string | null>(null);
+
+  useEffect(() => {
+    fetch(import.meta.env.BASE_URL + 'How-to-Coterie.md')
+      .then(r => r.ok ? r.text() : '')
+      .then(text => { markdown.value = text; });
+  }, []);
+
+  if (!markdown.value) return <div class="vamp-rpanel-scroll" />;
+  const { title, intro, sections } = parseRulesMarkdown(markdown.value);
+
   return (
     <div class="vamp-rpanel-scroll">
-      <div class="vamp-placeholder">
-        Rules Reference
-        <br /><span class="vamp-placeholder__note">Quick-look rules, tables, glossary</span>
-      </div>
+      {title && <div class="vamp-rules-title" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(title) }} />}
+      <div class="vamp-rules-intro" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(intro) }} />
+      {sections.map(s => (
+        <div key={s.title} class={`vamp-move-section ${expanded.value === s.title ? 'vamp-move-section--open' : ''}`}>
+          <div class="vamp-move-section__bar" onClick={() => { expanded.value = expanded.value === s.title ? null : s.title; }}>
+            <span class="vamp-move-section__name">{s.title}</span>
+          </div>
+          {expanded.value === s.title && (
+            <div class="vamp-move-section__body vamp-rules-body"
+              dangerouslySetInnerHTML={{ __html: renderGameMarkdown(s.body) }}
+            />
+          )}
+        </div>
+      ))}
     </div>
   );
 }

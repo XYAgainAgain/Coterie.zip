@@ -4,6 +4,7 @@ import {
   type CreationStep,
   CREATION_STEPS, STEP_ZONE, STEP_LABELS, STEP_MESSAGES, STEP_WARNINGS,
   creationMode, creationStep, namePromptAnswered, stepComplete,
+  currentStepWarning,
 } from './creation';
 import { TOUR_STEPS } from './tour';
 import type { RPanelTab } from './panel';
@@ -11,7 +12,8 @@ import type { RPanelTab } from './panel';
 export type GuidePhase = 'creation' | 'tour';
 
 export type GuideZone = 'sidebar' | 'content' | 'right' | 'vitals'
-  | 'toolbar-left' | 'toolbar-right' | 'header';
+  | 'toolbar-left' | 'toolbar-right' | 'header'
+  | 'beside-sidebar' | 'beside-right' | 'beside-right-center' | 'center';
 
 export interface GuideStep {
   id: string;
@@ -145,6 +147,7 @@ export function currentCreationStepWarning(): string | null {
   const step = currentGuideStep.value;
   if (!step.creationStep) return null;
   if (stepComplete.value[step.creationStep]) return null;
+  if (step.creationStep === 'playbook') return currentStepWarning();
   return STEP_WARNINGS[step.creationStep] || null;
 }
 

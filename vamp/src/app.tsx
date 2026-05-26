@@ -13,7 +13,7 @@ import { gameData } from './state/derived';
 import { editMode, toggleEditMode, viewingOtherSheet } from './state/ui';
 import { creationMode } from './state/creation';
 import { authReady, handleEmailLinkRedirect } from './firebase';
-import { startAutoSave } from './state/persistence';
+import { startAutoSave, activeCharacterId } from './state/persistence';
 
 const dataReady = signal(false);
 const dataError = signal<string | null>(null);
@@ -48,14 +48,17 @@ export function App() {
         <span class="vamp-header__title">Vamp</span>
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
-        {!viewingOtherSheet.value && (
+        {!viewingOtherSheet.value && activeCharacterId.value && (
           <button
-            class="vamp-header__lock"
+            class={`vamp-header__lock ${editMode.value ? 'vamp-header__lock--editing' : ''}`}
             onClick={toggleEditMode}
-            aria-label={editMode.value ? 'Lock (switch to viewing)' : 'Unlock (switch to editing)'}
+            aria-label={editMode.value ? 'Lock (switch to playing)' : 'Unlock (switch to editing)'}
             aria-pressed={editMode.value}
           >
-            <span class={`vamp-header__lock-icon ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
+            <span class="vamp-header__lock-label vamp-header__lock-label--active">{editMode.value ? 'EDIT' : 'PLAY'}</span>
+            <span class="vamp-header__lock-label vamp-header__lock-label--hover">{editMode.value ? 'PLAY' : 'EDIT'}</span>
+            <span class={`vamp-header__lock-icon vamp-header__lock-icon--active ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
+            <span class={`vamp-header__lock-icon vamp-header__lock-icon--hover ${editMode.value ? 'vamp-header__lock-icon--locked' : 'vamp-header__lock-icon--unlocked'}`} />
           </button>
         )}
         {viewingOtherSheet.value && (

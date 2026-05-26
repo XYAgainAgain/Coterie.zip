@@ -1,11 +1,16 @@
 import { z } from 'zod';
 
+const MeritFlawField = z.object({
+  name: z.string().min(1),
+  description: z.string().min(1),
+});
+
 export const PredatorTypeSchema = z.object({
   name: z.string().min(1),
   huntingStat: z.string().min(1),
   discipline: z.string().min(1),
-  merit: z.string().min(1),
-  flaw: z.string().min(1),
+  merit: MeritFlawField,
+  flaw: MeritFlawField,
   humanity: z.string().nullable(),
   feedingRules: z.string().nullable(),
 });

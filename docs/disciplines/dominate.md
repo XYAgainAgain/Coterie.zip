@@ -40,7 +40,7 @@ Against supernatural creatures, this still requires the usual ***Compel*** roll.
 
 ### *Devotion (Passive)*
 
-Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. When another vampire uses a Dominate Power against one of your subjects, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.
+Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. **When another vampire uses a Dominate Power against one of your subjects**, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.
 
 Your mental hold comes first. Everybody else can wait in line.
 
@@ -69,11 +69,11 @@ If the target is a vampire, you may spend 2 Hold to force them into a Compulsion
 
 ### *Domitor's Favor (Passive)*
 
-Your command over the Blood Bond is ironclad:
+Your command over the Blood Bond is ironclad. You gain the following benefits:
 
 - Blood Bonds you hold over mortals never degrade. As long as the mortal lives, the Bond endures without maintenance.
 - Maintaining Blood Bonds over other Kindred requires half the normal effort and Vitae.
-- If you and another vampire share a mutual Blood Bond and either of you has this Power, you both have +1 Ongoing to all rolls when acting together in the same scene.
+- **If you and another vampire share a mutual Blood Bond and either of you has this Power**, you both have +1 Ongoing to all rolls when acting together in the same scene.
 
 ### *Mesmerize*
 

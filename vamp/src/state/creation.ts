@@ -16,14 +16,14 @@ export const CREATION_STEPS: CreationStep[] = [
   'predator', 'disciplines', 'convictions', 'xp',
 ];
 
-export const STEP_ZONE: Record<CreationStep, 'sidebar' | 'content' | 'right'> = {
-  name: 'sidebar',
-  playbook: 'right',
-  age: 'right',
-  predator: 'right',
-  disciplines: 'content',
-  convictions: 'content',
-  xp: 'right',
+export const STEP_ZONE: Record<CreationStep, string> = {
+  name: 'beside-sidebar',
+  playbook: 'beside-right',
+  age: 'beside-right',
+  predator: 'beside-right',
+  disciplines: 'vitals',
+  convictions: 'vitals',
+  xp: 'beside-right-center',
 };
 
 export const STEP_LABELS: Record<CreationStep, string> = {
@@ -42,7 +42,7 @@ export const STEP_MESSAGES: Record<CreationStep, string> = {
   age: "You will need to determine your age (which also determines your starting Blood Potency). Semimortal works only for Ghouls and Thin-Bloods. If you choose to play any other type of character, feel free to choose whichever one makes the most sense, but remember: higher BP does not always equal better! There are major trade-offs!",
   predator: "Now you must select how you **Hunt** for prey. This will give you access to an additional Discipline, or possibly duplicate one of the ones already available to you, and will determine which stat you use for the **Hunt** Basic Move. They also grant a Merit and a Flaw each, and some even affect your starting Humanity.",
   disciplines: "These are the categories of vampiric abilities you have access to. Select as many as you are allowed to — many Clanless Playbooks grant exclusive Discipline access plus allow you other choices. You will also receive one (or have one duplicated) by your Predator Type. You may choose **one Power per level you can access!** If a Discipline is duplicated by your Predator Type, you can select one additional Power of any level you can access for free, as long as you meet its requirements.",
-  convictions: "These are Always or Never statements that align with the morals of your character. Each one has an associated Touchstone, a mortal who represents or embodies each Conviction. These are critical to keeping your Humanity at a decent level, and for injecting drama into lots of scenes. Come up with 1–3, but no more.",
+  convictions: "These are Always or Never statements that align with the morals of your character. Each one has an associated Touchstone, a mortal who represents or embodies each Conviction. These are critical to keeping your Humanity at a decent level, and for injecting drama into lots of scenes. Come up with 2–4.",
   xp: "Depending upon your Blood Potency, you will receive a budget of starting XP. You can get more by voluntarily taking on Flaws or Folkloric Banes, and spend it on lots of different things, like BP increases, Advanced versions of Basic Moves, Discipline access and Powers, and lots more. This is the Advancement panel; you will return here during play to spend XP as you earn it. Remember: you can only ever hold 10 XP at a time, and upgrades do not apply until after your next slumber.",
 };
 
@@ -52,7 +52,7 @@ export const STEP_WARNINGS: Record<CreationStep, string> = {
   age: "You haven't chosen an Age Bracket yet!",
   predator: "You haven't chosen a Predator Type yet!",
   disciplines: "You haven't finished picking Disciplines yet!",
-  convictions: "You haven't added any Convictions or Touchstones yet!",
+  convictions: "You need at least 2 Convictions with linked Touchstones!",
   xp: '',
 };
 
@@ -97,8 +97,8 @@ export const stepComplete = computed<Record<CreationStep, boolean>>(() => {
     age: c.ageBracket !== '',
     predator: c.predatorType !== '' || predatorSkippable(c.ageBracket, c.playbook),
     disciplines: disciplineStepDone(c),
-    convictions: c.convictions.some(cv => cv.trim() !== '')
-      && c.touchstones.some(t => t.name.trim() !== ''),
+    convictions: c.convictions.filter(cv => cv.trim() !== '').length >= 2
+      && c.touchstones.filter(t => t.name.trim() !== '').length >= 2,
     xp: true,
   };
 });
@@ -146,7 +146,15 @@ export function exitCreationMode() {
 export function currentStepWarning(): string | null {
   const step = creationStep.value;
   if (stepComplete.value[step]) return null;
+  if (step === 'playbook') return playbookStepWarning();
   return STEP_WARNINGS[step] || null;
+}
+
+function playbookStepWarning(): string {
+  const c = character.value;
+  if (c.playbook === '') return STEP_WARNINGS.playbook;
+  if (c.archetypeName === '') return "You haven't chosen an Archetype yet!";
+  return "Your stats haven't been assigned yet!";
 }
 
 /* Returns list of incomplete step labels for the finish gate */

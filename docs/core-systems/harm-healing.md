@@ -88,7 +88,7 @@ A stake through the heart is every vampire's worst nightmare that doesn't involv
 
 Staking in combat requires a successful **Dirty Your Claws** roll with a weapon that could plausibly reach the heart (a stake, a sharpened chair leg, a broken broom handle, a piece of rebar, or even just a big sword). The attacker must declare their intent to stake before rolling, but more importantly, **the target must be well and truly powerless to stop it** (restrained or bound, grappled by someone much stronger, already at 0 HP, or similarly stuck between a spike and a hard place).
 
-**On a 10+,** the stake lands and the target is incapacitated. **On a 7–9,** the Storyteller chooses whether the stake found its mark or merely dealt normal Harm. **On a 6-,** the attempt fails entirely and possibly backfires.
+**On a 10+,** the stake lands and the target is incapacitated. **On a 7–9,** the Storyteller chooses whether the stake finds its mark or merely deals normal Harm. **On a 6-,** the attempt fails entirely and possibly backfires.
 
 A staked vampire can be revived by removing the stake, which can be done by anyone with physical access to the body. Removing a stake from another character within Intimate Range is a Free Action; removing one from yourself is impossible while it's in your heart. A staked vampire does not heal, does not gain or lose Hunger, and does not age. Time simply stops until the stake comes out.
 
@@ -100,7 +100,7 @@ A staked vampire can be revived by removing the stake, which can be done by anyo
 
 ### Healing Superficial Harm
 
-At the end of any scene in which you took Superficial Harm, you may choose to make a Hunger Check. Regardless of whether your Hunger increases, you heal Superficial Harm equal to your Blood Potency (minimum 1). Kindred Blood knits flesh, resets bones, and pushes out bullets; the only question is how thirsty it makes you. If you slumber after **Feeding** at least once the previous night, heal all Superficial Harm upon waking.
+At the beginning or end of any scene when you have Superficial Harm, you may choose to make a Hunger Check. Regardless of whether your Hunger increases, you heal Superficial Harm equal to your Blood Potency (minimum 1). Kindred Blood knits flesh, resets bones, and pushes out bullets; the only question is how thirsty it makes you. If you slumber after **Feeding** at least once the previous night, heal all Superficial Harm upon waking.
 
 !!! warning "Important Note"
 

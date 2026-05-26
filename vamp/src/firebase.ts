@@ -64,7 +64,15 @@ export async function handleEmailLinkRedirect(): Promise<boolean> {
   const credential = EmailAuthProvider.credentialWithLink(email, window.location.href);
 
   if (auth.currentUser?.isAnonymous) {
-    await linkWithCredential(auth.currentUser, credential);
+    try {
+      await linkWithCredential(auth.currentUser, credential);
+    } catch (err: any) {
+      if (err?.code === 'auth/email-already-in-use' || err?.code === 'auth/credential-already-in-use') {
+        await signInWithEmailLink(auth, email, window.location.href);
+      } else {
+        throw err;
+      }
+    }
   } else {
     await signInWithEmailLink(auth, email, window.location.href);
   }

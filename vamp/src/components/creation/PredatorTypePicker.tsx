@@ -61,8 +61,8 @@ export function PredatorTypePicker() {
             <div class="creation-card__tagline">
               {pt.huntingStat} · {pt.discipline}
             </div>
-            {pt.merit && <div class="creation-card__detail">Merit: {pt.merit}</div>}
-            {pt.flaw && <div class="creation-card__detail">Flaw: {pt.flaw}</div>}
+            {pt.merit && <div class="creation-card__detail">Merit: {pt.merit.name}</div>}
+            {pt.flaw && <div class="creation-card__detail">Flaw: {pt.flaw.name}</div>}
           </div>
         ))}
       </div>
