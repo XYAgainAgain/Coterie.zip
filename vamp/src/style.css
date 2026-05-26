@@ -240,6 +240,12 @@ a:hover {
 
 .vamp-header__spacer { flex: 1; }
 
+.vamp-header__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .vamp-header__btn {
   padding: 0.3rem 0.7rem;
   background: none;

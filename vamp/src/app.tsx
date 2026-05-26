@@ -12,6 +12,7 @@ import { loadAllGameData } from './data/loader';
 import { gameData } from './state/derived';
 import { editMode, toggleEditMode, viewingOtherSheet } from './state/ui';
 import { creationMode } from './state/creation';
+import { guideActive, currentGuideStep } from './state/guide';
 import { authReady, handleEmailLinkRedirect } from './firebase';
 import { startAutoSave, activeCharacterId } from './state/persistence';
 
@@ -48,24 +49,26 @@ export function App() {
         <span class="vamp-header__title">Vamp</span>
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
-        {!viewingOtherSheet.value && activeCharacterId.value && (
-          <button
-            class={`vamp-header__lock ${editMode.value ? 'vamp-header__lock--editing' : ''}`}
-            onClick={toggleEditMode}
-            aria-label={editMode.value ? 'Lock (switch to playing)' : 'Unlock (switch to editing)'}
-            aria-pressed={editMode.value}
-          >
-            <span class="vamp-header__lock-label vamp-header__lock-label--active">{editMode.value ? 'EDIT' : 'PLAY'}</span>
-            <span class="vamp-header__lock-label vamp-header__lock-label--hover">{editMode.value ? 'PLAY' : 'EDIT'}</span>
-            <span class={`vamp-header__lock-icon vamp-header__lock-icon--active ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
-            <span class={`vamp-header__lock-icon vamp-header__lock-icon--hover ${editMode.value ? 'vamp-header__lock-icon--locked' : 'vamp-header__lock-icon--unlocked'}`} />
-          </button>
-        )}
-        {viewingOtherSheet.value && (
-          <span class="vamp-header__viewing-label">Viewing</span>
-        )}
-        {!viewingOtherSheet.value && <EmailLinkPrompt />}
-        <EyeToggle />
+        <div class={`vamp-header__controls ${guideActive.value && currentGuideStep.value?.zone === 'header' ? 'guide-spotlight' : ''}`}>
+          {!viewingOtherSheet.value && activeCharacterId.value && (
+            <button
+              class={`vamp-header__lock ${editMode.value ? 'vamp-header__lock--editing' : ''}`}
+              onClick={toggleEditMode}
+              aria-label={editMode.value ? 'Lock (switch to playing)' : 'Unlock (switch to editing)'}
+              aria-pressed={editMode.value}
+            >
+              <span class="vamp-header__lock-label vamp-header__lock-label--active">{editMode.value ? 'EDIT' : 'PLAY'}</span>
+              <span class="vamp-header__lock-label vamp-header__lock-label--hover">{editMode.value ? 'PLAY' : 'EDIT'}</span>
+              <span class={`vamp-header__lock-icon vamp-header__lock-icon--active ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
+              <span class={`vamp-header__lock-icon vamp-header__lock-icon--hover ${editMode.value ? 'vamp-header__lock-icon--locked' : 'vamp-header__lock-icon--unlocked'}`} />
+            </button>
+          )}
+          {viewingOtherSheet.value && (
+            <span class="vamp-header__viewing-label">Viewing</span>
+          )}
+          {!viewingOtherSheet.value && <EmailLinkPrompt />}
+          <EyeToggle />
+        </div>
       </header>
       <main class="vamp-body">
         {dataError.value ? (

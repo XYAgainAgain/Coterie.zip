@@ -3,14 +3,19 @@ import {
   collection, doc, getDoc, getDocs, setDoc, deleteDoc,
   query, where, serverTimestamp, onSnapshot, runTransaction,
 } from 'firebase/firestore';
-import { db, auth } from '../firebase';
+import { db, auth, linkedEmail } from '../firebase';
 import { character, type CharacterState, NOTEBOOK_HELP_NOTE } from './character';
 import { coterieState, masqueradeClock } from './coterie';
 import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
 
-export const MAX_CHARACTERS = 12;
+const MAX_CHARACTERS_ANON = 2;
+const MAX_CHARACTERS_LINKED = 12;
+
+export function maxCharacters(): number {
+  return linkedEmail.value ? MAX_CHARACTERS_LINKED : MAX_CHARACTERS_ANON;
+}
 
 /* Kebab-case slug from character name, safe for URLs */
 export function generateNameSlug(name: string): string {
@@ -337,8 +342,13 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
 
   const all = await idbGetAll<IDBCharacterRecord>('characters');
   const owned = all.filter(r => r.ownerId === uid);
-  if (owned.length >= MAX_CHARACTERS) {
-    throw new Error(`Character limit reached (${MAX_CHARACTERS})`);
+  const cap = maxCharacters();
+  if (owned.length >= cap) {
+    throw new Error(
+      cap === MAX_CHARACTERS_ANON
+        ? `Anonymous users can create up to ${MAX_CHARACTERS_ANON} characters. Link your email to unlock ${MAX_CHARACTERS_LINKED}!`
+        : `Character limit reached (${MAX_CHARACTERS_LINKED})`,
+    );
   }
 
   const state: CharacterState = { ...BLANK_CHARACTER, ...initial };

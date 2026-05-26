@@ -7,7 +7,7 @@ import {
   createCharacter,
   deleteCharacter,
   activeCharacterId,
-  MAX_CHARACTERS,
+  maxCharacters,
 } from '../state/persistence';
 
 export function CharacterList() {
@@ -98,7 +98,7 @@ export function CharacterList() {
         </div>
       ))}
 
-      {list.length < MAX_CHARACTERS && (
+      {list.length < maxCharacters() && (
         <div
           class="vamp-character-list__new"
           onClick={handleCreate}
@@ -107,9 +107,9 @@ export function CharacterList() {
         </div>
       )}
 
-      {list.length >= MAX_CHARACTERS && (
+      {list.length >= maxCharacters() && (
         <div class="vamp-character-list__limit">
-          Character limit reached ({MAX_CHARACTERS})
+          Character limit reached ({maxCharacters()})
         </div>
       )}
     </div>
