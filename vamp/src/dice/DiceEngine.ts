@@ -3,7 +3,8 @@ import { DiceRenderer } from './DiceRenderer';
 import { DicePhysics } from './DicePhysics';
 import { DiceAudio } from './DiceAudio';
 import { DiceEffects } from './DiceEffects';
-import { generateDiceTextures, disposeDiceTextures, getCurrentTheme, type FaceMaps } from './DiceTextures';
+import { generateDiceTextures, disposeDiceTextures, getCurrentTheme, FACE_VALUES, type FaceMaps } from './DiceTextures';
+import { getRollSpeed, rollMode } from './diceConfig';
 
 export class DiceEngine {
   private renderer: DiceRenderer;
@@ -20,6 +21,10 @@ export class DiceEngine {
   private currentBatchId = 0;
   private currentBatchCount = 0;
   private batchImpacted = false;
+  private fadeTimeoutId: ReturnType<typeof setTimeout> | null = null;
+  private fadeCancelled = { flag: false };
+  private physicsAccumulator = 0;
+  private reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   constructor(private canvas: HTMLCanvasElement) {
     this.renderer = new DiceRenderer(canvas);
@@ -34,7 +39,7 @@ export class DiceEngine {
     this.physics.onFirstImpact = (_dieId: number) => {
       if (this.batchImpacted) return;
       this.batchImpacted = true;
-      this.audio.playRoll(this.currentBatchCount);
+      this.audio.playRoll(this.currentBatchCount, undefined, getRollSpeed());
     };
 
     this.physics.onCollision = (event) => {
@@ -72,6 +77,7 @@ export class DiceEngine {
     });
 
     this.startTime = performance.now() / 1000;
+    if (this.reducedMotion || rollMode.value === 'no3d') this.renderer.freezeSpinnerRandom();
     this.start();
     console.log('[Dice] Demo running — click the spinner to spawn dice');
   }
@@ -113,7 +119,7 @@ export class DiceEngine {
     console.log('[Dice] Evicted %d oldest dice to stay at cap %d', overflow, max);
   }
 
-  spawnFromSpinner(count = 1): void {
+  async spawnFromSpinner(count = 1): Promise<void> {
     if (this.faceTextures.length === 0) return;
 
     this.audio.resume();
@@ -143,18 +149,108 @@ export class DiceEngine {
       for (let i = 0; i < count; i++) spawnOne(i);
     } else {
       spawnOne(0);
-      for (let i = 1; i < count; i++) {
-        const delay = 50 + Math.random() * 50;
-        setTimeout(() => spawnOne(i), delay * i);
-      }
+      await new Promise<void>(resolve => {
+        let spawned = 1;
+        for (let i = 1; i < count; i++) {
+          const delay = (50 + Math.random() * 50) * i;
+          setTimeout(() => {
+            spawnOne(i);
+            if (++spawned === count) resolve();
+          }, delay);
+        }
+      });
     }
   }
 
+  fixDieResults(desiredValues: number[]): void {
+    if (this.faceTextures.length === 0) return;
+
+    const saved = this.physics.saveBodyStates();
+    this.physics.presimulate();
+    const upIndices = this.physics.getUpFaceIndices();
+    this.physics.restoreBodyStates(saved);
+
+    const cubes = this.renderer.getCubes();
+    for (let i = 0; i < Math.min(cubes.length, desiredValues.length, upIndices.length); i++) {
+      const cube = cubes[i];
+      if (!Array.isArray(cube.material)) continue;
+
+      const upIdx = upIndices[i];
+      const desired = desiredValues[i];
+      const currentValueAtUp = FACE_VALUES[upIdx];
+      if (currentValueAtUp === desired) continue;
+
+      const desiredIdx = FACE_VALUES.indexOf(desired);
+      if (desiredIdx < 0) continue;
+
+      const mats = cube.material as THREE.MeshStandardMaterial[];
+      const tmp = mats[upIdx];
+      mats[upIdx] = mats[desiredIdx];
+      mats[desiredIdx] = tmp;
+    }
+  }
+
+  fadeDiceOut(delayMs = 3000, durationMs = 600): void {
+    this.fadeCancelled = { flag: false };
+    const cancel = this.fadeCancelled;
+
+    this.fadeTimeoutId = setTimeout(() => {
+      if (cancel.flag || this.disposed) return;
+      const cubes = [...this.renderer.getCubes()];
+      for (const cube of cubes) {
+        const mats = Array.isArray(cube.material) ? cube.material : [cube.material];
+        for (const mat of mats) {
+          if (mat instanceof THREE.MeshStandardMaterial) {
+            mat.transparent = true;
+            mat.depthWrite = false;
+            mat.needsUpdate = true;
+          }
+        }
+      }
+
+      const start = performance.now();
+      const fade = () => {
+        if (cancel.flag || this.disposed) return;
+        const t = Math.min(1, (performance.now() - start) / durationMs);
+        const opacity = 1 - t;
+        for (const cube of cubes) {
+          const mats = Array.isArray(cube.material) ? cube.material : [cube.material];
+          for (const mat of mats) {
+            if (mat instanceof THREE.MeshStandardMaterial) {
+              mat.opacity = opacity;
+              mat.needsUpdate = true;
+            }
+          }
+        }
+        if (t < 1) {
+          requestAnimationFrame(fade);
+        } else {
+          this.clearDice();
+        }
+      };
+      requestAnimationFrame(fade);
+    }, delayMs);
+  }
+
   clearDice(): void {
+    this.fadeCancelled.flag = true;
+    if (this.fadeTimeoutId !== null) {
+      clearTimeout(this.fadeTimeoutId);
+      this.fadeTimeoutId = null;
+    }
     this.effects.clear();
     this.physics.clear();
     this.renderer.clearCubes();
     console.log('[Dice] All dice cleared');
+  }
+
+  playRollAudio(diceCount: number): void {
+    this.audio.resume();
+    this.audio.playRoll(diceCount, undefined, getRollSpeed());
+  }
+
+  waitForSettle(): Promise<void> {
+    return this.physics.waitForSettle();
   }
 
   getSpinnerScreenPosition(): { x: number; y: number } | null {
@@ -187,9 +283,17 @@ export class DiceEngine {
     this.lastFrameTime = now;
 
     const elapsed = now / 1000 - this.startTime;
-    this.renderer.updateSpinner(elapsed);
+    if (!this.reducedMotion && rollMode.value !== 'no3d') {
+      this.renderer.updateSpinner(elapsed);
+    }
     this.renderer.updateLightOrbit(elapsed);
-    this.physics.step();
+
+    this.physicsAccumulator += getRollSpeed();
+    while (this.physicsAccumulator >= 1) {
+      this.physics.step();
+      this.physicsAccumulator -= 1;
+    }
+
     this.renderer.syncWithPhysics(this.physics.getBodyTransforms());
     this.effects.tick(dt);
     this.renderer.render();

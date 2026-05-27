@@ -42,7 +42,7 @@ export function EmailLinkPrompt() {
     sending.value = true;
     try {
       await sendEmailLink(addr);
-      forceToast('Sign-in link sent! Check your email.', 'info', 120);
+      forceToast('Sign-in link sent! Check your email.', 'info', undefined, { bg: 'hsl(120 40% 15%)', border: 'hsl(120 70% 50%)' });
       open.value = false;
     } catch (err) {
       showToast(

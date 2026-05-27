@@ -1,5 +1,6 @@
-import { useEffect } from 'preact/hooks';
+import { useEffect, useRef } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
+import { debounce } from '../utils/debounce';
 import { SectionBox } from '../components/SectionBox';
 import { RightColumn } from '../components/RightColumn';
 import { RightPanelContent } from '../components/RightPanelTabs';
@@ -18,6 +19,7 @@ import {
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
   addDebt, removeDebt, updateDebt, cycleDebtState, adjustStat,
 } from '../state/character';
+import { performRoll } from '../dice/rollMove';
 import { editMode, viewingOtherSheet } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
 import {
@@ -35,7 +37,7 @@ import {
   startGuide,
 } from '../state/guide';
 import type { StatName } from '../data/types';
-import type { Touchstone, Bio, Clock } from '../state/character';
+import type { Bio, Clock } from '../state/character';
 
 // All rendered markdown comes from our own verified JSON parsers (trusted content)
 
@@ -307,10 +309,34 @@ function DebtEntry({ debtId, guarded }: { debtId: string; guarded?: boolean }) {
   const isEdit = editMode.value;
   const confirming = useSignal(false);
   const editingField = useSignal<'who' | 'text' | null>(null);
+  const whoDraft = useSignal(d.who);
+  const textDraft = useSignal(d.text);
+  const whoSaved = useRef(d.who);
+  const textSaved = useRef(d.text);
+
+  const debouncedWho = useRef(
+    debounce((val: string) => { whoSaved.current = val; updateDebt(debtId, { who: val }); }, 3000)
+  ).current;
+  const debouncedText = useRef(
+    debounce((val: string) => { textSaved.current = val; updateDebt(debtId, { text: val }); }, 3000)
+  ).current;
+
+  useEffect(() => () => { debouncedWho.cancel(); debouncedText.cancel(); }, []);
 
   useEffect(() => {
-    if (!editMode.value) editingField.value = null;
+    if (!editMode.value) {
+      debouncedWho.flush();
+      debouncedText.flush();
+      editingField.value = null;
+    }
   }, [editMode.value]);
+
+  if (!editingField.value) {
+    whoDraft.value = d.who;
+    textDraft.value = d.text;
+    whoSaved.current = d.who;
+    textSaved.current = d.text;
+  }
 
   function handleAdvance() {
     if (guarded) {
@@ -332,8 +358,27 @@ function DebtEntry({ debtId, guarded }: { debtId: string; guarded?: boolean }) {
     cycleDebtState(debtId, true);
   }
 
+  function flushField() {
+    if (editingField.value === 'who') debouncedWho.flush();
+    if (editingField.value === 'text') debouncedText.flush();
+    editingField.value = null;
+  }
+
+  function cancelField() {
+    if (editingField.value === 'who') {
+      debouncedWho.cancel();
+      whoDraft.value = whoSaved.current;
+    }
+    if (editingField.value === 'text') {
+      debouncedText.cancel();
+      textDraft.value = textSaved.current;
+    }
+    editingField.value = null;
+  }
+
   function handleFieldKey(e: KeyboardEvent) {
-    if (e.key === 'Enter' || e.key === 'Escape') editingField.value = null;
+    if (e.key === 'Enter') flushField();
+    if (e.key === 'Escape') cancelField();
   }
 
   return (
@@ -349,10 +394,14 @@ function DebtEntry({ debtId, guarded }: { debtId: string; guarded?: boolean }) {
         {editingField.value === 'who' ? (
           <input
             class="vamp-debt__edit-input vamp-debt__edit-input--who"
-            value={d.who}
+            value={whoDraft.value}
             autoFocus
-            onInput={(e) => updateDebt(debtId, { who: (e.target as HTMLInputElement).value })}
-            onBlur={() => { editingField.value = null; }}
+            onInput={(e) => {
+              const val = (e.target as HTMLInputElement).value;
+              whoDraft.value = val;
+              debouncedWho(val);
+            }}
+            onBlur={flushField}
             onKeyDown={handleFieldKey}
           />
         ) : (
@@ -364,10 +413,14 @@ function DebtEntry({ debtId, guarded }: { debtId: string; guarded?: boolean }) {
         {editingField.value === 'text' ? (
           <input
             class="vamp-debt__edit-input"
-            value={d.text}
+            value={textDraft.value}
             autoFocus
-            onInput={(e) => updateDebt(debtId, { text: (e.target as HTMLInputElement).value })}
-            onBlur={() => { editingField.value = null; }}
+            onInput={(e) => {
+              const val = (e.target as HTMLInputElement).value;
+              textDraft.value = val;
+              debouncedText(val);
+            }}
+            onBlur={flushField}
             onKeyDown={handleFieldKey}
           />
         ) : (
@@ -514,6 +567,9 @@ function ContentTabs() {
         <div style={{ display: active.value === 0 ? undefined : 'none' }}><VitalsTab /></div>
         <div style={{ display: active.value === 1 ? undefined : 'none' }}><DisciplinesTab /></div>
         <div style={{ display: active.value === 2 ? undefined : 'none' }}>
+          {/* TODO: Possessions tab — sortable table of tagged items (Tag-System-Rules.md).
+             Structured input: base type dropdown, mechanical/descriptive tag fields, description.
+             Hover tooltips on tags from parsed reference data. */}
           <div class="vamp-placeholder">
             Possessions and inventory
             <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
@@ -734,7 +790,7 @@ function VitalsTab() {
           <div class="vamp-paired vamp-paired--grid">
             {char.convictions.map((conviction, i) => (
               <div class="vamp-paired__item" key={i}>
-                <div class="vamp-paired__conviction">{conviction || '—'}</div>
+                <div class="vamp-paired__conviction">{conviction ? `“${conviction}”` : '—'}</div>
                 {char.touchstones[i] && char.touchstones[i].name && (
                   <div class="vamp-paired__touchstone">
                     {char.touchstones[i].name}
@@ -834,35 +890,53 @@ const MAX_CONVICTIONS = 4;
 
 function ConvictionForm({ index }: { index: number }) {
   const char = character.value;
-  const conviction = char.convictions[index] ?? '';
+  const storedConviction = char.convictions[index] ?? '';
   const raw = char.touchstones[index];
-  const touchstone = {
+  const storedTouchstone = {
     name: raw?.name ?? '',
-    pronouns: raw?.pronouns ?? ['', ''],
+    pronouns: raw?.pronouns ?? ['', ''] as [string, string],
     ageBracket: raw?.ageBracket ?? '',
     description: raw?.description ?? '',
   };
 
-  const hasAlwaysNever = /\b(always|never)\b/i.test(conviction);
-  const showWarning = conviction.trim().length > 0 && !hasAlwaysNever;
-  const descWordCount = touchstone.description.trim().split(/\s+/).filter(Boolean).length;
-  const descTooShort = touchstone.description.trim().length > 0 && descWordCount < 3;
+  const convDraft = useSignal(storedConviction);
+  const tName = useSignal(storedTouchstone.name);
+  const tPron0 = useSignal(storedTouchstone.pronouns[0]);
+  const tPron1 = useSignal(storedTouchstone.pronouns[1]);
+  const tAge = useSignal(storedTouchstone.ageBracket);
+  const tDesc = useSignal(storedTouchstone.description);
 
-  function updateConviction(text: string) {
-    const convictions = [...char.convictions];
-    while (convictions.length <= index) convictions.push('');
-    convictions[index] = text;
-    updateCharacter({ convictions });
+  const debouncedSave = useRef(
+    debounce((conv: string, name: string, p0: string, p1: string, age: string, desc: string) => {
+      const c = character.value;
+      const convictions = [...c.convictions];
+      while (convictions.length <= index) convictions.push('');
+      convictions[index] = conv;
+      const touchstones = [...c.touchstones];
+      while (touchstones.length <= index) touchstones.push({ name: '', pronouns: ['', ''], ageBracket: '', description: '' });
+      touchstones[index] = { name, pronouns: [p0, p1], ageBracket: age, description: desc };
+      updateCharacter({ convictions, touchstones });
+    }, 3000)
+  ).current;
+
+  useEffect(() => () => debouncedSave.flush(), []);
+
+  function schedSave() {
+    debouncedSave(convDraft.value, tName.value, tPron0.value, tPron1.value, tAge.value, tDesc.value);
   }
 
-  function updateTouchstone(patch: Partial<Touchstone>) {
-    const touchstones = [...char.touchstones];
-    while (touchstones.length <= index) touchstones.push({ name: '', pronouns: ['', ''], ageBracket: '', description: '' });
-    touchstones[index] = { ...touchstones[index], ...patch };
-    updateCharacter({ touchstones });
-  }
+  const hasAlwaysNever = /\b(always|never)\b/i.test(convDraft.value);
+  const showWarning = convDraft.value.trim().length > 0 && !hasAlwaysNever;
+  const descWordCount = tDesc.value.trim().split(/\s+/).filter(Boolean).length;
+  const descTooShort = tDesc.value.trim().length > 0 && descWordCount < 3;
+  const isEmpty = convDraft.value.trim() === '' && tName.value.trim() === '';
 
-  const isEmpty = conviction.trim() === '' && touchstone.name.trim() === '';
+  function onConviction(e: Event) { convDraft.value = (e.target as HTMLInputElement).value; schedSave(); }
+  function onName(e: Event) { tName.value = (e.target as HTMLInputElement).value; schedSave(); }
+  function onPron0(e: Event) { tPron0.value = (e.target as HTMLInputElement).value; schedSave(); }
+  function onPron1(e: Event) { tPron1.value = (e.target as HTMLInputElement).value; schedSave(); }
+  function onDesc(e: Event) { tDesc.value = (e.target as HTMLInputElement).value; schedSave(); }
+  function onAge(e: Event) { tAge.value = (e.target as HTMLSelectElement).value; schedSave(); }
 
   return (
     <div class={`vamp-conviction-form ${isEmpty ? 'vamp-conviction-form--empty' : ''}`}>
@@ -872,8 +946,8 @@ function ConvictionForm({ index }: { index: number }) {
         class={`vamp-input vamp-conviction-form__conviction ${showWarning ? 'vamp-conviction-form__conviction--warn' : ''}`}
         type="text"
         placeholder={`Write an "Always" or "Never" statement...`}
-        value={conviction}
-        onInput={(e) => updateConviction((e.target as HTMLInputElement).value)}
+        value={convDraft.value}
+        onInput={onConviction}
       />
       {showWarning && (
         <div class="vamp-conviction-form__warning">
@@ -881,8 +955,8 @@ function ConvictionForm({ index }: { index: number }) {
         </div>
       )}
 
-      {conviction.trim() && (
-        <div class="vamp-conviction-form__preview">"{conviction}"</div>
+      {convDraft.value.trim() && (
+        <div class="vamp-conviction-form__preview">"{convDraft.value}"</div>
       )}
 
       <div class="vamp-conviction-form__sub-heading">Linked Touchstone</div>
@@ -891,8 +965,8 @@ function ConvictionForm({ index }: { index: number }) {
         class="vamp-input"
         type="text"
         placeholder="NPC name"
-        value={touchstone.name}
-        onInput={(e) => updateTouchstone({ name: (e.target as HTMLInputElement).value })}
+        value={tName.value}
+        onInput={onName}
       />
 
       <div class="vamp-conviction-form__row">
@@ -900,21 +974,21 @@ function ConvictionForm({ index }: { index: number }) {
           class="vamp-input vamp-conviction-form__pronoun"
           type="text"
           placeholder="they"
-          value={touchstone.pronouns[0]}
-          onInput={(e) => updateTouchstone({ pronouns: [(e.target as HTMLInputElement).value, touchstone.pronouns[1]] })}
+          value={tPron0.value}
+          onInput={onPron0}
         />
         <span class="vamp-conviction-form__slash">/</span>
         <input
           class="vamp-input vamp-conviction-form__pronoun"
           type="text"
           placeholder="them"
-          value={touchstone.pronouns[1]}
-          onInput={(e) => updateTouchstone({ pronouns: [touchstone.pronouns[0], (e.target as HTMLInputElement).value] })}
+          value={tPron1.value}
+          onInput={onPron1}
         />
         <select
           class="creation-dropdown"
-          value={touchstone.ageBracket}
-          onChange={(e) => updateTouchstone({ ageBracket: (e.target as HTMLSelectElement).value })}
+          value={tAge.value}
+          onChange={onAge}
         >
           <option value="">Age?</option>
           {HUMAN_AGE_BRACKETS.map(ab => <option key={ab} value={ab}>{ab}</option>)}
@@ -925,8 +999,8 @@ function ConvictionForm({ index }: { index: number }) {
         class={`vamp-input ${descTooShort ? 'vamp-conviction-form__conviction--warn' : ''}`}
         type="text"
         placeholder="Who are they to you? (at least a few words)"
-        value={touchstone.description}
-        onInput={(e) => updateTouchstone({ description: (e.target as HTMLInputElement).value })}
+        value={tDesc.value}
+        onInput={onDesc}
       />
     </div>
   );
@@ -956,28 +1030,26 @@ function ConvictionsCreationPanel() {
   );
 }
 
-/* Closes editing only when focus leaves the field entirely, not when tabbing between sibling inputs */
-function handleBioBlur(e: FocusEvent, editing: { value: boolean }) {
+/* Stays open when focus moves to another bio field (Tab flow) */
+function handleBioBlur(e: FocusEvent, close: () => void) {
   const related = (e as FocusEvent).relatedTarget as HTMLElement | null;
-  const container = (e.currentTarget as HTMLElement).closest('.vamp-bio__field');
-  if (container?.contains(related)) return;
-  editing.value = false;
+  const dualContainer = (e.currentTarget as HTMLElement).closest('.vamp-bio__field');
+  if (dualContainer?.contains(related)) return;
+  const bioContainer = (e.currentTarget as HTMLElement).closest('.vamp-bio');
+  if (bioContainer?.contains(related)) return;
+  close();
 }
 
-function handleBioKey(e: KeyboardEvent, editing: { value: boolean }, restore?: () => void) {
-  if (e.key === 'Enter') editing.value = false;
-  if (e.key === 'Escape') {
-    if (restore) restore();
-    editing.value = false;
-  }
-}
-
-function BioDualField({ label, bio, variant }: {
+function BioDualField({ label, bio, variant, active, onActivate, onClose, onAdvance, onRetreat }: {
   label: string;
   bio: Bio;
   variant: 'ages' | 'pronouns';
+  active: boolean;
+  onActivate: () => void;
+  onClose: () => void;
+  onAdvance: () => void;
+  onRetreat: () => void;
 }) {
-  const editing = useSignal(false);
   const isEdit = editMode.value;
   const isCreatingName = guideActive.value && isCreationPhase.value && creationStep.value === 'name';
   const isAges = variant === 'ages';
@@ -987,45 +1059,71 @@ function BioDualField({ label, bio, variant }: {
     ? (isAges ? `${v1} (${v2})` : `${v1}/${v2}`)
     : '';
 
-  const snapshot = useSignal({ v1, v2 });
-  if (!editing.value) snapshot.value = { v1, v2 };
+  const draft1 = useSignal(v1);
+  const draft2 = useSignal(v2);
+  const savedRef = useRef({ v1, v2 });
+  const hasFocused = useRef(false);
 
-  function save(idx: 0 | 1, val: string) {
-    if (isAges) {
-      updateCharacter({ bio: { ...bio, [idx === 0 ? 'vampiricAge' : 'apparentAge']: val } });
-    } else {
-      const next: [string, string] = [...bio.pronouns];
-      next[idx] = val;
-      updateCharacter({ bio: { ...bio, pronouns: next } });
-    }
+  const debouncedSave = useRef(
+    debounce((d1: string, d2: string) => {
+      savedRef.current = { v1: d1, v2: d2 };
+      const current = character.value.bio;
+      if (isAges) {
+        updateCharacter({ bio: { ...current, vampiricAge: d1, apparentAge: d2 } });
+      } else {
+        updateCharacter({ bio: { ...current, pronouns: [d1, d2] } });
+      }
+    }, 3000)
+  ).current;
+
+  useEffect(() => () => debouncedSave.cancel(), []);
+
+  if (!active) {
+    draft1.value = v1;
+    draft2.value = v2;
+    savedRef.current = { v1, v2 };
+    hasFocused.current = false;
   }
 
   function restore() {
-    const current = character.value.bio;
-    if (isAges) {
-      updateCharacter({ bio: { ...current, vampiricAge: snapshot.value.v1, apparentAge: snapshot.value.v2 } });
-    } else {
-      updateCharacter({ bio: { ...current, pronouns: [snapshot.value.v1, snapshot.value.v2] } });
+    debouncedSave.cancel();
+    draft1.value = savedRef.current.v1;
+    draft2.value = savedRef.current.v2;
+  }
+
+  function handleKey(e: KeyboardEvent, isLastInput: boolean, isFirstInput: boolean) {
+    if (e.key === 'Enter') { debouncedSave.flush(); onClose(); }
+    if (e.key === 'Escape') { restore(); onClose(); }
+    if (e.key === 'Tab') {
+      if (e.shiftKey && isFirstInput) { e.preventDefault(); debouncedSave.flush(); onRetreat(); }
+      else if (!e.shiftKey && isLastInput) { e.preventDefault(); debouncedSave.flush(); onAdvance(); }
     }
   }
 
-  if (editing.value) {
+  if (active) {
     return (
       <div class="vamp-bio__field vamp-bio__field--dual">
         <span class="vamp-bio__label">{label}</span>
         <div class="vamp-bio__dual-row">
-          <input class="vamp-bio__input vamp-bio__input--half" value={v1}
-            placeholder={isAges ? 'actual' : 'any'} autoFocus
-            onInput={(e) => save(0, (e.target as HTMLInputElement).value)}
-            onBlur={(e) => handleBioBlur(e, editing)}
-            onKeyDown={(e) => handleBioKey(e as unknown as KeyboardEvent, editing, restore)}
+          <input class="vamp-bio__input vamp-bio__input--half" value={draft1.value}
+            placeholder={isAges ? 'actual' : 'any'}
+            ref={(el) => { if (el && !hasFocused.current) { hasFocused.current = true; el.focus(); el.select(); } }}
+            onInput={(e) => {
+              draft1.value = (e.target as HTMLInputElement).value;
+              debouncedSave(draft1.value, draft2.value);
+            }}
+            onBlur={(e) => { debouncedSave.flush(); handleBioBlur(e, onClose); }}
+            onKeyDown={(e) => handleKey(e as unknown as KeyboardEvent, false, true)}
           />
           <span class="vamp-bio__sep">{isAges ? '(' : '/'}</span>
-          <input class="vamp-bio__input vamp-bio__input--half" value={v2}
+          <input class="vamp-bio__input vamp-bio__input--half" value={draft2.value}
             placeholder={isAges ? 'looks' : 'all'}
-            onInput={(e) => save(1, (e.target as HTMLInputElement).value)}
-            onBlur={(e) => handleBioBlur(e, editing)}
-            onKeyDown={(e) => handleBioKey(e as unknown as KeyboardEvent, editing, restore)}
+            onInput={(e) => {
+              draft2.value = (e.target as HTMLInputElement).value;
+              debouncedSave(draft1.value, draft2.value);
+            }}
+            onBlur={(e) => { debouncedSave.flush(); handleBioBlur(e, onClose); }}
+            onKeyDown={(e) => handleKey(e as unknown as KeyboardEvent, true, false)}
           />
           {isAges && <span class="vamp-bio__sep">)</span>}
         </div>
@@ -1034,39 +1132,70 @@ function BioDualField({ label, bio, variant }: {
   }
 
   return (
-    <div class="vamp-bio__field" onDblClick={() => { if (isEdit || isCreatingName) editing.value = true; }}>
+    <div class="vamp-bio__field" onDblClick={() => { if (isEdit || isCreatingName) onActivate(); }}>
       <span class="vamp-bio__label">{label}</span>
       <span class="vamp-bio__value">{display || '—'}</span>
     </div>
   );
 }
 
-function BioField({ label, field, bio }: {
+function BioField({ label, field, bio, active, onActivate, onClose, onAdvance, onRetreat }: {
   label: string;
   field: keyof Bio;
   bio: Bio;
+  active: boolean;
+  onActivate: () => void;
+  onClose: () => void;
+  onAdvance: () => void;
+  onRetreat: () => void;
 }) {
-  const editing = useSignal(false);
+  const draft = useSignal(bio[field] as string);
+  const savedRef = useRef(bio[field] as string);
+  const hasFocused = useRef(false);
   const isEdit = editMode.value;
   const isCreatingName = guideActive.value && isCreationPhase.value && creationStep.value === 'name';
   const value = bio[field] as string;
-  const snapshot = useSignal(value);
-  if (!editing.value) snapshot.value = value;
 
-  if (editing.value) {
+  const debouncedSave = useRef(
+    debounce((val: string) => {
+      savedRef.current = val;
+      updateCharacter({ bio: { ...character.value.bio, [field]: val } });
+    }, 3000)
+  ).current;
+
+  useEffect(() => () => debouncedSave.cancel(), []);
+
+  if (!active) {
+    draft.value = value;
+    savedRef.current = value;
+    hasFocused.current = false;
+  }
+
+  if (active) {
     return (
       <div class="vamp-bio__field">
         <span class="vamp-bio__label">{label}</span>
-        <input class="vamp-bio__input" value={value}
-          autoFocus
-          onInput={(e) => updateCharacter({ bio: { ...bio, [field]: (e.target as HTMLInputElement).value } })}
-          onBlur={() => { editing.value = false; }}
+        <input class="vamp-bio__input" value={draft.value}
+          ref={(el) => { if (el && !hasFocused.current) { hasFocused.current = true; el.focus(); el.select(); } }}
+          onInput={(e) => {
+            const val = (e.target as HTMLInputElement).value;
+            draft.value = val;
+            debouncedSave(val);
+          }}
+          onBlur={(e) => { debouncedSave.flush(); handleBioBlur(e, onClose); }}
           onKeyDown={(e) => {
             const key = (e as unknown as KeyboardEvent).key;
-            if (key === 'Enter') editing.value = false;
+            if (key === 'Enter') { debouncedSave.flush(); onClose(); }
             if (key === 'Escape') {
-              updateCharacter({ bio: { ...character.value.bio, [field]: snapshot.value } });
-              editing.value = false;
+              debouncedSave.cancel();
+              draft.value = savedRef.current;
+              onClose();
+            }
+            if (key === 'Tab') {
+              e.preventDefault();
+              debouncedSave.flush();
+              if ((e as unknown as KeyboardEvent).shiftKey) onRetreat();
+              else onAdvance();
             }
           }}
         />
@@ -1075,7 +1204,7 @@ function BioField({ label, field, bio }: {
   }
 
   return (
-    <div class="vamp-bio__field" onDblClick={() => { if (isEdit || isCreatingName) editing.value = true; }}>
+    <div class="vamp-bio__field" onDblClick={() => { if (isEdit || isCreatingName) onActivate(); }}>
       <span class="vamp-bio__label">{label}</span>
       <span class="vamp-bio__value">{value || '—'}</span>
     </div>
@@ -1083,9 +1212,65 @@ function BioField({ label, field, bio }: {
 }
 
 
+const BIO_FIELDS = [
+  { type: 'dual', label: 'Ages', variant: 'ages' },
+  { type: 'dual', label: 'Pronouns', variant: 'pronouns' },
+  { type: 'single', label: 'Height', field: 'height' },
+  { type: 'single', label: 'Weight', field: 'weight' },
+  { type: 'single', label: 'Style', field: 'style' },
+  { type: 'single', label: 'Occupation', field: 'occupation' },
+] as const;
+
+function BioSection({ bio }: { bio: Bio }) {
+  const activeIndex = useSignal<number | null>(null);
+
+  function activate(i: number) { activeIndex.value = i; }
+  function close() { activeIndex.value = null; }
+  function advance(current: number) {
+    const next = current + 1;
+    activeIndex.value = next < BIO_FIELDS.length ? next : null;
+  }
+  function retreat(current: number) {
+    const prev = current - 1;
+    activeIndex.value = prev >= 0 ? prev : null;
+  }
+
+  return (
+    <div class="vamp-bio">
+      {BIO_FIELDS.map((f, i) =>
+        f.type === 'dual' ? (
+          <BioDualField key={f.label} label={f.label} bio={bio} variant={f.variant}
+            active={activeIndex.value === i} onActivate={() => activate(i)} onClose={close}
+            onAdvance={() => advance(i)} onRetreat={() => retreat(i)} />
+        ) : (
+          <BioField key={f.label} label={f.label} field={f.field} bio={bio}
+            active={activeIndex.value === i} onActivate={() => activate(i)} onClose={close}
+            onAdvance={() => advance(i)} onRetreat={() => retreat(i)} />
+        )
+      )}
+    </div>
+  );
+}
+
 function NameField({ name, isCreating }: { name: string; isCreating: boolean }) {
   const editing = useSignal(false);
+  const draft = useSignal(name);
+  const savedRef = useRef(name);
   const isEdit = editMode.value;
+
+  const debouncedSave = useRef(
+    debounce((text: string) => {
+      savedRef.current = text;
+      updateCharacter({ name: text });
+    }, 3000)
+  ).current;
+
+  useEffect(() => () => debouncedSave.cancel(), []);
+
+  if (!editing.value && !isCreating) {
+    draft.value = name;
+    savedRef.current = name;
+  }
 
   if (isCreating || editing.value) {
     return (
@@ -1093,11 +1278,20 @@ function NameField({ name, isCreating }: { name: string; isCreating: boolean }) 
         class="vamp-identity__name-input"
         type="text"
         placeholder="Inscribe a name..."
-        value={name}
-        onInput={(e) => updateCharacter({ name: (e.target as HTMLInputElement).value })}
-        onBlur={() => { editing.value = false; }}
+        value={draft.value}
+        onInput={(e) => {
+          const text = (e.target as HTMLInputElement).value;
+          draft.value = text;
+          debouncedSave(text);
+        }}
+        onBlur={() => { debouncedSave.flush(); editing.value = false; }}
         onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === 'Escape') editing.value = false;
+          if (e.key === 'Enter') { debouncedSave.flush(); editing.value = false; }
+          if (e.key === 'Escape') {
+            debouncedSave.cancel();
+            draft.value = savedRef.current;
+            editing.value = false;
+          }
         }}
         autoFocus={!isCreating}
       />
@@ -1219,14 +1413,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
             )}
           </div>
 
-          <div class="vamp-bio">
-            <BioDualField label="Ages" bio={char.bio} variant="ages" />
-            <BioDualField label="Pronouns" bio={char.bio} variant="pronouns" />
-            <BioField label="Height" field="height" bio={char.bio} />
-            <BioField label="Weight" field="weight" bio={char.bio} />
-            <BioField label="Style" field="style" bio={char.bio} />
-            <BioField label="Occupation" field="occupation" bio={char.bio} />
-          </div>
+          <BioSection bio={char.bio} />
         </div>
 
         <div class="vamp-stat-list">
@@ -1236,7 +1423,11 @@ export function CharacterSheet({ slug }: { slug?: string }) {
             const moves = entry?.moves ?? [];
 
             const isEdit = editMode.value && !isCreating;
+            const canRoll = !isEdit && !isCreating && !isViewing;
             const cap = statCap.value;
+            const handleStatRoll = (stat: typeof statName) => {
+              performRoll(stat);
+            };
             return (
               <div class="vamp-stat" key={statName}>
                 <div class="vamp-stat__header">
@@ -1247,7 +1438,13 @@ export function CharacterSheet({ slug }: { slug?: string }) {
                       onClick={() => adjustStat(statName, -1, cap)}
                     />
                   )}
-                  <div class="vamp-stat__circle">
+                  <div
+                    class={`vamp-stat__circle ${canRoll ? 'vamp-stat__circle--rollable' : ''}`}
+                    onClick={canRoll ? () => handleStatRoll(statName) : undefined}
+                    role={canRoll ? 'button' : undefined}
+                    tabIndex={canRoll ? 0 : undefined}
+                    aria-label={canRoll ? `Roll +${statName}` : undefined}
+                  >
                     {isNaN(value) ? '+0' : value >= 0 ? `+${value}` : value}
                   </div>
                   {isEdit && (
@@ -1257,7 +1454,12 @@ export function CharacterSheet({ slug }: { slug?: string }) {
                       onClick={() => adjustStat(statName, 1, cap)}
                     />
                   )}
-                  <div class="vamp-stat__name">{statName}</div>
+                  <div
+                    class={`vamp-stat__name ${canRoll ? 'vamp-stat__name--rollable' : ''}`}
+                    onClick={canRoll ? () => handleStatRoll(statName) : undefined}
+                  >
+                    {statName}
+                  </div>
                 </div>
                 {moves.length > 0 && (
                   <ul class="vamp-stat__moves">
@@ -1340,12 +1542,12 @@ export function CharacterSheet({ slug }: { slug?: string }) {
         <div class="vamp-sheet__content">
           <div class="vamp-toolbar-row">
             <div class={`vamp-modifier-float ${guideZone === 'toolbar-left' || guideStep?.id === 'tour-modifiers' ? 'guide-spotlight' : ''}`}>
-              <SectionBox title="Move Modifiers">
+              <SectionBox title="Modifiers">
                 <ModifierBar />
               </SectionBox>
             </div>
             <div class={`vamp-scene-float ${guideZone === 'toolbar-right' || guideStep?.id === 'tour-scene-tools' ? 'guide-spotlight' : ''}`}>
-              <SectionBox title="Scene Tools">
+              <SectionBox title="Tools">
                 <SceneTools />
               </SectionBox>
             </div>

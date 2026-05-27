@@ -1,4 +1,4 @@
-import { marked } from 'marked';
+import { marked, type Token } from 'marked';
 import { STAT_NAMES } from './types';
 import type { StatName, Prerequisite } from './types';
 
@@ -227,17 +227,26 @@ export function resolveSnippetTokens(text: string, ctx: SnippetContext): string 
 const mdCache = new Map<string, string>();
 
 const renderer = new marked.Renderer();
-renderer.link = ({ href, text }: { href: string; text: string }) => {
+renderer.link = function({ href, tokens }: { href: string; tokens: Token[] }) {
+  const rendered = this.parser.parseInline(tokens);
   if (href.startsWith('https://coterie.zip')) {
-    return `<a href="${href}" target="_blank" rel="noopener">${text}</a>`;
+    return `<a href="${href}" target="_blank" rel="noopener">${rendered}</a>`;
   }
-  return `<a href="${href}">${text}</a>`;
+  return `<a href="${href}">${rendered}</a>`;
 };
+
+/* Fix bold wrapping multiple pipe-delimited links: **| [A](u) | [B](u)** → | [**A**](u) | [**B**](u) */
+function fixBoldPipes(md: string): string {
+  return md.replace(/\*\*(\|[^*\n]+)\*\*/g, (_, inner: string) =>
+    inner.replace(/\[([^\]]+)\]/g, '[**$1**]')
+  );
+}
 
 export function renderGameMarkdown(raw: string): string {
   const cached = mdCache.get(raw);
   if (cached) return cached;
-  const admonitioned = processAdmonitions(raw);
+  const fixed = fixBoldPipes(raw);
+  const admonitioned = processAdmonitions(fixed);
   const rewritten = rewriteMarkdownLinks(admonitioned);
   const html = marked.parse(rewritten, { async: false, breaks: true, renderer }) as string;
   const result = colorTierMarkers(html);

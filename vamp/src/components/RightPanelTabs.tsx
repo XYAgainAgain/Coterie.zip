@@ -17,7 +17,7 @@ import { editMode, enterDisciplineBuyMode } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
 import { switchContentTab } from '../state/panel';
 import { activeCoterie, createCoterie, joinCoterie, BLANK_CHARACTER } from '../state/persistence';
-import { EditableText } from './EditableText';
+import { EditableTextField } from './EditableTextField';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
 import { COTERIE_STAT_NAMES } from '../data/types';
 import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife, Merit, Flaw } from '../data/types';
@@ -460,11 +460,12 @@ function CoteriePanel() {
 
       <CollapsibleSection title="Haven" defaultOpen>
         <div class="vamp-rpanel-field">
-          <EditableText
+          <EditableTextField
             value={cot.havenDescription}
             onSave={setHavenDescription}
             placeholder="Describe your Haven..."
             multiline
+            autoResize
             className="vamp-haven-desc"
           />
         </div>

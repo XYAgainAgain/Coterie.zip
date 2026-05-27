@@ -38,7 +38,7 @@ export function GuideCard() {
     }
     nextGuideStep();
     if (current === total) {
-      forceToast('Welcome to Vamp! Click any stat button to roll dice, and use the Move Modifiers panel to add bonuses. Have fun!', 'success', 50);
+      forceToast('Welcome to Vamp! Click any stat button to roll dice, and use the Move Modifiers panel to add bonuses. Have fun!', 'success');
     }
   }
 
@@ -49,7 +49,7 @@ export function GuideCard() {
       return;
     }
     finishCreation();
-    forceToast('Character created! Continuing with a quick tour of your sheet.', 'success', 50);
+    forceToast('Character created! Continuing with a quick tour of your sheet.', 'success');
   }
 
   function handleYes() {

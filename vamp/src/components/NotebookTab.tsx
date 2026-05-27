@@ -1,9 +1,11 @@
 import { useSignal } from '@preact/signals';
+import { useRef, useEffect } from 'preact/hooks';
 import {
   character, addNote, removeNote, updateNote, reorderNotes,
 } from '../state/character';
 import type { Note } from '../state/character';
 import { renderGameMarkdown } from '../data/transforms';
+import { debounce } from '../utils/debounce';
 
 // All rendered markdown comes from user-authored note content (trusted, not external)
 
@@ -116,21 +118,42 @@ function MaximizedNote({ note, editing, onClose }: {
   const isEditing = useSignal(editing);
   const titleDraft = useSignal(note.title);
   const bodyDraft = useSignal(note.body);
+  const savedTitle = useRef(note.title);
+  const savedBody = useRef(note.body);
 
-  function save() {
-    updateNote(note.id, {
-      title: titleDraft.value,
-      body: bodyDraft.value,
-    });
+  const debouncedSave = useRef(
+    debounce((title: string, body: string) => {
+      savedTitle.current = title;
+      savedBody.current = body;
+      updateNote(note.id, { title, body });
+    }, 3000)
+  ).current;
+
+  useEffect(() => () => debouncedSave.flush(), []);
+
+  if (!isEditing.value) {
+    titleDraft.value = note.title;
+    bodyDraft.value = note.body;
+    savedTitle.current = note.title;
+    savedBody.current = note.body;
   }
 
   function handleClose() {
-    if (isEditing.value) save();
+    debouncedSave.flush();
     onClose();
   }
 
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Escape') handleClose();
+    if (e.key === 'Escape') {
+      if (isEditing.value) {
+        debouncedSave.cancel();
+        titleDraft.value = savedTitle.current;
+        bodyDraft.value = savedBody.current;
+        isEditing.value = false;
+      } else {
+        handleClose();
+      }
+    }
   }
 
   return (
@@ -141,7 +164,10 @@ function MaximizedNote({ note, editing, onClose }: {
             class="vamp-note-max__title-input"
             type="text"
             value={titleDraft.value}
-            onInput={(e) => { titleDraft.value = (e.target as HTMLInputElement).value; }}
+            onInput={(e) => {
+              titleDraft.value = (e.target as HTMLInputElement).value;
+              debouncedSave(titleDraft.value, bodyDraft.value);
+            }}
             placeholder="Note title"
           />
         ) : (
@@ -154,12 +180,6 @@ function MaximizedNote({ note, editing, onClose }: {
           </span>
         )}
         <div class="vamp-note-max__actions">
-          {isEditing.value && (
-            <button
-              class="vamp-note-max__save"
-              onClick={() => { save(); isEditing.value = false; }}
-            >Done</button>
-          )}
           <button class="vamp-note-max__close" onClick={handleClose}>
             <svg viewBox="0 0 16 16" width="14" height="14">
               <line x1="2" y1="2" x2="14" y2="14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
@@ -173,7 +193,10 @@ function MaximizedNote({ note, editing, onClose }: {
           <textarea
             class="vamp-note-max__editor"
             value={bodyDraft.value}
-            onInput={(e) => { bodyDraft.value = (e.target as HTMLTextAreaElement).value; }}
+            onInput={(e) => {
+              bodyDraft.value = (e.target as HTMLTextAreaElement).value;
+              debouncedSave(titleDraft.value, bodyDraft.value);
+            }}
             placeholder="Write your note here... (Markdown supported)"
           />
         ) : (

@@ -213,11 +213,65 @@ export class DicePhysics {
   waitForSettle(): Promise<void> {
     if (this.isSettled()) return Promise.resolve();
     return new Promise(resolve => {
+      const deadline = performance.now() + 8_000;
       const check = () => {
-        if (this.isSettled()) { resolve(); return; }
+        if (this.isSettled() || performance.now() > deadline) { resolve(); return; }
         requestAnimationFrame(check);
       };
       requestAnimationFrame(check);
+    });
+  }
+
+  /* Save/restore for pre-simulation: snapshot body states, fast-forward, then rewind */
+  saveBodyStates(): Array<{ pos: CANNON.Vec3; vel: CANNON.Vec3; angVel: CANNON.Vec3; quat: CANNON.Quaternion }> {
+    return this.bodies.map(({ body }) => ({
+      pos: body.position.clone(),
+      vel: body.velocity.clone(),
+      angVel: body.angularVelocity.clone(),
+      quat: body.quaternion.clone(),
+    }));
+  }
+
+  restoreBodyStates(states: Array<{ pos: CANNON.Vec3; vel: CANNON.Vec3; angVel: CANNON.Vec3; quat: CANNON.Quaternion }>): void {
+    for (let i = 0; i < Math.min(this.bodies.length, states.length); i++) {
+      const { body } = this.bodies[i];
+      const s = states[i];
+      body.position.copy(s.pos);
+      body.velocity.copy(s.vel);
+      body.angularVelocity.copy(s.angVel);
+      body.quaternion.copy(s.quat);
+      body.wakeUp();
+    }
+  }
+
+  presimulate(maxSteps = 600): void {
+    for (let i = 0; i < maxSteps; i++) {
+      this.world.step(TIMESTEP);
+      if (this.isSettled()) break;
+    }
+  }
+
+  getUpFaceIndices(): number[] {
+    const FACE_NORMALS = [
+      new CANNON.Vec3(1, 0, 0),
+      new CANNON.Vec3(-1, 0, 0),
+      new CANNON.Vec3(0, 1, 0),
+      new CANNON.Vec3(0, -1, 0),
+      new CANNON.Vec3(0, 0, 1),
+      new CANNON.Vec3(0, 0, -1),
+    ];
+
+    return this.bodies.map(({ body }) => {
+      let bestIndex = 2;
+      let bestDot = -Infinity;
+      for (let i = 0; i < 6; i++) {
+        const worldNormal = body.quaternion.vmult(FACE_NORMALS[i]);
+        if (worldNormal.y > bestDot) {
+          bestDot = worldNormal.y;
+          bestIndex = i;
+        }
+      }
+      return bestIndex;
     });
   }
 

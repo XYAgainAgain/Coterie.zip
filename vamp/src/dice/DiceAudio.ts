@@ -122,7 +122,7 @@ export class DiceAudio {
    * is adjusted so the clip matches the physics timing.
    * Without it, a random rate variation is applied.
    */
-  playRoll(diceCount: number, rollDuration?: number): void {
+  playRoll(diceCount: number, rollDuration?: number, speedMultiplier = 1): void {
     if (!this.loaded || !this.ctx) return;
 
     const tier = tierForCount(diceCount);
@@ -133,14 +133,14 @@ export class DiceAudio {
 
     let rate: number;
     if (rollDuration && rollDuration > 0) {
-      rate = buffer.duration / rollDuration;
-      rate = Math.max(0.7, Math.min(1.4, rate));
+      rate = (buffer.duration / rollDuration) * speedMultiplier;
     } else {
-      rate = 0.85 + Math.random() * 0.3;
+      rate = (0.85 + Math.random() * 0.3) * speedMultiplier;
     }
+    rate = Math.max(0.7, Math.min(2.0, rate));
 
     this.playBuffer(buffer, 0.8, rate);
-    console.log('[Dice Audio] Playing %s (rate %.2f)', key, rate);
+    console.log('[Dice Audio] Playing %s (rate %.2f, speed %.1f×)', key, rate, speedMultiplier);
   }
 
   private playBuffer(buffer: AudioBuffer, volume: number, pitch: number): void {

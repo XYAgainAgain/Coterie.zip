@@ -21,7 +21,7 @@ const FALLBACKS: Record<string, { body: string; numeral: string; font: string }>
   abyss:  { body: '#070707', numeral: '#A88BFF', font: 'Sinistre, fantasy' },
 };
 
-const FACE_VALUES = [2, 5, 1, 6, 3, 4];
+export const FACE_VALUES = [2, 5, 1, 6, 3, 4];
 
 interface ResolvedTheme {
   bodyColor: string;

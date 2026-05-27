@@ -13,7 +13,7 @@ export function TourOverlay() {
   function handleNext() {
     nextTourStop();
     if (current === total) {
-      forceToast('Welcome to Vamp! Click any stat button to roll dice, and use the Move Modifiers panel to add bonuses. Have fun!', 'success', 50);
+      forceToast('Welcome to Vamp! Click any stat button to roll dice, and use the Move Modifiers panel to add bonuses. Have fun!', 'success');
     }
   }
 

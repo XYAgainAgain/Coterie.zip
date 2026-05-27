@@ -160,6 +160,15 @@ export class DiceRenderer {
     this.spinnerCube.rotation.z = elapsed * 0.17;
   }
 
+  freezeSpinnerRandom(): void {
+    if (!this.spinnerCube) return;
+    this.spinnerCube.rotation.set(
+      Math.random() * Math.PI * 2,
+      Math.random() * Math.PI * 2,
+      Math.random() * Math.PI * 2,
+    );
+  }
+
   getSpinnerWorldPosition(): THREE.Vector3 | null {
     return this.spinnerCube?.position ?? null;
   }

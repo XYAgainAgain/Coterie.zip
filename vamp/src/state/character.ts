@@ -16,6 +16,7 @@ export interface Modifier {
   target: string | null;
   source: string;
   spendOn?: string;
+  stats?: StatName[];
 }
 
 export interface Touchstone {
@@ -113,6 +114,8 @@ export interface CharacterState {
   tourComplete: boolean;
   clocks: Clock[];
   notes: Note[];
+  initiative: string;
+  combatNotes: string;
 }
 
 export const NOTEBOOK_HELP_ID = '1998';
@@ -238,6 +241,8 @@ const JOHNNY_FANGS: CharacterState = {
     { id: 'n1', title: 'Session 1', body: 'Met Katie at the house party. She knows about us.\n\nNeed to figure out how to handle this.' },
     { id: 'n2', title: 'Safe House Intel', body: 'Alejandro mentioned a warehouse on **Pier 7**. Sabbat presence suspected.' },
   ],
+  initiative: '',
+  combatNotes: '',
 };
 
 export const character = signal<CharacterState>(JOHNNY_FANGS);
@@ -398,10 +403,30 @@ export function adjustModifierValue(id: string, delta: number) {
   character.value = { ...character.value, modifiers: updated };
 }
 
-export function clearForwards() {
+export function clearForwards(rolledStat?: StatName) {
   character.value = {
     ...character.value,
-    modifiers: character.value.modifiers.filter(m => m.type !== 'forward'),
+    modifiers: character.value.modifiers.filter(m => {
+      if (m.type !== 'forward') return true;
+      if (!rolledStat || !m.stats) return false;
+      return !m.stats.includes(rolledStat);
+    }),
+  };
+}
+
+export function clearHolds() {
+  character.value = {
+    ...character.value,
+    modifiers: character.value.modifiers.filter(m => m.type !== 'hold'),
+  };
+}
+
+export function newScene() {
+  character.value = {
+    ...character.value,
+    modifiers: character.value.modifiers.filter(m => m.type !== 'forward' && m.type !== 'hold'),
+    initiative: '',
+    combatNotes: '',
   };
 }
 

@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from 'preact/hooks';
+import { diceEngine } from './diceState';
+import { performRawRoll } from './rollMove';
 
 interface ButtonPos { x: number; y: number }
 
@@ -8,7 +10,6 @@ const DBLCLICK_WINDOW = 300;
 
 export function DiceOverlay() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const engineRef = useRef<{ dispose: () => void; spawnFromSpinner: (count?: number) => void; clearDice: () => void; getSpinnerScreenPosition: () => ButtonPos | null; handleResize: (w: number, h: number) => void } | null>(null);
   const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [btnPos, setBtnPos] = useState<ButtonPos | null>(null);
   const [diceCount, setDiceCount] = useState<DiceCount>(1);
@@ -30,21 +31,21 @@ export function DiceOverlay() {
       await engine.init();
       if (disposed) { engine.dispose(); return; }
 
-      engineRef.current = engine;
       await engine.initDemo();
       if (disposed) { engine.dispose(); return; }
 
+      diceEngine.value = engine;
       setBtnPos(engine.getSpinnerScreenPosition());
     }
 
     function onResize() {
-      if (!canvasRef.current || !engineRef.current) return;
+      if (!canvasRef.current || !diceEngine.value) return;
       const w = window.innerWidth;
       const h = window.innerHeight;
       canvasRef.current.width = w;
       canvasRef.current.height = h;
-      engineRef.current.handleResize(w, h);
-      setBtnPos(engineRef.current.getSpinnerScreenPosition());
+      diceEngine.value.handleResize(w, h);
+      setBtnPos(diceEngine.value.getSpinnerScreenPosition());
     }
 
     init();
@@ -53,21 +54,21 @@ export function DiceOverlay() {
     return () => {
       disposed = true;
       window.removeEventListener('resize', onResize);
-      engineRef.current?.dispose();
-      engineRef.current = null;
+      diceEngine.value?.dispose();
+      diceEngine.value = null;
     };
   }, []);
 
   const handleClick = () => {
     if (clickTimer.current) clearTimeout(clickTimer.current);
     clickTimer.current = setTimeout(() => {
-      engineRef.current?.spawnFromSpinner(diceCount);
+      performRawRoll(diceCount);
     }, DBLCLICK_WINDOW);
   };
 
   const handleDoubleClick = () => {
     if (clickTimer.current) clearTimeout(clickTimer.current);
-    engineRef.current?.clearDice();
+    diceEngine.value?.clearDice();
   };
 
   const handleContextMenu = (e: MouseEvent) => {

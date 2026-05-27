@@ -129,6 +129,8 @@ export const BLANK_CHARACTER: CharacterState = {
   tourComplete: false,
   clocks: [],
   notes: [{ ...NOTEBOOK_HELP_NOTE }],
+  initiative: '',
+  combatNotes: '',
 };
 
 function toSummary(id: string, data: Record<string, unknown>): CharacterSummary {

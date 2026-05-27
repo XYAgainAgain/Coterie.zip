@@ -43,7 +43,7 @@ export function CreationOverlay() {
     updateCharacter({ creationComplete: true });
     creationMode.value = false;
     startTour();
-    forceToast('Character created! Here\'s a quick tour of your sheet.', 'success', 50);
+    forceToast('Character created! Here\'s a quick tour of your sheet.', 'success');
   }
 
   function handleYes() {
