@@ -8,8 +8,7 @@ import {
 } from '../state/panel';
 import {
   currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
-  statCap, parseXPValue, xpRange, disciplineAccessCost, isExclusiveDiscipline,
-  startingDisciplineSlugs,
+  statCap, parseXPValue, xpRange,
 } from '../state/derived';
 import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription } from '../state/coterie';

@@ -14,7 +14,7 @@ const MAX_CHARACTERS_ANON = 2;
 const MAX_CHARACTERS_LINKED = 12;
 
 export function maxCharacters(): number {
-  return linkedEmail.value ? MAX_CHARACTERS_LINKED : MAX_CHARACTERS_ANON;
+  return (auth.currentUser?.email || linkedEmail.value) ? MAX_CHARACTERS_LINKED : MAX_CHARACTERS_ANON;
 }
 
 /* Kebab-case slug from character name, safe for URLs */
@@ -342,12 +342,22 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
   const uid = auth.currentUser?.uid;
   if (!uid) throw new Error('Not authenticated');
 
-  const all = await idbGetAll<IDBCharacterRecord>('characters');
-  const owned = all.filter(r => r.ownerId === uid);
-  const cap = maxCharacters();
-  if (owned.length >= cap) {
+  /* Count from Firestore (not IDB) so the cap can't be bypassed via DevTools.
+     Linked status from auth.currentUser.email (actual Firebase state, not signal). */
+  const isLinked = !!auth.currentUser?.email;
+  const cap = isLinked ? MAX_CHARACTERS_LINKED : MAX_CHARACTERS_ANON;
+  let count: number;
+  try {
+    const q = query(collection(db, 'characters'), where('ownerId', '==', uid));
+    const snap = await getDocs(q);
+    count = snap.size;
+  } catch {
+    const all = await idbGetAll<IDBCharacterRecord>('characters');
+    count = all.filter(r => r.ownerId === uid).length;
+  }
+  if (count >= cap) {
     throw new Error(
-      cap === MAX_CHARACTERS_ANON
+      !isLinked
         ? `Anonymous users can create up to ${MAX_CHARACTERS_ANON} characters. Link your email to unlock ${MAX_CHARACTERS_LINKED}!`
         : `Character limit reached (${MAX_CHARACTERS_LINKED})`,
     );

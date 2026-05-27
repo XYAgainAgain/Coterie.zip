@@ -229,10 +229,12 @@ const mdCache = new Map<string, string>();
 const renderer = new marked.Renderer();
 renderer.link = function({ href, tokens }: { href: string; tokens: Token[] }) {
   const rendered = this.parser.parseInline(tokens);
+  if (!/^(https?:\/\/|[#/])/i.test(href)) return rendered;
+  const safe = href.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   if (href.startsWith('https://coterie.zip')) {
-    return `<a href="${href}" target="_blank" rel="noopener">${rendered}</a>`;
+    return `<a href="${safe}" target="_blank" rel="noopener">${rendered}</a>`;
   }
-  return `<a href="${href}">${rendered}</a>`;
+  return `<a href="${safe}">${rendered}</a>`;
 };
 
 /* Fix bold wrapping multiple pipe-delimited links: **| [A](u) | [B](u)** → | [**A**](u) | [**B**](u) */
