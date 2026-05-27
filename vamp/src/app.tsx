@@ -8,7 +8,8 @@ import { EmailLinkPrompt } from './components/EmailLinkPrompt';
 import { CreationProgress } from './components/creation/CreationProgress';
 import { DiceOverlay } from './dice/DiceOverlay';
 import { ToastStack } from './components/ToastStack';
-import { loadAllGameData } from './data/loader';
+import { prefetchRules } from './utils/rulesCache';
+import { loadGameDataCached } from './utils/gameDataCache';
 import { gameData } from './state/derived';
 import { editMode, toggleEditMode, viewingOtherSheet } from './state/ui';
 import { creationMode } from './state/creation';
@@ -26,14 +27,18 @@ if (redirectPath) {
 }
 
 Promise.all([
-  loadAllGameData(),
+  loadGameDataCached(),
   authReady,
 ])
-  .then(async ([data]) => {
+  .then(async ([{ data, refresh }]) => {
     await handleEmailLinkRedirect();
     gameData.value = data;
+    prefetchRules();
     startAutoSave();
     dataReady.value = true;
+    refresh().then(fresh => {
+      if (fresh && !editMode.value && !creationMode.value) gameData.value = fresh;
+    });
   })
   .catch(err => {
     dataError.value = err instanceof Error ? err.message : String(err);
@@ -80,6 +85,7 @@ export function App() {
         ) : (
           <Router>
             <Route path="/vamp/" component={CharacterList} />
+            <Route path="/vamp/view/:charId" component={CharacterViewer} />
             <Route path="/vamp/:coterieCode/:charSlug" component={CharacterViewer} />
             <Route path="/vamp/:slug" component={CharacterSheet} />
           </Router>

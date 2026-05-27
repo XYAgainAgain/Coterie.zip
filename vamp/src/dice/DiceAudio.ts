@@ -159,7 +159,7 @@ export class DiceAudio {
   }
 
   /* Per-impact sounds for individual dice-to-surface/dice-to-dice collisions.
-     Requires impact clips in /assets/audio/dice/impacts/ -- stubbed until we have them. */
+     Requires impact clips; stubbed until organized. */
   playImpact(volume: number): void {
     if (!this.loaded || !this.ctx || this.prefs.sfxMuted) return;
     // TODO: load and play individual impact clips when available

@@ -1,5 +1,5 @@
 const DB_NAME = 'vamp-db';
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 let dbPromise: Promise<IDBDatabase> | null = null;
 
@@ -18,6 +18,9 @@ function openDB(): Promise<IDBDatabase> {
         if (!db.objectStoreNames.contains('prefs')) {
           db.createObjectStore('prefs');
         }
+        if (!db.objectStoreNames.contains('gamedata')) {
+          db.createObjectStore('gamedata');
+        }
       } catch (e) {
         dbPromise = null;
         reject(e);
@@ -25,6 +28,10 @@ function openDB(): Promise<IDBDatabase> {
     };
 
     req.onsuccess = () => resolve(req.result);
+    req.onblocked = () => {
+      dbPromise = null;
+      reject(new Error('Database upgrade blocked — close other Vamp tabs and reload'));
+    };
     req.onerror = () => {
       dbPromise = null;
       reject(req.error);
@@ -34,7 +41,7 @@ function openDB(): Promise<IDBDatabase> {
   return dbPromise;
 }
 
-type StoreName = 'characters' | 'prefs';
+type StoreName = 'characters' | 'prefs' | 'gamedata';
 
 export async function idbGet<T = unknown>(store: StoreName, key: string): Promise<T | undefined> {
   const db = await openDB();

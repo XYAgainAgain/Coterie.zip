@@ -19,6 +19,7 @@ import { switchContentTab } from '../state/panel';
 import { activeCoterie, createCoterie, joinCoterie, BLANK_CHARACTER } from '../state/persistence';
 import { EditableTextField } from './EditableTextField';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
+import { getCachedRules, getRulesPending, prefetchRules } from '../utils/rulesCache';
 import { COTERIE_STAT_NAMES } from '../data/types';
 import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife, Merit, Flaw } from '../data/types';
 import type { CharacterState } from '../state/character';
@@ -1794,40 +1795,27 @@ function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, on
   );
 }
 
-interface RulesSection { title: string; body: string }
-
-function parseRulesMarkdown(raw: string): { title: string; intro: string; sections: RulesSection[] } {
-  const parts = raw.split(/\n(?=## )/);
-  const titleMatch = parts[0].match(/^#\s+(.+)/);
-  const title = titleMatch ? titleMatch[1].trim() : '';
-  const intro = parts[0].replace(/^#\s+.*\n+/, '');
-  const sections = parts.slice(1).map(chunk => {
-    const newline = chunk.indexOf('\n');
-    return {
-      title: chunk.slice(3, newline > 0 ? newline : undefined).trim(),
-      body: newline > 0 ? chunk.slice(newline + 1).trim() : '',
-    };
-  });
-  return { title, intro, sections };
-}
-
 function RulesPanel() {
-  const markdown = useSignal<string | null>(null);
   const expanded = useSignal<string | null>(null);
+  const rules = useSignal(getCachedRules());
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + 'How-to-Coterie.md')
-      .then(r => r.ok ? r.text() : '')
-      .then(text => { markdown.value = text; });
+    if (rules.value) return;
+    let live = true;
+    /* If prefetch failed or hasn't run, retry */
+    let p = getRulesPending();
+    if (!p) { prefetchRules(); p = getRulesPending(); }
+    if (p) p.then(r => { if (live) rules.value = r; });
+    return () => { live = false; };
   }, []);
 
-  if (!markdown.value) return <div class="vamp-rpanel-scroll" />;
-  const { title, intro, sections } = parseRulesMarkdown(markdown.value);
+  if (!rules.value) return <div class="vamp-rpanel-scroll" />;
+  const { title, intro, sections } = rules.value;
 
   return (
     <div class="vamp-rpanel-scroll">
-      {title && <div class="vamp-rules-title" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(title) }} />}
-      <div class="vamp-rules-intro" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(intro) }} />
+      {title && <div class="vamp-rules-title" dangerouslySetInnerHTML={{ __html: title }} />}
+      <div class="vamp-rules-intro" dangerouslySetInnerHTML={{ __html: intro }} />
       {sections.map(s => (
         <div key={s.title} class={`vamp-move-section ${expanded.value === s.title ? 'vamp-move-section--open' : ''}`}>
           <div class="vamp-move-section__bar" onClick={() => { expanded.value = expanded.value === s.title ? null : s.title; }}>
@@ -1835,7 +1823,7 @@ function RulesPanel() {
           </div>
           {expanded.value === s.title && (
             <div class="vamp-move-section__body vamp-rules-body"
-              dangerouslySetInnerHTML={{ __html: renderGameMarkdown(s.body) }}
+              dangerouslySetInnerHTML={{ __html: s.body }}
             />
           )}
         </div>

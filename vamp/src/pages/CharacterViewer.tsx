@@ -3,38 +3,45 @@ import { signal } from '@preact/signals';
 import { route } from 'preact-router';
 import { CharacterSheet } from './CharacterSheet';
 import { character } from '../state/character';
-import { loadCharacterForViewing, activeCharacterId, loadCoterie } from '../state/persistence';
+import { loadCharacterForViewing, loadCharacterPublic, activeCharacterId, loadCoterie } from '../state/persistence';
 import { viewingOtherSheet } from '../state/ui';
 
 const viewerLoading = signal(false);
 const viewerError = signal<string | null>(null);
 const viewerReady = signal(false);
-const viewerIsOwner = signal(false);
 
-export function CharacterViewer({ coterieCode, charSlug }: { coterieCode?: string; charSlug?: string }) {
+export function CharacterViewer({ coterieCode, charSlug, charId }: {
+  coterieCode?: string;
+  charSlug?: string;
+  charId?: string;
+}) {
   useEffect(() => {
-    if (!coterieCode || !charSlug) return;
+    const isCoteriePath = coterieCode && charSlug;
+    const isDirectPath = charId;
+    if (!isCoteriePath && !isDirectPath) return;
 
     viewerLoading.value = true;
     viewerError.value = null;
     viewerReady.value = false;
 
-    loadCharacterForViewing(coterieCode, charSlug)
+    const load = isCoteriePath
+      ? loadCharacterForViewing(coterieCode!, charSlug!)
+          .then(({ state, coterieId, isOwner }) => ({ state, coterieId, isOwner }))
+      : loadCharacterPublic(charId!)
+          .then(({ state, coterieId, isOwner }) => ({ state, coterieId, isOwner }));
+
+    viewingOtherSheet.value = true;
+
+    load
       .then(async ({ state, coterieId, isOwner }) => {
         if (isOwner) {
-          /* Owner viewing their own sheet: redirect to the editable route */
-          const charId = activeCharacterId.value;
-          if (charId) {
-            route(`/vamp/${charId}`, true);
-            return;
-          }
+          const ownId = charId ?? activeCharacterId.value;
+          if (ownId) { route(`/vamp/${ownId}`, true); return; }
         }
 
         character.value = state;
-        viewerIsOwner.value = isOwner;
-        viewingOtherSheet.value = true;
 
-        await loadCoterie(coterieId);
+        if (coterieId) await loadCoterie(coterieId);
 
         viewerReady.value = true;
       })
@@ -46,7 +53,7 @@ export function CharacterViewer({ coterieCode, charSlug }: { coterieCode?: strin
       });
 
     return () => { viewingOtherSheet.value = false; };
-  }, [coterieCode, charSlug]);
+  }, [coterieCode, charSlug, charId]);
 
   if (viewerLoading.value) {
     return <div class="vamp-loading">Materializing...</div>;

@@ -9,6 +9,14 @@ import type {
 
 const cache = new Map<string, unknown>();
 
+export function clearFetchCache(): void { cache.clear(); }
+
+/* Read generatedAt from the already-fetched in-memory cache (avoids a second network hit) */
+export function getCachedGeneratedAt(): string | null {
+  const raw = cache.get('playbooks') as { generatedAt?: string } | undefined;
+  return raw?.generatedAt ?? null;
+}
+
 async function fetchJSON<T>(name: string): Promise<T> {
   const cached = cache.get(name);
   if (cached) return cached as T;

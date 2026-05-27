@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { debounce } from '../utils/debounce';
+import { preloadPortraits } from '../utils/preloadPortraits';
 import { SectionBox } from '../components/SectionBox';
 import { RightColumn } from '../components/RightColumn';
 import { RightPanelContent } from '../components/RightPanelTabs';
@@ -1332,6 +1333,11 @@ export function CharacterSheet({ slug }: { slug?: string }) {
       .finally(() => { loading.value = false; });
     return () => { flushSave(); };
   }, [slug, isViewing]);
+
+  useEffect(() => {
+    const urls = character.value.portraits.map(p => p.url);
+    preloadPortraits(urls);
+  }, [slug]);
 
   if (loading.value) {
     return <div class="vamp-loading">Materializing...</div>;

@@ -581,6 +581,24 @@ export async function loadCharacterForViewing(
   return { state, coterieId: coterieCode, isOwner };
 }
 
+/* Load any character by ID for public read-only viewing (no Coterie membership required... yet) */
+export async function loadCharacterPublic(
+  charId: string,
+): Promise<{ state: CharacterState; isOwner: boolean; coterieId: string | null }> {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error('Not authenticated');
+
+  const charSnap = await getDoc(doc(db, 'characters', charId));
+  if (!charSnap.exists()) throw new Error('Character not found');
+
+  const raw = charSnap.data();
+  const state = stripMetadata(raw);
+  const isOwner = raw.ownerId === uid;
+  const coterieId: string | null = (raw.coterieId as string) ?? null;
+
+  return { state, isOwner, coterieId };
+}
+
 let coterieUnsub: (() => void) | null = null;
 
 function applyCoterie(data: Record<string, unknown>) {
