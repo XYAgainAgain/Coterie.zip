@@ -365,3 +365,5 @@ The rift stays open until someone closes it. A practitioner of Blood Sorcery, Ob
 ## Daimonion Sacraments
 
 \[PLS HOLD, THEY'RE COOKIN' I PROMISE!!! :) THEY'RE YUCKY!]
+
+For details on how to learn Sacraments, see the Discipline [General Rules](general-rules.md).

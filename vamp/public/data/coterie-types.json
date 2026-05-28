@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-26T06:34:07.169Z",
+  "generatedAt": "2026-05-28T22:47:36.776Z",
   "entries": [
     {
       "name": "The Champions",
@@ -29,7 +29,10 @@
           "big target",
           "local resentment",
           "sleep deprivation"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -60,7 +63,10 @@
           "overcrowded blood fridge",
           "incompatible décor",
           "thin walls"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -90,7 +96,10 @@
           "fundamentally unsanitary",
           "fire hazard",
           "escaped member"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -120,7 +129,10 @@
           "always on call",
           "unappreciative supervisor(s)",
           "overworked and understaffed"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -152,7 +164,10 @@
           "regulatory scrutiny",
           "overtime culture",
           "quarterly expectations"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -182,7 +197,10 @@
           "trust deficit",
           "weaponized neutrality",
           "everyone's dirty secrets"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -213,7 +231,10 @@
           "unsettled wills",
           "skeletons (literal)",
           "obligatory dinners"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -244,7 +265,10 @@
           "known hangout",
           "stolen goods",
           "annoying wannabe"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -274,7 +298,10 @@
           "budget constraints",
           "dangerous knowledge",
           "favors owed"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -305,7 +332,10 @@
           "cash only",
           "paranoid habits",
           "no friends nearby"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -315,7 +345,7 @@
       "havenFeatures": {
         "positiveCount": 3,
         "positiveOptions": [
-          "spirit wards",
+          "Spirit wards",
           "cemetery access",
           "ritual circle",
           "spectral informants",
@@ -336,7 +366,10 @@
           "corpse smell",
           "restless tenants",
           "flickering lights"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -365,7 +398,10 @@
           "refrigeration costs",
           "ethical queasiness",
           "jealous rivals"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -396,7 +432,10 @@
           "local rivalries",
           "road fatigue",
           "no fixed address"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -426,7 +465,10 @@
           "loyalty tests",
           "compartmentalized lives",
           "paper-thin trust"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -459,7 +501,10 @@
           "impossible expectations",
           "useless help",
           "nasty rumors"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -489,7 +534,10 @@
           "venue damage",
           "trend anxiety",
           "jealous admirers"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -522,7 +570,10 @@
           "worn-out welcome",
           "guilt trips",
           "network stretched thin"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -552,7 +603,10 @@
           "information overload",
           "recently-stolen goods",
           "dangerous upcoming expedition"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -583,7 +637,10 @@
           "maintenance costs",
           "cabin fever",
           "territorial obsession"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -614,7 +671,10 @@
           "aggressive neighbors",
           "recent member death",
           "foolish new recruit"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -645,7 +705,10 @@
           "server overheating",
           "data breaches",
           "just moved again"
-        ]
+        ],
+        "aggregate": false,
+        "positiveNote": null,
+        "negativeNote": null
       }
     },
     {
@@ -654,15 +717,377 @@
       "coterieStats": "Distribute stats to reflect your current situation, ensuring that none start at ±3 and that all the numbers add up to a total of 2.",
       "havenFeatures": {
         "positiveCount": 3,
-        "positiveOptions": [
-          "any from the above lists in any combination that makes thematic sense",
-          "or invent your own with your Storyteller's help"
-        ],
         "negativeCount": 2,
+        "positiveOptions": [
+          "academic contacts",
+          "actual safe house",
+          "altar with drainage",
+          "ancestral property",
+          "ancestral wards",
+          "ancient library",
+          "architectural plans",
+          "armored vehicle",
+          "armory access",
+          "art collection",
+          "artifact vault",
+          "attractive secretary",
+          "backup vehicle",
+          "blackmail archive",
+          "blackout curtains",
+          "blood storage",
+          "bone collection",
+          "buried safe",
+          "burner phones",
+          "campfire stories",
+          "cash safe",
+          "cemetery access",
+          "chop shop",
+          "cleanup supplies",
+          "clear-ish conscience",
+          "coffee machine",
+          "cold storage",
+          "comms array",
+          "communal blood supply",
+          "community respect",
+          "company vehicles",
+          "comprehensive fake identities",
+          "conference room",
+          "confidential archives",
+          "consecrated ground",
+          "convenient location",
+          "cool telescope",
+          "cool weapon stash",
+          "corner office",
+          "corporate housing",
+          "cover stories",
+          "data archive",
+          "dawn alarm",
+          "daytime armory",
+          "dead drops",
+          "defensible layout",
+          "delivery network",
+          "designer wardrobe",
+          "devoted congregation",
+          "diplomatic immunity",
+          "discreet location",
+          "disguise kit",
+          "distinguished clientele",
+          "dope sound system",
+          "emergency cash",
+          "emergency lockdown",
+          "encrypted devices",
+          "encrypted network",
+          "escape route",
+          "escape tunnel",
+          "established domain",
+          "event connections",
+          "evidence disposal",
+          "existing staff",
+          "expedition gear",
+          "expense accounts",
+          "extensive genealogy",
+          "extensive library",
+          "extraction plan",
+          "faction contacts",
+          "fake IDs",
+          "fake plates collection",
+          "family heirlooms",
+          "family lawyer",
+          "faraway contact",
+          "fascinating collection",
+          "first aid kit",
+          "forged documents",
+          "forgery kit",
+          "fortified entrance",
+          "fortified perimeter",
+          "free parking",
+          "gallery space",
+          "generational wealth",
+          "getaway vehicle",
+          "ghost traps",
+          "go-bags ready",
+          "good water pressure",
+          "guest quarters",
+          "hacker contacts",
+          "handler contact",
+          "hidden entrance",
+          "hidden passages",
+          "hidden rooms",
+          "hidey-holes",
+          "holiday traditions",
+          "hospitality suite",
+          "impeccable filing system",
+          "impressive address",
+          "impressive bar",
+          "indoctrination library",
+          "inherited estate",
+          "intelligence network",
+          "inter-city contacts",
+          "investor network",
+          "large weapons arsenal",
+          "legacy contacts",
+          "legacy reputation",
+          "legal counsel",
+          "lenient/lazy landlord",
+          "light-tight room",
+          "light-tight trunk",
+          "loading dock",
+          "local informants",
+          "lookout post",
+          "managed herd",
+          "map collection",
+          "media contacts",
+          "medical supplies",
+          "mobile blood storage",
+          "mortal employees",
+          "mortal entourage",
+          "mortal sympathizers",
+          "mortal-passing décor",
+          "motion sensors",
+          "multilingual library",
+          "nearby mortal relatives",
+          "neighborhood watch",
+          "neutral ground",
+          "nice view",
+          "occult library",
+          "patrol routes",
+          "performance gear",
+          "personal stylist",
+          "police band radio",
+          "police liaison",
+          "police scanner",
+          "political connections",
+          "portable shrine",
+          "pre-furnished",
+          "private feeding rooms",
+          "rare manuscripts",
+          "recognized authority",
+          "recording studio",
+          "refugee network",
+          "reinforced doors",
+          "reliable fence",
+          "reliable internet",
+          "remote monitoring station",
+          "restoration workshop",
+          "ritual chamber",
+          "ritual circle",
+          "rooftop garden",
+          "rooftop lounge",
+          "rooftop sundeck",
+          "rotating shelters",
+          "sacred relic",
+          "safe route maps",
+          "séance parlor",
+          "secure comms",
+          "secure locks",
+          "secure meeting room",
+          "security system",
+          "server room",
+          "several Blood Dolls",
+          "shift schedule",
+          "slush fund",
+          "social media bots",
+          "social media monitoring",
+          "soundproofed sanctum",
+          "spare bedrooms",
+          "sparring ring",
+          "spectral informants",
+          "Spirit wards",
+          "sunscreen stockpile",
+          "supply cache",
+          "surprisingly spacious",
+          "surveillance gear",
+          "tactical maps",
+          "tasting notes",
+          "tax shelter",
+          "tinted vehicle",
+          "tip line",
+          "training room",
+          "translation tools",
+          "travel documents",
+          "truly anonymous accounts",
+          "trusted couriers",
+          "trusted drivers",
+          "trusty vehicle",
+          "unmarked vehicle",
+          "updated maps",
+          "veterinary supplies",
+          "VIP contacts",
+          "VPN infrastructure",
+          "war trophies",
+          "watchtower",
+          "weapons stash",
+          "wellness program",
+          "white flag collection",
+          "wine/\"wine\" cellar"
+        ],
         "negativeOptions": [
-          "ditto",
-          "but make sure they'll be fun for everyone"
-        ]
+          "active pursuers",
+          "aggressive neighbors",
+          "always attracting weirdos",
+          "always on call",
+          "always overcrowded",
+          "annoying wannabe",
+          "assassination risk",
+          "attachment issues",
+          "awkward reunions",
+          "betrayal potential",
+          "big target",
+          "borrowed spaces",
+          "budget constraints",
+          "bullet-hole decor",
+          "burned cover risk",
+          "cabin fever",
+          "cash only",
+          "chronic underfunding",
+          "civilian discomfort",
+          "compartmentalized lives",
+          "compromised safehouse",
+          "constant callouts",
+          "constant threat(s)",
+          "constant travel",
+          "corpse smell",
+          "cramped quarters",
+          "crumbling infrastructure",
+          "crumbling walls",
+          "curious police",
+          "cursed acquisitions",
+          "dangerous knowledge",
+          "dangerous upcoming expedition",
+          "data breaches",
+          "definitely watchlisted",
+          "demanding clientele",
+          "desperate guests",
+          "digital footprint",
+          "disgruntled employee",
+          "disposable assets",
+          "double agent paranoia",
+          "double shifts",
+          "electricity dependency",
+          "embezzlement rumors",
+          "empty treasury",
+          "escaped member",
+          "estranged branch",
+          "ethical queasiness",
+          "everyone's dirty secrets",
+          "everyone's trash",
+          "expendable reputation",
+          "expensive tastes",
+          "family secrets",
+          "favors owed",
+          "fire hazard",
+          "flickering lights",
+          "foolish new recruit",
+          "frequent border crossings",
+          "friendly new neighbors",
+          "fundamentally unsanitary",
+          "grant dependency",
+          "growing enemies list",
+          "guilt trips",
+          "handler's agenda",
+          "herd poachers",
+          "hostile chore wheel",
+          "hostile shareholders",
+          "hunted by authorities",
+          "impossible expectations",
+          "incense-scented everything",
+          "incompatible décor",
+          "informant risk",
+          "information addiction",
+          "information overload",
+          "inheritance disputes",
+          "inherited beef",
+          "inherited enemies",
+          "inventory spoilage",
+          "jealous admirers",
+          "jealous rivals",
+          "judgmental Elders",
+          "just moved again",
+          "known hangout",
+          "landlord snitches",
+          "local resentment",
+          "local rivalries",
+          "loyalty tests",
+          "maintenance costs",
+          "many complaints filed",
+          "many dead bodies",
+          "mysterious stain",
+          "nasty rumors",
+          "network stretched thin",
+          "no fixed address",
+          "no friends nearby",
+          "no gas money",
+          "no nights off",
+          "no real allies",
+          "nocturnal visitors",
+          "nosy neighbors",
+          "obligatory dinners",
+          "obsessive hoarding",
+          "one bedroom",
+          "outdated policies",
+          "overcrowded blood fridge",
+          "overtime culture",
+          "overworked and understaffed",
+          "paper trail",
+          "paper-thin trust",
+          "paranoid habits",
+          "pending audit",
+          "perpetual chill",
+          "persistent detective",
+          "quarterly expectations",
+          "rabid local fanbase",
+          "recent member death",
+          "recently-stolen goods",
+          "refrigeration costs",
+          "regulatory scrutiny",
+          "reputation fragility",
+          "resource drain",
+          "restless tenants",
+          "rival hackers",
+          "rival researchers",
+          "rival socialites",
+          "rival territory",
+          "road fatigue",
+          "seen too much",
+          "server overheating",
+          "siege mentality",
+          "skeletons (literal)",
+          "sleep deprivation",
+          "slumbering in shifts",
+          "smelly car",
+          "someone's lingering ex",
+          "stained floors",
+          "stolen goods",
+          "succession vultures",
+          "suspicious van",
+          "tabloid attention",
+          "targeted by authorities",
+          "territorial obsession",
+          "thankless duty",
+          "thermostat wars",
+          "thin walls",
+          "trend anxiety",
+          "trust deficit",
+          "unappreciative supervisor(s)",
+          "unclear lease",
+          "unfinished business",
+          "unrepaired battle damage",
+          "unsettled wills",
+          "unsettling noises",
+          "unstable artifacts",
+          "unwanted visitors",
+          "unwelcome everywhere",
+          "useless help",
+          "vehicle breakdowns",
+          "venue damage",
+          "very fucking haunted",
+          "vigilante reputation",
+          "weaponized neutrality",
+          "worn-out welcome"
+        ],
+        "aggregate": true,
+        "positiveNote": "any from the above lists in any combination that makes thematic sense, or invent your own with your Storyteller's help",
+        "negativeNote": "ditto, but make sure they'll be fun for everyone"
       }
     }
   ]

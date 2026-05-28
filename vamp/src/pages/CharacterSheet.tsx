@@ -18,15 +18,18 @@ import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH 
 import {
   character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
-  addDebt, removeDebt, updateDebt, cycleDebtState, adjustStat,
+  addDebt, removeDebt, updateDebt, cycleDebtState, adjustStat, bloodSurgeActive,
 } from '../state/character';
-import { performRoll } from '../dice/rollMove';
+import {
+  performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge,
+} from '../dice/rollMove';
 import { editMode, viewingOtherSheet } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
 import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
   getSnippet, gameData, statCap, startingDisciplineSlugs,
+  bloodSurgesRemaining,
 } from '../state/derived';
 import { switchTab, openMove, activeContentTab } from '../state/panel';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
@@ -131,42 +134,85 @@ function ClickPipRow({ value, count, onChange, muted, droplet }: {
   );
 }
 
-function HungerTracker() {
-  const hunger = character.value.hunger;
+/* Roll-action button anchored to the top-right of a vitals box (play mode only). */
+function VitalRollButton({ label, onClick, disabled }: {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      class="vamp-vital-roll"
+      onClick={onClick}
+      disabled={disabled}
+      title={label}
+    >
+      {label.split(' ').map((word, i) => (
+        <span key={i} class="vamp-vital-roll__line">{word}</span>
+      ))}
+    </button>
+  );
+}
 
-  const level = (() => {
-    if (hunger === 0) return { name: 'Sated', text: 'Just fed well. No penalties.' };
-    if (hunger <= 2) return { name: 'Manageable', text: 'Cravings present but controllable. No penalties.' };
-    if (hunger === 3) return { name: 'Distracted', text: 'Blood is on your mind constantly. -1 Ongoing except Hunt, Feed, Dirty Your Claws.' };
-    if (hunger === 4) return { name: 'Ravenous', text: 'You need blood soon. -2 Ongoing except Hunt, Feed, Dirty Your Claws.' };
-    return { name: 'Frenzy', text: 'The Beast is driving. You must Feed until you reach 0 Hunger.' };
-  })();
+/* Hunger level name + effect text, shown in the Hunger box's legend tooltip. */
+function hungerLevel(hunger: number): { name: string; text: string } {
+  if (hunger === 0) return { name: 'Sated', text: 'Just fed well. No penalties.' };
+  if (hunger <= 2) return { name: 'Manageable', text: 'Cravings present but controllable. No penalties.' };
+  if (hunger === 3) return { name: 'Distracted', text: 'Blood is on your mind constantly. -1 Ongoing except Hunt, Feed, Dirty Your Claws.' };
+  if (hunger === 4) return { name: 'Ravenous', text: 'You need blood soon. -2 Ongoing except Hunt, Feed, Dirty Your Claws.' };
+  return { name: 'Frenzy', text: 'The Beast is driving. You must Feed until you reach 0 Hunger.' };
+}
+
+function HungerTracker({ canRoll }: { canRoll?: boolean }) {
+  const hunger = character.value.hunger;
+  const warn = hunger >= 5 ? 'frenzy' : hunger === 4 ? 'ravenous' : null;
 
   return (
-    <div>
-      <div class="vamp-pip-row">
-        <ClickPipRow value={hunger} count={5} onChange={setHunger} droplet />
+    <div class="vamp-hunger-tracker">
+      {canRoll && (
+        <div class="vamp-vital-actions">
+          <VitalRollButton label="Hunger Check" onClick={performHungerCheck} />
+        </div>
+      )}
+      <div class={`vamp-pip-row ${warn ? `vamp-pip-row--hunger-${warn}` : ''}`}>
+        <span class="vamp-hunger-pips">
+          <ClickPipRow value={hunger} count={5} onChange={setHunger} droplet />
+        </span>
         <span class="vamp-tracker-label">{hunger}/5</span>
       </div>
-      <div class="vamp-tracker-note">
-        <strong class={hunger >= 5 ? 'vamp-frenzy-glow' : ''}>{level.name}:</strong>{' '}{level.text}
-      </div>
+      {hunger >= 5 && (
+        <div class="vamp-hunger-warn"><strong>Stay Chill</strong> to not Frenzy!</div>
+      )}
     </div>
   );
 }
 
-function BPTracker() {
+function BPTracker({ canRoll }: { canRoll?: boolean }) {
   const bp = character.value.bp;
-  const hp = maxHP.value;
   const isEdit = editMode.value;
   const pendingBP = character.value.pendingUpgrades.filter(u => u.type === 'bp').length;
-
-  const bpText = bp === 0
-    ? `${hp} HP, no Blood Surges, no Powers, no feeding restrictions`
-    : `${hp} HP, Blood Surge ${bp}/night, level ${bp} Powers`;
+  const remaining = bloodSurgesRemaining.value;
+  const surgeActive = bloodSurgeActive();
 
   return (
     <div>
+      {canRoll && bp >= 1 && (
+        <div class="vamp-vital-actions">
+          <VitalRollButton
+            label="Blood Surge"
+            onClick={performBloodSurge}
+            disabled={remaining <= 0 || surgeActive}
+          />
+          <span
+            class="vamp-surge-track"
+            title={`${remaining} of ${bp} Blood Surge${bp === 1 ? '' : 's'} available tonight`}
+          >
+            {Array.from({ length: bp }, (_, i) => (
+              <span key={i} class={`vamp-surge-pip ${i < remaining ? 'vamp-surge-pip--ready' : ''}`} />
+            ))}
+          </span>
+        </div>
+      )}
       <div class="vamp-pip-row">
         <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} droplet />
         <span class="vamp-tracker-label">BP {bp}</span>
@@ -180,12 +226,11 @@ function BPTracker() {
           <span class="vamp-tracker-pending">+{pendingBP} pending</span>
         )}
       </div>
-      <div class="vamp-tracker-note">{bpText}</div>
     </div>
   );
 }
 
-function HumanityTracker() {
+function HumanityTracker({ canRoll }: { canRoll?: boolean }) {
   const char = character.value;
   const filledCount = Math.max(0, char.humanity - char.stains);
   const initial: PipState[] = Array.from({ length: 10 }, (_, i) => {
@@ -221,18 +266,20 @@ function HumanityTracker() {
 
   return (
     <div>
+      {canRoll && (
+        <div class="vamp-vital-actions">
+          <VitalRollButton label="Remorse Check" onClick={performRemorseCheck} disabled={char.stains === 0} />
+        </div>
+      )}
       <div class="vamp-pip-row">
         <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
         <span class="vamp-tracker-label">{boxes.value.filter(s => s === 'filled').length}{stainLabel}</span>
-      </div>
-      <div class="vamp-tracker-note">
-        Touchscreens, digest food ~1hr. Blush of Life with Advantage.
       </div>
     </div>
   );
 }
 
-function HarmTracker({ hp }: { hp: number }) {
+function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
   const char = character.value;
   const initial: PipState[] = Array.from({ length: hp }, (_, i) => {
     if (i < char.harm.aggravated) return 'filled';
@@ -259,16 +306,18 @@ function HarmTracker({ hp }: { hp: number }) {
   }
 
   const sup = boxes.value.filter(s => s === 'slashed').length;
-  const agg = boxes.value.filter(s => s === 'filled').length;
-  const threshold = Math.ceil(hp / 2);
+  /* Cap at two rows; pips shrink to fit when a row would exceed ~10 (keeps Vitals height fixed). */
+  const cols = hp <= 10 ? hp : Math.ceil(hp / 2);
 
   return (
     <div>
-      <div class="vamp-pip-row">
+      {canRoll && char.playbook !== 'Ghoul' && (
+        <div class="vamp-vital-actions">
+          <VitalRollButton label="Quick Heal" onClick={performQuickHeal} disabled={sup === 0} />
+        </div>
+      )}
+      <div class="vamp-pip-row vamp-pip-row--harm" style={{ '--harm-cols': String(cols) }}>
         <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
-      </div>
-      <div class="vamp-tracker-note">
-        {sup} Superficial &amp; {agg} Aggravated. | At 0 HP: ≥{threshold} Agg. = Final Death | &lt;{threshold} = Torpor
       </div>
     </div>
   );
@@ -1360,6 +1409,16 @@ export function CharacterSheet({ slug }: { slug?: string }) {
   const zone = isCreating ? STEP_ZONE[step] : null;
   const guideZone: TourZone | null = guideStep?.zone as TourZone | null ?? null;
   const statsDualHighlight = isCreating && step === 'playbook' && stepComplete.value.playbook;
+  const playMode = !editMode.value && !isCreating && !isViewing;
+
+  const hLvl = hungerLevel(char.hunger);
+  const hungerTip = `${hLvl.name}: ${hLvl.text}`;
+  const bpTip = char.bp === 0
+    ? `${hp} HP, no Blood Surges, no Powers, no feeding restrictions`
+    : `${hp} HP, Blood Surge ${char.bp}/night, level ${char.bp} Powers`;
+  const humanityTip = 'Touchscreens, digest food ~1hr. Blush of Life with Advantage.';
+  const harmThreshold = Math.ceil(hp / 2);
+  const harmTip = `${char.harm.superficial} Superficial & ${char.harm.aggravated} Aggravated. | At 0 HP: ≥${harmThreshold} Agg. = Final Death | <${harmThreshold} = Torpor`;
 
   useEffect(() => {
     if (!guideOn || !guideStep) return;
@@ -1522,24 +1581,24 @@ export function CharacterSheet({ slug }: { slug?: string }) {
         <div class={`vamp-vitals ${guideStep?.id === 'tour-vitals' ? 'guide-spotlight' : ''}`}>
           <div class="vamp-vitals__grid">
 
-            <SectionBox title="Blood Potency">
-              <BPTracker />
+            <SectionBox title="Blood Potency" legendTip={bpTip}>
+              <BPTracker canRoll={playMode} />
             </SectionBox>
 
-            <SectionBox title="Humanity">
-              <HumanityTracker key={`${char.humanity}-${char.stains}`} />
+            <SectionBox title="Humanity" legendTip={humanityTip}>
+              <HumanityTracker key={`${char.humanity}-${char.stains}`} canRoll={playMode} />
             </SectionBox>
 
             <SectionBox title="XP">
               <XPTracker />
             </SectionBox>
 
-            <SectionBox title="Hunger">
-              <HungerTracker />
+            <SectionBox title="Hunger" legendTip={hungerTip}>
+              <HungerTracker canRoll={playMode} />
             </SectionBox>
 
-            <SectionBox title="Harm">
-              <HarmTracker key={hp} hp={hp} />
+            <SectionBox title="Harm" legendTip={harmTip}>
+              <HarmTracker key={`${hp}-${char.harm.superficial}-${char.harm.aggravated}`} hp={hp} canRoll={playMode} />
             </SectionBox>
 
           </div>

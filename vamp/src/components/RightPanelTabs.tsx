@@ -11,16 +11,17 @@ import {
   statCap, parseXPValue, xpRange,
 } from '../state/derived';
 import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
-import { coterieState, adjustCoterieStat, setHavenDescription } from '../state/coterie';
+import { coterieState, adjustCoterieStat, setHavenDescription, setHavenPicks } from '../state/coterie';
 import { editMode, enterDisciplineBuyMode } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
 import { switchContentTab } from '../state/panel';
-import { activeCoterie, createCoterie, joinCoterie, BLANK_CHARACTER } from '../state/persistence';
+import { activeCoterie, createCoterie, joinCoterie, leaveCoterie, BLANK_CHARACTER } from '../state/persistence';
 import { EditableTextField } from './EditableTextField';
+import { showToast } from '../state/toasts';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
 import { getCachedRules, getRulesPending, prefetchRules } from '../utils/rulesCache';
 import { COTERIE_STAT_NAMES } from '../data/types';
-import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife, Merit, Flaw } from '../data/types';
+import type { StatName, CoterieStatName, BasicMove, StandardMove, BlushOfLife, Merit, Flaw, HavenFeatures } from '../data/types';
 import type { CharacterState } from '../state/character';
 
 function groupByCategory<T extends { category: string }>(items: T[]): [string, T[]][] {
@@ -359,8 +360,165 @@ function CoterieSetup() {
   );
 }
 
+/* Aggregate (The Uncategorizable) draws from the pooled options with its own caps,
+   kept as named consts because Sam wants them unlockable later, not buried literals. */
+const AGGREGATE_POSITIVE_CAP = 3;
+const AGGREGATE_NEGATIVE_CAP = 2;
+
+const HavenRemoveX = () => (
+  <svg class="vamp-haven-pill__x" viewBox="0 0 16 16" width="9" height="9" aria-hidden="true">
+    <line x1="3" y1="3" x2="13" y2="13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="13" y1="3" x2="3" y2="13" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+  </svg>
+);
+
+function HavenSide({
+  label, polarity, options, selected, cap, aggregate, note, isEditing, onChange,
+}: {
+  label: string;
+  polarity: 'pos' | 'neg';
+  options: string[];
+  selected: string[];
+  cap: number;
+  aggregate: boolean;
+  note: string | null;
+  isEditing: boolean;
+  onChange: (next: string[]) => void;
+}) {
+  const atCap = selected.length >= cap;
+
+  function toggle(opt: string) {
+    if (selected.includes(opt)) onChange(selected.filter(o => o !== opt));
+    else if (!atCap) onChange([...selected, opt]);
+  }
+
+  function addFromDropdown(e: Event) {
+    const sel = e.target as HTMLSelectElement;
+    const val = sel.value;
+    if (val && !selected.includes(val) && !atCap) onChange([...selected, val]);
+    sel.value = '';
+  }
+
+  const pill = (opt: string, interactive: boolean) => {
+    if (!interactive) {
+      return (
+        <span key={opt} class={`vamp-haven-pill vamp-haven-pill--${polarity} vamp-haven-pill--active vamp-haven-pill--static`}>
+          {opt}
+        </span>
+      );
+    }
+    return (
+      <button
+        key={opt}
+        type="button"
+        class={`vamp-haven-pill vamp-haven-pill--${polarity} vamp-haven-pill--active`}
+        onClick={() => toggle(opt)}
+        title={`Remove ${opt}`}
+      >
+        {opt}<HavenRemoveX />
+      </button>
+    );
+  };
+
+  return (
+    <div class="vamp-rpanel-field vamp-haven-side">
+      <span class={`vamp-haven-side__label vamp-haven-side__label--${polarity}`}>
+        {label} <span class="vamp-haven-side__count">{selected.length}/{cap}</span>
+      </span>
+
+      {!isEditing && (
+        selected.length > 0
+          ? <div class="vamp-haven-pills">{selected.map(o => pill(o, false))}</div>
+          : <span class="vamp-haven-empty">None selected</span>
+      )}
+
+      {isEditing && !aggregate && (
+        <div class="vamp-haven-pills">
+          {options.map(opt => {
+            const sel = selected.includes(opt);
+            if (sel) return pill(opt, true);
+            return (
+              <button
+                key={opt}
+                type="button"
+                class={`vamp-haven-pill vamp-haven-pill--${polarity}`}
+                onClick={() => toggle(opt)}
+                disabled={atCap}
+              >
+                {opt}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      {isEditing && aggregate && (
+        <>
+          {note && <p class="vamp-haven-note">{note}</p>}
+          <select class="vamp-haven-select" onChange={addFromDropdown} disabled={atCap}>
+            <option value="">{atCap ? `Max ${cap} chosen` : 'Add a feature…'}</option>
+            {options.filter(o => !selected.includes(o)).map(o => (
+              <option key={o} value={o}>{o}</option>
+            ))}
+          </select>
+          {selected.length > 0 && (
+            <div class="vamp-haven-pills">{selected.map(o => pill(o, true))}</div>
+          )}
+        </>
+      )}
+    </div>
+  );
+}
+
+function HavenFeatureSelector({
+  features, positives, negatives, isEditing,
+}: {
+  features: HavenFeatures;
+  positives: string[];
+  negatives: string[];
+  isEditing: boolean;
+}) {
+  const posCap = features.aggregate ? AGGREGATE_POSITIVE_CAP : features.positiveCount;
+  const negCap = features.aggregate ? AGGREGATE_NEGATIVE_CAP : features.negativeCount;
+
+  return (
+    <>
+      <HavenSide
+        label="Positives"
+        polarity="pos"
+        options={features.positiveOptions}
+        selected={positives}
+        cap={posCap}
+        aggregate={features.aggregate}
+        note={features.positiveNote}
+        isEditing={isEditing}
+        onChange={next => setHavenPicks(next, coterieState.value.havenNegatives)}
+      />
+      <HavenSide
+        label="Negatives"
+        polarity="neg"
+        options={features.negativeOptions}
+        selected={negatives}
+        cap={negCap}
+        aggregate={features.aggregate}
+        note={features.negativeNote}
+        isEditing={isEditing}
+        onChange={next => setHavenPicks(coterieState.value.havenPositives, next)}
+      />
+    </>
+  );
+}
+
 function CoteriePanel() {
   const coterieId = activeCoterie.value;
+  /* Hooks run unconditionally, before any early return, so hook order stays
+     stable when activeCoterie flips null -> set without remounting. */
+  const expandedMove = useSignal<string | null>(null);
+  const copied = useSignal(false);
+  const codeRevealed = useSignal(false);
+  const confirmLeave = useSignal(false);
+  const leaving = useSignal(false);
+
   if (!coterieId) return <CoterieSetup />;
 
   const cot = coterieState.value;
@@ -368,22 +526,29 @@ function CoteriePanel() {
   const isEditing = editMode.value;
   const coterieType = data?.coterieTypes.find(t => t.name === cot.typeName) ?? null;
   const coterieMoves = data?.coterieMoves ?? [];
-  const expandedMove = useSignal<string | null>(null);
-  const copied = useSignal(false);
 
   function copyId() {
-    navigator.clipboard.writeText(coterieId!).then(() => {
+    navigator.clipboard?.writeText(coterieId!).then(() => {
       copied.value = true;
       setTimeout(() => { copied.value = false; }, 2000);
+    }).catch(() => {
+      showToast('Could not copy automatically. Reveal the code and copy it manually.', 'warning');
     });
+  }
+
+  async function handleLeave() {
+    leaving.value = true;
+    try {
+      await leaveCoterie();
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : 'Could not leave the Coterie.', 'error');
+    }
+    leaving.value = false;
+    confirmLeave.value = false;
   }
 
   return (
     <div class="vamp-rpanel-scroll">
-      <div style="padding: 0.4rem 0.6rem; display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
-        <span style="font-size:0.85rem; color:var(--v-text-accent); font-family:var(--v-font-display); letter-spacing:0.15em;">{coterieId}</span>
-        <button class="wiz-card__toggle" onClick={copyId}>{copied.value ? 'Copied!' : 'Copy'}</button>
-      </div>
       <CollapsibleSection title={cot.typeName} pill="Coterie Type">
         {coterieType && (
           <div class="vamp-rpanel-field__body"
@@ -469,18 +634,14 @@ function CoteriePanel() {
             className="vamp-haven-desc"
           />
         </div>
-        <div class="vamp-rpanel-field">
-          <span class="vamp-rpanel-field__label">Positives</span>
-          <ul class="vamp-rpanel-field__list">
-            {cot.havenPositives.map((p, i) => <li key={i}>{p}</li>)}
-          </ul>
-        </div>
-        <div class="vamp-rpanel-field">
-          <span class="vamp-rpanel-field__label">Negatives</span>
-          <ul class="vamp-rpanel-field__list">
-            {cot.havenNegatives.map((n, i) => <li key={i}>{n}</li>)}
-          </ul>
-        </div>
+        {coterieType && (
+          <HavenFeatureSelector
+            features={coterieType.havenFeatures}
+            positives={cot.havenPositives}
+            negatives={cot.havenNegatives}
+            isEditing={isEditing}
+          />
+        )}
       </CollapsibleSection>
 
       <CollapsibleSection title="Coterie Moves">
@@ -533,6 +694,35 @@ function CoteriePanel() {
           </div>
         ))}
       </CollapsibleSection>
+
+      <div class="vamp-coterie-code">
+        <span class="vamp-coterie-code__label">Coterie Code</span>
+        <div class="vamp-coterie-code__row">
+          <button
+            type="button"
+            class={`vamp-coterie-code__value ${codeRevealed.value ? 'vamp-coterie-code__value--revealed' : ''}`}
+            onClick={() => { codeRevealed.value = !codeRevealed.value; }}
+            aria-label={codeRevealed.value ? 'Hide Coterie code' : 'Reveal Coterie code'}
+            title={codeRevealed.value ? 'Click to hide' : 'Click to reveal'}
+          >{coterieId}</button>
+          {codeRevealed.value && (
+            <button class="wiz-card__toggle" onClick={copyId}>{copied.value ? 'Copied!' : 'Copy'}</button>
+          )}
+        </div>
+        <div class="vamp-coterie-leave">
+          {confirmLeave.value ? (
+            <>
+              <span class="vamp-coterie-leave__prompt">Leave this Coterie?</span>
+              <button class="wiz-card__toggle vamp-coterie-leave__confirm" onClick={handleLeave} disabled={leaving.value}>
+                {leaving.value ? 'Leaving…' : 'Yes, leave'}
+              </button>
+              <button class="wiz-card__toggle" onClick={() => { confirmLeave.value = false; }} disabled={leaving.value}>Cancel</button>
+            </>
+          ) : (
+            <button class="vamp-coterie-leave__btn" onClick={() => { confirmLeave.value = true; }}>Leave Coterie</button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

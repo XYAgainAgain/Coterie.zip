@@ -22,32 +22,38 @@ export interface CoterieState {
   members: CoterieMember[];
 }
 
-export const coterieState = signal<CoterieState>({
-  typeName: 'The Fang Gang',
-  stats: { Clout: 0, Cohesion: 1, Charm: -1, Claim: 1, Currency: 1 },
-  havenDescription: '',
-  havenPositives: ['getaway vehicle', 'reliable fence', 'weapons stash'],
-  havenNegatives: ['rival territory', 'persistent detective'],
-  members: [
-    {
-      characterId: 'mock-bridget',
-      slug: 'bridget-cavanaugh',
-      name: 'Bridget Cavanaugh',
-      pronouns: 'she/her',
-      portraitUrl: 'https://i.imgur.com/tJbArZo.jpeg',
-      ageBracket: 'Ancilla',
-      bp: 2,
-      playbook: 'Tremere',
-    },
-  ],
-});
+export function blankCoterie(): CoterieState {
+  return {
+    typeName: '',
+    stats: { Clout: 0, Cohesion: 0, Charm: 0, Claim: 0, Currency: 0 },
+    havenDescription: '',
+    havenPositives: [],
+    havenNegatives: [],
+    members: [],
+  };
+}
+
+export const coterieState = signal<CoterieState>(blankCoterie());
+
+/* Set when this client makes a local edit to the shared Coterie fields, cleared
+   once saveCoterie persists. While true, the realtime listener won't overwrite
+   those fields from an incoming snapshot, so an unrelated roster/clock write
+   can't revert an in-flight stat or Haven edit before it's saved. */
+export const coterieDirty = signal(false);
 
 export function setCoterieType(name: string, stats: Record<CoterieStatName, number>) {
   coterieState.value = { ...coterieState.value, typeName: name, stats };
+  coterieDirty.value = true;
 }
 
 export function setHavenDescription(text: string) {
   coterieState.value = { ...coterieState.value, havenDescription: text };
+  coterieDirty.value = true;
+}
+
+export function setHavenPicks(havenPositives: string[], havenNegatives: string[]) {
+  coterieState.value = { ...coterieState.value, havenPositives, havenNegatives };
+  coterieDirty.value = true;
 }
 
 export function adjustCoterieStat(stat: CoterieStatName, delta: number) {
@@ -57,6 +63,8 @@ export function adjustCoterieStat(stat: CoterieStatName, delta: number) {
     ...coterieState.value,
     stats: { ...coterieState.value.stats, [stat]: next },
   };
+  coterieDirty.value = true;
+  console.log('[CoterieSync] adjustCoterieStat', stat, '->', coterieState.value.stats[stat], 'dirty=', coterieDirty.value);
 }
 
 /* Always 8 segments. Shared across all Coterie members' sheets. */
@@ -67,14 +75,20 @@ export const masqueradeClock = signal<Clock>({
   filled: 0,
 });
 
+/* Guards a just-changed local clock value from being reverted by a stale remote
+   snapshot before its own save lands. Cleared once saveCoterie persists it. */
+export const masqueradeDirty = signal(false);
+
 export function fillMasquerade() {
   const c = masqueradeClock.value;
   if (c.filled >= c.segments) return;
+  masqueradeDirty.value = true;
   masqueradeClock.value = { ...c, filled: c.filled + 1 };
 }
 
 export function unfillMasquerade() {
   const c = masqueradeClock.value;
   if (c.filled <= 0) return;
+  masqueradeDirty.value = true;
   masqueradeClock.value = { ...c, filled: c.filled - 1 };
 }

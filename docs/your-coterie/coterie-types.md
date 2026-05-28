@@ -148,7 +148,7 @@ Your Coterie deals with the dead. The actually dead: ghosts, spirits, restless a
 
 ##### *Haven Features*
 
-- **Pick 3 Positive:** *spirit wards, cemetery access, ritual circle, spectral informants, séance parlor, occult library, consecrated ground, bone collection, ghost traps, cold storage*
+- **Pick 3 Positive:** *Spirit wards, cemetery access, ritual circle, spectral informants, séance parlor, occult library, consecrated ground, bone collection, ghost traps, cold storage*
 - **Pick 3 Negative:** *very fucking haunted, perpetual chill, friendly new neighbors, unsettling noises, always attracting weirdos, corpse smell, restless tenants, flickering lights*
 
 ---

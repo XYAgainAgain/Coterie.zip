@@ -161,7 +161,7 @@ The trance takes at least as long as a full day of slumber, but when it ends, al
 
 ### *Boon of Anubis (Passive)*
 
-You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits you would normally gain**, you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
+You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits you would normally gain**, you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent Ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
 
 You can protect a number of mortals up to half your current Humanity, rounded up. If your Humanity drops and you now exceed your limit, the mortal who received the Boon earliest loses their protection first.
 
@@ -231,7 +231,7 @@ This Power has two paths. Both require sacrifice. Both reverse what everyone kno
 - You return at 3 Hunger regardless of the Coterie's offering
 - One specific, important memory is gone forever; the Storyteller chooses which one
 
-**On a 6-,** the Pillar shatters and you do not return. The Coterie feels the moment their friend slips away for good. Every Coterie member who participated marks 1 Stain from the weight of the failure. Whatever remains of your spirit passes beyond reach, and this Power can never be used to try to bring you back again.
+**On a 6-,** the Pillar shatters and you do not return. The Coterie feels the moment their friend slips away for good. Every Coterie member who participated marks 1 Stain from the weight of the failure. Whatever remains of your Spirit passes beyond reach, and this Power can never be used to try to bring you back again.
 
 **Path of Sacrifice:**
 

@@ -6,15 +6,17 @@ interface Props {
   children: ComponentChildren;
   collapsible?: boolean;
   collapsedLabel?: string;
+  legendTip?: string;
 }
 
-export function SectionBox({ title, children, collapsible, collapsedLabel }: Props) {
+export function SectionBox({ title, children, collapsible, collapsedLabel, legendTip }: Props) {
   const collapsed = useSignal(false);
 
   return (
     <fieldset class={`vamp-section ${collapsed.value ? 'vamp-section--collapsed' : ''}`}>
       <legend
-        class={`vamp-section__legend ${collapsible ? 'vamp-section__legend--collapsible' : ''}`}
+        class={`vamp-section__legend ${collapsible ? 'vamp-section__legend--collapsible' : ''} ${legendTip ? 'vamp-section__legend--tip' : ''}`}
+        title={legendTip}
         onClick={collapsible ? () => { collapsed.value = !collapsed.value; } : undefined}
       >
         {collapsed.value && collapsedLabel ? collapsedLabel : title}

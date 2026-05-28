@@ -3,13 +3,21 @@ import { readdirSync } from 'node:fs';
 import { type Token, type Tokens } from 'marked';
 import { readMarkdown } from '../common/io.js';
 import { tokenize, plainText, type Section } from '../common/tokens.js';
-import type { Discipline, Power, DisciplinePerk } from '../schemas/disciplines.js';
+import type { Discipline, Power, DisciplinePerk, ProjectPower, ProjectPowerType } from '../schemas/disciplines.js';
 
 const SOURCE_DIR = 'docs/disciplines';
 const SKIP_FILES = new Set(['general-rules.md']);
 
 const LEVEL_RE = /^Level (\d)$/;
 const PERK_RE = /\(Discipline Perk\)/;
+const REQS_RE = /^\*{3}Requirements:\*{2}\s+(.+)\*$/;
+
+const PROJECT_POWER_SECTIONS: Record<string, ProjectPowerType> = {
+  'Blood Sorcery Rituals': 'ritual',
+  'Oblivion Ceremonies': 'ceremony',
+  'Daimonion Sacraments': 'sacrament',
+  'Thin-Blood Alchemy Formulae': 'formula',
+};
 function slugFromFile(filename: string): string {
   return filename.replace(/\.md$/, '');
 }
@@ -102,6 +110,48 @@ function parsePowersFromLevel(levelSection: Section, level: number): Power[] {
   return powers;
 }
 
+function parseProjectPowerEntries(levelSection: Section, level: number, type: ProjectPowerType): ProjectPower[] {
+  const entries: ProjectPower[] = [];
+  let currentName: string | null = null;
+  let currentTags: string[] = [];
+  let requirements: string | null = null;
+  let bodyParts: string[] = [];
+
+  function flush() {
+    if (currentName) {
+      const body = bodyParts.join('').trim();
+      if (body) {
+        entries.push({ name: currentName, level, tags: currentTags, requirements, body, type });
+      }
+    }
+    currentName = null;
+    currentTags = [];
+    requirements = null;
+    bodyParts = [];
+  }
+
+  for (const t of levelSection.tokens) {
+    if (t.type === 'heading' && (t as Tokens.Heading).depth === 4) {
+      flush();
+      const heading = plainText(t).trim();
+      currentName = heading.replace(/\s*\([^)]*\)\s*/g, '').trim();
+      currentTags = extractTags(heading);
+    } else if (currentName) {
+      if (t.type === 'hr') continue;
+      if (requirements === null && t.type === 'paragraph') {
+        const match = t.raw.trim().match(REQS_RE);
+        if (match) {
+          requirements = match[1].trim();
+        }
+      }
+      bodyParts.push(t.raw);
+    }
+  }
+  flush();
+
+  return entries;
+}
+
 function splitByHeadingSafe(tokens: Token[], depth: number): Section[] {
   const sections: Section[] = [];
   let current: Section | null = null;
@@ -132,12 +182,26 @@ function parseDiscipline(filePath: string, slug: string): Discipline {
 
   const h2Sections = splitByHeadingSafe(allTokens, 2);
   const powers: Power[] = [];
+  const projectPowers: ProjectPower[] = [];
 
   for (const section of h2Sections) {
     const levelMatch = section.name.match(LEVEL_RE);
-    if (!levelMatch) continue;
-    const level = parseInt(levelMatch[1], 10);
-    powers.push(...parsePowersFromLevel(section, level));
+    if (levelMatch) {
+      const level = parseInt(levelMatch[1], 10);
+      powers.push(...parsePowersFromLevel(section, level));
+      continue;
+    }
+
+    const ppType = PROJECT_POWER_SECTIONS[section.name];
+    if (ppType) {
+      const levelSections = splitByHeadingSafe(section.tokens, 3);
+      for (const lvlSec of levelSections) {
+        const lvlMatch = lvlSec.name.match(LEVEL_RE);
+        if (!lvlMatch) continue;
+        const level = parseInt(lvlMatch[1], 10);
+        projectPowers.push(...parseProjectPowerEntries(lvlSec, level, ppType));
+      }
+    }
   }
 
   return {
@@ -146,6 +210,7 @@ function parseDiscipline(filePath: string, slug: string): Discipline {
     intro,
     perk,
     powers,
+    projectPowers,
     status: determineStatus(perk, powers),
   };
 }

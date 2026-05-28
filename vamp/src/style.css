@@ -617,9 +617,21 @@ a:hover {
   grid-area: 1 / 1;
 }
 
+/* Keyframe (not transition) so the fade fires on mount: the outgoing img is
+   only rendered during a transition, so it never gets a 1->0 change to animate. */
 .vamp-identity__portrait-img--outgoing {
-  opacity: 0;
-  transition: opacity 1s ease;
+  animation: vamp-portrait-fade-out 1s ease forwards;
+}
+
+@keyframes vamp-portrait-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-identity__portrait-img--outgoing {
+    animation-duration: 0.01ms;
+  }
 }
 
 .vamp-identity__portrait-placeholder {
@@ -971,6 +983,17 @@ a:hover {
 
 .vamp-vitals__grid > .vamp-section {
   margin-bottom: 0;
+  /* Column layout lets a tracker fill the box; the legend renders as the fieldset
+     caption and stays out of the flex flow. */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Fill the Hunger box so the Frenzy warning can sit equidistant below the pips */
+.vamp-hunger-tracker {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .vamp-vitals__grid > :nth-child(3) {
@@ -1002,6 +1025,10 @@ a:hover {
 .vamp-section__legend--collapsible {
   cursor: pointer;
   transition: color 0.15s ease;
+}
+
+.vamp-section__legend--tip {
+  cursor: help;
 }
 
 .vamp-section__legend--collapsible:hover {
@@ -1106,6 +1133,86 @@ a:hover {
   font-style: italic;
 }
 
+/* Roll-action button + Blood Surge readiness dots, anchored to a vitals box's top-right */
+/* Equal-width container anchored right; button + dots share one center axis across all four boxes */
+.vamp-vital-actions {
+  position: absolute;
+  inset-block-start: 0.3rem;
+  inset-inline-end: 0.5rem;
+  inline-size: 4.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  z-index: 1;
+}
+
+.vamp-vital-roll {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.1;
+  padding-block: 0.18rem;
+  padding-inline: 0.45rem;
+  border: 1.5px solid var(--v-text-muted);
+  border-radius: var(--v-radius-sm);
+  background: none;
+  color: var(--v-text-secondary);
+  font-family: 'Merriweather', serif;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.vamp-vital-roll:hover:not(:disabled) {
+  color: var(--v-text-primary);
+  border-color: var(--v-accent);
+}
+
+.vamp-vital-roll:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.vamp-surge-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.vamp-surge-pip {
+  inline-size: 0.45rem;
+  block-size: 0.45rem;
+  box-sizing: border-box;
+  border: 1.5px solid var(--v-text-muted);
+  border-radius: 50%;
+}
+
+.vamp-surge-pip--ready {
+  background: var(--v-accent);
+  border-color: var(--v-accent);
+}
+
+/* Harm reflows into at most two balanced rows; columns flex down so pips shrink
+   to fit (keeps the Vitals area from growing vertically at high HP/Fortitude). The
+   trailing margin reserves the action-button column so the top row never slides under it. */
+.vamp-pip-row--harm {
+  display: grid;
+  grid-template-columns: repeat(var(--harm-cols), minmax(0, 1fr));
+  gap: 0.2rem;
+  align-items: start;
+  max-inline-size: calc(var(--harm-cols) * 1.5rem + (var(--harm-cols) - 1) * 0.2rem);
+  margin-inline-end: 5.25rem;
+}
+
+.vamp-pip-row--harm .vamp-pip {
+  inline-size: 100%;
+  block-size: auto;
+  aspect-ratio: 1;
+}
+
 .vamp-tracker-adj {
   display: inline-flex;
   gap: 0.2rem;
@@ -1154,11 +1261,49 @@ a:hover {
   font-style: italic;
 }
 
-.vamp-frenzy-glow {
+/* Wraps the Hunger droplets so the breathe-glow lives on an unmasked element.
+   The droplets use mask: url(droplet.svg); mask clips after filter, so a drop-shadow
+   applied to the pips themselves gets eaten. Glowing the wrapper avoids that. */
+.vamp-hunger-pips {
+  display: inline-flex;
+  gap: 0.25rem;
+}
+
+/* Frenzy danger cue: droplets breathe gently at Ravenous (4), harder at Frenzy (5) */
+@keyframes vamp-hunger-breathe {
+  0%, 100% { filter: drop-shadow(0 0 1px var(--v-glow)); }
+  50% { filter: drop-shadow(0 0 var(--_hunger-glow, 4px) var(--v-glow)); }
+}
+
+.vamp-pip-row--hunger-ravenous .vamp-hunger-pips,
+.vamp-pip-row--hunger-frenzy .vamp-hunger-pips {
+  animation: vamp-hunger-breathe 2.6s ease-in-out infinite;
+}
+
+.vamp-pip-row--hunger-ravenous {
+  --_hunger-glow: 4px;
+}
+
+.vamp-pip-row--hunger-frenzy {
+  --_hunger-glow: 9px;
+}
+
+.vamp-pip-row--hunger-frenzy .vamp-hunger-pips {
+  animation-duration: 1.5s;
+}
+
+.vamp-hunger-warn {
+  margin-block: auto;
+  font-size: 0.7rem;
   color: var(--v-text-accent);
-  filter:
-    drop-shadow(0 0 3px var(--v-glow))
-    drop-shadow(0 0 6px var(--v-glow));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-pip-row--hunger-ravenous .vamp-hunger-pips,
+  .vamp-pip-row--hunger-frenzy .vamp-hunger-pips {
+    animation: none;
+    filter: drop-shadow(0 0 4px var(--v-glow));
+  }
 }
 
 
@@ -1234,23 +1379,28 @@ a:hover {
   opacity: 0.35;
 }
 
+/* Left-pack the working zones at their natural width so a changing Dice-Mode
+   label can't resize its neighbours; Total is pushed to the far right below. */
 .vamp-mod-zone--numbers {
-  flex: 1;
-  gap: 0.5rem;
-  justify-content: center;
+  gap: 0.9rem;
+}
+
+/* Pair each +/- stack with its number so they read as a unit, not an even comb */
+.vamp-mod-pair {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .vamp-mod-zone--dice {
   flex-direction: column;
   justify-content: center;
   gap: 0;
-  padding: 0.15rem 0.6rem;
+  padding: 0.15rem 0.5rem;
 }
 
 .vamp-mod-zone--hold {
-  flex: 1;
   gap: 0.5rem;
-  justify-content: center;
 }
 
 .vamp-mod-zone--total {
@@ -1260,6 +1410,49 @@ a:hover {
   gap: 0;
   padding: 0.1rem 1.5rem 0.1rem 0.5rem;
   min-width: 6rem;
+}
+
+/* Pin Total (and the divider that precedes it) hard right */
+.vamp-mod-divider:has(+ .vamp-mod-zone--total) {
+  margin-inline-start: auto;
+}
+
+/* Conditional zone: appears only while a Blood Surge pool is live */
+.vamp-mod-zone--surge {
+  flex-shrink: 0;
+  gap: 0.3rem;
+}
+
+.vamp-mod-surge-count {
+  font-family: var(--v-font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--v-accent);
+}
+
+.vamp-mod-surge-arm {
+  padding-block: 0.1rem;
+  padding-inline: 0.4rem;
+  border: 1.5px solid var(--v-text-muted);
+  border-radius: var(--v-radius-sm);
+  background: none;
+  color: var(--v-text-secondary);
+  font-family: 'Merriweather', serif;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.vamp-mod-surge-arm:hover:not(:disabled) {
+  color: var(--v-text-primary);
+  border-color: var(--v-accent);
+}
+
+.vamp-mod-surge-arm:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
 }
 
 .vamp-mod-zone--dim {
@@ -1297,7 +1490,10 @@ a:hover {
 /* Forward/Ongoing values */
 
 .vamp-mod-value {
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--v-text-accent);
   white-space: nowrap;
@@ -1309,7 +1505,7 @@ a:hover {
 }
 
 .vamp-mod-label {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 400;
   color: var(--v-text-secondary);
 }
@@ -1328,19 +1524,17 @@ a:hover {
   transition: opacity 0.15s ease;
 }
 
-.vamp-mod-arrow--up {
-  opacity: 0.5;
-}
-
-.vamp-mod-arrow--up:hover {
-  opacity: 1;
-}
-
+.vamp-mod-arrow--up,
 .vamp-mod-arrow--down {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
-.vamp-mod-arrow--down:hover {
+.vamp-mod-arrow:hover {
+  opacity: 0.8;
+}
+
+/* The lit direction shows which way the dice are currently tipped */
+.vamp-mod-arrow--active {
   opacity: 1;
 }
 
@@ -1369,10 +1563,12 @@ a:hover {
 }
 
 .vamp-mod-dice-label {
-  font-size: 0.75rem;
+  min-inline-size: 6rem;
+  font-size: 0.85rem;
   font-weight: 700;
   text-align: center;
   line-height: 1;
+  white-space: nowrap;
 }
 
 .vamp-mod-dice-label--advantage {
@@ -1397,7 +1593,7 @@ a:hover {
 }
 
 .vamp-mod-hold-value {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   line-height: 1;
 }
@@ -1410,7 +1606,7 @@ a:hover {
   border-radius: 3px;
   background: none;
   color: var(--v-text-muted);
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 700;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
@@ -1425,24 +1621,6 @@ a:hover {
 
 /* Total zone (far right, at-a-glance roll summary) */
 
-.vamp-mod-adv-echo {
-  font-size: 0.6rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.vamp-mod-adv-echo--advantage {
-  color: var(--v-success);
-}
-
-.vamp-mod-adv-echo--disadvantage {
-  color: var(--v-danger);
-}
-
-.vamp-mod-adv-echo--flat {
-  color: var(--v-text-muted);
-}
-
 .vamp-mod-total-number {
   font-size: 1.6rem;
   font-weight: 700;
@@ -1456,12 +1634,21 @@ a:hover {
   transition: color 0.15s ease;
 }
 
+/* The total's colour stands in for the Advantage/Disadvantage state */
+.vamp-mod-total-number--advantage {
+  color: var(--v-success);
+}
+
+.vamp-mod-total-number--disadvantage {
+  color: var(--v-danger);
+}
+
 .vamp-mod-total-number:hover {
   color: var(--v-accent);
 }
 
 .vamp-mod-conditionals {
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   color: var(--v-text-muted);
   white-space: nowrap;
   line-height: 1;
@@ -1665,6 +1852,44 @@ a:hover {
 }
 
 .vamp-mod-popover-form__type--active {
+  background: var(--v-accent);
+  color: var(--v-bg-primary);
+  border-color: var(--v-accent);
+}
+
+/* Stat-gate pills: restrict a Forward/Ongoing modifier to specific stat rolls */
+.vamp-mod-popover-form__field--stats {
+  align-items: flex-start;
+}
+
+.vamp-mod-popover-form__field--stats label {
+  padding-block-start: 0.15rem;
+}
+
+.vamp-mod-popover-form__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.vamp-mod-stat-pill {
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--v-border);
+  border-radius: 1rem;
+  background: none;
+  color: var(--v-text-secondary);
+  font-size: 0.7rem;
+  font-family: var(--v-font-body);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.vamp-mod-stat-pill:hover {
+  border-color: var(--v-accent);
+  color: var(--v-text-primary);
+}
+
+.vamp-mod-stat-pill--active {
   background: var(--v-accent);
   color: var(--v-bg-primary);
   border-color: var(--v-accent);
@@ -3905,7 +4130,18 @@ details[open] > .vamp-detail__summary::before {
   opacity: 0.6;
 }
 
+.vamp-disc__pp-divider {
+  height: 2px;
+  margin: 0.6rem 0;
+  opacity: 0.35;
+  background: var(--v-dot-dash-h);
+}
 
+.vamp-disc__group-label--pp {
+  font-size: 0.95rem;
+  color: var(--v-text-accent);
+  margin-bottom: 0.4rem;
+}
 
 /* Power card */
 
@@ -5472,6 +5708,94 @@ details[open] > .vamp-detail__summary::before {
   padding-inline-start: 1.25rem;
 }
 
+/* Coterie code: spoiler-blurred until clicked, pinned to the bottom of the panel */
+.vamp-coterie-code {
+  margin-block-start: auto;
+  display: grid;
+  justify-items: center;
+  gap: 0.3rem;
+  padding-block: 1rem 0.25rem;
+}
+
+.vamp-coterie-code__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v-text-muted);
+}
+
+.vamp-coterie-code__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vamp-coterie-code__value {
+  font-family: var(--v-font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.18em;
+  color: var(--v-text-accent);
+  background: none;
+  border: none;
+  padding: 0.1rem 0.2rem;
+  cursor: pointer;
+  filter: blur(0.3rem);
+  user-select: none;
+  transition: filter 0.2s ease;
+}
+
+.vamp-coterie-code__value--revealed {
+  filter: none;
+  user-select: text;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-coterie-code__value {
+    transition: none;
+  }
+}
+
+.vamp-coterie-leave {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-block-start: 0.35rem;
+}
+
+.vamp-coterie-leave__btn {
+  background: none;
+  border: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  color: var(--v-text-muted);
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 0.2em;
+  transition: color 0.15s ease;
+}
+
+.vamp-coterie-leave__btn:hover {
+  color: #cc3333;
+}
+
+.vamp-coterie-leave__prompt {
+  font-size: 0.72rem;
+  color: var(--v-text-secondary);
+}
+
+.vamp-coterie-leave__confirm {
+  color: #cc3333;
+  border-color: #cc3333;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-coterie-leave__btn {
+    transition: none;
+  }
+}
+
 
 /* Right panel collapsible sections */
 
@@ -5750,6 +6074,118 @@ details[open] > .vamp-detail__summary::before {
 .vamp-haven-desc {
   font-size: 0.85rem;
   margin-bottom: 0.35rem;
+}
+
+.vamp-haven-side {
+  margin-block-start: 0.6rem;
+}
+
+.vamp-haven-side__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-block-end: 0.3rem;
+}
+
+.vamp-haven-side__label--pos { color: var(--v-success); }
+.vamp-haven-side__label--neg { color: var(--v-danger); }
+
+.vamp-haven-side__count {
+  font-weight: 400;
+  color: var(--v-text-muted);
+  letter-spacing: 0;
+}
+
+.vamp-haven-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-block: 0.1rem 0.2rem;
+}
+
+.vamp-haven-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.18rem 0.55rem;
+  border: 1px solid var(--v-border);
+  border-radius: 1rem;
+  background: none;
+  color: var(--v-text-secondary);
+  font-family: var(--v-font-body);
+  font-size: 0.78rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.vamp-haven-pill:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.vamp-haven-pill--static {
+  cursor: default;
+}
+
+button.vamp-haven-pill:not(:disabled):not(.vamp-haven-pill--active):hover {
+  border-color: var(--v-text-secondary);
+  color: var(--v-text-primary);
+}
+
+.vamp-haven-pill--pos.vamp-haven-pill--active {
+  border-color: var(--v-success);
+  color: var(--v-success);
+  background: color-mix(in srgb, var(--v-success) 15%, transparent);
+}
+
+.vamp-haven-pill--neg.vamp-haven-pill--active {
+  border-color: var(--v-danger);
+  color: var(--v-danger);
+  background: color-mix(in srgb, var(--v-danger) 15%, transparent);
+}
+
+.vamp-haven-pill__x {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+button.vamp-haven-pill:hover .vamp-haven-pill__x {
+  opacity: 1;
+}
+
+.vamp-haven-note {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--v-text-muted);
+  line-height: 1.4;
+  margin-block: 0.1rem 0.3rem;
+}
+
+.vamp-haven-select {
+  display: block;
+  inline-size: 100%;
+  padding: 0.25rem 0.4rem;
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  background: var(--v-bg-primary);
+  color: var(--v-text-primary);
+  font-family: var(--v-font-body);
+  font-size: 0.8rem;
+  margin-block: 0.15rem 0.35rem;
+}
+
+.vamp-haven-select:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vamp-haven-empty {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--v-text-muted);
 }
 
 .vamp-stat__rocker {
@@ -6586,17 +7022,6 @@ details[open] > .vamp-detail__summary::before {
   text-decoration: line-through;
 }
 
-.vamp-roll-toast__dropped::before {
-  content: "(";
-  opacity: 0.5;
-}
-
-.vamp-roll-toast__dropped::after {
-  content: " dropped)";
-  opacity: 0.5;
-  font-size: 0.85em;
-}
-
 .vamp-roll-toast__mod {
   font-weight: 700;
 }
@@ -6622,6 +7047,23 @@ details[open] > .vamp-detail__summary::before {
 .vamp-roll-toast__total {
   font-size: 1.3em;
   font-weight: 700;
+}
+
+/* Check toasts (Hunger/Remorse/Quick Heal/Blood Surge): outcome and detail on their own lines */
+.vamp-roll-toast__outcome {
+  display: block;
+  margin-block-start: 0.15rem;
+  font-family: 'IM Fell English SC', serif;
+  font-size: 1.05em;
+  letter-spacing: 0.02em;
+  white-space: normal;
+}
+
+.vamp-roll-toast__sub {
+  display: block;
+  font-size: 0.8em;
+  opacity: 0.8;
+  white-space: normal;
 }
 
 @media (prefers-reduced-motion: reduce) {

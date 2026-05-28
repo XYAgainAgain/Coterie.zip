@@ -5,7 +5,7 @@ import {
 } from 'firebase/firestore';
 import { db, auth, linkedEmail } from '../firebase';
 import { character, type CharacterState, NOTEBOOK_HELP_NOTE } from './character';
-import { coterieState, masqueradeClock } from './coterie';
+import { coterieState, masqueradeClock, blankCoterie, coterieDirty, masqueradeDirty } from './coterie';
 import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
@@ -106,6 +106,7 @@ export const BLANK_CHARACTER: CharacterState = {
   unlockedDisciplines: [],
   startingDisciplines: [],
   knownPowers: [],
+  knownProjectPowers: [],
   advancedMoves: [],
   pendingUpgrades: [],
   bp: 0,
@@ -131,6 +132,8 @@ export const BLANK_CHARACTER: CharacterState = {
   notes: [{ ...NOTEBOOK_HELP_NOTE }],
   initiative: '',
   combatNotes: '',
+  bloodSurgesUsed: 0,
+  bloodSurgeAdvantages: 0,
 };
 
 function toSummary(id: string, data: Record<string, unknown>): CharacterSummary {
@@ -421,8 +424,12 @@ export async function deleteCharacter(id: string): Promise<void> {
             activeCoterie.value = null;
           }
         } else {
+          /* Drop this character's roster entry too, not just the uid, or it
+             lingers as a phantom member in everyone's Members list. */
+          const members: CoterieMember[] = coterieSnap.data().members ?? [];
           await setDoc(doc(db, 'coteries', coterieId), {
             memberUids: uids.filter(u => u !== uid),
+            members: members.filter(m => m.characterId !== id),
             updatedAt: serverTimestamp(),
           }, { merge: true });
         }
@@ -468,6 +475,23 @@ async function syncPending(): Promise<void> {
 
 /* Upsert this character's entry in the Coterie's members array.
    Uses a transaction to avoid read-modify-write races when multiple players save simultaneously. */
+/* Durably persist a character's Coterie association. saveCharacter dedups on
+   character-state JSON, and the association is not part of that state, so
+   create/join/leave must write it explicitly. Otherwise a refresh before the
+   next unrelated autosave loses the link (the member entry survives in the
+   Coterie's members[], so the character shows as a member it doesn't know about). */
+async function setCharacterCoterie(charId: string, coterieId: string | null): Promise<void> {
+  await setDoc(doc(db, 'characters', charId), {
+    coterieId,
+    public: !!coterieId,
+    updatedAt: serverTimestamp(),
+  }, { merge: true });
+  try {
+    const rec = await idbGet<IDBCharacterRecord>('characters', charId);
+    if (rec) await idbPut('characters', { ...rec, coterieId, public: !!coterieId, updatedAt: Date.now() });
+  } catch {}
+}
+
 async function syncMemberToCoterie(
   characterId: string,
   state: CharacterState,
@@ -611,18 +635,27 @@ export async function loadCharacterPublic(
 
 let coterieUnsub: (() => void) | null = null;
 
-function applyCoterie(data: Record<string, unknown>) {
+function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false) {
+  const members = (data.members as CoterieState['members']) ?? [];
+  /* Roster always applies (externally owned). The clock applies too, except while
+     our own increment is in flight, so a stale snapshot can't revert it. */
+  if (data.masqueradeClock && !masqueradeDirty.value) {
+    masqueradeClock.value = data.masqueradeClock as Clock;
+  }
+  if (preserveLocalEdits) {
+    console.log('[CoterieSync] applyCoterie PRESERVE local; ignoring incoming stats', data.stats);
+    coterieState.value = { ...coterieState.value, members };
+    return;
+  }
+  console.log('[CoterieSync] applyCoterie OVERWRITE from server; stats', data.stats, 'haven', data.havenDescription);
   coterieState.value = {
     typeName: (data.typeName as string) ?? '',
     stats: (data.stats as CoterieState['stats']) ?? { Clout: 0, Cohesion: 0, Charm: 0, Claim: 0, Currency: 0 },
     havenDescription: (data.havenDescription as string) ?? '',
     havenPositives: (data.havenPositives as string[]) ?? [],
     havenNegatives: (data.havenNegatives as string[]) ?? [],
-    members: (data.members as CoterieState['members']) ?? [],
+    members,
   };
-  if (data.masqueradeClock) {
-    masqueradeClock.value = data.masqueradeClock as Clock;
-  }
 }
 
 export async function loadCoterie(coterieId: string): Promise<void> {
@@ -634,7 +667,12 @@ export async function loadCoterie(coterieId: string): Promise<void> {
   activeCoterie.value = coterieId;
 
   coterieUnsub = onSnapshot(doc(db, 'coteries', coterieId), snap => {
-    if (snap.exists()) applyCoterie(snap.data());
+    console.log('[CoterieSync] snapshot pending=', snap.metadata.hasPendingWrites, 'dirty=', coterieDirty.value, 'exists=', snap.exists());
+    /* Skip local write echoes (latency compensation): local state already
+       reflects our edits, and applying the echo would clobber an in-flight edit
+       with the not-yet-saved server value. Only confirmed remote changes apply. */
+    if (!snap.exists() || snap.metadata.hasPendingWrites) return;
+    applyCoterie(snap.data(), coterieDirty.value);
   });
 }
 
@@ -647,12 +685,33 @@ export async function saveCoterie(): Promise<void> {
   const uid = auth.currentUser?.uid;
   if (!id || !uid) return;
 
-  /* memberUids is managed by createCoterie/joinCoterie/deleteCharacter only */
-  await setDoc(doc(db, 'coteries', id), {
-    ...coterieState.value,
-    masqueradeClock: masqueradeClock.value,
-    updatedAt: serverTimestamp(),
-  }, { merge: true });
+  /* Write only the fields this save owns; members/memberUids belong to the
+     transactional member-sync paths. */
+  const c = coterieState.value;
+  const clockAtWrite = masqueradeClock.value;
+  console.log('[CoterieSync] saveCoterie writing stats', c.stats, 'haven', c.havenDescription, 'clock', clockAtWrite.filled);
+  try {
+    await setDoc(doc(db, 'coteries', id), {
+      typeName: c.typeName,
+      stats: c.stats,
+      havenDescription: c.havenDescription,
+      havenPositives: c.havenPositives,
+      havenNegatives: c.havenNegatives,
+      masqueradeClock: clockAtWrite,
+      updatedAt: serverTimestamp(),
+    }, { merge: true });
+    /* Clear guards only after the server confirms, and only if nothing landed
+       mid-write, so an in-flight member write from another client can't revert
+       us during the round-trip. */
+    const now = coterieState.value;
+    const unchanged = now.typeName === c.typeName && now.stats === c.stats
+      && now.havenDescription === c.havenDescription
+      && now.havenPositives === c.havenPositives && now.havenNegatives === c.havenNegatives;
+    if (unchanged) coterieDirty.value = false;
+    if (masqueradeClock.value === clockAtWrite) masqueradeDirty.value = false;
+  } catch (err) {
+    console.error('[Coterie] saveCoterie failed; will retry on next edit:', err);
+  }
 }
 
 const LOBBY_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
@@ -693,16 +752,17 @@ export async function createCoterie(initial: Partial<CoterieState> = {}): Promis
     updatedAt: serverTimestamp(),
   });
 
-  coterieState.value = state;
-  masqueradeClock.value = defaultClock;
-  activeCoterie.value = code;
-
-  /* Sync this character's member entry into the new Coterie */
+  /* Sync this character's member entry, then loadCoterie to attach the live
+     onSnapshot listener and pull back the doc (including the member we just
+     wrote). Without this, the creator never receives live updates. */
   const charId = activeCharacterId.value;
   if (charId) {
     const slug = generateNameSlug(character.value.name);
     await syncMemberToCoterie(charId, character.value, code, slug);
+    await setCharacterCoterie(charId, code);
   }
+
+  await loadCoterie(code);
 
   return code;
 }
@@ -727,5 +787,47 @@ export async function joinCoterie(rawCode: string): Promise<void> {
 
   activeCoterie.value = coterieId;
   await loadCoterie(coterieId);
-  await saveCharacter();
+
+  /* Write the roster entry and the character's association explicitly rather
+     than via saveCharacter, which dedups on character-state JSON (unchanged on
+     a bare join) and would skip both. */
+  const slug = generateNameSlug(character.value.name);
+  await syncMemberToCoterie(charId, character.value, coterieId, slug);
+  await setCharacterCoterie(charId, coterieId);
+}
+
+/* Detach the active character from its Coterie without deleting the character.
+   Removes the member entry (and uid), deleting the Coterie if it was the last
+   member. The character keeps the code implicitly and can rejoin by entering it. */
+export async function leaveCoterie(): Promise<void> {
+  const uid = auth.currentUser?.uid;
+  const coterieId = activeCoterie.value;
+  const charId = activeCharacterId.value;
+  if (!uid || !coterieId || !charId) return;
+
+  /* No try/catch around the critical writes: if any throw, the error reaches
+     handleLeave (which toasts) and local state is left intact, so the user stays
+     in the Coterie rather than ending up in a "left locally, still a member in
+     Firestore" split-brain. */
+  const coterieSnap = await getDoc(doc(db, 'coteries', coterieId));
+  if (coterieSnap.exists()) {
+    const uids: string[] = coterieSnap.data().memberUids ?? [];
+    if (uids.length <= 1) {
+      await deleteDoc(doc(db, 'coteries', coterieId));
+    } else {
+      const members: CoterieMember[] = coterieSnap.data().members ?? [];
+      await setDoc(doc(db, 'coteries', coterieId), {
+        memberUids: uids.filter(u => u !== uid),
+        members: members.filter(m => m.characterId !== charId),
+        updatedAt: serverTimestamp(),
+      }, { merge: true });
+    }
+  }
+
+  await setCharacterCoterie(charId, null);
+
+  stopCoterieListener();
+  activeCoterie.value = null;
+  coterieState.value = blankCoterie();
+  masqueradeClock.value = { id: 'masquerade', name: 'The Masquerade', segments: 8, filled: 0 };
 }

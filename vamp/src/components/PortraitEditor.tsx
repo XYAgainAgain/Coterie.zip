@@ -35,17 +35,32 @@ export function PortraitEditor({ portraits, name }: Props) {
 
   useEffect(() => {
     if (portraits.length < 2) return;
+    let cancelled = false;
+    let fadeTimer: ReturnType<typeof setTimeout>;
     const timer = setInterval(() => {
-      prevIndex.value = activeIndex.value;
-      transitioning.value = true;
-      activeIndex.value = (activeIndex.value + 1) % portraits.length;
-      const fadeTimer = setTimeout(() => {
-        transitioning.value = false;
-        prevIndex.value = -1;
-      }, FADE_MS);
-      return () => clearTimeout(fadeTimer);
+      const nextIdx = (activeIndex.value + 1) % portraits.length;
+      // Decode the next image before swapping so Firefox doesn't briefly
+      // paint the raw bitmap at natural size before object-fit settles.
+      const next = new Image();
+      next.src = portraits[nextIdx].url;
+      const swap = () => {
+        if (cancelled) return;
+        prevIndex.value = activeIndex.value;
+        transitioning.value = true;
+        activeIndex.value = nextIdx;
+        fadeTimer = setTimeout(() => {
+          if (cancelled) return;
+          transitioning.value = false;
+          prevIndex.value = -1;
+        }, FADE_MS);
+      };
+      next.decode ? next.decode().then(swap, swap) : swap();
     }, CYCLE_MS);
-    return () => clearInterval(timer);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+      clearTimeout(fadeTimer);
+    };
   }, [portraits]);
 
   if (showForm) {

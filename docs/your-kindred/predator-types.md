@@ -34,7 +34,7 @@ You are an opportunistic feeder, lunging for prey in back alleys, empty parking 
 
 ## Alu
 
-You are the shadow that falls over sleeping victims, the weight on their chest when they wake up breathless, the shape in the corner of their eye that vanishes when they try to look directly at it. Named for the faceless Sumerian spirit that draped itself over the vulnerable and sapped their health, you paralyze your prey with dread and drink while they lie frozen in terror. Unlike the Sandman, you don't sneak, you haunt.
+You are the shadow that falls over sleeping victims, the weight on their chest when they wake up breathless, the shape in the corner of their eye that vanishes when they try to look directly at it. Named for the faceless Sumerian Spirit that draped itself over the vulnerable and sapped their health, you paralyze your prey with dread and drink while they lie frozen in terror. Unlike the Sandman, you don't sneak, you haunt.
 
 - **Hunting Stat:** +Shadow
 - **Discipline:** Oblivion
@@ -471,7 +471,7 @@ You can't just **Feed** from any old mortal, you have to fall for them first. Un
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Auspex
 - **Merit:** *Pillow Talk.* Your genuine emotional connection makes your victims more forthcoming. **When you *Discern Vibes* about someone you're romantically pursuing**, take +1 Forward and +1 extra Hold on a success.
-- **Flaw:** *Bleeding Heart.* You can't help getting attached. **If a mortal you've been romantically *Feeding* from is harmed, endangered, or killed** (by you or anyone else), mark 1 Stain and gain 1 Hunger.
+- **Flaw:** *Bleeding Heart.* You can't help getting attached. **If a mortal you've been romantically *Feeding* from is harmed, endangered, or killed** (by you or anyone else), mark 1 Stain and gain +1 Hunger.
 - **Feeding Rules:** You gain no sustenance from animals, blood bags, or Blood Dolls. **Feeding** from anyone you aren't romantically pursuing can never slake more than 1 Hunger. Ugh, it's *so* dull.
 
 ---

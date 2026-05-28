@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-26T06:34:07.169Z",
+  "generatedAt": "2026-05-28T22:47:36.776Z",
   "entries": [
     {
       "name": "Abductor",
@@ -597,7 +597,7 @@
       },
       "flaw": {
         "name": "Bleeding Heart",
-        "description": "You can't help getting attached. **If a mortal you've been romantically *Feeding* from is harmed, endangered, or killed** (by you or anyone else), mark 1 Stain and gain 1 Hunger."
+        "description": "You can't help getting attached. **If a mortal you've been romantically *Feeding* from is harmed, endangered, or killed** (by you or anyone else), mark 1 Stain and gain +1 Hunger."
       },
       "humanity": null,
       "feedingRules": "You gain no sustenance from animals, blood bags, or Blood Dolls. **Feeding** from anyone you aren't romantically pursuing can never slake more than 1 Hunger. Ugh, it's *so* dull."

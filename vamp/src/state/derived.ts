@@ -1,9 +1,9 @@
 import { computed, signal } from '@preact/signals';
-import { character, BP_HP } from './character';
+import { character, maxHPFor, BLOOD_SURGE_SOURCE } from './character';
 import { parseHuntingStat, parsePrerequisites } from '../data/transforms';
 import type {
   StatName, Playbook, PredatorType, Discipline,
-  Power, Prerequisite, AgeBracket,
+  Power, Prerequisite, AgeBracket, ProjectPower,
 } from '../data/types';
 import type { GameData } from '../data/loader';
 
@@ -175,7 +175,7 @@ export const accessibleDisciplineData = computed<Discipline[]>(() => {
 
 const BP_STAT_CAP: Record<number, number> = { 0: 3, 1: 3, 2: 3, 3: 4, 4: 5, 5: 5 };
 
-export const maxHP = computed(() => BP_HP[character.value.bp] ?? 6);
+export const maxHP = computed(() => maxHPFor(character.value));
 export const statCap = computed(() => BP_STAT_CAP[character.value.bp] ?? 3);
 
 export type PowerStatus = 'known' | 'pending' | 'available' | 'locked';
@@ -241,6 +241,28 @@ export function getPowerStatus(power: Power, disciplineSlug: string): PowerWithS
   }
 
   return { power, status: 'available', lockReason: null, prerequisites: prereqs };
+}
+
+export interface ProjectPowerWithStatus {
+  pp: ProjectPower;
+  status: 'known' | 'available' | 'locked';
+  lockReason: string | null;
+}
+
+/* Project Powers (Rituals/Ceremonies/etc.) gate on Discipline level only.
+   Their "Requirements" are fictional ingredients, not mechanical prereqs, so
+   parsePrerequisites is intentionally not run here. No XP-cost pending state. */
+export function getProjectPowerStatus(pp: ProjectPower): ProjectPowerWithStatus {
+  const char = character.value;
+  const discBP = effectiveDisciplineBP.value;
+
+  if (char.knownProjectPowers.includes(pp.name)) {
+    return { pp, status: 'known', lockReason: null };
+  }
+  if (pp.level > discBP) {
+    return { pp, status: 'locked', lockReason: `Requires BP ${pp.level} (current: ${discBP})` };
+  }
+  return { pp, status: 'available', lockReason: null };
 }
 
 export interface MoveStatEntry {
@@ -371,6 +393,14 @@ export const conditionalTotals = computed<ConditionalTotal[]>(() => {
 
 export const holdCounters = computed(() =>
   character.value.modifiers.filter(m => m.type === 'hold')
+);
+
+export const bloodSurgesRemaining = computed(() =>
+  Math.max(0, character.value.bp - character.value.bloodSurgesUsed)
+);
+
+export const bloodSurgeArmed = computed(() =>
+  character.value.modifiers.some(m => m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)
 );
 
 export const otherMoves = computed<string[]>(() => {

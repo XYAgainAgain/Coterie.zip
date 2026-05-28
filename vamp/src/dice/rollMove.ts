@@ -1,11 +1,15 @@
 import { h } from 'preact';
-import { clearForwards, character } from '../state/character';
+import {
+  clearForwards, consumeArmedSurge, bankBloodSurge, bloodSurgeActive, character,
+  setHunger, setHumanity, setHarm,
+} from '../state/character';
 import { forceToast } from '../state/toasts';
-import { netAdvantage } from '../state/derived';
+import { netAdvantage, bloodSurgesRemaining } from '../state/derived';
+import type { AdvantageState } from '../state/derived';
 import { diceEngine } from './diceState';
 import { logRoll } from './rollHistory';
 import { getRollSpeed, rollMode } from './diceConfig';
-import { rollMultipleD6, rollWithAdvantage, rollWithDisadvantage } from './DiceFairness';
+import { rollD6, rollMultipleD6, rollWithAdvantage, rollWithDisadvantage } from './DiceFairness';
 import { classifyRoll, type MoveRollResult, type ResultTier } from './types';
 import type { StatName } from '../data/types';
 
@@ -65,6 +69,7 @@ export function rollMove(statName: StatName): RollBreakdown {
   };
 
   clearForwards(statName);
+  consumeArmedSurge();
 
   return {
     result,
@@ -101,27 +106,32 @@ export const TIER_COLORS: Record<ResultTier, TierColors> = {
 let rolling = false;
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+/* Animate (or audio-only / skip) a known set of die faces through the shared engine. */
+async function animateDice(dice: number[]): Promise<void> {
+  const engine = diceEngine.value;
+  if (!engine) return;
+
+  const skipDice = prefersReducedMotion.matches || rollMode.value === 'no3d';
+  if (skipDice) {
+    engine.playRollAudio(dice.length);
+    return;
+  }
+
+  engine.clearDice();
+  await engine.spawnFromSpinner(dice.length);
+  engine.fixDieResults(dice);
+  await engine.waitForSettle();
+  const speed = getRollSpeed();
+  engine.fadeDiceOut(Math.round(3000 / speed), Math.round(600 / speed));
+}
+
 export async function performRoll(statName: StatName): Promise<RollBreakdown | null> {
   if (rolling) return null;
   rolling = true;
 
   try {
     const breakdown = rollMove(statName);
-    const engine = diceEngine.value;
-    const diceCount = breakdown.advantage === 'flat' ? 2 : 3;
-
-    const skipDice = prefersReducedMotion.matches || rollMode.value === 'no3d';
-    if (engine && !skipDice) {
-      engine.clearDice();
-      await engine.spawnFromSpinner(diceCount);
-      engine.fixDieResults(breakdown.result.dice);
-      await engine.waitForSettle();
-      const speed = getRollSpeed();
-      engine.fadeDiceOut(Math.round(3000 / speed), Math.round(600 / speed));
-    } else if (engine) {
-      engine.playRollAudio(diceCount);
-    }
-
+    await animateDice(breakdown.result.dice);
     showRollToast(breakdown);
     logRoll(breakdown);
     return breakdown;
@@ -137,19 +147,7 @@ export async function performRawRoll(count: number): Promise<void> {
   try {
     const dice = rollMultipleD6(count);
     const total = dice.reduce((a, b) => a + b, 0);
-    const engine = diceEngine.value;
-
-    const skipDice = prefersReducedMotion.matches || rollMode.value === 'no3d';
-    if (engine && !skipDice) {
-      engine.clearDice();
-      await engine.spawnFromSpinner(count);
-      engine.fixDieResults(dice);
-      await engine.waitForSettle();
-      const speed = getRollSpeed();
-      engine.fadeDiceOut(Math.round(3000 / speed), Math.round(600 / speed));
-    } else if (engine) {
-      engine.playRollAudio(count);
-    }
+    await animateDice(dice);
 
     const breakdown: RollBreakdown = {
       result: { dice, kept: dice, dropped: [], total, stat: '', modifier: 0, tier: 'failure', context: `roll ${count}d6`, timestamp: Date.now() },
@@ -222,4 +220,154 @@ function showRawRollToast(count: number, dice: number[], total: number): void {
     duration: rollToastDuration(),
     isRoll: true,
   });
+}
+
+interface CheckRoll {
+  kept: number[];
+  dropped: number[];
+  value: number;
+  advantage: AdvantageState;
+}
+
+/* Single-die check (Hunger/Remorse). Advantage/Disadvantage roll the d6 twice and
+   keep the higher/lower; no Forward/Ongoing modifiers apply (rolling-dice.md). */
+function rollSingleCheck(): CheckRoll {
+  const advantage = netAdvantage.value;
+  if (advantage === 'advantage' || advantage === 'disadvantage') {
+    const pair = [rollD6(), rollD6()].sort((a, b) => a - b);
+    const keepHigh = advantage === 'advantage';
+    return {
+      kept: [keepHigh ? pair[1] : pair[0]],
+      dropped: [keepHigh ? pair[0] : pair[1]],
+      value: keepHigh ? pair[1] : pair[0],
+      advantage,
+    };
+  }
+  const die = rollD6();
+  return { kept: [die], dropped: [], value: die, advantage };
+}
+
+/* Resolve a Hunger Check result against current Hunger, applying +1 on failure.
+   At 0 Hunger, only a 6 is safe (hunger.md); otherwise you must roll over Hunger. */
+function applyHungerResult(value: number): boolean {
+  const hunger = character.value.hunger;
+  const safe = hunger === 0 ? value === 6 : value > hunger;
+  if (!safe) setHunger(hunger + 1);
+  return safe;
+}
+
+function checkDiceSpans(check: CheckRoll) {
+  return [
+    ...check.kept.map((d, i) => h('span', { key: `k${i}`, class: 'vamp-roll-toast__die' }, d)),
+    ...check.dropped.map((d, i) =>
+      h('span', { key: `d${i}`, class: 'vamp-roll-toast__die vamp-roll-toast__die--dropped' }, d)),
+  ];
+}
+
+const GOOD = TIER_COLORS.success;
+const BAD = TIER_COLORS.failure;
+
+export async function performHungerCheck(): Promise<boolean | null> {
+  if (rolling) return null;
+  rolling = true;
+  try {
+    const check = rollSingleCheck();
+    await animateDice([...check.kept, ...check.dropped]);
+    consumeArmedSurge();
+    const hungerBefore = character.value.hunger;
+    const safe = applyHungerResult(check.value);
+    const colors = safe ? GOOD : BAD;
+    const message = h('span', { class: 'vamp-roll-toast' },
+      ...checkDiceSpans(check),
+      ' vs Hunger ', h('span', { class: 'vamp-roll-toast__total' }, hungerBefore),
+      h('span', { class: 'vamp-roll-toast__outcome' }, safe ? 'Resisted' : '+1 Hunger'),
+    );
+    forceToast(message, 'info', 'Hunger Check', {
+      duration: rollToastDuration(), bg: colors.bg, border: colors.border, isRoll: true,
+    });
+    return safe;
+  } finally {
+    rolling = false;
+  }
+}
+
+export async function performRemorseCheck(): Promise<boolean | null> {
+  if (rolling) return null;
+  rolling = true;
+  try {
+    const check = rollSingleCheck();
+    await animateDice([...check.kept, ...check.dropped]);
+    consumeArmedSurge();
+    const char = character.value;
+    const stains = char.stains;
+    const safe = check.value > stains;
+    setHumanity(safe ? char.humanity : char.humanity - 1, 0);
+    const colors = safe ? GOOD : BAD;
+    const message = h('span', { class: 'vamp-roll-toast' },
+      ...checkDiceSpans(check),
+      ' vs ', h('span', { class: 'vamp-roll-toast__total' }, stains), ` Stain${stains === 1 ? '' : 's'}`,
+      h('span', { class: 'vamp-roll-toast__outcome' }, safe ? 'Stains cleared' : '−1 Humanity, Stains cleared'),
+    );
+    forceToast(message, 'info', 'Remorse Check', {
+      duration: rollToastDuration(), bg: colors.bg, border: colors.border, isRoll: true,
+    });
+    return safe;
+  } finally {
+    rolling = false;
+  }
+}
+
+export async function performQuickHeal(): Promise<boolean | null> {
+  const char = character.value;
+  if (char.playbook === 'Ghoul') return null;
+  if (char.harm.superficial === 0) return null;
+  if (rolling) return null;
+  rolling = true;
+  try {
+    const check = rollSingleCheck();
+    await animateDice([...check.kept, ...check.dropped]);
+    consumeArmedSurge();
+    const safe = applyHungerResult(check.value);
+    const maxHeal = Math.max(1, char.bp);
+    const newSuperficial = Math.max(0, char.harm.superficial - maxHeal);
+    const healed = char.harm.superficial - newSuperficial;
+    setHarm(newSuperficial, char.harm.aggravated);
+    const message = h('span', { class: 'vamp-roll-toast' },
+      ...checkDiceSpans(check),
+      h('span', { class: 'vamp-roll-toast__outcome' }, `Healed ${healed} (max. ${maxHeal}) Superficial`),
+      h('span', { class: 'vamp-roll-toast__sub' }, safe ? 'Hunger held' : '+1 Hunger'),
+    );
+    forceToast(message, 'info', 'Quick Heal', {
+      duration: rollToastDuration(), bg: GOOD.bg, border: GOOD.border, isRoll: true,
+    });
+    return safe;
+  } finally {
+    rolling = false;
+  }
+}
+
+export async function performBloodSurge(): Promise<boolean | null> {
+  const char = character.value;
+  if (char.bp < 1 || bloodSurgesRemaining.value <= 0 || bloodSurgeActive()) return null;
+  if (rolling) return null;
+  rolling = true;
+  try {
+    const check = rollSingleCheck();
+    await animateDice([...check.kept, ...check.dropped]);
+    const safe = applyHungerResult(check.value);
+    bankBloodSurge(char.bp);
+    const left = bloodSurgesRemaining.value;
+    const message = h('span', { class: 'vamp-roll-toast' },
+      ...checkDiceSpans(check),
+      h('span', { class: 'vamp-roll-toast__outcome' }, `Banked ${char.bp} Advantage${char.bp === 1 ? '' : 's'}`),
+      h('span', { class: 'vamp-roll-toast__sub' },
+        `${safe ? 'Hunger held' : '+1 Hunger'} · ${left} surge${left === 1 ? '' : 's'} left tonight`),
+    );
+    forceToast(message, 'info', 'Blood Surge', {
+      duration: rollToastDuration(), bg: GOOD.bg, border: GOOD.border, isRoll: true,
+    });
+    return safe;
+  } finally {
+    rolling = false;
+  }
 }

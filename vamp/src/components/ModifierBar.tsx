@@ -3,15 +3,17 @@ import { useEffect, useRef } from 'preact/hooks';
 import {
   character, addModifier, removeModifier, adjustModifierValue,
   quickAdjustForward, quickAdjustOngoing, quickAddHold,
-  quickToggleAdvantage, quickToggleDisadvantage,
+  quickToggleAdvantage, quickToggleDisadvantage, armBloodSurge,
   MANUAL_SOURCE, MAX_HOLD_COUNTERS,
 } from '../state/character';
 import type { Modifier } from '../state/character';
 import {
   universalForwardTotal, universalOngoingTotal, universalTotal,
-  conditionalTotals, holdCounters, netAdvantage,
+  conditionalTotals, holdCounters, netAdvantage, bloodSurgeArmed,
 } from '../state/derived';
 import type { AdvantageState } from '../state/derived';
+import { STAT_NAMES } from '../data/types';
+import type { StatName } from '../data/types';
 
 const HOLD_COLORS = ['var(--v-hold-1)', 'var(--v-hold-2)', 'var(--v-hold-3)'];
 
@@ -61,24 +63,30 @@ function NumbersZone() {
 
   return (
     <div class="vamp-mod-zone vamp-mod-zone--numbers">
-      <VerticalButtons
-        onUp={() => quickAdjustForward(1)}
-        onDown={() => quickAdjustForward(-1)}
-        upLabel="Add +1 Forward"
-        downLabel="Subtract 1 Forward"
-      />
-      <span class={`vamp-mod-value ${dimFwd ? 'vamp-mod-value--dim' : ''}`}>
-        {fmtFwd} <span class="vamp-mod-label">Forward</span>
-      </span>
-      <VerticalButtons
-        onUp={() => quickAdjustOngoing(1)}
-        onDown={() => quickAdjustOngoing(-1)}
-        upLabel="Add +1 Ongoing"
-        downLabel="Subtract 1 Ongoing"
-      />
-      <span class={`vamp-mod-value ${dimOng ? 'vamp-mod-value--dim' : ''}`}>
-        {fmtOng} <span class="vamp-mod-label">Ongoing</span>
-      </span>
+      <div class="vamp-mod-pair">
+        <VerticalButtons
+          onUp={() => quickAdjustForward(1)}
+          onDown={() => quickAdjustForward(-1)}
+          upLabel="Add +1 Forward"
+          downLabel="Subtract 1 Forward"
+        />
+        <span class={`vamp-mod-value ${dimFwd ? 'vamp-mod-value--dim' : ''}`}>
+          <span class="vamp-mod-num">{fmtFwd}</span>
+          <span class="vamp-mod-label">Forward</span>
+        </span>
+      </div>
+      <div class="vamp-mod-pair">
+        <VerticalButtons
+          onUp={() => quickAdjustOngoing(1)}
+          onDown={() => quickAdjustOngoing(-1)}
+          upLabel="Add +1 Ongoing"
+          downLabel="Subtract 1 Ongoing"
+        />
+        <span class={`vamp-mod-value ${dimOng ? 'vamp-mod-value--dim' : ''}`}>
+          <span class="vamp-mod-num">{fmtOng}</span>
+          <span class="vamp-mod-label">Ongoing</span>
+        </span>
+      </div>
     </div>
   );
 }
@@ -90,7 +98,7 @@ function DiceModeZone() {
   return (
     <div class="vamp-mod-zone vamp-mod-zone--dice">
       <button
-        class="vamp-mod-arrow vamp-mod-arrow--up"
+        class={`vamp-mod-arrow vamp-mod-arrow--up ${state === 'advantage' ? 'vamp-mod-arrow--active' : ''}`}
         onClick={quickToggleAdvantage}
         aria-label="Toggle Advantage"
         title="Toggle Advantage"
@@ -99,7 +107,7 @@ function DiceModeZone() {
       </button>
       <span class={`vamp-mod-dice-label vamp-mod-dice-label--${state}`}>{label}</span>
       <button
-        class="vamp-mod-arrow vamp-mod-arrow--down"
+        class={`vamp-mod-arrow vamp-mod-arrow--down ${state === 'disadvantage' ? 'vamp-mod-arrow--active' : ''}`}
         onClick={quickToggleDisadvantage}
         aria-label="Toggle Disadvantage"
         title="Toggle Disadvantage"
@@ -149,6 +157,25 @@ function HoldZone() {
   );
 }
 
+/* Manual-spend pool from an active Blood Surge: arm one banked Advantage onto the next roll. */
+function BloodSurgeZone() {
+  const pool = character.value.bloodSurgeAdvantages;
+  const armed = bloodSurgeArmed.value;
+
+  return (
+    <div class="vamp-mod-zone vamp-mod-zone--surge">
+      <span class="vamp-mod-label">Surge</span>
+      <span class="vamp-mod-surge-count">{pool}</span>
+      <button
+        class="vamp-mod-surge-arm"
+        onClick={armBloodSurge}
+        disabled={pool <= 0 || armed}
+        title={armed ? 'Advantage armed for your next roll' : 'Arm Advantage on your next roll'}
+      >{armed ? 'Armed' : 'Arm'}</button>
+    </div>
+  );
+}
+
 function TotalZone({ onBarClick }: { onBarClick: () => void }) {
   const total = universalTotal.value;
   const conds = conditionalTotals.value;
@@ -156,17 +183,14 @@ function TotalZone({ onBarClick }: { onBarClick: () => void }) {
   const fmtTotal = total >= 0 ? `+${total}` : `${total}`;
   const dim = total === 0 && conds.length === 0 && advState === 'flat';
 
-  const advLabel = advState === 'advantage' ? 'Advantage' : advState === 'disadvantage' ? 'Disadvantage' : 'Flat';
-
   const condText = conds.length > 0
     ? '(' + conds.map(c => `${c.total >= 0 ? '+' : ''}${c.total} if ${c.target}`).join(', ') + ')'
     : '';
 
   return (
     <div class={`vamp-mod-zone vamp-mod-zone--total ${dim ? 'vamp-mod-zone--dim' : ''}`}>
-      <span class={`vamp-mod-adv-echo vamp-mod-adv-echo--${advState}`}>{advLabel}</span>
       <button
-        class="vamp-mod-total-number"
+        class={`vamp-mod-total-number vamp-mod-total-number--${advState}`}
         onClick={(e) => { e.stopPropagation(); onBarClick(); }}
         aria-label="View modifier details"
         title="View modifier details"
@@ -233,8 +257,17 @@ function AddModifierForm({ onClose }: { onClose: () => void }) {
   const modTarget = useSignal('');
   const modSource = useSignal('');
   const modSpendOn = useSignal('');
+  const modStats = useSignal<StatName[]>([]);
 
   const isAdvDis = modType.value === 'advantage' || modType.value === 'disadvantage';
+  // Only Forward/Ongoing are filtered per-stat by the roll engine, so that's where the gate applies.
+  const supportsStatGate = modType.value === 'forward' || modType.value === 'ongoing';
+
+  function toggleStat(s: StatName) {
+    modStats.value = modStats.value.includes(s)
+      ? modStats.value.filter(x => x !== s)
+      : [...modStats.value, s];
+  }
 
   function handleCreate() {
     if (!modSource.value.trim()) return;
@@ -246,6 +279,7 @@ function AddModifierForm({ onClose }: { onClose: () => void }) {
       ...(modType.value === 'hold' && modSpendOn.value.trim()
         ? { spendOn: modSpendOn.value.trim() }
         : {}),
+      ...(supportsStatGate && modStats.value.length ? { stats: [...modStats.value] } : {}),
     });
     onClose();
   }
@@ -262,7 +296,7 @@ function AddModifierForm({ onClose }: { onClose: () => void }) {
           <button
             key={t}
             class={`vamp-mod-popover-form__type ${modType.value === t ? 'vamp-mod-popover-form__type--active' : ''}`}
-            onClick={() => { modType.value = t; }}
+            onClick={() => { modType.value = t; modStats.value = []; }}
           >
             {t.charAt(0).toUpperCase() + t.slice(1)}
           </button>
@@ -301,6 +335,22 @@ function AddModifierForm({ onClose }: { onClose: () => void }) {
               value={modTarget.value}
               onInput={(e) => { modTarget.value = (e.target as HTMLInputElement).value; }}
             />
+          </div>
+        )}
+        {supportsStatGate && (
+          <div class="vamp-mod-popover-form__field vamp-mod-popover-form__field--stats">
+            <label>Which stat(s)?</label>
+            <div class="vamp-mod-popover-form__stats">
+              {STAT_NAMES.map(s => (
+                <button
+                  key={s}
+                  type="button"
+                  class={`vamp-mod-stat-pill ${modStats.value.includes(s) ? 'vamp-mod-stat-pill--active' : ''}`}
+                  onClick={() => toggleStat(s)}
+                  title={`Only apply to ${s} rolls`}
+                >{s}</button>
+              ))}
+            </div>
           </div>
         )}
         {modType.value === 'hold' && (
@@ -397,6 +447,7 @@ function ModifierPopover({ onClose, initialShowAdd }: { onClose: () => void; ini
 export function ModifierBar() {
   const popoverOpen = useSignal(false);
   const addMode = useSignal(false);
+  const surgeActive = character.value.bloodSurgeAdvantages > 0 || bloodSurgeArmed.value;
 
   function handleBarClick() {
     addMode.value = false;
@@ -432,6 +483,12 @@ export function ModifierBar() {
           <div class="vamp-mod-divider" />
           <HoldZone />
           <div class="vamp-mod-divider" />
+          {surgeActive && (
+            <>
+              <BloodSurgeZone />
+              <div class="vamp-mod-divider" />
+            </>
+          )}
           <TotalZone onBarClick={() => handleBarClick()} />
         </div>
         {popoverOpen.value && <ModifierPopover onClose={handleClose} initialShowAdd={addMode.value} />}

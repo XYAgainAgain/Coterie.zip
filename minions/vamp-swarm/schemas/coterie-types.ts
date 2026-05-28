@@ -5,6 +5,12 @@ const HavenFeaturesSchema = z.object({
   positiveOptions: z.array(z.string().min(1)).min(1),
   negativeCount: z.number().int().min(1),
   negativeOptions: z.array(z.string().min(1)).min(1),
+  // True for "The Uncategorizable": options are the aggregate pool of every
+  // other type, so the UI renders dropdowns rather than a fixed pill set.
+  aggregate: z.boolean(),
+  // Authored "invent your own" guidance, present only when aggregate is true.
+  positiveNote: z.string().min(1).nullable(),
+  negativeNote: z.string().min(1).nullable(),
 });
 
 export const CoterieTypeSchema = z.object({

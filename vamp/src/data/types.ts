@@ -59,12 +59,24 @@ export interface DisciplinePerk {
   body: string;
 }
 
+export type ProjectPowerType = 'ritual' | 'ceremony' | 'sacrament' | 'formula';
+
+export interface ProjectPower {
+  name: string;
+  level: number;
+  tags: string[];
+  requirements: string | null;
+  body: string;
+  type: ProjectPowerType;
+}
+
 export interface Discipline {
   name: string;
   slug: string;
   intro: string | null;
   perk: DisciplinePerk | null;
   powers: Power[];
+  projectPowers: ProjectPower[];
   status: 'complete' | 'partial' | 'stub';
 }
 
@@ -196,6 +208,11 @@ export interface HavenFeatures {
   positiveOptions: string[];
   negativeCount: number;
   negativeOptions: string[];
+  // aggregate=true (Uncategorizable): options are the pooled union of all other
+  // types; notes hold the "invent your own" guidance. Both null for normal types.
+  aggregate: boolean;
+  positiveNote: string | null;
+  negativeNote: string | null;
 }
 
 export interface CoterieType {

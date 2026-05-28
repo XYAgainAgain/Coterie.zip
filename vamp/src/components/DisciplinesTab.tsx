@@ -1,15 +1,19 @@
 import { useSignal } from '@preact/signals';
 import {
-  accessibleDisciplineData, getPowerStatus, gameData, currentPlaybook,
+  accessibleDisciplineData, getPowerStatus, getProjectPowerStatus, gameData, currentPlaybook,
   currentPredatorType, effectiveDisciplineBP, isExclusiveDiscipline,
   disciplineAccessCost, powerXPCost, startingDisciplineSlugs,
+  type ProjectPowerWithStatus,
 } from '../state/derived';
-import { character, updateCharacter, setXP, learnPower, addPendingUpgrade } from '../state/character';
+import {
+  character, updateCharacter, setXP, learnPower, addPendingUpgrade,
+  learnProjectPower, unlearnProjectPower,
+} from '../state/character';
 import { creationMode, creationStep } from '../state/creation';
 import { editMode, disciplineBuyMode, enterDisciplineBuyMode, exitDisciplineBuyMode } from '../state/ui';
 import { PowerCard, type PowerBuyInfo } from './PowerCard';
 import { renderGameMarkdown } from '../data/transforms';
-import type { Discipline } from '../data/types';
+import type { Discipline, ProjectPower } from '../data/types';
 
 /* All rendered markdown is from Coterie's verified JSON parsers (trusted content) */
 
@@ -30,6 +34,13 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
   const expanded = useSignal(isCreation || isBuying);
   const showAvailable = useSignal((isCreation && isSelected) || isBuying);
   const showLocked = useSignal(false);
+
+  /* Project Powers: pickable for a selected/granted discipline in creation,
+     freely add/removable in edit/buy mode, read-only in play. */
+  const ppMode: 'play' | 'creation' | 'edit' | null =
+    isCreation ? (isSelected ? 'creation' : null)
+    : isBuying ? 'edit'
+    : 'play';
 
   const powers = discipline.powers.map(p => getPowerStatus(p, discipline.slug));
   const known = powers.filter(p => p.status === 'known');
@@ -192,7 +203,157 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
               ))}
             </div>
           )}
+
+          {ppMode && (
+            <ProjectPowerSection
+              projectPowers={discipline.projectPowers ?? []}
+              disciplineName={discipline.name}
+              mode={ppMode}
+              budget={effectiveDisciplineBP.value}
+            />
+          )}
         </div>
+      )}
+    </div>
+  );
+}
+
+const PROJECT_POWER_LABELS: Record<string, string> = {
+  ritual: 'Rituals',
+  ceremony: 'Ceremonies',
+  sacrament: 'Sacraments',
+  formula: 'Formulae',
+};
+
+function ProjectPowerSection({ projectPowers, disciplineName, mode, budget }: {
+  projectPowers: ProjectPower[];
+  disciplineName: string;
+  mode: 'play' | 'creation' | 'edit';
+  budget?: number;
+}) {
+  const showAvailable = useSignal(mode !== 'play');
+  const showLocked = useSignal(false);
+  if (!projectPowers.length) return null;
+
+  const type = projectPowers[0].type;
+  const plural = PROJECT_POWER_LABELS[type] ?? 'Project Powers';
+
+  const statuses = projectPowers.map(getProjectPowerStatus);
+  const known = statuses.filter(s => s.status === 'known');
+  const available = statuses.filter(s => s.status === 'available');
+  const locked = statuses.filter(s => s.status === 'locked');
+
+  const atBudget = mode === 'creation' && budget != null && known.length >= budget;
+
+  function removeAction(entry: ProjectPowerWithStatus) {
+    if (mode === 'play') return undefined;
+    return {
+      label: mode === 'creation' ? 'Unselect' : 'Remove',
+      variant: 'vamp-btn--unselect',
+      onClick: () => unlearnProjectPower(entry.pp.name),
+    };
+  }
+
+  function addAction(entry: ProjectPowerWithStatus) {
+    if (mode === 'play') return undefined;
+    return {
+      label: mode === 'creation' ? 'Select' : 'Add',
+      variant: 'vamp-btn--select',
+      disabled: atBudget,
+      onClick: () => learnProjectPower(entry.pp.name),
+    };
+  }
+
+  return (
+    <>
+      <div class="vamp-disc__pp-divider" />
+      <div class="vamp-disc__group-label vamp-disc__group-label--pp">{disciplineName} {plural}</div>
+
+      {known.length > 0 && (
+        <div class="vamp-disc__group">
+          <div class="vamp-disc__group-label">Known</div>
+          {known.map(entry => (
+            <ProjectPowerCard key={entry.pp.name} entry={entry} action={removeAction(entry)} />
+          ))}
+        </div>
+      )}
+
+      {mode === 'creation' && budget != null && (
+        <div class={`vamp-disc__pick-count ${atBudget ? 'vamp-disc__pick-count--full' : ''}`}>
+          {known.length}/{budget} free {plural} selected
+        </div>
+      )}
+
+      {available.length > 0 && (
+        <div class="vamp-disc__group">
+          <button
+            class="vamp-disc__group-toggle"
+            onClick={() => { showAvailable.value = !showAvailable.value; }}
+          >
+            <span class={`vamp-disc__bat vamp-disc__bat--sm ${showAvailable.value ? 'vamp-disc__bat--open' : ''}`} />
+            Available ({available.length})
+          </button>
+          {showAvailable.value && available.map(entry => (
+            <ProjectPowerCard key={entry.pp.name} entry={entry} action={addAction(entry)} />
+          ))}
+        </div>
+      )}
+
+      {locked.length > 0 && (
+        <div class="vamp-disc__group">
+          <button
+            class="vamp-disc__group-toggle vamp-disc__group-toggle--locked"
+            onClick={() => { showLocked.value = !showLocked.value; }}
+          >
+            <span class={`vamp-disc__bat vamp-disc__bat--sm ${showLocked.value ? 'vamp-disc__bat--open' : ''}`} />
+            Locked ({locked.length})
+          </button>
+          {showLocked.value && locked.map(entry => (
+            <ProjectPowerCard key={entry.pp.name} entry={entry} />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
+function ProjectPowerCard({ entry, action }: {
+  entry: ProjectPowerWithStatus;
+  action?: { label: string; variant: string; disabled?: boolean; onClick: () => void };
+}) {
+  const { pp, status, lockReason } = entry;
+  const expanded = useSignal(false);
+  return (
+    <div class={`vamp-power vamp-power--pp vamp-power--${status}`}>
+      <div class="vamp-power__header" onClick={() => { expanded.value = !expanded.value; }}>
+        <span
+          class="vamp-power__level"
+          style={`background: var(--v-lvl-${Math.min(pp.level, 5)})`}
+        >
+          {pp.level}
+        </span>
+        <span class="vamp-power__name">{pp.name}</span>
+        {pp.tags.map(tag => (
+          <span class="vamp-power__tag" key={tag}>{tag.charAt(0) + tag.slice(1).toLowerCase()}</span>
+        ))}
+        {status === 'locked' && lockReason && (
+          <span class="vamp-power__lock" title={lockReason} />
+        )}
+        {action && (
+          <button
+            class={`vamp-btn vamp-btn--sm ${action.variant}`}
+            disabled={action.disabled}
+            onClick={(e) => { e.stopPropagation(); action.onClick(); }}
+          >
+            {action.label}
+          </button>
+        )}
+        <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
+      </div>
+      {expanded.value && (
+        <div class="vamp-power__body"
+          dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pp.body) }}
+        />
       )}
     </div>
   );
@@ -373,7 +534,16 @@ function CreationDisciplineList() {
       if (current.length >= config.maxPicks + (ptSlug && !ptOverlaps ? 1 : 0)) return;
       current.push(slug);
     }
-    updateCharacter({ unlockedDisciplines: current, knownPowers: [] });
+    /* Drop only the deselected Discipline's picks; keep selections for Disciplines that survive. */
+    const keptSlugs = new Set([...current, ...allGranted]);
+    const keptDiscs = data!.disciplines.filter(d => keptSlugs.has(d.slug));
+    const powerNames = new Set(keptDiscs.flatMap(d => d.powers.map(p => p.name)));
+    const ppNames = new Set(keptDiscs.flatMap(d => (d.projectPowers ?? []).map(p => p.name)));
+    updateCharacter({
+      unlockedDisciplines: current,
+      knownPowers: character.value.knownPowers.filter(n => powerNames.has(n)),
+      knownProjectPowers: character.value.knownProjectPowers.filter(n => ppNames.has(n)),
+    });
   }
 
   return (

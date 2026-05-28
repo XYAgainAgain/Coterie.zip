@@ -41,6 +41,7 @@ export interface Note {
 }
 
 export const MANUAL_SOURCE = '(manual)';
+export const BLOOD_SURGE_SOURCE = 'Blood Surge';
 export const MAX_HOLD_COUNTERS = 3;
 
 export interface Bio {
@@ -91,6 +92,7 @@ export interface CharacterState {
   unlockedDisciplines: string[];
   startingDisciplines: string[];
   knownPowers: string[];
+  knownProjectPowers: string[];
   advancedMoves: string[];
   pendingUpgrades: PendingUpgrade[];
   bp: number;
@@ -116,6 +118,10 @@ export interface CharacterState {
   notes: Note[];
   initiative: string;
   combatNotes: string;
+  /* Blood Surge activations spent this night; remaining = BP − this. Resets on New Night. */
+  bloodSurgesUsed: number;
+  /* Advantages banked from the current Blood Surge, spent at-will this scene. Resets on New Scene. */
+  bloodSurgeAdvantages: number;
 }
 
 export const NOTEBOOK_HELP_ID = '1998';
@@ -195,6 +201,7 @@ const JOHNNY_FANGS: CharacterState = {
     'Traversal',
     'Silence of Death',
   ],
+  knownProjectPowers: [],
   advancedMoves: [],
   pendingUpgrades: [],
   bp: 1,
@@ -243,6 +250,8 @@ const JOHNNY_FANGS: CharacterState = {
   ],
   initiative: '',
   combatNotes: '',
+  bloodSurgesUsed: 0,
+  bloodSurgeAdvantages: 0,
 };
 
 export const character = signal<CharacterState>(JOHNNY_FANGS);
@@ -276,6 +285,21 @@ export function unlearnPower(powerName: string) {
   };
 }
 
+export function learnProjectPower(name: string) {
+  if (character.value.knownProjectPowers.includes(name)) return;
+  character.value = {
+    ...character.value,
+    knownProjectPowers: [...character.value.knownProjectPowers, name],
+  };
+}
+
+export function unlearnProjectPower(name: string) {
+  character.value = {
+    ...character.value,
+    knownProjectPowers: character.value.knownProjectPowers.filter(n => n !== name),
+  };
+}
+
 export function setHunger(hunger: number) {
   character.value = { ...character.value, hunger: Math.max(0, Math.min(5, hunger)) };
 }
@@ -299,8 +323,19 @@ export function setHumanity(humanity: number, stains: number) {
 
 export const BP_HP: Record<number, number> = { 0: 6, 1: 6, 2: 9, 3: 12, 4: 15, 5: 18 };
 
+/* Fortitude's Resilience Perk (automatic with Discipline access) adds HP equal to BP (min +1). */
+export function fortitudeBonusHP(char: CharacterState): number {
+  const hasFortitude = char.unlockedDisciplines.includes('fortitude')
+    || char.startingDisciplines.includes('fortitude');
+  return hasFortitude ? Math.max(1, char.bp) : 0;
+}
+
+export function maxHPFor(char: CharacterState): number {
+  return (BP_HP[char.bp] ?? 6) + fortitudeBonusHP(char);
+}
+
 export function setHarm(superficial: number, aggravated: number) {
-  const hp = BP_HP[character.value.bp] ?? 6;
+  const hp = maxHPFor(character.value);
   const agg = Math.min(Math.max(0, aggravated), hp);
   const sup = Math.min(Math.max(0, superficial), hp - agg);
   character.value = {
@@ -375,6 +410,7 @@ export function addModifier(mod: Omit<Modifier, 'id' | 'value'> & { value?: numb
     target: mod.target,
     source: mod.source,
     ...(mod.spendOn ? { spendOn: mod.spendOn } : {}),
+    ...(mod.stats && mod.stats.length ? { stats: mod.stats } : {}),
   };
   character.value = {
     ...character.value,
@@ -421,10 +457,50 @@ export function clearHolds() {
   };
 }
 
+/* True while a Blood Surge is still "active" — banked advantages remain or one is armed.
+   The rulebook forbids re-activating until the previous surge is fully spent or expires. */
+export function bloodSurgeActive(): boolean {
+  const char = character.value;
+  return char.bloodSurgeAdvantages > 0
+    || char.modifiers.some(m => m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE);
+}
+
+/* Bank a fresh pool of advantages and spend one of the night's surges. */
+export function bankBloodSurge(amount: number) {
+  character.value = {
+    ...character.value,
+    bloodSurgeAdvantages: amount,
+    bloodSurgesUsed: character.value.bloodSurgesUsed + 1,
+  };
+}
+
+/* Arm the next roll with one banked advantage (a one-shot, consumed when the roll fires). */
+export function armBloodSurge() {
+  const char = character.value;
+  if (char.bloodSurgeAdvantages <= 0) return;
+  if (char.modifiers.some(m => m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)) return;
+  character.value = { ...char, bloodSurgeAdvantages: char.bloodSurgeAdvantages - 1 };
+  addModifier({ type: 'advantage', target: null, source: BLOOD_SURGE_SOURCE });
+}
+
+/* Remove an armed Blood Surge advantage after a roll has consumed it. */
+export function consumeArmedSurge() {
+  const char = character.value;
+  if (!char.modifiers.some(m => m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)) return;
+  character.value = {
+    ...char,
+    modifiers: char.modifiers.filter(m => !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)),
+  };
+}
+
 export function newScene() {
   character.value = {
     ...character.value,
-    modifiers: character.value.modifiers.filter(m => m.type !== 'forward' && m.type !== 'hold'),
+    modifiers: character.value.modifiers.filter(m =>
+      m.type !== 'forward' && m.type !== 'hold'
+      && !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)
+    ),
+    bloodSurgeAdvantages: 0,
     initiative: '',
     combatNotes: '',
   };
@@ -476,12 +552,11 @@ export function quickToggleAdvantage() {
   const mods = character.value.modifiers;
   const existingAdv = mods.find(m => m.type === 'advantage' && m.source === MANUAL_SOURCE);
   const existingDis = mods.find(m => m.type === 'disadvantage' && m.source === MANUAL_SOURCE);
-  if (existingAdv) {
-    removeModifier(existingAdv.id);
-  } else {
-    if (existingDis) removeModifier(existingDis.id);
-    addModifier({ type: 'advantage', target: null, source: MANUAL_SOURCE });
-  }
+  // The arrows negate one another: a standing Disadvantage cancels back to Flat before
+  // Advantage can be set, so a single click never jumps straight across the two states.
+  if (existingDis) { removeModifier(existingDis.id); return; }
+  if (existingAdv) { removeModifier(existingAdv.id); return; }
+  addModifier({ type: 'advantage', target: null, source: MANUAL_SOURCE });
 }
 
 export function addDebt(direction: 'owed' | 'owe', who: string, text: string) {
@@ -526,12 +601,10 @@ export function quickToggleDisadvantage() {
   const mods = character.value.modifiers;
   const existingDis = mods.find(m => m.type === 'disadvantage' && m.source === MANUAL_SOURCE);
   const existingAdv = mods.find(m => m.type === 'advantage' && m.source === MANUAL_SOURCE);
-  if (existingDis) {
-    removeModifier(existingDis.id);
-  } else {
-    if (existingAdv) removeModifier(existingAdv.id);
-    addModifier({ type: 'disadvantage', target: null, source: MANUAL_SOURCE });
-  }
+  // Mirror of quickToggleAdvantage: a standing Advantage cancels to Flat first.
+  if (existingAdv) { removeModifier(existingAdv.id); return; }
+  if (existingDis) { removeModifier(existingDis.id); return; }
+  addModifier({ type: 'disadvantage', target: null, source: MANUAL_SOURCE });
 }
 
 
@@ -585,6 +658,12 @@ function applyPendingUpgrades() {
 export function newNight() {
   applyPendingUpgrades();
   setHunger(character.value.hunger + 1);
+  character.value = {
+    ...character.value,
+    bloodSurgesUsed: 0,
+    bloodSurgeAdvantages: 0,
+    modifiers: character.value.modifiers.filter(m => !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)),
+  };
 }
 
 export function newSession() {

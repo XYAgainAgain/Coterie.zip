@@ -6,12 +6,13 @@ import type { CoterieType } from '../schemas/coterie-types.js';
 
 const SOURCE = 'docs/your-coterie/coterie-types.md';
 
-function parseFeatureList(section: Section, ctx: string): {
-  positiveCount: number;
-  positiveOptions: string[];
-  negativeCount: number;
-  negativeOptions: string[];
-} {
+type HavenFeatures = CoterieType['havenFeatures'];
+
+// Uncategorizable reuses the **Pick N X:** skeleton but fills it with a
+// freeform sentence, so it's branched separately to dodge the comma splitter.
+const UNCATEGORIZABLE = 'The Uncategorizable';
+
+function parseFeatureList(section: Section, ctx: string): HavenFeatures {
   let positiveCount = 0;
   let positiveOptions: string[] = [];
   let negativeCount = 0;
@@ -45,7 +46,62 @@ function parseFeatureList(section: Section, ctx: string): {
     throw new Error(`[${ctx}] No negative Haven Features found`);
   }
 
-  return { positiveCount, positiveOptions, negativeCount, negativeOptions };
+  return {
+    positiveCount,
+    positiveOptions,
+    negativeCount,
+    negativeOptions,
+    aggregate: false,
+    positiveNote: null,
+    negativeNote: null,
+  };
+}
+
+// Option pools left empty here; backfilled from every other type post-parse.
+function parseAggregateFeatures(section: Section, ctx: string): HavenFeatures {
+  let positiveCount = 0;
+  let negativeCount = 0;
+  let positiveNote: string | null = null;
+  let negativeNote: string | null = null;
+
+  for (const t of section.tokens) {
+    if (t.type !== 'list') continue;
+    for (const item of (t as Tokens.List).items) {
+      const raw = item.text.trim();
+
+      const posMatch = raw.match(/^\*\*Pick (\d+) Positive:\*\*\s*\*?(.+?)\*?$/s);
+      if (posMatch) {
+        positiveCount = parseInt(posMatch[1], 10);
+        positiveNote = posMatch[2].trim();
+        continue;
+      }
+
+      const negMatch = raw.match(/^\*\*Pick (\d+) Negative:\*\*\s*\*?(.+?)\*?$/s);
+      if (negMatch) {
+        negativeCount = parseInt(negMatch[1], 10);
+        negativeNote = negMatch[2].trim();
+      }
+    }
+  }
+
+  if (!positiveNote || !negativeNote) {
+    throw new Error(`[${ctx}] Aggregate Haven Feature instructions not found`);
+  }
+
+  return {
+    positiveCount,
+    negativeCount,
+    positiveOptions: [],
+    negativeOptions: [],
+    aggregate: true,
+    positiveNote,
+    negativeNote,
+  };
+}
+
+// Dedupe and alphabetize for a predictable dropdown order.
+function dedupe(values: string[]): string[] {
+  return [...new Set(values)].sort((a, b) => a.localeCompare(b));
 }
 
 function extractDescription(tokens: Token[]): string {
@@ -79,7 +135,7 @@ export function parseCoterieTypes(repoRoot: string): CoterieType[] {
   const allTokens = tokenize(src);
   const sections = splitByHeading(allTokens, 2);
 
-  return sections.map(section => {
+  const entries = sections.map(section => {
     const ctx = `Coterie Types > ${section.name}`;
     const description = extractDescription(section.tokens);
     const coterieStats = extractCoterieStats(section.tokens);
@@ -88,7 +144,9 @@ export function parseCoterieTypes(repoRoot: string): CoterieType[] {
       throw new Error(`[${ctx}] No Coterie Stats line found`);
     }
 
-    const havenFeatures = parseFeatureList(section, ctx);
+    const havenFeatures = section.name === UNCATEGORIZABLE
+      ? parseAggregateFeatures(section, ctx)
+      : parseFeatureList(section, ctx);
 
     return {
       name: section.name,
@@ -97,4 +155,17 @@ export function parseCoterieTypes(repoRoot: string): CoterieType[] {
       havenFeatures,
     };
   });
+
+  const aggregate = entries.find(e => e.havenFeatures.aggregate);
+  if (aggregate) {
+    const others = entries.filter(e => e !== aggregate);
+    aggregate.havenFeatures.positiveOptions = dedupe(
+      others.flatMap(e => e.havenFeatures.positiveOptions),
+    );
+    aggregate.havenFeatures.negativeOptions = dedupe(
+      others.flatMap(e => e.havenFeatures.negativeOptions),
+    );
+  }
+
+  return entries;
 }
