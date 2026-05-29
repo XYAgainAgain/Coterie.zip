@@ -314,10 +314,11 @@ export function setXP(xp: number) {
 
 export function setHumanity(humanity: number, stains: number) {
   const h = Math.max(0, Math.min(10, humanity));
+  /* Stains fill the track to the right of Humanity, so they cap at 10 - h. */
   character.value = {
     ...character.value,
     humanity: h,
-    stains: Math.max(0, Math.min(h, stains)),
+    stains: Math.max(0, Math.min(10 - h, stains)),
   };
 }
 

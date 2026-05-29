@@ -2,6 +2,7 @@ import { signal } from '@preact/signals';
 
 export const editMode = signal(false);
 export const disciplineBuyMode = signal(false);
+export const portraitMinimized = signal(false);
 /* Set when viewing another player's sheet via Coterie link */
 export const viewingOtherSheet = signal(false);
 

@@ -49,6 +49,10 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
   const locked = powers.filter(p => p.status === 'locked');
   const atPickLimit = isCreation && maxFreePowers != null && known.length >= maxFreePowers;
 
+  /* Natural Ritualist speed-learns 2 extra Rituals on top of BP allotment. */
+  const ritualBudgetBonus = discipline.projectPowers?.[0]?.type === 'ritual'
+    && character.value.knownPowers.includes('Natural Ritualist') ? 2 : 0;
+
   /* Per-level pick tracking: 1 Power per accessible level, overlap bonus allows 1 extra at any level */
   const filledLevels = new Map<number, number>();
   for (const k of known) {
@@ -209,7 +213,7 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
               projectPowers={discipline.projectPowers ?? []}
               disciplineName={discipline.name}
               mode={ppMode}
-              budget={effectiveDisciplineBP.value}
+              budget={effectiveDisciplineBP.value + ritualBudgetBonus}
             />
           )}
         </div>
@@ -224,6 +228,38 @@ const PROJECT_POWER_LABELS: Record<string, string> = {
   sacrament: 'Sacraments',
   formula: 'Formulae',
 };
+
+type PPAction = { label: string; variant: string; disabled?: boolean; onClick: () => void };
+
+function groupByLevel(entries: ProjectPowerWithStatus[]): [number, ProjectPowerWithStatus[]][] {
+  const m = new Map<number, ProjectPowerWithStatus[]>();
+  for (const e of entries) {
+    const arr = m.get(e.pp.level) ?? [];
+    arr.push(e);
+    m.set(e.pp.level, arr);
+  }
+  return [...m.entries()].sort((a, b) => a[0] - b[0]);
+}
+
+/* Collapsed by default: long Rituals/Ceremonies lists overwhelm players otherwise. */
+function PPLevelGroup({ level, entries, action }: {
+  level: number;
+  entries: ProjectPowerWithStatus[];
+  action?: (e: ProjectPowerWithStatus) => PPAction | undefined;
+}) {
+  const open = useSignal(false);
+  return (
+    <div class="vamp-disc__pp-level">
+      <button class="vamp-disc__group-toggle" onClick={() => { open.value = !open.value; }}>
+        <span class={`vamp-disc__bat vamp-disc__bat--sm ${open.value ? 'vamp-disc__bat--open' : ''}`} />
+        Level {level} ({entries.length})
+      </button>
+      {open.value && entries.map(entry => (
+        <ProjectPowerCard key={entry.pp.name} entry={entry} action={action?.(entry)} />
+      ))}
+    </div>
+  );
+}
 
 function ProjectPowerSection({ projectPowers, disciplineName, mode, budget }: {
   projectPowers: ProjectPower[];
@@ -293,8 +329,8 @@ function ProjectPowerSection({ projectPowers, disciplineName, mode, budget }: {
             <span class={`vamp-disc__bat vamp-disc__bat--sm ${showAvailable.value ? 'vamp-disc__bat--open' : ''}`} />
             Available ({available.length})
           </button>
-          {showAvailable.value && available.map(entry => (
-            <ProjectPowerCard key={entry.pp.name} entry={entry} action={addAction(entry)} />
+          {showAvailable.value && groupByLevel(available).map(([level, entries]) => (
+            <PPLevelGroup key={level} level={level} entries={entries} action={addAction} />
           ))}
         </div>
       )}
@@ -308,8 +344,8 @@ function ProjectPowerSection({ projectPowers, disciplineName, mode, budget }: {
             <span class={`vamp-disc__bat vamp-disc__bat--sm ${showLocked.value ? 'vamp-disc__bat--open' : ''}`} />
             Locked ({locked.length})
           </button>
-          {showLocked.value && locked.map(entry => (
-            <ProjectPowerCard key={entry.pp.name} entry={entry} />
+          {showLocked.value && groupByLevel(locked).map(([level, entries]) => (
+            <PPLevelGroup key={level} level={level} entries={entries} />
           ))}
         </div>
       )}
@@ -551,7 +587,7 @@ function CreationDisciplineList() {
       <div class="vamp-disc-creation__hint">{config.hint}</div>
       {ptSlug && !ptOverlaps && (
         <div class="vamp-disc-creation__hint">
-          Your Predator Type also grants access to {pt!.discipline}. It appears below as granted.
+          Your Predator Type also grants free access to {pt!.discipline}. It appears below as granted.
         </div>
       )}
       {ptSlug && ptOverlaps && (

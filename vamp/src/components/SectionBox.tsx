@@ -3,7 +3,8 @@ import { useSignal } from '@preact/signals';
 
 interface Props {
   title: string;
-  children: ComponentChildren;
+  /* Render-prop child keeps this bit mounted & collapsed so it can partially hide content (e.g. tuck Touchstones, keep Convictions). */
+  children: ComponentChildren | ((collapsed: boolean) => ComponentChildren);
   collapsible?: boolean;
   collapsedLabel?: string;
   legendTip?: string;
@@ -11,9 +12,10 @@ interface Props {
 
 export function SectionBox({ title, children, collapsible, collapsedLabel, legendTip }: Props) {
   const collapsed = useSignal(false);
+  const partial = typeof children === 'function';
 
   return (
-    <fieldset class={`vamp-section ${collapsed.value ? 'vamp-section--collapsed' : ''}`}>
+    <fieldset class={`vamp-section ${collapsed.value && !partial ? 'vamp-section--collapsed' : ''}`}>
       <legend
         class={`vamp-section__legend ${collapsible ? 'vamp-section__legend--collapsible' : ''} ${legendTip ? 'vamp-section__legend--tip' : ''}`}
         title={legendTip}
@@ -21,12 +23,14 @@ export function SectionBox({ title, children, collapsible, collapsedLabel, legen
       >
         {collapsed.value && collapsedLabel ? collapsedLabel : title}
       </legend>
-      {!collapsed.value && children}
+      {partial
+        ? (children as (c: boolean) => ComponentChildren)(collapsed.value)
+        : (!collapsed.value && children)}
     </fieldset>
   );
 }
 
-/* Gear SVG preserved for future Settings panel */
+/* Gear SVG preserved for Settings panel */
 export const GearSvg = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="12" cy="12" r="3" />

@@ -62,8 +62,7 @@ export function App() {
               aria-label={editMode.value ? 'Lock (switch to playing)' : 'Unlock (switch to editing)'}
               aria-pressed={editMode.value}
             >
-              <span class="vamp-header__lock-label vamp-header__lock-label--active">{editMode.value ? 'EDIT' : 'PLAY'}</span>
-              <span class="vamp-header__lock-label vamp-header__lock-label--hover">{editMode.value ? 'PLAY' : 'EDIT'}</span>
+              <span class="vamp-header__lock-label">{editMode.value ? 'PLAY' : 'EDIT'}</span>
               <span class={`vamp-header__lock-icon vamp-header__lock-icon--active ${editMode.value ? 'vamp-header__lock-icon--unlocked' : 'vamp-header__lock-icon--locked'}`} />
               <span class={`vamp-header__lock-icon vamp-header__lock-icon--hover ${editMode.value ? 'vamp-header__lock-icon--locked' : 'vamp-header__lock-icon--unlocked'}`} />
             </button>

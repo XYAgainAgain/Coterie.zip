@@ -304,13 +304,10 @@ a:hover {
 
 .vamp-header__lock--editing .vamp-header__lock-label { color: var(--v-bg-primary); }
 
-.vamp-header__lock-label--hover,
 .vamp-header__lock-icon--hover { display: none; }
 
-.vamp-header__lock:hover .vamp-header__lock-label--active,
 .vamp-header__lock:hover .vamp-header__lock-icon--active { display: none; }
 
-.vamp-header__lock:hover .vamp-header__lock-label--hover,
 .vamp-header__lock:hover .vamp-header__lock-icon--hover { display: block; }
 
 .vamp-header__lock-icon {
@@ -591,9 +588,105 @@ a:hover {
 .vamp-identity__name {
   font-family: 'Sinistre Bold', var(--v-font-display);
   font-size: 1.2rem;
+  line-height: 1.15;
   color: var(--v-text-accent);
   text-wrap: balance;
   margin-bottom: 0.2rem;
+}
+
+.vamp-identity__portrait-wrap {
+  position: relative;
+}
+
+.vamp-identity__mini {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.vamp-identity__mini-pic {
+  position: relative;
+  inline-size: 3.25rem;
+  block-size: 3.25rem;
+  flex-shrink: 0;
+  border: 2px solid var(--v-accent);
+  border-radius: var(--v-radius-sm);
+  overflow: hidden;
+}
+
+.vamp-identity__mini-pic img {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.vamp-identity__mini-pic .vamp-portrait-toggle {
+  position: absolute;
+  inset-block-start: 0.15rem;
+  inset-inline-start: 0.15rem;
+  z-index: 2;
+  padding: 0.12rem;
+}
+
+.vamp-identity__mini-placeholder {
+  display: grid;
+  place-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+  background: var(--v-bg-sunken);
+  color: var(--v-text-muted);
+}
+
+.vamp-identity__mini-info {
+  min-inline-size: 0;
+}
+
+.vamp-identity__mini-name {
+  font-family: 'Sinistre Bold', var(--v-font-display);
+  font-size: 1rem;
+  color: var(--v-text-accent);
+}
+
+.vamp-identity__mini-meta {
+  font-size: 0.72rem;
+  color: var(--v-text-secondary);
+}
+
+.vamp-portrait-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2rem;
+  background: color-mix(in srgb, var(--v-bg-sunken) 70%, transparent);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  line-height: 0;
+}
+
+.vamp-portrait-toggle:hover { border-color: var(--v-accent); }
+
+.vamp-identity__portrait-wrap .vamp-portrait-toggle {
+  position: absolute;
+  inset-block-start: 0.4rem;
+  inset-inline-start: 0.4rem;
+  z-index: 2;
+}
+
+.vamp-portrait-toggle__bat {
+  display: block;
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  background: var(--v-accent);
+  mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  rotate: 90deg;
+  transition: rotate 0.15s ease;
+}
+
+.vamp-portrait-toggle--min .vamp-portrait-toggle__bat {
+  rotate: 0deg;
 }
 
 .vamp-identity__portrait {
@@ -1062,6 +1155,8 @@ a:hover {
 
 .vamp-pip--round { border-radius: 50%; }
 
+.vamp-pip--locked { cursor: default; }
+
 .vamp-pip--small {
   width: 1.15rem;
   height: 1.15rem;
@@ -1147,6 +1242,14 @@ a:hover {
   z-index: 1;
 }
 
+/* Two stacked equal-width buttons; rides up to balance the taller column. */
+.vamp-vital-actions--stack {
+  display: grid;
+  grid-template-columns: 1fr;
+  inline-size: 4rem;
+  inset-block-start: -0.5rem;
+}
+
 .vamp-vital-roll {
   display: flex;
   flex-direction: column;
@@ -1164,6 +1267,17 @@ a:hover {
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.vamp-vital-roll--inline {
+  flex-direction: row;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+/* Keep the button + dots grouped, nudged up to balance the BP box. */
+.vamp-vital-actions--surge {
+  inset-block-start: -0.25rem;
 }
 
 .vamp-vital-roll:hover:not(:disabled) {
@@ -1195,9 +1309,7 @@ a:hover {
   border-color: var(--v-accent);
 }
 
-/* Harm reflows into at most two balanced rows; columns flex down so pips shrink
-   to fit (keeps the Vitals area from growing vertically at high HP/Fortitude). The
-   trailing margin reserves the action-button column so the top row never slides under it. */
+/* Harm reflows into 2 balanced rows; columns flex down so pips shrink to fit (keeps the Vitals area from growing vertically at high HP/Fortitude). The trailing margin reserves the action-button column so the top row never slides under it. */
 .vamp-pip-row--harm {
   display: grid;
   grid-template-columns: repeat(var(--harm-cols), minmax(0, 1fr));
@@ -1211,6 +1323,11 @@ a:hover {
   inline-size: 100%;
   block-size: auto;
   aspect-ratio: 1;
+}
+
+/* Humanity has its own Remorse Check button in the same absolute action column, so its 10 pips need the same trailing reservation as Harm or they wrap under it. */
+.vamp-pip-row--humanity {
+  margin-inline-end: 4.5rem;
 }
 
 .vamp-tracker-adj {
@@ -1262,7 +1379,7 @@ a:hover {
 }
 
 /* Wraps the Hunger droplets so the breathe-glow lives on an unmasked element.
-   The droplets use mask: url(droplet.svg); mask clips after filter, so a drop-shadow
+   The droplets use mask: url(droplet.svg); mask clips after filter, so a drop-shadow 
    applied to the pips themselves gets eaten. Glowing the wrapper avoids that. */
 .vamp-hunger-pips {
   display: inline-flex;
@@ -1380,12 +1497,12 @@ a:hover {
 }
 
 /* Left-pack the working zones at their natural width so a changing Dice-Mode
-   label can't resize its neighbours; Total is pushed to the far right below. */
+   label can't resize its neighbors; Total is pushed to the far right below. */
 .vamp-mod-zone--numbers {
   gap: 0.9rem;
 }
 
-/* Pair each +/- stack with its number so they read as a unit, not an even comb */
+/* Pair each +/- stack with its number so they read as a unit */
 .vamp-mod-pair {
   display: flex;
   align-items: center;
@@ -4135,6 +4252,10 @@ details[open] > .vamp-detail__summary::before {
   margin: 0.6rem 0;
   opacity: 0.35;
   background: var(--v-dot-dash-h);
+}
+
+.vamp-disc__pp-level {
+  margin-inline-start: 0.6rem;
 }
 
 .vamp-disc__group-label--pp {

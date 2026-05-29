@@ -706,7 +706,7 @@ function CoteriePanel() {
             title={codeRevealed.value ? 'Click to hide' : 'Click to reveal'}
           >{coterieId}</button>
           {codeRevealed.value && (
-            <button class="wiz-card__toggle" onClick={copyId}>{copied.value ? 'Copied!' : 'Copy'}</button>
+            <button class="vamp-mod-surge-arm" onClick={copyId}>{copied.value ? 'Copied!' : 'Copy'}</button>
           )}
         </div>
         <div class="vamp-coterie-leave">

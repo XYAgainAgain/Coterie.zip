@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'preact/hooks';
+import { useEffect, useLayoutEffect, useRef } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { debounce } from '../utils/debounce';
 import { preloadPortraits } from '../utils/preloadPortraits';
@@ -23,7 +23,7 @@ import {
 import {
   performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge,
 } from '../dice/rollMove';
-import { editMode, viewingOtherSheet } from '../state/ui';
+import { editMode, viewingOtherSheet, portraitMinimized } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
 import {
   currentPlaybook, currentPredatorType,
@@ -32,6 +32,7 @@ import {
   bloodSurgesRemaining,
 } from '../state/derived';
 import { switchTab, openMove, activeContentTab } from '../state/panel';
+import { showToast } from '../state/toasts';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
 import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
 import { creationMode, creationStep, stepComplete, STEP_ZONE } from '../state/creation';
@@ -43,7 +44,7 @@ import {
 import type { StatName } from '../data/types';
 import type { Bio, Clock } from '../state/character';
 
-// All rendered markdown comes from our own verified JSON parsers (trusted content)
+// All rendered markdown comes from my own verified JSON parsers (trusted content)
 
 if (import.meta.env.DEV) {
   (window as any).__startGuide = startGuide;
@@ -134,27 +135,28 @@ function ClickPipRow({ value, count, onChange, muted, droplet }: {
   );
 }
 
-/* Roll-action button anchored to the top-right of a vitals box (play mode only). */
-function VitalRollButton({ label, onClick, disabled }: {
+/* Roll-action button anchored to top-right of a box (Play mode only). */
+function VitalRollButton({ label, onClick, disabled, singleLine }: {
   label: string;
   onClick: () => void;
   disabled?: boolean;
+  singleLine?: boolean;
 }) {
   return (
     <button
-      class="vamp-vital-roll"
+      class={`vamp-vital-roll ${singleLine ? 'vamp-vital-roll--inline' : ''}`}
       onClick={onClick}
       disabled={disabled}
       title={label}
     >
-      {label.split(' ').map((word, i) => (
+      {singleLine ? label : label.split(' ').map((word, i) => (
         <span key={i} class="vamp-vital-roll__line">{word}</span>
       ))}
     </button>
   );
 }
 
-/* Hunger level name + effect text, shown in the Hunger box's legend tooltip. */
+/* Hunger level name + effect text, shown in Hunger's legend tooltip. */
 function hungerLevel(hunger: number): { name: string; text: string } {
   if (hunger === 0) return { name: 'Sated', text: 'Just fed well. No penalties.' };
   if (hunger <= 2) return { name: 'Manageable', text: 'Cravings present but controllable. No penalties.' };
@@ -197,7 +199,7 @@ function BPTracker({ canRoll }: { canRoll?: boolean }) {
   return (
     <div>
       {canRoll && bp >= 1 && (
-        <div class="vamp-vital-actions">
+        <div class="vamp-vital-actions vamp-vital-actions--surge">
           <VitalRollButton
             label="Blood Surge"
             onClick={performBloodSurge}
@@ -232,48 +234,43 @@ function BPTracker({ canRoll }: { canRoll?: boolean }) {
 
 function HumanityTracker({ canRoll }: { canRoll?: boolean }) {
   const char = character.value;
-  const filledCount = Math.max(0, char.humanity - char.stains);
-  const initial: PipState[] = Array.from({ length: 10 }, (_, i) => {
-    if (i < filledCount) return 'filled';
-    if (i < char.humanity) return 'slashed';
-    return 'empty';
-  });
+  const isEdit = editMode.value;
+  const humanity = char.humanity;
+  /* Filled pips = Humanity; Stains = crossed pips, label shows Humanity. */
+  const stains = Math.min(char.stains, 10 - humanity);
+  const stainLabel = stains > 0 ? ` (${stains} Stain${stains > 1 ? 's' : ''})` : '';
 
-  const { boxes, advance: rawAdvance, reverse: rawReverse } = useDualPhase(initial);
-
-  function countFromArray(arr: PipState[]) {
-    const f = arr.filter(s => s === 'filled').length;
-    const sl = arr.filter(s => s === 'slashed').length;
-    return { f, sl };
+  /* At 5 Stains/full track, the Beast claims 1 Humanity & Stains clear. */
+  function addStain() {
+    const next = char.stains + 1;
+    if (next >= 5 || humanity + next >= 10) {
+      setHumanity(humanity - 1, 0);
+      showToast('Stains filled the track — lost 1 Humanity.', 'warning');
+    } else {
+      setHumanity(humanity, next);
+    }
   }
-
-  function advance(i: number) {
-    const next = rawAdvance(i);
-    const { f, sl } = countFromArray(next);
-    setHumanity(f + sl, sl);
-  }
-
-  function reverse(i: number, e: Event) {
-    const next = rawReverse(i, e);
-    const { f, sl } = countFromArray(next);
-    setHumanity(f + sl, sl);
-  }
-
-  const stainCount = boxes.value.filter(s => s === 'slashed').length;
-  const stainLabel = stainCount > 0
-    ? ` (${stainCount} Stain${stainCount > 1 ? 's' : ''})`
-    : '';
 
   return (
     <div>
       {canRoll && (
-        <div class="vamp-vital-actions">
+        <div class="vamp-vital-actions vamp-vital-actions--stack">
           <VitalRollButton label="Remorse Check" onClick={performRemorseCheck} disabled={char.stains === 0} />
+          <VitalRollButton label="+1 Stain" onClick={addStain} singleLine />
         </div>
       )}
-      <div class="vamp-pip-row">
-        <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
-        <span class="vamp-tracker-label">{boxes.value.filter(s => s === 'filled').length}{stainLabel}</span>
+      <div class={`vamp-pip-row ${canRoll ? 'vamp-pip-row--humanity' : ''}`}>
+        {Array.from({ length: 10 }, (_, i) => {
+          const state: PipState = i < humanity ? 'filled' : i < humanity + stains ? 'slashed' : 'empty';
+          return (
+            <div
+              key={i}
+              class={`vamp-pip vamp-pip--${state} ${isEdit ? '' : 'vamp-pip--locked'}`}
+              onClick={isEdit ? () => setHumanity(i < humanity ? i : i + 1, char.stains) : undefined}
+            />
+          );
+        })}
+        <span class="vamp-tracker-label">{humanity}{stainLabel}</span>
       </div>
     </div>
   );
@@ -306,7 +303,7 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
   }
 
   const sup = boxes.value.filter(s => s === 'slashed').length;
-  /* Cap at two rows; pips shrink to fit when a row would exceed ~10 (keeps Vitals height fixed). */
+  /* Cap at 2 rows; pips shrink to fit when row would exceed ~10 (keeps Vitals height fixed!) Might have to set min size; these get teensy-weensy */
   const cols = hp <= 10 ? hp : Math.ceil(hp / 2);
 
   return (
@@ -343,7 +340,7 @@ function XPTracker() {
               checked={char.xpTriggers[i] ?? false}
               onChange={() => fireXPTrigger(i)}
             />
-            {/* Rendered markdown from our own verified JSON parsers (trusted content) */}
+            {/* Rendered markdown from my own verified JSON parsers (trusted content) */}
             {' '}<span dangerouslySetInnerHTML={{ __html: renderGameMarkdown(trigger) }} />
           </label>
         ))}
@@ -754,7 +751,7 @@ function SnippetBlock({ type, name, fullText, pill, nameClass, label }: {
   const isEditing = editMode.value || creationMode.value;
   const hasSnippet = !isEditing && snippet && snippet !== fullText;
 
-  // All rendered content comes from our own verified JSON parsers (trusted)
+  // All rendered content comes from my own verified JSON parsers (trusted)
   return (
     <div
       class={`vamp-perk ${hasSnippet ? 'vamp-perk--expandable' : ''} ${expanded.value ? 'vamp-perk--expanded' : ''}`}
@@ -833,26 +830,31 @@ function VitalsTab() {
         </div>
       </div>
 
-      <SectionBox title="Convictions & Touchstones">
-        {editMode.value || (guideActive.value && isCreationPhase.value && creationStep.value === 'convictions') ? (
-          <ConvictionsCreationPanel />
-        ) : (
-          <div class="vamp-paired vamp-paired--grid">
-            {char.convictions.map((conviction, i) => (
-              <div class="vamp-paired__item" key={i}>
-                <div class="vamp-paired__conviction">{conviction ? `“${conviction}”` : '—'}</div>
-                {char.touchstones[i] && char.touchstones[i].name && (
-                  <div class="vamp-paired__touchstone">
-                    {char.touchstones[i].name}
-                    {char.touchstones[i].pronouns[0] && ` (${char.touchstones[i].pronouns.filter(Boolean).join('/')})`}
-                    {char.touchstones[i].ageBracket && `, ${char.touchstones[i].ageBracket}`}
-                    {char.touchstones[i].description && ` — ${char.touchstones[i].description}`}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
+      <SectionBox title="Convictions & Touchstones" collapsible collapsedLabel="Convictions (& Touchstones)">
+        {(collapsed: boolean) => {
+          if (editMode.value || (guideActive.value && isCreationPhase.value && creationStep.value === 'convictions')) {
+            return <ConvictionsCreationPanel />;
+          }
+          /* Touchstones always private to viewers & tuck away when collapsed. */
+          const showTouchstones = !viewingOtherSheet.value && !collapsed;
+          return (
+            <div class="vamp-paired vamp-paired--grid">
+              {char.convictions.map((conviction, i) => (
+                <div class="vamp-paired__item" key={i}>
+                  <div class="vamp-paired__conviction">{conviction ? `“${conviction}”` : '—'}</div>
+                  {showTouchstones && char.touchstones[i] && char.touchstones[i].name && (
+                    <div class="vamp-paired__touchstone">
+                      {char.touchstones[i].name}
+                      {char.touchstones[i].pronouns[0] && ` (${char.touchstones[i].pronouns.filter(Boolean).join('/')})`}
+                      {char.touchstones[i].ageBracket && `, ${char.touchstones[i].ageBracket}`}
+                      {char.touchstones[i].description && ` — ${char.touchstones[i].description}`}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          );
+        }}
       </SectionBox>
 
       {(() => {
@@ -932,7 +934,7 @@ function VitalsTab() {
 
 
 const HUMAN_AGE_BRACKETS = [
-  'Baby', 'Child', 'Youth', 'Teen', 'Young Adult', 'Mature Adult', 'Senior',
+  "Baby", "Child", "Youth", "Teen", "Young Adult", "Mature Adult", "Senior",
   "Don't Ask", "Don't Know",
 ];
 
@@ -1308,6 +1310,8 @@ function NameField({ name, isCreating }: { name: string; isCreating: boolean }) 
   const savedRef = useRef(name);
   const isEdit = editMode.value;
 
+  const displayRef = useRef<HTMLDivElement>(null);
+
   const debouncedSave = useRef(
     debounce((text: string) => {
       savedRef.current = text;
@@ -1316,6 +1320,38 @@ function NameField({ name, isCreating }: { name: string; isCreating: boolean }) 
   ).current;
 
   useEffect(() => () => debouncedSave.cancel(), []);
+
+  /* Full name, always: shrink the font until it fits two lines rather than
+     truncating or pushing the sidebar down. */
+  useLayoutEffect(() => {
+    const el = displayRef.current;
+    if (!el) return;
+    const MAX = 1.2, MIN = 0.65, STEP = 0.04;
+    const fit = () => {
+      let size = MAX;
+      el.style.fontSize = `${size}rem`;
+      for (let i = 0; i < 32 && size > MIN; i++) {
+        const lh = parseFloat(getComputedStyle(el).lineHeight) || size * 18.4;
+        /* Prefer wrapping to 2 lines over shrinking; names wrap only at spaces/hyphens, width check only shrinks a long unbreakable token instead of letting it overflow. */
+        const fits = el.scrollHeight <= lh * 2 + 1 && el.scrollWidth <= el.clientWidth + 1;
+        if (fits) break;
+        size = Math.max(MIN, size - STEP);
+        el.style.fontSize = `${size}rem`;
+      }
+    };
+    let cancelled = false;
+    let lastWidth = -1;
+    /* Font tweaks change height, which are ignored to avoid a loop. */
+    const ro = new ResizeObserver(entries => {
+      const w = entries[0].contentRect.width;
+      if (Math.abs(w - lastWidth) < 0.5) return;
+      lastWidth = w;
+      fit();
+    });
+    ro.observe(el);
+    document.fonts?.ready.then(() => { if (!cancelled) fit(); });
+    return () => { cancelled = true; ro.disconnect(); };
+  }, [name, editing.value, isCreating]);
 
   if (!editing.value && !isCreating) {
     draft.value = name;
@@ -1350,9 +1386,44 @@ function NameField({ name, isCreating }: { name: string; isCreating: boolean }) 
 
   return (
     <div
+      ref={displayRef}
       class="vamp-identity__name"
       onDblClick={() => { if (isEdit) editing.value = true; }}
     >{name || 'Unnamed'}</div>
+  );
+}
+
+function PortraitToggle() {
+  const min = portraitMinimized.value;
+  return (
+    <button
+      class={`vamp-portrait-toggle ${min ? 'vamp-portrait-toggle--min' : ''}`}
+      onClick={() => { portraitMinimized.value = !min; }}
+      aria-label={min ? 'Expand portrait' : 'Minimize portrait'}
+      aria-pressed={min}
+    >
+      <span class="vamp-portrait-toggle__bat" />
+    </button>
+  );
+}
+
+function MiniIdentityCard() {
+  const char = character.value;
+  const p = char.portraits[0];
+  const meta = [char.playbook, char.ageBracket, `BP ${char.bp}`].filter(Boolean).join(' | ');
+  return (
+    <div class="vamp-identity__mini">
+      <div class="vamp-identity__mini-pic">
+        <PortraitToggle />
+        {p
+          ? <img src={p.url} alt={char.name} style={`object-position: ${p.x}% ${p.y}%`} />
+          : <span class="vamp-identity__mini-placeholder">?</span>}
+      </div>
+      <div class="vamp-identity__mini-info">
+        <div class="vamp-identity__mini-name">{char.name || 'Unnamed'}</div>
+        <div class="vamp-identity__mini-meta">{meta}</div>
+      </div>
+    </div>
   );
 }
 
@@ -1463,20 +1534,29 @@ export function CharacterSheet({ slug }: { slug?: string }) {
 
       <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? 'guide-spotlight' : ''}`}>
         <div class="vamp-identity">
-          <NameField name={char.name} isCreating={isCreating && step === 'name'} />
-          <PortraitEditor portraits={char.portraits} name={char.name} />
-          <div class="vamp-identity__meta">
-            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook || 'No Playbook'}</span>
-          </div>
-          <div class="vamp-identity__meta">
-            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket || '?'}</span>
-            {char.predatorType && (
-              <>
-                <span class="vamp-identity__sep">|</span>
-                <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
-              </>
-            )}
-          </div>
+          {!isCreating && portraitMinimized.value ? (
+            <MiniIdentityCard />
+          ) : (
+            <>
+              <NameField name={char.name} isCreating={isCreating && step === 'name'} />
+              <div class="vamp-identity__portrait-wrap">
+                {!isCreating && <PortraitToggle />}
+                <PortraitEditor portraits={char.portraits} name={char.name} />
+              </div>
+              <div class="vamp-identity__meta">
+                <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook || 'No Playbook'}</span>
+              </div>
+              <div class="vamp-identity__meta">
+                <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket || '?'}</span>
+                {char.predatorType && (
+                  <>
+                    <span class="vamp-identity__sep">|</span>
+                    <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
+                  </>
+                )}
+              </div>
+            </>
+          )}
 
           <BioSection bio={char.bio} />
         </div>
