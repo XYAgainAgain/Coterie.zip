@@ -26,23 +26,23 @@ The black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1)
 
 ### *Ashes to Ashes*
 
-**When you press your palm to a corpse and force some of your Vitae into it**, gain +1 Hunger. Over the next 30 seconds, the body and everything in or on it dissolves into fine grey ash, unless an item has the Holy, Magical, or Unbreakable tag. Nothing forensically useful remains, and it can be swept up in a bin or blown away by a light breeze.
+**When you press your palm to a corpse and force some of your Vitae into it,** gain +1 Hunger. Over the next 30 seconds, the body and everything in or on it dissolves into fine grey ash, unless an item has the Holy, Magical, or Unbreakable tag. Nothing forensically useful remains, and it can be swept up in a bin or blown away by a light breeze.
 
 This works on any mortal corpse, fresh or ancient, human or animal. It does not work on dead vampires or bodies still animated by supernatural means. This Power is impractical during combat but invaluable for cleanup afterward. Hope you brought a snack.
 
 ### *The Binding Fetter (Passive)*
 
-While ***Abyssal Sight*** is active, you can also perceive Fetters, which are objects, places, or people that anchor a ghost to the world. Fetters emanate auras visible only to those with Oblivion access; Auspex is useless when trying to identify them. Some glow with lingering vitality, others radiate decay, and many carry the phantom scent of something the dead person loved or feared (fresh bread, gasoline, recently-cut grass, perfume, hospital antiseptic, blood, wood smoke, or really anything else).
+**While *Abyssal Sight* is active,** you can also perceive Fetters, which are objects, places, or people that anchor a ghost to the world. Fetters emanate auras visible only to those with Oblivion access; Auspex is useless when trying to identify them. Some glow with lingering vitality, others radiate decay, and many carry the phantom scent of something the dead person loved or feared (fresh bread, gasoline, recently-cut grass, perfume, hospital antiseptic, blood, wood smoke, or really anything else).
 
 Once you've identified a ghost's Fetter, you gain an Ongoing bonus equal to your Blood Potency (minimum 1) on all social, investigative, and Discipline rolls when dealing with that ghost or spirit, for as long as you know what and where the Fetter is.
 
 ### *Shadow Cloak (Passive)*
 
-**When you *Slip Away* or *Influence* a mortal with intent to intimidate while shrouded in darkness**, you gain a Forward bonus equal to your Blood Potency (minimum 1). If ***Abyssal Sight*** is active at the time, ignore its Ongoing social penalty when you **Influence** someone with this Power. Ambient shadows cling to you, thickening around your silhouette when you need them and thinning when you don't. You're not invisible, just hard to pin down and quite difficult to look at directly.
+**When you *Slip Away* or *Influence* a mortal with intent to intimidate while shrouded in darkness,** you gain a Forward bonus equal to your Blood Potency (minimum 1). If ***Abyssal Sight*** is active at the time, ignore its Ongoing social penalty when you **Influence** someone with this Power. Ambient shadows cling to you, thickening around your silhouette when you need them and thinning when you don't. You're not invisible, just hard to pin down and quite difficult to look at directly.
 
 ### *Lambent Dark (Passive)*
 
-**When you raise a hand to guide yourself and your allies through darkness**, you begin to radiate a strange, pale ghost-light from your palm. This has no Hunger cost, no roll, and can be activated or deactivated as a Free Action.
+**When you raise a hand to guide yourself and your allies through darkness,** you begin to radiate a strange, pale ghost-light from your palm. This has no Hunger cost, no roll, and can be activated or deactivated as a Free Action.
 
 Lambent Dark is a unique substance that is visible only to you and to others with Oblivion access; think of it like darkness so complete that it wraps back around to being light again. ***Sense the Unseen*** cannot detect it. Auspex cannot perceive it. Mortals, Ghouls, and creatures without Oblivion see nothing at all; you could illuminate an entire room and nobody without ***Abyssal Sight*** would notice.
 
@@ -54,7 +54,7 @@ The light functions even in supernatural darkness, does not disrupt other Oblivi
 
 ### *Arms of Ahriman*
 
-**When you reach into the nearest patch of shadow to drag writhing tendrils of darkness into the open**, make a Hunger Check and roll +Shadow. The arms extend to Close Range (or Far Range if your BP is 4+) and can seize up to 2 targets simultaneously. While maintaining ***Arms of Ahriman***, you may use your Free Action each turn to slam or squeeze a restrained target, dealing 2 Superficial Harm. The Power ends if you are moved from wherever you summoned the arms.
+**When you reach into the nearest patch of shadow to drag writhing tendrils of darkness into the open,** make a Hunger Check and roll +Shadow. The arms extend to Close Range (or Far Range if your BP is 4+) and can seize up to 2 targets simultaneously. While maintaining ***Arms of Ahriman***, you may use your Free Action each turn to slam or squeeze a restrained target, dealing 2 Superficial Harm. The Power ends if you are moved from wherever you summoned the arms.
 
 **On a 12+,** the arms lock down hard. Restrained targets cannot use their Movement and can only break free by using a Discipline Power of a level equal to or greater than your Blood Potency. The hold lasts until you release them, are displaced and lose concentration, or the scene ends.
 
@@ -70,7 +70,7 @@ The light functions even in supernatural darkness, does not disrupt other Oblivi
 
 ### *Maw of Ahriman*
 
-**When you open your mouth and invite the Abyss in**, gain +2 Hunger. Your mouth becomes an inky void of absolute darkness that swallows light, sound, and everything else unfortunate enough to get close. Your teeth and tongue disappear for a while, and there's nothing behind your lips except the howling Abyss.
+**When you open your mouth and invite the Abyss in,** gain +2 Hunger. Your mouth becomes an inky void of absolute darkness that swallows light, sound, and everything else unfortunate enough to get close. Your teeth and tongue disappear for a while, and there's nothing behind your lips except the howling Abyss.
 
 The void is visible to anyone looking at your face. For the rest of the scene, the following applies to you:
 
@@ -86,7 +86,7 @@ Ending the effect requires you to give living flesh to the Abyss, which usually 
 
 *(Requires: Auspex access)*
 
-**When you study a mortal from a distance and knit invisible strands of entropy around their fate**, make a Hunger Check and roll +Wits. The curse unfolds over the next 24 hours through mundane-seeming accidents, sudden illness, or improbably unfortunate coincidences.
+**When you study a mortal from a distance and knit invisible strands of entropy around their fate,** make a Hunger Check and roll +Wits. The curse unfolds over the next 24 hours through mundane-seeming accidents, sudden illness, or improbably unfortunate coincidences.
 
 This Power only affects mortals (including Ghouls). Vampires are too dead and too stubborn for entropy to get a good grip. You cannot interact with the target in any way while the curse is active. Sending a Ghoul, calling in a favor, or arranging circumstances around them all count as interference and break the curse immediately. Nice try.
 
@@ -104,19 +104,19 @@ This Power only affects mortals (including Ghouls). Vampires are too dead and to
 
 ### *Shadow Perspective (Passive)*
 
-**When you view the world through your shadow's eyes as well as your own**, your perception splits. You can see and hear through any shadow within line of sight as if you were lurking inside it, while still perceiving your normal surroundings. The presence of your senses in the shadow is undetectable except by ***Sense the Unseen***.
+**When you view the world through your shadow's eyes as well as your own,** your perception splits. You can see and hear through any shadow within line of sight as if you were lurking inside it, while still perceiving your normal surroundings. The presence of your senses in the shadow is undetectable except by ***Sense the Unseen***.
 
 This includes your own shadow as projected by ***Umbral Sphere*** if active. You can shift your awareness between shadows within line of sight freely.
 
 ### *Umbral Sphere*
 
-**When you exhale darkness from within and force a supernatural shadow into existence around you**, make a Hunger Check. For the rest of the scene, you project a supernatural shadow that fills Close Range (Far Range at BP 4+), stretching out from you in every direction. This shadow negates the Light Sensitivity Disadvantage for any Oblivion Power used within its reach and obscures the vision of anyone unable to see through its inky magical blackness. Direct sunlight or strong UV light dispels it immediately.
+**When you exhale darkness from within and force a supernatural shadow into existence around you,** make a Hunger Check. For the rest of the scene, you project a supernatural shadow that fills Close Range (Far Range at BP 4+), stretching out from you in every direction. This shadow negates the Light Sensitivity Disadvantage for any Oblivion Power used within its reach and obscures the vision of anyone unable to see through its inky magical blackness. Direct sunlight or strong UV light dispels it immediately.
 
 Oblivion Powers whose effects extend beyond the shadow's Range do not benefit from ***Umbral Sphere***. You can direct the shape of your shadow at will, elongating or distorting it for dramatic effect, though when undirected it moves on its own to reflect your mood. The shadow is visibly supernatural to anyone paying attention, but not even ***Sense the Unseen*** can penetrate its gloom.
 
 ### *Where the Veil Thins*
 
-**When you press your awareness against the boundary between the living and the dead**, make a Hunger Check and roll +Shadow. Regardless of the result, the Storyteller tells you the density of the Veil in the immediate area. The following densities exist, and any Oblivion user with this Power benefits from the listed bonuses whenever performing Ceremonies at a matching location, whether or not they've actively tested it:
+**When you press your awareness against the boundary between the living and the dead,** make a Hunger Check and roll +Shadow. Regardless of the result, the Storyteller tells you the density of the Veil in the immediate area. The following densities exist, and any Oblivion user with this Power benefits from the listed bonuses whenever performing Ceremonies at a matching location, whether or not they've actively tested it:
 
 - **Impenetrable:** no deaths happened here, or this is sacred ground; the dead cannot cross the Veil here
 - **Thick:** a death took place here long ago, or this is a place of joy; no mechanical effect
@@ -149,7 +149,7 @@ Without this Power, Oblivion users cannot benefit from these Ongoing bonuses eve
 
 ### *Aura of Decay*
 
-**When you let the entropy of the Abyss seep out through your pallid skin**, make 3 Hunger Checks. For the rest of the scene, everything within Close Range of you rots rapidly. Plants wilt and blacken, food spoils, wood warps, paint peels, brick crumbles, and mortals grow ill. Living creatures caught in the aura take Superficial Harm equal to your Blood Potency over the course of the scene, applied gradually as their bodies weaken. This Harm is supernatural in origin and cannot be treated by mundane medicine while the aura is active.
+**When you let the entropy of the Abyss seep out through your pallid skin,** make 3 Hunger Checks. For the rest of the scene, everything within Close Range of you rots rapidly. Plants wilt and blacken, food spoils, wood warps, paint peels, brick crumbles, and mortals grow ill. Living creatures caught in the aura take Superficial Harm equal to your Blood Potency over the course of the scene, applied gradually as their bodies weaken. This Harm is supernatural in origin and cannot be treated by mundane medicine while the aura is active.
 
 You also *absolutely reek* of death while this Power is active. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls for the duration unless you're talking to a Graverobber or Grim Reaper. Anyone who consumes food or drink affected by the aura takes 2 Superficial Harm per item consumed until treated with supernatural means or healed with Vitae. The aura ends when the scene ends or you choose to let it disperse (a Free Action).
 
@@ -157,7 +157,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 *(Requires: Fortitude access)*
 
-**When you *Feed* from a particularly passionate or benevolent spirit**, mark 1 Stain, make a Hunger Check, and roll with your normal **Feed** stat. You drain ephemera, something like the psychic imprint of emotion itself, consuming the ghost's tethering passions and leaving whatever remains. Aggressive Wraiths or Spectres and apathetic ghosts have nothing worth consuming; the Spirit must have genuine positive attachments for this Power to work.
+**When you *Feed* from a particularly passionate or benevolent spirit,** mark 1 Stain, make a Hunger Check, and roll with your normal **Feed** stat. You drain ephemera, something like the psychic imprint of emotion itself, consuming the ghost's tethering passions and leaving whatever remains. Aggressive Wraiths or Spectres and apathetic ghosts have nothing worth consuming; the Spirit must have genuine positive attachments for this Power to work.
 
 **On a 12+,** slake 3 Hunger. The ghost is left hollowed out but intact, drifting in vacant, sorrowful apathy forevermore. Hope the meal was worth condemning them to that.
 
@@ -175,7 +175,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 *(Requires: Auspex access)*
 
-**When you peel a piece of your own shadow free and give it purpose**, make a Hunger Check and roll +Shadow. The Shade travels across surfaces at running speed, slips under doors and through the smallest cracks, and follows your mental commands. It has no mind of its own but perceives everything around it. When it returns and merges back into your shadow, you receive everything it experienced. Shades cannot attack, manipulate objects, or interact with the physical world (unless yours is allowed to by some other limited means). They are destroyed by bright light (UV or otherwise) or direct sunlight.
+**When you peel a piece of your own shadow free and give it purpose,** make a Hunger Check and roll +Shadow. The Shade travels across surfaces at running speed, slips under doors and through the smallest cracks, and follows your mental commands. It has no mind of its own but perceives everything around it. When it returns and merges back into your shadow, you receive everything it experienced. Shades cannot attack, manipulate objects, or interact with the physical world (unless yours is allowed to by some other limited means). They are destroyed by bright light (UV or otherwise) or direct sunlight.
 
 **On a 12+,** the Shade lasts until dawn and can travel any distance. It returns vivid, detailed information.
 
@@ -192,7 +192,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 ### *Touch of Oblivion*
 
-**When you grip someone within Hand Range and channel the withering entropy of the Abyss through your grasp**, make a Hunger Check and roll +Shadow. The target ages catastrophically wherever you touch: skin shrivels, muscle atrophies, bone goes brittle. The effect is instantaneous and insidious. Vampires can mend crippling injuries from this Power during slumber like any Aggravated Harm. Mortals cannot without supernatural healing. Mark 1 Stain if you or your Coterie are the aggressors in this encounter, or if you roll 12+.
+**When you grip someone within Hand Range and channel the withering entropy of the Abyss through your grasp,** make a Hunger Check and roll +Shadow. The target ages catastrophically wherever you touch: skin shrivels, muscle atrophies, bone goes brittle. The effect is instantaneous and insidious. Vampires can mend crippling injuries from this Power during slumber like any Aggravated Harm. Mortals cannot without supernatural healing. Mark 1 Stain if you or your Coterie are the aggressors in this encounter, or if you roll 12+.
 
 **On a 12+,** the target takes 3 Aggravated Harm. Choose 2:
 
@@ -218,7 +218,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 ### *Necrotic Plague*
 
-**When you firmly touch a mortal's skin and poison their blood with supernatural rot**, make a Hunger Check and roll +Shadow. The disease is invisible and presents as a sudden, severe illness that no doctor can diagnose or treat. This Power only affects mortals (including Ghouls), and when it says "day," that means 24 whole hours, even the ones with sunlight in them. Each one is critical.
+**When you firmly touch a mortal's skin and poison their blood with supernatural rot,** make a Hunger Check and roll +Shadow. The disease is invisible and presents as a sudden, severe illness that no doctor can diagnose or treat. This Power only affects mortals (including Ghouls), and when it says "day," that means 24 whole hours, even the ones with sunlight in them. Each one is critical.
 
 **On a 12+,** the target is infected for a number of days equal to your Blood Potency, taking 2 Aggravated Harm at the start of each day. The disease is contagious via touch; subsequent victims suffer the plague for 1 night fewer than the person who infected them. The disease can be cured by drinking Vitae, but good luck explaining to a mortal why they need to drink your blood to feel better.
 
@@ -234,7 +234,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 ### *Profane the Sanctified*
 
-**When you channel the emptiness of the Abyss against a person of genuine religious devotion**, make a Hunger Check and roll +Shadow. This Power targets anyone who holds sincere faith, not performative piety. The Storyteller determines whether the target qualifies.
+**When you channel the emptiness of the Abyss against a person of genuine religious devotion,** make a Hunger Check and roll +Shadow. This Power targets anyone who holds sincere faith, not performative piety. The Storyteller determines whether the target qualifies.
 
 **On a 12+,** the target takes 1 Aggravated Harm for each symbol of faith on their person (rosary, crucifix, prayer shawl, clerical vestments, or anything else worn or carried as an expression of belief). Each symbol cracks, corrodes, burns with black flame, or decays beyond repair. Any faith-based protections or advantages the target possesses are suppressed until the next dawn.
 
@@ -252,7 +252,7 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 *(Requires: **Umbral Sphere**)*
 
-**When you extend your *Umbral Sphere* beyond its normal reach**, your shadow deepens and sound dies within it. All sound inside the sphere becomes muffled: voices dissolve into murmurs, footsteps vanish, screams become whispers, gunshots become faint cracks, and music is put through a heavy low-pass filter. Anyone inside the sphere without ***Abyssal Sight*** has an Ongoing −2 penalty to all perception-based rolls for as long as they remain within.
+**When you extend your *Umbral Sphere* beyond its normal reach,** your shadow deepens and sound dies within it. All sound inside the sphere becomes muffled: voices dissolve into murmurs, footsteps vanish, screams become whispers, gunshots become faint cracks, and music is put through a heavy low-pass filter. Anyone inside the sphere without ***Abyssal Sight*** has an Ongoing −2 penalty to all perception-based rolls for as long as they remain within.
 
 Mortals caught in the shroud take 1 Superficial Harm per turn from the suffocating emptiness. It just really sucks to be in there.
 
@@ -270,7 +270,7 @@ Unprepared mortals are catatonic with shock for the rest of the scene. Vampires 
 
 *(Requires: **Shade Servant**)*
 
-**When you reach into a creature's shadow and rip out the darkest parts of their psyche**, make 2 Hunger Checks and roll +Shadow. You must have clear sight of the target (***Shadow Perspective*** works nicely).
+**When you reach into a creature's shadow and rip out the darkest parts of their psyche,** make 2 Hunger Checks and roll +Shadow. You must have clear sight of the target (***Shadow Perspective*** works nicely).
 
 **On a success (7+),** a shadowy doppelgänger erupts from the target's shadow constructed of their suppressed impulses, their cruelty, and their darkest instincts, all given physical form. The dark entity matches its host's stats, equipment, HP, and Discipline access, but it has no allies (not even you) and no interest in self-preservation. Its only purpose is the destruction of its other half. It fights mercilessly until the end of the scene or until it or its host is destroyed.
 
@@ -278,11 +278,11 @@ Unprepared mortals are catatonic with shock for the rest of the scene. Vampires 
 
 ### *Shadow Step*
 
-**When you step into any shadow large enough to cover you and step out of another somewhere else**, make a Hunger Check. You disappear and reappear from another shadow within Distant Range and line of sight. In combat, this consumes your Movement. The passage is instantaneous but not painless; something bitterly cold brushes against you each time, and the chill lingers for hours.
+**When you step into any shadow large enough to cover you and step out of another somewhere else,** make a Hunger Check. You disappear and reappear from another shadow within Distant Range and line of sight. In combat, this consumes your Movement. The passage is instantaneous but not painless; something bitterly cold brushes against you each time, and the chill lingers for hours.
 
 You can bring one willing passenger through at no additional cost; they must be touching you when you step in, and if they don't have Oblivion access, they take 1 Superficial Harm from whatever dwells in there.
 
-**When you try to drag an unwilling creature through with you**, they must be held in a grapple. Roll +Shadow. **On a 10+,** they come through. An unprepared mortal is rendered catatonic until the end of the scene. A vampire must **Stay Chill** or enter Frenzy and flee from your Abyssal gaze immediately.
+**When you try to drag an unwilling creature through with you,** they must be held in a grapple. Roll +Shadow. **On a 10+,** they come through. An unprepared mortal is rendered catatonic until the end of the scene. A vampire must **Stay Chill** or enter Frenzy and flee from your Abyssal gaze immediately.
 
 **On a 7–9,** they come through, but the Storyteller chooses 1 complication:
 
@@ -296,7 +296,7 @@ You can bring one willing passenger through at no additional cost; they must be 
 
 *(Requires: **Necrotic Plague**)*
 
-**When you slather your palms and face in your own Vitae and recall the face of a mortal or Ghoul**, gain +2 Hunger and roll +Shadow. Distance is irrelevant; if you know their face, you can find their thread. This Power only affects mortals and Ghouls.
+**When you slather your palms and face in your own Vitae and recall the face of a mortal or Ghoul,** gain +2 Hunger and roll +Shadow. Distance is irrelevant; if you know their face, you can find their thread. This Power only affects mortals and Ghouls.
 
 **On a 12+,** the target is struck by the return of a condition they previously survived (treated cancer, a healed fracture, a past infection, a cured disease). The condition returns immediately at its worst possible severity. If you choose, you can simply stop the target's heart, killing them instantly; mark 3 Stains if you do.
 
@@ -308,7 +308,7 @@ You can bring one willing passenger through at no additional cost; they must be 
 - The target senses something supernatural at work and begins seeking answers
 - The effort drains you; take −2 Ongoing to all Oblivion rolls until dawn
 
-If the target is a Ghoul, this Power strips their immunity to aging and burns away any and all Vitae in their system. Older Ghouls may age decades in seconds, potentially disintegrating where they stand.
+**If the target is a Ghoul,** this Power strips their immunity to aging and burns away any and all Vitae in their system. Older Ghouls may age decades in seconds, potentially disintegrating where they stand.
 
 **On a 6-,** the target gains immunity to this Power forever, from any user. The entropy snaps back through the connection; you take Aggravated Harm and Stains equal to your Blood Potency. How tragic.
 
@@ -316,7 +316,7 @@ If the target is a Ghoul, this Power strips their immunity to aging and burns aw
 
 *(Requires: **Stygian Shroud**)*
 
-**When you surrender your physical form to the Abyss and dissolve into living darkness**, make 2 Hunger Checks and roll +Shadow. The transformation takes a full turn, during which you cannot do anything else except make menacing noises and speak in a terrible raspy whisper.
+**When you surrender your physical form to the Abyss and dissolve into living darkness,** make 2 Hunger Checks and roll +Shadow. The transformation takes a full turn, during which you cannot do anything else except make menacing noises and speak in a terrible raspy whisper.
 
 While transformed, you are a two-dimensional patch of sentient shadow. You can slither across any surface at walking speed and pass through any gap that isn't hermetically sealed. You take no Harm from physical sources; only fire and sunlight can hurt you. Mental Disciplines can still be used at the Storyteller's discretion.
 
@@ -338,7 +338,7 @@ You can envelop a single creature by flowing over them. An enveloped target suff
 
 *(Requires: **Touch of Oblivion**)*
 
-**When you firmly grasp a creature, lock eyes, and channel raw entropy directly into their soul**, make 2 Hunger Checks and roll +Shadow. You must be within Hand Range. This Power affects mortals and vampires differently but devastates both. Mark 5 Stains unless the kill aligns with one of your Convictions.
+**When you firmly grasp a creature, lock eyes, and channel raw entropy directly into their soul,** make 2 Hunger Checks and roll +Shadow. You must be within Hand Range. This Power affects mortals and vampires differently but devastates both. Mark 5 Stains unless the kill aligns with one of your Convictions.
 
 Against mortals, the target takes Aggravated Harm equal to twice your Blood Potency. Those killed by ***Withering Spirit*** are annihilated so completely that they cannot return as ghosts. No Wraith, no Spectre, no haunting. They are gone and banished and no longer your problem.
 
@@ -365,7 +365,7 @@ For details on how to learn Ceremonies, see the Discipline [General Rules](gener
 ### Level 1
 #### *Gift of False Life*
 
-***Requirements:** a human or animal corpse (or multiple), a concoction of blood, phlegm, and bile, your Vitae, 1 scene*
+***Requirements:*** *a human or animal corpse (or multiple), a concoction of blood, phlegm, and bile, your Vitae, 1 scene*
 
 You apply the concoction to each corpse, massage your Vitae into the remains, and gain +1 Hunger. The bodies shudder, twitch, and stand. Though technically classifiable as undead, they're more like meat robots capable of following simple instructions.
 
@@ -377,7 +377,7 @@ Animated corpses decay at a natural rate. They have HP equal to three times your
 
 #### *Summon Spirit*
 
-***Requirements:** one of the target Spirit's Fetters (identified via **The Binding Fetter** or other means), a visual depiction of the Spirit (photograph, sketch, painting), the Spirit's true name, your Vitae, 1 uninterrupted scene*
+***Requirements:*** *one of the target Spirit's Fetters (identified via **The Binding Fetter** or other means), a visual depiction of the Spirit (photograph, sketch, painting), the Spirit's true name, your Vitae, 1 uninterrupted scene*
 
 You pour your Vitae over the Fetter, study the depiction, and call the Spirit's name aloud. Gain +1 Hunger. The Spirit feels its Fetter's pull and begins the journey from wherever it lingers to your location. If the Veil is thin enough where you stand, the Spirit is pulled through. If the Veil is Impenetrable at the Ceremony site, the Spirit cannot cross and the Ceremony fails silently.
 
@@ -387,7 +387,7 @@ The Spirit is under no obligation to cooperate. It may be grateful for the conta
 
 #### *The Knowing Stone*
 
-***Requirements:** a stone from a holy site (church wall, temple foundation, consecrated ground), your Vitae, the true name of the deceased, 1 scene*
+***Requirements:*** *a stone from a holy site (church wall, temple foundation, consecrated ground), your Vitae, the true name of the deceased, 1 scene*
 
 You pour your Vitae into a vessel and use it to write the deceased's true name on the consecrated stone. Gain +1 Hunger. If the individual still exists as a ghost or Spirit anywhere in the world, you receive a vision of their current location, clear enough to identify the place, but not precise enough to navigate there blindly (unless you're a GeoGuessr pro).
 
@@ -395,7 +395,7 @@ The vision persists for the rest of the scene and can be revisited by holding th
 
 #### *Subjugating Concatenation*
 
-***Requirements:** an arm's length of iron chain, a stone taken from a place of worship, your Vitae, 1 scene*
+***Requirements:*** *an arm's length of iron chain, a stone taken from a place of worship, your Vitae, 1 scene*
 
 You firmly grip the iron chain, place the stone in your mouth, and concentrate. Gain +1 Hunger. When you're ready, swallow the stone (yes, the whole thing; it dissolves like a pill, but it hurts a bit going down) and hurl the chain at a manifestation of Oblivion that you don't already control: a Shade, an animated corpse, a shadowy construct, or any entity sustained by an Oblivion Power.
 
@@ -405,7 +405,7 @@ This Ceremony has no effect on Spirits, Wraiths, Spectres, or any entity that is
 
 #### *Hadopelagian Familiar*
 
-***Requirements:** black vinegar, raw fish, your Vitae, a willing Familiar (from **Bond Familiar**), 1 scene*
+***Requirements:*** *black vinegar, raw fish, your Vitae, a willing Familiar (from **Bond Familiar**), 1 scene*
 
 You steep the raw fish in black vinegar mixed with your Vitae, then give the resulting mixture to a Familiar (it need not be your own). Gain +1 Hunger. If it eats the fish (it might not want to, especially if normally herbivorous), the Familiar's relationship with darkness changes fundamentally.
 
@@ -417,7 +417,7 @@ If the shadow the Familiar is submerged in is destroyed by light (someone flips 
 
 #### *Hands of the Far Shore*
 
-***Requirements:** a lightless room, a large quantity of blood (at least a gallon from any source), several liters of pitch resin, 1 uninterrupted scene*
+***Requirements:*** *a lightless room, a large quantity of blood (at least a gallon from any source), several liters of pitch resin, 1 uninterrupted scene*
 
 You bring the pitch to a boil (using magic or a hot plate, whatever gets the job done without light), then you soak your forearms and the lower half of your body in it. Take 1 Aggravated Harm and make a Hunger Check. Remember to take your clothes off first.
 
@@ -429,7 +429,7 @@ The stains never wash off, never fade, and never heal during slumber. They are p
 
 #### *Kyros' Shroud*
 
-***Requirements:** a beeswax candle, holy water or oil, a length of fabric large enough to wear as a cloak or wrap, a bundle of hyacinth, 1 scene*
+***Requirements:*** *a beeswax candle, holy water or oil, a length of fabric large enough to wear as a cloak or wrap, a bundle of hyacinth, 1 scene*
 
 You fold the fabric tightly around the hyacinth, anoint it with holy water or oil, and pray (or meditate, or just focus really hard; the words are less important than the intent). Gain +1 Hunger. When the Ceremony completes, the exterior fabric turns pitch black and remains that way for the rest of the night.
 
@@ -443,7 +443,7 @@ The Shroud is comfy and lasts until dawn. It can be worn over other clothing or 
 
 #### *Fungal Ring*
 
-***Requirements:** a fresh mushroom, a patch of moist earth (indoors or outdoors), your Vitae, 3 consecutive nights*
+***Requirements:*** *a fresh mushroom, a patch of moist earth (indoors or outdoors), your Vitae, 3 consecutive nights*
 
 You place the mushroom in the earth, drip your Vitae onto it, and wait as patiently as you can. Gain +1 Hunger only on the first night. Over the next 3 nights, additional mushroom caps sprout until they form a ring roughly an arm-span across.
 
@@ -457,7 +457,7 @@ The ring looks exactly as strange as you want it to. Mushrooms growing in severa
 
 *(Requires: **Lambent Dark**)*
 
-***Requirements:** a small sharp implement (knife, scalpel, razor blade, thorn, or similar), 1 scene*
+***Requirements:*** *a small sharp implement (knife, scalpel, razor blade, thorn, or similar), 1 scene*
 
 You prick your skin with the implement, allowing your Vitae to coat the tip, and the blood begins to shine with Lambent Dark (the substance, not the Ceremony). Take 1 Superficial Harm and gain +1 Hunger. For the rest of the scene, you can write on almost any surface using the implement, leaving marks visible only to those who can read the shadows as you can. To anyone who can see it, the writing glows with a faint, sickly fluorescence, similar to certain materials under a blacklight.
 
@@ -470,7 +470,7 @@ Use it to mark paths through unfamiliar territory, leave coded messages for alli
 ### Level 2
 #### *Awaken the Homuncular Servant*
 
-***Requirements:** a severed body part (hand, head, foot) or a small animal carcass (no larger than a dog), the weapon used to sever or kill it, your Vitae, 1 scene*
+***Requirements:*** *a severed body part (hand, head, foot) or a small animal carcass (no larger than a dog), the weapon used to sever or kill it, your Vitae, 1 scene*
 
 You coat the weapon in the concoction, use it to prepare the body part or carcass (don't think too hard about what "prepare" means, just do it), and massage your Vitae into the remains. Gain +1 Hunger. The thing twitches, flexes, and begins to move with eerie purpose, though it takes some time to orient itself, often wobbling around noisily. If anyone asks what you're doing in the bathroom, *lie.*
 
@@ -480,7 +480,7 @@ You can passively maintain a number of active Homunculi simultaneously equal to 
 
 #### *Compel Spirit*
 
-***Requirements:** the Spirit's Fetter, your Vitae, something capable of damaging or destroying the Fetter (knife, hammer, fire, acid), the Spirit's presence (typically via **Summon Spirit**), 1 scene*
+***Requirements:*** *the Spirit's Fetter, your Vitae, something capable of damaging or destroying the Fetter (knife, hammer, fire, acid), the Spirit's presence (typically via **Summon Spirit**), 1 scene*
 
 You splash your Vitae toward the Spirit and hold the destructive implement against its Fetter. Gain +1 Hunger, then you make your demands. The Spirit can feel the burn, and it knows you mean business. Roll +Shadow.
 
@@ -498,7 +498,7 @@ The compulsion ends when all tasks are fulfilled or when you voluntarily release
 
 #### *Blinding the Alloy Eye*
 
-***Requirements:** a piece of metallic mesh (copper works best), your Vitae, a location where the Veil is Thin or thinner, 1 uninterrupted scene*
+***Requirements:*** *a piece of metallic mesh (copper works best), your Vitae, a location where the Veil is Thin or thinner, 1 uninterrupted scene*
 
 You spend a scene in solitude at a location where the Veil is Thin or thinner, pressing the mesh against your face while dripping Vitae onto it. Gain +1 Hunger and take 1 Superficial Harm. Spirits of the dead gather around the mesh, drawn by the blood and the thinness between worlds. When the Ceremony completes, the mesh is fused to your skin for the night, and visible to the naked eye until the Harm it inflicted is healed.
 
@@ -510,7 +510,7 @@ The mesh must remain on your face for the duration. If removed, lost, or destroy
 
 #### *Ashen Relic*
 
-***Requirements:** the remains of a destroyed vampire (ash, bones or fragment, fangs, or anything else left behind after Final Death), salt, embalming herbs, your Vitae, 1 uninterrupted scene*
+***Requirements:*** *the remains of a destroyed vampire (ash, bones or fragment, fangs, or anything else left behind after Final Death), salt, embalming herbs, your Vitae, 1 uninterrupted scene*
 
 You mix the salt and herbs with your Vitae, coat the remains thoroughly, and speak the Ceremony's solemn words of preservation. Gain +1 Hunger. The remains harden, darken, and stop decaying. What would have crumbled to nothing within hours is now in stasis indefinitely.
 
@@ -522,7 +522,7 @@ Some Kindred preserve relics out of sentiment. Others keep them for leverage, in
 
 #### *Glass Eye*
 
-***Requirements:** black tea, your Vitae, your own eyeball, 1 scene*
+***Requirements:*** *black tea, your Vitae, your own eyeball, 1 scene*
 
 You remove one of your own eyes (you choose which one). Take 1 Aggravated Harm. Steep the eye in black tea mixed with your Vitae and make a Hunger Check. The tea turns white, then freezing cold, then turns to mist all at once. When you fish the eye out, it's encased in a smooth, dark gel.
 
@@ -536,7 +536,7 @@ Up to two (or three, if you're a Salubri) Glass Eyes can be maintained if you're
 
 #### *Hunger of Ahriman*
 
-***Requirements:** one of your own fangs, a tool capable of extracting it (pliers, a strong grip, or some string and a doorknob), your Vitae, 1 scene performed immediately after waking*
+***Requirements:*** *one of your own fangs, a tool capable of extracting it (pliers, a strong grip, or some string and a doorknob), your Vitae, 1 scene performed immediately after waking*
 
 Upon rising from slumber, instead of brushing them, you extract one of your fangs. Take 1 Aggravated Harm. Drop the fang into your own shadow and maintain unbroken focus for the rest of the scene until the shadow absorbs it. Spit your Vitae onto the shadow where the fang disappeared, then make a Hunger Check. The blood sinks in and your shadow ripples ominously.
 
@@ -546,7 +546,7 @@ While this Ceremony is active, your shadow moves independently of your body when
 
 #### *Sin Seekers*
 
-***Requirements:** several projectiles (arrows, crossbow bolts, sling stones, or similar; no bullets), as much gold as you can get, a means to melt said gold, your Vitae, 1 scene*
+***Requirements:*** *several projectiles (arrows, crossbow bolts, sling stones, or similar; no bullets), as much gold as you can get, a means to melt said gold, your Vitae, 1 scene*
 
 You melt the gold carefully in a small crucible, mix in your Vitae, and dip each projectile's tip into the molten mixture while speaking harsh words of banishment. Gain +1 Hunger. The gold hardens and dulls to a faint dark sheen that catches no light.
 
@@ -558,7 +558,7 @@ This Ceremony originates from religious and martial orders who considered archer
 
 #### *Devil's Tooth*
 
-***Requirements:** fungal spores, a rotten log or equivalent decaying wood, a gallon of coagulated blood (any kind), a section of still-warm human skin, your Vitae, 3 consecutive nights*
+***Requirements:*** *fungal spores, a rotten log or equivalent decaying wood, a gallon of coagulated blood (any kind), a section of still-warm human skin, your Vitae, 3 consecutive nights*
 
 You coat a section of the log in coagulated blood, drape the skin over it, scatter the spores, and sprinkle your Vitae across the whole nasty little arrangement. Over the next 3 nights, you gain +1 Hunger per sprinkling as fungus germinates and grows across the viscera as it decomposes. On the third night, the log is covered in what looks exactly like *Hydnellum peckii*, white fungal bodies weeping deliciously viscous crimson syrup.
 

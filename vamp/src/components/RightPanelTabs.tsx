@@ -12,7 +12,7 @@ import {
 } from '../state/derived';
 import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription, setHavenPicks } from '../state/coterie';
-import { editMode, enterDisciplineBuyMode } from '../state/ui';
+import { editMode, enterDisciplineBuyMode, viewingOtherSheet } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
 import { switchContentTab } from '../state/panel';
 import { activeCoterie, createCoterie, joinCoterie, leaveCoterie, BLANK_CHARACTER } from '../state/persistence';
@@ -32,6 +32,13 @@ function groupByCategory<T extends { category: string }>(items: T[]): [string, T
     else map.set(item.category, [item]);
   }
   return [...map.entries()];
+}
+
+/* Ascending XP (cost for Merits, gain for Flaws), then A→Z. */
+function sortByXPThenName<T extends { name: string }>(items: T[], xpOf: (item: T) => string): T[] {
+  return [...items].sort((a, b) =>
+    (parseXPValue(xpOf(a)) - parseXPValue(xpOf(b))) || a.name.localeCompare(b.name),
+  );
 }
 
 function checkLimitEligibility(
@@ -993,8 +1000,29 @@ function PlaybookSection({ creating, focused }: { creating: boolean; focused: bo
               onClick={creating && char.archetypeName !== 'Custom' ? () => updateCharacter({ archetypeName: 'Custom', stats: { Blood: NaN, Shadow: NaN, Resolve: NaN, Demeanor: NaN, Wits: NaN } }) : undefined}
             >
               {creating && <input type="radio" name="archetype" checked={char.archetypeName === 'Custom'} readOnly class="vamp-archetype__radio" />}
-              <div class="vamp-archetype__name">Custom Archetype</div>
-              <div class="vamp-archetype__tagline">Your concept, your spread.</div>
+              {char.archetypeName === 'Custom' && !viewingOtherSheet.value && (creating || editMode.value) ? (
+                <>
+                  <EditableTextField
+                    className="vamp-archetype__name"
+                    value={char.customArchetypeName}
+                    placeholder="Custom Archetype"
+                    onSave={(v) => updateCharacter({ customArchetypeName: v })}
+                    hideLabel
+                  />
+                  <EditableTextField
+                    className="vamp-archetype__tagline"
+                    value={char.customArchetypeTagline}
+                    placeholder="Your concept, your spread."
+                    onSave={(v) => updateCharacter({ customArchetypeTagline: v })}
+                    hideLabel
+                  />
+                </>
+              ) : (
+                <>
+                  <div class="vamp-archetype__name">{char.customArchetypeName || 'Custom Archetype'}</div>
+                  <div class="vamp-archetype__tagline">{char.customArchetypeTagline || 'Your concept, your spread.'}</div>
+                </>
+              )}
               {creating && char.archetypeName === 'Custom' ? (
                 <CustomStatAllocator />
               ) : (
@@ -1650,8 +1678,11 @@ function AdvancementPanel() {
               </p>
             )}
             {groupByCategory(optExtras.merits).map(([cat, items]) => {
-              const visible = items.filter(m =>
-                char.merits.some(x => x.name === m.name) || checkMeritEligibility(m, char),
+              const visible = sortByXPThenName(
+                items.filter(m =>
+                  char.merits.some(x => x.name === m.name) || checkMeritEligibility(m, char),
+                ),
+                m => m.xpCost,
               );
               if (visible.length === 0) return null;
               return (
@@ -1694,8 +1725,11 @@ function AdvancementPanel() {
               </p>
             )}
             {groupByCategory(optExtras.flaws).map(([cat, items]) => {
-              const visible = items.filter(f =>
-                char.flaws.some(x => x.name === f.name) || checkFlawEligibility(f, char),
+              const visible = sortByXPThenName(
+                items.filter(f =>
+                  char.flaws.some(x => x.name === f.name) || checkFlawEligibility(f, char),
+                ),
+                f => f.xpGain,
               );
               if (visible.length === 0) return null;
               return (

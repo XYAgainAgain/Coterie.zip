@@ -88,6 +88,9 @@ export interface CharacterState {
   ageBracket: string;
   bio: Bio;
   archetypeName: string;
+  /* Player-authored name + tagline shown when the Custom Archetype is active. */
+  customArchetypeName: string;
+  customArchetypeTagline: string;
   stats: Record<StatName, number>;
   unlockedDisciplines: string[];
   startingDisciplines: string[];
@@ -192,6 +195,8 @@ const JOHNNY_FANGS: CharacterState = {
   ageBracket: 'Fledgling',
   bio: { apparentAge: '28', vampiricAge: '3', pronouns: ['he', 'him'], height: '5\'10"', weight: '165 lbs', style: 'Leather jacket, slicked-back hair', occupation: 'Bouncer' },
   archetypeName: 'Greaser',
+  customArchetypeName: '',
+  customArchetypeTagline: '',
   stats: { Blood: 1, Shadow: 1, Resolve: -1, Demeanor: 0, Wits: 2 },
   unlockedDisciplines: ['celerity', 'obfuscate'],
   startingDisciplines: ['celerity', 'obfuscate'],
@@ -343,6 +348,77 @@ export function setHarm(superficial: number, aggravated: number) {
     ...character.value,
     harm: { superficial: sup, aggravated: agg },
   };
+}
+
+export interface StainOutcome {
+  humanity: number;
+  stains: number;
+  lostHumanity: boolean;
+}
+
+/* Marking a Stain costs 1 Humanity (and clears Stains) once Stains hit 5 or fill the
+   remaining track, whichever comes first. */
+export function applyStain(humanity: number, stains: number): StainOutcome {
+  const next = stains + 1;
+  if (next >= 5 || humanity + next >= 10) {
+    return { humanity: Math.max(0, humanity - 1), stains: 0, lostHumanity: true };
+  }
+  return { humanity, stains: next, lostHumanity: false };
+}
+
+export interface RemorseOutcome {
+  humanity: number;
+  stains: number;
+  safe: boolean;
+}
+
+/* Roll strictly over your Stains to hold Humanity, else lose 1. Either way, Stains clear. */
+export function resolveRemorse(humanity: number, stains: number, roll: number): RemorseOutcome {
+  const safe = roll > stains;
+  return { humanity: safe ? humanity : Math.max(0, humanity - 1), stains: 0, safe };
+}
+
+/* Mending Superficial Harm restores BP boxes, minimum 1. */
+export function superficialHealAmount(bp: number): number {
+  return Math.max(1, bp);
+}
+
+/* Slumber repairs 1 + BP Aggravated Harm. */
+export function aggravatedHealAmount(bp: number): number {
+  return 1 + bp;
+}
+
+export interface SlumberHealOutcome {
+  superficial: number;
+  aggravated: number;
+  superficialHealed: number;
+  aggravatedHealed: number;
+}
+
+/* Healing on waking. Superficial fully clears if you Fed the prior night; Aggravated
+   heals 1+BP only if you bedded down at 2 Hunger or below. hungerAtBed is the Hunger you
+   slept at, before the wake +1. */
+export function slumberHeal(
+  harm: { superficial: number; aggravated: number },
+  bp: number,
+  hungerAtBed: number,
+  fedLastNight: boolean,
+): SlumberHealOutcome {
+  let superficial = harm.superficial;
+  let aggravated = harm.aggravated;
+  let superficialHealed = 0;
+  let aggravatedHealed = 0;
+
+  if (fedLastNight) {
+    superficialHealed = superficial;
+    superficial = 0;
+  }
+  if (hungerAtBed <= 2) {
+    const next = Math.max(0, aggravated - aggravatedHealAmount(bp));
+    aggravatedHealed = aggravated - next;
+    aggravated = next;
+  }
+  return { superficial, aggravated, superficialHealed, aggravatedHealed };
 }
 
 export function fireXPTrigger(index: number) {
@@ -656,15 +732,21 @@ function applyPendingUpgrades() {
   };
 }
 
-export function newNight() {
+export function newNight(fedLastNight = false): SlumberHealOutcome {
+  /* Snapshot before upgrades: healing uses the BP and Hunger you slept with, not a BP
+     a pending upgrade grants on waking. */
+  const { harm: harmAtBed, bp: bpAtBed, hunger: hungerAtBed } = character.value;
   applyPendingUpgrades();
-  setHunger(character.value.hunger + 1);
+  const heal = slumberHeal(harmAtBed, bpAtBed, hungerAtBed, fedLastNight);
   character.value = {
     ...character.value,
+    hunger: Math.min(5, hungerAtBed + 1),
+    harm: { superficial: heal.superficial, aggravated: heal.aggravated },
     bloodSurgesUsed: 0,
     bloodSurgeAdvantages: 0,
     modifiers: character.value.modifiers.filter(m => !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)),
   };
+  return heal;
 }
 
 export function newSession() {

@@ -1054,6 +1054,34 @@ a:hover {
   .vamp-bio { font-size: 0.6rem; }
 }
 
+/* Floor target: 720p at 150% zoom (~480 CSS px tall). Keep the 5 stats and the
+   remaining Basic Moves visible by tightening the whole column, including the bio and
+   the universal block, which otherwise hold full size and squeeze the stat grid. */
+@media (height <= 650px) {
+  .vamp-sheet__sidebar { padding: 0.4rem 0.85rem 0.6rem; }
+  .vamp-stat__header { gap: 0.25rem; }
+  .vamp-stat__circle { width: 1.4rem; height: 1.4rem; font-size: 0.7rem; }
+  .vamp-stat__name { font-size: 0.74rem; letter-spacing: 0.05em; }
+  .vamp-stat__move { font-size: 0.7rem; line-height: 1.15; }
+  .vamp-stat__moves { padding-left: 1.65rem; }
+  .vamp-bio { font-size: 0.58rem; margin-top: 0.2rem; }
+  .vamp-sidebar__universal { margin-top: 0.4rem; padding-top: 0.4rem; }
+  .vamp-sidebar__universal::before { margin-bottom: 0.4rem; }
+  .vamp-sidebar__universal > .vamp-stat__name { font-size: 0.82rem; }
+}
+
+@media (height <= 540px) {
+  .vamp-stat__header { gap: 0.2rem; }
+  .vamp-stat__circle { width: 1.25rem; height: 1.25rem; font-size: 0.64rem; border-width: 1px; }
+  .vamp-stat__name { font-size: 0.68rem; }
+  .vamp-stat__move { font-size: 0.66rem; line-height: 1.1; }
+  .vamp-stat__moves { padding-left: 1.45rem; }
+  .vamp-bio { font-size: 0.55rem; }
+  .vamp-sidebar__universal { margin-top: 0.3rem; padding-top: 0.3rem; }
+  .vamp-sidebar__universal::before { margin-bottom: 0.3rem; }
+  .vamp-sidebar__universal > .vamp-stat__name { font-size: 0.76rem; }
+}
+
 @keyframes creation-hint-fade-in {
   from { opacity: 0; translate: 0 0.5rem; }
   to { opacity: 1; translate: 0 0; }
@@ -4031,6 +4059,13 @@ details[open] > .vamp-detail__summary::before {
   color: var(--v-text-secondary);
   font-style: italic;
   margin-bottom: 0.3rem;
+}
+
+/* Inline editors for the Custom Archetype inherit the name/tagline look. */
+.vamp-archetype__name.vamp-editable :is(.vamp-editable__display, .vamp-editable__input),
+.vamp-archetype__tagline.vamp-editable :is(.vamp-editable__display, .vamp-editable__input) {
+  font: inherit;
+  color: inherit;
 }
 
 .vamp-archetype__stats {

@@ -16,9 +16,9 @@ Masquerade risk varies wildly; some Powers are practically invisible, others are
 
 Your blood is both a diagnostic instrument and an extension of your will.
 
-**When you reach out to physically command spilled blood**, it obeys like a very wet puppet on invisible strings. You can move, shape, suspend, sculpt, clean, moisten, dry, freeze, and direct any blood or Vitae that exists outside a living or unliving body within Close Range, up to a few buckets' worth at a time. Slide it under doors, write messages on walls, clean a crime scene, form it into symbols. This requires no roll and no Hunger Check, and counts as a Free Action during combat. You cannot weaponize blood this way (that requires more advanced Powers), and you cannot affect blood still inside a creature's body.
+**When you reach out to physically command spilled blood,** it obeys like a very wet puppet on invisible strings. You can move, shape, suspend, sculpt, clean, moisten, dry, freeze, and direct any blood or Vitae that exists outside a living or unliving body within Close Range, up to a few buckets' worth at a time. Slide it under doors, write messages on walls, clean a crime scene, form it into symbols. This requires no roll and no Hunger Check, and counts as a Free Action during combat. You cannot weaponize blood this way (that requires more advanced Powers), and you cannot affect blood still inside a creature's body.
 
-**When you taste a drop of blood while *Discerning Vibes* or *Catching the Scent***, you gain access to the following additional questions, which cost Hold as normal:
+**When you taste a drop of blood while *Discerning Vibes* or *Catching the Scent*,** you gain access to the following additional questions, which cost Hold as normal:
 
 - What type of creature does this blood belong to?
 - What is the blood's Resonance, and how intense is it?
@@ -39,7 +39,7 @@ A single drop is all you need. Not enough to trigger a Blood Bond, but enough to
 
 ### *Corrosive Vitae (Passive)*
 
-**When your sizzling Vitae splashes onto any inanimate object**, gain +1 Hunger as it eats through matter like strong acid through paper. Over the next few minutes, your Vitae dissolves organic material, corrodes soft metals, and pits harder alloys. A palmful is enough to eat through a padlock, a set of handcuffs, or a wooden door. More blood means more destruction, but also more Hunger; each application costs an additional +1.
+**When your sizzling Vitae splashes onto any inanimate object,** gain +1 Hunger as it eats through matter like strong acid through paper. Over the next few minutes, your Vitae dissolves organic material, corrodes soft metals, and pits harder alloys. A palmful is enough to eat through a padlock, a set of handcuffs, or a wooden door. More blood means more destruction, but also more Hunger; each application costs an additional +1.
 
 Reinforced steel, titanium, and similarly hard metals resist the corrosion, scarring and pitting without fully dissolving. Your Vitae has no effect on living or unliving flesh. The process is too slow for combat but excellent for getting into places you weren't invited or ruining somebody's most prized possessions.
 
@@ -51,11 +51,11 @@ Your Ghoul doesn't need to know they're a delivery mechanism, and probably shoul
 
 ### *Pierce the Flesh*
 
-**When you open a wound on yourself and crystallize your Vitae into razor-sharp projectiles**, take 1 Superficial Harm (Ignore Armor) and make a Hunger Check. A number of gleaming blood daggers equal to twice your Blood Potency materialize in the air around you, hovering menacingly until directed. They last until the end of the scene or until used.
+**When you open a wound on yourself and crystallize your Vitae into razor-sharp projectiles,** take 1 Superficial Harm (Ignore-Armor) and make a Hunger Check. A number of gleaming blood daggers equal to twice your Blood Potency materialize in the air around you, hovering menacingly until directed. They last until the end of the scene or until used.
 
 You can hurl a single 1-Harm dagger at any target within Far Range as a Free Action without rolling, dealing Superficial Harm to supernatural creatures or Aggravated Harm to mortals.
 
-**When you fling a volley of every remaining dagger at once**, roll +Blood and describe how sick it looks. All daggers are consumed after a volley, hit or miss.
+**When you fling a volley of every remaining dagger at once,** roll +Blood and describe how sick it looks. All daggers are consumed after a volley, hit or miss.
 
 **On a 12+,** roll 1d6 per dagger to determine how much Harm they deal, distributed however you like among any number of targets within Far Range.
 
@@ -82,7 +82,7 @@ This Power can be taken multiple times: once each time your Blood Potency increa
 
 ### *Extinguish Vitae*
 
-**When you twist your fingers to curdle the blood of a vampire you can see within Far Range**, make a Hunger Check and roll +Blood.
+**When you twist your fingers to curdle the blood of a vampire you can see within Far Range,** make a Hunger Check and roll +Blood.
 
 **On a 12+,** the target gains +2 Hunger and the process is completely undetectable, even to Auspex users. **On a 10+,** the target gains +2 Hunger. **On a 7–9,** the target gains +1 Hunger, and the Storyteller chooses 1 complication:
 
@@ -95,7 +95,7 @@ This Power can be taken multiple times: once each time your Blood Potency increa
 
 ### *Blood's Curse*
 
-**When you lock eyes with another vampire and speak a blood hex to amplify their curse**, make a Hunger Check and roll +Blood.
+**When you lock eyes with another vampire and speak a blood hex to amplify their curse,** make a Hunger Check and roll +Blood.
 
 **On a 12+,** if the target has a Clan, they suffer their Variant Bane in addition to their normal one for the rest of the night; if Clanless, choose two Folkloric Banes of any severity for them to suffer instead. **On a 10+,** choose a Folkloric Bane worth +2 XP or less and impose it on the target for the rest of the night.
 
@@ -110,7 +110,7 @@ This Power can be taken multiple times: once each time your Blood Potency increa
 
 ### *Scour Secrets*
 
-**When you make an incision on yourself and spill blood across documents or surfaces, reading their contents through your Vitae**, make a Hunger Check and roll +Wits. Your blood washes over the material faster than any eye could scan it, then recedes, leaving telltale dark red stains on everything it touched.
+**When you make an incision on yourself and spill blood across documents or surfaces, reading their contents through your Vitae,** make a Hunger Check and roll +Wits. Your blood washes over the material faster than any eye could scan it, then recedes, leaving telltale dark red stains on everything it touched.
 
 **On a 12+,** Hold 3 and take +2 Forward when acting directly on the information. **On a 10+,** Hold 2 and take +1 Forward instead. **On a 7–9,** Hold 1, and the Storyteller chooses 1 complication:
 
@@ -137,7 +137,7 @@ Spend Hold 1-for-1 to ask the Storyteller:
 
 *(Requires: **Corrosive Vitae**)*
 
-**When you score your skin and coat your fangs or a bladed weapon in toxic Vitae**, make a Hunger Check and roll +Blood. The venom lasts for 1 scene. You can coat additional weapons at 1 Hunger Check each, and you can spit a mouthful at any target within Close Range as a Free Action for 1 Superficial Harm.
+**When you score your skin and coat your fangs or a bladed weapon in toxic Vitae,** make a Hunger Check and roll +Blood. The venom lasts for 1 scene. You can coat additional weapons at 1 Hunger Check each, and you can spit a mouthful at any target within Close Range as a Free Action for 1 Superficial Harm.
 
 **On a 10+,** for the rest of the scene, whenever you **Dirty Your Claws** with a coated weapon or your fangs, the target takes an additional 3 Superficial Harm from the toxin. Mortals who take any Harm from the poison collapse unconscious in the most dramatic way your Storyteller can conceive.
 
@@ -152,13 +152,13 @@ Spend Hold 1-for-1 to ask the Storyteller:
 
 ### *Blood of Potency*
 
-**When you clench your fists and thicken the Vitae coursing through your undead veins**, make a number of Hunger Checks equal to the Blood Potency you're trying to reach. Your BP increases to the target level until the end of the scene. To extend the boost to a full night, make twice that number of Hunger Checks instead.
+**When you clench your fists and thicken the Vitae coursing through your undead veins,** make a number of Hunger Checks equal to the Blood Potency you're trying to reach. Your BP increases to the target level until the end of the scene. To extend the boost to a full night, make twice that number of Hunger Checks instead.
 
 You gain every benefit and every cost of the higher BP: more HP, less XP, stronger Blood Surges, tighter **Feeding** restrictions, and worse Bane consequences. If the Hunger Checks push you to 5 Hunger and you Frenzy, the temporary BP boost still takes effect. Good luck with that.
 
 ### *Ripples of the Heart*
 
-**When you press your fingers into a pool of blood and twist its emotional resonance**, make a Hunger Check and roll +Blood. The blood can be yours, a mortal's, or a Kindred's you're currently **Feeding** from.
+**When you press your fingers into a pool of blood and twist its emotional resonance,** make a Hunger Check and roll +Blood. The blood can be yours, a mortal's, or a Kindred's you're currently **Feeding** from.
 
 **On a 12+,** you get both options below. **On a 10+,** choose one:
 
@@ -182,7 +182,7 @@ The next Kindred who **Feeds** from the altered source inherits the effect. Alte
 
 ### *Theft of Vitae*
 
-**When you beckon toward a mortal you can see and command their blood to leap from their body into your open mouth**, make a Hunger Check and roll +Blood. An arterial wound opens on the target in your preferred drinking location and a stream of blood arcs through the air toward you. You can do nothing else while **Feeding** this way except move, though you must maintain line of sight, and the process takes 3 full turns (15 seconds) to complete. The wound seals itself when the consumption ends, leaving no trace. A target wearing full-body protection (hazmat suit, sealed armor) merely bleeds ecstatically into their own outfit.
+**When you beckon toward a mortal you can see and command their blood to leap from their body into your open mouth,** make a Hunger Check and roll +Blood. An arterial wound opens on the target in your preferred drinking location and a stream of blood arcs through the air toward you. You can do nothing else while **Feeding** this way except move, though you must maintain line of sight, and the process takes 3 full turns (15 seconds) to complete. The wound seals itself when the consumption ends, leaving no trace. A target wearing full-body protection (hazmat suit, sealed armor) merely bleeds ecstatically into their own outfit.
 
 Against supernatural creatures whose BP is half yours (rounded down) or lower, the Power works identically. If line of sight is broken at any time while you use this Power, the stream of blood splashes to the ground and you slake Hunger equal to how many turns you were able to hold it for; no other effects occur.
 
@@ -197,7 +197,7 @@ Against supernatural creatures whose BP is half yours (rounded down) or lower, t
 
 ### *Marionette*
 
-**When you seize control of the blood inside a mortal's body and puppet them like they deserve**, make a Hunger Check, roll +Blood, and mark 2 Stains. You must have previously tasted the target's blood (even a single drop will suffice). The target maintains awareness and can still speak, but cannot resist your control of their limbs.
+**When you seize control of the blood inside a mortal's body and puppet them like they deserve,** make a Hunger Check, roll +Blood, and mark 2 Stains. You must have previously tasted the target's blood (even a single drop will suffice). The target maintains awareness and can still speak, but cannot resist your control of their limbs.
 
 Against supernatural creatures whose BP is half yours (rounded down) or lower, the Power works identically, though the target can spend a turn fighting for control at the cost of 1 Aggravated Harm as their blood shreds them from within. Sorry, but that's *your* blood right now.
 
@@ -214,13 +214,13 @@ You must maintain concentration throughout. Movement and Free Actions on your en
 
 ### *Blood Aegis*
 
-**When you open your veins and command your Vitae to form a hovering shield of liquid crimson**, gain +1 Hunger. You gain 5 Temporary HP. The quivering crimson barrier moves on its own to intercept incoming attacks, spattering beautifully on impact.
+**When you open your veins and command your Vitae to form a hovering shield of liquid crimson,** gain +1 Hunger. You gain 5 Temporary HP. The quivering crimson barrier moves on its own to intercept incoming attacks, spattering beautifully on impact.
 
 You can push additional Vitae into the shield at 1 Hunger Check per reinforcement, each restoring 5 Temporary HP, up to a maximum pool equal to 3 × your Blood Potency. The Aegis lasts for 1 scene or until all Temporary HP is depleted. Once the shield breaks, inert blood splatters across the floor. Somebody's going to have to clean that up. Probably you, but preferably a freaky little Ghoul.
 
 ### *Fulminating Vitae*
 
-**When you bleed into a small sealed container and magically prime your Vitae to detonate on contact**, gain +2 Hunger. The container (a vial, jar, bottle, flask, water balloon, thermos, Christmas ornament, or whatever else fits in one hand) begins to visibly seethe and strain against its seal. It remains armed and dangerous until dawn, and can be thrown by you or someone else at a target within Far Range by **Dirtying Your Claws**, with the following replacing the usual effects:
+**When you bleed into a small sealed container and magically prime your Vitae to detonate on contact,** gain +2 Hunger. The container (a vial, jar, bottle, flask, water balloon, thermos, Christmas ornament, or whatever else fits in one hand) begins to visibly seethe and strain against its seal. It remains armed and dangerous until dawn, and can be thrown by you or someone else at a target within Far Range by **Dirtying Your Claws**, with the following replacing the usual effects:
 
 **On a 12+,** the vermilion explosion deals Aggravated Harm equal to 4 + your Blood stat to every Kindred within Close Range of wherever the container breaks. Mortals in the blast take Superficial Harm instead since the Vitae mixes into their injuries and partially heals them while it shreds them; isn't that nice?
 
@@ -242,7 +242,7 @@ Anyone who takes Harm from the explosion also counts as having tasted your Vitae
 
 *(Requires: **Scorpion's Touch**)*
 
-**When you transmute your Vitae into a lethally aggressive neurotoxin that kills on contact**, make a Hunger Check and roll +Blood. This Power uses the same delivery methods as ***Scorpion's Touch*** (coat weapons, fangs, or spit), but the venom is significantly more deadly.
+**When you transmute your Vitae into a lethally aggressive neurotoxin that kills on contact,** make a Hunger Check and roll +Blood. This Power uses the same delivery methods as ***Scorpion's Touch*** (coat weapons, fangs, or spit), but the venom is significantly more deadly.
 
 **On a 10+,** for the rest of the scene, your envenomed attacks deal an additional 5 Aggravated Harm to everyone, Kindred and mortal alike. Mortals who take any Harm from it die in seconds and experience horrible agony in their final moments. Kindred who take Aggravated Harm from ***Baal's Caress*** must **Stay Chill** when they next attempt to sleep; on a 6-, they enter indefinite Torpor.
 
@@ -256,7 +256,7 @@ Anyone who takes Harm from the explosion also counts as having tasted your Vitae
 
 ### *Cauldron of Blood*
 
-**When you press your palm against a creature's skin and boil the blood inside their body**, gain +1 Hunger, mark 1 Stain, and roll +Blood. In combat, landing the touch requires you to successfully **Dirty Your Claws**.
+**When you press your palm against a creature's skin and boil the blood inside their body,** gain +1 Hunger, mark 1 Stain, and roll +Blood. In combat, landing the touch requires you to successfully **Dirty Your Claws**.
 
 **On a 12+,** the target takes Aggravated Harm equal to 5 + your Blood stat. Mortals die screaming and steaming. Kindred who somehow survive immediately enter Frenzy, but their Beast is terrified of you and they will rapidly flee as soon as they are able. The Frenzy ends when they can no longer sense you or any members of your Coterie, when they reach 0 Hunger again, or until you rip out their spine to punish their cowardice.
 
@@ -271,7 +271,7 @@ Anyone who takes Harm from the explosion also counts as having tasted your Vitae
 
 ### *Reclamation of Vitae*
 
-**When you close your eyes and command the Vitae you gave to your Ghouls to return**, mark 1 Stain per Ghoul targeted. Distance is irrelevant. The blood rips itself free and finds its way back to you through means that would give a physicist nightmares.
+**When you close your eyes and command the Vitae you gave to your Ghouls to return,** mark 1 Stain per Ghoul targeted. Distance is irrelevant. The blood rips itself free and finds its way back to you through means that would give a physicist nightmares.
 
 For each Ghoul targeted, slake 2 Hunger and gain +1 Ongoing (maximum of +5) to all Discipline rolls until the end of the scene. The Ghoul takes 5 Aggravated Harm as their body ages rapidly and catastrophically. If they somehow survive, the Blood Bond is severed and they are no longer a Ghoul.
 
@@ -289,7 +289,7 @@ Many Rituals don't involve rolls, but some do. Each will tell you what it needs,
 
 #### *Lesser Ward*
 
-***Requirements:** your Vitae, sympathetic ingredients keyed to the Trespasser type (see below), an object no larger than a door, 1+ nights of careful inscription*
+***Requirements:*** *your Vitae, sympathetic ingredients keyed to the Trespasser type (see below), an object no larger than a door, 1+ nights of careful inscription*
 
 You trace a glyph onto an object using your Vitae mixed with ingredients chosen to repel a specific type of creature, referred to as a Trespasser. Once the glyph dries, it is invisible. The Ward doesn't react to incidental contact; it fires only when a Trespasser touches, grasps, or attempts to cross the Warded object. A Warded sword won't trigger when swung at a Trespasser, but it will when a Trespasser tries to pick it up.
 
@@ -323,7 +323,7 @@ If it doesn't fizzle, each Ward you place lasts until the Warded object is physi
 
 #### *Blood Walk*
 
-***Requirements:** a silver cup, a sample of the subject's blood (at least a mouthful), 1 scene*
+***Requirements:*** *a silver cup, a sample of the subject's blood (at least a mouthful), 1 scene*
 
 You pour your own Vitae into the cup alongside the subject's blood, gain +1 Hunger, and spend a scene murmuring incantations over the mingling fluids. The two bloods swirl together and separate in patterns only you (and whoever taught you this Ritual) can read.
 
@@ -344,7 +344,7 @@ If the subject is not a vampire, the Ritual still works, but yields less: what t
 
 #### *Craft Bloodstone*
 
-***Requirements:** a pebble of iron or a small magnet, a liter of blood from any source in a silver bowl, 3 consecutive nights*
+***Requirements:*** *a pebble of iron or a small magnet, a liter of blood from any source in a silver bowl, 3 consecutive nights*
 
 You spill your Vitae into the bowl each night, gaining +1 Hunger each time (3 total), and chant over the mixture as the pebble slowly absorbs every drop. By the third dawn, the liquid in the bowl is translucent and the stone pulses faintly when you hold it.
 
@@ -354,7 +354,7 @@ You can maintain a number of active Bloodstones equal to your Resolve stat at an
 
 #### *Wake with Evening's Freshness*
 
-***Requirements:** burnt bones and feathers of a rooster, your Vitae, a circle drawn around your resting place, 1 scene*
+***Requirements:*** *burnt bones and feathers of a rooster, your Vitae, a circle drawn around your resting place, 1 scene*
 
 You mix the ashes with your Vitae, gain +1 Hunger, and trace a circle around wherever you intend to sleep for the day. Then you rest as normal (some light grimoire reading before bed is optional but recommended). This Ritual can only be cast on yourself, and the circle vanishes when you awaken. Do not roll anything yet.
 
@@ -372,7 +372,7 @@ You mix the ashes with your Vitae, gain +1 Hunger, and trace a circle around whe
 
 #### *Bind the Accusing Tongue*
 
-***Requirements:** a picture, effigy, or image of the target, a lock of the target's hair, a black silken cord, 1 scene*
+***Requirements:*** *a picture, effigy, or image of the target, a lock of the target's hair, a black silken cord, 1 scene*
 
 You wind the cord around the hair and image while repeating the incantation, gain +1 Hunger, and tie a knot to seal it. As long as the cord remains wound and the knot holds, the target cannot speak, write, or otherwise directly communicate anything negative or harmful about you (not even via internet comments).
 
@@ -384,7 +384,7 @@ The Ritual lasts until the cord is unwound or destroyed, or until the target suc
 
 #### *Revealing the Crimson Trail*
 
-***Requirements:** a sewing needle with an eye, your Vitae, the gumption to stab yourself in the eye, 1 scene*
+***Requirements:*** *a sewing needle with an eye, your Vitae, the gumption to stab yourself in the eye, 1 scene*
 
 You ritually prepare the sewing needle by carefully pricking your own eyeball with it, gain +1 Hunger and take 1 Superficial Harm, and then peer through its eye. For the rest of the scene, you can see any spilled blood in the area with perfect clarity, no matter how old, diluted, scrubbed, or chemically treated it is. Dried bloodstains glow a deep arterial red. Cleaned-up crime scenes light up like neon. A single drop on a carpet from six months ago is as visible as a fresh puddle.
 
@@ -392,7 +392,7 @@ The sewing needle must remain in your hand, and you must keep looking through it
 
 #### *Blood Missive*
 
-***Requirements:** varies by method (see below), 1 scene*
+***Requirements:*** *varies by method (see below), 1 scene*
 
 This Ritual encodes messages into blood. Two different preparation methods produce two different results. Both have seen a resurgence since certain mortals started monitoring digital communications.
 
@@ -406,7 +406,7 @@ Each casting produces enough charges for the message to appear once per designat
 
 #### *Douse the Fear*
 
-***Requirements:** a Holy object (Bible, Quran, Torah, prayer beads, crucifix, or similar), a source of flame, 1 scene*
+***Requirements:*** *a Holy object (Bible, Quran, Torah, prayer beads, crucifix, or similar), a source of flame, 1 scene*
 
 You expose the Holy object to the flame just enough to scorch it (don't fully destroy it, you might need that later), mix the soot with a drop of your Vitae, and swallow the residue. Gain +1 Hunger. The desecration tastes like burning paper and moral compromise. Yum.
 
@@ -416,7 +416,7 @@ If you're the type who burns other people's sacred objects regularly, maybe thin
 
 #### *Crimson Woad*
 
-***Requirements:** whiskey, animal blood, wild mushrooms, rosemary, a stone mortar and pestle, 1 scene*
+***Requirements:*** *whiskey, animal blood, wild mushrooms, rosemary, a stone mortar and pestle, 1 scene*
 
 You grind the ingredients together while humming a discordant, droning tune (or any alt-J song), pour in a mouthful of your own Vitae, and gain +1 Hunger. Then you paint the resulting paste onto your skin in aggressive spiraling patterns that glow faintly before sinking into your flesh.
 
@@ -426,7 +426,7 @@ This Ritual hails from old pagan Gangrel traditions. Academic Blood Sorcerers fi
 
 #### *Clinging of the Insect*
 
-***Requirements:** a living spider, a vial of your Vitae, strong stomach, 1 scene*
+***Requirements:*** *a living spider, a vial of your Vitae, strong stomach, 1 scene*
 
 You crush a spider into the vial of your Vitae, mix it thoroughly, optionally season to taste, and drink the whole thing in one go. Gain +1 Hunger.
 
@@ -436,7 +436,7 @@ This Ritual can only be performed on yourself. Others gain nothing from drinking
 
 #### *Seal the Brand*
 
-***Requirements:** molten silver, a tattoo, scar, brand, piercing, or other body modification on the target, 1 uninterrupted scene*
+***Requirements:*** *molten silver, a tattoo, scar, brand, piercing, or other body modification on the target, 1 uninterrupted scene*
 
 You pour molten silver over the target's body modification before it has the chance to seal itself. The target takes 1 Superficial Harm from the silver (heals normally). No Hunger cost, but someone has to melt the silver, which means dealing with fire, a crucible, and a willingness to handle molten metal.
 
@@ -444,7 +444,7 @@ The body modification is now permanent. It will never fade, shift, or heal away 
 
 #### *Blood to Water*
 
-***Requirements:** purified water (natural spring or mechanically filtered), your Vitae, 1 scene*
+***Requirements:*** *purified water (natural spring or mechanically filtered), your Vitae, 1 scene*
 
 You smear your Vitae across your hands, pour the purified water through your fingers, and splash it across the area. Gain +1 Hunger. All spilled blood exposed to the air within Close Range transmutes into water, leaving no forensic traces behind. Your own spilled Vitae is not exempt.
 
@@ -452,7 +452,7 @@ This does not affect blood inside a living or unliving body, only blood that's a
 
 #### *Enrich the Blood*
 
-***Requirements:** a half-full vial of the target mortal's blood, 5 or more liters of unprocessed human blood no more than 3 hours old, 1 uninterrupted scene*
+***Requirements:*** *a half-full vial of the target mortal's blood, 5 or more liters of unprocessed human blood no more than 3 hours old, 1 uninterrupted scene*
 
 You slowly pour the unprocessed blood into the vial while maintaining unbroken focus. The vial never fills, absorbing everything you pour in. When the last drop is added, you can give the concentrated blood vial back to the target mortal (or Ghoul), who must drink it to gain the benefits of this Ritual. No Hunger cost.
 
@@ -462,7 +462,7 @@ A second casting of this Ritual on the same non-Ghoul mortal outright kills them
 
 #### *Beelzebeatit*
 
-***Requirements:** vinegar or strong alcohol, a counterclockwise walk around the perimeter of the area, 1 scene*
+***Requirements:*** *vinegar or strong alcohol, a counterclockwise walk around the perimeter of the area, 1 scene*
 
 You sprinkle the vinegar or alcohol on the floor while turning counterclockwise, visually tracing the boundary of the space you want cleared. No Hunger cost.
 
@@ -472,7 +472,7 @@ This is a low-level precaution against Animalism surveillance and a decent way t
 
 #### *Coax the Garden*
 
-***Requirements:** human blood (a mouthful or so), poppy seeds, an area with living plant life, 1 scene*
+***Requirements:*** *human blood (a mouthful or so), poppy seeds, an area with living plant life, 1 scene*
 
 You cast the mixture of blood and poppy seeds onto the earth and the surrounding flora comes alive. Gain +1 Hunger. Vines reach, roots shift, branches swing, grass tangles around ankles. The animated plant life covers everything within Close Range.
 
@@ -484,7 +484,7 @@ The effect lasts until the end of the scene or until you dismiss it by snapping 
 
 #### *Truth of Blood*
 
-***Requirements:** a pint or more of blood from the subject, a vessel large enough to dip your finger in, your Vitae, 1 uninterrupted scene*
+***Requirements:*** *a pint or more of blood from the subject, a vessel large enough to dip your finger in, your Vitae, 1 uninterrupted scene*
 
 You mix your Vitae with the subject's blood in the vessel, gain +1 Hunger, and immerse a finger in the swirling mixture. The mixture reacts to truth and falsehood: it warms for honesty and chills for deception.
 
@@ -496,7 +496,7 @@ The subject does not need to be present (or even alive) for this Ritual to work,
 
 #### *Illuminate the Trail of Prey*
 
-***Requirements:** a white satin ribbon, your Vitae, knowledge of the target's face, 1 scene*
+***Requirements:*** *a white satin ribbon, your Vitae, knowledge of the target's face, 1 scene*
 
 You soak the ribbon in your Vitae, gain +1 Hunger, and set it alight. Despite being wet, the ribbon catches fire and burns fiercely like a dynamite fuse, consuming itself in seconds in red flame. When the last thread turns to ash, the Ritual takes effect.
 
@@ -506,7 +506,7 @@ The trail cannot be faked, obscured by mundane means, or hidden by cleaning. ***
 
 #### *Soporific Touch*
 
-***Requirements:** a small amount of hashish or similar narcotic substance, your Vitae, 1 scene*
+***Requirements:*** *a small amount of hashish or similar narcotic substance, your Vitae, 1 scene*
 
 You mix the narcotic with your Vitae and rub the mixture between your fingers while whispering the incantation. Gain +1 Hunger. The narcotic Vitae coats your hand, invisible and odorless but slightly warm to the touch. *Ooh, tingly!*
 
@@ -518,7 +518,7 @@ You can prepare only one dose per casting. The affected hand must be the one tha
 
 #### *Communicate with Kindred Sire*
 
-***Requirements:** an object previously possessed by your Sire, a silver bowl filled with clear water, your Vitae, 1 uninterrupted scene*
+***Requirements:*** *an object previously possessed by your Sire, a silver bowl filled with clear water, your Vitae, 1 uninterrupted scene*
 
 You submerge your Sire's object in the bowl, let your Vitae drip into the water, and gain +1 Hunger. Then you concentrate on your last memory of your Sire and wait, potentially for a while, depending on where your Sire is. The water clouds, clears, and clouds again as the connection forms. The Skype call sound is optional but recommended.
 
@@ -528,7 +528,7 @@ This Ritual only works on your Sire. It cannot connect to Grandsires, other Kind
 
 #### *The Shroud of Silence*
 
-***Requirements:** varies by method (see below), 1 scene*
+***Requirements:*** *varies by method (see below), 1 scene*
 
 This Ritual creates an area of impenetrable supernatural silence. Two preparation methods exist, each producing a different effect. The silence is absolute: no sound enters, exits, or carries within the affected area. Voices die on the lips. Gunshots produce muzzle flash and recoil but no bang. Music stops existing, much to the dismay of any nearby Daughters of Cacophony. It's a strange feeling for those affected, but useful for discreet operations, and incredible for drowning out daytime construction sounds when you're trying to slumber.
 
@@ -542,7 +542,7 @@ The holder can activate the talisman as a Free Action by pressing it against the
 
 #### *Eyes of Babel*
 
-***Requirements:** a fresh eye and tongue from a living or recently-dead person, your Vitae, strong stomach, 1 scene*
+***Requirements:*** *a fresh eye and tongue from a living or recently-dead person, your Vitae, strong stomach, 1 scene*
 
 You pluck the eye and tongue fresh from the subject (mark 1 Stain if they're still alive and this act doesn't align with your Convictions), mix them with a splash of your Vitae, and swallow the lot. Gain +1 Hunger. The Ritual dissolves the ingredients supernaturally; they won't sit in your stomach like normal food.
 
@@ -552,7 +552,7 @@ The donor does not need to be alive for the Ritual to work, but the ingredients 
 
 #### *Depths of Nightmare*
 
-***Requirements:** target's hair, melted wax, natron (soda ash, available from any chemical supplier), your Vitae, 1 scene*
+***Requirements:*** *target's hair, melted wax, natron (soda ash, available from any chemical supplier), your Vitae, 1 scene*
 
 You mix your Vitae into the melted wax, gain +1 Hunger, roll the target's hair in the mixture, and shape the bloody wax into a crude humanoid figure. After inscribing glyphs or runes onto its surface, you soak the figurine in a bowl of water mixed with natron. The doll hardens, and the curse takes root.
 
@@ -562,7 +562,7 @@ If a mortal target has a preexisting anxiety disorder or trauma history, this Ri
 
 #### *Calling the Aura's Remnants*
 
-***Requirements:** a human corpse or the remains of a destroyed vampire, your Vitae, 1 scene*
+***Requirements:*** *a human corpse or the remains of a destroyed vampire, your Vitae, 1 scene*
 
 You kneel near the corpse, spill your Vitae across its chest, and gain +1 Hunger. The blood seeps into the body and the psychic residue of the deceased stirs to life. An echo of the person imprinted in their remains (notably, this is *not* a ghost nor Spirit). The echo speaks, answers questions, and behaves as the deceased did in life, drawing on memories up to the exact moment of death.
 
@@ -572,7 +572,7 @@ If the corpse has been significantly damaged (burned, dismembered, decomposed be
 
 #### *Calix Secretus*
 
-***Requirements:** a hand-sized mundane object, your Vitae, 1 uninterrupted scene*
+***Requirements:*** *a hand-sized mundane object, your Vitae, 1 uninterrupted scene*
 
 You drench the object in your Vitae and speak the words of the Ritual. The object absorbs the blood completely, leaving no trace. Gain +2 Hunger (this Ritual hurts). Select one command word while casting.
 
@@ -584,7 +584,7 @@ Useful for emergency snacks, dead drops, insurance against Blood Bond blackmail,
 
 #### *As Fog on Water*
 
-***Requirements:** a piece of wood from a watercraft (a ship, boat, canoe, raft, rowboat, or other vessel), a body of water, your Vitae, 1 scene*
+***Requirements:*** *a piece of wood from a watercraft (a ship, boat, canoe, raft, rowboat, or other vessel), a body of water, your Vitae, 1 scene*
 
 You submerge the piece of wood in the body of water you intend to cross, spill your Vitae over it, and gain +1 Hunger. The wood dissolves. When you step onto the water's surface, it holds you as though you were weightless. Fog rises from each footstep in thin, ghostly wisps.
 
@@ -594,7 +594,7 @@ Other people cannot benefit from this Ritual. If you're carrying someone, the co
 
 #### *Craftmaster*
 
-***Requirements:** blood of a skilled mortal or supernatural creature, a representative object of their expertise (an instrument for music, a needle for tailoring, a page from a book for scholarship, a playing card for sleight of hand, a chisel for sculpting, etc.), vulture bones, a fire, 1 scene*
+***Requirements:*** *blood of a skilled mortal or supernatural creature, a representative object of their expertise (an instrument for music, a needle for tailoring, a page from a book for scholarship, a playing card for sleight of hand, a chisel for sculpting, etc.), vulture bones, a fire, 1 scene*
 
 You char the vulture bones in a fire, place the representative object in a bowl over the flames, and pour the skilled subject's blood into the bowl. As the bones crack and burn, you drink the blood from the bowl. Make a Hunger Check. The taste carries fragments of muscle memory, procedural knowledge, and years of practice that you absolutely did not earn.
 
@@ -604,7 +604,7 @@ The blood donor doesn't lose their skill. The subject doesn't even need to be al
 
 #### *Viscera Garden*
 
-***Requirements:** a plot of open land (at least the size of a small garden bed), a day-old human or animal corpse, your Vitae, seeds or cuttings of your preferred plants, 1 uninterrupted night*
+***Requirements:*** *a plot of open land (at least the size of a small garden bed), a day-old human or animal corpse, your Vitae, seeds or cuttings of your preferred plants, 1 uninterrupted night*
 
 You dig a shallow pit, tear open your wrist, pour Vitae into the corpse, gain +1 Hunger, eviscerate the remains, and bury the whole mess with your chosen plant material on top. Speak the Ritual's closing words and pack the earth down.
 
@@ -616,7 +616,7 @@ Ideal for impressing a date, disposing of evidence, confusing botanists, and sup
 
 #### *Unseen Underground*
 
-***Requirements:** a live rat, the rat's eyes (removed), a shadowed or unlit location, 1 scene*
+***Requirements:*** *a live rat, the rat's eyes (removed), a shadowed or unlit location, 1 scene*
 
 You drain the rat dry of blood, pluck out its eyes, and toss them into the nearest dark corner while speaking the Ritual's words. Make a Hunger Check. The shadows ripple and accept the offering.
 
@@ -626,7 +626,7 @@ The Ritual ends instantly if any part of your body crosses above ground level, e
 
 #### *Dark Heart of the Wood*
 
-***Requirements:** the heart of a large ruminant (deer, cow, elk, goat, or similar), common fungus, fresh moss, an acorn or pinecone, your Vitae, a clear plot of open land under open sky, 1 uninterrupted scene*
+***Requirements:*** *the heart of a large ruminant (deer, cow, elk, goat, or similar), common fungus, fresh moss, an acorn or pinecone, your Vitae, a clear plot of open land under open sky, 1 uninterrupted scene*
 
 You grind your Vitae with the fungus and moss, stuff the heart with the mixture and the seed, and bury it all in the center of the clearing. Gain +1 Hunger. Speak the Ritual's closing words and step back.
 
@@ -638,7 +638,7 @@ This Ritual comes from old Gangrel forest traditions and looks nothing like what
 
 #### *Enhance Dyscrasia*
 
-***Requirements:** an object of personal significance to the target mortal (matched to their Blood Resonance), a taste of the target's blood, 1 scene*
+***Requirements:*** *an object of personal significance to the target mortal (matched to their Blood Resonance), a taste of the target's blood, 1 scene*
 
 You taste the target mortal's blood, hold the significant object, and concentrate on the Resonance you sensed. Gain +1 Hunger. The object warms in your hands before cooling. Return the object to the target (they must carry or wear it) and the Ritual takes effect.
 

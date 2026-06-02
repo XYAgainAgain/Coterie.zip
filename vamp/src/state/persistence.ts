@@ -102,6 +102,8 @@ export const BLANK_CHARACTER: CharacterState = {
   ageBracket: '',
   bio: { apparentAge: '', vampiricAge: '', pronouns: ['', ''], height: '', weight: '', style: '', occupation: '' },
   archetypeName: '',
+  customArchetypeName: '',
+  customArchetypeTagline: '',
   stats: { Blood: 0, Shadow: 0, Resolve: 0, Demeanor: 0, Wits: 0 },
   unlockedDisciplines: [],
   startingDisciplines: [],

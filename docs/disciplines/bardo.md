@@ -22,7 +22,7 @@ There is no inherent counter to Bardo. Vampires who want to resist its effects c
 
 ### *Banishing Sign of Thoth*
 
-**When you trace the crescent sigil of Thoth in the air between yourself and an incoming Discipline Power or other magical effect directed at you**, make a Hunger Check and roll +Resolve. You can activate this Power reactively the instant something offensive and magical targets you, even if it isn't your turn, substituting it for a **Stay Chill** roll if one is called for.
+**When you trace the crescent sigil of Thoth in the air between yourself and an incoming Discipline Power or other magical effect directed at you,** make a Hunger Check and roll +Resolve. You can activate this Power reactively the instant something offensive and magical targets you, even if it isn't your turn, substituting it for a **Stay Chill** roll if one is called for.
 
 **On a 10+,** the sigil flares and the Power unravels before it reaches you. The effect is completely negated. The attacker feels their Power collapse and knows something you did blocked it, but not how or what. The ancient god of wisdom, writing, magic, and measurement, that's what.
 
@@ -36,7 +36,7 @@ There is no inherent counter to Bardo. Vampires who want to resist its effects c
 
 ### *Soothing Breeze*
 
-**When you extend your open hand toward a wounded creature within Far Range and exhale a slow, steady breath you never inhaled**, make a Hunger Check. The target heals Superficial Harm equal to whatever you rolled on the d6 for this Power's Hunger Check. You can use this as a Free Action during combat, but only once per target per scene. You cannot use this Power on yourself.
+**When you extend your open hand toward a wounded creature within Far Range and exhale a slow, steady breath you never inhaled,** make a Hunger Check. The target heals Superficial Harm equal to whatever you rolled on the d6 for this Power's Hunger Check. You can use this as a Free Action during combat, but only once per target per scene. You cannot use this Power on yourself.
 
 As your Humanity grows, so does the strength of the breeze:
 
@@ -47,7 +47,7 @@ The wound closes, the bruise fades, the fracture knits, the spilled blood steams
 
 ### *Turn the Other Cheek (Passive)*
 
-**When someone deals Harm to you and you choose not to retaliate**, the next time that same assailant deals Harm to you, their strike heals you instead of hurting you. The healing equals whatever the second hit would have dealt as Harm. Bullets dissolve into little puffs of white sand. Fists land and the bruise from the first hit vanishes under the knuckles like ripples in a reflection pool.
+**When someone deals Harm to you and you choose not to retaliate,** the next time that same assailant deals Harm to you, their strike heals you instead of hurting you. The healing equals whatever the second hit would have dealt as Harm. Bullets dissolve into little puffs of white sand. Fists land and the bruise from the first hit vanishes under the knuckles like ripples in a reflection pool.
 
 This Power tracks per person, and only works if you survive the initial blow (though if they strike you at 0 HP in Torpor, you pop right back up). If three different assailants are hitting you, each one has their own alternating cycle (you and the Storyteller should both keep track). The pattern resets if you retaliate against that specific person in any way more aggressive than gently brushing them aside so you can go elsewhere. Your Coterie members, however, can do whatever they want to them; this is about *your* restraint, not theirs.
 
@@ -57,7 +57,7 @@ This Power tracks per person, and only works if you survive the initial blow (th
 
 ### *Restore Humanitas*
 
-**When you spend a full, uninterrupted scene in deep meditation, reaching inward past the Beast to touch the mortal soul buried beneath it**, make 2 Hunger Checks and roll +Resolve.
+**When you spend a full, uninterrupted scene in deep meditation, reaching inward past the Beast to touch the mortal soul buried beneath it,** make 2 Hunger Checks and roll +Resolve.
 
 **On a 10+,** you ground yourself, and your Humanity increases by 1 (to a maximum of 8) for the remainder of the night. This temporary Humanity counts for all purposes, including Bardo Power access, **Blush of Life**, and everything else gated by Humanity. In addition, a number of other Kindred who meditated alongside you (up to your Blood Potency) can each gain the same benefit. The temporary Humanity lasts until the next sunset.
 
@@ -75,15 +75,15 @@ You can only use this Power once per night. The temporary Humanity cannot raise 
 
 You have reconnected with the mortal rhythm of day and night. The crushing lethargy that pins other Kindred to their beds or coffins during daylight hours simply doesn't apply to you. **You wake when you choose, sleep when you choose, and function at full capacity regardless of the sun's position in the sky.**
 
-**When you meditate at your Pillar for a full, uninterrupted scene during which you focus on nothing besides resting and resetting**, you can gain the benefits of a full day of slumber. You also gain +2 Ongoing to **Catch the Scent** and **Discern Vibes** rolls made during daylight hours, when the mortal world is fully active and unguarded, and the Kindred who might otherwise notice your inquiries are dead to the world.
+**When you meditate at your Pillar for a full, uninterrupted scene during which you focus on nothing besides resting and resetting,** you can gain the benefits of a full day of slumber. You also gain +2 Ongoing to **Catch the Scent** and **Discern Vibes** rolls made during daylight hours, when the mortal world is fully active and unguarded, and the Kindred who might otherwise notice your inquiries are dead to the world.
 
 Critically, this Power does *not* protect you from sunlight itself. Step outside during the day and you burn like any other vampire. But behind closed curtains, in basements, in windowless rooms, in the back of a moving van with the doors shut? You're as sharp and capable at noon as you are at midnight.
 
 ### *Shifting Sands*
 
-**When you scatter a handful of sand on the ground and trace a crossed crook and flail into the pile**, make a Hunger Check and roll +Wits. The sand glows faintly for a moment, then settles into an unremarkable little mound with the symbol in it. As long as that sand remains undisturbed and you are within Distant Range of it, you carry a single-use escape route. The sand is consumed on use. To prepare another escape point, you need another handful of sand and another Hunger Check, but you can only have a maximum of 1 ready at any time.
+**When you scatter a handful of sand on the ground and trace a crossed crook and flail into the pile,** make a Hunger Check and roll +Wits. The sand glows faintly for a moment, then settles into an unremarkable little mound with the symbol in it. As long as that sand remains undisturbed and you are within Distant Range of it, you carry a single-use escape route. The sand is consumed on use. To prepare another escape point, you need another handful of sand and another Hunger Check, but you can only have a maximum of 1 ready at any time.
 
-**At any point before the sand is disturbed, when you are about to take Harm**, you may reactively swap places with the sand pile. You vanish in a swirl of blinding white sand from where you are and reappear at the symbol's location instantly. Anything (and anyone) you're carrying or holding comes with you. A neat conical pile of sand appears where you were standing, about enough to fill a wine glass.
+**At any point before the sand is disturbed, when you are about to take Harm,** you may reactively swap places with the sand pile. You vanish in a swirl of blinding white sand from where you are and reappear at the symbol's location instantly. Anything (and anyone) you're carrying or holding comes with you. A neat conical pile of sand appears where you were standing, about enough to fill a wine glass.
 
 **On a 10+,** the swap is instantaneous and seamless; you arrive steady, oriented, and ready to act.
 
@@ -101,7 +101,7 @@ Critically, this Power does *not* protect you from sunlight itself. Step outside
 
 ### *Paradox of Intent*
 
-**When you open your heart and let your cultivated serenity pour outward**, make a Hunger Check and roll +Demeanor.
+**When you open your heart and let your cultivated serenity pour outward,** make a Hunger Check and roll +Demeanor.
 
 **On a 10+,** for the rest of the scene, everything you do is perceived as gentle, helpful, and benign by everyone who can see or hear you (apart from those with ***Sense the Unseen***). Picking a locked door? You're just making sure it's locked. Rifling through someone's belongings? You're fixing a zipper for them. Using a Discipline Power on someone? Just two pals hanging out. Observers will rationalize anything you do as harmless, filling in whatever innocent explanation fits best.
 
@@ -123,7 +123,7 @@ The aura breaks the instant you deal Harm to anyone. One kick, one claw, one wel
 
 ### *A Peaceful Meander*
 
-**When you center yourself, prepare for the worst, and begin to walk with purpose and surety**, make 2 Hunger Checks. For the rest of the scene, you move at exactly the speed you *must*. Any offensive Move made against you requires a 10+ to connect; anything less simply misses. You're always exactly where you need to be, one step ahead, one step aside, moving like a calm river around many stones.
+**When you center yourself, prepare for the worst, and begin to walk with purpose and surety,** make 2 Hunger Checks. For the rest of the scene, you move at exactly the speed you *must*. Any offensive Move made against you requires a 10+ to connect; anything less simply misses. You're always exactly where you need to be, one step ahead, one step aside, moving like a calm river around many stones.
 
 **You cannot use this speed for violence.** The moment you take any directly offensive or destructive action (attacking, breaking something, shoving someone), this Power ends immediately. You can hand your Coterie member that lead pipe over there, but you can't swing it yourself. You can push the button to trigger the fire alarm, but you can't break the glass to reach it. You can carry a wounded ally to safety, but you can't push someone else aside to get clear unless the push would save them from injury as well. The line is simple: if the action is meant to harm, damage, or destroy, ***A Peaceful Meander*** won't abide it.
 
@@ -137,7 +137,7 @@ Unlike ***Blurred Momentum*** (Celerity), there is no recurring Hunger Check cos
 
 ### *Mummification (Passive)*
 
-**When you wrap yourself in strips of resinous cloth and settle in somewhere dark and undisturbed**, your body hardens into a leathery, desiccated husk. Your skin tightens, your joints lock, and you freeze in place. You look, to all external observation, like you died a very long time ago and were carefully embalmed.
+**When you wrap yourself in strips of resinous cloth and settle in somewhere dark and undisturbed,** your body hardens into a leathery, desiccated husk. Your skin tightens, your joints lock, and you freeze in place. You look, to all external observation, like you died a very long time ago and were carefully embalmed.
 
 While mummified, all incoming physical Harm is halved (rounded down). Fire and sunlight still deal full Aggravated Harm (the wrappings are *very* flammable, so plan accordingly). Your awareness drops to a dim, dreamlike state; you can sense broad changes in your environment (a door opening, voices, sudden light) but not details. You might see visions of the sun, warm and golden, close enough to touch, yet never painful. It's the most peaceful form of sleep you'll experience as a vampire.
 
@@ -145,7 +145,7 @@ The trance takes at least as long as a full day of slumber, but when it ends, al
 
 ### *Ra's Blessing*
 
-**When you intentionally step into direct, unfiltered sunlight and finally let it kiss your cold skin**, make 2 Hunger Checks and roll +Resolve. You must repeat this roll and pay the Hunger Check cost for each scene you wish to remain in the sun.
+**When you intentionally step into direct, unfiltered sunlight and finally let it kiss your cold skin,** make 2 Hunger Checks and roll +Resolve. You must repeat this roll and pay the Hunger Check cost for each scene you wish to remain in the sun.
 
 **On a 10+,** the sun warms you and does nothing else. You can walk, run, sit, talk, and act in full daylight as though you were mortal. You feel its heat everywhere and it feels unbelievably good. Until the scene ends, sunlight deals you no Harm and triggers no Frenzy.
 
@@ -161,17 +161,17 @@ The trance takes at least as long as a full day of slumber, but when it ends, al
 
 ### *Boon of Anubis (Passive)*
 
-You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits you would normally gain**, you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent Ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
+You can extend the protection of Osiris to those who cannot protect themselves. **When you *Feed* from a consenting mortal and choose to sacrifice all benefits you would normally gain,** you may grant them the ***Boon of Anubis*** instead. You take a small sip of their blood and give back something better: a permanent Ward against the Embrace. After this **Feeding** concludes, you must press a gentle kiss to their forehead. This part is not optional.
 
 You can protect a number of mortals up to half your current Humanity, rounded up. If your Humanity drops and you now exceed your limit, the mortal who received the Boon earliest loses their protection first.
 
-**When any vampire attempts to *Feed* from a mortal under your Boon**, two things happen. First, the blood tastes like liquid sunlight; the would-be Sire takes Aggravated Harm equal to twice your Blood Potency (minimum 2). If they survive, drink anyway, and attempt the Embrace, the mortal simply falls asleep and wakes up roughly eight hours later feeling better than they have in years (every ache gone, every fog lifted, like the best day of their life). The Embrace does not occur. The would-be Sire loses 1 Humanity and receives a brief, unmistakable psychic impression of your disapproving face and the absolute certainty that this mortal is spoken for. They know whose protection they just ran into.
+**When any vampire attempts to *Feed* from a mortal under your Boon,** two things happen. First, the blood tastes like liquid sunlight; the would-be Sire takes Aggravated Harm equal to twice your Blood Potency (minimum 2). If they survive, drink anyway, and attempt the Embrace, the mortal simply falls asleep and wakes up roughly eight hours later feeling better than they have in years (every ache gone, every fog lifted, like the best day of their life). The Embrace does not occur. The would-be Sire loses 1 Humanity and receives a brief, unmistakable psychic impression of your disapproving face and the absolute certainty that this mortal is spoken for. They know whose protection they just ran into.
 
 ### *A Moment of Reflection*
 
 *(Requires: **A Peaceful Meander**)*
 
-**When you hold your palm out flat toward an inanimate object within Close Range and will it into stillness**, make a Hunger Check and roll +Resolve. You may use this Power reflexively whenever its conditions apply (as a Free Action in combat). It has no effect on creatures at all, but can affect objects they are riding, wearing, or holding.
+**When you hold your palm out flat toward an inanimate object within Close Range and will it into stillness,** make a Hunger Check and roll +Resolve. You may use this Power reflexively whenever its conditions apply (as a Free Action in combat). It has no effect on creatures at all, but can affect objects they are riding, wearing, or holding.
 
 **On a 10+,** the object freezes in time. All of its energy, momentum, and chemical processes halt completely. A bullet hangs in midair, a grenade takes a while to think about if it's really ready to explode, a truck plowing over an embankment at you and your Coterie freezes long enough for emergency services to arrive. The object remains suspended until the end of the scene or until any physical contact more significant than a raindrop occurs. When the stasis breaks, the object resumes exactly where it left off with all of its original energy intact: the bullet continues its flight, the grenade opts to fail, and the car tumbles to a fiery halt far away from you. Choose 1 additional benefit:
 
@@ -194,7 +194,7 @@ You can protect a number of mortals up to half your current Humanity, rounded up
 
 ### *The Osiris Ritual*
 
-**When you wish to return a vampire to the blessed, blinding light of mortality**, you must prepare heavily.
+**When you wish to return a vampire to the blessed, blinding light of mortality,** you must prepare heavily. This is no mean feat.
 
 **Prerequisites:**
 
@@ -204,9 +204,9 @@ You can protect a number of mortals up to half your current Humanity, rounded up
 - The target must be a willing and fully consenting vampire; no coercion, no Dominate, no "they'll thank me later"
 - The practitioner and the target may be the same person (but this is not a requirement)
 
-**When you begin to meditate (together if you're targeting someone else)**, start a 6-segment Ritual Clock. Each segment takes 4 hours to complete, for a total of 24 uninterrupted hours of prayer, meditation, and spiritual work at your consecrated Pillar. There is no roll for each segment; the Clock fills automatically as time passes. The only way the Ritual fails is if it is interrupted. If interrupted, the Clock resets to 0 and the Pillar cracks but is not destroyed; the Ritual can be attempted again after reconsecrating the Pillar (1 additional week of preparation per failed attempt).
+**When you begin to meditate** (together if you're targeting someone else), start a 6-segment Ritual Clock. Each segment takes 4 hours to complete, for a total of 24 uninterrupted hours of prayer, meditation, and spiritual work at your consecrated Pillar. There is no roll for each segment; the Clock fills automatically as time passes. The only way the Ritual fails is if it is interrupted. If interrupted, the Clock resets to 0 and the Pillar cracks but is not destroyed; the Ritual can be attempted again after reconsecrating the Pillar (1 additional week of preparation per failed attempt).
 
-**When the Clock fills**, you greet Final Death with open arms and a warm smile. Your body crumbles into white sand, and your Pillar splits apart and collapses. Both are gone, permanently and irreversibly.
+**When the Clock fills,** you greet Final Death with open arms and a warm smile. Your body crumbles into white sand, and your Pillar splits apart and collapses. Both are gone, permanently and irreversibly.
 
 From the remains of the Pillar, a mortal body emerges. The target is restored to the exact physical form they had at the moment of their Embrace: same age, same face, same body. Every illness, injury, and harmful imperfection they carried into undeath is healed. They retain full memory of their time as a vampire, every night of it, but the Beast is gone. The Hunger is gone. They are, fully and completely, human once more.
 
@@ -220,7 +220,7 @@ This Power has two paths. Both require sacrifice. Both reverse what everyone kno
 
 **Path of Return:**
 
-**If you know this Power when you meet Final Death**, your Coterie can attempt to call you back. The Ritual must be performed at your Pillar, and every surviving member of the Coterie must be present. Each Coterie member must contribute some of their Vitae into the Pillar's foundation, gaining +1 Hunger each. The Coterie member with the highest Humanity rolls +Resolve.
+**If you know this Power when you meet Final Death,** your Coterie can attempt to call you back. The Ritual must be performed at your Pillar, and every surviving member of the Coterie must be present. Each Coterie member must contribute some of their Vitae into the Pillar's foundation, gaining +1 Hunger each. The Coterie member with the highest Humanity rolls +Resolve.
 
 **On a 10+,** you reconstitute from the Pillar's stone over the course of the scene. You return at your previous Blood Potency and Humanity, with full memory and all Discipline Powers intact. The Pillar crumbles to dust in the process and cannot be rebuilt; you must consecrate a new one, though the location may be the same.
 
@@ -250,7 +250,7 @@ This Power has two paths. Both require sacrifice. Both reverse what everyone kno
 
 ### *Hale and Sound (Passive)*
 
-Your Humanity radiates outward like warmth from a hearth. **While you are enjoying the presence of your Coterie**, every member gains the following benefits from your connection to mortality:
+Your Humanity radiates outward like warmth from a hearth. **While you are enjoying the presence of your Coterie,** every member gains the following benefits from your connection to mortality:
 
 - Each Coterie member gains the effects of your **Blush of Life** tier (9–10 Humanity) regardless of their own Humanity without rolling a Hunger Check. This benefit lasts as long as they remain within Far Range of you; if they leave your presence, their **Blush of Life** reverts to their own Humanity tier at the end of the scene as though they had activated it. They might even miss you.
 - Each Coterie member gains the benefits of your ***Gift of Apis*** Perk. Animal blood nourishes them as effectively as human blood, regardless of their Blood Potency, with no BP-related feeding restrictions and no foul taste. The Ventrue can drink squirrel blood. The BP 4 Lasombra can subsist on pigeons. It tastes exactly as delicious as you always insist. It's fine, just try it! C'mon!

@@ -76,21 +76,22 @@ Recovering lost Humanity is the hardest thing a vampire can do other than sunbat
 
 ## Stains
 
-When you commit atrocities or violate your Convictions, you mark **Stains** on your Humanity track (crossed boxes instead of filled).
+When you commit atrocities or violate your Convictions, you mark **Stains** on your Humanity track, represented by crossed/struck-through boxes which are marked exclusively in the empty boxes. Filled boxes represent how much Humanity you still cling to (and thus stand to lose), while empty boxes show you how much is missing.
 
 **What Causes Stains:**
 
 - Violating a local tenet or code of conduct (killing innocents, unnecessary cruelty, breaching the Masquerade)
 - Violating your personal Convictions or rules
 - Harming or destroying your Touchstones
+- Several of the nastier Discipline Powers (with some exceptions for when their usage aligns with Convictions)
 
 **How Many Stains:**
 
-- Minor violation: 1 Stain
-- Serious violation: 2–3 Stains
-- Acting in service of a Conviction: −1 Stain
+- Minor violation: +1 Stain
+- Serious violation: +2–3 Stains
+- Acting in service of a Conviction: −1 Stain or more, depending on context
 
-If you accumulate 5 or more Stains or fill your remaining Humanity track (if it's lower than 5), you automatically lose 1 Humanity, and any remaining Stains roll over.
+If you accumulate enough Stains to fill your missing Humanity track, or when you accumulate 5 Stains (whichever comes first), you automatically lose 1 Humanity, and any remaining Stains roll over.
 
 ### Remorse Checks
 
@@ -101,7 +102,7 @@ If you accumulate 5 or more Stains or fill your remaining Humanity track (if it'
 
 ## Convictions
 
-**Convictions** are your character's core moral beliefs; what keeps them anchored to Humanity, morality, and mortality. They're statements that start with "always" or "never" and deal in absolutes. You'll need a minimum of 2.
+**Convictions** are your character's core moral beliefs; what keeps them anchored to Humanity, morality, and mortality. They're statements that usually start with "always" or "never" and deal in absolutes. You'll need a minimum of 2.
 
 !!! example "Examples"
 

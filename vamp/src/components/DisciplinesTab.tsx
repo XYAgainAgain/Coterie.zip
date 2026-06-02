@@ -42,7 +42,9 @@ function DisciplineSection({ discipline, creationToggle, maxFreePowers, hasOverl
     : isBuying ? 'edit'
     : 'play';
 
-  const powers = discipline.powers.map(p => getPowerStatus(p, discipline.slug));
+  const powers = discipline.powers
+    .map(p => getPowerStatus(p, discipline.slug))
+    .sort((a, b) => (a.power.level - b.power.level) || a.power.name.localeCompare(b.power.name));
   const known = powers.filter(p => p.status === 'known');
   const pending = powers.filter(p => p.status === 'pending');
   const available = powers.filter(p => p.status === 'available');
@@ -238,6 +240,7 @@ function groupByLevel(entries: ProjectPowerWithStatus[]): [number, ProjectPowerW
     arr.push(e);
     m.set(e.pp.level, arr);
   }
+  for (const arr of m.values()) arr.sort((a, b) => a.pp.name.localeCompare(b.pp.name));
   return [...m.entries()].sort((a, b) => a[0] - b[0]);
 }
 

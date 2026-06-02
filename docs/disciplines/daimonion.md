@@ -18,9 +18,9 @@ There is no inherent counter to Daimonion, but it can't hurt to hang religious s
 
 You carry an open line to the Outer Dark, and the things on the other end are always listening.
 
-**When you witness an act of cruelty or moral compromise, no matter how small**, you may ask the Storyteller one question about the situation, the people involved, or the circumstances. The answer comes from something in the Outer Dark; a whisper at the base of your skull, a flash of alien insight, letters rearranging themselves, an animal talking only to you for a moment, or a sudden gut feeling you can't explain but know to be correct. The answer is always true, always relevant, and always colored by an agenda you can't fully grasp. The Storyteller determines the tone and framing. Demonic sources are not known for their warmth or their straightforward delivery.
+**When you witness an act of cruelty or moral compromise, no matter how small,** you may ask the Storyteller one question about the situation, the people involved, or the circumstances. The answer comes from something in the Outer Dark; a whisper at the base of your skull, a flash of alien insight, letters rearranging themselves, an animal talking only to you for a moment, or a sudden gut feeling you can't explain but know to be correct. The answer is always true, always relevant, and always colored by an agenda you can't fully grasp. The Storyteller determines the tone and framing. Demonic sources are not known for their warmth or their straightforward delivery.
 
-**Additionally, when you focus on someone within Close Range**, you can clearly sense their most pressing unfulfilled desire without rolling. You learn the thing they'd kill for, the need they're pretending doesn't exist, the itch they can't quite scratch. This is not emotional reading (that's Auspex) nor sin detection (that's keen observation; just sniff them and draw your own conclusions). It works on mortals and vampires alike, though older or more guarded subjects may present murkier readings.
+**Additionally, when you focus on someone within Close Range,** you can clearly sense their most pressing unfulfilled desire without rolling. You learn the thing they'd kill for, the need they're pretending doesn't exist, the itch they can't quite scratch. This is not emotional reading (that's Auspex) nor sin detection (that's keen observation; just sniff them and draw your own conclusions). It works on mortals and vampires alike, though older or more guarded subjects may present murkier readings.
 
 ---
 
@@ -28,9 +28,9 @@ You carry an open line to the Outer Dark, and the things on the other end are al
 
 ### *Cypher Lingua (Passive)*
 
-Your mind absorbs languages with unnatural speed. **When you spend at least one scene of focused exposure to a mortal language you don't already speak**, you permanently learn whatever components you were exposed to. Reading a manuscript grants literacy in its language, while an evening spent listening to a native or well-studied speaker grants fluency. The more immersive the exposure, the more complete the knowledge. Passive exposure (background chatter, a song on the radio, language learning podcasts while you slumber, etc.) doesn't count; you need to actively engage with intent.
+Your mind absorbs languages with unnatural speed. **When you spend at least one scene of focused exposure to a mortal language you don't already speak,** you permanently learn whatever components you were exposed to. Reading a manuscript grants literacy in its language, while an evening spent listening to a native or well-studied speaker grants fluency. The more immersive the exposure, the more complete the knowledge. Passive exposure (background chatter, a song on the radio, language learning podcasts while you slumber, etc.) doesn't count; you need to actively engage with intent.
 
-**When you encounter supernatural writing, symbols, or markings and attempt to decipher their meaning**, make a Hunger Check and roll the stat that the Storyteller tells you most closely matches the tradition: +Blood for Blood Sorcery sigils and thaumaturgical inscriptions, +Shadow for Oblivion runes and Abyssal script, or +Wits for anything else arcane that doesn't fall cleanly into either category.
+**When you encounter supernatural writing, symbols, or markings and attempt to decipher their meaning,** make a Hunger Check and roll the stat that the Storyteller tells you most closely matches the tradition: +Blood for Blood Sorcery sigils and thaumaturgical inscriptions, +Shadow for Oblivion runes and Abyssal script, or +Wits for anything else arcane that doesn't fall cleanly into either category.
 
 **On a 10+,** you understand the full meaning, purpose, and approximate power level of what you're reading. You can reproduce the symbols accurately from memory on-demand.
 
@@ -48,7 +48,7 @@ Pain sharpens your connection to the Outer Dark. **Once per scene, when you suff
 
 ### *Duress*
 
-**When you pull the oppressive weight of the Outer Dark into the air around you to smother every supernatural spark**, make a number of Hunger Checks equal to the number of other Discipline users within Close Range, then roll +Shadow. While ***Duress*** is active, all Discipline rolls within Close Range (including yours) have Disadvantage.
+**When you pull the oppressive weight of the Outer Dark into the air around you to smother every supernatural spark,** make a number of Hunger Checks equal to the number of other Discipline users within Close Range, then roll +Shadow. While ***Duress*** is active, all Discipline rolls within Close Range (including yours) have Disadvantage.
 
 If you have access to level 4 of Daimonion or higher, the cost drops to 1 Hunger Check per two Discipline users (rounded up).
 
@@ -64,11 +64,11 @@ If you have access to level 4 of Daimonion or higher, the cost drops to 1 Hunger
 
 ### *Surge of Tenacity (Passive)*
 
-**When you activate a Blood Surge**, the infernal Vitae coursing through you bleeds outward. Every ally within Close Range gains Advantage on their next +Blood or +Shadow roll this scene. You can't choose who benefits and you can't suppress it; the boost just happens. They might feel it as a sudden surge of confidence, a sharpening of the senses, or an unexpected warmth somewhere that isn't entirely unpleasant.
+**When you activate a Blood Surge,** the infernal Vitae coursing through you bleeds outward. Every ally within Close Range gains Advantage on their next +Blood or +Shadow roll this scene. You can't choose who benefits and you can't suppress it; the boost just happens. They might feel it as a sudden surge of confidence, a sharpening of the senses, or an unexpected warmth somewhere that isn't entirely unpleasant.
 
 ### *Gnaw*
 
-**When you let the dormant critters that writhe beneath your skin come out to play**, take 1 Superficial Harm (Ignore-Armor) as a gnawing swarm tears its way free from your flesh, then make a Hunger Check and roll +Blood. The swarm is a churning mass of carnivorous arthropods (or worse; the Outer Dark isn't picky about aesthetics) that relentlessly pursues the target you designate at the moment of release. You cannot redirect it once launched. The swarm is mindless, has no care for self-preservation, and disperses into blood and smoke after 3 turns or when the target dies, whichever comes first.
+**When you let the dormant critters that writhe beneath your skin come out to play,** take 1 Superficial Harm (Ignore-Armor) as a gnawing swarm tears its way free from your flesh, then make a Hunger Check and roll +Blood. The swarm is a churning mass of carnivorous arthropods (or worse; the Outer Dark isn't picky about aesthetics) that relentlessly pursues the target you designate at the moment of release. You cannot redirect it once launched. The swarm is mindless, has no care for self-preservation, and disperses into blood and smoke after 3 turns or when the target dies, whichever comes first.
 
 **On a 10+,** the swarm locks onto the target and deals 1 Superficial Harm per turn for its full duration. If the target flees on foot, the swarm follows at their speed.
 
@@ -86,7 +86,7 @@ If you have access to level 4 of Daimonion or higher, the cost drops to 1 Hunger
 
 ### *Kiss of the Molochim (Passive)*
 
-**When you successfully *Feed* on someone who could potentially threaten you or your allies**, you may choose to forfeit all benefits of the **Feeding** (no Hunger slaked, no Blood Resonance absorbed, no other effects) to leave a mark of infernal submission in their blood.
+**When you successfully *Feed* on someone who could potentially threaten you or your allies,** you may choose to forfeit all benefits of the **Feeding** (no Hunger slaked, no Blood Resonance absorbed, no other effects) to leave a mark of infernal submission in their blood.
 
 For a number of nights equal to your current Humanity (ending at dawn on the final night), the target has Disadvantage on all rolls involving aggression toward you or any member of your Coterie: attacking, threatening, scheming against, giving damning testimony, sabotaging your plans, any of it. They can still defend themselves if cornered (in a dark alley or in court), but their instincts scream at them not to start anything.
 
@@ -94,7 +94,7 @@ If you or a known ally provokes or attacks the target at any point during this p
 
 ### *Incite Sin (Passive)*
 
-Your blood carries something a little extra spicy. **When someone ingests your Vitae for any reason**, they experience a sharp, intoxicating rush of euphoria followed by creeping intrusive thoughts that nudge them toward their worst impulses. This effect lasts until the next dawn.
+Your blood carries something a little extra spicy. **When someone ingests your Vitae for any reason,** they experience a sharp, intoxicating rush of euphoria followed by creeping intrusive thoughts that nudge them toward their worst impulses. This effect lasts until the next dawn.
 
 You can also trigger this deliberately through external contact. **When your blood touches someone's bare skin and seeps right into their cardiovascular system**, make a Hunger Check. If they were cut open by you first, no check is needed; you've already done the hard part.
 
@@ -102,13 +102,13 @@ You can also trigger this deliberately through external contact. **When your blo
 
 ### *Vampiric Vehemence (Passive)*
 
-**When you channel infernal energy into a melee weapon you're holding**, make a Hunger Check. The weapon crackles with infernal energy. On your next swing, you can project the strike as a ranged attack at a target within Far Range using whatever Move you'd normally use (most likely **Dirty Your Claws**). The weapon deals its normal Harm plus extra Harm equal to whatever you rolled on the d6 for this Power's Hunger Check. One charge, one shot. After the projectile fires, the weapon returns to normal.
+**When you channel infernal energy into a melee weapon you're holding,** make a Hunger Check. The weapon crackles with infernal energy. On your next swing, you can project the strike as a ranged attack at a target within Far Range using whatever Move you'd normally use (most likely **Dirty Your Claws**). The weapon deals its normal Harm plus extra Harm equal to whatever you rolled on the d6 for this Power's Hunger Check. One charge, one shot. After the projectile fires, the weapon returns to normal.
 
 *If you also have **Knight of Teeth**:* weapons you create with it can be charged with this Power.
 
 ### *Knight of Teeth*
 
-**When you violently reshape your own flesh into implements of war**, declare how many weapons you want to create (melee, ranged, or a mix; your call) to a maximum equal to your Blood Potency, then take 2 Superficial Harm per weapon (Ignore-Armor). Make a Hunger Check and roll +Blood. The quality of what erupts from your body depends on how well you channel the chaos. The good news is that they always deal Aggravated Harm to mortals regardless of your roll.
+**When you violently reshape your own flesh into implements of war,** declare how many weapons you want to create (melee, ranged, or a mix; your call) to a maximum equal to your Blood Potency, then take 2 Superficial Harm per weapon (Ignore-Armor). Make a Hunger Check and roll +Blood. The quality of what erupts from your body depends on how well you channel the chaos. The good news is that they always deal Aggravated Harm to mortals regardless of your roll.
 
 **On a 12+,** each weapon deals 4-Harm. Their form is almost beautiful, in a wet and red and horrible sort of way. Any Tremere who can see you instantly want to know the hell how you did that.
 
@@ -124,7 +124,7 @@ Weapons created by this Power are grotesque, obviously supernatural, and unmista
 
 *(Requires: **Duress**)*
 
-**When someone activates a Discipline Power in your presence and you whisper a sealing hymn in response**, make a Hunger Check and roll +Shadow. The sealed Power crystallizes into a small talisman (a bead, a tooth, a knot of hair, a cyst on a chain, a scrap of smoking paper, a shard of something not of this world) that appears somewhere on your person. While you hold it, the target cannot use that specific Power.
+**When someone activates a Discipline Power in your presence and you whisper a sealing hymn in response,** make a Hunger Check and roll +Shadow. The sealed Power crystallizes into a small talisman (a bead, a tooth, a knot of hair, a cyst on a chain, a scrap of smoking paper, a shard of something not of this world) that appears somewhere on your person. While you hold it, the target cannot use that specific Power.
 
 **On a 12+,** the seal takes hold silently. The target knows their Power isn't working but has no idea who did it or how. They will likely panic, since this doesn't happen often.
 
@@ -142,7 +142,7 @@ The seal lasts until the next dawn or until the target physically reclaims the t
 
 ### *Carrion Banquet (Passive)*
 
-**When you slay a living creature of at least human size**, you can make a Hunger Check to violently detonate the fresh corpse. The body ruptures outward, painting everything and everyone within Close Range in a fine mist of blood, viscera, and the faint scent of sulfur (for seasoning).
+**When you slay a living creature of at least human size,** you can make a Hunger Check to violently detonate the fresh corpse. The body ruptures outward, painting everything and everyone within Close Range in a fine mist of blood, viscera, and the faint scent of sulfur (for seasoning).
 
 You and any other vampires caught in the splash zone may immediately attempt to **Feed** reactively. **On a 7+,** instantly slake 1 Hunger from the airborne gore and describe how sick it looks (gaining no other benefits). **On a 6-,** you get a mouthful of something yucky that doesn't sit right; slake no Hunger, and the Storyteller decides how that mouthful manifests. It won't be pretty.
 
@@ -154,7 +154,7 @@ If any mortals witness this, it is an automatic, non-negotiable, spectacular Mas
 
 ### *Coiling Spite*
 
-**When you crack open the door to the Outer Dark and let its vitriol flood outward in a psychic lash**, make a Hunger Check and roll +Shadow. Every supernatural creature except yourself within Close Range (including allies) takes 3 Aggravated Harm (Ignore-Armor). Mortals are completely unaffected; this Power targets the supernatural spark itself, and mortals don't have one. The damage is indiscriminate and cannot be aimed, reduced, or selectively applied.
+**When you crack open the door to the Outer Dark and let its vitriol flood outward in a psychic lash,** make a Hunger Check and roll +Shadow. Every supernatural creature except yourself within Close Range (including allies) takes 3 Aggravated Harm (Ignore-Armor). Mortals are completely unaffected; this Power targets the supernatural spark itself, and mortals don't have one. The damage is indiscriminate and cannot be aimed, reduced, or selectively applied.
 
 **On a 12+,** every supernatural creature that takes Harm from this Power must immediately **Stay Chill** or buckle under the psychic weight. You gain Temporary HP equal to the total Harm dealt to those who fail. The Outer Dark preys on weakness, and it shares the scraps.
 
@@ -171,7 +171,7 @@ If any mortals witness this, it is an automatic, non-negotiable, spectacular Mas
 
 ### *Eternal Damnation*
 
-**When you lock eyes with someone who is already wounded and speak a curse that no living language should allow**, make a Hunger Check and roll +Blood. The curse binds their injuries in place. All Harm the target has marked cannot be mended, healed, regenerated, or reduced by any means while the curse holds. Vampiric healing, medical attention, Discipline Powers, prayer, wishful thinking... none of it works.
+**When you lock eyes with someone who is already wounded and speak a curse that no living language should allow,** make a Hunger Check and roll +Blood. The curse binds their injuries in place. All Harm the target has marked cannot be mended, healed, regenerated, or reduced by any means while the curse holds. Vampiric healing, medical attention, Discipline Powers, prayer, wishful thinking... none of it works.
 
 **On a 12+,** the curse is indefinite. It lasts until you choose to lift it, you meet Final Death, or somebody finds a way to break it that the Storyteller deems sufficient. The name of this Power is not figurative.
 
@@ -185,7 +185,7 @@ If any mortals witness this, it is an automatic, non-negotiable, spectacular Mas
 
 *(Requires: **Gnaw**)*
 
-**When you retch up a horrible parasitoid from deep inside your chest and launch it at a target**, make a Hunger Check and roll +Blood. The parasite is a single writhing organism (part lamprey, part tick, all demon) that bores into the target's flesh and begins to consume it. Once burrowed, the parasite spreads its tendrils inward and becomes exceedingly difficult to remove.
+**When you retch up a horrible parasitoid from deep inside your chest and launch it at a target,** make a Hunger Check and roll +Blood. The parasite is a single writhing organism (part lamprey, part tick, all demon) that bores into the target's flesh and begins to consume it. Once burrowed, the parasite spreads its tendrils inward and becomes exceedingly difficult to remove.
 
 **On a 12+,** the parasite bores in instantly on impact. John Carpenter would be proud.
 
@@ -205,7 +205,7 @@ Removing the parasite is the host's problem. They have two options: **Stay Chill
 
 ### *Balefire Ignition*
 
-**When you expose your Vitae to open air and speak the words that set it ablaze**, gain +1 Hunger automatically. If you have already taken Harm this scene, the infernal blood ignites eagerly on its own and no Hunger is gained. Either way, two sickly green-black whips of Balefire now extend from your wrists.
+**When you expose your Vitae to open air and speak the words that set it ablaze,** gain +1 Hunger automatically. If you have already taken Harm this scene, the infernal blood ignites eagerly on its own and no Hunger is gained. Either way, two sickly green-black whips of Balefire now extend from your wrists.
 
 **While the Balefire burns**, your unarmed **Dirty Your Claws** rolls can target anyone within Close Range. The attack deals Aggravated Harm equal to 3 + your Blood stat. Anyone damaged by the Balefire (other than you) ignites; they take 1 Aggravated Harm at the start of each of their turns until the scene ends or the fire is extinguished by supernatural means.
 
@@ -217,7 +217,7 @@ The Balefire lasts for the rest of the scene or until you choose to extinguish i
 
 *(Requires: Oblivion access)*
 
-**When you reach into a target's mind and dredge their worst fears from its darkest corners**, make a Hunger Check and roll +Shadow. While this Power is active, you cannot use any other Discipline Powers; your concentration is entirely consumed by the psychic channel. Everything else functions normally.
+**When you reach into a target's mind and dredge their worst fears from its darkest corners,** make a Hunger Check and roll +Shadow. While this Power is active, you cannot use any other Discipline Powers; your concentration is entirely consumed by the psychic channel. Everything else functions normally.
 
 Against unprepared mortals, a result of 6- is treated as a 7–9 instead. Nightmares almost always find purchase in the feeble mortal mind.
 
@@ -240,7 +240,7 @@ Against unprepared mortals, a result of 6- is treated as a 7–9 instead. Nightm
 
 ### *Hell Warden*
 
-**When you spread your arms and seal every exit in an enclosed space with your fiendish authority**, make 2 Hunger Checks and roll +Demeanor. Every door, window, vent, crawlspace, and opening within the building or enclosed area you occupy warps into something impassable. You decide what they look like: Balefire roaring behind every window, nightmarish forms scratching at every door, exits that seem to recede infinitely on approach, brickwork that was never a door at all, or whatever other horrors you can imagine. Unprepared mortals cannot pass through or open the sealed exits under any circumstances.
+**When you spread your arms and seal every exit in an enclosed space with your fiendish authority,** make 2 Hunger Checks and roll +Demeanor. Every door, window, vent, crawlspace, and opening within the building or enclosed area you occupy warps into something impassable. You decide what they look like: Balefire roaring behind every window, nightmarish forms scratching at every door, exits that seem to recede infinitely on approach, brickwork that was never a door at all, or whatever other horrors you can imagine. Unprepared mortals cannot pass through or open the sealed exits under any circumstances.
 
 Supernatural creatures and anyone who was somehow ready for this can attempt to escape. First, they must **Catch the Scent** to identify which exits are real beneath the warding. Then, they must successfully roll +Resolve (7+) to force one open. The hellish seal lasts until you leave the enclosed space or choose to end it.
 
@@ -262,7 +262,7 @@ Supernatural creatures and anyone who was somehow ready for this can attempt to 
 
 A faintly luminous ring of pale green light, visible only to those with supernatural sight, hovers and flickers above your brow. It marks you as worthy of recognition by the entities beyond creation, and they extend a measure of deference whether they want to or not.
 
-**While your *Dark Sacrament* is dedicated to the Outer Dark**, you gain the following benefits:
+**While your *Dark Sacrament* is dedicated to the Outer Dark,** you gain the following benefits:
 
 - You can clearly perceive Wraiths, Shades, ghosts, and other incorporeal entities that are not actively concealing their presence, regardless of whether ***Abyssal Sight*** or similar Powers are active.
 - You sense when Blood Sorcery, Oblivion, or Daimonion Powers are activated within Distant Range and can identify the general direction and relative threat level of the source compared to yourself.
@@ -272,7 +272,7 @@ If you change your ***Dark Sacrament*** dedication to the Beast or your Coterie,
 
 ### *Sanguine Bond*
 
-**When you lock eyes with a target and forge a link between your wounds and theirs**, make a Hunger Check and roll +Resolve. While the bond holds, every point of Harm you heal (either type and by any means) is simultaneously inflicted on the cursed target as the same type of Harm.
+**When you lock eyes with a target and forge a link between your wounds and theirs,** make a Hunger Check and roll +Resolve. While the bond holds, every point of Harm you heal (either type and by any means) is simultaneously inflicted on the cursed target as the same type of Harm.
 
 **On a 12+,** the bond snaps into place and all Harm you currently have marked is instantly transferred to the target. Your Harm track clears; theirs fills. If this kills the target, mark 1 Stain. You probably enjoy it.
 
@@ -286,7 +286,7 @@ If you change your ***Dark Sacrament*** dedication to the Beast or your Coterie,
 
 ### *Soul Swap*
 
-**When you reach across the Veil and silently switch a target's essence with your own**, make a Hunger Check and roll +Shadow. Your supernatural aura and the target's are swapped. Anyone who uses Auspex, Blood Sorcery, or any other method of reading supernatural identity sees you as the target and the target as you. Your ***Hidden Devil*** cover Clan is overridden for the duration; you read as whatever the target actually is.
+**When you reach across the Veil and silently switch a target's essence with your own,** make a Hunger Check and roll +Shadow. Your supernatural aura and the target's are swapped. Anyone who uses Auspex, Blood Sorcery, or any other method of reading supernatural identity sees you as the target and the target as you. Your ***Hidden Devil*** cover Clan is overridden for the duration; you read as whatever the target actually is.
 
 The swap lasts until dawn.
 
@@ -308,7 +308,7 @@ The swap lasts until dawn.
 
 ### *Mitosis*
 
-**When you spend a full, uninterrupted scene tearing yourself in half**, make a Hunger Check and roll +Blood. Your body violently convulses, splits, and produces a near-exact replica of yourself. You take Aggravated Harm equal to your missing Humanity (Ignore-Armor). The copy emerges with HP equal to half your maximum HP (rounded down), your stats, your memories, your knowledge, your Discipline Powers up to level 4, most (but not all) of your opinions, and something very close to your personality. It is, for all intents and purposes, another you. You control both versions of your character.
+**When you spend a full, uninterrupted scene tearing yourself in half,** make a Hunger Check and roll +Blood. Your body violently convulses, splits, and produces a near-exact replica of yourself. You take Aggravated Harm equal to your missing Humanity (Ignore-Armor). The copy emerges with HP equal to half your maximum HP (rounded down), your stats, your memories, your knowledge, your Discipline Powers up to level 4, most (but not all) of your opinions, and something very close to your personality. It is, for all intents and purposes, another you. You control both versions of your character.
 
 The duplicate lasts until it is slain (same rules as usual) or until you heal all the Aggravated Harm this Power dealt to you, whichever comes first. When the copy expires, anything it learned floods back into you.
 
@@ -320,7 +320,7 @@ The Storyteller may step in to temporarily pilot and/or speak as the copy when i
 
 ### *Born Again*
 
-**When you call upon the Outer Dark to claim the vessels you've prepared for its coming incursion**, make a Hunger Check and roll +Demeanor. Every mortal who ingested your Vitae since the last dawn is eligible. Upon activation, each chosen mortal is violently transformed into a minor demon for the remainder of the scene. Their skin splits, their bones crack and resettle, and something awful from the Outer Dark fills the space where their humanity used to be. These demons are not subtle in the slightest, and are an instant Masquerade breach if/when spotted, but they may not be traceable back to you, depending on your position.
+**When you call upon the Outer Dark to claim the vessels you've prepared for its coming incursion,** make a Hunger Check and roll +Demeanor. Every mortal who ingested your Vitae since the last dawn is eligible. Upon activation, each chosen mortal is violently transformed into a minor demon for the remainder of the scene. Their skin splits, their bones crack and resettle, and something awful from the Outer Dark fills the space where their humanity used to be. These demons are not subtle in the slightest, and are an instant Masquerade breach if/when spotted, but they may not be traceable back to you, depending on your position.
 
 The demons are not directly controllable but take general direction from you. Point them at a problem and they'll handle it with extreme prejudice, though "handle it" may not look quite how you expected. They prioritize threats to you but are not above collateral damage. In fact, they revel in it.
 
@@ -340,7 +340,7 @@ When the scene ends, the demons depart in a shower of Balefire and gore. Blood B
 
 ### *Hell's Yawning Maw*
 
-**When you rip open a screaming wound in reality and let the Outer Dark pour through**, make 2 Hunger Checks and roll +Blood or +Shadow (use higher). A portal manifests as a churning tear in the air, ringed with sickly green Balefire and leaking something that sounds (optimistically) like screaming.
+**When you rip open a screaming wound in reality and let the Outer Dark pour through,** make 2 Hunger Checks and roll +Blood or +Shadow (use higher). A portal manifests as a churning tear in the air, ringed with sickly green Balefire and leaking something that sounds (optimistically) like screaming.
 
 All creatures within Far Range except you are affected — even a momentary glimpse is enough — and takes Aggravated Harm equal to your missing Humanity. Those killed by this Harm are immediately and involuntarily used to incubate and birth a legion of **Balefire Hellions**: burning, shrieking, and endlessly cruel semi-corporeal entities of green-black flame that claw their way out of the strewn corpses and begin defiling or destroying whatever's closest to them.
 

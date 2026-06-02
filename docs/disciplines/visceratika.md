@@ -10,7 +10,7 @@ Every Visceratika Power is a Masquerade risk if witnessed by mortals. You are a 
 
 ### *Flight (Discipline Perk)*
 
-You have wings and can fly. No roll is required for basic flight; you take off, maneuver, and land freely. In flight, your Movement takes you between two Range bands per turn instead of one.
+**You have wings and can fly.** No roll is required for basic flight; you take off, maneuver, and land freely. In flight, your Movement takes you between two Range bands per turn instead of one.
 
 You can carry a number of willing passengers equal to your Blood Potency, or half your Blood Potency (rounded down, minimum 1) if they're unwilling. Sizeable inanimate payloads (furniture, rubble, a motorcycle, a huge mesh bag full of fresh artichokes, etc.) are reasonable asks but at the Storyteller's discretion.
 
@@ -20,15 +20,13 @@ You can carry a number of willing passengers equal to your Blood Potency, or hal
 
 ### *Sentinel's Perch (Passive)*
 
-While touching stone, earth, concrete, or brick, you feel vibrations through the surface such as footsteps, doors opening, heartbeats pressed against walls, or the tapping of a keyboard. You can detect the presence and approximate location of any creature moving within Close Range inside the structure without rolling.
+**While touching stone, earth, concrete, or brick,** you feel vibrations through the surface such as footsteps, doors opening, heartbeats pressed against walls, or the tapping of a keyboard. You can detect the presence and approximate location of any creature moving within Close Range inside the structure without rolling.
 
 If you also have ***Skin of the Chameleon*** and remain perfectly still, your awareness expands to encompass the entire structure you're touching, regardless of its size.
 
 ### *Skin of the Chameleon (Passive)*
 
-Your stone skin automatically shifts to match your surroundings: granite grey with moss on a rooftop, ruddy brick against a tenement, dark and cloudy against the night sky.
-
-**When you *Slip Away* while perched on architecture, posing as a statue, or flying at night**, treat a roll of 6- as a 7–9. Observers who aren't actively searching for you assume you're part of the scenery.
+**When you *Slip Away* while perched on architecture, posing as a statue, or flying at night**, treat a roll of 6- as a 7–9. Observers who aren't actively searching for you assume you're part of the scenery. Your stone skin automatically shifts to match your surroundings: granite grey with moss on a rooftop, ruddy brick against a tenement, dark and cloudy against the night sky.
 
 ---
 
@@ -36,11 +34,11 @@ Your stone skin automatically shifts to match your surroundings: granite grey wi
 
 ### *Armor Terra (Passive)*
 
-Your stone skin thickens and hardens beyond its natural state. Each scene, you may convert up to 2× your Blood Potency in incoming Aggravated Harm to Superficial Harm. Additionally, you become completely immune to fire — flames lick harmlessly across your stony surface, though prolonged exposure leaves visible charring and scorching on your body until you next slumber, and will disrupt any local foliage you've been cultivating.
+**Your stone skin thickens and hardens beyond its natural state.** Each scene, you may convert up to 2× your Blood Potency in incoming Aggravated Harm to Superficial Harm. Additionally, you become completely immune to fire — flames lick harmlessly across your stony surface, though prolonged exposure leaves visible charring and scorching on your body until you next slumber, and will disrupt any local foliage you've been cultivating.
 
 ### *Rend and Hurl*
 
-**When you sink your claws into a building or the ground and tear a chunk out**, you can hurl it at a target within Close Range. Make a Hunger Check and roll +Blood.
+**When you sink your claws into a building or the ground and tear a chunk out,** you can hurl it at a target within Close Range. Make a Hunger Check and roll +Blood.
 
 **On a 10+,** the impact is devastating. Inflict Harm equal to 2× your Blood stat and choose 1:
 
@@ -58,21 +56,21 @@ Your stone skin thickens and hardens beyond its natural state. Each scene, you m
 
 ### *Clay Body*
 
-**When you reshape your normally firm body to adapt to a situation**, make a Hunger Check and roll +Blood.
+**When you reshape your normally firm body to adapt to a situation,** make a Hunger Check and roll +Blood.
 
 **On a 10+,** your stone flesh flows like wet clay. Describe your transformation to the Storyteller: extend your reach, widen your wingspan, compress your frame to fit through gaps, grow additional gripping surfaces, whatever your situation demands. The Storyteller should be lenient with what you can accomplish; the only real limits are your mass and imagination. The change lasts until the end of the scene, then reverts. Take +1 Forward on the next roll that directly benefits from your new form.
 
 **On a 7–9,** the reshaping works, but the Storyteller chooses 1 complication:
 
 - The transformation is imprecise; it does what you wanted, but not exactly how you pictured it
-- The reshaping is painful; take 1 Aggravated Harm (ignore Armor) as your bones crack and reform
+- The reshaping is painful; take 1 Aggravated Harm (Ignore-Armor) as your bones crack and reform
 - Part of your body resists, limiting the change's usefulness in an unexpected/inconvenient way
 
 **On a 6-,** your body starts to shift but locks mid-transformation. You're stuck in a partially altered state until the end of the scene. The Storyteller describes the complication and you describe how gnarly you look.
 
 ### *Shape the Edifice*
 
-**When you press your hands against stone, concrete, or brick and will it to reshape**, make a Hunger Check and roll +Resolve.
+**When you press your hands against stone, concrete, or brick and will it to reshape,** make a Hunger Check and roll +Resolve.
 
 **On a 10+,** the material obeys. You can reshape, open, seal, or restructure an area of material roughly the size of a double doorway. Larger alterations may require additional time or multiple uses. These changes are permanent. Someone will need tools, explosives, or their own supernatural abilities to undo your work.
 
@@ -90,21 +88,21 @@ Your stone skin thickens and hardens beyond its natural state. Each scene, you m
 
 ### *Flow Through the Mountain*
 
-**When you press yourself into earth, stone, concrete, or brick and let it swallow you**, make a Hunger Check and roll +Shadow.
+**When you press yourself into earth, stone, concrete, or brick and let it swallow you,** make a Hunger Check and roll +Shadow.
 
 **On a 10+,** you sink into the surface and can move through it at your usual pace for the rest of the scene. A visible ripple traces your path across the surface as you pass. You can emerge from any connected stone surface at will. While merged, you're aware of your immediate surroundings and immune to physical attacks.
 
 **On a 7–9,** you merge and can move through stone, but the Storyteller chooses 1 complication:
 
 - Your ripple is very obvious; anyone watching the surface can track you clearly
-- Emerging is rough; you take 1 Superficial Harm (ignore Armor) each time you tear free from the stone
+- Emerging is rough; you take 1 Superficial Harm (Ignore-Armor) each time you tear free from the stone
 - The substrate is resistant; your movement is half as fast as expected
 
 **On a 6-,** you partially merge and get stuck. You need help or a subsequent roll as before to extract yourself, and you're vulnerable while embedded.
 
 ### *Lurking Grotesque*
 
-**When you blend or meld into a stone surface and lie in wait for prey**, make a Hunger Check and roll +Shadow.
+**When you blend or meld into a stone surface and lie in wait for prey,** make a Hunger Check and roll +Shadow.
 
 **On a 10+,** you merge with the surface completely. You become invisible, silent, and undetectable by mundane means. You can remain merged indefinitely as long as you don't move. When a target comes within Hand Range, you erupt from the undisturbed surface in a flurry. Your next **Dirty Your Claws** is treated as an automatic 12+, and the target must immediately **Stay Chill** or freeze in terror.
 
@@ -120,7 +118,7 @@ Your ambush still triggers as above when a target comes within Hand Range.
 
 ### *The Rock Within (Passive)*
 
-Your innards have petrified, and yes, it feels weird. Piercing and puncturing weapons (bullets, knives, arrows, stakes) deal half Harm to you (round down, minimum 1). Staking you is near-impossible — any attempt to stake you automatically fails unless you're already at 0 HP and they have enough time to get the appropriate tools.
+**Your innards have petrified, and yes, it feels weird.** Piercing and puncturing weapons (bullets, knives, arrows, stakes) deal half Harm to you (round down, minimum 1). Staking you is near-impossible — any attempt to stake you automatically fails unless you're already at 0 HP and they have enough time to get the appropriate tools.
 
 ---
 
@@ -128,11 +126,11 @@ Your innards have petrified, and yes, it feels weird. Piercing and puncturing we
 
 ### *Dark Statue (Passive)*
 
-While perfectly still and in contact with stone or earth, you are completely immune to both sunlight and fire. Your body shifts into the same material as your chosen spot, and your mind becomes unreachable. No supernatural Power can detect your thoughts, read your emotions, or locate you through mental means. This lasts as long as you remain motionless. Moving, speaking, or taking any action ends the effect immediately.
+**While perfectly still and in contact with stone or earth,** you are completely immune to both sunlight and fire. Your body shifts into the same material as your chosen spot, and your mind becomes unreachable. No supernatural Power can detect your thoughts, read your emotions, or locate you through mental means. This lasts as long as you remain motionless. Moving, speaking, or taking any action ends the effect immediately.
 
 ### *Stone Legion*
 
-**When you call upon the memory of your kin and the stone answers**, make a Hunger Check and roll +Resolve with Advantage.
+**When you call upon the memory of your kin and the stone answers,** make a Hunger Check and roll +Resolve with Advantage.
 
 **On a 10+,** the architecture comes alive. Statues step from pedestals, pillars crack free and lumber forward, nearby gargoyles and grotesques spread their wings. A number of stone constructs equal to your Blood Potency animate and fight alongside you for the rest of the scene. They act together immediately after you in Initiative, share your stats, but can only attack as per an unarmed **Dirty Your Claws**.
 

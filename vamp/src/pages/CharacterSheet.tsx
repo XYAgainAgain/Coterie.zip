@@ -17,7 +17,7 @@ import { PortraitEditor } from '../components/PortraitEditor';
 import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH as MIN_RIGHT_WIDTH } from '../components/RightColumn';
 import {
   character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
-  setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm,
+  setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm, applyStain,
   addDebt, removeDebt, updateDebt, cycleDebtState, adjustStat, bloodSurgeActive,
 } from '../state/character';
 import {
@@ -240,14 +240,11 @@ function HumanityTracker({ canRoll }: { canRoll?: boolean }) {
   const stains = Math.min(char.stains, 10 - humanity);
   const stainLabel = stains > 0 ? ` (${stains} Stain${stains > 1 ? 's' : ''})` : '';
 
-  /* At 5 Stains/full track, the Beast claims 1 Humanity & Stains clear. */
   function addStain() {
-    const next = char.stains + 1;
-    if (next >= 5 || humanity + next >= 10) {
-      setHumanity(humanity - 1, 0);
+    const outcome = applyStain(humanity, char.stains);
+    setHumanity(outcome.humanity, outcome.stains);
+    if (outcome.lostHumanity) {
       showToast('Stains filled the track — lost 1 Humanity.', 'warning');
-    } else {
-      setHumanity(humanity, next);
     }
   }
 
@@ -1458,6 +1455,19 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     const urls = character.value.portraits.map(p => p.url);
     preloadPortraits(urls);
   }, [slug]);
+
+  /* Short viewports (720p, or a zoomed-in larger screen) can't fit the full portrait plus
+     the stat column. Default the portrait minimized when one is set; manual expand sticks
+     since this only ever minimizes, never re-opens. */
+  const portraitCount = character.value.portraits.length;
+  useEffect(() => {
+    if (isViewing || portraitCount === 0) return;
+    const mql = window.matchMedia('(max-height: 760px)');
+    const apply = () => { if (mql.matches) portraitMinimized.value = true; };
+    apply();
+    mql.addEventListener('change', apply);
+    return () => mql.removeEventListener('change', apply);
+  }, [slug, portraitCount, isViewing]);
 
   if (loading.value) {
     return <div class="vamp-loading">Materializing...</div>;

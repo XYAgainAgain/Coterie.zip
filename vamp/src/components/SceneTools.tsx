@@ -88,6 +88,13 @@ export function SceneTools() {
     notesDraft.value = '';
   }
 
+  /* Scaffold: a blocking confirm until a themed Yes/No dialog is built. Feeding clears
+     all Superficial on waking. */
+  function handleNewNight() {
+    const fed = window.confirm('Did you Feed at least once tonight?');
+    newNight(fed);
+  }
+
   function clearInit() {
     debouncedInit.cancel();
     initDraft.value = '';
@@ -183,7 +190,7 @@ export function SceneTools() {
 
       <div class="vamp-scene-tools__buttons">
         <button class="vamp-scene-btn" onClick={newSession}>New Session</button>
-        <button class="vamp-scene-btn" onClick={newNight}>New Night</button>
+        <button class="vamp-scene-btn" onClick={handleNewNight}>New Night</button>
         <button class="vamp-scene-btn" onClick={handleNewScene}>New Scene</button>
       </div>
 

@@ -4,13 +4,13 @@ title: "Protean"
 
 Protean transformations affect clothing, accessories, and anything worn or carried up to roughly slim-backpack size; larger items (duffel bags, weapon cases, that guitar you insist on bringing everywhere) are left behind when you shift. Plan accordingly. Experienced shapeshifters travel light.
 
-Nearly every Protean Power is a Masquerade risk if witnessed. Even the subtle ones tend to raise questions mortals can't un-ask. Are you gonna explain it to them? I'm not.
+Nearly every Protean Power is a Masquerade risk if witnessed. Even the subtle ones tend to raise questions mortals can't un-ask. Are you gonna explain it to them? I'm certainly not.
 
 ### *Eyes of the Beast (Discipline Perk)*
 
 Your senses sharpen far beyond mortal limits. You suffer no penalties from darkness of any kind, including supernatural, and your vision is preternaturally sharp at any distance; you can read license plates and phone screens from rooftops and spot movement blocks away.
 
-Whenever you like, you can summon an unnatural red glow in your eyes (counts as a Free Action). While your eyes are glowing, you have Advantage when you **Influence** mortals and Kindred below your Blood Potency. Mortals will absolutely tell their friends about it.
+**Whenever you like, you can summon an unnatural red glow in your eyes** (counts as a Free Action). While your eyes are glowing, you have Advantage when you **Influence** mortals and Kindred below your Blood Potency. Mortals will absolutely tell their friends about it.
 
 ---
 
@@ -18,17 +18,17 @@ Whenever you like, you can summon an unnatural red glow in your eyes (counts as 
 
 ### *Feral Weapons*
 
-**When you extend your natural vampiric weapons into vicious talons or dagger-length fangs**, make a Hunger Check. For the rest of the scene, you deal +2 Harm with unarmed attacks and all Harm you inflict this way is Aggravated.
+**When you extend your natural vampiric weapons into vicious talons or dagger-length fangs,** make a Hunger Check. For the rest of the scene, you deal +2 Harm with unarmed attacks and all Harm you inflict this way is Aggravated.
 
 ### *Squirm (Passive)*
 
-Your flesh and bones become rubbery at will. You can squeeze through any gap at least 2 inches wide. Use this to wriggle free of grapples, slip out of restraints, and generally treat your skeleton as more of a suggestion than a structural requirement. Zip ties, handcuffs, straightjackets, coffins, car trunks, storm drains, toilet pipes: if there's enough clearance, you're getting through.
+**Your flesh and bones can become rubbery at will.** You can squeeze through any gap at least 2 inches wide. Use this to wriggle free of grapples, slip out of restraints, and generally treat your skeleton as more of a suggestion than a structural requirement. Zip ties, handcuffs, straightjackets, coffins, car trunks, storm drains, toilet pipes: if there's enough clearance, you're getting through.
 
 While you can compress your form, you can't decrease your mass, so make sure you'll actually fit through/into whatever it is you're trying to enter. If someone or something forcibly extracts you from a tight space before you've finished passing through (yanking you back out by the ankle, for example), you take 1 Aggravated Harm as your compressed body snaps back into shape the hard way. Cartoon noises optional.
 
 ### *Weight of the Feather (Passive)*
 
-You can reduce your effective mass and density to almost nothing whenever you want. You're immune to fall damage, don't trigger pressure-sensitive devices, and leave no footprints or weight impressions. You are quite easily thrown, however.
+**You can reduce your effective mass and density to almost nothing whenever you want.** You're immune to fall damage, don't trigger pressure-sensitive devices, and leave no footprints or weight impressions. You are quite easily thrown, however.
 
 Changing your mass back to normal (or returning to this state) counts as a Free Action when you need to actually weigh something down or not blow away in a stiff breeze.
 
@@ -40,13 +40,13 @@ Changing your mass back to normal (or returning to this state) counts as a Free 
 
 *(Requires: Oblivion access)*
 
-**When you let your body remember what it actually is**, make a Hunger Check. You assume the appearance of a genuine corpse: fresh, gruesome, decomposing, mummified, or skeletal (your choice). You can't move or physically communicate, but you retain all of your senses. Only Aggravated Harm affects you in this state; Superficial Harm is simply irrelevant to a body that's already dead.
+**When you let your body remember what it actually is,** make a Hunger Check. You assume the appearance of a genuine corpse: fresh, gruesome, decomposing, mummified, or skeletal (your choice). You can't move or physically communicate, but you retain all of your senses. Only Aggravated Harm affects you in this state; Superficial Harm is simply irrelevant to a body that's already dead.
 
 You may also choose to voluntarily enter Torpor while in this state, which is the only way this clever ruse will fool ***Sense the Unseen***. The effect lasts until you end it or until sunset, whichever comes first. Remember to ask a Coterie buddy to hot glue at least one eyelid open.
 
 ### *Serpent's Kiss*
 
-**When you will your fangs to lengthen and hollow out like those of a venomous snake**, make a Hunger Check. For the rest of the scene, any time you bite someone, you can inject a small amount of your Vitae into them along with the wound and optionally deal 2 additional Aggravated Harm.
+**When you allow your fangs to lengthen and hollow out like those of a venomous snake,** make a Hunger Check. For the rest of the scene, any time you bite someone, you can inject a small amount of your Vitae into them along with the wound and optionally deal 2 additional Aggravated Harm.
 
 The target counts as having tasted your blood but costs no extra Hunger; this can start or advance a Blood Bond and counts as an exchange of Vitae for any other purpose. The target doesn't need to consent, cooperate, or even be conscious. They just need to be bitten.
 
@@ -54,7 +54,7 @@ The target counts as having tasted your blood but costs no extra Hunger; this ca
 
 ### *Shapechange*
 
-**When you choose to take the form of a particular beast**, make a Hunger Check and roll +Blood. You know up to BP+1 animal shapes and can hold a form for up to the same number of consecutive scenes. What types of forms are available depends upon your Blood Potency:
+**When you choose to take the form of a particular beast,** make a Hunger Check and roll +Blood. You know up to BP+1 animal shapes and can hold a form for up to the same number of consecutive scenes. What types of forms are available depends upon your Blood Potency:
 
 - **BP 1–2:** Common animals: bat, cat, rat, dog, small snake, raven, etc.
 - **BP 3:** Mid-tier predators: owl, fox, coyote, lynx, hawk, etc.
@@ -73,13 +73,13 @@ The target counts as having tasted your blood but costs no extra Hunger; this ca
 
 *(Requires: Fortitude access)*
 
-**When someone offers you a drink you'd rather not take**, you can prevent any blood you consume from actually entering your system and taking effect. Should a suspicious host hand you a chalice of something that smells like it belongs in a Tremere's lab, or if a potential Blood Bond is one sip away from completion: you drink, you taste, and nothing happens.
+**When someone offers you a drink you'd rather not take,** you can prevent any blood you consume from actually entering your system and taking effect. Should a suspicious host hand you a chalice of something that smells like it belongs in a Tremere's lab, or if a potential Blood Bond is one sip away from completion: you drink, you taste, and nothing happens.
 
 The blood does not count toward a Blood Bond, cannot inflict Harm upon you, cannot poison you, and does not slake Hunger. You must vomit it back up before the end of the scene or it enters your system normally. Find a bathroom, an alley, a potted plant, or a very understanding friend.
 
 ### *Vicissitude*
 
-**When you decide to reshape your own flesh and bone to suit your needs**, make a Hunger Check and roll +Resolve. You can never have more total ***Vicissitude*** changes active than your Blood Potency. All changes are permanent until reshaped.
+**When you decide to reshape your own flesh and bone to suit your needs,** make a Hunger Check and roll +Resolve. You can never have more total ***Vicissitude*** changes active than your Blood Potency. All changes are permanent until reshaped.
 
 **On a 10+,** Hold 3. **On a 7–9,** Hold 2 and the Storyteller chooses 1 complication. **On a 6-,** Hold 1 and the Storyteller makes a Move that interrupts, inhibits, ruins, or causes big problems with your transformation.
 
@@ -104,7 +104,7 @@ Spend Hold 1-for-1 on the following adaptations:
 
 ### *Earth Meld*
 
-**When you surrender your body to the earth**, make a Hunger Check and roll +Resolve. You must be touching natural terrain: soil, rock, sand, grass, mud, anything not made by human hands. Concrete, asphalt, and other artificial surfaces won't work.
+**When you surrender your body to the cold, dark earth,** make a Hunger Check and roll +Resolve. You must be touching natural terrain: soil, rock, sand, grass, mud, anything not made by human hands. Concrete, asphalt, and other artificial surfaces won't work.
 
 **On a 10+,** you sink fully into the ground in one turn, leaving no trace. While melded, you're aware of your surroundings within Close Range, you're immune to physical Harm, fire, and sunlight, and you may rise from the earth at will. You can remain melded indefinitely; it's a perfectly fine way to sleep through the day.
 
@@ -114,13 +114,13 @@ Spend Hold 1-for-1 on the following adaptations:
 - The meld is shallow; heavy impact or an animal digging could disturb you
 - Rising is sluggish; it takes a full turn and you emerge disoriented (Disadvantage on your first roll)
 
-**On a 6-,** the earth does not accept the intrusion. You are sucked in, violently moved elsewhere, and spat back out as if in disgust. The Storyteller chooses where you end up. You take 1 Aggravated Harm (ignore Armor) and you're pretty sure something internal isn't where it ought to be.
+**On a 6-,** the earth does not accept the intrusion. You are sucked in, violently moved elsewhere, and spat back out as if in disgust. The Storyteller chooses where you end up. You take 1 Aggravated Harm (Ignore-Armor) and you're pretty sure something internal isn't where it ought to be.
 
 ### *Fleshcrafting*
 
 *(Requires: **Vicissitude** + Dominate access)*
 
-**When you spend an uninterrupted scene reshaping another's flesh and bone**, apply up to BP+1 changes from ***Vicissitude***'s list to the subject. No roll is required; the artistry is in getting them to hold still. Changes are permanent until reshaped.
+**When you spend an uninterrupted scene reshaping another's flesh and bone,** apply up to BP+1 changes from ***Vicissitude***'s list to the subject. No roll is required; the artistry is in getting them to hold still. Changes are permanent until reshaped.
 
 Mortals can be forced to endure this with ***Compel***; a simple command is enough. Kindred and other unwilling supernatural entities must be restrained, or must **Stay Chill** to endure the awful process willingly.
 
@@ -128,7 +128,7 @@ Mortals can be forced to endure this with ***Compel***; a simple command is enou
 
 *(Requires: Blood Sorcery access)*
 
-**When you press your hands to the ground near one or more dead bodies and slurp up the remains**, make a Hunger Check and roll +Blood. Blood, viscera, bone, and tissue liquify and flow across the floor and into your flesh like water running in reverse. The bodies shrink, deflate, and vanish. Vampiric remains are not affected, only mortal or animal bodies, but loose blood from anyone is fair game.
+**When you press your hands to the ground near one or more dead bodies and slurp up the remains,** make a Hunger Check and roll +Blood. Blood, viscera, bone, and tissue liquify and flow across the floor and into your flesh like water running in reverse. The bodies shrink, deflate, and vanish. Vampiric remains are not affected, only mortal or animal bodies, but loose blood from anyone is fair game.
 
 **On a 12+,** you absorb every corpse and scrap of gore within Close Range. Each full body slakes 1 Hunger. The scene is spotless afterwards and you feel invigorated. Please enjoy +1 Forward, you sicko.
 
@@ -152,7 +152,7 @@ This Power is extremely overt during use. If anyone is watching, they see a mani
 
 *(Requires: Blood Sorcery access)*
 
-**When you allow your body to liquefy into an amorphous mass of sentient blood**, make a Hunger Check and roll +Blood. Congratulations, you are no longer solid! Conventional weapons pass through you. Stakes can't find your heart. You can squeeze through any crack a liquid could pass through, flow up walls, pool beneath doors, ruin upholstery, and seep through floorboards.
+**When you dissolve your body and liquefy into an amorphous mass of sentient blood,** make a Hunger Check and roll +Blood. Congratulations, you are no longer solid! Conventional weapons pass through you. Stakes can't find your heart. You can squeeze through any crack a liquid could pass through, flow up walls, pool beneath doors, ruin upholstery, and seep through floorboards.
 
 You're vaguely aware of your surroundings within Close Range, as if you had echolocation without the sound requirement. You have Disadvantage on any roll that requires interacting with something physical: turning a doorknob, pressing a button, picking up an object. You can partially reform body parts (an eye to see around a corner, a hand to grab something, a mouth to speak) with 1 additional Hunger Check per part.
 
@@ -172,7 +172,7 @@ If separated into multiple pools, your consciousness stays with the largest port
 
 *(Requires: **Vicissitude**)*
 
-**When you *Feed* from someone and choose to take their likeness for yourself**, make a Hunger Check. Your flesh reshapes itself into a perfect physical copy of the person you just drank from: their face, their build, their voice, their mannerisms. This is not mesmerism. This is your body literally becoming theirs from tip to toe.
+**When you *Feed* from someone and choose to take their likeness for yourself,** make a Hunger Check. Your flesh reshapes itself into a perfect physical copy of the person you just drank from: their face, their build, their voice, their mannerisms. This is not mesmerism. This is your body literally becoming theirs from tip to toe.
 
 You gain Advantage on all rolls made to pass yourself off as the person you copy. Because the transformation is physical rather than psychic, ***Sense the Unseen*** cannot detect it.
 
@@ -182,7 +182,7 @@ The disguise lasts until you reach 5 Hunger, use this Power again, or otherwise 
 
 *(Requires: **Vicissitude**)*
 
-**When you unleash your Beast's true shape**, make a Hunger Check and roll +Blood. Choose a number of changes up to your Blood Potency from ***Vicissitude***'s list; these are free, last for the scene, and do not count against your ***Vicissitude*** change limit. You become an unmistakable monster; verbal communication is near-impossible, and this is an automatic Masquerade breach if spotted or recorded.
+**When you unleash your Beast's true shape,** make a Hunger Check and roll +Blood. Choose a number of changes up to your Blood Potency from ***Vicissitude***'s list; these are free, last for the scene, and do not count against your ***Vicissitude*** change limit. You become an unmistakable monster; verbal communication is near-impossible, and this is an automatic Masquerade breach if spotted or recorded.
 
 **On a 10+,** the transformation is immediate and total; gain +1 Forward on your first **Dirty Your Claws** in this form. **On a 7–9,** you transform, but the Beast rides close; the Storyteller chooses 1 complication:
 
@@ -196,7 +196,7 @@ The disguise lasts until you reach 5 Hunger, use this Power again, or otherwise 
 
 *(Requires: **Shapechange**)*
 
-You are no longer limited to a fixed set of animal shapes. You can take the form of any creature within the limits of ***Shapechange***, switching freely between them as a Free Action mid-scene, mid-combat, even mid-sentence if you time it right.
+**You are no longer limited to a fixed set of animal shapes.** You can take the form of any creature within the limits of ***Shapechange***, switching freely between them as a Free Action mid-scene, mid-combat, even mid-sentence if you time it right.
 
 If you also have ***Metamorphosis***, this upgrade applies to your personal form only. Your Coterie members retain whatever shape you gave them; they don't shift when you do. Each specific animal form always looks the same (your wolf is always *your* wolf), but you can swap between them as fast as you can think of a reason to.
 
@@ -204,7 +204,7 @@ If you also have ***Metamorphosis***, this upgrade applies to your personal form
 
 *(Requires: **Shapechange**)*
 
-**When you offer to extend your beast-shape to your Coterie**, make a Hunger Check and roll +Blood. While you're in an animal form, up to your entire Coterie can take on the same shape. The Coterie holds their forms until dawn, they decide to exit it as a Free Action, or until each is reduced to 0 HP, whichever comes first.
+**When you offer to extend your beast-shape to your Coterie,** make a Hunger Check and roll +Blood. While you're in an animal form, up to your entire Coterie can take on the same shape. The Coterie holds their forms until dawn, they decide to exit it as a Free Action, or until each is reduced to 0 HP, whichever comes first.
 
 **On a 10+,** the transformation ripples through seamlessly; everyone shifts within moments and retains Discipline access (Storyteller's discretion for speech/hand-dependent powers). **On a 7–9,** everyone shifts, but the Storyteller chooses 1 complication:
 
@@ -222,7 +222,7 @@ If you also have ***Metamorphosis***, this upgrade applies to your personal form
 
 *(Requires: Fortitude access)*
 
-**When you slice open your own chest and carve out your Vitae-powered heart**, you take Aggravated Harm equal to your Blood Potency and should place it somewhere safe as soon as possible. A locked box, a buried jar, a safe deposit box, a piggy bank, a wine decanter, a taxidermied raven on your mantelpiece. Get creative! Wherever you keep it, you must guard it with everything you have.
+**When you slice open your own chest and carve out your Vitae-powered heart,** you take Aggravated Harm equal to your Blood Potency and should place it somewhere safe as soon as possible. A locked box, a buried jar, a safe deposit box, a piggy bank, a wine decanter, a taxidermied raven on your mantelpiece. Get creative! Wherever you keep it, you must guard it with everything you have.
 
 While your heart is removed:
 
@@ -236,7 +236,7 @@ To reinsert your heart, you must make a number of Hunger Checks equal to your Bl
 
 ### *Mist Form*
 
-**When you dissolve your body into a billowing cloud of mist**, make a Hunger Check and roll +Resolve.
+**When you dissolve your body into a billowing cloud of mist,** make a Hunger Check and roll +Resolve.
 
 **On a 10+,** you disperse fully; you're untouchable by physical attacks, can pass through any gap air can fit through, and perceive your surroundings normally. Only fire, sunlight, and supernatural attacks can hurt you. You move at walking pace and reform at will. Lasts one scene or until ended voluntarily.
 
@@ -246,13 +246,13 @@ To reinsert your heart, you must make a number of Hunger Checks equal to your Bl
 - Strong air currents control your drift; the Storyteller decides where you go
 - The mist is conspicuously unnatural; it glows faintly, smells of blood, or moves against the wind
 
-**On a 6-,** you rush it and miscalculate which parts of you are supposed to become what. You still become mist, but it is dark red and clearly made exclusively of your Vitae. You take Aggravated Harm equal to your Blood Potency (ignore Armor) and are a pulsing, drifting cloud of Masquerade violation particles.
+**On a 6-,** you rush it and miscalculate which parts of you are supposed to become what. You still become mist, but it is dark red and clearly made exclusively of your Vitae. You take Aggravated Harm equal to your Blood Potency (Ignore-Armor) and are a pulsing, drifting cloud of Masquerade violation particles.
 
 ### *One With the Land*
 
 *(Requires: **Earth Meld**)*
 
-**When you surrender fully to the earth and extend your awareness down and outward**, the depth of your connection depends on how much Hunger you accept. You must be on natural terrain to connect to it.
+**When you surrender fully to the earth and extend your awareness down and outward,** the depth of your connection depends on how much Hunger you accept. You must be on natural terrain to connect to it.
 
 - **1 Hunger Check:** You sink into the earth and gain a sensory overview of everything within Distant Range: movement, vibrations, the presence of living and undead beings. Lasts one scene.
 - **2 Hunger Checks:** As above, plus you can focus on specific events or conversations within Distant Range, perceiving it as clearly as if you were right there.
@@ -264,7 +264,7 @@ While melded, you're immune to physical Harm, fire, and sunlight. Rising takes o
 
 *(Requires: **Shapechange**)*
 
-**When your body comes apart at the seams and dissolves into a living swarm of small critters**, make 2 Hunger Checks. You choose the species of your swarm when you first learn this Power: arthropods (bugs), rats, snakes, bats, eels, ravens, ferrets, cats, piranhas, whatever your Beast prefers. This choice is permanent.
+**When your body comes apart at the seams and dissolves into a living swarm of small critters,** make 2 Hunger Checks. You choose the species of your swarm when you first learn this Power: arthropods (bugs), rats, snakes, bats, eels, ravens, ferrets, cats, piranhas, whatever your Beast prefers. This choice is permanent.
 
 You are the swarm and the swarm is you. You spread across the area, crawling over walls, flooding through cracks, filling the room with chittering, skittering, writhing life with violent urges. Conventional weapons cannot meaningfully damage you. Only fire and sunlight pose a real threat.
 
@@ -278,7 +278,7 @@ If mortals witness this, the Masquerade Clock advances. Obviously.
 
 Your heart has unmoored from its fixed position and drifts freely within your chest, pulsing wherever the Beast pleases. Staking you requires a 12+ on the staking roll; anything less simply misses. Even when staked, you retain Movement and can still **Slip Away** or **Reposition**.
 
-**When you wrench a stake from your own chest**, roll +Blood.
+**When you wrench a stake from your own chest,** roll +Blood.
 
 **On a 10+,** you pull the stake free! You gain +1 HP, +1 Hunger, and +1 Forward.
 
@@ -286,4 +286,4 @@ Your heart has unmoored from its fixed position and drifts freely within your ch
 
 **On a 6-,** you can't get the stake out and your struggle draws attention. You gain +1 Hunger and the Storyteller makes a Hard Move against you or someone you care about. It *will* be a nasty one.
 
-If the Hunger gained from this Power brings you to 5 Hunger, the Beast erupts. You Frenzy instantly, rip out the stake automatically, and heal all your HP. *Yes, all of it.* Whoever staked you becomes your sole focus. You will look for them, you will find them, and you will kill them. Only then can your Frenzy end.
+**If the Hunger gained from this Power brings you to 5 Hunger,** the Beast erupts. You Frenzy instantly, rip out the stake automatically, and heal all your HP. *Yes, all of it.* Whoever staked you becomes your sole focus. You will look for them, you will find them, and you will kill them. Only then can your Frenzy end.

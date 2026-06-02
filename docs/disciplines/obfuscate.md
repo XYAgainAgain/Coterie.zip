@@ -20,13 +20,13 @@ The effect lasts for one scene or until you move, speak above a whisper, or take
 
 ### *Ensconce (Passive)*
 
-**When you need to hide a small object**, you can supernaturally conceal a number of small objects on your person equal to your Blood Potency (minimum 1). A "small object" is anything you could reasonably hold in one hand: a knife, a gun, a wallet, a banana, your friend's phone, Sephora products, etc. Mortal observers simply don't notice them, even during pat-downs or bag checks.
+**When you need to hide a small object,** you can supernaturally conceal a number of small objects on your person equal to your Blood Potency (minimum 1). A "small object" is anything you could reasonably hold in one hand: a knife, a gun, a wallet, a banana, your friend's phone, Sephora products, etc. Mortal observers simply don't notice them, even during pat-downs or bag checks.
 
 Objects must be on your person (in a pocket or sleeve, tucked in a waistband, palmed in a hand). Anything in plain view with no physical concealment can't be affected. ***Sense the Unseen*** can detect concealed objects as usual.
 
 ### *Mask of a Thousand Faces*
 
-**When you disguise yourself as another forgettable face among many**, make a Hunger Check and roll +Shadow.
+**When you disguise yourself as another forgettable face among many,** make a Hunger Check and roll +Shadow.
 
 Instead of vanishing, you become someone who belongs here. A night guard at the warehouse, a stagehand at the venue, a commuter on the train. Your features blur into something nondescript — same approximate height and build, forgettable face, clothes that match the environment. You can talk, interact, and move freely as long as your presence is at all plausible.
 
@@ -43,7 +43,7 @@ Instead of vanishing, you become someone who belongs here. A night guard at the 
 
 ### *Mask of Ages*
 
-**When you shift your apparent age to something other than how you looked when you were Embraced**, make a Hunger Check. You can project yourself as any plausible human age, younger or older.
+**When you shift your apparent age to something other than how you looked when you were Embraced,** make a Hunger Check. You can project yourself as any plausible human age, younger or older.
 
 A vampire Embraced at 90 years young can attend a college party as a 20-something. A vampire Embraced as a child can appear old enough to order a drink and not get carded. The disguise is physically real but subtle (same face, same build, same you, just aged up or down) and lasts until dawn. ***Sense the Unseen*** sees through the mask, but honestly, what are they gonna say?
 
@@ -51,13 +51,13 @@ You gain a Forward bonus equal to your Blood Potency to any roll where your proj
 
 ### *Silence of Death*
 
-**When you cloak yourself in terrible silence**, make a Hunger Check as your actions become completely muffled. If you have just killed a creature, no Hunger Check is required.
+**When you cloak yourself in terrible silence,** make a Hunger Check as your actions become completely muffled. If you have just killed a creature, no Hunger Check is required.
 
 Until the scene ends, your footsteps, the rustle of your movement, your phone ringing, your gunshots, even the wet sounds of **Feeding** are gone. You produce no sound from your person whatsoever unless you choose to bypass it, such as by speaking at a normal volume or slow-clapping dramatically from the shadows.
 
 This makes you undetectable to anyone relying on hearing alone, such as a guard listening for intruders in the dark, someone on a different floor of a building, or a sentry with their back turned. It doesn't silence sounds you create outside your personal space (slamming doors, dropping objects or bodies, knocking over furniture), and it doesn't fool microphones or other electronic audio equipment.
 
-This Power works purely on the sense of hearing. You can fight, **Feed**, and generally cause mayhem without producing a whisper. It works well in combat. Perhaps too well. Popular among the Banu Haqim.
+This Power works purely on the sense of hearing. You can fight, **Feed**, and generally cause mayhem without producing a whisper. It works well in combat. Perhaps too well. Popular amongst the Banu Haqim.
 
 ---
 
@@ -67,7 +67,7 @@ This Power works purely on the sense of hearing. You can fight, **Feed**, and ge
 
 *(Requires: **Ensconce**)*
 
-**When you touch an object that mustn't be noticed and walk away**, make a Hunger Check. The object remains hidden without you needing to carry it. You can leave concealed items in a drawer, on a busy shelf or table, tucked beneath a mattress, taped under a table, wherever you want. As long as it's small enough for ***Ensconce*** to conceal, ***Cache*** keeps it covered until the end of the scene. If you want, you can make one more Hunger Check to conceal it until dawn.
+**When you touch an object that mustn't be noticed and walk away,** make a Hunger Check. The object remains hidden without you needing to carry it. You can leave concealed items in a drawer, on a busy shelf or table, tucked beneath a mattress, taped under a table, wherever you want. As long as it's small enough for ***Ensconce*** to conceal, ***Cache*** keeps it covered until the end of the scene. If you want, you can make one more Hunger Check to conceal it until dawn.
 
 The other rules from ***Ensconce*** apply: mortals ignore the object and ***Sense the Unseen*** can detect it.
 
@@ -75,7 +75,7 @@ The other rules from ***Ensconce*** apply: mortals ignore the object and ***Sens
 
 *(Requires: Auspex access)*
 
-**Once per scene, you can say one thing and secretly convey a completely different message to a single intended listener**. The hidden message piggybacks on your spoken words; bystanders hear only what you actually said. The recipient hears both and knows which is which.
+**Once per scene, you can say one thing and secretly convey a completely different message to a single intended listener.** The hidden message piggybacks on your spoken words; bystanders hear only what you actually said. The recipient hears both and knows which is which.
 
 The secret message must be anything you (the presumably mortal player) could say in one breath. If you need to pause for air, it's too long.
 
@@ -96,7 +96,7 @@ The secret message must be anything you (the presumably mortal player) could say
 
 ### *Unseen Passage (Passive)*
 
-**After you've successfully *Slipped Away* or activated *Cloak of Shadows***, you can make a Hunger Check to remain hidden while moving freely. Walk, run, or climb as much as you like. As long as you don't speak above a whisper, produce any overpowering odors, or take any action that forces observers to acknowledge your presence, you stay hidden for the rest of the scene.
+**After you've successfully *Slipped Away* or activated *Cloak of Shadows*,** you can make a Hunger Check to remain hidden while moving freely. Walk, run, or climb as much as you like. As long as you don't speak above a whisper, produce any overpowering odors, or take any action that forces observers to acknowledge your presence, you stay hidden for the rest of the scene.
 
 You must already be hidden for ***Unseen Passage*** to function. You can't use it to disappear while under observation, so make sure to check your six before you try anything. And always remember to look up.
 
@@ -116,7 +116,7 @@ Illusions can't mask or disguise real objects, can't block line of sight, can't 
 - **2 Hunger Checks:** Three or four senses. Fills a large space.
 - **3 Hunger Checks:** A fully immersive experience that can envelop an entire building.
 
-**When you project an elaborate illusion into the minds of everyone nearby**, roll +Shadow.
+**When you project an elaborate illusion into the minds of everyone nearby,** roll +Shadow.
 
 **On a 10+,** the illusion is flawless and persists for one scene. Mortals can only disbelieve it through direct physical interaction that proves it false (walking through the "wall" or touching the "flames"). Supernatural creatures roll to disbelieve with a Forward penalty equal to your Blood Potency (minimum 1).
 
@@ -130,7 +130,7 @@ Illusions can't mask or disguise real objects, can't block line of sight, can't 
 
 ### *Ghost in the Machine (Passive)*
 
-Your Obfuscate now extends through electronic media. **When you use any Obfuscate Power that visually conceals you**, live surveillance feeds are affected just like human observers. Recordings and photographs taken during active Obfuscation are degraded: blurred, distorted, and maddeningly hard to identify. Anyone attempting to ID you from such footage takes an Ongoing penalty equal to your Blood Potency (minimum 1).
+Your Obfuscate now extends through electronic media. **When you use any Obfuscate Power that visually conceals you,** live surveillance feeds are affected just like human observers. Recordings and photographs taken during active Obfuscation are degraded: blurred, distorted, and maddeningly hard to identify. Anyone attempting to ID you from such footage takes an Ongoing penalty equal to your Blood Potency (minimum 1).
 
 You also gain Advantage on any roll to circumvent automated surveillance: CCTV cameras, motion sensors, facial recognition, security networks, and the like.
 
@@ -138,7 +138,7 @@ You also gain Advantage on any roll to circumvent automated surveillance: CCTV c
 
 *(Requires: Oblivion access)*
 
-**When you caress a corpse that has been dead for less than a week and spend a full scene absorbing its spiritual residue**, make a Hunger Check. You steal the dead person's appearance, bearing, and mannerisms. You look like them, you move like them, gesture like them, and instinctively react like they would. Being dead yourself provides some innate affinity for snagging an identity no longer in active use.
+**When you caress a corpse that has been dead for less than a week and spend a full scene absorbing its spiritual residue,** make a Hunger Check. You steal the dead person's appearance, bearing, and mannerisms. You look like them, you move like them, gesture like them, and instinctively react like they would. Being dead yourself provides some innate affinity for snagging an identity no longer in active use.
 
 The disguise is well-crafted and highly believable; you take the time to get all the details right. The disguise lasts until dawn. ***Sense the Unseen*** pierces it as usual.
 
@@ -152,7 +152,7 @@ The Storyteller makes a hidden roll using your +Shadow stat. You won't know how 
 
 *(Requires: Dominate access, **Mask of a Thousand Faces**)*
 
-**When you force the facial mesmerism of *Mask of a Thousand Faces* onto an unwilling subject**, make a Hunger Check and roll +Shadow. Instead of concealing yourself, you erase someone else's recognizability. Their face becomes forgettable, their voice becomes generic, their presence becomes wallpaper. Even their closest friends, lovers, and family look right through them.
+**When you force the facial mesmerism of *Mask of a Thousand Faces* onto an unwilling subject,** make a Hunger Check and roll +Shadow. Instead of concealing yourself, you erase someone else's recognizability. Their face becomes forgettable, their voice becomes generic, their presence becomes wallpaper. Even their closest friends, lovers, and family look right through them.
 
 **On a 10+,** the effect lasts for the rest of the night. The target is unrecognizable to everyone, including themselves if they look in a mirror. No telling what kind of therapy they'll need after this.
 
@@ -172,7 +172,7 @@ If the target becomes aware that a supernatural effect is causing their invisibi
 
 ### *Conceal*
 
-**When you touch an object or an area and will it to become forgettable**, make a number of Hunger Checks equal to the number of nights you want the concealment to last, then roll +Wits.
+**When you touch an object or an area and will it to become forgettable,** make a number of Hunger Checks equal to the number of nights you want the concealment to last, then roll +Wits.
 
 The object doesn't become invisible, people's minds simply refuse to register it. They navigate around it and rationalize the space without questioning it. Anyone inside a concealed object (people in an inconspicuous van, occupants of a room) is concealed along with it, as long as they remain inside.
 
@@ -192,7 +192,7 @@ This Power can't affect anything larger than a two-story house, and it can't aff
 
 *(Requires: Dominate access)*
 
-**When you lock eyes with someone and twist their sense of direction**, the scope of your misdirection depends on how much Hunger you accept:
+**When you lock eyes with someone and twist their sense of direction,** the scope of your misdirection depends on how much Hunger you accept:
 
 - **1 Hunger Check:** A building. Hallways double back, exits lead to rooms already visited, every door opens onto somewhere deeper inside.
 - **2 Hunger Checks:** A single room. Walls shift, the door has moved, corners multiply. Harder; less space to work with.
@@ -216,7 +216,7 @@ Against supernatural creatures, roll +Shadow.
 
 *(Requires: Dominate access)*
 
-**When you craft a false psychic persona to present to supernatural scrutiny**, make a Hunger Check and roll +Wits.
+**When you craft a false psychic persona to present to supernatural scrutiny,** make a Hunger Check and roll +Wits.
 
 You build a mask only minds can see; a complete alternate identity with its own thoughts, emotions, and surface memories. Anyone who uses supernatural abilities to read your aura, thoughts, emotional state, or mental landscape encounters the mask instead of you.
 
@@ -234,7 +234,7 @@ You build a mask only minds can see; a complete alternate identity with its own 
 
 *(Requires: Dominate access)*
 
-**When you lock eyes with someone and sever their connection to every living and unliving thing around them**, they are rendered alone. Completely, terrifyingly alone. They cannot perceive any creature, living, dead, or undead. They unconsciously avoid bumping into people but are deaf to their voices and blind to their faces. The world is nothing but empty rooms and silent streets, like the beginning of *28 Days Later*.
+**When you lock eyes with someone and sever their connection to every living and unliving thing around them,** they are rendered alone. Completely, terrifyingly alone. They cannot perceive any creature, living, dead, or undead. They unconsciously avoid bumping into people but are deaf to their voices and blind to their faces. The world is nothing but empty rooms and silent streets, like the beginning of *28 Days Later*.
 
 The duration depends on how many Hunger Checks you're willing to gamble:
 
@@ -254,7 +254,7 @@ The target can still interact with the physical world: open doors, drive cars, e
 
 ### *Cloak the Coterie (Passive)*
 
-**When you use any Obfuscate Power**, you can make one additional Hunger Check with Disadvantage to extend it to your entire Coterie. Every member benefits from the Power as though they activated it themselves, using your capabilities when a roll is needed. Members of the Coterie can still perceive each other while under the effect.
+**When you use any Obfuscate Power,** you can make one additional Hunger Check with Disadvantage to extend it to your entire Coterie. Every member benefits from the Power as though they activated it themselves, using your capabilities when a roll is needed. Members of the Coterie can still perceive each other while under the effect.
 
 If a Coterie member is revealed through their own actions or a perceptive observer, the rest of the group remains hidden. If you are revealed, so is everyone else. Better not mess this up!
 
@@ -264,7 +264,7 @@ If a Coterie member is revealed through their own actions or a perceptive observ
 
 This Power requires a dedicated scene of studying and interacting with the person you want to impersonate: their face from different angles, their voice, their mannerisms, the way they hold themselves. You can't do this from a photograph or video, you need time with the real thing.
 
-**When you reshape your presence to mimic a specific person**, make a Hunger Check and roll +Shadow.
+**When you reshape your presence to mimic a specific person,** make a Hunger Check and roll +Shadow.
 
 **On a 12+,** you are utterly indistinguishable from the original. Voice, mannerisms, body language, even the micro-expressions that only close friends would recognize — all perfect. Even ***Sense the Unseen*** cannot pierce this disguise. You ARE them, for all intents and purposes, for the rest of the scene.
 
@@ -280,6 +280,6 @@ This Power requires a dedicated scene of studying and interacting with the perso
 
 ### *Vanish (Passive)*
 
-You no longer need to **Slip Away** or be hidden from view before activating ***Cloak of Shadows*** or ***Unseen Passage***. You can simply disappear. Mid-conversation or mid-eye-contact. One blink and you're gone. *Swish.*
+**You no longer need to *Slip Away* or be hidden from view before activating *Cloak of Shadows* or *Unseen Passage*.** You can simply disappear. Mid-conversation or mid-eye-contact. One blink and you're gone. *Swish.*
 
 Mortals who witness you ***Vanish*** question whether you were ever there at all. Their memories of you become foggy and indistinct; not erased, just uncertain. You can ***Vanish*** only once per scene unless the Storyteller says otherwise, or you're in your Haven, in which case you can go wild because you know all the good hiding spots.

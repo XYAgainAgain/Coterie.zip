@@ -12,9 +12,9 @@ There is no counter to Potence. If someone can hit you this hard, your options a
 
 ### *Soaring Leap (Discipline Perk)*
 
-You can leap to any point within Far Range in a single bound, ignoring standard physics for a moment. Rooftop to rooftop, street level to fire escape, ground floor to third-story window; if you can see it and it's within Far Range, you can reach it. No run-up required.
+**You can leap to any point within Far Range in a single bound, ignoring standard physics for a moment.** Rooftop to rooftop, street level to fire escape, ground floor to third-story window; if you can see it and it's within Far Range, you can reach it. No run-up, roll, or Hunger Check required.
 
-The landing is always clean (your legs are built for this), but the takeoff can leave a mark: cracked asphalt, buckled flooring, a small crater in the lawn. The Storyteller decides whether the evidence is noticeable. ***Soaring Leap*** does not require a roll or a Hunger Check.
+The landing is always clean (your legs are built for this), but the takeoff can leave a mark: cracked asphalt, buckled flooring, a small crater in the lawn. The Storyteller decides whether the evidence is noticeable.
 
 ---
 
@@ -22,13 +22,13 @@ The landing is always clean (your legs are built for this), but the takeoff can 
 
 ### *Lethal Body (Passive)*
 
-Your bare hands were already weapons, but now they are *honed* weapons. Your unarmed strikes made when you **Dirty Your Claws** can deal Aggravated Harm to mortals if you choose (you can always opt for Superficial instead). Additionally, your unarmed strikes carry the Ignore BP-Armor tag, allowing them to bypass a number of Armor points equal to your Blood Potency.
+Your bare hands were already weapons, but now they are *honed* weapons. **Your unarmed strikes made when you *Dirty Your Claws* can deal Aggravated Harm to mortals if you choose** (you can always opt for Superficial instead). Additionally, your unarmed strikes carry the Ignore-BP-Armor tag, allowing them to bypass a number of Armor points equal to your Blood Potency.
 
 This stacks with everything. A Brujah with ***Brutality*** adds their Blood Potency to unarmed Harm *and* ignores that same amount of Armor. A Gargoyle with ***Stone Hide*** still benefits from the Armor penetration. Whatever else you've got going on, ***Lethal Body*** makes it hit harder and ignore more.
 
 ### *Uncanny Grip (Passive)*
 
-You can climb any non-metallic surface by forcing your fingers and toes into it like pitons. Concrete, brick, stone, wood, drywall, glass (if it's thick enough to take your weight); you simply grip and go. No roll required. Metal surfaces are too hard and smooth; you might manage softer metals (copper cladding, old bronze) at the Storyteller's discretion, but steel and iron won't cooperate.
+**You can climb any non-metallic surface by forcing your fingers and toes into it like pitons.** Concrete, brick, stone, wood, drywall, glass (if it's thick enough to take your weight); you simply grip and go. No roll required. Metal surfaces are too hard and smooth; you might manage softer metals (copper cladding, old bronze) at the Storyteller's discretion, but steel and iron won't cooperate.
 
 You can also hang indefinitely from walls and ceilings, though ceiling-hanging requires bare feet. This is comfortable for you and very uncomfortable for anyone who walks into the room.
 
@@ -40,13 +40,13 @@ The marks you leave behind are permanent: parallel gouges in concrete, finger-sh
 
 ### *Prowess*
 
-**When you channel your Blood into raw physical might**, make a Hunger Check. For the rest of the scene, your unarmed strikes now deal Harm equal to 2× your Blood stat, and any feat of raw strength (bending bars, lifting vehicles, throwing people or heavy objects, breaking down reinforced doors, winning an arm wrestling contest) benefits from the same doubled bonus.
+**When you channel your Blood into raw physical might,** make a Hunger Check. For the rest of the scene, your unarmed strikes now deal Harm equal to 2× your Blood stat, and any feat of raw strength (bending bars, lifting vehicles, throwing people or heavy objects, breaking down reinforced doors, winning an arm wrestling contest) benefits from the same doubled bonus.
 
 This stacks with ***Brutality*** and any other Harm modifiers. For example, a BP 2 Brujah with +3 Blood deals 6 Superficial Harm per punch (2×3) plus 2 from ***Brutality*** for a casual 8. That's enough to turn most mortals into showers of viscera and put a serious dent in anything else.
 
 ### *Relentless Grasp*
 
-**When someone tries to break free of your grip, knock you off a surface, or wrench something from your hands**, your supernatural strength locks down like a hydraulic press.
+**When someone tries to break free of your grip, knock you off a surface, or wrench something from your hands,** your supernatural strength locks down like a hydraulic press.
 
 Against mortals, this is automatic. They cannot move you, pry your fingers loose, or escape your hold. It's just not happening.
 
@@ -68,7 +68,7 @@ Against supernatural creatures, make a Hunger Check and roll +Blood.
 
 ### *Brutal Feed*
 
-**When you roll a 12+ on *Dirty Your Claws***, you may activate ***Brutal Feed*** even if you don't have the Advanced version of the Move. No Hunger Check required.
+**When you roll a 12+ on *Dirty Your Claws*,** you may activate ***Brutal Feed*** even if you don't have the Advanced version of the Move. No Hunger Check required.
 
 Roll 1d6. Reduce your Hunger by the result and also deal that same number as extra Aggravated Harm to the target. Blood vessels burst, organs rupture, bones crack from the inside out. The victim is drained at terrifying speed, collapses into a husk, and whatever's left of them certainly isn't going to last much longer.
 
@@ -78,7 +78,7 @@ If mortals are present, the Masquerade Clock advances. There's no subtle version
 
 ### *Spark of Rage*
 
-**When you lock eyes with someone and project primal aggression into their skull**, make a Hunger Check and roll +Demeanor.
+**When you lock eyes with someone and project primal aggression into their skull,** make a Hunger Check and roll +Demeanor.
 
 Against unprepared mortals, no roll is required. They feel a sudden, irrational surge of fury toward whatever target you direct them at and act on it immediately, with no understanding of why.
 
@@ -113,7 +113,7 @@ You are a blood-powered demolition machine. Please punch responsibly.
 
 ### *Crash Down*
 
-**When you use *Soaring Leap* to launch yourself up and slam into the ground like a vengeful meteor**, make a Hunger Check and roll +Blood.
+**When you use *Soaring Leap* to launch yourself up and slam into the ground like a vengeful meteor,** make a Hunger Check and roll +Blood.
 
 Everyone and everything within Close Range of your landing point takes 4 Superficial Harm, and the immediate environment cracks, buckles, or crumbles from the impact.
 
@@ -136,13 +136,13 @@ If mortals are present, the Masquerade Clock advances. A vampire plummeting from
 
 ### *Draught of Might*
 
-**When you open a vein and let someone drink directly from you**, make a Hunger Check with Disadvantage. The drinker gains temporary access to all of Level 1 Potence until the next dawn. For vampires, the gift fades when they next **Feed** or reach 5 Hunger, whichever comes first.
+**When you open a vein and let someone drink directly from you,** make a Hunger Check with Disadvantage. The drinker gains temporary access to all of Level 1 Potence until the next dawn. For vampires, the gift fades when they next **Feed** or reach 5 Hunger, whichever comes first.
 
 Drinking directly from a Kindred is an intimate and dangerous act. This counts as 1 exchange of Vitae toward a Blood Bond.
 
 ### *Subtle Hammer (Passive)*
 
-Every part of your body can project the sum of your strength through the smallest possible motion. A flick of your finger carries the force of a full-body punch. A casual nudge sends a grown adult flying across the room. You can snap handcuffs by tensing your wrists, shatter a lock by squeezing it, or crack a load-bearing column by leaning on it.
+**Every part of your body can project the sum of your strength through the smallest possible motion.** A flick of your finger carries the force of a full-body punch. A casual nudge sends a grown adult flying across the room. You can snap handcuffs by tensing your wrists, shatter a lock by squeezing it, or crack a load-bearing column by leaning on it.
 
 This doesn't actually make you any stronger, it just lets you use all of your existing strength through movements so minor that casual observers have no idea what just happened. The bouncer you flicked goes flying and everyone assumes they tripped. The door you tapped swings off its hinges and people blame shoddy construction. The Storyteller should not advance the Masquerade Clock for Potence feats performed through ***Subtle Hammer*** unless a witness is specifically watching you and has reason to suspect supernatural involvement.
 
@@ -154,7 +154,7 @@ You also automatically break free of any mundane physical restraint (handcuffs, 
 
 ### *Earthshock*
 
-**When you slam your fist or foot into the ground and let the full force of your Blood rip through the earth**, make 2 Hunger Checks and roll +Blood.
+**When you slam your fist or foot into the ground and let the full force of your Blood rip through the earth,** make 2 Hunger Checks and roll +Blood.
 
 Everyone within Close Range is caught in the shockwave, including allies unless they were braced for it.
 
@@ -174,6 +174,6 @@ If mortals are present, the Masquerade Clock advances. Twice, probably. Sinkhole
 
 ### *Fist of Caine*
 
-**When you will the murderous strength of the First Vampire into your bare hands**, make a Hunger Check. For the rest of the scene, your unarmed strikes deal Aggravated Harm to all creatures, mortal and supernatural alike. Go wild with your violent descriptions. You can tear off limbs, punch through ribcages, decapitate with a casual slash, cave in sternums, crush skulls, or rip out any organs you'd like. Against most mortals, a single hit is super fatal. That's worse than regular fatal and I will not be elaborating further.
+**When you draw the murderous strength of the First Vampire into your bare hands,** make a Hunger Check. For the rest of the scene, your unarmed strikes deal Aggravated Harm to all creatures, mortal and supernatural alike. Go wild with your violent descriptions. You can tear off limbs, punch through ribcages, decapitate with a casual slash, cave in sternums, crush skulls, or rip out any organs you'd like. Against most mortals, a single hit is super fatal. That's worse than regular fatal and I will not be elaborating further.
 
 While ***Fist of Caine*** is active, each time you slay an opponent by **Dirtying Your Claws**, you may immediately spring to another enemy within Close Range and **Dirty Your Claws** again. If that kill chains into another, keep going up to a total number of **Dirty Your Claws** rolls equal to your Blood Potency (including the first one that started the chain). Each strike in the chain still requires its own roll.

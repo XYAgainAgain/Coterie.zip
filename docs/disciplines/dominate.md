@@ -12,7 +12,7 @@ Dominate cannot extract information. Dominated targets are puppets, not conversa
 
 ### *Compel (Discipline Perk)*
 
-**When you lock eyes with someone and speak a single commanding word**, the target obeys immediately. The command must be physical in nature and completable in a single action: "Stop," "Run," "Release," "Hide", etc. Ambiguous commands are interpreted literally, often poorly.
+**When you lock eyes with someone and speak a single commanding word,** the target obeys immediately. The command must be physical in nature and completable in a single action: "Stop," "Run," "Release," "Hide," etc. Ambiguous commands are interpreted literally, often poorly.
 
 Against unprepared mortals, no roll is needed; they simply comply. The Storyteller may grant exceptions for dramatically important mortals or extraordinary circumstances.
 
@@ -40,7 +40,7 @@ Against supernatural creatures, this still requires the usual ***Compel*** roll.
 
 ### *Devotion (Passive)*
 
-Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. **When another vampire uses a Dominate Power against one of your subjects**, their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.
+Anyone currently under the effect of one of your Dominate Powers is shielded from other attempts to Dominate them. **When another vampire uses a Dominate Power against one of your subjects,** their results are downgraded: a 12+ or 10+ counts as a 7–9, and a 7–9 counts as a 6-.
 
 Your mental hold comes first. Everybody else can wait in line.
 
@@ -50,7 +50,7 @@ Your mental hold comes first. Everybody else can wait in line.
 
 ### *Dementation*
 
-**When you engage someone in conversation and begin threading your will between the words**, make a Hunger Check and roll +Demeanor. This requires genuine back-and-forth; a monologue won't cut it. Sustained eye contact is not required for this Power.
+**When you engage someone in conversation and begin threading your will between the words,** make a Hunger Check and roll +Demeanor. This requires genuine back-and-forth; a monologue won't cut it. Sustained eye contact is not required for this Power.
 
 **On a 10+,** Hold 3. **On a 7–9,** Hold 1.
 
@@ -77,7 +77,7 @@ Your command over the Blood Bond is ironclad. You gain the following benefits:
 
 ### *Mesmerize*
 
-**When you hold someone's gaze and issue a series of clear, immediate commands**, make a Hunger Check and roll +Resolve.
+**When you hold someone's gaze and issue a series of clear, immediate commands,** make a Hunger Check and roll +Resolve.
 
 The commands must be immediately actionable: "Go to the front desk, collect your belongings, and leave through the back exit." No conditional logic ("If you see Hank, give him the envelope"), no tasks requiring judgment, and nothing the target couldn't accomplish on autopilot. The target carries out your instructions mindlessly and to the letter (think Jedi mind trick, not strategic briefing).
 
@@ -94,7 +94,7 @@ The commands must be immediately actionable: "Go to the front desk, collect your
 
 ### *The Stolen Voice*
 
-**When you lock eyes with someone and command their silence**, make a Hunger Check. Against mortals, no roll is needed; the silence is immediate and total (equivalent to the 6- result).
+**When you lock eyes with someone and command their silence,** make a Hunger Check. Against mortals, no roll is needed; the silence is immediate and total (equivalent to the 6- result).
 
 Against supernatural creatures, the target must **Stay Chill** to resist. If the target's Blood Potency exceeds yours, they have Advantage on this roll. Their result determines the depth of silence:
 
@@ -120,7 +120,7 @@ Only one directive can be embedded per target at a time. The directive lies dorm
 
 ### *The Forgetful Mind*
 
-**When you hold someone's gaze for an extended period and carefully describe new memories to replace their old ones**, make a Hunger Check and roll +Wits. This requires a full, uninterrupted scene of focused work; you are verbally painting over the old canvas, one detail at a time. Loud parties, combat, and ticking Clocks are not your friend here.
+**When you hold someone's gaze for an extended period and carefully describe new memories to replace their old ones,** make a Hunger Check and roll +Wits. This requires a full, uninterrupted scene of focused work; you are verbally painting over the old canvas, one detail at a time. Loud parties, combat, and ticking Clocks are not your friend here.
 
 The scope of memory you can rewrite depends on your Blood Potency:
 
@@ -144,7 +144,7 @@ The scope of memory you can rewrite depends on your Blood Potency:
 
 ### *Ancestral Dominion*
 
-**When you reach through the Blood to command a vampire of your own Clan within Close Range**, make a Hunger Check and roll +Blood. This Power requires neither eye contact nor spoken words; the command travels silently through the Blood itself. The target must have a lower Blood Potency than yours. They know instinctively that an ancestor is compelling them, though not necessarily who.
+**When you reach through the Blood to command a vampire of your own Clan within Close Range,** make a Hunger Check and roll +Blood. This Power requires neither eye contact nor spoken words; the command travels silently through the Blood itself. The target must have a lower Blood Potency than yours. They know instinctively that an ancestor is compelling them, though not necessarily who.
 
 **On a 10+,** the target carries out your command as though ***Mesmerized***. They may resist internally but cannot refuse.
 
@@ -160,7 +160,7 @@ The scope of memory you can rewrite depends on your Blood Potency:
 
 ### *Implant Suggestion*
 
-**When you lock eyes with someone and plant a desire, opinion, or impulse directly into their mind**, make a Hunger Check and roll +Demeanor.
+**When you lock eyes with someone and plant a desire, opinion, or impulse directly into their mind,** make a Hunger Check and roll +Demeanor.
 
 Unlike ***Compel*** or ***Mesmerize***, this Power doesn't puppet the target. It changes what they *want*. You can make someone trust a stranger, distrust an ally, crave something they've never desired, or abandon a belief they've held for years. The target acts on the implanted desire using their own judgment and free will, they just have different priorities now.
 
@@ -178,7 +178,7 @@ Radical changes to core beliefs (making a pacifist violent, a devoted parent neg
 
 ### *Rationalize (Passive)*
 
-Your Dominate victims now believe that everything they did under your command was entirely their own idea. They defend their actions with complete conviction, no matter how absurd those actions were.
+**Your Dominate victims now believe that everything they did under your command was entirely their own idea.** They defend their actions with complete conviction, no matter how absurd those actions were.
 
 Only hard evidence or persistent, highly specific questioning can crack the illusion. Even then, the target is far more likely to question their own sanity than to realize they were Dominated. Long-term exposure to ***Rationalize*** causes lasting psychological damage: anxiety disorders, identity crises, a creeping sense that their own thoughts aren't trustworthy.
 
@@ -186,7 +186,7 @@ It's one of the cruelest applications of Dominate, and Kindred who use it casual
 
 ### *Tabula Rasa*
 
-**When you restrain a conscious target, lock their gaze, and begin systematically dismantling their identity**, make 3 Hunger Checks. If any of these push you to 5 Hunger, you Frenzy. The Power fails, and your Beast demands you drain the helpless body in front of you completely. If the target is Kindred, this may constitute Diablerie.
+**When you restrain a conscious target, lock their gaze, and begin systematically dismantling their identity,** make 3 Hunger Checks. If any of these push you to 5 Hunger, you Frenzy. The Power fails, and your Beast demands you drain the helpless body in front of you completely. If the target is Kindred, this may constitute Diablerie.
 
 If you maintain control, roll +Resolve. This requires a full, uninterrupted scene; any significant disturbance ends the attempt.
 
@@ -212,9 +212,9 @@ On any successful use of this Power (7+), you automatically gain Stains equal to
 
 Where ***The Forgetful Mind*** is a surgeon's scalpel, this Power is a pressure washer. No rewriting, no careful verbal painting, no scene full of focused work. Just a glance and a decision about how much goes. This Power operates in two modes:
 
-**Erasure by Time:** Make 1 Hunger Check to erase the target's past week of memories. Each additional week costs 1 additional Hunger Check, up to 5 total (erasing approximately 1 month). No roll is needed; the memories simply vanish. The target is left with a clean gap or a vague sense of time having passed (your choice). Eye contact is required but the process takes only moments.
+**Erasure by Time:** **When you lock eyes with someone and scour the past from their mind,** make 1 Hunger Check to erase the target's past week of memories. Each additional week costs 1 additional Hunger Check, up to 5 total (erasing approximately 1 month). No roll is needed; the memories simply vanish. The target is left with a clean gap or a vague sense of time having passed (your choice). Eye contact is required but the process takes only moments.
 
-**Erasure by Topic:** **When you lock eyes with someone and will a specific person or event out of their memory entirely**, make a Hunger Check and roll +Wits.
+**Erasure by Topic:** **When you lock eyes with someone and will a specific person or event out of their memory entirely,** make a Hunger Check and roll +Wits.
 
 **On a 12+,** you achieve perfect erasure. Every trace of the specified person or event is gone. No mundane or supernatural means can recover what was lost.
 
@@ -232,4 +232,4 @@ Any of your Dominate Powers can now target a group instead of a single individua
 
 Commands that would result in the target's death or serious self-injury no longer fail automatically. "Walk into the sun," "Put the gun to your head," "Stop breathing" — all of these now function through ***Compel***, ***Mesmerize***, or any other Dominate Power. This works on Kindred as well as mortals.
 
-Using ***Terminal Decree*** costs you 1 Humanity immediately. No roll, no Stain check; your soul simply dims. The sole exception: if the target has been given a fair trial and found guilty of a capital offense by a legitimate authority, the Humanity cost is waived. What counts as "fair" and "legitimate" is between you, your Coterie, your Storyteller, and whatever remains of your conscience.
+Using ***Terminal Decree*** costs you 1 Humanity immediately. No roll, no Stain check; your soul simply dims. The sole exception is if the target has been given a fair trial and found guilty of a capital offense by a legitimate authority, the Humanity cost is waived. What counts as "fair" and "legitimate" is between you, your Coterie, your Storyteller, and whatever remains of your conscience.

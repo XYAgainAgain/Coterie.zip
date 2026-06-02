@@ -14,7 +14,7 @@ Presence affects emotions, not minds. Targets retain their free will but their f
 
 ### *Awe/Daunt (Discipline Perk)*
 
-**Once per scene when you wish to impose your will upon the social situation**, choose one effect (no Hunger Check required):
+**Once per scene when you wish to impose your will upon the social situation,** choose one effect (no Hunger Check required):
 
 - ***Awe:*** Your supernatural charisma draws every eye and softens every heart. You have a number of +1 Forward bonuses equal to your Blood Potency to social rolls involving charm, persuasion, or performance until the scene ends or until you use another Presence Power. Use these whenever you like; they are lost when the scene or ***Awe/Daunt*** ends.
 - ***Daunt:*** You radiate menace and authority. As above, you gain at-will +1 Forward bonuses to social rolls involving intimidation or coercion until the scene ends or until you use another Presence Power. While ***Daunt*** is active, a creature that is considering attacking you in this scene must successfully **Stay Chill** first or find themselves unable to act against you. If they manage it and combat begins, ***Daunt*** ends.
@@ -25,7 +25,7 @@ Presence affects emotions, not minds. Targets retain their free will but their f
 
 ### *Eyes of the Serpent*
 
-**When you catch someone's gaze and your eyes shift to reveal slitted, serpentine pupils**, the target is frozen in place for as long as you maintain eye contact. They can speak quietly but cannot move, take actions, or shout. Breaking eye contact, looking away, or the target taking Harm ends the effect immediately. You can only hold one gaze at a time.
+**When you catch someone's gaze and your eyes shift to reveal slitted, serpentine pupils,** the target is frozen in place for as long as you maintain eye contact. They can speak quietly but cannot move, take actions, or shout. Breaking eye contact, looking away, or the target taking Harm ends the effect immediately. You can only hold one gaze at a time.
 
 Against most mortals, no roll is required; they are utterly enraptured.
 
@@ -53,13 +53,13 @@ You have Advantage on all social rolls against mortals craving your sweet Kiss. 
 
 ### *Electromagnetism (Passive)*
 
-Your Presence now transmits through live electronic media as long as your voice can be heard: phone calls, video chats, live streams, and broadcasts. ***Awe/Daunt*** and ***Entrancement*** function through live feeds as though you were physically present. Recorded messages and pre-recorded video do not retain the effect.
+**Your Presence now transmits through live electronic media as long as your voice can be heard:** phone calls, video chats, live streams, and broadcasts. ***Awe/Daunt*** and ***Entrancement*** function through live feeds as though you were physically present. Recorded messages and pre-recorded video do not retain the effect.
 
 If using ***Entrancement*** through a livestream/video feed, you must speak the target's name clearly; the Power only affects one person at a time. Anyone else watching the same transmission finds you unusually compelling and may instantly like and subscribe, but nothing more.
 
 ### *Honeyed Words (Passive)*
 
-Your voice alone carries the full weight of your Presence. Normally, Presence requires the target to perceive you directly. With ***Honeyed Words***, the target only needs to hear your voice. You can use this Discipline's Perk and any Presence Power through a closed door, from behind a curtain, while hidden, or from anywhere within Close Range as long as the target can hear you clearly and understand your words. This does not work through electronic transmission.
+**Your voice alone carries the full weight of your Presence.** Normally, Presence requires the target to perceive you directly. With ***Honeyed Words***, the target only needs to hear your voice. You can use this Discipline's Perk and any Presence Power through a closed door, from behind a curtain, while hidden, or from anywhere within Close Range as long as the target can hear you clearly and understand your words. This does not work through electronic transmission.
 
 ---
 
@@ -67,7 +67,7 @@ Your voice alone carries the full weight of your Presence. Normally, Presence re
 
 ### *Dread Gaze*
 
-**When you bare your fangs and fix somebody with an expression meant to induce primal terror**, make a Hunger Check and roll +Demeanor.
+**When you bare your fangs and fix somebody with an expression meant to induce primal terror,** make a Hunger Check and roll +Demeanor.
 
 Mortals who witness this display flee, freeze, or crumple. No mortal can stand against the full fury of the Beast made visible.
 
@@ -85,15 +85,13 @@ Mortals who witness this display flee, freeze, or crumple. No mortal can stand a
 
 ### *Irresistible Voice (Passive)*
 
-Your voice carries preternatural authority. People find it difficult to interrupt you, walk away mid-sentence, or ignore you even when they want to, and must **Stay Chill** or remain hanging on your every word. Anyone outside your Coterie with a Blood Potency lower than yours is affected by this.
+**Your voice carries preternatural authority.** People find it difficult to interrupt you, walk away mid-sentence, or ignore you even when they want to, and must **Stay Chill** or remain hanging on your every word. Anyone outside your Coterie with a Blood Potency lower than yours is affected by this.
 
 *If you also have Dominate:* eye contact is no longer required for any Dominate Power of a level equal to or lower than your Blood Potency. Your voice alone is sufficient. The target must still be within Close Range and able to hear you clearly. This does not work through electronic transmission.
 
 ### *Passion Leech*
 
-*If you also have Auspex:* the mortal's emotional state is visible to you as Resonance throughout the process, and you can choose which specific emotion to drain.
-
-**When you spend a scene in close proximity to a mortal and slowly siphon the warmth of genuine emotion from them**, make a Hunger Check and roll +Demeanor. The target must be unaware of what you're doing; casual conversation, shared space, or simply being near them works.
+**When you spend a scene in close proximity to a mortal and slowly siphon the warmth of genuine emotion from them,** make a Hunger Check and roll +Demeanor. The target must be unaware of what you're doing; casual conversation, shared space, or simply being near them works.
 
 **On a 10+,** you absorb the full depth of their emotional capacity. Until dawn breaks, you gain all the benefits of 10 Humanity: your **Blush of Life** returns with unnecessary gusto, and you feel genuinely, heartbreakingly alive. Warm skin, beating heart, food has flavor, emotions feel real (and quite strong).
 
@@ -107,11 +105,13 @@ Your voice carries preternatural authority. People find it difficult to interrup
 
 Successfully using this Power both numbs and stokes the mortal victim's temperament. They lose all Blood Resonance and spend the next 3 nights in a state of flattened affect and reduced inhibitions: emotionally stunted, prone to impulsive decisions, quicker to anger, slower to empathize. They act, in other words, uncomfortably like a vampire. Their behavior returns to normal after the third night, and they will probably write it off as a short-lived illness or mental breakdown.
 
+*If you also have Auspex:* the mortal's emotional state is visible to you as Resonance throughout the process, and you can choose which specific emotion to drain.
+
 ### *True Love's Face*
 
 *(Requires: Obfuscate access)*
 
-**When you dive into someone's feelings and reshape your appearance to match the person they feel most strongly about**, make a Hunger Check and roll +Demeanor. You must know (or have learned through Auspex, conversation, or investigation) who the target has strong emotions for and what that person looks like. The emotion doesn't have to be love; grief, guilt, longing, hatred, and fury all work just as well.
+**When you dive into someone's feelings and reshape your appearance to match the person they feel most strongly about,** make a Hunger Check and roll +Demeanor. You must know (or have learned through Auspex, conversation, or investigation) who the target has strong emotions for and what that person looks like. The emotion doesn't have to be love; grief, guilt, longing, hatred, and fury all work just as well.
 
 **On a 10+,** the transformation is flawless. For the rest of the scene, you look, sound, and move exactly like the person you're impersonating. You have Advantage on all social rolls with the target. The target's emotional response is genuine and intense; the Storyteller decides whether they lean toward the emotion (running to embrace you) or recoil from it (backing away in shock or rage).
 
@@ -131,7 +131,7 @@ If you appear as one of the target's Touchstones, the emotional impact is amplif
 
 ### *Entrancement*
 
-**When you focus your supernatural allure on a single individual**, make a Hunger Check and roll +Demeanor.
+**When you focus your supernatural allure on a single individual,** make a Hunger Check and roll +Demeanor.
 
 The target falls into rapt fascination with you, as if falling head-over-heels in love or meeting a lifelong idol. They do their best to remain in your good graces and will go out of their way to please you, but will not cause physical harm to themselves or their loved ones. Asking them to do so immediately ends the effect, as does failing any social roll against the target while the effect is active; the spell breaks when your charm falters.
 
@@ -151,7 +151,7 @@ The effect lasts for a number of scenes equal to your Blood Potency.
 
 *(Requires: Obfuscate access)*
 
-**When you touch someone and invisibly crank their existing desire to 11**, make a Hunger Check and roll +Demeanor. You must be aware of what the target currently wants (through observation, conversation, Auspex, or simple deduction); this Power amplifies what's already there, it never creates a new desire.
+**When you touch someone and invisibly crank their existing desire to 11,** make a Hunger Check and roll +Demeanor. You must be aware of what the target currently wants (through observation, conversation, Auspex, or simple deduction); this Power amplifies what's already there, it never creates a new desire.
 
 **On a 10+,** the target becomes consumed by their desire. They will pursue it to the exclusion of all else for the rest of the scene: abandoning conversations, ignoring obligations, brushing past allies, spending money they don't have. They suffer −2 Ongoing to any roll not directly related to pursuing the desire. If the object of the desire is something you can offer or withhold, you have Advantage on any negotiation or social roll involving it.
 
@@ -165,7 +165,7 @@ The effect lasts for a number of scenes equal to your Blood Potency.
 
 ### *Suffuse the Edifice (Passive)*
 
-**While you are present in a building or similar enclosed space**, you can extend ***Awe***, ***Daunt***, or ***Majesty*** through the entire structure. Anyone inside the building or looking at it from outside is affected as though you were standing directly in front of them.
+**While you are present in a building or similar enclosed space,** you can extend ***Awe***, ***Daunt***, or ***Majesty*** through the entire structure. Anyone inside the building or looking at it from outside is affected as though you were standing directly in front of them.
 
 If used outdoors, the effect extends to Far Range instead.
 
@@ -173,7 +173,7 @@ A nightclub suffused with ***Awe*** has lines stretching around the block. A Hav
 
 ### *Wingman*
 
-**When you touch a willing vampire and channel your Presence through them**, make 2 Hunger Checks. Choose one of your Presence Powers. Your ally gains access to that Power until the end of the scene, using your Blood Potency for any effects that depend upon it. You cannot use the shared Power yourself while it's extended.
+**When you touch a willing vampire and channel your Presence through them,** make 2 Hunger Checks. Choose one of your Presence Powers. Your ally gains access to that Power until the end of the scene, using your Blood Potency for any effects that depend upon it. You cannot use the shared Power yourself while it's extended.
 
 Only one Power can be extended at a time, and only to one target. If you extend a different Power or target a different ally, the previous extension ends immediately.
 
@@ -183,7 +183,7 @@ Only one Power can be extended at a time, and only to one target. If you extend 
 
 ### *Majesty*
 
-**When you draw yourself up and unleash the full, terrible force of your supernatural presence**, make a number of Hunger Checks equal to the number of Range bands you wish to affect (1 for Intimate, 5 for all through Distant, etc.), then roll +Demeanor.
+**When you draw yourself up and unleash the full, terrible force of your supernatural presence,** make a number of Hunger Checks equal to the number of Range bands you wish to affect (1 for Intimate, 5 for all through Distant, etc.), then roll +Demeanor.
 
 Whether you appear heartrendingly beautiful, monstrously terrifying, or wielding absolute divine command is up to you. The effect is the same: everyone within the affected area who can perceive you cannot act against you. They can only stare, avert their eyes, kneel, or flee. Self-preservation is still allowed (running from a fire, defending against someone else), but you are untouchable.
 
@@ -199,7 +199,7 @@ Whether you appear heartrendingly beautiful, monstrously terrifying, or wielding
 
 ### *Summon*
 
-**When you concentrate on individuals you've previously affected with a Presence Power or who have tasted your Vitae**, make a Hunger Check and roll +Demeanor. You can target a number of individuals up to your Blood Potency. You don't need to know where they are; the call reaches them regardless of distance.
+**When you concentrate on individuals you've previously affected with a Presence Power or who have tasted your Vitae,** make a Hunger Check and roll +Demeanor. You can target a number of individuals up to your Blood Potency. You don't need to know where they are; the call reaches them regardless of distance.
 
 **On a 12+,** the targets drop whatever they are doing and make their way to you immediately. They'll pay for an overpriced cab, walk out of a meeting, skip work, cancel plans, or even excuse themselves from a date. The only thing they won't do is directly harm themselves to get there.
 

@@ -20,7 +20,7 @@ The cost is the distance. Every person you touch loses something, and the more f
 
 ## Disciplines
 
-You start with exclusive access to [**Psychotrophia**](../disciplines/psychotrophia.md). Choose 1 additional: [**Auspex**](../disciplines/auspex.md) **| [Presence](../disciplines/presence.md)**
+You start with exclusive access to [**Psychotrophia**](../disciplines/psychotrophia.md). Choose 1 additional: **[Auspex](../disciplines/auspex.md) | [Presence](../disciplines/presence.md)**
 
 ## Bane: *The Wasting*
 

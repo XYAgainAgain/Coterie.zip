@@ -10,7 +10,7 @@ The flip side: everything hits a hell of a lot harder. ***Heightened Senses*** m
 
 ### *Heightened Senses (Discipline Perk)*
 
-**When you *Discern Vibes* or *Catch the Scent***, you have +1 Forward to those rolls.
+**When you *Discern Vibes* or *Catch the Scent*,** you have +1 Forward to those rolls.
 
 However, if you're exposed to extreme sensations (loud bangs, intense light, overpowering smells), you must **Stay Chill** or suffer −1 Ongoing to all Wits rolls for the rest of the scene as your heightened senses overload.
 
@@ -20,7 +20,7 @@ However, if you're exposed to extreme sensations (loud bangs, intense light, ove
 
 ### *Reveal Temperament*
 
-**When you lean close to draw in someone's scent**, make a Hunger Check and roll +Wits. You must be within Hand Range.
+**When you lean close to draw in someone's scent,** make a Hunger Check and roll +Wits. You must be within Hand Range.
 
 **On a 10+,** the blood speaks volumes. You learn the target's Blood Resonance, if any, and which of the four Humors they're most predisposed to. If the target is a vampire, you also learn the Resonance of their last meal, whether they've **Fed** recently, and how they **Hunt** (their Predator Type).
 
@@ -32,7 +32,7 @@ However, if you're exposed to extreme sensations (loud bangs, intense light, ove
 
 Your awareness pierces the veil between worlds. Cloaked vampires, distant watchers, lingering spirits, and woven enchantments all register to your expanded perception — you know what hides in the spaces between reality.
 
-**When you successfully *Discern Vibes* or *Catch the Scent***, you gain +1 additional Hold. The following questions can also be asked regardless of which Move you used:
+**When you successfully *Discern Vibes* or *Catch the Scent*,** you gain +1 additional Hold. The following questions can also be asked regardless of which Move you used:
 
 - Is anything supernatural concealed here?
 - What occult powers are active nearby?
@@ -45,7 +45,7 @@ Your awareness pierces the veil between worlds. Cloaked vampires, distant watche
 
 ### *Panacea*
 
-**When you lay your hands on someone and reach into their mind to still the turmoil within**, make a Hunger Check and roll +Resolve. You must be within Hand Range, and the target must be willing or unaware. ***Panacea*** cannot target yourself.
+**When you lay your hands on someone and reach into their mind to still the turmoil within,** make a Hunger Check and roll +Resolve. You must be within Hand Range, and the target must be willing or unaware. ***Panacea*** cannot target yourself.
 
 **On a 10+,** Hold 3. **On a 7–9,** Hold 1.
 
@@ -64,7 +64,7 @@ Spend Hold 1-for-1 to administer the following treatments:
 
 Your awareness occasionally slips forward in time. The Storyteller may give you brief, involuntary flashes of insight whenever they see fit: a prickle of danger before an ambush, a name that surfaces unbidden, a split-second image of someone you haven't met yet. These cost nothing and require no roll. The Storyteller should use these flashes to flag upcoming danger, highlight overlooked clues, or nudge the story forward when momentum stalls; they're pacing tools as much as character abilities.
 
-**When you deliberately still your mind and reach for a vision of what's to come**, make a Hunger Check and roll +Resolve. You may activate this only once per scene.
+**When you deliberately still your mind and reach for a vision of what's to come,** make a Hunger Check and roll +Resolve. You may activate this only once per scene.
 
 **On a 10+,** the vision arrives with clarity. The Storyteller provides a truthful, actionable answer to one question you have about the subject: a person's near-term intentions, the most likely outcome(s) of a plan, what waits behind a closed door, or any other forward-looking question relevant to the current situation. Take +1 Ongoing when you act on what you've seen until it comes to pass.
 
@@ -74,7 +74,7 @@ Your awareness occasionally slips forward in time. The Storyteller may give you 
 
 ### *Unerring Pursuit*
 
-**When you lock eyes with someone and plant a psychic marker in their consciousness**, make a Hunger Check and roll +Shadow. For a number of nights equal to your Blood Potency, whenever the target catches their own reflection (mirrors, windows, phone screens, puddles), you receive a brief, vivid flash of their surroundings: where they are, who they're with, what they're doing.
+**When you lock eyes with someone and plant a psychic marker in their consciousness,** make a Hunger Check and roll +Shadow. For a number of nights equal to your Blood Potency, whenever the target catches their own reflection (mirrors, windows, phone screens, puddles), you receive a brief, vivid flash of their surroundings: where they are, who they're with, what they're doing.
 
 **On a 10+,** the connection is one-way and invisible. The target has no idea they're being tracked.
 
@@ -88,7 +88,7 @@ Your awareness occasionally slips forward in time. The Storyteller may give you 
 
 ### *Fatal Flaw (Passive)*
 
-**When you successfully *Discern Vibes* or *Catch the Scent* on a particular person**, the following questions can also be asked regardless of which Move you used:
+**When you successfully *Discern Vibes* or *Catch the Scent* on a particular person,** the following questions can also be asked regardless of which Move you used:
 
 - What is this person most vulnerable to right now?
 - What would break their composure in this moment?
@@ -102,7 +102,7 @@ Additionally, when you use either Move, you may make one Hunger Check to gain +2
 
 *(Requires: Oblivion access)*
 
-**When you kill a mortal and read the secrets of the cosmos written in their cooling viscera**, make a Hunger Check and roll +Wits. The death must be fresh; this Power requires you to physically examine the remains within moments of their final breath. You gain 1 Stain (*Organovore* Predator Types are exempt; you've done this before).
+**When you kill a mortal and read the secrets of the cosmos written in their cooling viscera,** make a Hunger Check and roll +Wits. The death must be fresh; this Power requires you to physically examine the remains within moments of their final breath. You gain 1 Stain (*Organovore* Predator Types are exempt; you've done this before).
 
 **On a 10+,** the dying mind's final glimpse of the infinite becomes yours. Bank a number of Disadvantages equal to your Blood Potency. Until the next dawn, whenever someone acts against you (attacking, **Influencing**, using a Discipline Power, etc.), you may spend 1 banked Disadvantage to impose Disadvantage on their roll. You already saw this coming.
 
@@ -110,13 +110,13 @@ Additionally, when you use either Move, you may make one Hunger Check to gain +2
 
 - The vision was fragmentary; you can only use the banked Disadvantages against threats you've already identified, not surprises
 - The death attracted attention; someone heard, saw, or will find the body sooner than you'd like
-- The cosmic insight came with a price; you suffer a vivid, involuntary vision of your own Final Death that haunts you for the rest of the night (−1 Forward on your next **Stay Chill** roll)
+- The cosmic insight came with a price; you suffer a vivid, involuntary vision of your own Final Death that haunts you for the rest of the night and take −1 Forward to your next **Stay Chill** roll
 
 **On a 6-,** the dying mind's final vision crashes into you unfiltered. You see something true, terrible, and deeply personal about your own future. The Storyteller describes it. No Disadvantages are banked. You must immediately **Stay Chill** or be overwhelmed by what you saw.
 
 ### *Scry the Soul*
 
-**When you focus your gaze on someone and read the shifting colors of their aura**, make a Hunger Check and roll +Wits.
+**When you focus your gaze on someone and read the shifting colors of their aura,** make a Hunger Check and roll +Wits.
 
 **On a 10+,** Hold 3. **On a 7–9,** Hold 1.
 
@@ -137,7 +137,7 @@ Additionally, you may make one extra Hunger Check to broaden the reading to ever
 
 ### *Share the Senses*
 
-**When you fix your attention on someone within Hand Range and reach out to ride their senses**, make a Hunger Check and roll +Wits. If the target carries your Vitae (from **Feeding** from you, a Blood Bond, having been made your Ghoul, etc.), you can initiate this Power at any distance.
+**When you fix your attention on someone within Hand Range and reach out to ride their senses,** make a Hunger Check and roll +Wits. If the target carries your Vitae (from **Feeding** from you, a Blood Bond, having been made your Ghoul, etc.), you can initiate this Power at any distance.
 
 **On a 10+,** the connection is seamless. You perceive everything the target perceives: sight, sound, smell, touch, taste. Choose which senses to tap into (one, some, or all). You remain aware of your own surroundings through the senses you didn't choose, and sustained use demands concentration. The connection lasts up to a number of scenes equal to your Blood Potency.
 
@@ -158,7 +158,7 @@ While the link is active, your body remains where you left it. You can act and m
 
 ### *Clairvoyance*
 
-**When you close your eyes and expand your awareness beyond your immediate surroundings**, choose how long you wish to maintain the connection and make the corresponding Hunger Checks:
+**When you close your eyes and expand your awareness beyond your immediate surroundings,** choose how long you wish to maintain the connection and make the corresponding Hunger Checks:
 
 - **1 Hunger Check:** One scene
 - **2 Hunger Checks:** Full night
@@ -178,7 +178,7 @@ You must remain in the area while ***Clairvoyance*** is active. Taking Harm ends
 
 ### *Heart Laid Bare*
 
-**When you engage someone in conversation and begin peeling back the layers of their psyche**, choose whether you're searching for fears or desires, then make a Hunger Check and roll +Wits. You must sustain the conversation for several minutes; quick exchanges won't cut it.
+**When you engage someone in conversation and begin peeling back the layers of their psyche,** choose whether you're searching for fears or desires, then make a Hunger Check and roll +Wits. You must sustain the conversation for several minutes; quick exchanges won't cut it.
 
 **On a 12+,** everything under the 10+, and you also learn the root cause: the formative experience, relationship, or trauma that created the fear or desire. You understand them better than they understand themselves.
 
@@ -190,7 +190,7 @@ You must remain in the area while ***Clairvoyance*** is active. Taking Harm ends
 
 ### *Spirit's Touch*
 
-**When you press your hand to an object or surface and open your senses to its history**, choose how far back you wish to reach and make the corresponding Hunger Checks:
+**When you press your hand to an object or surface and open your senses to its history,** choose how far back you wish to reach and make the corresponding Hunger Checks:
 
 - **1 Hunger Check:** Days
 - **2 Hunger Checks:** Months
@@ -218,7 +218,7 @@ Spend Hold 1-for-1 to ask the Storyteller about events within your chosen time r
 
 *(Requires: Dominate access)*
 
-**When you lock eyes with a mortal or a Ghoul bound to you by Blood and project your consciousness into their body**, make a Hunger Check and roll +Resolve. This Power cannot target Kindred or other supernatural creatures.
+**When you lock eyes with a mortal or a Ghoul bound to you by Blood and project your consciousness into their body,** make a Hunger Check and roll +Resolve. This Power cannot target Kindred or other supernatural creatures.
 
 **On a 10+,** the ***Possession*** takes hold cleanly. Your consciousness inhabits the host; your body collapses into a Torpor-like trance wherever you left it (completely unresponsive, though Aggravated Harm to your real body wrenches you back immediately). While possessing the host, you can use any Discipline that operates through mental or vocal means: Auspex, Dominate, Presence, and Melpominee all function normally. Physical Disciplines do not. You're borrowing this body, not upgrading it.
 
@@ -231,7 +231,7 @@ You cannot read the host's mind, access their memories, or use their skills. Imp
 - The transition was rough; your real body twitched, cried out, or moved visibly before going limp, and anyone nearby likely has concerns
 - The host retains fragmentary awareness of what you do while inside; when you leave, they'll remember flashes of what happened
 
-**On a 6-,** the host's will snaps back against yours. You're ejected immediately and both you and the host are disoriented for a full turn. The host remembers the attempt with perfect clarity. Your body wrenches out of Torpor violently and you take 1 Aggravated Harm (ignore Armor).
+**On a 6-,** the host's will snaps back against yours. You're ejected immediately and both you and the host are disoriented for a full turn. The host remembers the attempt with perfect clarity. Your body wrenches out of Torpor violently and you take 1 Aggravated Harm (Ignore-Armor).
 
 **Possession and the Soul:** For each full scene you remain inside the host, gain 1 Stain. When you exit the host (voluntarily or otherwise), you must immediately make a Remorse Check.
 
@@ -241,7 +241,7 @@ You cannot read the host's mind, access their memories, or use their skills. Imp
 
 You can project your own thoughts directly into another person's mind, as clearly as though you were whispering in their ear. This requires line of sight but no roll, no Hunger Check, and no physical proximity. The target hears your voice in their head and knows the thoughts are not their own. They can choose to respond mentally; if they do, you hear them just as clearly.
 
-**When you reach into someone else's mind to read their thoughts**, make 1 Hunger Check (or 2 if the target is an unwilling supernatural creature) and roll +Wits. Willing targets and most unprepared mortals are read automatically with no roll required; the Storyteller may grant exceptions for mortals with exceptional mental training or willpower.
+**When you reach into someone else's mind to read their thoughts,** make 1 Hunger Check (or 2 if the target is an unwilling supernatural creature) and roll +Wits. Willing targets and most unprepared mortals are read automatically with no roll required; the Storyteller may grant exceptions for mortals with exceptional mental training or willpower.
 
 For automatic reads, the Storyteller provides whatever the target is actively thinking about: surface thoughts, immediate emotions, current intentions, and any relevant anxieties.
 
@@ -257,7 +257,7 @@ Against supernatural creatures:
 
 *(Requires: **Panacea**, Dominate access)*
 
-**When you spend a scene in seclusion with a willing Kindred and reach through the empathic connection to touch their darkness**, make a Hunger Check and roll +Resolve. This Power automatically fails if the target's Humanity is higher than yours; you cannot soothe a soul cleaner than your own.
+**When you spend a scene in seclusion with a willing Kindred and reach through the empathic connection to touch their darkness,** make a Hunger Check and roll +Resolve. This Power automatically fails if the target's Humanity is higher than yours; you cannot soothe a soul cleaner than your own.
 
 **On a 12+,** everything applies as per 10+, and you may also restore 1 Humanity to your target. This can only be done once per person, ever, with no exceptions.
 

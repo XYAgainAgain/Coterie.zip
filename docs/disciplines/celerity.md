@@ -26,7 +26,7 @@ Additionally, you have always-active Armor equal to your Blood Potency against r
 
 ### *Traversal*
 
-**When you trust your superior form and throw yourself at a surface that shouldn't support lateral movement**, make a Hunger Check. For a number of turns equal to your Blood Potency, you can run or climb along any surface: walls, ceilings, the sides of buildings, across water (with a running start), up sheer glass, along stretches of rope — whatever the situation demands. The surface must be physically intact enough to push off of; crumbling walls and loose sand won't cooperate.
+**When you trust your superior form and throw yourself at a surface that shouldn't support lateral movement,** make a Hunger Check. For a number of turns equal to your Blood Potency, you can run or climb along any surface: walls, ceilings, the sides of buildings, across water (with a running start), up sheer glass, along stretches of rope — whatever the situation demands. The surface must be physically intact enough to push off of; crumbling walls and loose sand won't cooperate.
 
 When the Power ends, gravity remembers you exist. Plan your route accordingly! If you're vertical or over water when the effect ends, you fall. ***Cat's Grace*** ensures you land on your feet, but it can't repeal physics entirely.
 
@@ -42,7 +42,7 @@ This does not stack with Celerity Powers that already modify your movement dista
 
 ### *Rush Job*
 
-**When you burn Vitae to move at impossible speed for the purposes of multitasking**, make a Hunger Check and roll +Blood.
+**When you burn Vitae to move at impossible speed for the purposes of multitasking,** make a Hunger Check and roll +Blood.
 
 **On a 10+,** for the rest of the scene, you can handle two physically demanding tasks simultaneously; a Discipline Power and a Basic Move, or any other combination the fiction supports. You choose which task suffers from the split attention (−2 Forward).
 
@@ -56,7 +56,7 @@ This does not stack with Celerity Powers that already modify your movement dista
 
 ### *A Thousand Cuts*
 
-**When you unleash a flurry of strikes against a single target with your claws or an edged weapon**, make a Hunger Check and roll +Blood.
+**When you unleash a flurry of strikes against a single target with your claws or an edged weapon,** make a Hunger Check and roll +Blood.
 
 **On a 12+,** roll a number of d6s equal to your Blood Potency. The target takes the total as Superficial Harm. What's left looks less like a fight and more like a disagreement with industrial machinery.
 
@@ -74,7 +74,7 @@ Regardless of the result, the carnage triggers the Beast in anyone watching. Eve
 
 ### *Blink*
 
-**When you swoop across the space to a point up to 2 Range bands away**, make a Hunger Check and roll +Blood. In combat, ***Blink*** replaces your Movement; you can still act before or after you arrive.
+**When you swoop across the space to a point up to 2 Range bands away,** make a Hunger Check and roll +Blood. In combat, ***Blink*** replaces your Movement; you can still act before or after you arrive.
 
 **On a 10+,** you end up exactly where you intended, perfectly positioned. Take +1 Forward on whatever you do next.
 
@@ -90,7 +90,7 @@ Regardless of the result, the carnage triggers the Beast in anyone watching. Eve
 
 *(Requires: **Rapid Reflexes**)*
 
-**When you overclock your reflexes to perceive incoming projectiles in slow motion**, make a Hunger Check with Disadvantage. For the rest of the scene or until something knocks you on your ass and ends the Power, you are immune to ranged projectiles entirely. You sidestep each one with casual, contemptuous ease, watching it drift past you with a comical lack of urgency.
+**When you overclock your reflexes to perceive incoming projectiles in slow motion,** make a Hunger Check with Disadvantage. For the rest of the scene or until something knocks you on your ass and ends the Power, you are immune to ranged projectiles entirely. You sidestep each one with casual, contemptuous ease, watching it drift past you with a comical lack of urgency.
 
 ***Weaving*** reads physics, not magic. Supernatural ranged attacks are not affected and still hurt pretty bad.
 
@@ -100,7 +100,7 @@ Regardless of the result, the carnage triggers the Beast in anyone watching. Eve
 
 ### *Blurred Momentum*
 
-**When you commit to sustained maximum speed**, make a Hunger Check. While ***Blurred Momentum*** is active, any offensive Move taken against you requires a 10+ to connect; anything less simply misses.
+**When you commit to sustaining maximum speed,** make a Hunger Check. While ***Blurred Momentum*** is active, any offensive Move taken against you requires a 10+ to connect; anything less simply misses.
 
 Maintaining ***Blurred Momentum*** costs 1 additional Hunger Check at the start of each of your turns. The effect lasts until you choose to end it or you can no longer pay the cost.
 
@@ -108,7 +108,7 @@ If the Hunger cost pushes you to 5 Hunger and you Frenzy, ***Blurred Momentum***
 
 ### *Draught of Elegance*
 
-**When you open a vein and let someone drink directly from you**, make a Hunger Check with Disadvantage. The drinker gains temporary access to all of Level 1 Celerity until the next dawn. For vampires, the gift fades when they next **Feed** or reach 5 Hunger, whichever comes first.
+**When you open a vein and let someone drink directly from you,** make a Hunger Check with Disadvantage. The drinker gains temporary access to all of Level 1 Celerity until the next dawn. For vampires, the gift fades when they next **Feed** or reach 5 Hunger, whichever comes first.
 
 Drinking directly from a Kindred is an intimate and dangerous act. This counts as 1 exchange of Vitae toward a Blood Bond.
 
@@ -118,7 +118,7 @@ Drinking directly from a Kindred is an intimate and dangerous act. This counts a
 
 Your ***Blink*** can now carry you through any barrier that light could pass through: windows, thin curtains, fences, chain-link, latticed gates, glass doors, wrought-iron bars. If light gets through, so do you.
 
-**When your *Blink* path crosses through fire or direct sunlight**, you pass through unharmed on a 10+ result. The exposure is simply too brief to catch.
+**When your *Blink* path crosses through fire or direct sunlight,** you pass through unharmed on a 10+ result. The exposure is simply too brief to catch.
 
 On a 7–9 ***Blink*** result, the Storyteller may choose from two additional complications when this Power is relevant:
 
@@ -133,7 +133,7 @@ Your preternatural speed governs your aim as thoroughly as it governs your mobil
 
 *(Requires: **Blink**)*
 
-**When you *Blink* to close directly on an enemy**, your arrival is an Ambush; you strike before they can react. After you act, you may immediately **Slip Away** as part of the same burst of motion.
+**When you *Blink* to close directly on an enemy,** your arrival is an Ambush; you strike before they can react. After you act, you may immediately **Slip Away** as part of the same burst of motion.
 
 *If you also have Obfuscate:* witnesses cannot track your movement or identify you as the attacker. Their eyes register a blur at most and their memory of the event is fog. Only those with ***Sense the Unseen*** (Auspex) can piece together what happened.
 
@@ -143,12 +143,12 @@ Your preternatural speed governs your aim as thoroughly as it governs your mobil
 
 ### *Lightning Strike*
 
-**When you commit your full supernatural speed to a single devastating blow**, make a Hunger Check. Double the Harm you would deal and add 5. This applies to any damaging melee attack or offensive Discipline Power used within Hand Range.
+**When you commit your full supernatural speed to a single devastating blow,** make a Hunger Check. Double the Harm you would deal and add 5. This applies to any damaging melee attack or offensive Discipline Power used within Hand Range.
 
 The general Celerity Counter applies: a target with Celerity access and Blood Potency equal to or greater than yours can make a Hunger Check to negate the bonus Harm, but the base attack still lands.
 
 ### *Split Second*
 
-**When the Storyteller begins describing an incoming threat, unfolding disaster, or enemy Ambush**, you may make a Hunger Check to act first. You take a full turn before the threat resolves or the enemies act. If the situation is an Ambush, you act before the enemies; your Coterie is still Ambushed as normal.
+**When the Storyteller begins describing an incoming threat, unfolding disaster, or enemy Ambush,** you may make a Hunger Check to act first. You take a full turn before the threat resolves or the enemies act. If the situation is an Ambush, you act before the enemies; your Coterie is still Ambushed as normal.
 
 The Storyteller is not obligated to pause the action for you. Using this Power requires you to respectfully interrupt them. If the narration moves on and you didn't call it, the moment has passed. Being attentive pays dividends.

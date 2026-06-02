@@ -18,7 +18,7 @@ You can bidirectionally communicate with any animal in a language you both under
 
 Animals know things. The bodega cat knows who comes and goes at 3 AM. The pigeons on the fire escape watched the whole robbery go down. The rats in the basement have opinions about the new tenants. Animals are limited by their perspective and intelligence, but they're excellent observers within their domain, and they don't lie. Except cats, who might do so just to mess with you unless you pony up a treat.
 
-**When you call out for a specific type of animal in the area**, make a Hunger Check. If you have the *Farmer* Predator Type, make this Hunger Check with Advantage. The animals must actually be present nearby to answer; nothing technically prevents you from trying to summon an orca in Central Park, but you should do the math on that idea before committing. Summoned animals listen to you and follow reasonable requests but scatter or turn hostile if seriously endangered. This is not a **Hunt**; ***Feral Whispers*** calls animals for utility, scouting, or companionship, not for getting eaten.
+**When you call out for a specific type of animal in the area,** make a Hunger Check. If you have the *Farmer* Predator Type, make this Hunger Check with Advantage. The animals must actually be present nearby to answer; nothing technically prevents you from trying to summon an orca in Central Park, but you should do the math on that idea before committing. Summoned animals listen to you and follow reasonable requests but scatter or turn hostile if seriously endangered. This is not a **Hunt**; ***Feral Whispers*** calls animals for utility, scouting, or companionship, not for getting eaten.
 
 ---
 
@@ -30,7 +30,7 @@ You can Blood Bond with an animal, turning it into your Familiar: a supernatural
 
 Your Familiar follows verbal commands, defends you instinctively, and fights on your behalf, though it retains enough self-preservation not to throw itself at something obviously suicidal without extraordinary prompting. You can only have one Familiar at a time, but can Bond a new one if yours dies. Choosing this Power at character creation allows you to already have a Familiar when the game begins, if you'd like.
 
-**When you summon your Familiar from a distance**, make a Hunger Check. It arrives as quickly as its natural speed allows, taking the safest and most direct route available. If your Familiar has died and you wish to Bond a new animal, begin the 3-night process again.
+**When you summon your Familiar from a distance,** make a Hunger Check. It arrives as quickly as its natural speed allows, taking the safest and most direct route available. If your Familiar has died and you wish to Bond a new animal, begin the 3-night process again.
 
 Using ***Feral Whispers*** and ***Subsume the Spirit*** on your Familiar requires no Hunger Check.
 
@@ -38,7 +38,7 @@ Using ***Feral Whispers*** and ***Subsume the Spirit*** on your Familiar require
 
 *(Requires: Auspex access)*
 
-**When you open your senses to the fear-scent of prey that has witnessed something it shouldn't have**, make a Hunger Check and roll +Blood. You can detect any mortal in the area who has recently witnessed a Masquerade breach. They carry a distinct scent that prey animals produce when confronted by an apex predator, and your Beast recognizes it instantly.
+**When you open your senses to the fear-scent of prey that has witnessed something it shouldn't have,** make a Hunger Check and roll +Blood. You can detect any mortal in the area who has recently witnessed a Masquerade breach. They carry a distinct scent that prey animals produce when confronted by an apex predator, and your Beast recognizes it instantly.
 
 This Power is ineffective on mortals who are accustomed to the supernatural: Ghouls, vampire-aware retainers, most actual goths, dedicated Hunters, and anyone else whose familiarity with Kindred has dulled the prey response.
 
@@ -56,7 +56,7 @@ This Power is ineffective on mortals who are accustomed to the supernatural: Gho
 
 ### *Sense the Beast (Passive)*
 
-**When you focus on the primal currents around you**, your perception of the Beast sharpens into clarity. You gain the following additional questions when you **Discern Vibes** or **Catch the Scent**:
+**When you focus on the primal currents around you,** your perception of the Beast sharpens into clarity. You gain the following additional questions when you **Discern Vibes** or **Catch the Scent**:
 
 - Are they harboring a supernatural Beast? (Identifies vampires, werewolves, and similar creatures)
 - How hungry/desperate are they? (Detects Hunger level in vampires, general state of need in others)
@@ -73,7 +73,7 @@ These questions cost Hold as normal. The answers come through instinct rather th
 
 *(Requires: **Bond Familiar**)*
 
-**When you whisper a message to your Familiar and name a recipient**, make a Hunger Check. Your Familiar sets out to find the target by the safest and most direct route available. When it arrives and makes eye contact with the recipient, it speaks your message aloud in your voice. Its lips move like they're bad CGI.
+**When you whisper a message to your Familiar and name a recipient,** make a Hunger Check. Your Familiar sets out to find the target by the safest and most direct route available. When it arrives and makes eye contact with the recipient, it speaks your message aloud in your voice. Its lips move like they're bad CGI.
 
 One or two short sentences is ideal; longer messages are possible but the Familiar may editorialize. If the recipient's location is unknown, the Familiar must track them down, which could take hours or days depending on distance. The Storyteller determines travel time based on the fiction. After delivering the message, the Familiar returns to you unless given other instructions.
 
@@ -81,7 +81,7 @@ One or two short sentences is ideal; longer messages are possible but the Famili
 
 ### *Animal Succulence (Passive)*
 
-Feeding from animals nourishes you more than it does for most Kindred. **When you *Feed* from an animal**, slake 1 additional Hunger beyond what the roll provides. Your Blood Potency counts as 2 lower (minimum 0) for the purposes of any **Feeding** restrictions or penalties related to animal blood.
+Feeding from animals nourishes you more than it does for most Kindred. **When you *Feed* from an animal,** slake 1 additional Hunger beyond what the roll provides. Your Blood Potency counts as 2 lower (minimum 0) for the purposes of any **Feeding** restrictions or penalties related to animal blood.
 
 You may also choose to consume your Familiar entirely, draining every drop of its supernaturally enriched Vitae. This is permanent and irreversible; the animal dies, the Bond is severed, and something quiet and important inside you goes with it. Slake 4 Hunger. Additionally, the Storyteller determines which of your stats is most closely associated with the consumed animal, and you gain +2 to that stat until the next dawn. A consumed cat might raise Wits or Shadow, a dog might raise Resolve or Blood, a raven might raise Wits or Demeanor. The Storyteller has final say.
 
@@ -91,7 +91,7 @@ This stat bonus does not stack with itself. Only one instance at a time is permi
 
 *(Requires: Auspex access)*
 
-**When you spend a few minutes gathering knowledge from a swarm of animals**, gain +1 Hunger and roll +Blood. You dispense a trace of your Vitae to the flock, swarm, or school to momentarily link their collective awareness. They know things: the pigeons saw who entered the building, the rats heard the conversation through the walls, the stray cats know every face on the block (especially those that don't stop to scratch them).
+**When you spend a few minutes gathering knowledge from a swarm of animals,** gain +1 Hunger and roll +Blood. You dispense a trace of your Vitae to the flock, swarm, or school to momentarily link their collective awareness. They know things: the pigeons saw who entered the building, the rats heard the conversation through the walls, the stray cats know every face on the block (especially those that don't stop to scratch them).
 
 Regardless of the result, you may ask the Storyteller 1 question about anyone or anything within the city, filtered through what the targeted group of animals could reasonably have observed. The Storyteller answers by describing the image the swarm forms: murmurations of starlings tracing the shape of a building, cockroaches arranging themselves into a crude map, fish swimming a pattern that makes sense only to you (and maybe your Malkavian buddy).
 
@@ -121,7 +121,7 @@ Your Familiar and any animals you summon through ***Feral Whispers*** are toughe
 
 *(Requires: **Animal Messenger**)*
 
-**When your Familiar delivers a message via *Animal Messenger* and you weave a supernatural command into its words**, make a Hunger Check and roll +Resolve. On delivery, the Familiar's gaze carries the weight of your will.
+**When your Familiar delivers a message via *Animal Messenger* and you weave a supernatural command into its words,** make a Hunger Check and roll +Resolve. On delivery, the Familiar's gaze carries the weight of your will.
 
 **On a 10+,** the target is affected as if you had successfully **Influenced** them with a 10+ result. The command must be achievable through a single sentence.
 
@@ -137,7 +137,7 @@ Your Familiar and any animals you summon through ***Feral Whispers*** are toughe
 
 ### *Plague of Beasts*
 
-**When you mark someone with the scent of prey and let the local wildlife know dinner is served**, make a Hunger Check and roll +Blood. The effect lasts until the next dawn.
+**When you mark someone with the scent of prey and let the local wildlife know dinner is served,** make a Hunger Check and roll +Blood. The effect lasts until the next dawn.
 
 **On a 10+,** the target is swarmed. Every animal in the vicinity converges and cooperates to harass them: stray dogs circle and snap, birds dive and peck, rats pour from storm drains and crawl up their legs. The target takes −3 Ongoing to all rolls from the constant harassment unless they can physically isolate themselves from all wildlife (and good luck with that outdoors). Any attempt to track the target gets +2 Forward from the very obvious trail of agitated animals.
 
@@ -151,7 +151,7 @@ Your Familiar and any animals you summon through ***Feral Whispers*** are toughe
 
 ### *Quell the Beast*
 
-**When you lock eyes with a creature and reach inside to still the Beast within them**, make a Hunger Check and roll +Resolve.
+**When you lock eyes with a creature and reach inside to still the Beast within them,** make a Hunger Check and roll +Resolve.
 
 Against mortals, a success renders them deeply apathetic for the rest of the scene. They lose all motivation, aggression, drive, and their Blood Resonance instantly becomes Acute Phlegmatic. They won't attack, won't flee, and won't resist much of anything. They act to preserve their own life if directly threatened but otherwise sit, stare, and wait for the world to start mattering again. It passes, but they won't forget how empty it felt.
 
@@ -171,7 +171,7 @@ Against supernatural creatures:
 
 *(Requires: **Bond Familiar**)*
 
-**When you extend your Animalism to creatures that crawl, swarm, and skitter**, you can Bond and command swarms of animals as if they were a single creature. This Power removes the vertebrate restriction for swarms of arthropods (flies, roaches, spiders, wasps, centipedes, moths, etc.) and allows control over a whole murder of crows or schools of fish. You can even Bond a swarm as your Familiar.
+**When you extend your Animalism to creatures that crawl, swarm, and skitter,** you can Bond and command swarms of animals as if they were a single creature. This Power removes the vertebrate restriction for swarms of arthropods (flies, roaches, spiders, wasps, centipedes, moths, etc.) and allows control over a whole murder of crows or schools of fish. You can even Bond a swarm as your Familiar.
 
 Some vampires allow their swarm to nest inside their body, making a home in the folds, cavities, and orifices of their undead flesh. While nested, the swarm is completely hidden from sight short of an X-ray. They nurse on negligible amounts of your Vitae and remain indefinitely.
 
@@ -187,7 +187,7 @@ A walking Nosferatu whose trench coat erupts into a living carpet of cockroaches
 
 ### *Awaken the Parasite*
 
-**When you reach into a creature's dead flesh and command every dormant thing living inside it to wake up**, make a Hunger Check and roll +Blood. Vampires are dead, but they are not empty. Parasitic eggs, larvae, bacteria, and nameless things nest in the folds and cavities of undead flesh, sustained by trace amounts of Vitae. This Power forces them to mature in seconds. The target must be within Close Range.
+**When you reach into a creature's dead flesh and command every dormant thing living inside it to wake up,** make a Hunger Check and roll +Blood. Vampires are dead, but they are not empty. Parasitic eggs, larvae, bacteria, and nameless things nest in the folds and cavities of undead flesh, sustained by trace amounts of Vitae. This Power forces them to mature in seconds. The target must be within Close Range.
 
 **On a 12+,** the eruption is catastrophic. Pupating arthropods burst from the target's skin in a shower of gore. Mortals are killed outright, but usually stick around long enough to witness their own demise. Vampires take Aggravated Harm equal to your Blood Potency and cannot speak as their throat fills with writhing larvae; they take −2 Ongoing to all rolls for the rest of the scene. If the Harm kills them, the maggots take care of the body for you. If mortals witness this, the Masquerade Clock advances by two segments.
 
@@ -205,7 +205,7 @@ If you really want to, you can use this Power on yourself deliberately, skipping
 
 ### *Subsume the Spirit*
 
-**When you pour your consciousness into your Familiar or a nearby animal and let your own body fall still**, make a Hunger Check and roll +Blood. Using this Power on your Familiar requires no Hunger Check.
+**When you pour your consciousness into your Familiar or a nearby animal and let your own body fall still,** make a Hunger Check and roll +Blood. Using this Power on your Familiar requires no Hunger Check.
 
 Your body collapses into a kind of Torpor. You have no awareness of it while possessing the animal. If your body takes Harm, you are yanked back into it immediately, ending the possession. If the animal dies while you inhabit it, you snap back into your body and take 1 Aggravated Harm from the psychic shock.
 
@@ -223,7 +223,7 @@ Your body collapses into a kind of Torpor. You have no awareness of it while pos
 
 ### *Sway the Flock*
 
-**When you reach out to the animal world around you and impose your will upon it**, you can alter the behavior of every animal in a wide area. Choose the emotional tenor: calm, aggression, fear, focused attention, or indifference.
+**When you reach out to the animal world around you and impose your will upon it,** you can alter the behavior of every animal in a wide area. Choose the emotional tenor: calm, aggression, fear, focused attention, or indifference.
 
 Make 1 or more Hunger Checks, up to a maximum of 5. Each Hunger Check expands the scale:
 
@@ -247,7 +247,7 @@ Roll +Blood. The effect lasts until dawn.
 
 ### *Coax the Bestial Temper*
 
-**When you vocalize a low, wordless sound to the Beasts of every supernatural creature within earshot**, make a Hunger Check and roll +Blood, then choose whether the sound is Calming or Agitating.
+**When you vocalize a low, wordless sound to the Beasts of every supernatural creature within earshot,** make a Hunger Check and roll +Blood, then choose whether the sound is Calming or Agitating.
 
 This Power has no effect on mortals. They might find the sound unsettling, but their lack of a Beast means there's nothing to grab onto. This Power works just fine on your Coterie members.
 
@@ -265,7 +265,7 @@ This Power has no effect on mortals. They might find the sound unsettling, but t
 
 ### *Drawing Out the Beast*
 
-**When you are about to Frenzy and you refuse to let the Beast have you**, you can redirect it. Choose a target within Close Range. No roll is required on your part; the Beast simply lunges where you point it.
+**When you are about to Frenzy and you refuse to let the Beast have you,** you can redirect it. Choose a target within Close Range. No roll is required on your part; the Beast simply lunges where you point it.
 
 The target must immediately **Stay Chill** to resist the incoming Frenzy. If they succeed, the Beast snaps back to you and you Frenzy as normal. If they fail, they Frenzy in your place and you are left calm, collected, and uncomfortably empty for the rest of the scene. If you're at 5 Hunger, it drops to 4.
 
@@ -281,7 +281,7 @@ While your Beast is elsewhere, you cannot Blood Surge, and any roll that would r
 
 Your mastery of ***Subsume the Spirit*** deepens. When you successfully possess an animal, the duration extends to the full night rather than a single scene, and extending into additional scenes no longer requires further Hunger Checks.
 
-**When you leap from one possessed animal directly into another without returning to your body first**, roll +Blood. The target animal must be within the possessed animal's line of sight.
+**When you leap from one possessed animal directly into another without returning to your body first,** roll +Blood. The target animal must be within the possessed animal's line of sight.
 
 **On a 10+,** the transfer is seamless. Your consciousness flows from one animal to the next without interruption and it tingles in a good way. Your body remains in Torpor, undisturbed, flourishing, in its lane.
 

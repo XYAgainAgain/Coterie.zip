@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import {
   clearForwards, consumeArmedSurge, bankBloodSurge, bloodSurgeActive, character,
-  setHunger, setHumanity, setHarm,
+  setHunger, setHumanity, setHarm, resolveRemorse, superficialHealAmount,
 } from '../state/character';
 import { forceToast } from '../state/toasts';
 import { netAdvantage, bloodSurgesRemaining } from '../state/derived';
@@ -300,8 +300,9 @@ export async function performRemorseCheck(): Promise<boolean | null> {
     consumeArmedSurge();
     const char = character.value;
     const stains = char.stains;
-    const safe = check.value > stains;
-    setHumanity(safe ? char.humanity : char.humanity - 1, 0);
+    const outcome = resolveRemorse(char.humanity, stains, check.value);
+    const safe = outcome.safe;
+    setHumanity(outcome.humanity, outcome.stains);
     const colors = safe ? GOOD : BAD;
     const message = h('span', { class: 'vamp-roll-toast' },
       ...checkDiceSpans(check),
@@ -328,7 +329,7 @@ export async function performQuickHeal(): Promise<boolean | null> {
     await animateDice([...check.kept, ...check.dropped]);
     consumeArmedSurge();
     const safe = applyHungerResult(check.value);
-    const maxHeal = Math.max(1, char.bp);
+    const maxHeal = superficialHealAmount(char.bp);
     const newSuperficial = Math.max(0, char.harm.superficial - maxHeal);
     const healed = char.harm.superficial - newSuperficial;
     setHarm(newSuperficial, char.harm.aggravated);

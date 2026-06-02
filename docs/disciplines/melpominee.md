@@ -12,7 +12,7 @@ Most Melpominee Powers work through general vocalization alone. Those that expli
 
 ### *Ventriloquism (Discipline Perk)*
 
-**Whenever you vocalize**, you can project your voice to any point within line of sight that's Distant or closer, making it sound as though you are speaking from that location: behind someone, around a corner, through a window, from an upper floor, off a distant rooftop. No roll is required.
+**Whenever you vocalize,** you can project your voice to any point within line of sight that's Distant or closer, making it sound as though you are speaking from that location: behind someone, around a corner, through a window, from an upper floor, off a distant rooftop. No roll is required.
 
 The voice carries at whatever volume you choose, from a whisper to a shout, and can be clearly heard by anyone within Close Range of the projected point. Your lips don't move unless you want them to, and even then, they don't have to match up with what you're actually saying.
 
@@ -26,13 +26,13 @@ You can use any other Melpominee Power through your projected voice as though yo
 
 You lean into the music that never stops. **When you sing along with your Inner Song** (Free Action to start or stop), you can choose a number of targets within Far Range up to your Blood Potency (minimum 1). Those targets suffer −1 Ongoing to all rolls for as long as you keep singing and they can hear you.
 
-While ***Cognitive Dissonance*** is active, you cannot use any other Discipline Power that requires vocalization; your voice is already spoken for. This Power works in combat, but ends if you take Harm equal to or greater than your Blood Potency — it's quite hard to get stabbed and keep singing. Ask me how I know.
+**While *Cognitive Dissonance* is active,** you cannot use any other Discipline Power that requires vocalization; your voice is already spoken for. This Power works in combat, but ends if you take Harm equal to or greater than your Blood Potency — it's quite hard to get stabbed and keep singing. Ask me how I know.
 
 ### *Distorted Voice*
 
 You can freely alter your own voice in any way: deeper, higher, accented, aged, gendered, robotic, auto-tuned, or completely unrecognizable. No roll is required and the change lasts as long as you want.
 
-**When you attempt to perfectly mimic a specific individual's voice**, make a Hunger Check and roll +Demeanor.
+**When you attempt to perfectly mimic a specific individual's voice,** make a Hunger Check and roll +Demeanor.
 
 **On a 10+,** the mimicry is flawless. Anyone who knows the voice would swear they were hearing the real thing.
 
@@ -50,7 +50,7 @@ You can freely alter your own voice in any way: deeper, higher, accented, aged, 
 
 ### *Convincing Affect*
 
-**When you vocalize with deliberate emotional intent, threading a specific feeling into the timbre of your voice**, make a number of Hunger Checks equal to the intensity you wish to instill (1 for Fleeting, 2 for Intense, 3 for Acute), then roll +Demeanor.
+**When you vocalize with deliberate emotional intent, threading a specific feeling into the timbre of your voice,** make a number of Hunger Checks equal to the intensity you wish to instill (1 for Fleeting, 2 for Intense, 3 for Acute), then roll +Demeanor.
 
 You instill one of the four Blood Resonances in a single target:
 
@@ -73,7 +73,7 @@ The Resonance you instill matches the emotional tone of your vocalization. The t
 
 ### *Piercing Wail*
 
-**When you open your mouth and unleash a devastating sonic blast**, make a Hunger Check and roll +Blood.
+**When you open your mouth and unleash a devastating sonic blast,** make a Hunger Check and roll +Blood.
 
 The wail strikes every person, creature, and object within Close Range, dealing 2 + your Blood + your Demeanor in Superficial Harm. Every target hit also suffers −1 Forward. Daughters of Cacophony and the belongings on their person are immune. You never take Harm directly from this Power. Everything and everyone else is fair game: Coterie members, enemies, bystanders, furniture, loose sandwiches, windows, load-bearing walls. Sound waves do not discriminate.
 
@@ -93,13 +93,13 @@ The wail strikes every person, creature, and object within Close Range, dealing 
 
 ### *Distraction*
 
-**When you begin to sing, hum, rhythmically vocalize, or otherwise fill the air with your voice and refuse to stop**, make a Hunger Check and roll +Demeanor.
+**When you begin to sing, hum, rhythmically vocalize, or otherwise fill the air with your voice and refuse to stop,** make a Hunger Check and roll +Demeanor.
 
 The effect lasts for as long as you continue vocalizing. Stopping ends it immediately.
 
-Mortals within Close Range are automatically entranced; they stand still, listen, and suffer −3 Ongoing to noticing anything else happening around them. Supernatural creatures with Blood Potency equal to or lower than yours are similarly affected without resistance.
+Mortals within Close Range are automatically entranced; they stand still, listen, and suffer −3 Ongoing to notice anything else happening around them. Supernatural creatures with Blood Potency equal to or lower than yours are similarly affected without resistance.
 
-Supernatural creatures with Blood Potency higher than yours can attempt to resist. They must **Stay Chill** and roll 7+ to be unaffected. On anything less, they too are caught in your melodic snare.
+Supernatural creatures with Blood Potency higher than yours can attempt to resist. They must successfully **Stay Chill** (7+) to be unaffected. On anything less, they too are caught in your melodic snare.
 
 **On a 10+,** the performance is mesmerizing. Every affected target is utterly enraptured; short of physical violence, nothing will draw their attention away from you.
 
@@ -113,7 +113,7 @@ Supernatural creatures with Blood Potency higher than yours can attempt to resis
 
 ### *Phantom Voice*
 
-**When you reach out with your voice to someone you've spoken to before for at least 1 scene**, make a number of Hunger Checks equal to the number of scenes you wish to maintain the connection (1 Hunger Check = 1 scene, up to 5).
+**When you reach out with your voice to someone you've spoken to before for at least 1 scene,** make a number of Hunger Checks equal to the number of scenes you wish to maintain the connection (1 Hunger Check = 1 scene, up to 5).
 
 Your voice is heard in the target's ear as clearly as if you were standing next to them. You can hold a normal two-way conversation; they can respond and you hear them. The connection's reach depends on your Blood Potency; at BP 3 you can reach anyone within Distant Range, at BP 4 you can reach any other Daughter of Cacophony at any distance, and at BP 5, the Range restriction is removed and you may contact anyone anywhere in the world.
 
@@ -125,7 +125,7 @@ The target always hears your Inner Song bleeding faintly underneath your words, 
 
 ### *Invigorating Display*
 
-**When you perform for a crowd of at least ten mortals and drink in their collective emotions**, make a Hunger Check and roll +Demeanor. You must sustain the performance for the majority of a scene; this is a full show, not a silly little card trick.
+**When you perform for a crowd of at least ten mortals and drink in their collective emotions,** make a Hunger Check and roll +Demeanor. You must sustain the performance for the majority of a scene; this is a full show, not a silly little card trick.
 
 **On a 12+,** choose the Blood Resonance Humor you want. You absorb Acute Resonance (3 stocked Advantages). Additionally, slake 1 Hunger. You may distribute any number of the stocked Advantages among Coterie members who witnessed the performance; each recipient who receives at least 1 Advantage also slakes 1 Hunger.
 
@@ -139,7 +139,7 @@ The audience is left emotionally drained regardless of your result. Mortals who 
 
 ### *Lingering Echo*
 
-**When you vocalize into a space and leave an echo of yourself behind**, make a number of Hunger Checks equal to the number of nights you want the echo to persist, then roll +Resolve. There is no upper limit on duration; you accept as much Hunger as you're willing to risk.
+**When you vocalize into a space and leave an echo of yourself behind,** make a number of Hunger Checks equal to the number of nights you want the echo to persist, then roll +Resolve. There is no upper limit on duration; you accept as much Hunger as you're willing to risk.
 
 You must specify a trigger condition when placing the echo: crossing a threshold, picking up an object, a time of day, reading a specific message, or any other observable event. When triggered, the echo plays your voice at the volume and tone you recorded, and continues until the triggering individual leaves the affected area (Close Range from the point of placement).
 
@@ -169,12 +169,12 @@ Your ***Piercing Wail*** evolves into something far more terrible; this Power ex
 
 ### *Psychic Scream (Passive)*
 
-Your Melpominee Powers no longer require the target to physically hear you. The sound travels directly into the mind, bypassing ears entirely. Deafness, earplugs, noise-canceling headphones, soundproofed rooms, and supernatural silence all fail to block your magnificent voice.
+**Your Melpominee Powers no longer require the target to physically hear you.** The sound travels directly into the mind, bypassing ears entirely. Deafness, earplugs, noise-canceling headphones, soundproofed rooms, and supernatural silence all fail to block your magnificent voice.
 
 The target still perceives the sound as auditory; they hear your voice in their head as clearly as if you were standing next to them, they just can't make it stop by covering their ears and screaming... but why would they want to? You sound *amazing*.
 
 ### *Virtuosa (Passive)*
 
-Your mastery of voice and sound transcends ordinary limits. Any Melpominee Power that normally affects a single target can now affect a number of targets up to your Blood Potency.
+Your mastery of voice and sound transcends ordinary limits. **Any Melpominee Power that normally affects a single target can now affect a number of targets up to your Blood Potency.**
 
 Additionally, you can split your voice between up to 2 vocal-based Powers simultaneously, even from different Disciplines. You could maintain ***Cognitive Dissonance*** while using ***Convincing Affect***, or run ***Distraction*** alongside Presence's ***Awe***. The usual restriction against using multiple vocal Powers at once no longer applies to you.

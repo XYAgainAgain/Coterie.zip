@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-05-28T22:47:36.776Z",
+  "generatedAt": "2026-06-02T01:10:13.588Z",
   "data": {
     "intro": "Humanity is how close you still are to the person you used to be. It measures empathy, self-control, the ability to feel genuine connection with the living, and ultimately whether you're still some*one* or just some*thing*. Every vampire starts with Humanity, and every vampire loses it eventually: the question is how fast, how far, and whether you can claw any of it back before the Beast swallows you whole.Humanity is not a spendable resource. You always want as much of it as possible, because losing it makes everything about being a vampire harder and everything about pretending to be human less convincing. When it hits zero, the pretending stops permanently.",
     "tiers": [
@@ -43,11 +43,11 @@
     "sections": [
       {
         "name": "Stains",
-        "body": "When you commit atrocities or violate your Convictions, you mark **Stains** on your Humanity track (crossed boxes instead of filled).\n\n**What Causes Stains:**\n\n- Violating a local tenet or code of conduct (killing innocents, unnecessary cruelty, breaching the Masquerade)\n- Violating your personal Convictions or rules\n- Harming or destroying your Touchstones\n\n**How Many Stains:**\n\n- Minor violation: 1 Stain\n- Serious violation: 2–3 Stains\n- Acting in service of a Conviction: −1 Stain\n\nIf you accumulate 5 or more Stains or fill your remaining Humanity track (if it's lower than 5), you automatically lose 1 Humanity, and any remaining Stains roll over.\n\n### Remorse Checks\n\n**Remorse Check (end of each night):** Roll 1d6, aiming to roll over your number of Stains.\n\n- **Success:** Keep your current Humanity, remove all Stains\n- **Failure:** Lose 1 Humanity, remove all Stains"
+        "body": "When you commit atrocities or violate your Convictions, you mark **Stains** on your Humanity track, represented by crossed/struck-through boxes which are marked exclusively in the empty boxes. Filled boxes represent how much Humanity you still cling to (and thus stand to lose), while empty boxes show you how much is missing.\n\n**What Causes Stains:**\n\n- Violating a local tenet or code of conduct (killing innocents, unnecessary cruelty, breaching the Masquerade)\n- Violating your personal Convictions or rules\n- Harming or destroying your Touchstones\n- Several of the nastier Discipline Powers (with some exceptions for when their usage aligns with Convictions)\n\n**How Many Stains:**\n\n- Minor violation: +1 Stain\n- Serious violation: +2–3 Stains\n- Acting in service of a Conviction: −1 Stain or more, depending on context\n\nIf you accumulate enough Stains to fill your missing Humanity track, or when you accumulate 5 Stains (whichever comes first), you automatically lose 1 Humanity, and any remaining Stains roll over.\n\n### Remorse Checks\n\n**Remorse Check (end of each night):** Roll 1d6, aiming to roll over your number of Stains.\n\n- **Success:** Keep your current Humanity, remove all Stains\n- **Failure:** Lose 1 Humanity, remove all Stains"
       },
       {
         "name": "Convictions",
-        "body": "**Convictions** are your character's core moral beliefs; what keeps them anchored to Humanity, morality, and mortality. They're statements that start with \"always\" or \"never\" and deal in absolutes. You'll need a minimum of 2.\n\n!!! example \"Examples\"\n\n    *\"Always protect the vulnerable\", \"Never break your word\", \"Loyalty is everything\"*"
+        "body": "**Convictions** are your character's core moral beliefs; what keeps them anchored to Humanity, morality, and mortality. They're statements that usually start with \"always\" or \"never\" and deal in absolutes. You'll need a minimum of 2.\n\n!!! example \"Examples\"\n\n    *\"Always protect the vulnerable\", \"Never break your word\", \"Loyalty is everything\"*"
       },
       {
         "name": "Touchstones",
