@@ -33,24 +33,7 @@ At its core, ***Coterie*** asks only one question of its players:
     *Site theme based on [Zensical](https://zensical.org/) by Martin Donath (MIT License). Fonts used under the SIL Open Font License. The animation sprites for the adorable little bat buddy (**Batthew**) are from [ggoolmool on Itch.io](http://Itch.io)!*
 ---
 
-## Temporary Design Notes
-
-Important things to keep in mind:
-
-- **Personal stats** typically range from −3 to +3, reaching ±4–5 for very old/potent vampires
-- **Coterie stats** cap at ±3, typically start at ±1 (rarely ±2)
-- **Clout and Currency** are spendable resources
-- **Cohesion** provides direct bonuses/penalties to Coterie Moves
-- **Charm and Claim** fluctuate through play but aren't spent
-- **Clout gambling:** Spend 1 or more Clout to double Cohesion bonus + everyone gets +1 Ongoing. Win = gain Clout back +1. Lose = lose gambled Clout. Bad if negative.
-- **Humanity loss is contextual**, not automatic from killing. Depends on necessity, consent, circumstances, and personal Convictions.
-- **Predator Types:** Chosen at character creation for older vamps. Baby vamps earn them through play.
-- **Advantage/Disadvantage** uses 3d6 drop lowest/highest and stacks with Forward/Ongoing bonuses.
-- **Hunger** counts up from 0 → 5. **Humanity** counts down from 10 → 0. **Stains** are tracked in the same section as Humanity, indicating potential Humanity loss.
-- **XP** is tracked from 0–10 and doesn't roll over the max value, and so should be either spent in-session or saved carefully for a big upgrade.
-- There's a lot of stuff mentioned but not yet expanded upon in this document. I'll get there eventually. Please have patience!
-
-## Permanent Capitalization Standards
+## Capitalization Standards
 
 Game Terms are *always* capitalized for clarity and easy recognition (which is weirdly uncommon in PbtA games):
 
