@@ -5,6 +5,7 @@ import {
   splitByHeading,
   findFieldList,
   collectFields,
+  collectLeadingProse,
   requireField,
 } from '../common/tokens.js';
 import type { PredatorType } from '../schemas/predator-types.js';
@@ -54,6 +55,7 @@ export function parsePredatorTypes(repoRoot: string): PredatorType[] {
 
     return {
       name: section.name,
+      description: collectLeadingProse(section.tokens, EXPECTED_LABELS),
       huntingStat: requireField(fields, 'Hunting Stat', ctx),
       discipline: requireField(fields, 'Discipline', ctx),
       merit: parseMeritFlaw(requireField(fields, 'Merit', ctx), ctx, 'Merit'),

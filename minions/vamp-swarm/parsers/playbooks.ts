@@ -49,8 +49,7 @@ function extractBaneName(heading: string): string {
   return heading.replace(/^Bane:\s*/, '');
 }
 
-function extractCompulsionName(heading: string): string | null {
-  if (/nothing/i.test(heading)) return null;
+function extractCompulsionName(heading: string): string {
   return heading.replace(/^Compulsion:\s*/, '');
 }
 

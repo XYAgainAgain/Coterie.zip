@@ -1,9 +1,10 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-06T08:29:10.304Z",
+  "generatedAt": "2026-06-07T01:06:10.434Z",
   "entries": [
     {
       "name": "Abductor",
+      "description": "You prowl the night for vulnerable prey: the late-night jogger, the tipsy bargoer stumbling home alone, the gas station attendant on the graveyard shift. You follow them for a while, make sure nobody is watching, grab them, drag them somewhere private, and drink at your leisure. It's messy, it's terrifying for everyone involved, and you wouldn't have it any other way.",
       "huntingStat": "+Shadow",
       "discipline": "Potence",
       "merit": {
@@ -19,6 +20,7 @@
     },
     {
       "name": "Alleycat",
+      "description": "You are an opportunistic feeder, lunging for prey in back alleys, empty parking lots, or any other convenient location that suits your immediate needs. You might disguise your method of hunting as some other street activity such as drug sales, muggings, or simply starting fights with passersby.",
       "huntingStat": "+Blood",
       "discipline": "Celerity",
       "merit": {
@@ -34,6 +36,7 @@
     },
     {
       "name": "Alu",
+      "description": "You are the shadow that falls over sleeping victims, the weight on their chest when they wake up breathless, the shape in the corner of their eye that vanishes when they try to look directly at it. Named for the faceless Sumerian Spirit that draped itself over the vulnerable and sapped their health, you paralyze your prey with dread and drink while they lie frozen in terror. Unlike the Sandman, you don't sneak, you haunt.",
       "huntingStat": "+Shadow",
       "discipline": "Oblivion",
       "merit": {
@@ -49,6 +52,7 @@
     },
     {
       "name": "Bagger",
+      "description": "You avoid fresh blood at all costs, preferring the taste, sensation, and/or ethical ramifications of drinking from refrigerated blood bags. You might know someone at a blood bank who needs cash and doesn't ask questions, still work night shifts at the local hospital, or make a habit of breaking into ambulances.",
       "huntingStat": "+Shadow",
       "discipline": "Obfuscate",
       "merit": {
@@ -64,6 +68,7 @@
     },
     {
       "name": "Blood Leech",
+      "description": "You are a peculiar type of parasite who drinks only from other vampires, which seems the only truly moral method of blood consumption you can conceive of, despite its complications. This practice is generally forbidden by vampiric society, so you probably are a risk-taker, someone in a position of notable influence, or someone who believes the act of Diablerie is justified by your Convictions.",
       "huntingStat": "+Shadow",
       "discipline": "Protean",
       "merit": {
@@ -79,6 +84,7 @@
     },
     {
       "name": "Cardillac",
+      "description": "You are an artist of uncommon talent, and your patrons pay for your work in more ways than they realize. You cultivate a following of collectors and admirers, track down those who possess your art, and **Feed** from them, sometimes killing them to reclaim the piece. The art is the lure, the gallery is your hunting ground, and every sale is an invitation.",
       "huntingStat": "+Wits",
       "discipline": "Presence",
       "merit": {
@@ -94,6 +100,7 @@
     },
     {
       "name": "Catfish",
+      "description": "The internet is full of lonely hearts looking for connection in all the wrong places, and in your arms is exactly the *right* wrong place. You maintain carefully crafted personas across dating apps and social media platforms, arranging nocturnal meetups with victims who never suspect that the charming stranger they've been texting has fangs. The unlimited supply of marks is the reward; the digital footprint is the risk.",
       "huntingStat": "+Wits",
       "discipline": "Obfuscate",
       "merit": {
@@ -109,6 +116,7 @@
     },
     {
       "name": "Cazador",
+      "description": "You **Hunt** the Hunters. While most Kindred flee from mortals who know too much, you seek them out, infiltrate their circles, bait their traps, and turn the predator/prey relationship on its head. It's incredibly dangerous, tremendously satisfying, certainly reckless, and earns you equal parts admiration and scorn from other vampires... But *damn,* nothing else tastes quite like victory blood.",
       "huntingStat": "+Resolve",
       "discipline": "Potence",
       "merit": {
@@ -124,6 +132,7 @@
     },
     {
       "name": "C.H.U.D.",
+      "description": "Cannibalistic Humanoid Underground Dweller. You lurk in the sewers, tunnels, and forgotten sub-basements beneath the city, **Feeding** on whatever (and whoever) wanders too deep. The surface world is someone else's problem. Down here, in the concrete dark, you are fast, you are patient, and you are hungry.",
       "huntingStat": "+Shadow",
       "discipline": "Celerity",
       "merit": {
@@ -139,6 +148,7 @@
     },
     {
       "name": "Civic Disservant",
+      "description": "Every municipal system has a critical employee: the postal worker, the subway engineer, the overnight security guard, the dog walker, the cops. You find them, **Feed** on them, and enjoy the satisfaction knowing that a dozen people's days are about to fall apart. It's not really about the blood (though that's nice too), it's about knowing that one missing piece can grind the whole machine to a halt. Now to find the right cog...",
       "huntingStat": "+Wits",
       "discipline": "Auspex",
       "merit": {
@@ -154,6 +164,7 @@
     },
     {
       "name": "Cleaver",
+      "description": "You are an anomaly among Kindred who feeds covertly from your own or another vampire's mortal family and friends. They may or may not know about your nocturnal activities. The most extreme Cleavers may try to maintain a human family, even marrying or adopting children, but this is a massive risk for all involved — a clear Masquerade breach teetering on a knife's edge between tragedy and even worse tragedy.",
       "huntingStat": "+Demeanor",
       "discipline": "Dominate",
       "merit": {
@@ -169,6 +180,7 @@
     },
     {
       "name": "Confessor",
+      "description": "You wear the guise of clergy, or perhaps you genuinely are (or were) a person of faith. Either way, you **Feed** behind the closed doors of confessionals, rectories, and prayer meetings, drawing in sinners and desperate people who come seeking absolution and leave a little lighter in more ways than one. Whether you believe the penance you offer is real is between you and whatever's listening.",
       "huntingStat": "+Resolve",
       "discipline": "Dominate",
       "merit": {
@@ -184,6 +196,7 @@
     },
     {
       "name": "Consensualist",
+      "description": "You never take blood without informed consent. You might have a blood-related cover story for your activities or you may simply be open with your donors about who and what you are in order to get their permission to feed. Many would call that a clear Masquerade breach, but it's often considered an acceptable risk; sometimes it really is better to ask permission than forgiveness.",
       "huntingStat": "+Demeanor",
       "discipline": "Auspex",
       "merit": {
@@ -199,6 +212,7 @@
     },
     {
       "name": "Cucuy",
+      "description": "You are the thing the neighborhood whispers about. A folktale that happens to be real, a local legend with actual literal teeth. Blood is left on doorsteps, stoops, porches, and at shrines, offered by frightened locals or semi-willing cultists who'd rather **Feed** the devil they know than risk what happens if the offerings stop. You reap the rewards that a healthy dose of fear can inject into a community.",
       "huntingStat": "+Shadow",
       "discipline": "Oblivion",
       "merit": {
@@ -214,6 +228,7 @@
     },
     {
       "name": "Extortionist",
+      "description": "You are either highly manipulative or sincerely concerned with the welfare of your vessels. You acquire blood through an exchange of services such as surveillance, security, or the safekeeping of secrets. This could be for entirely legitimate reasons or a convenient story told to spook them into ponying up the good stuff whenever you're hungry.",
       "huntingStat": "+Demeanor",
       "discipline": "Dominate",
       "merit": {
@@ -229,6 +244,7 @@
     },
     {
       "name": "Extravagant",
+      "description": "Drinking blood must be an *event*. You surround yourself with vessels, transform every meal into a lavish and drawn-out indulgence, and drink until the ecstasy of the Kiss drowns out everything else. Restraint is for vampires who don't know how to unlive properly. The only trouble is that it often takes ages to set it all up, and your Ghouls are probably a little annoyed at how much cleaning they have to do afterwards.",
       "huntingStat": "+Demeanor",
       "discipline": "Blood Sorcery",
       "merit": {
@@ -244,6 +260,7 @@
     },
     {
       "name": "Farmer",
+      "description": "You exclusively **Feed** from animals. You have learned to tolerate the constant gnawing of Hunger, but you haven't killed any humans so far (except maybe that one time) and you intend to stay the course. This choice is normally only made by those who were obsessed with or deeply affected by morality in life, such as an activist, social worker, or member of the clergy. Most other vampires who learn of your \"veganism\" will likely think you are varying degrees of foolish, insane, or masochistic.",
       "huntingStat": "+Blood",
       "discipline": "Animalism",
       "merit": {
@@ -259,6 +276,7 @@
     },
     {
       "name": "Gehenna Prepper",
+      "description": "The ancients are stirring, the end of the world is coming, and you intend to be the last one standing when it does. You've stockpiled blood, weapons, and supplies in a fortified bunker you call home, and you venture out only to tranquilize or subdue fresh victims and drag them back for draining. You acquired a gun, learned how to use it, and you can't wait for shit to hit the fan.",
       "huntingStat": "+Resolve",
       "discipline": "Fortitude",
       "merit": {
@@ -274,6 +292,7 @@
     },
     {
       "name": "Graverobber",
+      "description": "You find the scent of a fresh corpse just as appealing as a human might find the aroma of a freshly-opened bottle of good red wine. You're not too picky, though, and there are often plenty of potential meals (living or not) in and around graveyards, cemeteries, morgues, and hospitals who fit the bill. The sadder they are, the sweeter they taste.",
       "huntingStat": "+Resolve",
       "discipline": "Fortitude",
       "merit": {
@@ -289,6 +308,7 @@
     },
     {
       "name": "Grim Reaper",
+      "description": "You crave the fine flavors that arise in a body when it is on its last legs, and drink almost exclusively on those who are about to die. You might hang around shelters, ambulances, assisted living homes, or hospice care facilities listening for the weakest or most irregular heartbeats. You may even speak frankly to your prey, offering them the serenity of a planned, peaceful, and euphoric death whenever they are ready (possibly under the guise of a large dose of morphine). You must be cautious, though, because too many unexplained exsanguinations in one spot often brings fanged trouble.",
       "huntingStat": "+Wits",
       "discipline": "Oblivion",
       "merit": {
@@ -304,6 +324,7 @@
     },
     {
       "name": "Harvester",
+      "description": "You cultivate swarms of arthropods that nest in corpses and carrion, producing Vitae-infused larvae or byproduct that you consume as your primary source of sustenance. It is, by any measure, one of the most repulsive **Feeding** methods ever conceived by Kindred or mortals alike. It is also remarkably effective and nearly untraceable. If your Coterie watches you eat, there's a non-zero chance they puke.",
       "huntingStat": "+Resolve",
       "discipline": "Animalism",
       "merit": {
@@ -319,6 +340,7 @@
     },
     {
       "name": "Kerubut",
+      "description": "You enter your day-sleep or just stay very, very still with your mouth wide open, exuding a corpse-like scent that draws curious animals close enough to investigate. When something brushes your lips, your body snaps shut in a sudden spasm that would impress a bear trap. It's passive, it's disgusting, and it often works quite well. Just be sure to leave your coffin lid cracked open so the critters can get in.",
       "huntingStat": "+Resolve",
       "discipline": "Fortitude",
       "merit": {
@@ -334,6 +356,7 @@
     },
     {
       "name": "Lurking Lure",
+      "description": "You are the monster people imagine when they stare into the dark mouth of a cave, the dusty space beneath the bed, or the black swirling water of a storm drain. You bait your prey with cries for help, promises of riches, or simple curiosity, then strike when they wander close enough. Unlike the Trapdoor, you don't need a fixed location. Anywhere sufficiently dark and private will do.",
       "huntingStat": "+Shadow",
       "discipline": "Protean",
       "merit": {
@@ -349,6 +372,7 @@
     },
     {
       "name": "Mean Girl",
+      "description": "With a tongue even sharper than your fangs, you not only drain your victims' blood, you drain their self-worth first. You target the insecure, the grieving, and the already-broken, sharpening their misery with cutting remarks, public embarrassment, and psychological manipulation before you move in for the Kiss. Everything tastes better when it's been properly seasoned with despair.",
       "huntingStat": "+Demeanor",
       "discipline": "Presence",
       "merit": {
@@ -364,6 +388,7 @@
     },
     {
       "name": "Mephistopheles",
+      "description": "You are the smiling devil people shake hands with and rarely think twice about. You offer favors, secrets, protection, and earthly pleasures to anyone desperate enough to make a deal, and the price is always paid in blood. A pact is a pact. You collect what you're owed, and what happens when someone tries to break the bargain is between them and your Beast.",
       "huntingStat": "+Wits",
       "discipline": "Blood Sorcery",
       "merit": {
@@ -379,6 +404,7 @@
     },
     {
       "name": "Montero",
+      "description": "You are a hunter in the most aristocratic sense — you would rather have other people do the hard work of rounding up your prey while you take the gory glory for yourself. Your Coterie or any of your subordinates herd your victims towards you so that you may strike the all-important final blow, though the hunt itself can take many forms. You're part of the reason nobody trusts flash mobs.",
       "huntingStat": "None",
       "discipline": "Dominate",
       "merit": {
@@ -394,6 +420,7 @@
     },
     {
       "name": "Mutualist",
+      "description": "You have a partner in crime, and they have four legs and a tail (or two legs & wings, or any number of legs & scales or chiton). Your trained or Ghouled animals scout ahead, lure prey into position, or pin them down while you move in for the kill. It's a mutually beneficial arrangement: you get dinner, they get treats. If you have a Familiar, they're probably your best employee. Who's a good little hunter? *You both are!*",
       "huntingStat": "+Blood",
       "discipline": "Animalism",
       "merit": {
@@ -409,6 +436,7 @@
     },
     {
       "name": "Opportunistic Host",
+      "description": "You are the host everyone wants an invitation from. Art openings, charity galas, VIP lounges in clubs you own, exclusive soirées. You curate the guest list, control the venue, and **Feed** on attendees who are too dazzled or distracted to notice a little blood loss between cocktails. The event is your **Hunting** ground, and you run the whole damn show.",
       "huntingStat": "+Demeanor",
       "discipline": "Dominate",
       "merit": {
@@ -424,6 +452,7 @@
     },
     {
       "name": "Orbiter",
+      "description": "There is one person in the world who occupies your every waking thought. You watch them from the dark, memorize their routines, follow them home, and **Feed** near them, or on rare and exquisite occasions, from them. No other blood fully sates you. You are hopelessly, irrevocably, and terrifyingly fixated... until they die, of course. There's always more mortals.",
       "huntingStat": "+Shadow",
       "discipline": "Obfuscate",
       "merit": {
@@ -439,6 +468,7 @@
     },
     {
       "name": "Organovore",
+      "description": "You are a monster among monsters. Human blood does little to satiate your hunger; you can only survive on human flesh and organs. You are especially fond of those rich in blood, such as the heart, brain, lungs, liver, placenta, spleen... and of course, the fresher the better. This method of feeding, while not unheard of, is viewed with disdain by many blood-only vampires. It's messy, time consuming, and almost invariably lethal, but at least you can make yourself nice pink smoothies to go. So what if you like a little pulp in your juice?",
       "huntingStat": "+Blood",
       "discipline": "Potence",
       "merit": {
@@ -454,6 +484,7 @@
     },
     {
       "name": "Osiris",
+      "description": "You are kind of a big deal, and your flock are your food. You might be a celebrity, TV/radio/podcast personality, religious/cult leader, popular artist or writer, LARP organizer, or the face of a well-known brand. You feed mainly from your fans or devotees, and almost always have easy access to willingly-given blood. The troublesome part is getting them to keep their damn mouths shut about your snacking preferences.",
       "huntingStat": "+Demeanor",
       "discipline": "Presence",
       "merit": {
@@ -469,6 +500,7 @@
     },
     {
       "name": "Party Crasher",
+      "description": "You weren't invited and you don't care. Weddings, birthday parties, gallery openings, corporate mixers. If there's a crowd, there's a meal, and you have a supernatural talent for blending in where you don't belong. The thrill of **Feeding** somewhere you absolutely should not be is half the appeal, even if it keeps the Sheriff's phone ringing. What do you care? You're in the bathroom creating a nightmare for the custodial staff.",
       "huntingStat": "+Demeanor",
       "discipline": "Dominate",
       "merit": {
@@ -484,6 +516,7 @@
     },
     {
       "name": "Patron of the Arts",
+      "description": "You provide resources, connections, and patronage to artists who depend on your generosity for their careers and livelihoods. In exchange, they provide something far more personal: your favorite food, just about whenever you want it. The art world has always been built on the patronage of monsters. You're just more literal about it than most.",
       "huntingStat": "+Wits",
       "discipline": "Presence",
       "merit": {
@@ -499,6 +532,7 @@
     },
     {
       "name": "Piscator",
+      "description": "You **Feed** through strange rites, channeling the darkness itself to draw sustenance from beyond the Veil. What was once a simple method practiced by sailors at sea has evolved over the centuries into the preferred **Feeding** style of Abyss mystics and occult-minded Kindred who treat every meal as a ceremony and every shadow as a potential vessel. At character creation (or the first time you go out for a bite), decide what your rites look like and stick to them as closely as you can until something meaningfully changes them.",
       "huntingStat": "+Shadow",
       "discipline": "Oblivion",
       "merit": {
@@ -514,6 +548,7 @@
     },
     {
       "name": "Poacher",
+      "description": "You **Hunt** in other Kindred's territory, and you're not even a little bit sorry about it, you rascal. Maybe you just can't find a good spot of your own, maybe you live a nomadic existence, or maybe you've simply decided that the concept of \"someone else's hunting ground\" is actually a personal challenge. You get in, you grab a meal, you get out, and if the local constabulary learns about it, that's a problem for future you.",
       "huntingStat": "+Shadow",
       "discipline": "Celerity",
       "merit": {
@@ -529,6 +564,7 @@
     },
     {
       "name": "Pursuer",
+      "description": "You enjoy the thrill of the hunt perhaps even more than actually getting your fangs wet. You stalk and study your intended victim, observing them carefully to memorize their routines and determine whether they can disappear without too much of a fuss. You are usually cautious and careful, striking only when your efforts and cravings have reached their delicious climactic peak.",
       "huntingStat": "+Wits",
       "discipline": "Auspex",
       "merit": {
@@ -544,6 +580,7 @@
     },
     {
       "name": "Rat in the Walls",
+      "description": "You have moved into someone's home without their knowledge, and you live there still. In the walls, the ceiling, the crawlspace, the air ducts. At night, while they toss and turn with a nameless anxiety they can't explain, you creep out and take a little drink. You don't need them to be asleep. You just need them not to look behind that weird patch of drywall.",
       "huntingStat": "+Shadow",
       "discipline": "Obfuscate",
       "merit": {
@@ -559,6 +596,7 @@
     },
     {
       "name": "Rival",
+      "description": "Blood tastes sweeter when flavored by competition. You have a rival (maybe friendly, maybe not) and the two of you choose a target and race to see who Feeds first. Winning is intoxicating. Losing is motivating. Cheating is dangerous. The whole arrangement is precisely one bad night away from becoming an actual problem for you and your entire Coterie. They should just give up already!",
       "huntingStat": "+Blood",
       "discipline": "Presence",
       "merit": {
@@ -574,6 +612,7 @@
     },
     {
       "name": "Roadside Killer",
+      "description": "You are constantly driving, always watching the shoulder of the road. Rest areas, truck stops, highway on-ramps, rural bus stations — these are your hunting grounds. You look for the vulnerable ones: hitchhikers with their thumbs out, motorists with flat tires, travelers sleeping in their cars at 3 AM. You pull over, offer help, and the night does the rest. Maybe you were a trucker or a traveling salesperson once, or maybe you met your own fate along the road and decided to pay it forward in the worst possible way.",
       "huntingStat": "+Shadow",
       "discipline": "Protean",
       "merit": {
@@ -589,6 +628,7 @@
     },
     {
       "name": "Romanticist",
+      "description": "You can't just **Feed** from any old mortal, you have to fall for them first. Unlike the Siren, your interest isn't performative; you genuinely pursue romantic connection with your prey, court them properly, and treat them with care (or at least the best approximation of care that a vampire can manage). The problem, of course, is that every relationship you build has a coffin-shaped expiration date.",
       "huntingStat": "+Demeanor",
       "discipline": "Auspex",
       "merit": {
@@ -604,6 +644,7 @@
     },
     {
       "name": "Sacred Harlot",
+      "description": "You seek out the devout, the pious, and the faithful, and you test every last ounce of their belief by seducing them away from it. If their god is real, why did it allow *you* to happen to *them*? You **Feed** on the crisis of faith that follows, and the blood of the righteous tastes utterly divine. That, or they splash you with holy water and run screaming through the cloisters. That's fun too.",
       "huntingStat": "+Demeanor",
       "discipline": "Presence",
       "merit": {
@@ -619,6 +660,7 @@
     },
     {
       "name": "Sandman",
+      "description": "You are the thing that tries not to go bump in the night. You prey on sleeping humans whenever possible, especially the ones that snore loudly. If they never even know you were there, it's like you barely did anything wrong. Perhaps you don't feel cut out for the intensity of chasing your prey around all night, or maybe you just prefer to take your meals in silence. Hopefully nobody minds.",
       "huntingStat": "+Shadow",
       "discipline": "Obfuscate",
       "merit": {
@@ -634,6 +676,7 @@
     },
     {
       "name": "Scene Queen",
+      "description": "You are a common sight amongst a particular group of people, and you love how they taste. Your involvement with a specific subculture (likely one you enjoyed in your mortal life) grants you access to all their hangouts. You might run or ride with a gang, regularly visit a meeting space or *Something Anonymous* group, attend conventions or galas, or even just dance at the same nightclub a few times every week. Everyone knows your face, but few know your secret.",
       "huntingStat": "+Demeanor",
       "discipline": "Presence",
       "merit": {
@@ -649,6 +692,7 @@
     },
     {
       "name": "Sin-Eater",
+      "description": "You have a burning thirst for the blood of sinners and those who would do others harm. You watch people from a distance, read them like a menu, and move in to **Feed** exclusively from those whose moral character falls short of your standards. Whether this makes you a vigilante or just a picky eater is a question you'd rather not examine too closely. Either way, you're doing everyone else a favor, or so you believe.",
       "huntingStat": "+Blood",
       "discipline": "Blood Sorcery",
       "merit": {
@@ -664,6 +708,7 @@
     },
     {
       "name": "Siren",
+      "description": "You feed almost exclusively during sex or other intimate activities. You try to find humans that can almost match your appetites, and are a master of one-night-stands and/or a regular at the local kink club — you might even have a Touchstone who's into your whole freaky meal deal. In your moments of darkness, you may worry if you're a problematic lover (or worse), but after all, unlife is for unliving, so you might as well enjoy the ride (and the riding crop).",
       "huntingStat": "+Demeanor",
       "discipline": "Presence",
       "merit": {
@@ -679,6 +724,7 @@
     },
     {
       "name": "Spawn Farmer",
+      "description": "Somewhere in a dark corner of whatever municipality you inhabit, you maintain a wretched pool of tainted Vitae and chemical runoff that produces malformed, blood-bloated creatures. You **Feed** exclusively on these abominations, partly because you've developed a taste for it, and partly because you're not entirely sure what would happen if you stopped tending the pool. Sometimes it ripples for some reason. *Hmmm.*",
       "huntingStat": "+Resolve",
       "discipline": "Animalism",
       "merit": {
@@ -694,6 +740,7 @@
     },
     {
       "name": "Suliformes",
+      "description": "Named for the order of seabirds that regurgitate food for their young, your **Feeding** method is exactly as charming as that comparison suggests. You send Ghouled animals out into the night to gorge on blood and flesh, then collect their haul when they waddle home and deposit it (wetly, warmly, and willingly) directly into your waiting mouth. It's nearly untraceable. It's also the reason nobody sits next to you at Elysium.",
       "huntingStat": "+Blood",
       "discipline": "Animalism",
       "merit": {
@@ -709,6 +756,7 @@
     },
     {
       "name": "Teardown",
+      "description": "You prey upon the powerful, the proud, and the accomplished, but only after you've demolished their confidence first. Corporate climbers, gang lieutenants, petty lords, and self-styled sovereigns: you find their weaknesses, strip away their illusions of control, and make sure they know exactly where they rank on the food chain before you sink your fangs into their perfumed necks.",
       "huntingStat": "+Wits",
       "discipline": "Presence",
       "merit": {
@@ -724,6 +772,7 @@
     },
     {
       "name": "Tithe Collector",
+      "description": "You don't have to hunt. You *receive*. Through intimidation, political maneuvering, or a position of authority among the local Kindred, you've arranged for other vampires to deliver carefully selected vessels directly to you on a regular basis. The mortals arrive fed, watered, and mostly unharmed; they're returned afterward in roughly the same condition. How they're acquired is everyone else's problem. You just eat.",
       "huntingStat": "+Demeanor",
       "discipline": "Dominate",
       "merit": {
@@ -739,6 +788,7 @@
     },
     {
       "name": "Tourist Hunter",
+      "description": "You know your territory better than you know yourself, and you can tell when something's different. A new face at the diner, an unfamiliar car parked overnight, a backpacker asking for directions at the wrong hour... you always notice. You prey exclusively on travelers, drifters, tourists, and transients; people passing through who won't be missed by anyone nearby. Your hunting ground is your home, and you never soil it by feeding from the locals. That's how patterns form, and patterns get you staked, baked, and swept into the trash.",
       "huntingStat": "+Wits",
       "discipline": "Obfuscate",
       "merit": {
@@ -754,6 +804,7 @@
     },
     {
       "name": "Trapdoor",
+      "description": "You have a special spot that you'd just *love* to show someone. Like the inimitable trapdoor spider, you build a nest and lure your prey to you, then strike when the moment is right. You might lurk in the shadows of a local park, lounge around in a jazz club, haunt a house, or even just bring people back to your Haven for a quick chill & spill. It's up to you how you treat your victims; maybe you like to make them squirm or scream, maybe you hang onto them for a while and get a few meals out of the same one, or maybe you just drink deep and send them away in a daze.",
       "huntingStat": "+Shadow",
       "discipline": "Obfuscate",
       "merit": {
@@ -769,6 +820,7 @@
     },
     {
       "name": "Vandewalt",
+      "description": "Named for a particularly vicious art critic, you (and parasites like you) **Feed** exclusively on artists whose work you find talentless, derivative, or otherwise unworthy of existing. You have extremely strong opinions about what constitutes *real art*, and an even stronger belief that bad artists serve the world better as juice boxes than as contributors to the cultural landscape. Someone should fetch you a golden straw.",
       "huntingStat": "+Demeanor",
       "discipline": "Dominate",
       "merit": {
@@ -784,6 +836,7 @@
     },
     {
       "name": "Welch",
+      "description": "You don't **Hunt**. You *can't* **Hunt**. You might wish you could or you might find it abhorrent, but it's causing a problem and you're all too aware of how big an issue it is. What you *can* do is beg, borrow, wheedle, promise, and guilt other Kindred into sharing their meals with you. You make deals you may have no intention of keeping, promise boons you'll probably never deliver, and survive entirely on the charity and gullibility of others. It's a sad way to exist, but at least nobody gets hurt except the people who trusted you.",
       "huntingStat": "None",
       "discipline": "Blood Sorcery",
       "merit": {

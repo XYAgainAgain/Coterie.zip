@@ -1165,6 +1165,9 @@ function PredatorTypeSection({ creating, focused }: { creating: boolean; focused
       <div class="vamp-rpanel-section__content">
         {pt ? (
           <>
+            {pt.description && (
+              <div class="vamp-rpanel-field__body" dangerouslySetInnerHTML={{ __html: renderGameMarkdown(pt.description) }} />
+            )}
             <div class="vamp-rpanel-field">
               <span class="vamp-rpanel-field__label">Hunting Stat</span>
               <span class="vamp-rpanel-field__value vamp-rpanel-field__value--accent">{pt.huntingStat}</span>

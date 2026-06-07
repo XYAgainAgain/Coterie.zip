@@ -162,8 +162,7 @@ Numbered lists for plans or sequences (you can indent with spaces too):
 
 1. Scope out the warehouse
    1. Bring binoculars
-   2. Pick up
-
+   2. Pick up some explosives
 2. Decide whether to tell the Coterie
 3. Drink blood and go to bed
 

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-06T08:29:10.304Z",
+  "generatedAt": "2026-06-07T01:06:10.434Z",
   "entries": [
     {
       "name": "Banu Haqim",
@@ -689,7 +689,7 @@
       "disciplines": "Choose any 2 Disciplines to start with. These are unaffected by your Bane.",
       "baneName": "Lacking Lineage",
       "baneDescription": "**You carry no supernatural curse, but Kindred society treats your existence as one**. Any Kindred who knows you're Caitiff may impose social consequences at their discretion; the Storyteller can apply a penalty of −1 to −2 Forward on Demeanor rolls with Kindred who look down on the clanless (which is most of them).\n\nAdditionally, Disciplines take more effort to advance, as your Blood must learn what the Clans inherit. When you spend XP on unlocking access to Disciplines, add your Blood Potency to the cost (minimum 1). When you spend XP on Discipline Powers from Disciplines other than your two starters, add half your Blood Potency (rounded up) instead.",
-      "compulsionName": null,
+      "compulsionName": "Nothing",
       "compulsionDescription": "You have no fixed Compulsion. You just get to help with everybody else's.",
       "perks": [
         {
@@ -963,7 +963,7 @@
       "disciplines": "You have exclusive access to [**Thin-Blood Alchemy**](../disciplines/thin-blood-alchemy.md), you get another Discipline from your Predator Type, and you can temporarily access level 1 of any other Discipline by drinking the right Vitae.",
       "baneName": "Diluted & Disliked",
       "baneDescription": "**You are barely a vampire.** Your Blood Potency is 0 and cannot increase through normal advancement — Diablerie is the one exception. You take Aggravated Harm from bladed weapons, bullets, and other sources that would only inflict Superficial Harm on full Kindred; your body is still mostly mortal. You cannot create Blood Bonds, and any attempt to Embrace a mortal has a high chance of simply killing them (the Storyteller decides the odds based on circumstances and must let you roll to determine the outcome).\n\nKindred society treats you as something between a nuisance and a bad omen. The Storyteller may apply a penalty of −1 to −2 Forward on social rolls with Kindred who know and care what you are, and many domains require Thin-Bloods to bear a crescent moon brand.",
-      "compulsionName": null,
+      "compulsionName": "Nothing",
       "compulsionDescription": "You have no fixed Compulsion. You kinda just don't *get it,* man. Why is everyone so uptight?",
       "perks": [
         {

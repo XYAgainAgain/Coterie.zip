@@ -7,6 +7,7 @@ const MeritFlawField = z.object({
 
 export const PredatorTypeSchema = z.object({
   name: z.string().min(1),
+  description: z.string(),
   huntingStat: z.string().min(1),
   discipline: z.string().min(1),
   merit: MeritFlawField,

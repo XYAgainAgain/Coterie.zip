@@ -68,6 +68,9 @@
   --v-font-heading: 'IM Fell English SC', 'Metamorphous', serif;
   --v-font-mono: 'Fira Code', monospace;
 
+  /* Reader-controlled content-text scale (rocker). Chrome/labels opt out by not using it. */
+  --v-text-scale: 1;
+
   --v-radius-sm: 0.25rem;
   --v-radius-md: 0.5rem;
   --v-radius-lg: 0.75rem;
@@ -87,4 +90,9 @@
     currentColor 52px 66px,
     transparent 66px 72px
   );
+}
+
+/* Font swap: serif mode only remaps body copy; headings/display fonts stay put. */
+:root[data-font-mode="serif"] {
+  --v-font-body: 'Merriweather', Georgia, serif;
 }

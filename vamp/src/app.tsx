@@ -4,6 +4,7 @@ import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
 import { CharacterViewer } from './pages/CharacterViewer';
 import { EyeToggle } from './components/EyeToggle';
+import { TextRocker } from './components/TextRocker';
 import { EmailLinkPrompt } from './components/EmailLinkPrompt';
 import { CreationProgress } from './components/creation/CreationProgress';
 import { DiceOverlay } from './dice/DiceOverlay';
@@ -55,6 +56,7 @@ export function App() {
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
         <div class={`vamp-header__controls ${guideActive.value && currentGuideStep.value?.zone === 'header' ? 'guide-spotlight' : ''}`}>
+          <TextRocker />
           {!viewingOtherSheet.value && activeCharacterId.value && (
             <button
               class={`vamp-header__lock ${editMode.value ? 'vamp-header__lock--editing' : ''}`}

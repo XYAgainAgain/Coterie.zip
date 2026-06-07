@@ -249,7 +249,59 @@ a:hover {
 .vamp-header__controls {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
+}
+
+/* Text-size + font-swap rocker (grouped pill, left of EDIT/PLAY) */
+.vamp-rocker {
+  display: flex;
+  align-items: stretch;
+  block-size: 2rem;
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-md);
+  overflow: hidden;
+}
+
+.vamp-rocker__btn {
+  display: grid;
+  place-items: center;
+  min-inline-size: 1.8rem;
+  padding-inline: 0.4rem;
+  font-family: var(--v-font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--v-text-secondary);
+  background: transparent;
+  border: none;
+  border-inline-start: 1px solid var(--v-border);
+  cursor: pointer;
+  transition: background var(--v-transition), color var(--v-transition);
+}
+
+.vamp-rocker__btn:first-child { border-inline-start: none; }
+
+/* Outer +/- get a fill; inner Aa/Tt stay transparent to match the header (like the main site). */
+.vamp-rocker__btn:first-child,
+.vamp-rocker__btn:last-child {
+  background: var(--v-accent-subtle);
+}
+
+.vamp-rocker__btn--font { font-size: 0.9rem; }
+
+.vamp-rocker__btn:hover:not(:disabled) {
+  background: var(--v-accent);
+  color: var(--v-bg-primary);
+}
+
+.vamp-rocker__btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.vamp-rocker__btn:focus-visible {
+  outline: 2px solid var(--v-accent);
+  outline-offset: -2px;
 }
 
 .vamp-header__btn {
@@ -1104,15 +1156,11 @@ a:hover {
 
 .vamp-vitals__grid > .vamp-section {
   margin-bottom: 0;
-  /* Column layout lets a tracker fill the box; the legend renders as the fieldset
-     caption and stays out of the flex flow. */
   display: flex;
   flex-direction: column;
 }
 
-/* Fill the Hunger box so the Frenzy warning can sit equidistant below the pips */
 .vamp-hunger-tracker {
-  flex: 1;
   display: flex;
   flex-direction: column;
 }
@@ -1260,22 +1308,28 @@ a:hover {
 /* Equal-width container anchored right; button + dots share one center axis across all four boxes */
 .vamp-vital-actions {
   position: absolute;
-  inset-block-start: 0.3rem;
+  inset-block: -0.75rem 0;
   inset-inline-end: 0.5rem;
   inline-size: 4.75rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.2rem;
   z-index: 1;
 }
 
-/* Two stacked equal-width buttons; rides up to balance the taller column. */
-.vamp-vital-actions--stack {
-  display: grid;
-  grid-template-columns: 1fr;
-  inline-size: 4rem;
-  inset-block-start: -0.5rem;
+.vamp-humanity-actions {
+  position: absolute;
+  inset-block: -0.75rem 0;
+  inset-inline-end: 0.5rem;
+  inline-size: 4.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.2rem;
+  z-index: 1;
 }
 
 .vamp-vital-roll {
@@ -1301,11 +1355,6 @@ a:hover {
   flex-direction: row;
   justify-content: center;
   white-space: nowrap;
-}
-
-/* Keep the button + dots grouped, nudged up to balance the BP box. */
-.vamp-vital-actions--surge {
-  inset-block-start: -0.25rem;
 }
 
 .vamp-vital-roll:hover:not(:disabled) {
@@ -1337,25 +1386,16 @@ a:hover {
   border-color: var(--v-accent);
 }
 
-/* Harm reflows into 2 balanced rows; columns flex down so pips shrink to fit (keeps the Vitals area from growing vertically at high HP/Fortitude). The trailing margin reserves the action-button column so the top row never slides under it. */
 .vamp-pip-row--harm {
   display: grid;
-  grid-template-columns: repeat(var(--harm-cols), minmax(0, 1fr));
+  grid-template-columns: repeat(var(--harm-cols), 1.5rem);
   gap: 0.2rem;
   align-items: start;
-  max-inline-size: calc(var(--harm-cols) * 1.5rem + (var(--harm-cols) - 1) * 0.2rem);
   margin-inline-end: 5.25rem;
 }
 
-.vamp-pip-row--harm .vamp-pip {
-  inline-size: 100%;
-  block-size: auto;
-  aspect-ratio: 1;
-}
-
-/* Humanity has its own Remorse Check button in the same absolute action column, so its 10 pips need the same trailing reservation as Harm or they wrap under it. */
 .vamp-pip-row--humanity {
-  margin-inline-end: 4.5rem;
+  margin-inline-end: 5.25rem;
 }
 
 .vamp-tracker-adj {
@@ -2442,7 +2482,7 @@ a:hover {
 }
 
 .vamp-debt__text {
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.4;
 }
@@ -2884,7 +2924,7 @@ a:hover {
 }
 
 .vamp-note__preview {
-  font-size: 0.75rem;
+  font-size: calc(0.75rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.4;
   overflow-y: auto;
@@ -3050,13 +3090,16 @@ a:hover {
 
 .vamp-note-max__body {
   flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   scrollbar-width: thin;
 }
 
 .vamp-note-max__editor {
+  flex: 1;
   width: 100%;
-  height: 100%;
   min-height: 12rem;
   resize: none;
   background: var(--v-bg-sunken);
@@ -3065,7 +3108,7 @@ a:hover {
   padding: 0.5rem;
   color: var(--v-text-primary);
   font-family: var(--v-font-body);
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   line-height: 1.5;
 }
 
@@ -3075,7 +3118,7 @@ a:hover {
 
 .vamp-note-max__rendered {
   padding: 0.25rem;
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   line-height: 1.6;
   cursor: pointer;
 }
@@ -3332,6 +3375,7 @@ textarea.vamp-editable__input {
 }
 
 .vamp-editable--markdown {
+  font-size: calc(1rem * var(--v-text-scale));
   line-height: 1.55;
 }
 
@@ -3480,6 +3524,10 @@ textarea.vamp-editable__input {
   scrollbar-color: var(--v-accent-subtle) transparent;
 }
 
+.vamp-tab-pane--fill {
+  display: contents;
+}
+
 
 .vamp-placeholder {
   padding: 1.5rem;
@@ -3524,6 +3572,9 @@ textarea.vamp-editable__input {
 .vamp-bane-compulsion__col {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .vamp-bane-compulsion__col > .vamp-perk {
@@ -3588,7 +3639,7 @@ textarea.vamp-editable__input {
 
 .vamp-perk__name {
   font-family: var(--v-font-heading);
-  font-size: 1.15rem;
+  font-size: calc(1.15rem * var(--v-text-scale));
   color: var(--v-text-accent);
   font-style: italic;
 }
@@ -3620,7 +3671,7 @@ textarea.vamp-editable__input {
 }
 
 .vamp-perk__text {
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.5;
 }
@@ -3659,7 +3710,7 @@ textarea.vamp-editable__input {
 
 .vamp-bane__name {
   font-family: var(--v-font-heading);
-  font-size: 1.15rem;
+  font-size: calc(1.15rem * var(--v-text-scale));
   color: var(--v-flaw-text);
 }
 
@@ -3670,7 +3721,7 @@ textarea.vamp-editable__input {
 }
 
 .vamp-bane__text {
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.5;
 }
@@ -3789,7 +3840,7 @@ textarea.vamp-editable__input {
 
 .vamp-mf-entry__name {
   font-family: var(--v-font-heading);
-  font-size: 0.85rem;
+  font-size: calc(1.1rem * var(--v-text-scale));
   color: var(--v-text-primary);
   margin-bottom: 0.15rem;
 }
@@ -3807,7 +3858,7 @@ textarea.vamp-editable__input {
 
 .vamp-mf-entry p {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   line-height: 1.5;
   color: var(--v-text-secondary);
 }
@@ -3950,7 +4001,7 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-detail__body {
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.55;
   padding-top: 0.4rem;
@@ -4165,7 +4216,7 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-disc__perk-ref {
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   margin-bottom: 0.5rem;
   padding-bottom: 0.4rem;
@@ -4353,7 +4404,7 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-power__name {
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   font-weight: 700;
   font-style: italic;
   color: var(--v-text-primary);
@@ -4381,7 +4432,7 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-power__body {
   padding: 0.25rem 0.4rem 0.5rem 2.1rem;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.55;
 }
@@ -6036,7 +6087,7 @@ details[open] > .vamp-detail__summary::before {
 .vamp-rpanel-field__value {
   display: block;
   color: var(--v-text-secondary);
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--v-text-scale));
   line-height: 1.5;
 }
 
@@ -6055,7 +6106,7 @@ details[open] > .vamp-detail__summary::before {
 .vamp-rpanel-field__value--accent {
   color: var(--v-accent);
   font-family: var(--v-font-heading);
-  font-size: 1.05rem;
+  font-size: calc(1.05rem * var(--v-text-scale));
 }
 
 .vamp-rpanel-field__tagline {
@@ -6066,7 +6117,7 @@ details[open] > .vamp-detail__summary::before {
 }
 
 .vamp-rpanel-field__body {
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.5;
   margin-block: 0.3rem;
@@ -6097,7 +6148,7 @@ details[open] > .vamp-detail__summary::before {
 .vamp-rpanel-field__list {
   padding-inline-start: 1.25rem;
   margin-block: 0.25rem;
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--v-text-scale));
   color: var(--v-text-secondary);
 }
 
@@ -6115,7 +6166,7 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-rpanel-tier__label {
   font-family: var(--v-font-display);
-  font-size: 1rem;
+  font-size: calc(1rem * var(--v-text-scale));
   font-weight: 600;
   margin-block-end: 0.15rem;
 }
@@ -6125,7 +6176,7 @@ details[open] > .vamp-detail__summary::before {
 .vamp-rpanel-tier--compulsion .vamp-rpanel-tier__label { color: var(--v-compulsion-text); }
 
 .vamp-rpanel-tier__body {
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.5;
 }
@@ -6587,7 +6638,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 
 .vamp-adv-extra-row__body {
   padding: 0.3rem 0.5rem 0.4rem 1.4rem;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   line-height: 1.5;
   color: var(--v-text-secondary);
 }
@@ -6869,7 +6920,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 .vamp-rules-title {
   padding: 0.6rem 0.75rem 0;
   font-family: var(--v-font-heading);
-  font-size: 1.4rem;
+  font-size: calc(1.4rem * var(--v-text-scale));
   color: var(--v-text-primary);
   text-align: center;
 }
@@ -6880,7 +6931,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 
 .vamp-rules-intro {
   padding: 0.25rem 0.75rem 0.5rem;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.55;
   border-block-end: 1px solid var(--v-border);
@@ -6897,7 +6948,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 
 .vamp-rules-body {
   padding: 0.25rem 0.75rem 0.5rem;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.55;
 }
@@ -6962,7 +7013,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 
 .vamp-move-tier__label {
   font-family: var(--v-font-display);
-  font-size: 1rem;
+  font-size: calc(1rem * var(--v-text-scale));
   font-weight: 600;
   margin-block-end: 0.15rem;
 }
@@ -6978,7 +7029,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 .vamp-move-tier--group-none .vamp-move-tier__label { color: #e57373; }
 
 .vamp-move-tier__content {
-  font-size: 0.85rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
   color: var(--v-text-secondary);
   line-height: 1.5;
 }
@@ -7039,11 +7090,13 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
     padding-left: 0;
   }
 
-  .vamp-perks-split {
+  .vamp-perks-split,
+  .vamp-bane-compulsion {
     flex-direction: column;
   }
 
-  .vamp-perks-split > .vamp-merits-flaws__divider {
+  .vamp-perks-split > .vamp-merits-flaws__divider,
+  .vamp-bane-compulsion > .vamp-merits-flaws__divider {
     display: none;
   }
 

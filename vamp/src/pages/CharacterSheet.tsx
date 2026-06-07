@@ -171,16 +171,18 @@ function HungerTracker({ canRoll }: { canRoll?: boolean }) {
 
   return (
     <div class="vamp-hunger-tracker">
-      {canRoll && (
-        <div class="vamp-vital-actions">
-          <VitalRollButton label="Hunger Check" onClick={performHungerCheck} />
+      <div class="vamp-vital-row">
+        <div class={`vamp-pip-row ${warn ? `vamp-pip-row--hunger-${warn}` : ''}`}>
+          <span class="vamp-hunger-pips">
+            <ClickPipRow value={hunger} count={5} onChange={setHunger} droplet />
+          </span>
+          <span class="vamp-tracker-label">{hunger}/5</span>
         </div>
-      )}
-      <div class={`vamp-pip-row ${warn ? `vamp-pip-row--hunger-${warn}` : ''}`}>
-        <span class="vamp-hunger-pips">
-          <ClickPipRow value={hunger} count={5} onChange={setHunger} droplet />
-        </span>
-        <span class="vamp-tracker-label">{hunger}/5</span>
+        {canRoll && (
+          <div class="vamp-vital-actions">
+            <VitalRollButton label="Hunger Check" onClick={performHungerCheck} />
+          </div>
+        )}
       </div>
       {hunger >= 5 && (
         <div class="vamp-hunger-warn"><strong>Stay Chill</strong> to not Frenzy!</div>
@@ -198,34 +200,36 @@ function BPTracker({ canRoll }: { canRoll?: boolean }) {
 
   return (
     <div>
-      {canRoll && bp >= 1 && (
-        <div class="vamp-vital-actions vamp-vital-actions--surge">
-          <VitalRollButton
-            label="Blood Surge"
-            onClick={performBloodSurge}
-            disabled={remaining <= 0 || surgeActive}
-          />
-          <span
-            class="vamp-surge-track"
-            title={`${remaining} of ${bp} Blood Surge${bp === 1 ? '' : 's'} available tonight`}
-          >
-            {Array.from({ length: bp }, (_, i) => (
-              <span key={i} class={`vamp-surge-pip ${i < remaining ? 'vamp-surge-pip--ready' : ''}`} />
-            ))}
-          </span>
+      <div class="vamp-vital-row">
+        <div class="vamp-pip-row">
+          <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} droplet />
+          <span class="vamp-tracker-label">BP {bp}</span>
+          {isEdit && (
+            <span class="vamp-tracker-adj">
+              <button class="vamp-adj-btn" disabled={bp <= 0} onClick={() => setBP(bp - 1)}>-</button>
+              <button class="vamp-adj-btn" disabled={bp >= 5} onClick={() => setBP(bp + 1)}>+</button>
+            </span>
+          )}
+          {pendingBP > 0 && (
+            <span class="vamp-tracker-pending">+{pendingBP} pending</span>
+          )}
         </div>
-      )}
-      <div class="vamp-pip-row">
-        <ClickPipRow value={bp} count={5} onChange={isEdit ? setBP : undefined} droplet />
-        <span class="vamp-tracker-label">BP {bp}</span>
-        {isEdit && (
-          <span class="vamp-tracker-adj">
-            <button class="vamp-adj-btn" disabled={bp <= 0} onClick={() => setBP(bp - 1)}>-</button>
-            <button class="vamp-adj-btn" disabled={bp >= 5} onClick={() => setBP(bp + 1)}>+</button>
-          </span>
-        )}
-        {pendingBP > 0 && (
-          <span class="vamp-tracker-pending">+{pendingBP} pending</span>
+        {canRoll && bp >= 1 && (
+          <div class="vamp-vital-actions">
+            <VitalRollButton
+              label="Blood Surge"
+              onClick={performBloodSurge}
+              disabled={remaining <= 0 || surgeActive}
+            />
+            <span
+              class="vamp-surge-track"
+              title={`${remaining} of ${bp} Blood Surge${bp === 1 ? '' : 's'} available tonight`}
+            >
+              {Array.from({ length: bp }, (_, i) => (
+                <span key={i} class={`vamp-surge-pip ${i < remaining ? 'vamp-surge-pip--ready' : ''}`} />
+              ))}
+            </span>
+          </div>
         )}
       </div>
     </div>
@@ -249,13 +253,7 @@ function HumanityTracker({ canRoll }: { canRoll?: boolean }) {
   }
 
   return (
-    <div>
-      {canRoll && (
-        <div class="vamp-vital-actions vamp-vital-actions--stack">
-          <VitalRollButton label="Remorse Check" onClick={performRemorseCheck} disabled={char.stains === 0} />
-          <VitalRollButton label="+1 Stain" onClick={addStain} singleLine />
-        </div>
-      )}
+    <div class="vamp-vital-row">
       <div class={`vamp-pip-row ${canRoll ? 'vamp-pip-row--humanity' : ''}`}>
         {Array.from({ length: 10 }, (_, i) => {
           const state: PipState = i < humanity ? 'filled' : i < humanity + stains ? 'slashed' : 'empty';
@@ -269,6 +267,12 @@ function HumanityTracker({ canRoll }: { canRoll?: boolean }) {
         })}
         <span class="vamp-tracker-label">{humanity}{stainLabel}</span>
       </div>
+      {canRoll && (
+        <div class="vamp-humanity-actions">
+          <VitalRollButton label="Remorse Check" onClick={performRemorseCheck} disabled={char.stains === 0} />
+          <VitalRollButton label="+1 Stain" onClick={addStain} singleLine />
+        </div>
+      )}
     </div>
   );
 }
@@ -300,19 +304,35 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
   }
 
   const sup = boxes.value.filter(s => s === 'slashed').length;
-  /* Cap at 2 rows; pips shrink to fit when row would exceed ~10 (keeps Vitals height fixed!) Might have to set min size; these get teensy-weensy */
-  const cols = hp <= 10 ? hp : Math.ceil(hp / 2);
+
+  const rootRef = useRef<HTMLDivElement>(null);
+  const cols = useSignal(hp);
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+    const recompute = () => {
+      const avail = el.clientWidth - 84;
+      const perRow = Math.max(1, Math.floor((avail + 3.2) / 27.2));
+      const rows = Math.max(1, Math.ceil(hp / perRow));
+      cols.value = Math.ceil(hp / rows);
+    };
+    recompute();
+    if (typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(recompute);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [hp]);
 
   return (
-    <div>
+    <div ref={rootRef}>
+      <div class="vamp-pip-row vamp-pip-row--harm" style={{ '--harm-cols': String(cols.value) }}>
+        <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
+      </div>
       {canRoll && char.playbook !== 'Ghoul' && (
         <div class="vamp-vital-actions">
           <VitalRollButton label="Quick Heal" onClick={performQuickHeal} disabled={sup === 0} />
         </div>
       )}
-      <div class="vamp-pip-row vamp-pip-row--harm" style={{ '--harm-cols': String(cols) }}>
-        <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
-      </div>
     </div>
   );
 }
@@ -620,7 +640,7 @@ function ContentTabs() {
           </div>
         </div>
         <div style={{ display: active.value === 3 ? undefined : 'none' }}><ClocksDebtsTab /></div>
-        {!isViewing && <div style={{ display: active.value === 4 ? undefined : 'none' }}><NotebookTab /></div>}
+        {!isViewing && <div class="vamp-tab-pane--fill" style={{ display: active.value === 4 ? undefined : 'none' }}><NotebookTab /></div>}
       </div>
     </div>
   );
@@ -805,27 +825,60 @@ function VitalsTab() {
 
   return (
     <div class="vamp-vitals-stack">
-      <div class="vamp-bane-compulsion">
-        <div class="vamp-bane-compulsion__col">
-          <SnippetBlock
-            type="banes"
-            name={playbook?.baneName ?? 'Unknown'}
-            fullText={playbook?.baneDescription ?? ''}
-            nameClass="vamp-bane__name"
-            label={{ text: 'Bane:', className: 'vamp-perk__label--bane' }}
-          />
-        </div>
-        <div class="vamp-merits-flaws__divider" />
-        <div class="vamp-bane-compulsion__col">
-          <SnippetBlock
-            type="compulsions"
-            name={playbook?.compulsionName ?? 'None'}
-            fullText={playbook?.compulsionDescription ?? ''}
-            nameClass="vamp-bane__name--compulsion"
-            label={{ text: 'Compulsion:', className: 'vamp-perk__label--compulsion' }}
-          />
-        </div>
-      </div>
+      {(() => {
+        const extras = gameData.value?.optionalExtras;
+        const variant = extras?.clanBaneVariants.find(
+          v => v.clan.toLowerCase() === (playbook?.name ?? '').toLowerCase(),
+        );
+
+        type BaneEntry = {
+          key: string; type: string; name: string; fullText: string;
+          nameClass: string; label: { text: string; className?: string };
+        };
+        const baneLabel = (text: string): { text: string; className: string } =>
+          ({ text, className: 'vamp-perk__label--bane' });
+
+        /* Top-left bane: the variant replaces standard only when 'variant' is chosen alone. */
+        const primary: BaneEntry = char.baneChoice === 'variant' && variant
+          ? { key: 'bane', type: 'banes', name: variant.baneName, fullText: variant.consequences, nameClass: 'vamp-bane__name', label: baneLabel('Bloodline Bane:') }
+          : { key: 'bane', type: 'banes', name: playbook?.baneName ?? 'Unknown', fullText: playbook?.baneDescription ?? '', nameClass: 'vamp-bane__name', label: baneLabel('Bloodline Bane:') };
+
+        /* Top-right is always the Compulsion. */
+        const compulsion: BaneEntry = {
+          key: 'compulsion', type: 'compulsions',
+          name: playbook?.compulsionName ?? 'None',
+          fullText: playbook?.compulsionDescription ?? '',
+          nameClass: 'vamp-bane__name--compulsion',
+          label: { text: 'Compulsion:', className: 'vamp-perk__label--compulsion' },
+        };
+
+        const extraBanes: BaneEntry[] = [];
+        if (char.baneChoice === 'both' && variant) {
+          extraBanes.push({ key: `variant-${variant.baneName}`, type: 'banes', name: variant.baneName, fullText: variant.consequences, nameClass: 'vamp-bane__name', label: baneLabel('Variant Clan Bane:') });
+        }
+        for (const fb of char.folkloricBanes) {
+          const full = extras?.folkloricBanes.find(b => b.baneName === fb.baneName);
+          extraBanes.push({ key: `folk-${fb.baneName}`, type: 'banes', name: fb.baneName, fullText: full?.consequences ?? '', nameClass: 'vamp-bane__name', label: baneLabel('Folkloric Bane:') });
+        }
+        extraBanes.sort((a, b) => a.name.localeCompare(b.name));
+
+        /* Row-major flow: index 0 left-top, 1 right-top, then extras fill left/right alternately. */
+        const all = [primary, compulsion, ...extraBanes];
+        const left = all.filter((_, i) => i % 2 === 0);
+        const right = all.filter((_, i) => i % 2 === 1);
+
+        const render = (e: BaneEntry) => (
+          <SnippetBlock key={e.key} type={e.type} name={e.name} fullText={e.fullText} nameClass={e.nameClass} label={e.label} />
+        );
+
+        return (
+          <div class="vamp-bane-compulsion">
+            <div class="vamp-bane-compulsion__col">{left.map(render)}</div>
+            <div class="vamp-merits-flaws__divider" />
+            <div class="vamp-bane-compulsion__col">{right.map(render)}</div>
+          </div>
+        );
+      })()}
 
       <SectionBox title="Convictions & Touchstones" collapsible collapsedLabel="Convictions (& Touchstones)">
         {(collapsed: boolean) => {

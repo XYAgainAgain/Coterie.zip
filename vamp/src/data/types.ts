@@ -39,6 +39,7 @@ export interface PTMeritFlaw {
 
 export interface PredatorType {
   name: string;
+  description: string;
   huntingStat: string;
   discipline: string;
   merit: PTMeritFlaw;

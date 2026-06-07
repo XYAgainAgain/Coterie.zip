@@ -81,6 +81,23 @@ export function extractBoldFieldFromParagraph(tokens: Token[]): BoldField | null
   return null;
 }
 
+/** Collect prose paragraphs preceding a section's field list, joined as markdown. */
+export function collectLeadingProse(tokens: Token[], expectedLabels: string[]): string {
+  const expected = new Set(expectedLabels);
+  const paras: string[] = [];
+  for (const token of tokens) {
+    if (token.type === 'list') {
+      const list = token as Tokens.List;
+      const first = list.items.length ? extractBoldField(list.items[0]) : null;
+      if (first && expected.has(first.label)) break;
+    }
+    if (token.type === 'paragraph') {
+      paras.push((token as Tokens.Paragraph).raw.trim());
+    }
+  }
+  return paras.join('\n\n').trim();
+}
+
 /** Recursively extract plain text from a token, stripping all formatting. */
 export function plainText(token: Token): string {
   if ('text' in token && typeof token.text === 'string') {
