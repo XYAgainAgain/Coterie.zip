@@ -27,8 +27,8 @@ Five stats define your character. You'll roll with whichever one fits the fictio
 - **Blood** = primal instinct, predatory awareness, connection to the Beast and other vampires
 - **Shadow** = stealth, subterfuge, deception, operating unseen/unheard/unnoticed
 - **Resolve** = composure, willpower, physical/emotional resilience, standing your ground
-- **Wits** = perception, quick thinking, investigation, knowledge, reading a situation
 - **Demeanor** = social presence, charm, charisma, commanding attention
+- **Wits** = perception, quick thinking, investigation, knowledge, reading a situation
 
 These stats are used for almost everything in the game, and whenever you roll for one of the Basic Moves (with 1 exception), you'll add your modifier. The 12 Basic Moves are **Influence**, **Discern Vibes**, **Catch the Scent**, **Help or Hinder**, **Stay Chill**, **Slip Away**, **Reposition**, **Dirty Your Claws**, **Hunt**, **Feed**, **Protect the Coterie**, and **Blush of Life** (the exception; this one only requires a Hunger Check).
 
