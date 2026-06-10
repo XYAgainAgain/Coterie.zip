@@ -6,7 +6,7 @@ Oblivion is the Discipline of entropy, absence, and the space between the living
 
 The Discipline operates on two axes. The first is **shadow**: darkness as a physical substance to be manipulated, sensory projection through shade, and eventually becoming the shadows yourself. The second is **necromancy**: communication with the dead, decay, and the boundary between worlds. Shadow Powers tend to be tactical. Necromantic Powers tend to be investigative and social. Both corrode the user's soul.
 
-**Oblivion Stains:** When you roll a Bestial Failure on any Oblivion roll, you gain 2 Stains instead of the usual 1. The void doesn't care what you were trying to accomplish. Individual Powers may also impose their own Stain costs for particularly dark applications.
+**Oblivion Stains:** When you roll a Fanged Failure on any Oblivion roll, you gain 2 Stains instead of the usual 1. The void doesn't care what you were trying to accomplish. Individual Powers may also impose their own Stain costs for particularly dark applications.
 
 **Light Sensitivity:** Oblivion requires darkness to function. Powers cannot be activated in bright light or daylight. In well-lit environments (fluorescent offices, stadium lights, IKEA, a room with every lamp on), all Oblivion rolls are made with Disadvantage that cannot be flattened by Advantage from any source. The magic itself is weakened, not the caster. Turn the lights off (or break the bulbs) and the problem goes away.
 

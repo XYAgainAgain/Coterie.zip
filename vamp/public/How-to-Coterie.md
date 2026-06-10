@@ -6,7 +6,7 @@ This quick little guide should tell you most of what you need to know for the ni
 
 Just about everything resolves by rolling **2d6 + Stat**. Describe what your character does; if it triggers a Move, the Storyteller will ask you to roll. Results fall into five tiers, from worst to best:
 
-- **Bestial Failure** = all 1s on every die you rolled (2d6 or more). Something primal & ugly happens: you gain a point of Hunger, the Beast surfaces in a way you can't hide, or worse. Think of it as a critical failure with fangs.
+- **Fanged Failure** = all 1s on every die you rolled (2d6 or more). Something primal & ugly happens: you gain a point of Hunger, the Beast surfaces in a way you can't hide, or worse. *(It's named this because 1s look like fangs!)*
 - **6-** = Failure; the Storyteller makes a Move against you (things get worse, never "nothing happens")
 - **7–9** = Mixed Success; you do the thing, but with a cost, complication, or hard choice
 - **10+** = Success; you do the thing, nice & clean, good job!
@@ -129,7 +129,7 @@ Initiative isn't only used for fighting! Your Storyteller may opt to enter Initi
 
 **Getting Staked:** If you get staked (meaning someone jams something sharp into your heart), you are immediately *incapacitated*. You can't move, speak, use Disciplines, or take any action whatsoever (unless you have something that says you can or have somehow protected yourself from getting staked). You're conscious and aware of your surroundings, but paralyzed. Communicating telepathically works fine, if you can do that.
 
-**Staking Someone Else:** Staking in combat requires a declaration of your intent, an opponent genuinely powerless to stop it, and a successful **Dirty Your Claws** roll with a weapon that could plausibly reach the heart. **On a 10+,** the stake lands and the target is incapacitated. **On a 7–9,** the Storyteller chooses whether the stake finds its mark or merely deals normal Harm. **On a 6-,** the attempt fails entirely and possibly backfires.
+**Staking Someone Else:** Staking in combat requires a declaration of your intent, an opponent genuinely powerless to stop it, and a successful **Dirty Your Claws** roll with a piercing weapon that could plausibly reach the heart. **On a 10+,** the stake lands and the target is incapacitated. **On a 7–9,** the Storyteller chooses whether the stake finds its mark or merely deals normal Harm. **On a 6-,** the attempt fails entirely and possibly backfires.
 
 ## Disciplines
 

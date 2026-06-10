@@ -6,7 +6,7 @@ Daimonion is a direct connection to the Outer Dark, the domain past the Abyss an
 
 The Discipline operates on two axes. The first is **communion**: sensing moral vulnerability, reading desire, understanding forbidden languages, and receiving whispers from entities that don't think the way you do. The second is **devastation**: Balefire, flesh-born parasites, insect swarms, area denial, and the destructive output of channeling energy from a place that hates all of creation. Communion Powers tend to be quiet and deceptive in nature. Devastation Powers tend to leave evidence, Stains, and lots of screaming; these are the ones that risk a Masquerade breach.
 
-**Infernal Taint:** When you roll a Bestial Failure on any Daimonion roll, the Storyteller can choose 1 infernal complication from the list in your *Devil's Bargain* Compulsion. This happens whether or not you're currently under its effects.
+**Infernal Taint:** When you roll a Fanged Failure on any Daimonion roll, the Storyteller can choose 1 infernal complication from the list in your *Devil's Bargain* Compulsion. This happens whether or not you're currently under its effects.
 
 **Holy Vulnerability:** Items and effects with the Holy tag deal 2× Harm to any Kindred who has learned at least one Daimonion Power. This vulnerability is permanent, even if they later lose access to the Power. Nobody harnesses the infernal unscathed.
 

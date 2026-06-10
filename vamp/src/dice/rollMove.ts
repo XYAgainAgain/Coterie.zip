@@ -83,7 +83,7 @@ export function rollMove(statName: StatName): RollBreakdown {
 }
 
 export const TIER_LABELS: Record<ResultTier, string> = {
-  bestial: 'Bestial Failure',
+  fanged: 'Fanged Failure',
   failure: 'Failure',
   mixed: 'Mixed Success',
   success: 'Success',
@@ -96,7 +96,7 @@ export interface TierColors {
 }
 
 export const TIER_COLORS: Record<ResultTier, TierColors> = {
-  bestial: { bg: 'hsl(0 50% 8%)', border: 'hsl(0 60% 25%)' },
+  fanged: { bg: 'hsl(0 50% 8%)', border: 'hsl(0 60% 25%)' },
   failure: { bg: 'hsl(0 40% 15%)', border: 'hsl(0 70% 45%)' },
   mixed: { bg: 'hsl(50 35% 15%)', border: 'hsl(50 65% 50%)' },
   success: { bg: 'hsl(140 40% 15%)', border: 'hsl(140 70% 50%)' },

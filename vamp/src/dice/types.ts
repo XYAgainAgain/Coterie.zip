@@ -1,4 +1,4 @@
-export type ResultTier = 'bestial' | 'failure' | 'mixed' | 'success' | 'crit';
+export type ResultTier = 'fanged' | 'failure' | 'mixed' | 'success' | 'crit';
 
 export type RollMode = 'standard' | 'fast' | 'no3d';
 
@@ -39,7 +39,7 @@ export const DEFAULT_CONFIG: DiceConfig = {
 
 /* Classify based on kept dice (post-advantage/disadvantage filtering) */
 export function classifyRoll(total: number, kept: number[]): ResultTier {
-  if (kept.length === 2 && kept.every(d => d === 1)) return 'bestial';
+  if (kept.length === 2 && kept.every(d => d === 1)) return 'fanged';
   if (total >= 12) return 'crit';
   if (total >= 10) return 'success';
   if (total >= 7) return 'mixed';
