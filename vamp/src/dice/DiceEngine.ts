@@ -3,7 +3,7 @@ import { DiceRenderer } from './DiceRenderer';
 import { DicePhysics } from './DicePhysics';
 import { DiceAudio } from './DiceAudio';
 import { DiceEffects } from './DiceEffects';
-import { generateDiceTextures, disposeDiceTextures, getCurrentTheme, FACE_VALUES, type FaceMaps } from './DiceTextures';
+import { generateDiceTextures, disposeDiceTextures, getDiceMetalness, getCurrentTheme, FACE_VALUES, type FaceMaps } from './DiceTextures';
 import { getRollSpeed, rollMode } from './diceConfig';
 
 export class DiceEngine {
@@ -13,7 +13,6 @@ export class DiceEngine {
   private effects: DiceEffects;
   private running = false;
   private disposed = false;
-  private animationFrameId: number | null = null;
   private startTime = 0;
   private lastFrameTime = 0;
   private faceTextures: FaceMaps[] = [];
@@ -25,6 +24,12 @@ export class DiceEngine {
   private fadeCancelled = { flag: false };
   private physicsAccumulator = 0;
   private reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  private diceThemeTimer: ReturnType<typeof setTimeout> | null = null;
+  private onDiceThemeEvent = () => {
+    if (this.disposed) return;
+    if (this.diceThemeTimer) clearTimeout(this.diceThemeTimer);
+    this.diceThemeTimer = setTimeout(() => { if (!this.disposed) this.onThemeChange(); }, 80);
+  };
 
   constructor(private canvas: HTMLCanvasElement) {
     this.renderer = new DiceRenderer(canvas);
@@ -76,6 +81,10 @@ export class DiceEngine {
       attributeFilter: ['data-theme'],
     });
 
+    /* Custom-theme accent/font/metalness edits don't move data-theme, so they re-skin via
+       this event instead. Debounced because a color-picker drag fires it rapidly. */
+    window.addEventListener('vamp-dice-theme', this.onDiceThemeEvent);
+
     this.startTime = performance.now() / 1000;
     if (this.reducedMotion || rollMode.value === 'no3d') this.renderer.freezeSpinnerRandom();
     this.start();
@@ -105,6 +114,7 @@ export class DiceEngine {
       });
     }
 
+    this.renderer.updateMetalness(getDiceMetalness());
     disposeDiceTextures(oldTextures);
   }
 
@@ -141,6 +151,8 @@ export class DiceEngine {
       const y = hand.y + (Math.random() - 0.5) * 0.5;
       this.physics.spawnDie(x, z, undefined, y);
       this.renderer.createDie(this.faceTextures);
+      /* Mark the shadow dirty on the spawn frame so the first die isn't shadowless for a frame. */
+      this.renderer.requestShadowUpdate();
       console.log('[Dice] Spawned die %d/%d (batch #%d), total %d/%d',
         index + 1, count, batchId, this.physics.getDiceCount(), this.physics.getMaxDice());
     };
@@ -241,6 +253,8 @@ export class DiceEngine {
     this.effects.clear();
     this.physics.clear();
     this.renderer.clearCubes();
+    /* One last shadow pass with no casters, or the final shadow freezes on the floor. */
+    this.renderer.requestShadowUpdate();
     console.log('[Dice] All dice cleared');
   }
 
@@ -266,19 +280,20 @@ export class DiceEngine {
     if (this.running || this.disposed) return;
     this.running = true;
     this.lastFrameTime = performance.now();
-    this.loop();
+    /* Let the WebGPU renderer drive the loop (frame pacing synced to the device). */
+    this.renderer.setAnimationLoop(this.loop);
   }
 
   stop(): void {
     this.running = false;
-    if (this.animationFrameId !== null) {
-      cancelAnimationFrame(this.animationFrameId);
-      this.animationFrameId = null;
-    }
+    this.renderer.setAnimationLoop(null);
   }
 
   private loop = (): void => {
-    if (!this.running || this.disposed) return;
+    if (!this.running || this.disposed) {
+      this.renderer.setAnimationLoop(null);
+      return;
+    }
 
     const now = performance.now();
     const dt = now - this.lastFrameTime;
@@ -297,10 +312,11 @@ export class DiceEngine {
     }
 
     this.renderer.syncWithPhysics(this.physics.getBodyTransforms());
+    /* Shadows are off-by-default; refresh only while dice are on screen (the spinner casts
+       none). Keeps the idle loop free of a per-frame depth pass. */
+    if (this.physics.getDiceCount() > 0) this.renderer.requestShadowUpdate();
     this.effects.tick(dt);
     this.renderer.render();
-
-    this.animationFrameId = requestAnimationFrame(this.loop);
   };
 
   handleResize(width: number, height: number): void {
@@ -327,6 +343,8 @@ export class DiceEngine {
     }
     this.themeObserver?.disconnect();
     this.themeObserver = null;
+    window.removeEventListener('vamp-dice-theme', this.onDiceThemeEvent);
+    if (this.diceThemeTimer) { clearTimeout(this.diceThemeTimer); this.diceThemeTimer = null; }
     this.effects.clear();
     disposeDiceTextures(this.faceTextures);
     this.faceTextures = [];

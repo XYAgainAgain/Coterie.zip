@@ -128,6 +128,7 @@ export const BLANK_CHARACTER: CharacterState = {
   folkloricBanes: [],
   baneChoice: 'standard',
   ghoulPatron: null,
+  customTheme: null,
   creationComplete: false,
   creationStep: 'name',
   tourComplete: false,

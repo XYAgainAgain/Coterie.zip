@@ -1,40 +1,22 @@
 /*
- * Plays full roll clips from /assets/audio/dice/hardwood/.
+ * Plays full roll clips from /assets/audio/dice/{surface}/.
  * Files: {1..6}d6-{a,b,c}.ogg + manyd6-{a,b,c}.ogg
  * Triggered on first surface impact; playbackRate can be matched
  * to pre-simulated roll duration for automatic tonal variation.
+ *
+ * Volume, mute, and surface are driven by device-tier signals in state/settings.ts.
+ * Import direction: dice imports from state, never the reverse, so lazy-loading holds.
  */
 
-const ASSET_PATH = '/assets/audio/dice/hardwood/';
+import { effect } from '@preact/signals';
+import { diceVolume, diceMuted, diceSurface, type DiceSurface } from '../state/settings';
+
+const FALLBACK_SURFACE: DiceSurface = 'hardwood';
+const surfacePath = (s: DiceSurface) => `/assets/audio/dice/${s}/`;
+
 const VARIANTS = ['a', 'b', 'c'] as const;
 const TIERS = [1, 2, 3, 4, 5, 6, 'many'] as const;
 type Tier = (typeof TIERS)[number];
-
-interface AudioPrefs {
-  masterVolume: number;
-  sfxVolume: number;
-  sfxMuted: boolean;
-}
-
-const DEFAULT_PREFS: AudioPrefs = {
-  masterVolume: 0.8,
-  sfxVolume: 1.0,
-  sfxMuted: false,
-};
-
-function loadPrefs(): AudioPrefs {
-  try {
-    const raw = localStorage.getItem('coterie-audio-prefs');
-    if (!raw) return { ...DEFAULT_PREFS };
-    return { ...DEFAULT_PREFS, ...JSON.parse(raw) };
-  } catch {
-    return { ...DEFAULT_PREFS };
-  }
-}
-
-function savePrefs(prefs: AudioPrefs): void {
-  try { localStorage.setItem('coterie-audio-prefs', JSON.stringify(prefs)); } catch {}
-}
 
 function tierForCount(n: number): Tier {
   if (n >= 7) return 'many';
@@ -51,15 +33,13 @@ export class DiceAudio {
   /* Keyed by "3d6-b" etc. */
   private buffers = new Map<string, AudioBuffer>();
 
-  private prefs: AudioPrefs;
   private loaded = false;
   private disposed = false;
-
-  constructor() {
-    this.prefs = loadPrefs();
-  }
+  private loadedSurface: DiceSurface | null = null;
+  private disposers: Array<() => void> = [];
 
   async init(): Promise<void> {
+    if (this.ctx) return; /* guard against a double init double-registering effects */
     this.ctx = new AudioContext();
 
     this.compressor = this.ctx.createDynamicsCompressor();
@@ -69,18 +49,41 @@ export class DiceAudio {
     this.compressor.connect(this.ctx.destination);
 
     this.masterGain = this.ctx.createGain();
-    this.masterGain.gain.value = this.prefs.masterVolume;
+    this.masterGain.gain.value = diceMuted.value ? 0 : diceVolume.value;
     this.masterGain.connect(this.compressor);
 
     this.sfxGain = this.ctx.createGain();
-    this.sfxGain.gain.value = this.prefs.sfxMuted ? 0 : this.prefs.sfxVolume;
+    this.sfxGain.gain.value = 1;
     this.sfxGain.connect(this.masterGain);
 
-    await this.loadBuffers();
-    console.log('[Dice Audio] Initialized — %d clips loaded', this.buffers.size);
+    const initialSurface = diceSurface.value;
+    await this.loadBuffers(initialSurface);
+    /* If the user switched surface while the first load was in flight, honor the latest.
+       Compared against the captured initial value (not loadedSurface) so a hardwood
+       fallback can't spin into a reload loop. */
+    if (!this.disposed && diceSurface.value !== initialSurface) {
+      await this.loadBuffers(diceSurface.value);
+    }
+
+    /* Live volume/mute: master gain follows the signals mid-session. */
+    this.disposers.push(effect(() => {
+      const g = diceMuted.value ? 0 : diceVolume.value;
+      if (this.masterGain) this.masterGain.gain.value = g;
+    }));
+
+    /* Surface swap: reload buffers lazily when the selection changes. The first run sees
+       the already-loaded surface and skips. */
+    this.disposers.push(effect(() => {
+      const s = diceSurface.value;
+      if (!this.disposed && this.loadedSurface !== null && this.loadedSurface !== s) {
+        void this.loadBuffers(s);
+      }
+    }));
+
+    console.log('[Dice Audio] Initialized — %d clips loaded (%s)', this.buffers.size, this.loadedSurface);
   }
 
-  private async loadBuffers(): Promise<void> {
+  private async loadBuffers(surface: DiceSurface): Promise<void> {
     if (!this.ctx) return;
 
     const entries: Array<{ key: string; file: string }> = [];
@@ -91,10 +94,11 @@ export class DiceAudio {
       }
     }
 
+    const path = surfacePath(surface);
     const results = await Promise.all(
       entries.map(async ({ key, file }) => {
         try {
-          const res = await fetch(ASSET_PATH + file);
+          const res = await fetch(path + file);
           if (!res.ok) return null;
           const buf = await this.ctx!.decodeAudioData(await res.arrayBuffer());
           return { key, buf };
@@ -104,10 +108,24 @@ export class DiceAudio {
       }),
     );
 
+    if (this.disposed) return;
+
+    const next = new Map<string, AudioBuffer>();
     for (const r of results) {
-      if (r) this.buffers.set(r.key, r.buf);
+      if (r) next.set(r.key, r.buf);
     }
+
+    /* Surface assets missing entirely → fall back to hardwood (safety net; all six ship). */
+    if (next.size === 0 && surface !== FALLBACK_SURFACE) {
+      console.warn('[Dice Audio] No clips for surface "%s"; falling back to %s', surface, FALLBACK_SURFACE);
+      await this.loadBuffers(FALLBACK_SURFACE);
+      return;
+    }
+
+    this.buffers = next;
+    this.loadedSurface = surface;
     this.loaded = true;
+    console.log('[Dice Audio] Loaded %d clips for surface "%s"', next.size, surface);
   }
 
   /* Returns the resume promise so playback can wait for a suspended
@@ -162,25 +180,15 @@ export class DiceAudio {
   /* Per-impact sounds for individual dice-to-surface/dice-to-dice collisions.
      Requires impact clips; stubbed until organized. */
   playImpact(volume: number): void {
-    if (!this.loaded || !this.ctx || this.prefs.sfxMuted) return;
+    if (!this.loaded || !this.ctx) return;
     // TODO: load and play individual impact clips when available
     void volume;
   }
 
-  setMasterVolume(v: number): void {
-    this.prefs.masterVolume = v;
-    if (this.masterGain) this.masterGain.gain.value = v;
-    savePrefs(this.prefs);
-  }
-
-  setSfxMuted(muted: boolean): void {
-    this.prefs.sfxMuted = muted;
-    if (this.sfxGain) this.sfxGain.gain.value = muted ? 0 : this.prefs.sfxVolume;
-    savePrefs(this.prefs);
-  }
-
   dispose(): void {
     this.disposed = true;
+    for (const d of this.disposers) d();
+    this.disposers = [];
     this.ctx?.close();
     this.ctx = null;
     this.buffers.clear();

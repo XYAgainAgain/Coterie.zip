@@ -34,15 +34,23 @@ function resolveTheme(themeName: string): ResolvedTheme {
   const styles = getComputedStyle(document.documentElement);
   const body = styles.getPropertyValue('--v-dice-body').trim();
   const numeral = styles.getPropertyValue('--v-dice-numeral').trim();
+  const font = styles.getPropertyValue('--v-dice-font').trim();
   return {
     bodyColor: body || fallback.body,
     numeralColor: numeral || fallback.numeral,
-    fontFamily: fallback.font,
+    fontFamily: font || fallback.font,
   };
 }
 
 export function getCurrentTheme(): string {
   return document.documentElement.getAttribute('data-theme') ?? 'night';
+}
+
+/* Custom themes drive face metalness via --v-dice-metalness (defaults to the material const). */
+export function getDiceMetalness(): number {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue('--v-dice-metalness').trim();
+  const n = parseFloat(raw);
+  return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : DICE_MATERIAL.metalness;
 }
 
 function fontSpec(theme: ResolvedTheme): string {

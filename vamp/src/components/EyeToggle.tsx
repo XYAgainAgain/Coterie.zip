@@ -1,28 +1,26 @@
-import { signal } from '@preact/signals';
 import { useEffect, useRef } from 'preact/hooks';
+import { theme, setDeviceTheme, THEMES, type Theme } from '../state/theme';
+import { customThemeActive, type EyeAnim } from '../themes/customTheme';
+import { character } from '../state/character';
+import { activeCharacterId } from '../state/persistence';
+import { viewingOtherSheet } from '../state/ui';
 
-const THEMES = ['sunset', 'night', 'abyss'] as const;
-const LABELS = ['Switch to Night', 'Switch to Abyss', 'Switch to Sunset'];
-type Theme = typeof THEMES[number];
+type Position = Theme | 'custom';
 
-function loadTheme(): Theme {
-  try {
-    const stored = localStorage.getItem('vamp-theme');
-    if (stored && THEMES.includes(stored as Theme)) return stored as Theme;
-  } catch { /* localStorage blocked */ }
-  return 'night';
-}
+const POSITION_LABEL: Record<Position, string> = {
+  sunset: 'Sunset',
+  night: 'Night',
+  abyss: 'Abyss',
+  custom: 'Custom',
+};
 
-const initial = loadTheme();
-document.documentElement.setAttribute('data-theme', initial);
-export const theme = signal<Theme>(initial);
-
-// Cached eye element refs -- avoids querySelectorAll on every blink/rotation tick
+/* Cached eye element refs -- avoids querySelectorAll on every blink/rotation tick */
 let cachedBlinkEyes: NodeListOf<Element> | null = null;
 
 function getBlinkEyes(btn: HTMLButtonElement): NodeListOf<Element> {
+  /* All eye images; the hidden ones (opacity 0 in some layouts) just don't show the flicker. */
   if (!cachedBlinkEyes || !cachedBlinkEyes[0]?.parentNode) {
-    cachedBlinkEyes = btn.querySelectorAll('.eye-toggle__eye--1, .eye-toggle__eye--2');
+    cachedBlinkEyes = btn.querySelectorAll('.eye-toggle__eye');
   }
   return cachedBlinkEyes;
 }
@@ -32,11 +30,28 @@ export function EyeToggle() {
   const blinkTid = useRef<number | null>(null);
   const rotateTid = useRef<number | null>(null);
 
+  /* The custom position is only offered on an owned sheet whose character has a saved theme. */
+  const customTheme = character.value.customTheme;
+  const hasCustom = !!customTheme && !!activeCharacterId.value && !viewingOtherSheet.value;
+  const isCustom = customThemeActive.value && hasCustom;
+  const eyeAnim: EyeAnim = customTheme?.eyeAnim ?? 'heartbeat';
+
   function cycle() {
-    const idx = THEMES.indexOf(theme.value);
-    theme.value = THEMES[(idx + 1) % THEMES.length];
-    document.documentElement.setAttribute('data-theme', theme.value);
-    try { localStorage.setItem('vamp-theme', theme.value); } catch { /* noop */ }
+    if (!hasCustom) {
+      const idx = THEMES.indexOf(theme.value);
+      customThemeActive.value = false;
+      setDeviceTheme(THEMES[(idx + 1) % THEMES.length]);
+      return;
+    }
+    const positions: Position[] = [...THEMES, 'custom'];
+    const current: Position = customThemeActive.value ? 'custom' : theme.value;
+    const next = positions[(positions.indexOf(current) + 1) % positions.length];
+    if (next === 'custom') {
+      customThemeActive.value = true; /* lifecycle effect applies the palette */
+    } else {
+      customThemeActive.value = false;
+      setDeviceTheme(next);
+    }
   }
 
   function doBlink() {
@@ -83,6 +98,13 @@ export function EyeToggle() {
 
   function startBehavior() {
     stopTimers();
+    if (isCustom) {
+      /* Keep the abyss 3-eye shuffle on abyss-based customs; run the blink timer when chosen.
+         The chosen glow is pure CSS (eye-anim-* class). */
+      if (customTheme?.base === 'abyss') scheduleRotation();
+      if (eyeAnim === 'blink') scheduleBlink();
+      return;
+    }
     if (theme.value === 'night') scheduleBlink();
     if (theme.value === 'abyss') scheduleRotation();
   }
@@ -90,21 +112,24 @@ export function EyeToggle() {
   useEffect(() => {
     startBehavior();
     return stopTimers;
-  }, [theme.value]);
+  }, [theme.value, isCustom, eyeAnim, customTheme?.base]);
 
-  const idx = THEMES.indexOf(theme.value);
+  const current: Position = isCustom ? 'custom' : theme.value;
+  const positions: Position[] = hasCustom ? [...THEMES, 'custom'] : [...THEMES];
+  const next = positions[(positions.indexOf(current) + 1) % positions.length];
+  const src = isCustom ? '/assets/images/eye-inverted.svg' : '/assets/images/eye.svg';
 
   return (
     <button
       ref={btnRef}
-      class="eye-toggle"
+      class={`eye-toggle ${isCustom ? `eye-toggle--custom eye-anim-${eyeAnim}` : ''}`}
       type="button"
-      aria-label={LABELS[idx]}
+      aria-label={`Switch to ${POSITION_LABEL[next]}`}
       onClick={cycle}
     >
-      <img src="/assets/images/eye.svg" alt="" class="eye-toggle__eye eye-toggle__eye--1" aria-hidden="true" />
-      <img src="/assets/images/eye.svg" alt="" class="eye-toggle__eye eye-toggle__eye--2" aria-hidden="true" />
-      <img src="/assets/images/eye.svg" alt="" class="eye-toggle__eye eye-toggle__eye--3" aria-hidden="true" />
+      <img src={src} alt="" class="eye-toggle__eye eye-toggle__eye--1" aria-hidden="true" />
+      <img src={src} alt="" class="eye-toggle__eye eye-toggle__eye--2" aria-hidden="true" />
+      <img src={src} alt="" class="eye-toggle__eye eye-toggle__eye--3" aria-hidden="true" />
     </button>
   );
 }

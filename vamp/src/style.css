@@ -4580,10 +4580,10 @@ details[open] > .vamp-detail__summary::before {
 }
 
 @keyframes sunset-glow {
-  0%, 100% { filter: invert(1) drop-shadow(0 0 0.25rem #faa916) drop-shadow(0 0 0.5rem #faa916); }
-  25%      { filter: invert(1) drop-shadow(0 0 0.25rem #ff6b4a) drop-shadow(0 0 0.5rem #ff6b4a); }
-  50%      { filter: invert(1) drop-shadow(0 0 0.25rem #E84545) drop-shadow(0 0 0.5rem #E84545); }
-  75%      { filter: invert(1) drop-shadow(0 0 0.25rem #fbb647) drop-shadow(0 0 0.5rem #fbb647); }
+  0%, 100% { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-glow)) drop-shadow(0 0 0.5rem var(--v-glow)); }
+  25%      { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-accent)) drop-shadow(0 0 0.5rem var(--v-accent)); }
+  50%      { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-glow-bright)) drop-shadow(0 0 0.5rem var(--v-glow-bright)); }
+  75%      { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-text-accent)) drop-shadow(0 0 0.5rem var(--v-text-accent)); }
 }
 
 @keyframes abyss-breathe {
@@ -7306,4 +7306,485 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 @media (prefers-reduced-motion: reduce) {
   .vamp-mqc-demo--pulse,
   .vamp-mqc-demo__hint { animation: none; }
+}
+
+/* Settings drawer */
+
+.vamp-settings-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.vamp-settings-gear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity var(--v-transition);
+}
+
+.vamp-settings-gear:hover,
+.vamp-settings-gear--active { opacity: 1; }
+
+.vamp-settings-gear__icon {
+  display: block;
+  inline-size: 1.5rem;
+  block-size: 1.5rem;
+  background: var(--v-text-secondary);
+  -webkit-mask: url("/assets/images/gear.svg") center / contain no-repeat;
+  mask: url("/assets/images/gear.svg") center / contain no-repeat;
+}
+
+.vamp-settings-gear--active .vamp-settings-gear__icon { background: var(--v-accent); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .vamp-settings-gear:hover .vamp-settings-gear__icon,
+  .vamp-settings-gear--active .vamp-settings-gear__icon {
+    animation: vamp-gear-spin 3s linear infinite;
+  }
+}
+
+@keyframes vamp-gear-spin { to { rotate: 360deg; } }
+
+.vamp-settings {
+  position: absolute;
+  inset-block-start: calc(100% + 0.5rem);
+  inset-inline-end: 0;
+  z-index: 300;
+  inline-size: 20rem;
+  /* Opaque, no backdrop-filter: a live blur over the always-rendering dice canvas stutters. */
+  background: var(--v-bg-elevated);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-md);
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.5);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .vamp-settings { animation: vamp-settings-in 0.2s ease; }
+  @starting-style { .vamp-settings { opacity: 0; translate: 0 -0.5rem; } }
+}
+
+@keyframes vamp-settings-in {
+  from { opacity: 0; translate: 0 -0.5rem; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.vamp-settings__tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0.25rem 0.25rem 0;
+  position: relative;
+}
+
+.vamp-settings__tabs::after {
+  content: '';
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-start: 0.25rem;
+  block-size: 2px;
+  inline-size: calc((100% - 0.5rem) / var(--tab-count, 3));
+  background: var(--v-accent);
+  border-radius: 1px;
+  translate: calc(var(--tab-active-idx, 0) * 100%) 0;
+  transition: translate 0.25s ease;
+  pointer-events: none;
+}
+
+.vamp-settings__tab {
+  flex: 1;
+  min-inline-size: 0;
+  font-family: var(--v-font-heading);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-block: 0.4rem;
+  background: none;
+  border: none;
+  color: var(--v-text-muted);
+  cursor: pointer;
+  border-radius: var(--v-radius-sm) var(--v-radius-sm) 0 0;
+  transition: color var(--v-transition), background var(--v-transition);
+}
+
+.vamp-settings__tab:hover { color: var(--v-text-primary); background: var(--v-accent-subtle); }
+.vamp-settings__tab--active { color: var(--v-text-accent); background: var(--v-accent-subtle); }
+
+.vamp-settings__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  /* Grow to fit each tab; only scroll if a tab would exceed the viewport. */
+  max-block-size: 80dvh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-accent-subtle) transparent;
+}
+
+.vamp-settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-block-size: 1.75rem;
+}
+
+.vamp-settings__label {
+  font-family: var(--v-font-heading);
+  font-size: 1.05rem;
+  color: var(--v-text-primary);
+  white-space: nowrap;
+}
+
+.vamp-settings__control { display: flex; align-items: center; gap: 0.4rem; }
+
+.vamp-settings__note {
+  margin: 0;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--v-text-muted);
+}
+
+.vamp-settings__status {
+  font-size: 0.9rem;
+  color: var(--v-text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-inline-size: 11rem;
+}
+
+/* Sub-section (custom theme, account actions) */
+
+.vamp-settings__sub {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+}
+
+.vamp-settings__sub-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--v-font-heading);
+  font-size: 1.05rem;
+  color: var(--v-text-accent);
+}
+
+.vamp-settings__sub-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--v-text-primary);
+  line-height: 1.4;
+}
+
+.vamp-settings__action {
+  font-family: var(--v-font-body);
+  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  background: var(--v-accent-subtle);
+  color: var(--v-text-accent);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  transition: background var(--v-transition);
+}
+
+.vamp-settings__action:hover { background: var(--v-accent); color: #fff; }
+.vamp-settings__action:disabled { opacity: 0.5; cursor: default; }
+.vamp-settings__action--confirm {
+  background: var(--v-danger);
+  border-color: var(--v-danger);
+  color: #fff;
+}
+
+.vamp-settings__clear {
+  font-family: var(--v-font-body);
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  background: none;
+  color: var(--v-text-muted);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+}
+
+.vamp-settings__clear:hover { color: var(--v-text-primary); border-color: var(--v-border-accent); }
+
+/* Segmented radio group */
+
+.vamp-settings-radio {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--v-bg-sunken);
+  border-radius: var(--v-radius-sm);
+}
+
+.vamp-settings-radio--disabled { opacity: 0.6; }
+
+.vamp-settings-radio__btn {
+  font-family: var(--v-font-body);
+  font-size: 0.8rem;
+  padding: 0.2rem 0.55rem;
+  background: none;
+  color: var(--v-text-secondary);
+  border: none;
+  border-radius: calc(var(--v-radius-sm) - 1px);
+  cursor: pointer;
+  transition: background var(--v-transition), color var(--v-transition);
+}
+
+.vamp-settings-radio__btn:hover:not(:disabled) { color: var(--v-text-primary); }
+.vamp-settings-radio__btn--active { background: var(--v-accent); color: #fff; }
+.vamp-settings-radio__btn:disabled { cursor: default; }
+
+/* Theme tiles */
+
+.vamp-settings-tiles { display: flex; gap: 0.4rem; }
+
+.vamp-settings-tile {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.3rem;
+  background: var(--v-bg-sunken);
+  border: 2px solid transparent;
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  transition: border-color var(--v-transition);
+}
+
+.vamp-settings-tile:hover { border-color: var(--v-border-accent); }
+.vamp-settings-tile--active { border-color: var(--v-accent); }
+
+.vamp-settings-tile__swatch {
+  inline-size: 1.5rem;
+  block-size: 1rem;
+  border-radius: 2px;
+  border: 1px solid rgb(255 255 255 / 0.15);
+}
+
+/* Rainbow hint before an accent is chosen; an inline background overrides it once set. */
+.vamp-settings-tile__swatch--custom {
+  background: conic-gradient(red, orange, yellow, lime, cyan, blue, magenta, red);
+}
+
+.vamp-settings-tile__name {
+  font-family: var(--v-font-heading);
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+  text-transform: uppercase;
+}
+
+
+/* Select */
+
+.vamp-settings-select {
+  font-family: var(--v-font-body);
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--v-bg-sunken);
+  color: var(--v-text-primary);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+}
+
+/* In-panel color picker */
+
+.vamp-settings__accent { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.vamp-cp { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.vamp-cp__sv {
+  position: relative;
+  block-size: 7rem;
+  border-radius: var(--v-radius-sm);
+  cursor: crosshair;
+  touch-action: none;
+  overflow: hidden;
+}
+
+/* White (left→right) and black (top→bottom) overlays turn the hue field into HSV space. */
+.vamp-cp__sv-white,
+.vamp-cp__sv-black {
+  position: absolute;
+  inset: 0;
+}
+.vamp-cp__sv-white { background: linear-gradient(to right, #fff, transparent); }
+.vamp-cp__sv-black { background: linear-gradient(to top, #000, transparent); }
+
+.vamp-cp__thumb {
+  position: absolute;
+  inline-size: 0.85rem;
+  block-size: 0.85rem;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  translate: -50% -50%;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.5);
+  pointer-events: none;
+}
+
+.vamp-cp__hue {
+  position: relative;
+  block-size: 0.9rem;
+  border-radius: var(--v-radius-sm);
+  cursor: ew-resize;
+  touch-action: none;
+  background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+.vamp-cp__hue-thumb {
+  position: absolute;
+  inset-block: -2px;
+  inline-size: 0.5rem;
+  border: 2px solid #fff;
+  border-radius: 3px;
+  translate: -50% 0;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / 0.5);
+  pointer-events: none;
+}
+
+.vamp-settings-color__hex {
+  align-self: flex-start;
+  inline-size: 6rem;
+  font-family: var(--v-font-mono);
+  font-size: 0.85rem;
+  padding: 0.25rem 0.4rem;
+  background: var(--v-bg-sunken);
+  color: var(--v-text-primary);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+}
+
+.vamp-settings-color__hex:focus-visible { outline: 1px solid var(--v-accent); border-color: var(--v-accent); }
+
+/* Volume control */
+
+.vamp-settings-vol { display: flex; align-items: center; gap: 0.5rem; }
+
+.vamp-settings-vol__icon {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+  background: var(--v-text-secondary);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--v-transition);
+}
+
+.vamp-settings-vol__icon:hover { background: var(--v-text-accent); }
+
+.vamp-settings-vol__slider,
+.vamp-settings-range {
+  inline-size: 9rem;
+  accent-color: var(--v-accent);
+  cursor: pointer;
+}
+
+/* Account email form */
+
+.vamp-settings-emailform { display: flex; gap: 0.4rem; }
+
+.vamp-settings-emailform__input {
+  flex: 1;
+  min-inline-size: 0;
+  font-family: var(--v-font-body);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+  background: var(--v-bg-sunken);
+  color: var(--v-text-primary);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+}
+
+.vamp-settings-emailform__input:focus-visible { outline: 1px solid var(--v-accent); border-color: var(--v-accent); }
+
+/* Recreate-mode Done button in the creation progress header */
+
+.creation-progress__done {
+  /* The .creation-progress container is pointer-events:none; children must opt back in. */
+  pointer-events: auto;
+  font-family: var(--v-font-heading);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.8rem;
+  margin-inline-start: 0.5rem;
+  background: var(--v-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  transition: background var(--v-transition);
+}
+
+.creation-progress__done:hover { background: var(--v-accent-hover); }
+
+/* EyeToggle custom-state glow animations (the 4th eye state). Applied to the eye images so
+   they override the base theme's own glow (higher specificity than [data-theme] rules), while
+   the position shuffle (a separate `translate`) keeps running. No invert: the custom state
+   uses the already-light eye-inverted.svg. Glow uses --v-glow, recolored by the accent. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .eye-toggle--custom.eye-anim-heartbeat .eye-toggle__eye { animation: eye-heartbeat 1.6s ease-in-out infinite; }
+  .eye-toggle--custom.eye-anim-dilate .eye-toggle__eye { animation: eye-dilate 2.4s ease-in-out infinite; }
+  .eye-toggle--custom.eye-anim-shimmer .eye-toggle__eye { animation: eye-shimmer 3.2s ease-in-out infinite; }
+  .eye-toggle--custom.eye-anim-glow .eye-toggle__eye { animation: eye-glow-custom 8s ease-in-out infinite; }
+  .eye-toggle--custom.eye-anim-breathe .eye-toggle__eye { animation: eye-breathe-custom 3s ease-in-out infinite; }
+  /* Blink is a static glow punctuated by a JS-scheduled flicker. */
+  .eye-toggle--custom.eye-anim-blink .eye-toggle__eye.eye-toggle__eye--blink { animation: eye-blink-custom 0.15s ease-in-out; }
+}
+
+/* The eye SVGs are black fills; invert(1) lights them (as the base theme rules do). */
+.eye-toggle--custom.eye-anim-blink .eye-toggle__eye {
+  filter: invert(1) drop-shadow(0 0 0.1875rem var(--v-glow)) drop-shadow(0 0 0.375rem var(--v-glow));
+}
+
+@keyframes eye-heartbeat {
+  0%, 38%, 100% { filter: invert(1) drop-shadow(0 0 0 transparent); }
+  8% { filter: invert(1) drop-shadow(0 0 4px var(--v-glow)); }
+  16% { filter: invert(1) drop-shadow(0 0 1px var(--v-glow)); }
+  26% { filter: invert(1) drop-shadow(0 0 6px var(--v-glow-bright)); }
+}
+
+@keyframes eye-dilate {
+  0%, 100% { scale: 1; filter: invert(1) drop-shadow(0 0 1px var(--v-glow)); }
+  50% { scale: 1.12; filter: invert(1) drop-shadow(0 0 4px var(--v-glow-bright)); }
+}
+
+@keyframes eye-shimmer {
+  0%, 100% { filter: invert(1) brightness(1) drop-shadow(0 0 0 transparent); }
+  40% { filter: invert(1) brightness(1.35) drop-shadow(0 0 5px var(--v-glow-bright)); }
+  55% { filter: invert(1) brightness(1.1) drop-shadow(0 0 2px var(--v-glow)); }
+}
+
+/* The three signature theme glows, recast for the custom state (same invert as the base). */
+@keyframes eye-glow-custom {
+  0%, 100% { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-glow)) drop-shadow(0 0 0.5rem var(--v-glow)); }
+  25% { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-accent)) drop-shadow(0 0 0.5rem var(--v-accent)); }
+  50% { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-glow-bright)) drop-shadow(0 0 0.5rem var(--v-glow-bright)); }
+  75% { filter: invert(1) drop-shadow(0 0 0.25rem var(--v-text-accent)) drop-shadow(0 0 0.5rem var(--v-text-accent)); }
+}
+
+@keyframes eye-breathe-custom {
+  0%, 100% { filter: invert(1) drop-shadow(0 0 0.125rem var(--v-glow)) drop-shadow(0 0 0.25rem var(--v-glow)); }
+  50% { filter: invert(1) drop-shadow(0 0 0.3125rem var(--v-glow-bright)) drop-shadow(0 0 0.625rem var(--v-glow)); }
+}
+
+@keyframes eye-blink-custom {
+  0%, 100% { filter: invert(1) drop-shadow(0 0 0.1875rem var(--v-glow)) drop-shadow(0 0 0.375rem var(--v-glow)); }
+  50% { filter: invert(1) drop-shadow(0 0 0 transparent); }
 }

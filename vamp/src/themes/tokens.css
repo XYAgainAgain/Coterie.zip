@@ -24,6 +24,9 @@
 
   --v-dice-body: var(--_dice-body);
   --v-dice-numeral: var(--_dice-numeral);
+  /* Empty by default so the dice engine falls back to its per-theme font; custom themes set it. */
+  --v-dice-font: var(--_dice-font);
+  --v-dice-metalness: var(--_dice-metalness, 0.3);
 
   --v-hold-1: var(--_hold-1);
   --v-hold-2: var(--_hold-2);

@@ -1,6 +1,6 @@
 import * as THREE from 'three/webgpu';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
-import { DICE_MATERIAL } from './DiceTextures';
+import { DICE_MATERIAL, getDiceMetalness } from './DiceTextures';
 
 export class DiceRenderer {
   readonly scene: THREE.Scene;
@@ -32,7 +32,7 @@ export class DiceRenderer {
       premultipliedAlpha: false,
       antialias: true,
     });
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
     this.renderer.setSize(w, h);
     this.renderer.setClearColor(0x000000, 0);
     this.renderer.shadowMap.enabled = true;
@@ -44,7 +44,9 @@ export class DiceRenderer {
 
   async init(): Promise<void> {
     await this.renderer.init();
-    /* Force PSO compilation so the first real roll has no hitch */
+    /* Force PSO compilation so the first real roll has no hitch (incl. one shadow pass,
+       since autoUpdate is off and would otherwise compile the shadow pipeline mid-roll). */
+    if (this.sun) this.sun.shadow.needsUpdate = true;
     this.renderer.render(this.scene, this.camera);
   }
 
@@ -52,7 +54,10 @@ export class DiceRenderer {
     this.sun = new THREE.DirectionalLight(0xffffff, 1.0);
     this.sun.position.set(-5, 20, -6);
     this.sun.castShadow = true;
-    this.sun.shadow.mapSize.set(2048, 2048);
+    this.sun.shadow.mapSize.set(1024, 1024);
+    /* The orbiting sun would otherwise re-render the depth pass every frame. Only the
+       (non-shadow-casting) spinner shows at idle, so refresh the map on demand during rolls. */
+    this.sun.shadow.autoUpdate = false;
     this.sun.shadow.camera.left = -20;
     this.sun.shadow.camera.right = 20;
     this.sun.shadow.camera.top = 12;
@@ -119,13 +124,14 @@ export class DiceRenderer {
   }
 
   createSpinnerCube(faceMaps: Array<{ color: THREE.Texture; bump: THREE.Texture; roughness: THREE.Texture }>): void {
+    const metalness = getDiceMetalness();
     const materials = faceMaps.map(face =>
       new THREE.MeshStandardMaterial({
         map: face.color,
         bumpMap: face.bump,
         bumpScale: DICE_MATERIAL.bumpScale,
         roughnessMap: face.roughness,
-        metalness: DICE_MATERIAL.metalness,
+        metalness,
       }),
     );
     this.spinnerCube = new THREE.Mesh(this.dieGeometry, materials);
@@ -143,6 +149,30 @@ export class DiceRenderer {
       mat.roughnessMap = maps.roughness;
       mat.needsUpdate = true;
     });
+  }
+
+  /* Push a new metalness onto the spinner and every live die (custom-theme edits).
+     metalness is a uniform, so no needsUpdate — that would force a shader recompile (stall). */
+  updateMetalness(metalness: number): void {
+    const apply = (mesh: THREE.Mesh | null) => {
+      if (!mesh || !Array.isArray(mesh.material)) return;
+      for (const mat of mesh.material) {
+        if (mat instanceof THREE.MeshStandardMaterial) mat.metalness = metalness;
+      }
+    };
+    apply(this.spinnerCube);
+    for (const die of this.cubes) apply(die);
+  }
+
+  /* WebGPU paces frames through the renderer's own loop; a manual rAF desyncs from the
+     device timeline and stutters. Pass null to stop. */
+  setAnimationLoop(cb: ((time: number) => void) | null): void {
+    this.renderer.setAnimationLoop(cb);
+  }
+
+  /* Refresh the shadow depth pass for the next render (called while dice are in motion). */
+  requestShadowUpdate(): void {
+    if (this.sun) this.sun.shadow.needsUpdate = true;
   }
 
   private positionSpinnerInCorner(): void {
@@ -196,13 +226,14 @@ export class DiceRenderer {
   }
 
   createDie(faceMaps: Array<{ color: THREE.Texture; bump: THREE.Texture; roughness: THREE.Texture }>): THREE.Mesh {
+    const metalness = getDiceMetalness();
     const materials = faceMaps.map(face =>
       new THREE.MeshStandardMaterial({
         map: face.color,
         bumpMap: face.bump,
         bumpScale: DICE_MATERIAL.bumpScale,
         roughnessMap: face.roughness,
-        metalness: DICE_MATERIAL.metalness,
+        metalness,
       }),
     );
     const die = new THREE.Mesh(this.dieGeometry, materials);

@@ -3,7 +3,7 @@ import { getFirestore } from 'firebase/firestore';
 import {
   getAuth, signInAnonymously, onAuthStateChanged,
   sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink,
-  EmailAuthProvider, linkWithCredential,
+  EmailAuthProvider, linkWithCredential, signOut,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -98,3 +98,10 @@ function refreshLinkedEmail() {
 
 /* Update after auth resolves */
 authReady.then(() => refreshLinkedEmail());
+
+/* Sign out the linked account. Firebase auto-creates a fresh anonymous session on the
+   next auth check, so callers should redirect/reload rather than reuse stale state. */
+export async function signOutUser(): Promise<void> {
+  await signOut(auth);
+  linkedEmail.value = null;
+}

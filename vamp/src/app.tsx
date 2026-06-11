@@ -6,7 +6,9 @@ import { CharacterViewer } from './pages/CharacterViewer';
 import { EyeToggle } from './components/EyeToggle';
 import { TextRocker } from './components/TextRocker';
 import { EmailLinkPrompt } from './components/EmailLinkPrompt';
+import { SettingsDrawer } from './components/SettingsDrawer';
 import { CreationProgress } from './components/creation/CreationProgress';
+import { initCustomThemeLifecycle } from './themes/customThemeLifecycle';
 import { DiceOverlay } from './dice/DiceOverlay';
 import { ToastStack } from './components/ToastStack';
 import { prefetchRules } from './utils/rulesCache';
@@ -26,6 +28,8 @@ if (redirectPath) {
   sessionStorage.removeItem('vamp-redirect');
   history.replaceState(null, '', redirectPath);
 }
+
+initCustomThemeLifecycle();
 
 Promise.all([
   loadGameDataCached(),
@@ -73,6 +77,7 @@ export function App() {
             <span class="vamp-header__viewing-label">Viewing</span>
           )}
           {!viewingOtherSheet.value && <EmailLinkPrompt />}
+          {!viewingOtherSheet.value && <SettingsDrawer />}
           <EyeToggle />
         </div>
       </header>

@@ -1,5 +1,6 @@
 import { signal } from '@preact/signals';
 import type { StatName } from '../data/types';
+import type { CustomTheme } from '../themes/customTheme';
 
 export interface Debt {
   id: string;
@@ -114,6 +115,8 @@ export interface CharacterState {
   folkloricBanes: { baneName: string; xpGain: string; fromPlaybookBane: boolean }[];
   baneChoice: 'standard' | 'variant' | 'both';
   ghoulPatron: GhoulPatron | null;
+  /* Per-character recolor of a base theme; null = use the device theme. See themes/customTheme.ts. */
+  customTheme: CustomTheme | null;
   creationComplete: boolean;
   creationStep: string;
   tourComplete: boolean;
@@ -240,6 +243,7 @@ const JOHNNY_FANGS: CharacterState = {
   folkloricBanes: [],
   baneChoice: 'standard',
   ghoulPatron: null,
+  customTheme: null,
   creationComplete: true,
   creationStep: 'name',
   tourComplete: true,
@@ -262,6 +266,19 @@ export const character = signal<CharacterState>(JOHNNY_FANGS);
 
 export function updateCharacter(patch: Partial<CharacterState>) {
   character.value = { ...character.value, ...patch };
+}
+
+export function setCustomTheme(ct: CustomTheme | null) {
+  character.value = { ...character.value, customTheme: ct };
+}
+
+/* Merge a partial into the existing custom theme. No-ops if it was cleared concurrently
+   (e.g. a cross-device sync) so a stale edit can't resurrect a ghost theme; enabling goes
+   through setCustomTheme instead. */
+export function patchCustomTheme(patch: Partial<CustomTheme>) {
+  const current = character.value.customTheme;
+  if (!current) return;
+  character.value = { ...character.value, customTheme: { ...current, ...patch } };
 }
 
 export function setStats(stats: Record<StatName, number>) {

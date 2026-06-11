@@ -1,12 +1,16 @@
 import {
   CREATION_STEPS, STEP_LABELS,
-  creationStep, stepComplete, goToStep,
+  creationStep, stepComplete, goToStep, exitCreationMode,
   type CreationStep,
 } from '../../state/creation';
+import { guideActive } from '../../state/guide';
 
 export function CreationProgress() {
   const current = creationStep.value;
   const complete = stepComplete.value;
+  /* First-run creation always runs the guide; recreate mode does not. The DONE button is
+     the recreate-mode exit (no completeness gate — the character was already valid). */
+  const recreateMode = !guideActive.value;
 
   return (
     <div class="creation-progress">
@@ -25,6 +29,11 @@ export function CreationProgress() {
           )}
         </button>
       ))}
+      {recreateMode && (
+        <button class="creation-progress__done" onClick={exitCreationMode}>
+          Done
+        </button>
+      )}
     </div>
   );
 }
