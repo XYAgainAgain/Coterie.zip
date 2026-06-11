@@ -1,6 +1,6 @@
 import { useSignal } from '@preact/signals';
 import { character, updateCharacter } from '../../state/character';
-import { gameData } from '../../state/derived';
+import { gameData, baaliGrantedBaneEntries } from '../../state/derived';
 import { nextStep } from '../../state/creation';
 import { BLANK_CHARACTER } from '../../state/persistence';
 import type { Playbook } from '../../data/types';
@@ -27,10 +27,11 @@ export function PlaybookPicker() {
       unlockedDisciplines: [],
       startingDisciplines: [],
       knownPowers: [],
+      knownProjectPowers: [],
       xpTriggers: [],
       merits: [],
       flaws: [],
-      folkloricBanes: [],
+      folkloricBanes: pb.name === 'Baali' ? baaliGrantedBaneEntries() : [],
       baneChoice: 'standard',
     });
 

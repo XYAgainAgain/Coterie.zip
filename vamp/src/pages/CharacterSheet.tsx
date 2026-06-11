@@ -605,21 +605,25 @@ function ContentTabs() {
   const tabs = isViewing
     ? ALL_TABS.filter(t => t !== 'Notebook')
     : ALL_TABS;
-  if (active.value >= tabs.length) active.value = 0;
+  /* Clamp locally for this render; persist in an effect (no signal writes mid-render) */
+  const idx = active.value >= tabs.length ? 0 : active.value;
+  useEffect(() => {
+    if (active.value >= tabs.length) active.value = 0;
+  }, [tabs.length]);
 
   return (
     <div class="vamp-tabs">
       <nav
         class="vamp-tabs__bar"
         role="tablist"
-        style={`--tab-count: ${tabs.length}; --tab-active-idx: ${active.value}`}
+        style={`--tab-count: ${tabs.length}; --tab-active-idx: ${idx}`}
       >
         {tabs.map((tab, i) => (
           <button
             key={tab}
             role="tab"
-            aria-selected={active.value === i}
-            class={`vamp-tabs__tab ${active.value === i ? 'vamp-tabs__tab--active' : ''}`}
+            aria-selected={idx === i}
+            class={`vamp-tabs__tab ${idx === i ? 'vamp-tabs__tab--active' : ''}`}
             onClick={() => { active.value = i; }}
           >
             {tab}
@@ -628,9 +632,9 @@ function ContentTabs() {
       </nav>
 
       <div class="vamp-tabs__panel" role="tabpanel">
-        <div style={{ display: active.value === 0 ? undefined : 'none' }}><VitalsTab /></div>
-        <div style={{ display: active.value === 1 ? undefined : 'none' }}><DisciplinesTab /></div>
-        <div style={{ display: active.value === 2 ? undefined : 'none' }}>
+        <div style={{ display: idx === 0 ? undefined : 'none' }}><VitalsTab /></div>
+        <div style={{ display: idx === 1 ? undefined : 'none' }}><DisciplinesTab /></div>
+        <div style={{ display: idx === 2 ? undefined : 'none' }}>
           {/* TODO: Possessions tab — sortable table of tagged items (Tag-System-Rules.md).
              Structured input: base type dropdown, mechanical/descriptive tag fields, description.
              Hover tooltips on tags from parsed reference data. */}
@@ -639,8 +643,8 @@ function ContentTabs() {
             <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
           </div>
         </div>
-        <div style={{ display: active.value === 3 ? undefined : 'none' }}><ClocksDebtsTab /></div>
-        {!isViewing && <div class="vamp-tab-pane--fill" style={{ display: active.value === 4 ? undefined : 'none' }}><NotebookTab /></div>}
+        <div style={{ display: idx === 3 ? undefined : 'none' }}><ClocksDebtsTab /></div>
+        {!isViewing && <div class="vamp-tab-pane--fill" style={{ display: idx === 4 ? undefined : 'none' }}><NotebookTab /></div>}
       </div>
     </div>
   );

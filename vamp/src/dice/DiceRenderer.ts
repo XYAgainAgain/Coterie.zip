@@ -7,6 +7,8 @@ export class DiceRenderer {
   readonly camera: THREE.PerspectiveCamera;
   readonly renderer: THREE.WebGPURenderer;
   private cubes: THREE.Mesh[] = [];
+  /* All dice share one geometry; per-die allocation re-uploaded identical vertex data every roll */
+  private dieGeometry = new RoundedBoxGeometry(1, 1, 1, 4, 0.1);
   private spinnerCube: THREE.Mesh | null = null;
   private shadowFloor: THREE.Mesh | null = null;
   private sun: THREE.DirectionalLight | null = null;
@@ -117,7 +119,6 @@ export class DiceRenderer {
   }
 
   createSpinnerCube(faceMaps: Array<{ color: THREE.Texture; bump: THREE.Texture; roughness: THREE.Texture }>): void {
-    const geometry = new RoundedBoxGeometry(1, 1, 1, 4, 0.1);
     const materials = faceMaps.map(face =>
       new THREE.MeshStandardMaterial({
         map: face.color,
@@ -127,7 +128,7 @@ export class DiceRenderer {
         metalness: DICE_MATERIAL.metalness,
       }),
     );
-    this.spinnerCube = new THREE.Mesh(geometry, materials);
+    this.spinnerCube = new THREE.Mesh(this.dieGeometry, materials);
     this.positionSpinnerInCorner();
     this.scene.add(this.spinnerCube);
   }
@@ -185,9 +186,8 @@ export class DiceRenderer {
   }
 
   createCube(texture: THREE.Texture): THREE.Mesh {
-    const geometry = new RoundedBoxGeometry(1, 1, 1, 4, 0.1);
     const material = new THREE.MeshStandardMaterial({ map: texture });
-    const cube = new THREE.Mesh(geometry, material);
+    const cube = new THREE.Mesh(this.dieGeometry, material);
     cube.castShadow = true;
     cube.receiveShadow = true;
     this.scene.add(cube);
@@ -196,7 +196,6 @@ export class DiceRenderer {
   }
 
   createDie(faceMaps: Array<{ color: THREE.Texture; bump: THREE.Texture; roughness: THREE.Texture }>): THREE.Mesh {
-    const geometry = new RoundedBoxGeometry(1, 1, 1, 4, 0.1);
     const materials = faceMaps.map(face =>
       new THREE.MeshStandardMaterial({
         map: face.color,
@@ -206,7 +205,7 @@ export class DiceRenderer {
         metalness: DICE_MATERIAL.metalness,
       }),
     );
-    const die = new THREE.Mesh(geometry, materials);
+    const die = new THREE.Mesh(this.dieGeometry, materials);
     die.castShadow = true;
     die.receiveShadow = true;
     this.scene.add(die);
@@ -240,7 +239,8 @@ export class DiceRenderer {
   }
 
   private disposeMesh(mesh: THREE.Mesh): void {
-    mesh.geometry.dispose();
+    /* Shared die geometry outlives individual meshes; disposed once in dispose() */
+    if (mesh.geometry !== this.dieGeometry) mesh.geometry.dispose();
     const mat = mesh.material;
     if (Array.isArray(mat)) {
       for (const m of mat) m.dispose();
@@ -271,6 +271,7 @@ export class DiceRenderer {
       this.shadowFloor = null;
     }
     this.clearCubes();
+    this.dieGeometry.dispose();
     this.renderer.dispose();
   }
 }

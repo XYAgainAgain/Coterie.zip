@@ -9,6 +9,7 @@ import { coterieState, masqueradeClock, blankCoterie, coterieDirty, masqueradeDi
 import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
+import { showToast } from './toasts';
 
 const MAX_CHARACTERS_ANON = 2;
 const MAX_CHARACTERS_LINKED = 12;
@@ -166,7 +167,13 @@ export async function loadCharacterList(): Promise<CharacterSummary[]> {
   try {
     const all = await idbGetAll<IDBCharacterRecord>('characters');
     idbRecords = all.filter(r => r.ownerId === uid);
-  } catch {}
+  } catch (err) {
+    if (!warnedLocalLoadFail) {
+      warnedLocalLoadFail = true;
+      showToast('Local storage unavailable; loading characters from the cloud only.', 'warning');
+    }
+    console.error('[Persist] IDB list failed:', err);
+  }
 
   if (idbRecords.length > 0) {
     characterList.value = idbRecords.map(r =>
@@ -281,6 +288,10 @@ export async function loadCharacter(id: string): Promise<void> {
   }
 }
 
+/* Once-per-session storage failure warnings; retries stay silent */
+let warnedLocalSaveFail = false;
+let warnedLocalLoadFail = false;
+
 async function saveCharacter(
   snapshotId?: string,
   snapshotState?: CharacterState,
@@ -316,7 +327,14 @@ async function saveCharacter(
     if (coterieId) {
       await syncMemberToCoterie(id, state, coterieId, newSlug);
     }
-  } catch {}
+  } catch (err) {
+    /* Warn once per session; the debounced save will keep retrying */
+    if (!warnedLocalSaveFail) {
+      warnedLocalSaveFail = true;
+      showToast('Local save failed (browser storage may be blocked). Cloud sync is still active.', 'warning');
+    }
+    console.error('[Persist] IDB save failed:', err);
+  }
 
   /* Only mark as saved once at least one storage path has the data */
   if (idbOk) lastSavedJson = json;
@@ -585,6 +603,11 @@ export async function flushSave(): Promise<void> {
   const coterie = activeCoterie.peek();
   await saveCharacter(id ?? undefined, state, coterie);
 }
+
+/* Tab close inside the 2s debounce window would drop the last edit; pagehide
+   is the last reliable hook (fires on mobile, unlike beforeunload). No-op
+   when nothing is pending thanks to the lastSavedJson dedup. */
+window.addEventListener('pagehide', () => { void flushSave(); });
 
 /* Load a character for read-only viewing via Coterie-scoped slug.
    Resolves coterieCode + slug → character doc. Verifies membership. */

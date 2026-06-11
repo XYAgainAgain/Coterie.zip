@@ -4,7 +4,7 @@ import {
   character, addNote, removeNote, updateNote, reorderNotes,
 } from '../state/character';
 import type { Note } from '../state/character';
-import { renderGameMarkdown } from '../data/transforms';
+import { renderUserMarkdown } from '../data/transforms';
 import { debounce } from '../utils/debounce';
 
 // All rendered markdown comes from user-authored note content (trusted, not external)
@@ -102,7 +102,7 @@ function NoteCard({ note, index, onMaximize }: {
       </div>
       <div class="vamp-note__preview">
         {note.body
-          ? <div dangerouslySetInnerHTML={{ __html: renderGameMarkdown(note.body) }} />
+          ? <div dangerouslySetInnerHTML={{ __html: renderUserMarkdown(note.body) }} />
           : <span class="vamp-note__empty">Empty note</span>
         }
       </div>
@@ -204,7 +204,7 @@ function MaximizedNote({ note, editing, onClose }: {
             class="vamp-note-max__rendered"
             onDblClick={() => { isEditing.value = true; }}
             title="Double-click to edit"
-            dangerouslySetInnerHTML={{ __html: renderGameMarkdown(note.body || '*Empty note*') }}
+            dangerouslySetInnerHTML={{ __html: renderUserMarkdown(note.body || '*Empty note*') }}
           />
         )}
       </div>

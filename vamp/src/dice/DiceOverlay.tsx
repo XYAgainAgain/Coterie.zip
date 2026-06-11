@@ -53,6 +53,7 @@ export function DiceOverlay() {
 
     return () => {
       disposed = true;
+      if (clickTimer.current) clearTimeout(clickTimer.current);
       window.removeEventListener('resize', onResize);
       diceEngine.value?.dispose();
       diceEngine.value = null;

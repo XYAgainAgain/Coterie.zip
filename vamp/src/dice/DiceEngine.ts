@@ -245,8 +245,10 @@ export class DiceEngine {
   }
 
   playRollAudio(diceCount: number): void {
-    this.audio.resume();
-    this.audio.playRoll(diceCount, undefined, getRollSpeed());
+    /* Wait out a suspended context or the first roll plays into silence */
+    this.audio.resume().then(() => {
+      if (!this.disposed) this.audio.playRoll(diceCount, undefined, getRollSpeed());
+    });
   }
 
   waitForSettle(): Promise<void> {
@@ -317,6 +319,12 @@ export class DiceEngine {
     if (this.disposed) return;
     this.disposed = true;
     this.stop();
+    /* Cancel any in-flight fade before tearing down GPU resources */
+    this.fadeCancelled.flag = true;
+    if (this.fadeTimeoutId !== null) {
+      clearTimeout(this.fadeTimeoutId);
+      this.fadeTimeoutId = null;
+    }
     this.themeObserver?.disconnect();
     this.themeObserver = null;
     this.effects.clear();

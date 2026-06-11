@@ -110,10 +110,11 @@ export class DiceAudio {
     this.loaded = true;
   }
 
-  resume(): void {
-    if (this.ctx?.state === 'suspended') {
-      this.ctx.resume();
-    }
+  /* Returns the resume promise so playback can wait for a suspended
+     context (autoplay policy) instead of silently dropping the first roll */
+  resume(): Promise<void> {
+    if (this.ctx?.state === 'suspended') return this.ctx.resume();
+    return Promise.resolve();
   }
 
   /**

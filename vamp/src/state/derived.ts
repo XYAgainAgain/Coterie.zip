@@ -1,5 +1,5 @@
 import { computed, signal } from '@preact/signals';
-import { character, maxHPFor, BLOOD_SURGE_SOURCE } from './character';
+import { character, maxHPFor, BLOOD_SURGE_SOURCE, type CharacterState } from './character';
 import { parseHuntingStat, parsePrerequisites } from '../data/transforms';
 import type {
   StatName, Playbook, PredatorType, Discipline,
@@ -140,6 +140,25 @@ export function parseXPValue(str: string): number {
   const range = str.match(/(\d+)\s*[–\-]\s*(\d+)/);
   if (range) return parseInt(range[1], 10);
   return parseInt(str.replace(/[^0-9]/g, ''), 10) || 0;
+}
+
+/* Baali Holy Repulsion: 3 mandatory Folkloric Banes at half their combined XP (+3, not +6) */
+export const BAALI_GRANTED_BANE_NAMES = ['Holy Water', "Ding-Dong Don't", 'Holy Symbols'];
+
+export function baaliGrantedBaneEntries(): CharacterState['folkloricBanes'] {
+  const all = gameData.value?.optionalExtras?.folkloricBanes ?? [];
+  return BAALI_GRANTED_BANE_NAMES.map(name => ({
+    baneName: name,
+    xpGain: all.find(b => b.baneName === name)?.xpGain ?? '+0 XP',
+    fromPlaybookBane: true,
+  }));
+}
+
+/* Halved XP contribution of auto-granted Banes (entries keep their real xpGain) */
+export function grantedBaneXP(banes: CharacterState['folkloricBanes']): number {
+  const full = banes.filter(b => b.fromPlaybookBane)
+    .reduce((sum, b) => sum + parseXPValue(b.xpGain), 0);
+  return Math.floor(full / 2);
 }
 
 export function xpRange(str: string): [number, number] | null {

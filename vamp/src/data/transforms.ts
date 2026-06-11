@@ -255,3 +255,19 @@ export function renderGameMarkdown(raw: string): string {
   mdCache.set(raw, result);
   return result;
 }
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/* User-authored renderer: marked passes raw HTML through untouched, so escape
+   it to block stored XSS (e.g. <img onerror>). Link allowlist shared above. */
+const userRenderer = new marked.Renderer();
+userRenderer.link = renderer.link;
+userRenderer.html = ({ text }: { text: string }) => escapeHtml(text);
+
+/* For user-authored text (notebook notes, etc.). No admonition injection and
+   no caching: user text mutates per keystroke, game text never does. */
+export function renderUserMarkdown(raw: string): string {
+  return marked.parse(raw, { async: false, breaks: true, renderer: userRenderer }) as string;
+}

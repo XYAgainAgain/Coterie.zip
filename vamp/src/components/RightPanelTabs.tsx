@@ -8,7 +8,7 @@ import {
 } from '../state/panel';
 import {
   currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
-  statCap, parseXPValue, xpRange,
+  statCap, parseXPValue, xpRange, baaliGrantedBaneEntries, grantedBaneXP,
 } from '../state/derived';
 import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription, setHavenPicks } from '../state/coterie';
@@ -68,11 +68,20 @@ function checkLimitEligibility(
     for (const t of targets) {
       if (t.toLowerCase() === char.playbook.toLowerCase()) return false;
       if (t.toLowerCase() === char.predatorType.toLowerCase()) return false;
-      /* "Nosferatu with *Monstrous Visage* Bane" */
+      /* "Nosferatu with *Monstrous Visage* Bane" — the named Bane may be the
+         clan's standard Bane or its variant; resolve via clanBaneVariants. */
       const withBane = t.match(/^(.+?)\s+with\s+(?:the\s+)?(.+?)\s+(?:Variant\s+)?Bane$/i);
       if (withBane) {
         const pb = withBane[1].trim();
-        if (pb.toLowerCase() === char.playbook.toLowerCase() && char.baneChoice !== 'standard') return false;
+        const baneName = withBane[2].replace(/\*/g, '').trim().toLowerCase();
+        if (pb.toLowerCase() === char.playbook.toLowerCase()) {
+          const variantName = gameData.value?.optionalExtras?.clanBaneVariants
+            .find(v => v.clan.toLowerCase() === pb.toLowerCase())?.baneName.toLowerCase();
+          const hasNamedBane = baneName === variantName
+            ? char.baneChoice === 'variant' || char.baneChoice === 'both'
+            : char.baneChoice === 'standard' || char.baneChoice === 'both';
+          if (hasNamedBane) return false;
+        }
       }
       /* "anyone incapable of the Embrace" */
       if (/incapable of the Embrace/i.test(t)) {
@@ -826,10 +835,11 @@ function PlaybookDropdown() {
           unlockedDisciplines: [],
           startingDisciplines: [],
           knownPowers: [],
+          knownProjectPowers: [],
           xpTriggers: [],
           merits: [],
           flaws: [],
-          folkloricBanes: [],
+          folkloricBanes: val === 'Baali' ? baaliGrantedBaneEntries() : [],
           baneChoice: 'standard',
         });
       }}
@@ -860,6 +870,7 @@ function GhoulPatronPrompt() {
       ghoulPatron: { type, bloodline: '', bp: 1, vampUrl: '' },
       unlockedDisciplines: [],
       knownPowers: [],
+      knownProjectPowers: [],
     });
   }
 
@@ -1417,7 +1428,9 @@ function AdvancementPanel() {
     if (!isCreation) return;
     const cur = character.value;
     if (cur.startingDisciplines.length === 0 && cur.unlockedDisciplines.length > 0) {
-      const base = Math.min(10, Math.max(1, cur.bp) * 2);
+      /* Granted Banes (Baali) exist before this snapshot, so fold their XP in here;
+         user-chosen extras come later and adjust XP imperatively */
+      const base = Math.min(10, Math.max(1, cur.bp) * 2 + grantedBaneXP(cur.folkloricBanes));
       updateCharacter({
         startingDisciplines: [...cur.unlockedDisciplines],
         xp: base,
@@ -1428,7 +1441,8 @@ function AdvancementPanel() {
   /* Display-only formula breakdown (XP itself is managed imperatively by each toggle/purchase) */
   const bpBase = Math.max(1, char.bp) * 2;
   const flawXP = char.flaws.reduce((sum, f) => sum + parseXPValue(f.xpGain), 0);
-  const baneXP = char.folkloricBanes.reduce((sum, b) => sum + parseXPValue(b.xpGain), 0);
+  const baneXP = char.folkloricBanes.filter(b => !b.fromPlaybookBane)
+    .reduce((sum, b) => sum + parseXPValue(b.xpGain), 0) + grantedBaneXP(char.folkloricBanes);
   const variantXP = char.baneChoice === 'both' ? 5 : 0;
   const rawStarting = bpBase + flawXP + baneXP + variantXP;
   const startingXP = Math.min(10, rawStarting);
@@ -1502,6 +1516,8 @@ function AdvancementPanel() {
     const gain = parseXPValue(xpGain);
     const cur = character.value;
     const existing = cur.folkloricBanes.find(b => b.baneName === baneName);
+    /* Auto-granted (Baali) Banes are mandatory; no UI path reaches here, but stay safe */
+    if (existing?.fromPlaybookBane) return;
     if (existing) {
       if (isCreation && cur.xp < gain) return;
       updateCharacter({
@@ -1645,11 +1661,11 @@ function AdvancementPanel() {
       )}
 
       {(isCreation || isEdit) && optExtras && (
-        <CollapsibleSection title="Folkloric Banes" pill={`${char.folkloricBanes.length} chosen`} defaultOpen={isCreation}>
+        <CollapsibleSection title="Folkloric Banes" pill={`${userBaneCount} chosen`} defaultOpen={isCreation}>
           <div class="vamp-adv-extras-list">
             {isCreation && (
               <p class="vamp-adv-extras-list__cap">
-                {userBaneCount}/3 chosen {isBaali && '(auto-grants do not count)'}
+                {userBaneCount}/3 chosen {isBaali && '(auto-granted Banes give half XP and don’t count)'}
               </p>
             )}
             {char.predatorType === 'Cucuy' && (
@@ -1657,12 +1673,14 @@ function AdvancementPanel() {
             )}
             {optExtras.folkloricBanes.map(bane => {
               const selected = char.folkloricBanes.some(b => b.baneName === bane.baneName);
+              const granted = char.folkloricBanes.some(b => b.baneName === bane.baneName && b.fromPlaybookBane);
               const disabled = !selected && atBaneCap;
               return (
                 <FolkloricBaneRow
                   key={bane.baneName}
                   bane={bane}
                   selected={selected}
+                  granted={granted}
                   disabled={disabled}
                   onToggle={() => toggleFolkloricBane(bane.baneName, bane.xpGain)}
                 />
@@ -1837,9 +1855,10 @@ function AdvancementPanel() {
   );
 }
 
-function FolkloricBaneRow({ bane, selected, disabled, onToggle }: {
+function FolkloricBaneRow({ bane, selected, granted, disabled, onToggle }: {
   bane: { baneName: string; consequences: string; xpGain: string };
   selected: boolean;
+  granted?: boolean;
   disabled: boolean;
   onToggle: () => void;
 }) {
@@ -1850,13 +1869,17 @@ function FolkloricBaneRow({ bane, selected, disabled, onToggle }: {
         <span class={`vamp-disc__bat vamp-disc__bat--sm ${expanded.value ? 'vamp-disc__bat--open' : ''}`} />
         <span class="vamp-adv-extra-row__name">{bane.baneName}</span>
         <span class="vamp-adv-extra-row__cost vamp-adv-extra-row__cost--gain">{bane.xpGain}</span>
-        <button
-          class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
-          disabled={disabled && !selected}
-          onClick={(e) => { e.stopPropagation(); onToggle(); }}
-        >
-          {selected ? 'Drop' : 'Take'}
-        </button>
+        {granted ? (
+          <span class="vamp-disc__badge vamp-disc__badge--granted">Granted</span>
+        ) : (
+          <button
+            class={`vamp-btn vamp-btn--sm ${selected ? 'vamp-btn--unselect' : 'vamp-btn--select'}`}
+            disabled={disabled && !selected}
+            onClick={(e) => { e.stopPropagation(); onToggle(); }}
+          >
+            {selected ? 'Drop' : 'Take'}
+          </button>
+        )}
       </div>
       {expanded.value && (
         <div class="vamp-adv-extra-row__body"
