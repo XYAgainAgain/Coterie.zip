@@ -12,7 +12,7 @@ Because not everything resolves in a single roll! Sometimes threats build slowly
 **Size Matters:** The number of segments a Clock has is determined by the situation's complexity.
 
 - **4 segments:** A straightforward problem (nosy neighbor, minor investigation, delayed delivery, etc.)
-- **6 segments:** A sticky situation (serious vampire hunter activity, rival Coterie scheming, etc.)
+- **6 segments:** A sticky situation (serious vampire Hunter activity, rival Coterie scheming, etc.)
 - **8 segments:** A daunting threat (Sheriff investigation, citywide Masquerade crisis, etc.)
 
 **Filling Segments:** When something happens that advances the Clock, tick 1–3 segments depending on how significant the event is.
@@ -79,7 +79,7 @@ Typically, you can only reduce the Masquerade Clock through significant collecti
 - **Haven Building Condemned:** 4 or 6 segments; landlord complaints, code violations, or suspicious inspectors
 - **Compromised Security:** 4 or 6 segments; someone's been snooping or mapping your defenses
 - **Rival Coterie's Plan:** 6 or 8 segments; they're scheming against you (but what's new, really?)
-- **Hunter Cell Investigation:** 6 or 8 segments; mortal vampire hunters gathering evidence and interviewing witnesses
+- **Hunter Cell Investigation:** 6 or 8 segments; mortal vampire Hunters gathering evidence and interviewing witnesses
 - **Sheriff's Wrath:** 6 or 8 segments; you've pissed off someone powerful on a personal level and they're coming for you
 
 **Relationship Clocks** (track deteriorating connections):
@@ -94,7 +94,7 @@ Typically, you can only reduce the Masquerade Clock through significant collecti
 
 **Racing Clocks** (two opposed Clocks competing, first to fill wins):
 
-- **Escape** (your Coterie) vs. **Cornered** (pursuing hunters)
+- **Escape** (your Coterie) vs. **Cornered** (pursuing Hunters)
 - **Secure the Asset** (your Coterie) vs. **Opposition Arrives** (rival Coterie)
 
 **Linked Clocks** (one unlocks another when filled):

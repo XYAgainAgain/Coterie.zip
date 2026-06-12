@@ -14,9 +14,11 @@ There are only four types of Powers in ***Coterie***, each of which is used diff
 2. **Passive Powers** (purchased with XP, provide narrative permission to do cool stuff, usually no rolls required)
 3. **Active Powers** (purchased with XP, may require rolls + Hunger Checks)
 4. **Project Powers** (unlocked by learning them in-game without XP, big effects, take time, usually gnarly)
-    - Four kinds: Blood Sorcery Rituals, Oblivion Ceremonies, Daimonion Sacraments, and some Thin-Blood Alchemy Formulae
+    - 4 kinds: Blood Sorcery Rituals, Oblivion Ceremonies, Daimonion Sacraments, & Thin-Blood Alchemy Formulae
     - Require preparation, components, & time
     - May use Clocks to track progress
     - Higher Hunger cost or automatic Hunger gain
 
 ## Learning Project Powers
+
+\[WORKIN' ON IT LOL]

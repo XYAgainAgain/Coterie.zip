@@ -1,23 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-11T12:44:49.862Z",
+  "generatedAt": "2026-06-12T05:55:11.252Z",
   "entries": [
     {
       "name": "Sate Your Hunger",
-      "trigger": "When your Coterie hunts and feeds together as a group",
+      "trigger": "When your Coterie *Hunts* and *Feeds* together as a group,",
       "countRule": "**Count successes:** 7+ = a success",
       "tiers": [
         {
           "tier": "Everyone rolls 10+",
-          "description": "The Coterie feeds exceptionally well with no Masquerade complications. Everyone reduces Hunger by 2. Choose 3 benefits:\n\n- No one was seriously harmed\n- You learned something useful about the area\n- Someone found prey with beneficial Resonance\n- A mortal really enjoyed the experience and wants more sometime\n- You acquired something useful or important while you were out"
+          "description": "The Coterie **Feeds** exceptionally well with no Masquerade complications. Everyone slakes 2 Hunger. Choose 3 benefits:\n\n- No one you care about is seriously injured\n- You learn something useful about the area\n- Someone finds prey with beneficial Blood Resonance\n- A mortal really enjoys the experience and wants more sometime\n- You acquire something useful or important while you're out"
         },
         {
           "tier": "Half or more succeed",
-          "description": "Most feed adequately. Those who succeeded reduce Hunger by 2, those who didn't reduce by 1. Choose 2 benefits. The Storyteller chooses 1 complication:\n\n- Someone was hurt or a vessel was killed\n- Evidence was left behind (start or advance the Masquerade Clock)\n- You drew unwanted attention\n- A Coterie member's Beast got a taste for something dangerous"
+          "description": "Most **Feed** adequately. Those who succeed slake 2 Hunger, those who don't slake 1. Choose 2 benefits. The Storyteller chooses 1 complication:\n\n- Someone gets hurt or a vessel is killed\n- Evidence gets left behind or a mortal witnesses something; start or advance the Masquerade Clock\n- You draw unwanted attention, probably lots of it\n- A Coterie member's Beast gets a taste for something dangerous"
         },
         {
           "tier": "Less than half succeed",
-          "description": "The hunt went poorly. Everyone reduces Hunger by 1. Choose 1 benefit. The Storyteller chooses 2 complications."
+          "description": "The **Hunt** goes poorly. Everyone slakes 1 Hunger. Choose 1 benefit. The Storyteller chooses 2 complications."
         },
         {
           "tier": "Nobody succeeds",
@@ -28,16 +28,16 @@
     },
     {
       "name": "Tidy the Haven",
-      "trigger": "When your Coterie maintains your Haven and territory together",
+      "trigger": "When your Coterie maintains your Haven and territory together,",
       "countRule": "**Count successes:** 7+ = a success",
       "tiers": [
         {
           "tier": "Everyone rolls 10+",
-          "description": "The Haven is running smoothly and everyone contributed meaningfully. Choose 3 contributions:\n\n- The Haven is supernaturally secure (wards intact, no intrusions detected)\n- All mundane matters are handled (repairs done, bills paid, space functional)\n- Mortals are satisfied and unsuspicious (neighbors unbothered, landlord appeased)\n- Live-in characters are well-cared for and content\n- You've improved the Haven meaningfully (new feature, upgrade, fortification)"
+          "description": "The Haven is running smoothly and everyone contributed meaningfully. Choose 3 contributions:\n\n- The Haven is supernaturally secure (Wards intact, no intrusions detected, salt circles unbroken)\n- All mundane matters are handled (repairs done, bills paid, space functional, groceries acquired)\n- Mortals and animals are satisfied and unsuspicious (neighbors unbothered, landlord appeased, raccoons flourishing)\n- Live-in characters are well-cared for and content (remember that Ghouls need actual food!)\n- You improve the Haven meaningfully (new Feature, upgrade, fortification, or a really deep clean)"
         },
         {
           "tier": "Half or more succeed",
-          "description": "The Haven is adequately maintained. Those who succeeded handled their responsibilities. Choose 2 contributions. The Storyteller chooses 1 complication:\n\n- Something needs more attention (start or advance a Haven Clock)\n- A mortal noticed something odd but hasn't made an issue of it yet\n- A character living in the Haven is stressed or needs extra care\n- The work cost more than expected; reduce Currency by 1\n- Your nighttime activities drew some minor attention"
+          "description": "The Haven is adequately maintained. Those who succeed handle their responsibilities. Choose 2 contributions. The Storyteller chooses 1 complication:\n\n- Something needs more attention; start or advance a Haven Clock\n- A mortal notices something odd but hasn't made an issue of it yet\n- A character living in the Haven is stressed or needs extra care\n- The work costs more than expected; reduce Currency by 1\n- Your nighttime activities draw some minor attention"
         },
         {
           "tier": "Less than half succeed",
@@ -45,14 +45,14 @@
         },
         {
           "tier": "Nobody succeeds",
-          "description": "The Haven is falling apart. The Storyteller makes a Hard Move."
+          "description": "The Haven is literally falling apart. The Storyteller makes a Hard Move."
         }
       ],
       "holdOptions": null
     },
     {
       "name": "Execute the Plan",
-      "trigger": "When your Coterie coordinates to accomplish a specific objective together",
+      "trigger": "When your Coterie coordinates to accomplish a specific objective together,",
       "countRule": "**Count successes:** 7+ = a success",
       "tiers": [
         {
@@ -61,7 +61,7 @@
         },
         {
           "tier": "Half or more succeed",
-          "description": "The plan mostly works. The Coterie collectively Holds 2. The Storyteller chooses 1 complication:\n\n- The plan takes longer than expected or draws attention\n- Someone on the team takes 1 Harm or is compromised\n- You have to give something up you weren't planning to (resources, information, a Debt)\n- Evidence or witnesses complicate things; start or advance a relevant Clock\n- An unexpected obstacle appears that needs handling"
+          "description": "The plan mostly works. The Coterie collectively Holds 2. The Storyteller chooses 1 complication:\n\n- The plan takes longer than expected or draws attention\n- Someone on the team takes some Harm, gains extra Hunger, or is compromised\n- You have to give something up you weren't planning to (resources, information, a Debt)\n- Evidence or witnesses complicate things; start or advance a relevant Clock\n- An unexpected obstacle appears that needs handling"
         },
         {
           "tier": "Less than half succeed",
@@ -76,27 +76,27 @@
         "Avoid collateral damage to mortals (no bystanders hurt, no property destroyed)",
         "Avoid collateral damage to Kindred (no vampires hurt who weren't targets)",
         "Avoid anyone in the Coterie taking Harm during execution",
-        "Discover an unexpected advantage or opportunity",
+        "Discover an unexpected boon, treasure, or opportunity",
         "Learn something valuable about your opposition or environment",
         "Pull off your supernatural abilities flawlessly; take no complications or extra Hunger from Disciplines used",
         "Finish efficiently; you have time/resources left over",
-        "Gain something extra (resources, intel, a Debt, a useful contact)",
+        "Gain something extra (resources, intel, a Debt, a useful contact, a stray animal)",
         "Impress or gain favor with someone important or powerful",
-        "Improve yourselves; the Coterie member(s) with the lowest roll learns a valuable lesson and gains 1 XP"
+        "Improve yourselves; the Coterie member(s) with the lowest roll learns a valuable lesson and gains +2 XP"
       ]
     },
     {
       "name": "Enforce Your Claim",
-      "trigger": "When your Coterie needs to assert or defend your territory, standing, or boundaries",
+      "trigger": "When your Coterie needs to assert or defend your territory, standing, or boundaries,",
       "countRule": "**Count successes:** 7+ = a success",
       "tiers": [
         {
           "tier": "Everyone rolls 10+",
-          "description": "Your Coterie makes a definitive statement. Choose 3 assertions:\n\n- You expand or solidify your position; gain +1 Claim\n- You earn genuine respect or fear, either through a show of power or extortion; gain either +1 Clout or +1 Currency\n- The threat is completely eliminated or driven off\n- You learn something valuable about your opposition\n- No one in the Coterie is harmed or compromised\n- You send a clear message that won't be forgotten\n- You gain something tangible and valuable (a secret, artifact, weapon, vehicle, etc.)"
+          "description": "Your Coterie makes a definitive statement. Choose 3 assertions:\n\n- You expand or solidify your position; gain +1 Claim\n- You earn genuine respect or fear, either through a show of power or extortion; gain either +1 Clout or +1 Currency\n- The threat is completely eliminated or driven off\n- You learn something valuable about your opposition\n- No one in the Coterie is injured or compromised\n- You send a clear message that won't be forgotten\n- You gain something tangible and valuable (a secret, artifact, weapon, vehicle, etc.)"
         },
         {
           "tier": "Half or more succeed",
-          "description": "You hold your ground effectively. Choose 2 assertions. The Storyteller chooses 1 complication:\n\n- It costs you; spend 1 Currency, reduce Clout by 1, or mark a Coterie Debt (Storyteller chooses)\n- Someone in the Coterie takes significant Harm or is exposed\n- You make a dangerous enemy or burn a bridge\n- Evidence or witnesses complicate things; start or advance a relevant Clock\n- Your display attracts unwanted attention; start or advance the Masquerade Clock\n- The threat retreats but isn't gone for good\n- You had to compromise on something important"
+          "description": "You hold your ground effectively. Choose 2 assertions. The Storyteller chooses 1 complication:\n\n- It costs you; spend 1 Currency, reduce Clout by 1, or mark a Coterie Debt (Storyteller chooses)\n- Someone in the Coterie takes significant Harm or is exposed\n- You make a dangerous enemy or burn a bridge (maybe literally)\n- Evidence or witnesses complicate things; start or advance a relevant Clock\n- Your display attracts unwanted attention; start or advance the Masquerade Clock\n- The threat retreats but isn't gone for good\n- You had to compromise on something important"
         },
         {
           "tier": "Less than half succeed",
@@ -111,12 +111,12 @@
     },
     {
       "name": "Save Face",
-      "trigger": "When things go awry and your Coterie is confronted",
+      "trigger": "When things go awry and your Coterie is confronted,",
       "countRule": "**Count successes:** 7+ = a success",
       "tiers": [
         {
           "tier": "Everyone rolls 10+",
-          "description": "You successfully defuse the situation and come out looking good. Choose 3 assurances:\n\n- You maintain (or even improve) your standing with them\n- You don't give up anything valuable (secrets, resources, Debts)\n- No one in the Coterie faces individual consequences\n- You learn something useful about who's confronting you\n- You turn the situation to your advantage somehow\n- The Coterie is partially absolved; everyone removes up to 2 Stains"
+          "description": "You successfully defuse the situation and come out looking good. Choose 3 assurances:\n\n- You maintain (or even improve) your standing with them\n- You don't give up anything valuable (secrets, resources, Debts)\n- No one in the Coterie faces individual consequences\n- You learn something useful about whoever is confronting you\n- You turn the situation to your advantage somehow\n- The Coterie is partially absolved; everyone removes up to 2 Stains"
         },
         {
           "tier": "Half or more succeed",
@@ -128,14 +128,14 @@
         },
         {
           "tier": "Nobody succeeds",
-          "description": "You've made everything worse. The Storyteller makes a Hard Move."
+          "description": "You've made everything so, *so* much worse. The Storyteller makes a Hard Move."
         }
       ],
       "holdOptions": null
     },
     {
       "name": "Talk It Out",
-      "trigger": "When your Coterie gets together and discusses the state of things",
+      "trigger": "When your Coterie gets together and discusses the state of things,",
       "countRule": "**Count successes:** 7+ = a success",
       "tiers": [
         {
@@ -144,7 +144,7 @@
         },
         {
           "tier": "Half or more succeed",
-          "description": "Most people feel heard and understood. The Coterie collectively Holds 2. The Storyteller chooses 1 complication:\n\n- Someone feels dismissed or unheard; they take −1 Ongoing until the end of the scene\n- An old wound or unresolved issue resurfaces\n- A difficult truth comes out that someone wasn't ready for\n- The conversation takes longer than expected and cuts into the night too much\n- Someone's frustration shows; they gain +1 Hunger from stress\n- The Coterie fails to connect; any attempt to increase Cohesion from this conversation is negated"
+          "description": "Most members feel heard and understood. The Coterie collectively Holds 2. The Storyteller chooses 1 complication:\n\n- Someone feels dismissed or unheard; they take −1 Ongoing until the end of the scene\n- An old wound or unresolved issue resurfaces\n- A difficult truth comes out that someone wasn't ready for\n- The conversation takes longer than expected and cuts into the night too much\n- Someone's frustration shows; they gain +1 Hunger from stress\n- The Coterie fails to connect; any attempt to increase Cohesion from this conversation is negated"
         },
         {
           "tier": "Less than half succeed",
@@ -156,14 +156,14 @@
         }
       ],
       "holdOptions": [
-        "The Coterie grows closer; increase Cohesion by 1",
+        "The Coterie grows closer; increase Cohesion by +1",
         "Settle an existing Debt between Coterie members",
         "Create a new Debt to represent a promise or commitment made",
         "The Coterie member(s) with the lowest Humanity score gains perspective on their actions and regains +1 Humanity",
-        "The Coterie member(s) with the lowest roll learns from another's experience and gains 1 XP",
-        "The group identifies a shared goal or priority that everyone commits to",
+        "The Coterie member(s) with the lowest roll learns from another's experience and gains +2 XP",
+        "The group identifies a shared goal or priority that everyone commits to (Storytellers take note!)",
         "A long-standing issue or conflict is finally resolved, possibly erasing a Debt",
-        "Someone opens up about something vulnerable; they and one other character each remove 1 Stain"
+        "Someone opens up about something vulnerable; they and one other member each clear 1 Stain"
       ]
     }
   ]

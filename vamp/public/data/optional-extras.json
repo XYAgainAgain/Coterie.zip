@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-11T12:44:49.862Z",
+  "generatedAt": "2026-06-12T05:55:11.252Z",
   "data": {
     "clanBaneVariantsIntro": "Each of the 14 Clans has a variant Bane, which you may take as an alternative to the usual one with the approval of the Storyteller. For a bit of additional challenge, with the Storyteller's permission, you may opt to suffer from both of your Clan's Banes in exchange for 5 XP. All Banes are permanent and cannot be removed. This XP must be spent by the end of your first slumber or it is lost.",
     "clanBaneVariants": [
@@ -1241,7 +1241,7 @@
         "name": "Known Blankbody",
         "category": "Your Standing",
         "limit": "—",
-        "description": "A mortal investigative body (law enforcement, intelligence agency, private hunters, investigative journalists) has a file of indeterminate chunkiness on you. **They know something is wrong with you**, even if they don't know exactly what. The Storyteller can introduce complications around this: surveillance, unexpected encounters with investigators, your photo circulating in briefings, mysteriously normal vans parked outside the Haven. The file grows each time you're sloppy. Allegedly.",
+        "description": "A mortal investigative body (law enforcement, intelligence agency, private Hunters, investigative journalists) has a file of indeterminate chunkiness on you. **They know something is wrong with you**, even if they don't know exactly what. The Storyteller can introduce complications around this: surveillance, unexpected encounters with investigators, your photo circulating in briefings, mysteriously normal vans parked outside the Haven. The file grows each time you're sloppy. Allegedly.",
         "xpGain": "3"
       },
       {

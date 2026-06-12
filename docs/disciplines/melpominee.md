@@ -97,7 +97,7 @@ The wail strikes every person, creature, and object within Close Range, dealing 
 
 The effect lasts for as long as you continue vocalizing. Stopping ends it immediately.
 
-Mortals within Close Range are automatically entranced; they stand still, listen, and suffer −3 Ongoing to notice anything else happening around them. Supernatural creatures with Blood Potency equal to or lower than yours are similarly affected without resistance.
+Mortals within Close Range are automatically entranced; they stand still, listen, and have −3 Ongoing to notice anything else happening around them. Supernatural creatures with Blood Potency equal to or lower than yours are similarly affected without resistance.
 
 Supernatural creatures with Blood Potency higher than yours can attempt to resist. They must successfully **Stay Chill** (7+) to be unaffected. On anything less, they too are caught in your melodic snare.
 
@@ -106,10 +106,10 @@ Supernatural creatures with Blood Potency higher than yours can attempt to resis
 **On a 7–9,** the performance takes hold, but the Storyteller chooses 1 complication:
 
 - The Inner Song bleeds into your performance; the affected hear something alien and unearthly underneath your voice and may be thoroughly disturbed by it afterward
-- Maintaining the vocalization is physically taxing; you suffer −1 Forward after the performance ends
+- Maintaining the vocalization is physically taxing; you take-1 Ongoing to all rolls for the rest of the scene after the performance ends
 - One target at the edge of the effect shakes it off early and is now deeply suspicious
 
-**On a 6-,** the Inner Song overwhelms your performance. Your voice cracks, distorts, or shifts into something you didn't intend. You must immediately **Stay Chill** or succumb to your Compulsion. The audience snaps out of it, and anyone supernatural in the room more or less knows what you just tried to do.
+**On a 6-,** the Inner Song overwhelms your performance. Your voice cracks, distorts, bends, or shifts into something you didn't intend. You must immediately **Stay Chill** or succumb to your Compulsion. The audience snaps out of it, and anyone supernatural in the room more or less knows what you just tried to do.
 
 ### *Phantom Voice*
 
@@ -133,9 +133,9 @@ The target always hears your Inner Song bleeding faintly underneath your words, 
 
 **On a 7–9,** the Storyteller chooses which Resonance Humor you absorb. You gain Fleeting Resonance (1 stocked Advantage) and must keep it for yourself.
 
-**On a 6-,** the crowd's emotions crash into you, undifferentiated and raw. No Resonance is absorbed. You must immediately **Stay Chill** or be overwhelmed by the collective emotional weight of the audience and have a breakdown in front of everybody. The result is almost certainly a career-defining moment for all the wrong reasons. This *will* be going on the internet.
+**On a 6-,** the crowd's emotions crash into you, undifferentiated and raw as hell. No Resonance is absorbed. You must immediately **Stay Chill** or be overwhelmed by the collective emotional weight of the audience and have a massive, dramatic breakdown in front of everybody. The result is almost certainly a career-defining moment for all the wrong reasons. This *will* be going on the internet.
 
-The audience is left emotionally drained regardless of your result. Mortals who witnessed the performance lose whatever Blood Resonance they were carrying and feel hollow, listless, and vaguely disappointed for the rest of the night. They'll chalk it up to the show being so good that nothing compares.
+The audience is left emotionally drained regardless of your result. Mortals who witnessed the performance lose whatever Blood Resonance they were carrying and feel hollow, listless, and vaguely disappointed for the rest of the night. They'll chalk it up to the show being so good that nothing else compares.
 
 ### *Lingering Echo*
 
@@ -145,23 +145,23 @@ You must specify a trigger condition when placing the echo: crossing a threshold
 
 You may weave any Discipline Power you possess into the echo. If you do, the Hunger Check cost is doubled. The embedded Power activates as though you were personally present when the echo triggers.
 
-**On a 10+,** the echo is placed perfectly. It triggers exactly as intended and any embedded Power activates cleanly.
+**On a 10+,** the echo is placed perfectly. It triggers exactly as intended and any embedded Power activates cleanly (as if you'd rolled a 10+).
 
 **On a 7–9,** the echo is placed, but the Storyteller chooses 1 complication:
 
 - The trigger condition is slightly imprecise; it might fire early, late, or on the wrong person
-- The echo carries audible distortion or your Inner Song woven through it; perceptive listeners know this is supernatural; if mortals are present, the Masquerade Clock advances
+- The echo carries audible distortion or your Inner Song woven through it; perceptive listeners know this is supernatural; if mortals discover it, the Masquerade Clock advances
 - An embedded Power activates at reduced effectiveness (Storyteller's discretion)
 
-**On a 6-,** the echo destabilizes on placement. It triggers immediately, right now, right here. Whatever Power you embedded fires on the spot, including on you, and the echo dissipates after a single activation. If you were embedding ***Piercing Wail***, this is a very bad day.
+**On a 6-,** the echo destabilizes on placement. It triggers immediately, right now, right here. Whatever Power you embedded fires on the spot, including on you, and the echo dissipates after a single activation. If you were embedding ***Piercing Wail***, this is a very bad night indeed.
 
 ### *Shattering Crescendo (Passive)*
 
 *(Requires: **Piercing Wail**)*
 
-Your ***Piercing Wail*** evolves into something far more terrible; this Power expands upon it permanently, and you cannot diminish its effects. It now deals 4 + your Blood + your Demeanor in Aggravated Harm and shatters glass and minds, cracks stone and bone, and buckles metal and knees within the affected area.
+Your ***Piercing Wail*** evolves into something far more terrible; this Power expands upon it permanently, and you cannot diminish its effects. It now deals 4 + your Blood + your Demeanor in Aggravated Harm. It shatters glass and minds, cracks stone and bone, and buckles metal and knees within the affected area.
 
-**If used in the company of ordinary mortals, the sonic force is beyond what a human body can withstand.** Their heads explode. Not "may explode." Not "at the Storyteller's discretion." They pop like bloody balloons. This is an automatic, catastrophic Masquerade breach and a Humanity crisis. Choose your venues carefully.
+**If used in the company of ordinary mortals, the sonic force is beyond what a human body can withstand.** Their heads explode. Not "may explode." Not "at the Storyteller's discretion." They pop like bloody balloons. This is an automatic, catastrophic Masquerade breach and a Humanity crisis. Choose your venues carefully and bring a poncho.
 
 ---
 
@@ -177,4 +177,4 @@ The target still perceives the sound as auditory; they hear your voice in their 
 
 Your mastery of voice and sound transcends ordinary limits. **Any Melpominee Power that normally affects a single target can now affect a number of targets up to your Blood Potency.**
 
-Additionally, you can split your voice between up to 2 vocal-based Powers simultaneously, even from different Disciplines. You could maintain ***Cognitive Dissonance*** while using ***Convincing Affect***, or run ***Distraction*** alongside Presence's ***Awe***. The usual restriction against using multiple vocal Powers at once no longer applies to you.
+Additionally, you can split your voice between up to 2 vocal-based Powers simultaneously, even from different Disciplines. You could maintain ***Cognitive Dissonance*** while using ***Convincing Affect***, or run ***Distraction*** alongside Presence's ***Awe***. The usual restriction against using multiple vocal Powers at once no longer applies to you. You *earned* this one, queen.

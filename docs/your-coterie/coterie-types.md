@@ -51,7 +51,7 @@ Your Coterie formed around shared devotion. Maybe it's genuine faith in somethin
 
 ## The Day Watch
 
-Most vampires are useless during the day. You're not. Your Coterie is composed of Kith and Kindred who can walk in sunlight (Thin-Bloods, Ghouls, Devorari, Osirians, or anyone else who's somehow figured it out), and that makes you indispensable to vampiric leadership that needs eyes, hands, and fangs operating while the rest of the city slumbers. You guard sleeping Elders, scout hunter movements, run daytime errands that would dust anyone else, and generally handle hours of the day that most vampires try to pretend don't exist. The thanks you receive is roughly proportional to how expendable they consider you.
+Most vampires are useless during the day. You're not. Your Coterie is composed of Kith and Kindred who can walk in sunlight (Thin-Bloods, Ghouls, Devorari, Osirians, or anyone else who's somehow figured it out), and that makes you indispensable to vampiric leadership that needs eyes, hands, and fangs operating while the rest of the city slumbers. You guard sleeping Elders, scout Hunter movements, run daytime errands that would dust anyone else, and generally handle hours of the day that most vampires try to pretend don't exist. The thanks you receive is roughly proportional to how expendable they consider you.
 
 **Coterie Stats:** **Clout −1** | **Cohesion +2** | **Charm +0** | **Claim +0** | **Currency +1**
 
@@ -129,7 +129,7 @@ Someone breached the Masquerade. Someone *always* breaches the Masquerade. That'
 
 ## The Fugitives
 
-You're running. Someone powerful wants you found, staked, and dealt with. Maybe it's a hunter organization, a vampiric authority with a grudge, or you might just know too much about someone who can't let that slide. You keep moving, stay low, and trust almost nobody outside the group. Your Haven is wherever you can crash today. Tomorrow night you'll be somewhere else. The good news is that nobody runs forever. The bad news is that you might find out why.
+You're running. Someone powerful wants you found, staked, and dealt with. Maybe it's a Hunter organization, a vampiric authority with a grudge, or you might just know too much about someone who can't let that slide. You keep moving, stay low, and trust almost nobody outside the group. Your Haven is wherever you can crash today. Tomorrow night you'll be somewhere else. The good news is that nobody runs forever. The bad news is that you might find out why.
 
 **Coterie Stats:** **Clout −1** | **Cohesion +2** | **Charm +1** | **Claim −2** | **Currency +2**
 
@@ -200,7 +200,7 @@ Someone powerful left, and you inherited the keys. Maybe your patron entered Tor
 
 ##### *Haven Features*
 
-- **Pick 4 Positive:** *inherited estate, political connections, existing staff, established domain, extensive library, recognized authority, ancestral wards, intelligence network, impressive address, legacy reputation*
+- **Pick 4 Positive:** *inherited estate, political connections, existing staff, established domain, extensive library, recognized authority, powerful Wards, intelligence network, impressive address, legacy reputation*
 - **Pick 3 Negative:** *inherited enemies, empty treasury, unfinished business, loyalty tests, succession vultures, crumbling infrastructure, outdated policies, impossible expectations, useless help, nasty rumors*
 
 ---
