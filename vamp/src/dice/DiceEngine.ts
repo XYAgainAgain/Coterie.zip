@@ -71,6 +71,8 @@ export class DiceEngine {
     this.renderer.setLightingTheme(theme);
 
     this.renderer.createSpinnerCube(this.faceTextures);
+    this.renderer.setDieFaceMaps(this.faceTextures);
+    this.renderer.warmDiePipelines();
     const pos = this.renderer.getSpinnerWorldPosition();
     console.log('[Dice] Spinner + %d face textures ready (%s theme, world %.1f,%.1f,%.1f)',
       this.faceTextures.length, theme, pos?.x, pos?.y, pos?.z);
@@ -100,19 +102,10 @@ export class DiceEngine {
     this.renderer.setLightingTheme(theme);
 
     /* Swap materials onto new textures before disposing old ones — avoids
-       a one-frame window where RAF renders with disposed GPU resources */
+       a one-frame window where RAF renders with disposed GPU resources.
+       The shared die set covers every live die in one pass. */
     this.renderer.reskinSpinnerCube(this.faceTextures);
-    for (const die of this.renderer.getCubes()) {
-      if (!Array.isArray(die.material)) continue;
-      die.material.forEach((mat, i) => {
-        const maps = this.faceTextures[i];
-        if (!maps || !(mat instanceof THREE.MeshStandardMaterial)) return;
-        mat.map = maps.color;
-        mat.bumpMap = maps.bump;
-        mat.roughnessMap = maps.roughness;
-        mat.needsUpdate = true;
-      });
-    }
+    this.renderer.setDieFaceMaps(this.faceTextures);
 
     this.renderer.updateMetalness(getDiceMetalness());
     disposeDiceTextures(oldTextures);
@@ -134,6 +127,8 @@ export class DiceEngine {
 
     this.audio.resume();
     this.evictForRoom(count);
+    /* An interrupted fade leaves the shared materials translucent */
+    this.renderer.setDiceOpacity(1);
 
     this.currentBatchId++;
     this.currentBatchCount = count;
@@ -150,7 +145,7 @@ export class DiceEngine {
       const z = hand.z + (Math.random() - 0.5) * 1.2;
       const y = hand.y + (Math.random() - 0.5) * 0.5;
       this.physics.spawnDie(x, z, undefined, y);
-      this.renderer.createDie(this.faceTextures);
+      this.renderer.createDie();
       /* Mark the shadow dirty on the spawn frame so the first die isn't shadowless for a frame. */
       this.renderer.requestShadowUpdate();
       console.log('[Dice] Spawned die %d/%d (batch #%d), total %d/%d',
@@ -208,32 +203,14 @@ export class DiceEngine {
 
     this.fadeTimeoutId = setTimeout(() => {
       if (cancel.flag || this.disposed) return;
-      const cubes = [...this.renderer.getCubes()];
-      for (const cube of cubes) {
-        const mats = Array.isArray(cube.material) ? cube.material : [cube.material];
-        for (const mat of mats) {
-          if (mat instanceof THREE.MeshStandardMaterial) {
-            mat.transparent = true;
-            mat.depthWrite = false;
-            mat.needsUpdate = true;
-          }
-        }
-      }
-
+      /* Dice materials are transparent from creation, so the fade is a pure opacity
+         (uniform) ramp. The old per-frame needsUpdate forced a material rebuild +
+         pipeline compile every frame — the post-roll freeze. */
       const start = performance.now();
       const fade = () => {
         if (cancel.flag || this.disposed) return;
         const t = Math.min(1, (performance.now() - start) / durationMs);
-        const opacity = 1 - t;
-        for (const cube of cubes) {
-          const mats = Array.isArray(cube.material) ? cube.material : [cube.material];
-          for (const mat of mats) {
-            if (mat instanceof THREE.MeshStandardMaterial) {
-              mat.opacity = opacity;
-              mat.needsUpdate = true;
-            }
-          }
-        }
+        this.renderer.setDiceOpacity(1 - t);
         if (t < 1) {
           requestAnimationFrame(fade);
         } else {

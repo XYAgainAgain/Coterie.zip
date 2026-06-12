@@ -438,7 +438,12 @@ export async function deleteCharacter(id: string): Promise<void> {
       const coterieSnap = await getDoc(doc(db, 'coteries', coterieId));
       if (coterieSnap.exists()) {
         const uids: string[] = coterieSnap.data().memberUids ?? [];
-        if (uids.length <= 1) {
+        const otherChar = await ownsOtherMemberCharacter(uid, coterieId, id);
+        /* Unknown membership state: leave the Coterie doc alone rather than risk
+           deleting it under another of the user's characters or zombifying it. */
+        if (otherChar === null) throw new Error('membership check failed');
+        const keepUid = otherChar;
+        if (uids.length <= 1 && !keepUid) {
           await deleteDoc(doc(db, 'coteries', coterieId));
           if (activeCoterie.value === coterieId) {
             stopCoterieListener();
@@ -449,7 +454,7 @@ export async function deleteCharacter(id: string): Promise<void> {
              lingers as a phantom member in everyone's Members list. */
           const members: CoterieMember[] = coterieSnap.data().members ?? [];
           await setDoc(doc(db, 'coteries', coterieId), {
-            memberUids: uids.filter(u => u !== uid),
+            memberUids: keepUid ? uids : uids.filter(u => u !== uid),
             members: members.filter(m => m.characterId !== id),
             updatedAt: serverTimestamp(),
           }, { merge: true });
@@ -491,6 +496,24 @@ async function syncPending(): Promise<void> {
       }, { merge: true });
       await idbPut('characters', { ...rec, pendingSync: false, updatedAt: Date.now() });
     } catch {}
+  }
+}
+
+/* True if the user owns another character (besides excludeCharId) still attached to
+   this Coterie. Removing the uid from memberUids while such a character remains
+   locks the user out of their own Coterie (this raptured Jaz on 2026-06-11).
+   Returns null when the query fails, so callers can pick their own safe fallback. */
+async function ownsOtherMemberCharacter(uid: string, coterieId: string, excludeCharId: string): Promise<boolean | null> {
+  try {
+    const q = query(
+      collection(db, 'characters'),
+      where('ownerId', '==', uid),
+      where('coterieId', '==', coterieId),
+    );
+    const snap = await getDocs(q);
+    return snap.docs.some(d => d.id !== excludeCharId);
+  } catch {
+    return null;
   }
 }
 
@@ -846,12 +869,14 @@ export async function leaveCoterie(): Promise<void> {
   const coterieSnap = await getDoc(doc(db, 'coteries', coterieId));
   if (coterieSnap.exists()) {
     const uids: string[] = coterieSnap.data().memberUids ?? [];
-    if (uids.length <= 1) {
+    /* Unknown membership state on leave: keep the uid (recoverable; rejoin works) */
+    const keepUid = (await ownsOtherMemberCharacter(uid, coterieId, charId)) ?? true;
+    if (uids.length <= 1 && !keepUid) {
       await deleteDoc(doc(db, 'coteries', coterieId));
     } else {
       const members: CoterieMember[] = coterieSnap.data().members ?? [];
       await setDoc(doc(db, 'coteries', coterieId), {
-        memberUids: uids.filter(u => u !== uid),
+        memberUids: keepUid ? uids : uids.filter(u => u !== uid),
         members: members.filter(m => m.characterId !== charId),
         updatedAt: serverTimestamp(),
       }, { merge: true });

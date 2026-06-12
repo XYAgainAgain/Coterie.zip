@@ -9,6 +9,9 @@ export class DiceRenderer {
   private cubes: THREE.Mesh[] = [];
   /* All dice share one geometry; per-die allocation re-uploaded identical vertex data every roll */
   private dieGeometry = new RoundedBoxGeometry(1, 1, 1, 4, 0.1);
+  /* All dice also share one 6-material set. Fresh materials per roll meant a node build +
+     pipeline compile mid-tumble (the freeze-then-jump hitch, worst on Firefox WebGPU). */
+  private dieMaterials: THREE.MeshStandardMaterial[] | null = null;
   private spinnerCube: THREE.Mesh | null = null;
   private shadowFloor: THREE.Mesh | null = null;
   private sun: THREE.DirectionalLight | null = null;
@@ -161,7 +164,10 @@ export class DiceRenderer {
       }
     };
     apply(this.spinnerCube);
-    for (const die of this.cubes) apply(die);
+    /* Live dice all reference the shared set */
+    if (this.dieMaterials) {
+      for (const mat of this.dieMaterials) mat.metalness = metalness;
+    }
   }
 
   /* WebGPU paces frames through the renderer's own loop; a manual rAF desyncs from the
@@ -225,17 +231,64 @@ export class DiceRenderer {
     return cube;
   }
 
-  createDie(faceMaps: Array<{ color: THREE.Texture; bump: THREE.Texture; roughness: THREE.Texture }>): THREE.Mesh {
+  /* Create or retarget the shared die material set. transparent: true from birth so the
+     fade-out never flips blend state — in WebGPU that's a whole new pipeline compile. */
+  setDieFaceMaps(faceMaps: Array<{ color: THREE.Texture; bump: THREE.Texture; roughness: THREE.Texture }>): void {
+    if (this.dieMaterials) {
+      this.dieMaterials.forEach((mat, i) => {
+        const maps = faceMaps[i];
+        if (!maps) return;
+        mat.map = maps.color;
+        mat.bumpMap = maps.bump;
+        mat.roughnessMap = maps.roughness;
+        mat.needsUpdate = true;
+      });
+      return;
+    }
     const metalness = getDiceMetalness();
-    const materials = faceMaps.map(face =>
+    this.dieMaterials = faceMaps.map(face =>
       new THREE.MeshStandardMaterial({
         map: face.color,
         bumpMap: face.bump,
         bumpScale: DICE_MATERIAL.bumpScale,
         roughnessMap: face.roughness,
         metalness,
+        transparent: true,
       }),
     );
+  }
+
+  /* opacity is a plain uniform; setting needsUpdate here would rebuild every pipeline */
+  setDiceOpacity(opacity: number): void {
+    if (!this.dieMaterials) return;
+    for (const mat of this.dieMaterials) mat.opacity = opacity;
+  }
+
+  /* Compile the dice color + shadow pipelines at startup. Without this, the first roll
+     stalls mid-tumble on an on-demand pipeline build ("shader compilation stutter"). */
+  warmDiePipelines(): void {
+    /* Pre-roll only: the opacity dance below would clobber live dice mid-fade */
+    if (!this.dieMaterials || this.disposed || this.cubes.length > 0) return;
+    const die = new THREE.Mesh(this.dieGeometry, [...this.dieMaterials]);
+    die.castShadow = true;
+    die.receiveShadow = true;
+    /* Sub-pixel and fully transparent: survives frustum culling, draws nothing visible */
+    die.scale.setScalar(0.001);
+    die.position.set(0, 0.5, 0);
+    this.scene.add(die);
+    this.setDiceOpacity(0);
+    this.requestShadowUpdate();
+    this.render();
+    this.scene.remove(die);
+    this.setDiceOpacity(1);
+    this.requestShadowUpdate();
+    this.render();
+  }
+
+  createDie(): THREE.Mesh {
+    /* Each die gets its own copy of the array (not the materials) so fixDieResults can
+       reorder faces per die while every die still shares the same compiled pipelines. */
+    const materials = this.dieMaterials ? [...this.dieMaterials] : [];
     const die = new THREE.Mesh(this.dieGeometry, materials);
     die.castShadow = true;
     die.receiveShadow = true;
@@ -270,11 +323,13 @@ export class DiceRenderer {
   }
 
   private disposeMesh(mesh: THREE.Mesh): void {
-    /* Shared die geometry outlives individual meshes; disposed once in dispose() */
+    /* Shared die geometry/materials outlive individual meshes; disposed once in dispose() */
     if (mesh.geometry !== this.dieGeometry) mesh.geometry.dispose();
     const mat = mesh.material;
     if (Array.isArray(mat)) {
-      for (const m of mat) m.dispose();
+      for (const m of mat) {
+        if (!this.dieMaterials?.includes(m as THREE.MeshStandardMaterial)) m.dispose();
+      }
     } else if (mat instanceof THREE.Material) {
       mat.dispose();
     }
@@ -302,6 +357,10 @@ export class DiceRenderer {
       this.shadowFloor = null;
     }
     this.clearCubes();
+    if (this.dieMaterials) {
+      for (const mat of this.dieMaterials) mat.dispose();
+      this.dieMaterials = null;
+    }
     this.dieGeometry.dispose();
     this.renderer.dispose();
   }

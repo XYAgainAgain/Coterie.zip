@@ -5,6 +5,7 @@ import {
   sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink,
   EmailAuthProvider, linkWithCredential, signOut,
 } from 'firebase/auth';
+import { showToast } from './state/toasts';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAEHxHwfggbE_O51EAkgTA1tq10aGqR5BU',
@@ -51,37 +52,64 @@ export async function sendEmailLink(email: string): Promise<void> {
 }
 
 /* Check if the current URL is an email sign-in link and complete the flow.
-   For anonymous users, links the email credential to preserve the existing UID. */
+   For anonymous users, links the email credential to preserve the existing UID.
+
+   Never throws: a dead link (expired, already used, or invalidated by a newer
+   send) used to bubble into the boot promise and brick the app with "Failed to
+   load game data" — and since the URL kept the dead code, every reload
+   re-failed. Failures now toast and let the app boot normally. */
 export async function handleEmailLinkRedirect(): Promise<boolean> {
   if (!isSignInWithEmailLink(auth, window.location.href)) return false;
 
-  let email = localStorage.getItem(EMAIL_STORAGE_KEY);
-  if (!email) {
-    email = window.prompt('Confirm your email address for sign-in:');
-    if (!email) return false;
-  }
-
-  const credential = EmailAuthProvider.credentialWithLink(email, window.location.href);
-
-  if (auth.currentUser?.isAnonymous) {
-    try {
-      await linkWithCredential(auth.currentUser, credential);
-    } catch (err: unknown) {
-      const code = err instanceof Error && 'code' in err ? (err as { code: string }).code : '';
-      if (code === 'auth/email-already-in-use' || code === 'auth/credential-already-in-use') {
-        await signInWithEmailLink(auth, email, window.location.href);
-      } else {
-        throw err;
-      }
+  /* Once the code has been submitted (consumed, success or not), drop it from the
+     URL so a reload can't replay it. A cancelled prompt never submits, so the
+     still-valid link must survive for a retry. */
+  let codeSubmitted = false;
+  try {
+    let email = localStorage.getItem(EMAIL_STORAGE_KEY);
+    if (!email) {
+      email = window.prompt('Confirm your email address for sign-in:');
+      if (!email) return false;
     }
-  } else {
-    await signInWithEmailLink(auth, email, window.location.href);
-  }
 
-  localStorage.removeItem(EMAIL_STORAGE_KEY);
-  refreshLinkedEmail();
-  window.history.replaceState(null, '', '/vamp/');
-  return true;
+    codeSubmitted = true;
+    const credential = EmailAuthProvider.credentialWithLink(email, window.location.href);
+
+    if (auth.currentUser?.isAnonymous) {
+      try {
+        await linkWithCredential(auth.currentUser, credential);
+      } catch (err: unknown) {
+        const code = err instanceof Error && 'code' in err ? (err as { code: string }).code : '';
+        if (code === 'auth/email-already-in-use' || code === 'auth/credential-already-in-use') {
+          /* The email already belongs to an account, so this signs IN rather than
+             linking — the anonymous session (and any characters it owns) is left
+             behind. Warn, since those characters need a manual ownership transfer. */
+          await signInWithEmailLink(auth, email, window.location.href);
+          showToast('Signed in to your existing account. Any characters created while signed out are not attached to it — tell Sam if one is missing.', 'warning');
+        } else {
+          throw err;
+        }
+      }
+    } else {
+      await signInWithEmailLink(auth, email, window.location.href);
+    }
+
+    localStorage.removeItem(EMAIL_STORAGE_KEY);
+    refreshLinkedEmail();
+    return true;
+  } catch (err: unknown) {
+    const code = err instanceof Error && 'code' in err ? (err as { code: string }).code : '';
+    console.error('[Auth] Email link sign-in failed:', err);
+    showToast(
+      code === 'auth/invalid-action-code'
+        ? 'That sign-in link is expired or already used. Request a fresh one, and only click the newest email.'
+        : 'Email sign-in failed. Request a fresh link and try again.',
+      'error',
+    );
+    return false;
+  } finally {
+    if (codeSubmitted) window.history.replaceState(null, '', '/vamp/');
+  }
 }
 
 import { signal } from '@preact/signals';

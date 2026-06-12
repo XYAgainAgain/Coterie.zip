@@ -7140,8 +7140,9 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
   color: var(--v-text-primary);
   cursor: pointer;
   animation: vamp-toast-in 0.25s ease-out;
-  opacity: 0.9;
-  backdrop-filter: blur(4px);
+  /* No backdrop-filter: toasts sit above the dice canvas and pop right at settle;
+     a live blur over the still-rendering canvas stutters the compositor. */
+  opacity: 0.95;
   box-shadow: 0 4px 12px oklch(0% 0 0 / 0.4);
 }
 
