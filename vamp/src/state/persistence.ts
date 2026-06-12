@@ -138,6 +138,7 @@ export const BLANK_CHARACTER: CharacterState = {
   combatNotes: '',
   bloodSurgesUsed: 0,
   bloodSurgeAdvantages: 0,
+  quickHealUsedThisScene: false,
 };
 
 function toSummary(id: string, data: Record<string, unknown>): CharacterSummary {

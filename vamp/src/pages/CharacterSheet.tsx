@@ -31,7 +31,10 @@ import {
   getSnippet, gameData, statCap, startingDisciplineSlugs,
   bloodSurgesRemaining,
 } from '../state/derived';
-import { switchTab, openMove, activeContentTab } from '../state/panel';
+import {
+  switchTab, openMove, activeContentTab, splitMode, splitRightTab, splitRatio,
+  cycleSplit, setPaneTab, type ContentTab,
+} from '../state/panel';
 import { showToast } from '../state/toasts';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
 import { activeCharacterId, activeCoterie, loadCharacter, flushSave } from '../state/persistence';
@@ -330,7 +333,7 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
       </div>
       {canRoll && char.playbook !== 'Ghoul' && (
         <div class="vamp-vital-actions">
-          <VitalRollButton label="Quick Heal" onClick={performQuickHeal} disabled={sup === 0} />
+          <VitalRollButton label="Quick Heal" onClick={performQuickHeal} disabled={sup === 0 || !!char.quickHealUsedThisScene} />
         </div>
       )}
     </div>
@@ -597,55 +600,229 @@ function DebtPanel() {
   );
 }
 
-const ALL_TABS = ['Vitals', 'Disciplines', 'Possessions', 'Clocks & Debts', 'Notebook'] as const;
+const CONTENT_TAB_DEFS: { id: ContentTab; label: string; short: string }[] = [
+  { id: 'vitals', label: 'Vitals', short: 'Vitals' },
+  { id: 'disciplines', label: 'Disciplines', short: 'Disco' },
+  { id: 'possessions', label: 'Possessions', short: 'Stuff' },
+  { id: 'clocks', label: 'Clocks & Debts', short: 'Cs&Ds' },
+  { id: 'notebook', label: 'Notebook', short: 'Notes' },
+];
 
-function ContentTabs() {
-  const active = activeContentTab;
-  const isViewing = viewingOtherSheet.value;
-  const tabs = isViewing
-    ? ALL_TABS.filter(t => t !== 'Notebook')
-    : ALL_TABS;
-  /* Clamp locally for this render; persist in an effect (no signal writes mid-render) */
-  const idx = active.value >= tabs.length ? 0 : active.value;
-  useEffect(() => {
-    if (active.value >= tabs.length) active.value = 0;
-  }, [tabs.length]);
-
+/* The icon previews the NEXT mode in the cycle, not the current one */
+function SplitCycleButton({ state }: { state: 'off' | 'reflowing' | 'split-button' | 'merged' }) {
+  const titles = {
+    'off': 'Split view (two tab bars)',
+    'reflowing': 'Switch to split-button bar',
+    'split-button': 'Exit split view',
+    'merged': 'Exit split view (panes merged)',
+  } as const;
+  const cls = [
+    'vamp-tabs__split-btn',
+    state !== 'off' && 'vamp-tabs__split-btn--active',
+    state === 'reflowing' && 'vamp-tabs__split-btn--to-sb',
+    (state === 'split-button' || state === 'merged') && 'vamp-tabs__split-btn--to-off',
+    state === 'merged' && 'vamp-tabs__split-btn--merged',
+  ].filter(Boolean).join(' ');
   return (
-    <div class="vamp-tabs">
+    <button class={cls} onClick={cycleSplit} title={titles[state]} aria-label={titles[state]} />
+  );
+}
+
+function TabBar({ tabs, selected, onSelect, showSplitButton, rowClass }: {
+  tabs: typeof CONTENT_TAB_DEFS;
+  selected: ContentTab;
+  onSelect: (tab: ContentTab) => void;
+  showSplitButton?: boolean;
+  rowClass?: string;
+}) {
+  const idx = Math.max(0, tabs.findIndex(t => t.id === selected));
+  return (
+    <div class={`vamp-tabs__bar-row ${rowClass ?? ''}`}>
       <nav
         class="vamp-tabs__bar"
         role="tablist"
         style={`--tab-count: ${tabs.length}; --tab-active-idx: ${idx}`}
       >
-        {tabs.map((tab, i) => (
+        {tabs.map(tab => (
           <button
-            key={tab}
+            key={tab.id}
             role="tab"
-            aria-selected={idx === i}
-            class={`vamp-tabs__tab ${idx === i ? 'vamp-tabs__tab--active' : ''}`}
-            onClick={() => { active.value = i; }}
+            aria-selected={selected === tab.id}
+            aria-label={tab.label}
+            class={`vamp-tabs__tab ${selected === tab.id ? 'vamp-tabs__tab--active' : ''}`}
+            onClick={() => onSelect(tab.id)}
           >
-            {tab}
+            <span class="vamp-tabs__label--full">{tab.label}</span>
+            <span class="vamp-tabs__label--short" aria-hidden="true">{tab.short}</span>
           </button>
         ))}
       </nav>
+      {showSplitButton && <SplitCycleButton state={splitMode.value === 'reflowing' ? 'reflowing' : 'off'} />}
+    </div>
+  );
+}
 
-      <div class="vamp-tabs__panel" role="tabpanel">
-        <div style={{ display: idx === 0 ? undefined : 'none' }}><VitalsTab /></div>
-        <div style={{ display: idx === 1 ? undefined : 'none' }}><DisciplinesTab /></div>
-        <div style={{ display: idx === 2 ? undefined : 'none' }}>
-          {/* TODO: Possessions tab — sortable table of tagged items (Tag-System-Rules.md).
-             Structured input: base type dropdown, mechanical/descriptive tag fields, description.
-             Hover tooltips on tags from parsed reference data. */}
-          <div class="vamp-placeholder">
-            Possessions and inventory
-            <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
-          </div>
+/* Split-button bar: one bar drives both panes. Each tab has two half-click zones
+   (left → pane A, right → pane B); warm/cool tints mark which pane holds the tab. */
+function SplitTabBar({ tabs, paneA, paneB, merged }: {
+  tabs: typeof CONTENT_TAB_DEFS;
+  paneA: ContentTab;
+  paneB: ContentTab;
+  merged: boolean;
+}) {
+  return (
+    <div class="vamp-tabs__bar-row vamp-tabs__bar-row--sb">
+      <nav class="vamp-tabs__bar vamp-tabs__bar--sb" role="tablist">
+        {tabs.map(tab => {
+          const isA = paneA === tab.id;
+          const isB = paneB === tab.id;
+          return (
+            <div
+              key={tab.id}
+              role="tab"
+              aria-selected={isA || isB}
+              class={`vamp-tabs__tab vamp-split-tab ${isA ? 'vamp-split-tab--a' : ''} ${isB ? 'vamp-split-tab--b' : ''}`}
+            >
+              <span class="vamp-tabs__label--full">{tab.label}</span>
+              <span class="vamp-tabs__label--short" aria-hidden="true">{tab.short}</span>
+              <button
+                class="vamp-split-tab__half vamp-split-tab__half--a"
+                aria-label={`${tab.label} in left pane`}
+                title={`${tab.label} → left pane`}
+                onClick={() => setPaneTab('a', tab.id)}
+              />
+              <button
+                class="vamp-split-tab__half vamp-split-tab__half--b"
+                aria-label={`${tab.label} in right pane`}
+                title={`${tab.label} → right pane`}
+                onClick={() => setPaneTab('b', tab.id)}
+              />
+            </div>
+          );
+        })}
+      </nav>
+      <SplitCycleButton state={merged ? 'merged' : 'split-button'} />
+    </div>
+  );
+}
+
+function TabPanels({ selected, isViewing, paneClass }: {
+  selected: ContentTab;
+  isViewing: boolean;
+  paneClass?: string;
+}) {
+  const show = (tab: ContentTab) => (selected === tab ? undefined : 'none');
+  return (
+    <div class={`vamp-tabs__panel ${paneClass ?? ''}`} role="tabpanel">
+      <div style={{ display: show('vitals') }}><VitalsTab /></div>
+      <div style={{ display: show('disciplines') }}><DisciplinesTab /></div>
+      <div style={{ display: show('possessions') }}>
+        {/* TODO: Possessions tab — sortable table of tagged items (Tag-System-Rules.md).
+           Structured input: base type dropdown, mechanical/descriptive tag fields, description.
+           Hover tooltips on tags from parsed reference data. */}
+        <div class="vamp-placeholder">
+          Possessions and inventory
+          <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
         </div>
-        <div style={{ display: idx === 3 ? undefined : 'none' }}><ClocksDebtsTab /></div>
-        {!isViewing && <div class="vamp-tab-pane--fill" style={{ display: idx === 4 ? undefined : 'none' }}><NotebookTab /></div>}
       </div>
+      <div style={{ display: show('clocks') }}><ClocksDebtsTab /></div>
+      {!isViewing && <div class="vamp-tab-pane--fill" style={{ display: show('notebook') }}><NotebookTab /></div>}
+    </div>
+  );
+}
+
+function ContentTabs() {
+  const isViewing = viewingOtherSheet.value;
+  const tabs = isViewing
+    ? CONTENT_TAB_DEFS.filter(t => t.id !== 'notebook')
+    : CONTENT_TAB_DEFS;
+  const visible = (tab: ContentTab) => tabs.some(t => t.id === tab);
+  const mode = splitMode.value;
+
+  /* Fall back locally for this render; persist in an effect (no signal writes mid-render).
+     Covers viewer filtering and a stale persisted pane-B tab. Same-tab panes are only
+     normalized away in reflowing mode — in split-button mode they mean "merged." */
+  const paneA = visible(activeContentTab.value) ? activeContentTab.value : 'vitals';
+  const fallbackB = paneA === 'disciplines' ? 'vitals' : 'disciplines';
+  const visB = visible(splitRightTab.value) ? splitRightTab.value : fallbackB;
+  const paneB = mode === 'reflowing' && visB === paneA ? fallbackB : visB;
+  useEffect(() => {
+    if (!visible(activeContentTab.value)) activeContentTab.value = 'vitals';
+    const normalizedA = activeContentTab.value;
+    if (!visible(splitRightTab.value)
+      || (splitMode.value === 'reflowing' && splitRightTab.value === normalizedA)) {
+      splitRightTab.value = normalizedA === 'disciplines' ? 'vitals' : 'disciplines';
+    }
+  }, [tabs.length, mode]);
+
+  const merged = mode === 'split-button' && paneA === paneB;
+  const splitContainerRef = useRef<HTMLDivElement>(null);
+
+  /* Pointer capture keeps events flowing to the divider even when the cursor leaves it,
+     so no global listeners are needed. The rect is measured once per drag (the container
+     can't resize mid-drag). Ratio persists to localStorage only — never Firestore. */
+  function onDividerPointerDown(e: PointerEvent) {
+    e.preventDefault();
+    const target = e.currentTarget as HTMLElement;
+
+    const container = splitContainerRef.current;
+    if (!container) return;
+    const rect = container.getBoundingClientRect();
+
+    const onPointerMove = (ev: PointerEvent) => {
+      const ratio = (ev.clientX - rect.left) / rect.width;
+      splitRatio.value = Math.min(0.67, Math.max(0.33, ratio));
+    };
+    const onPointerUp = () => {
+      target.removeEventListener('pointermove', onPointerMove);
+      target.removeEventListener('pointerup', onPointerUp);
+      target.removeEventListener('pointercancel', onPointerUp);
+    };
+    /* Listeners on before capture, so a same-tick release can't strand them */
+    target.addEventListener('pointermove', onPointerMove);
+    target.addEventListener('pointerup', onPointerUp);
+    target.addEventListener('pointercancel', onPointerUp);
+    target.setPointerCapture(e.pointerId);
+  }
+
+  if (mode === 'off') {
+    return (
+      <div class="vamp-tabs">
+        <TabBar tabs={tabs} selected={paneA} onSelect={tab => setPaneTab('a', tab)} showSplitButton />
+        <TabPanels selected={paneA} isViewing={isViewing} />
+      </div>
+    );
+  }
+
+  if (merged) {
+    return (
+      <div class="vamp-tabs vamp-tabs--merged">
+        <SplitTabBar tabs={tabs} paneA={paneA} paneB={paneB} merged />
+        <TabPanels selected={paneA} isViewing={isViewing} />
+      </div>
+    );
+  }
+
+  const splitVars = `--split-left: ${splitRatio.value}fr; --split-right: ${1 - splitRatio.value}fr`;
+
+  if (mode === 'split-button') {
+    return (
+      <div class="vamp-tabs vamp-tabs--split vamp-tabs--split-button" ref={splitContainerRef} style={splitVars}>
+        <SplitTabBar tabs={tabs} paneA={paneA} paneB={paneB} merged={false} />
+        <div class="vamp-tabs__divider" onPointerDown={onDividerPointerDown} />
+        <TabPanels selected={paneA} isViewing={isViewing} paneClass="vamp-tabs__panel--a" />
+        <TabPanels selected={paneB} isViewing={isViewing} paneClass="vamp-tabs__panel--b" />
+      </div>
+    );
+  }
+
+  return (
+    <div class="vamp-tabs vamp-tabs--split" ref={splitContainerRef} style={splitVars}>
+      <TabBar tabs={tabs} selected={paneA} onSelect={tab => setPaneTab('a', tab)} rowClass="vamp-tabs__bar-row--a" />
+      <TabBar tabs={tabs} selected={paneB} onSelect={tab => setPaneTab('b', tab)} showSplitButton rowClass="vamp-tabs__bar-row--b" />
+      <div class="vamp-tabs__divider" onPointerDown={onDividerPointerDown} />
+      <TabPanels selected={paneA} isViewing={isViewing} paneClass="vamp-tabs__panel--a" />
+      <TabPanels selected={paneB} isViewing={isViewing} paneClass="vamp-tabs__panel--b" />
     </div>
   );
 }
@@ -757,13 +934,14 @@ function useSnippetContext(): SnippetContext {
   };
 }
 
-function SnippetBlock({ type, name, fullText, pill, nameClass, label }: {
+function SnippetBlock({ type, name, fullText, pill, nameClass, label, rootClass }: {
   type: string;
   name: string;
   fullText: string;
   pill?: string;
   nameClass?: string;
   label?: { text: string; className?: string };
+  rootClass?: string;
 }) {
   const expanded = useSignal(false);
   const ctx = useSnippetContext();
@@ -775,7 +953,7 @@ function SnippetBlock({ type, name, fullText, pill, nameClass, label }: {
   // All rendered content comes from my own verified JSON parsers (trusted)
   return (
     <div
-      class={`vamp-perk ${hasSnippet ? 'vamp-perk--expandable' : ''} ${expanded.value ? 'vamp-perk--expanded' : ''}`}
+      class={`vamp-perk ${hasSnippet ? 'vamp-perk--expandable' : ''} ${expanded.value ? 'vamp-perk--expanded' : ''} ${rootClass ?? ''}`}
       onClick={hasSnippet ? () => { expanded.value = !expanded.value; } : undefined}
     >
       <div class="vamp-perk__header">
@@ -842,12 +1020,12 @@ function VitalsTab() {
         const baneLabel = (text: string): { text: string; className: string } =>
           ({ text, className: 'vamp-perk__label--bane' });
 
-        /* Top-left bane: the variant replaces standard only when 'variant' is chosen alone. */
+        /* Primary bane: the variant replaces standard only when 'variant' is chosen alone. */
         const primary: BaneEntry = char.baneChoice === 'variant' && variant
           ? { key: 'bane', type: 'banes', name: variant.baneName, fullText: variant.consequences, nameClass: 'vamp-bane__name', label: baneLabel('Bloodline Bane:') }
           : { key: 'bane', type: 'banes', name: playbook?.baneName ?? 'Unknown', fullText: playbook?.baneDescription ?? '', nameClass: 'vamp-bane__name', label: baneLabel('Bloodline Bane:') };
 
-        /* Top-right is always the Compulsion. */
+        /* Compulsion is last: beside the final Bane when odd, full-width below when even */
         const compulsion: BaneEntry = {
           key: 'compulsion', type: 'compulsions',
           name: playbook?.compulsionName ?? 'None',
@@ -866,20 +1044,21 @@ function VitalsTab() {
         }
         extraBanes.sort((a, b) => a.name.localeCompare(b.name));
 
-        /* Row-major flow: index 0 left-top, 1 right-top, then extras fill left/right alternately. */
-        const all = [primary, compulsion, ...extraBanes];
-        const left = all.filter((_, i) => i % 2 === 0);
-        const right = all.filter((_, i) => i % 2 === 1);
+        const all = [primary, ...extraBanes, compulsion];
+        const banesEven = (1 + extraBanes.length) % 2 === 0;
 
         const render = (e: BaneEntry) => (
-          <SnippetBlock key={e.key} type={e.type} name={e.name} fullText={e.fullText} nameClass={e.nameClass} label={e.label} />
+          <SnippetBlock
+            key={e.key} type={e.type} name={e.name} fullText={e.fullText}
+            nameClass={e.nameClass}
+            label={banesEven && e.key !== 'compulsion' ? undefined : e.label}
+            rootClass={e.key === 'compulsion' ? 'vamp-bane-compulsion__compulsion' : undefined}
+          />
         );
 
         return (
-          <div class="vamp-bane-compulsion">
-            <div class="vamp-bane-compulsion__col">{left.map(render)}</div>
-            <div class="vamp-merits-flaws__divider" />
-            <div class="vamp-bane-compulsion__col">{right.map(render)}</div>
+          <div class={`vamp-bane-compulsion ${banesEven ? 'vamp-bane-compulsion--even' : ''}`}>
+            {all.map(render)}
           </div>
         );
       })()}

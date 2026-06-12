@@ -244,6 +244,59 @@ a:hover {
     drop-shadow(0 0 6px var(--v-glow));
 }
 
+/* It's a link home now; glow brightens instead of the global link underline */
+.vamp-header__title:hover {
+  color: var(--v-text-accent);
+  text-decoration: none;
+  filter:
+    drop-shadow(0 0 4px var(--v-glow))
+    drop-shadow(0 0 9px var(--v-glow));
+}
+
+/* Dingy neon sign sputtering on: flash, flash, over-bright glare, settle.
+   Mismatched drop-shadow list lengths between keyframes are deliberate — they
+   interpolate discretely, which IS the flicker. */
+/* Flicker beats live in the first ~0.5s; the glare then cools down over ~2.7s */
+@keyframes vamp-neon-startup {
+  0%    { opacity: 0.55; filter: none; }
+  3%    { opacity: 1; filter: drop-shadow(0 0 4px var(--v-glow)) drop-shadow(0 0 8px var(--v-glow)); }
+  4.7%  { opacity: 0.4; filter: none; }
+  7%    { opacity: 0.95; filter: drop-shadow(0 0 4px var(--v-glow)) drop-shadow(0 0 8px var(--v-glow)); }
+  9.7%  { opacity: 0.55; filter: drop-shadow(0 0 2px var(--v-glow)); }
+  15%  {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 5px var(--v-glow))
+      drop-shadow(0 0 14px var(--v-glow))
+      drop-shadow(0 0 26px var(--v-glow))
+      brightness(1.65);
+  }
+  44%  {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 5px var(--v-glow))
+      drop-shadow(0 0 12px var(--v-glow))
+      drop-shadow(0 0 20px var(--v-glow))
+      brightness(1.3);
+  }
+  100% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 4px var(--v-glow))
+      drop-shadow(0 0 9px var(--v-glow));
+  }
+}
+
+.vamp-header__title--flicker {
+  animation: vamp-neon-startup 3.2s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-header__title--flicker {
+    animation: none;
+  }
+}
+
 .vamp-header__spacer { flex: 1; }
 
 .vamp-header__controls {
@@ -383,9 +436,9 @@ a:hover {
 
 .vamp-email-btn {
   background: none;
-  border: 1px solid var(--v-text-secondary);
+  border: 1px solid var(--v-header-idle);
   border-radius: 0.25rem;
-  color: var(--v-text-secondary);
+  color: var(--v-header-idle);
   cursor: pointer;
   padding: 0.15rem 0.35rem;
   font-size: 0.7rem;
@@ -1786,12 +1839,12 @@ a:hover {
 .vamp-mod-hold-add {
   display: grid;
   place-items: center;
-  padding: 0.15rem 0.3rem;
+  padding: 0.2rem 0.35rem;
   border: 1px solid var(--v-border);
   border-radius: 3px;
   background: none;
   color: var(--v-text-muted);
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   font-weight: 700;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
@@ -2848,6 +2901,8 @@ a:hover {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.5rem;
+  /* Matches .vamp-note-max — the panel itself has no inline padding */
+  padding: 0.5rem 1rem;
 }
 
 .vamp-note {
@@ -3026,6 +3081,8 @@ a:hover {
   flex-direction: column;
   height: 100%;
   min-height: 20rem;
+  /* The panel has no inline padding; without this the note frame kisses the pane edges */
+  padding: 0.5rem 1rem;
 }
 
 .vamp-note-max__header {
@@ -3105,7 +3162,7 @@ a:hover {
   background: var(--v-bg-sunken);
   border: 1px solid var(--v-border);
   border-radius: var(--v-radius-sm);
-  padding: 0.5rem;
+  padding: 0.75rem;
   color: var(--v-text-primary);
   font-family: var(--v-font-body);
   font-size: calc(0.85rem * var(--v-text-scale));
@@ -3117,7 +3174,7 @@ a:hover {
 }
 
 .vamp-note-max__rendered {
-  padding: 0.25rem;
+  padding: 0.25rem 0 1rem;
   font-size: calc(0.85rem * var(--v-text-scale));
   line-height: 1.6;
   cursor: pointer;
@@ -3457,13 +3514,23 @@ textarea.vamp-editable__input {
   flex: 1;
 }
 
+.vamp-tabs__bar-row {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  margin-block-end: 0.25rem;
+  min-inline-size: 0;
+}
+
 .vamp-tabs__bar {
   display: flex;
   gap: 2px;
   padding: 0 0.25rem;
-  flex-shrink: 0;
+  flex: 1;
+  min-inline-size: 0;
   position: relative;
-  margin-bottom: 0.25rem;
+  /* Each bar measures itself so two split panes swap to short labels independently */
+  container: vamp-bar / inline-size;
 }
 
 .vamp-tabs__bar::after {
@@ -3529,6 +3596,246 @@ textarea.vamp-editable__input {
 }
 
 
+/* Split view — two panes, draggable divider (ported from Deva) */
+
+.vamp-tabs__label--short {
+  display: none;
+}
+
+/* Threshold ≈ where full labels start ellipsizing; tune by feel in Firefox */
+@container vamp-bar (inline-size < 52rem) {
+  .vamp-tabs__label--full { display: none; }
+  .vamp-tabs__label--short { display: inline; }
+
+  .vamp-tabs__tab {
+    font-size: 1.1rem;
+    padding-inline: 0.4rem;
+  }
+}
+
+.vamp-tabs__split-btn {
+  flex-shrink: 0;
+  inline-size: 2.25rem;
+  margin-inline-start: 0.25rem;
+  background: none;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  position: relative;
+  transition: background 0.15s ease;
+}
+
+.vamp-tabs__split-btn::before {
+  content: '';
+  position: absolute;
+  inset: 30% 26%;
+  background: var(--v-text-muted);
+  -webkit-mask-image: url(/assets/images/vamp/split.svg);
+  mask-image: url(/assets/images/vamp/split.svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  transition: background 0.15s ease;
+}
+
+.vamp-tabs__split-btn:hover {
+  background: var(--v-accent-subtle);
+}
+
+.vamp-tabs__split-btn:hover::before {
+  background: var(--v-text-primary);
+}
+
+.vamp-tabs__split-btn--active::before {
+  background: var(--v-text-accent);
+}
+
+/* The 2px middle column IS the divider; minmax(0, fr) keeps long content from blowing the ratio */
+.vamp-tabs--split {
+  display: grid;
+  grid-template-columns: minmax(0, var(--split-left, 1fr)) 2px minmax(0, var(--split-right, 1fr));
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.vamp-tabs--split > .vamp-tabs__bar-row--a {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.vamp-tabs--split > .vamp-tabs__bar-row--b {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.vamp-tabs--split > .vamp-tabs__panel--a {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.vamp-tabs--split > .vamp-tabs__panel--b {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+/* Pane-width container queries drive content reflow; registered in split mode only,
+   so normal-mode layout is untouched. The pane's font-size tracks the text rocker
+   purely so the em-based query below scales with it (bigger text → earlier reflow);
+   the child reset re-anchors actual content at the normal 1rem base. */
+.vamp-tabs--split > .vamp-tabs__panel {
+  min-inline-size: 0;
+  font-size: calc(1rem * var(--v-text-scale));
+  container: vamp-pane / inline-size;
+}
+
+.vamp-tabs--split > .vamp-tabs__panel > * {
+  font-size: 1rem;
+}
+
+.vamp-tabs__divider {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  cursor: col-resize;
+  position: relative;
+  z-index: 1;
+  touch-action: none;
+  --divider-color: var(--v-text-secondary);
+  opacity: 0.5;
+  background: repeating-linear-gradient(0deg,
+    var(--divider-color) 0 3px, transparent 3px 6px,
+    var(--divider-color) 6px 16px, transparent 16px 19px,
+    var(--divider-color) 19px 29px, transparent 29px 32px,
+    var(--divider-color) 32px 35px, transparent 35px 38px,
+    var(--divider-color) 38px 48px, transparent 48px 51px
+  );
+  transition: opacity 0.15s ease;
+}
+
+.vamp-tabs__divider:hover,
+.vamp-tabs__divider:active {
+  opacity: 1;
+  --divider-color: var(--v-accent);
+}
+
+/* Invisible ±7px grab zone */
+.vamp-tabs__divider::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline: -7px;
+}
+
+/* Centered handle pip, fades in on hover */
+.vamp-tabs__divider::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  translate: -50% -50%;
+  inline-size: 4px;
+  block-size: 32px;
+  border-radius: 2px;
+  background: var(--v-accent);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.vamp-tabs__divider:hover::after {
+  opacity: 1;
+}
+
+/* Split-button mode: one bar spans both panes; the divider only crosses the content row */
+
+.vamp-tabs--split-button > .vamp-tabs__bar-row--sb {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.vamp-tabs--split-button > .vamp-tabs__divider {
+  grid-row: 2;
+}
+
+/* No sliding underline here — the warm/cool tints carry the active state */
+.vamp-tabs__bar--sb::after {
+  display: none;
+}
+
+.vamp-split-tab {
+  position: relative;
+  text-align: center;
+}
+
+.vamp-split-tab__half {
+  position: absolute;
+  inset-block: 0;
+  inline-size: 50%;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.vamp-split-tab__half--a { inset-inline-start: 0; }
+.vamp-split-tab__half--b { inset-inline-end: 0; }
+
+/* Pane tints hue-shift the live accent (custom themes included): A warm, B cool.
+   Active = full tint, hovering an inactive half = half-strength preview. */
+.vamp-split-tab::before,
+.vamp-split-tab::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  pointer-events: none;
+}
+
+.vamp-split-tab::before {
+  background: linear-gradient(90deg,
+    hsl(from var(--v-accent) calc(h - 25) calc(s + 10) calc(l - 8) / 0.5),
+    transparent 75%);
+}
+
+.vamp-split-tab::after {
+  background: linear-gradient(270deg,
+    hsl(from var(--v-accent) calc(h + 25) calc(s - 5) calc(l + 10) / 0.5),
+    transparent 75%);
+}
+
+.vamp-split-tab--a::before { opacity: 1; }
+.vamp-split-tab--b::after { opacity: 1; }
+
+.vamp-split-tab:has(.vamp-split-tab__half--a:hover):not(.vamp-split-tab--a)::before { opacity: 0.5; }
+.vamp-split-tab:has(.vamp-split-tab__half--b:hover):not(.vamp-split-tab--b)::after { opacity: 0.5; }
+
+.vamp-split-tab--a,
+.vamp-split-tab--b {
+  color: var(--v-text-accent);
+}
+
+.vamp-tabs__split-btn--to-sb::before {
+  -webkit-mask-image: url(/assets/images/vamp/split-b.svg);
+  mask-image: url(/assets/images/vamp/split-b.svg);
+}
+
+/* Exit icon: one plain pane, no mask needed */
+.vamp-tabs__split-btn--to-off::before {
+  -webkit-mask: none;
+  mask: none;
+  inset: 28% 34%;
+  border-radius: 1px;
+}
+
+.vamp-tabs__split-btn--merged::before {
+  background: var(--v-text-muted);
+}
+
+/* Squeezed-pane reflow rules live at the END of this file (cascade: equal specificity) */
+
+
 .vamp-placeholder {
   padding: 1.5rem;
   text-align: center;
@@ -3561,28 +3868,63 @@ textarea.vamp-editable__input {
 /* Bane & Compulsion conjoined */
 
 .vamp-bane-compulsion {
-  display: flex;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 1.5rem;
+  row-gap: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--v-border) 60%, transparent);
   border-radius: var(--v-radius-md);
   padding: 0.35rem 0.65rem;
   background: color-mix(in srgb, var(--v-bg-sunken) 40%, transparent);
 }
 
-.vamp-bane-compulsion__col {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.vamp-bane-compulsion__col > .vamp-perk {
+.vamp-bane-compulsion > .vamp-perk {
+  min-inline-size: 0;
   padding: 0;
   border-bottom: none;
+  position: relative;
 }
 
-.vamp-bane-compulsion__col .vamp-perk__header {
+/* Per-item dividers (not a container stripe) keep the full-width Compulsion row clean */
+.vamp-bane-compulsion > .vamp-perk:nth-child(even)::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(-0.75rem - 1px);
+  inline-size: 2px;
+  opacity: 0.35;
+  background: repeating-linear-gradient(0deg,
+    var(--v-text-secondary) 0 3px, transparent 3px 6px,
+    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
+    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
+    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
+    var(--v-text-secondary) 38px 48px, transparent 48px 51px
+  );
+}
+
+.vamp-bane-compulsion--even > .vamp-bane-compulsion__compulsion {
+  grid-column: 1 / -1;
+  padding-block-start: 0.55rem;
+}
+
+/* Horizontal rule stands in for the column divider above the full-width Compulsion */
+.vamp-bane-compulsion--even > .vamp-bane-compulsion__compulsion::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  block-size: 2px;
+  opacity: 0.35;
+  background: repeating-linear-gradient(90deg,
+    var(--v-text-secondary) 0 3px, transparent 3px 6px,
+    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
+    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
+    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
+    var(--v-text-secondary) 38px 48px, transparent 48px 51px
+  );
+}
+
+.vamp-bane-compulsion .vamp-perk__header {
   gap: 0.3rem;
 }
 
@@ -4814,6 +5156,14 @@ details[open] > .vamp-detail__summary::before {
   min-height: 0;
   display: flex;
   flex-direction: column;
+  container: vamp-content / inline-size;
+}
+
+/* No room to split: hide the entry button (exit stays reachable if already split or merged) */
+@container vamp-content (inline-size < 36rem) {
+  .vamp-tabs:not(.vamp-tabs--split):not(.vamp-tabs--merged) .vamp-tabs__split-btn {
+    display: none;
+  }
 }
 
 .guide-spotlight .vamp-section {
@@ -7053,6 +7403,35 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 }
 
 
+/* Force-indent rendered-markdown lists everywhere; the global reset zeroes the
+   browser's native list padding, and the per-container rules were too timid */
+
+.vamp-perk__text ul,
+.vamp-perk__text ol,
+.vamp-note__preview ul,
+.vamp-note__preview ol,
+.vamp-note-max__rendered ul,
+.vamp-note-max__rendered ol,
+.vamp-editable--markdown ul,
+.vamp-editable--markdown ol,
+.vamp-disc__intro ul,
+.vamp-disc__intro ol,
+.vamp-disc__perk-body ul,
+.vamp-disc__perk-body ol,
+.vamp-power__body ul,
+.vamp-power__body ol,
+.vamp-rpanel-scroll ul,
+.vamp-rpanel-scroll ol,
+.vamp-rpanel-field__body ul,
+.vamp-rpanel-field__body ol,
+.vamp-rules-body ul,
+.vamp-rules-body ol,
+.vamp-move-tier__content ul,
+.vamp-move-tier__content ol {
+  padding-inline-start: 2rem;
+}
+
+
 @media (max-width: 48rem) {
   .vamp-sheet {
     grid-template-columns: 1fr;
@@ -7090,13 +7469,19 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
     padding-left: 0;
   }
 
-  .vamp-perks-split,
-  .vamp-bane-compulsion {
+  .vamp-perks-split {
     flex-direction: column;
   }
 
-  .vamp-perks-split > .vamp-merits-flaws__divider,
-  .vamp-bane-compulsion > .vamp-merits-flaws__divider {
+  .vamp-perks-split > .vamp-merits-flaws__divider {
+    display: none;
+  }
+
+  .vamp-bane-compulsion {
+    grid-template-columns: 1fr;
+  }
+
+  .vamp-bane-compulsion > .vamp-perk:nth-child(even)::before {
     display: none;
   }
 
@@ -7111,6 +7496,38 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
   .vamp-vitals__grid > :nth-child(3) {
     grid-row: auto;
     grid-column: 1 / -1;
+  }
+}
+
+/* Split-pane reflow. Em deliberately: resolves against the pane's rocker-scaled
+   font-size, so larger text reflows sooner. Must stay after the component base rules. */
+@container vamp-pane (inline-size < 40em) {
+  .vamp-perks-split {
+    flex-direction: column;
+  }
+
+  .vamp-perks-split > .vamp-merits-flaws__divider {
+    display: none;
+  }
+
+  .vamp-bane-compulsion {
+    grid-template-columns: 1fr;
+  }
+
+  .vamp-bane-compulsion > .vamp-perk:nth-child(even)::before {
+    display: none;
+  }
+
+  .vamp-paired--grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vamp-debts-split {
+    grid-template-columns: 1fr;
+  }
+
+  .vamp-debts-split__divider {
+    display: none;
   }
 }
 
@@ -7324,22 +7741,19 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
   background: none;
   border: none;
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity var(--v-transition);
 }
-
-.vamp-settings-gear:hover,
-.vamp-settings-gear--active { opacity: 1; }
 
 .vamp-settings-gear__icon {
   display: block;
   inline-size: 1.5rem;
   block-size: 1.5rem;
-  background: var(--v-text-secondary);
+  background: var(--v-header-idle);
   -webkit-mask: url("/assets/images/gear.svg") center / contain no-repeat;
   mask: url("/assets/images/gear.svg") center / contain no-repeat;
+  transition: background var(--v-transition);
 }
 
+.vamp-settings-gear:hover .vamp-settings-gear__icon,
 .vamp-settings-gear--active .vamp-settings-gear__icon { background: var(--v-accent); }
 
 @media (prefers-reduced-motion: no-preference) {

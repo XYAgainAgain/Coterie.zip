@@ -128,6 +128,8 @@ export interface CharacterState {
   bloodSurgesUsed: number;
   /* Advantages banked from the current Blood Surge, spent at-will this scene. Resets on New Scene. */
   bloodSurgeAdvantages: number;
+  /* Quick Heal is 1/scene. Resets on New Scene/New Night; absent on old docs = false. */
+  quickHealUsedThisScene?: boolean;
 }
 
 export const NOTEBOOK_HELP_ID = '1998';
@@ -594,6 +596,7 @@ export function newScene() {
       && !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)
     ),
     bloodSurgeAdvantages: 0,
+    quickHealUsedThisScene: false,
     initiative: '',
     combatNotes: '',
   };
@@ -760,6 +763,7 @@ export function newNight(fedLastNight = false): SlumberHealOutcome {
     harm: { superficial: heal.superficial, aggravated: heal.aggravated },
     bloodSurgesUsed: 0,
     bloodSurgeAdvantages: 0,
+    quickHealUsedThisScene: false,
     modifiers: character.value.modifiers.filter(m => !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)),
   };
   return heal;

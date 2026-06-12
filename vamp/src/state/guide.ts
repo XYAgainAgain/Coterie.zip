@@ -7,7 +7,7 @@ import {
   currentStepWarning,
 } from './creation';
 import { TOUR_STEPS } from './tour';
-import type { RPanelTab } from './panel';
+import { splitMode, type RPanelTab, type ContentTab } from './panel';
 
 export type GuidePhase = 'creation' | 'tour';
 
@@ -21,7 +21,7 @@ export interface GuideStep {
   zone: GuideZone;
   label: string;
   message: string;
-  contentTab: number | null;
+  contentTab: ContentTab | null;
   rightTab: RPanelTab | null;
   creationStep?: CreationStep;
 }
@@ -33,7 +33,7 @@ function buildCreationGuideSteps(): GuideStep[] {
     zone: STEP_ZONE[cs] as GuideZone,
     label: STEP_LABELS[cs],
     message: STEP_MESSAGES[cs],
-    contentTab: cs === 'convictions' ? 0 : cs === 'disciplines' ? 1 : null,
+    contentTab: cs === 'convictions' ? 'vitals' : cs === 'disciplines' ? 'disciplines' : null,
     rightTab: cs === 'xp' ? 'advancement' as RPanelTab
       : ['playbook', 'age', 'predator'].includes(cs) ? 'character' as RPanelTab
       : null,
@@ -80,6 +80,9 @@ export const isTourPhase = computed(() =>
 
 export function startGuide() {
   guideActive.value = true;
+  /* The guide drives pane A only and the spotlight unions every .guide-spotlight rect,
+     so a second mounted pane would double-match targets. Split view sits out the tour. */
+  splitMode.value = 'off';
   creationMode.value = true;
   namePromptAnswered.value = false;
   let saved = character.value.creationStep as CreationStep;
@@ -92,6 +95,7 @@ export function startGuide() {
 
 export function resumeGuideForTour() {
   guideActive.value = true;
+  splitMode.value = 'off';
   const tourStart = ALL_GUIDE_STEPS.findIndex(s => s.phase === 'tour');
   guideStepIndex.value = tourStart >= 0 ? tourStart : 0;
 }

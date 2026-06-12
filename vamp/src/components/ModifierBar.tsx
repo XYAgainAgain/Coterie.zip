@@ -151,7 +151,7 @@ function HoldZone() {
           onClick={quickAddHold}
           aria-label="Add Hold counter"
           title="Add Hold counter"
-        >+H</button>
+        >{holds.length === 0 ? '+HOLD' : '+H'}</button>
       )}
     </div>
   );

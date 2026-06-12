@@ -1578,7 +1578,7 @@ function AdvancementPanel() {
 
   function handleUnlockAccess() {
     enterDisciplineBuyMode();
-    switchContentTab(1);
+    switchContentTab('disciplines');
   }
 
   const basicMoves = data?.basicMoves ?? [];

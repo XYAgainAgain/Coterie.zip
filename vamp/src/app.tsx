@@ -50,6 +50,18 @@ Promise.all([
     dataError.value = err instanceof Error ? err.message : String(err);
   });
 
+/* Neon-sign startup flicker, capped to once per 3s; re-hovers inside the
+   cooldown get the plain hover glow */
+let lastTitleFlicker = -Infinity;
+function titleNeonFlicker(e: MouseEvent) {
+  /* reduced-motion disables the animation, so animationend would never clear the class */
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const now = performance.now();
+  if (now - lastTitleFlicker < 3000) return;
+  lastTitleFlicker = now;
+  (e.currentTarget as HTMLElement).classList.add('vamp-header__title--flicker');
+}
+
 export function App() {
   return (
     <div class="vamp-app">
@@ -57,7 +69,13 @@ export function App() {
       <div class="ambient-blob ambient-blob--bottom" aria-hidden="true" />
       <div class="ambient-smoke" aria-hidden="true" />
       <header class="vamp-header">
-        <span class="vamp-header__title">Vamp</span>
+        <a
+          class="vamp-header__title"
+          href="/vamp/"
+          title="Back to your characters"
+          onMouseEnter={titleNeonFlicker}
+          onAnimationEnd={e => (e.currentTarget as HTMLElement).classList.remove('vamp-header__title--flicker')}
+        >Vamp</a>
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
         <div class={`vamp-header__controls ${guideActive.value && currentGuideStep.value?.zone === 'header' ? 'guide-spotlight' : ''}`}>

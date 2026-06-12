@@ -1,6 +1,6 @@
 import { signal, computed } from '@preact/signals';
 import { updateCharacter } from './character';
-import type { RPanelTab } from './panel';
+import type { RPanelTab, ContentTab } from './panel';
 
 export type TourStop =
   | 'vitals'
@@ -20,7 +20,7 @@ export type TourZone = 'vitals' | 'toolbar-left' | 'toolbar-right' | 'content' |
 export interface TourStepDef {
   id: TourStop;
   zone: TourZone;
-  contentTab: number | null;
+  contentTab: ContentTab | null;
   rightTab: RPanelTab | null;
   label: string;
   message: string;
@@ -54,7 +54,7 @@ export const TOUR_STEPS: TourStepDef[] = [
   {
     id: 'possessions',
     zone: 'content',
-    contentTab: 2,
+    contentTab: 'possessions',
     rightTab: null,
     label: 'Possessions',
     message: "This is where all your gear and stuff is stashed. You can add it, toss it, sort it, bag it, tag it, or just leave it lying around the Haven somewhere for your fellow Coterie members to use.",
@@ -62,7 +62,7 @@ export const TOUR_STEPS: TourStepDef[] = [
   {
     id: 'clocks-debts',
     zone: 'content',
-    contentTab: 3,
+    contentTab: 'clocks',
     rightTab: null,
     label: 'Clocks & Debts',
     message: "This is where you keep track of Clocks (which increment at certain fictional points) and Debts (which are leverage over you or others). Be sure to keep an eye on these! Watch the Masquerade Clock tick up into scary red territory, then double-click it to clear it. Your whole Coterie shares a Masquerade Clock, but the rest are yours. Any Debts you start with must be entered at character creation, and you can edit them anytime. These are all publicly visible.",
@@ -70,7 +70,7 @@ export const TOUR_STEPS: TourStepDef[] = [
   {
     id: 'notebook',
     zone: 'content',
-    contentTab: 4,
+    contentTab: 'notebook',
     rightTab: null,
     label: 'Notebook',
     message: "Here, you can write, sort, pin, and delete markdown-formatted notes about whatever you want. These are private and synced per-character. There is always a reference note that resets when you click the New Session button, too, in case you need formatting help.",

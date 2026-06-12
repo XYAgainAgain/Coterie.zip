@@ -1,7 +1,7 @@
 import { h } from 'preact';
 import {
   clearForwards, consumeArmedSurge, bankBloodSurge, bloodSurgeActive, character,
-  setHunger, setHumanity, setHarm, resolveRemorse, superficialHealAmount,
+  setHunger, setHumanity, setHarm, resolveRemorse, superficialHealAmount, updateCharacter,
 } from '../state/character';
 import { forceToast } from '../state/toasts';
 import { netAdvantage, bloodSurgesRemaining } from '../state/derived';
@@ -322,6 +322,7 @@ export async function performQuickHeal(): Promise<boolean | null> {
   const char = character.value;
   if (char.playbook === 'Ghoul') return null;
   if (char.harm.superficial === 0) return null;
+  if (char.quickHealUsedThisScene) return null;
   if (rolling) return null;
   rolling = true;
   try {
@@ -333,6 +334,7 @@ export async function performQuickHeal(): Promise<boolean | null> {
     const newSuperficial = Math.max(0, char.harm.superficial - maxHeal);
     const healed = char.harm.superficial - newSuperficial;
     setHarm(newSuperficial, char.harm.aggravated);
+    updateCharacter({ quickHealUsedThisScene: true });
     const message = h('span', { class: 'vamp-roll-toast' },
       ...checkDiceSpans(check),
       h('span', { class: 'vamp-roll-toast__outcome' }, `Healed ${healed} (max. ${maxHeal}) Superficial`),

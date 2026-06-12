@@ -74,6 +74,9 @@
   /* Reader-controlled content-text scale (rocker). Chrome/labels opt out by not using it. */
   --v-text-scale: 1;
 
+  /* Header control idle color; white to match the eye SVGs' invert(1) in every theme */
+  --v-header-idle: #fff;
+
   --v-radius-sm: 0.25rem;
   --v-radius-md: 0.5rem;
   --v-radius-lg: 0.75rem;
