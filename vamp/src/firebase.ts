@@ -81,9 +81,16 @@ export async function handleEmailLinkRedirect(): Promise<boolean> {
       } catch (err: unknown) {
         const code = err instanceof Error && 'code' in err ? (err as { code: string }).code : '';
         if (code === 'auth/email-already-in-use' || code === 'auth/credential-already-in-use') {
-          /* The email already belongs to an account, so this signs IN rather than
-             linking — the anonymous session (and any characters it owns) is left
-             behind. Warn, since those characters need a manual ownership transfer. */
+          /* Signing in (not linking) abandons the anon session and its characters */
+          const proceed = window.confirm(
+            'This email already has an account. Signing in will switch to it, and any '
+            + 'characters created in this browser while signed out will be left behind '
+            + '(Sam can transfer them later). Continue?',
+          );
+          if (!proceed) {
+            showToast('Sign-in cancelled. You are still on your signed-out session.', 'warning');
+            return false;
+          }
           await signInWithEmailLink(auth, email, window.location.href);
           showToast('Signed in to your existing account. Any characters created while signed out are not attached to it — tell Sam if one is missing.', 'warning');
         } else {

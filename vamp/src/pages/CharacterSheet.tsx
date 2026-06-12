@@ -24,7 +24,7 @@ import {
   performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge,
 } from '../dice/rollMove';
 import { editMode, viewingOtherSheet, portraitMinimized } from '../state/ui';
-import { masqueradeClock, fillMasquerade, unfillMasquerade } from '../state/coterie';
+import { masqueradeClock, fillMasquerade, unfillMasquerade, coterieState } from '../state/coterie';
 import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
@@ -34,7 +34,7 @@ import {
 import { switchTab, openMove, activeContentTab } from '../state/panel';
 import { showToast } from '../state/toasts';
 import { renderGameMarkdown, resolveSnippetTokens, type SnippetContext } from '../data/transforms';
-import { activeCharacterId, loadCharacter, flushSave } from '../state/persistence';
+import { activeCharacterId, activeCoterie, loadCharacter, flushSave } from '../state/persistence';
 import { creationMode, creationStep, stepComplete, STEP_ZONE } from '../state/creation';
 import { type TourZone } from '../state/tour';
 import {
@@ -1512,6 +1512,20 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     const urls = character.value.portraits.map(p => p.url);
     preloadPortraits(urls);
   }, [slug]);
+
+  /* Canonicalize to /vamp/{code}/{rosterSlug}; replaceState is invisible to preact-router */
+  const coterieCode = activeCoterie.value;
+  /* Keyed on the slug prop, not activeCharacterId (stale mid-navigation and on /vamp/new) */
+  const rosterSlug = coterieCode && slug && slug !== 'new'
+    ? coterieState.value.members.find(m => m.characterId === slug)?.slug
+    : undefined;
+  useEffect(() => {
+    if (isViewing || !coterieCode || !rosterSlug) return;
+    const clean = `/vamp/${coterieCode}/${rosterSlug}`;
+    if (window.location.pathname !== clean) {
+      window.history.replaceState(null, '', clean);
+    }
+  }, [isViewing, coterieCode, rosterSlug]);
 
   /* Short viewports (720p, or a zoomed-in larger screen) can't fit the full portrait plus
      the stat column. Default the portrait minimized when one is set; manual expand sticks

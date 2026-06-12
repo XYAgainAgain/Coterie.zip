@@ -3,6 +3,7 @@ import { signal } from '@preact/signals';
 import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
 import { CharacterViewer } from './pages/CharacterViewer';
+import { CoterieCharacterRoute } from './pages/CoterieCharacterRoute';
 import { EyeToggle } from './components/EyeToggle';
 import { TextRocker } from './components/TextRocker';
 import { EmailLinkPrompt } from './components/EmailLinkPrompt';
@@ -92,7 +93,7 @@ export function App() {
           <Router>
             <Route path="/vamp/" component={CharacterList} />
             <Route path="/vamp/view/:charId" component={CharacterViewer} />
-            <Route path="/vamp/:coterieCode/:charSlug" component={CharacterViewer} />
+            <Route path="/vamp/:coterieCode/:charSlug" component={CoterieCharacterRoute} />
             <Route path="/vamp/:slug" component={CharacterSheet} />
           </Router>
         )}

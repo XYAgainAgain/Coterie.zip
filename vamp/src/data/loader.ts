@@ -21,7 +21,9 @@ async function fetchJSON<T>(name: string): Promise<T> {
   const cached = cache.get(name);
   if (cached) return cached as T;
 
-  const res = await fetch(`./data/${name}.json`);
+  /* Anchored to the app base; a relative './' resolves against two-segment
+     URLs like /vamp/{code}/{slug} and 404s on cold cache */
+  const res = await fetch(`${import.meta.env.BASE_URL}data/${name}.json`);
   if (!res.ok) throw new Error(`Failed to load ${name}.json: ${res.status} ${res.statusText}`);
 
   const data = await res.json() as T;

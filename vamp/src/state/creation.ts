@@ -37,7 +37,7 @@ export const STEP_LABELS: Record<CreationStep, string> = {
 };
 
 export const STEP_MESSAGES: Record<CreationStep, string> = {
-  name: "Do you know who you are creating? If so, enter a name and a URL for a character portrait. It must point to an image (Discord URLs work just fine!), and you can also enter any other personal info you would like to include in the fields below by double-clicking them.",
+  name: "Do you know who you are creating? If so, enter a name and a URL for a character portrait. It must point to an image hosted somewhere stable like Imgur (avoid Discord links — they expire after a few days!), and you can also enter any other personal info you would like to include in the fields below by double-clicking them.",
   playbook: "If you have not yet chosen a Playbook, you must do that. There are 22 to choose from; feel free to explore them here or on the main site, and select one that suits your character. This will give you access to Disciplines, along with assigning a Bane, Compulsion, and XP triggers.",
   age: "You will need to determine your age (which also determines your starting Blood Potency). Semimortal works only for Ghouls and Thin-Bloods. If you choose to play any other type of character, feel free to choose whichever one makes the most sense, but remember: higher BP does not always equal better! There are major trade-offs!",
   predator: "Now you must select how you **Hunt** for prey. This will give you access to an additional Discipline, or possibly duplicate one of the ones already available to you, and will determine which stat you use for the **Hunt** Basic Move. They also grant a Merit and a Flaw each, and some even affect your starting Humanity.",

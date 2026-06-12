@@ -139,6 +139,10 @@ function PortraitUrlForm({ portraits, onDone }: { portraits: Portrait[]; onDone:
         const existing = portraits.find(p => p.url === url);
         return existing ?? { url, x: 50, y: 50, scale: 1 };
       });
+    /* Discord CDN links carry expiry params and die within days */
+    if (valid.some(p => /(?:media|cdn)\.discordapp\.(?:net|com)/i.test(p.url))) {
+      showToast('Discord image links expire after a few days! Re-upload your portrait to a host like Imgur and use that URL instead.', 'warning');
+    }
     updateCharacter({ portraits: valid });
     onDone();
   }

@@ -29,7 +29,7 @@ export async function loadGameDataCached(): Promise<{
 
 async function fetchGeneratedAt(): Promise<string | null> {
   try {
-    const res = await fetch('./data/playbooks.json');
+    const res = await fetch(`${import.meta.env.BASE_URL}data/playbooks.json`);
     if (!res.ok) return null;
     const json = await res.json();
     return json.generatedAt ?? null;

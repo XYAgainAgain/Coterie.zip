@@ -536,6 +536,22 @@ async function syncMemberToCoterie(
   slug: string,
 ): Promise<void> {
   try {
+    const firstPortrait = state.portraits[0]?.url ?? null;
+    const pronouns = state.bio.pronouns.filter(Boolean).join('/');
+
+    /* Each write costs ~1 read per online player; skip when nothing roster-visible
+       changed (slug excluded — the roster holds the deduped form) */
+    const current = coterieState.value.members.find(m => m.characterId === characterId);
+    if (current
+      && current.name === (state.name || 'Unnamed')
+      && current.pronouns === (pronouns || '?/?')
+      && current.portraitUrl === firstPortrait
+      && current.ageBracket === state.ageBracket
+      && current.bp === state.bp
+      && current.playbook === state.playbook) {
+      return;
+    }
+
     const coterieRef = doc(db, 'coteries', coterieId);
 
     await runTransaction(db, async (txn) => {
@@ -544,8 +560,6 @@ async function syncMemberToCoterie(
 
       const data = coterieSnap.data();
       const members: CoterieMember[] = data.members ?? [];
-      const firstPortrait = state.portraits[0]?.url ?? null;
-      const pronouns = state.bio.pronouns.filter(Boolean).join('/');
 
       const dedupedSlug = dedupeSlug(slug, characterId, members);
 
@@ -605,8 +619,14 @@ export function startAutoSave(): void {
       void masqueradeClock.value;
       const id = activeCoterie.value;
       if (!id) return;
-      if (coterieSaveTimer) clearTimeout(coterieSaveTimer);
-      coterieSaveTimer = setTimeout(() => { saveCoterie(); }, 2000);
+      /* Local edits only: saving on bare signal change looped write→snapshot→write
+         in every open tab (the 2026-06-11 136K-read quota blowout) */
+      if (!coterieDirty.value && !masqueradeDirty.value) return;
+      /* Schedule-once: resetting a pending timer would let busy-group roster
+         snapshots starve the save indefinitely */
+      if (!coterieSaveTimer) {
+        coterieSaveTimer = setTimeout(() => { coterieSaveTimer = null; saveCoterie(); }, 2000);
+      }
     });
   }
 }
@@ -633,6 +653,37 @@ export async function flushSave(): Promise<void> {
    when nothing is pending thanks to the lastSavedJson dedup. */
 window.addEventListener('pagehide', () => { void flushSave(); });
 
+/* Resolve /vamp/{code}/{slug} → character ID + ownership; owners skip the membership gate */
+export async function resolveCoterieCharacter(
+  rawCoterieCode: string,
+  charSlug: string,
+): Promise<{ characterId: string; isOwner: boolean }> {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error('Not authenticated');
+
+  const coterieCode = rawCoterieCode.trim().toUpperCase();
+  const coterieSnap = await getDoc(doc(db, 'coteries', coterieCode));
+  if (!coterieSnap.exists()) throw new Error(`Coterie "${coterieCode}" not found`);
+
+  const coterieData = coterieSnap.data();
+  const members: CoterieMember[] = coterieData.members ?? [];
+  const member = members.find(m => m.slug === charSlug);
+  if (!member) throw new Error(`No character "${charSlug}" found in this Coterie`);
+
+  const charSnap = await getDoc(doc(db, 'characters', member.characterId));
+  if (!charSnap.exists()) throw new Error('Character document not found');
+
+  const isOwner = charSnap.data().ownerId === uid;
+  if (!isOwner) {
+    const memberUids: string[] = coterieData.memberUids ?? [];
+    if (!memberUids.includes(uid)) {
+      throw new Error("Sorry, you don't have permission to peek at this sheet! Try another coffin.");
+    }
+  }
+
+  return { characterId: member.characterId, isOwner };
+}
+
 /* Load a character for read-only viewing via Coterie-scoped slug.
    Resolves coterieCode + slug → character doc. Verifies membership. */
 export async function loadCharacterForViewing(
@@ -648,7 +699,9 @@ export async function loadCharacterForViewing(
 
   const coterieData = coterieSnap.data();
   const memberUids: string[] = coterieData.memberUids ?? [];
-  if (!memberUids.includes(uid)) throw new Error('You are not a member of this Coterie');
+  if (!memberUids.includes(uid)) {
+    throw new Error("Sorry, you don't have permission to peek at this sheet! Try another coffin.");
+  }
 
   const members: CoterieMember[] = coterieData.members ?? [];
   const member = members.find(m => m.slug === charSlug);
