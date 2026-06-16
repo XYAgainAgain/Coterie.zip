@@ -420,7 +420,7 @@ If you're the type who burns other people's sacred objects regularly, maybe thin
 
 You grind the ingredients together while humming a discordant, droning tune (or any alt-J song), pour in a mouthful of your own Vitae, and gain +1 Hunger. Then you paint the resulting paste onto your skin in aggressive spiraling patterns that glow faintly before sinking into your flesh.
 
-For the next full night and day, you carry the fortification of ancient war-spirits under your skin. Any Harm that would put you into Torpor instead reduces you to 1 HP, and you gain +1 Forward whenever you **Stay Chill** against fear-based Frenzy of any kind. The symbols are invisible to mortal eyes but visible to anyone using ***Sense the Unseen*** or similar supernatural perception.
+For the next full night and day, you carry the fortification of ancient war-Spirits under your skin. Any Harm that would put you into Torpor instead reduces you to 1 HP, and you gain +1 Forward whenever you **Stay Chill** against fear-based Frenzy of any kind. The symbols are invisible to mortal eyes but visible to anyone using ***Sense the Unseen*** or similar supernatural perception.
 
 This Ritual hails from old pagan Gangrel traditions. Academic Blood Sorcerers find it embarrassing. Gangrel find that hilarious.
 
@@ -564,7 +564,7 @@ If a mortal target has a preexisting anxiety disorder or trauma history, this Ri
 
 ***Requirements:*** *a human corpse or the remains of a destroyed vampire, your Vitae, 1 scene*
 
-You kneel near the corpse, spill your Vitae across its chest, and gain +1 Hunger. The blood seeps into the body and the psychic residue of the deceased stirs to life. An echo of the person imprinted in their remains (notably, this is *not* a ghost nor Spirit). The echo speaks, answers questions, and behaves as the deceased did in life, drawing on memories up to the exact moment of death.
+You kneel near the corpse, spill your Vitae across its chest, and gain +1 Hunger. The blood seeps into the body and the psychic residue of the deceased stirs to life. An echo of the person imprinted in their remains (notably, this is *not* a Ghost nor Spirit). The echo speaks, answers questions, and behaves as the deceased did in life, drawing on memories up to the exact moment of death.
 
 The echo persists for 1 scene and cannot leave Close Range of the corpse. It has no will, no emotions, and no awareness that it's dead; it simply responds as the person would have. This is not communication with the dead in the Oblivion sense. ***Sense the Unseen*** won't detect it. It's a blood-powered playback, and it can't tell you anything the deceased didn't know.
 
@@ -608,7 +608,7 @@ The blood donor doesn't lose their skill. The subject doesn't even need to be al
 
 You dig a shallow pit, tear open your wrist, pour Vitae into the corpse, gain +1 Hunger, eviscerate the remains, and bury the whole mess with your chosen plant material on top. Speak the Ritual's closing words and pack the earth down.
 
-By the next nightfall, the corpse will have disintegrated into blood-scented smoke, leaving no forensic trace whatsoever. The plants above it grow unnaturally fast and hardy, producing blooms and fruit regardless of season. Maintaining the garden costs +1 Hunger once per month, poured directly onto the soil. Miss a feeding and the plants wither and die within days.
+By the next nightfall, the corpse will have disintegrated into blood-scented smoke, leaving no forensic trace whatsoever. The plants above it grow unnaturally fast and hardy, producing blooms and fruit regardless of season. Maintaining the garden costs +1 Hunger once per month, poured directly onto the soil. Miss a single watering and the plants wither and die within days.
 
 Plants from a Viscera Garden have two unusual properties. First, Kindred can actually ingest them without immediately expelling them. The produce tastes like nothing a living person would recognize, but it stays down, and can make for a great change of pace from the usual fare. Second, mortals who consume produce from the garden become unusually susceptible to vampiric social influence; they have Disadvantage on **Stay Chill** rolls against social Discipline Powers until the next dawn.
 

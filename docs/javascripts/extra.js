@@ -431,21 +431,12 @@ window.Coterie.storage = {
   }
 
   function formatEST() {
-    try {
-      const now = new Date();
-      const opts = {
-        timeZone: 'America/New_York',
-        year: 'numeric', month: '2-digit', day: '2-digit',
-        hour: '2-digit', minute: '2-digit', hour12: false,
-        timeZoneName: 'short'
-      };
-      const parts = new Intl.DateTimeFormat('en-US', opts).formatToParts(now);
-      const p = {};
-      parts.forEach(function(x) { p[x.type] = x.value; });
-      return `${p.month}/${p.day}/${p.year} | ${p.hour}:${p.minute} ${p.timeZoneName || 'ET'}`;
-    } catch (e) {
-      return new Date().toLocaleString();
-    }
+    return new Date().toLocaleString('en-US', {
+      timeZone: 'America/New_York',
+      year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', hour12: false,
+      timeZoneName: 'short'
+    });
   }
 
   function buildPopover() {

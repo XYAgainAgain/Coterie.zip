@@ -92,7 +92,7 @@ The secret message must be anything you (the presumably mortal player) could say
 - The hallucination lingers for too long, giving witnesses time to actually investigate
 - If auditory or olfactory, the hallucination issues from your current position instead of as intended
 
-**On a 6-,** the hallucination goes haywire. The Storyteller and any other players at the table get to invent what actually manifests. It's very clearly not real: loud music from a commercial playing slightly detuned, every surface in the room briefly becoming teeth, several copies of Bob Ross shaking hands with each other, or whatever nightmare fuel the table conjures. It's bizarre, it's unmistakable, and everyone present knows something deeply unnatural just occurred. If mortals are present, the Masquerade Clock advances. On the upside, these hallucinations can never be recorded or transmitted, so they'll never end up on the internet.
+**On a 6-,** the hallucination goes haywire. The Storyteller and any other players at the table get to invent what actually manifests. It's very clearly not real: loud music from a commercial playing slightly detuned, every surface in the room briefly becoming teeth, several copies of Bob Ross shaking hands with each other, or whatever nightmare fuel the table conjures. It's bizarre, it's unmistakable, and everyone present knows something highly unnatural just occurred. If mortals are present, the Masquerade Clock advances. On the upside, these hallucinations can never be recorded or transmitted, so they'll never end up on the internet. Small mercies.
 
 ### *Unseen Passage (Passive)*
 

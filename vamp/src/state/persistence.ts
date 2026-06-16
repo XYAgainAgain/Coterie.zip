@@ -4,7 +4,11 @@ import {
   query, where, serverTimestamp, onSnapshot, runTransaction,
 } from 'firebase/firestore';
 import { db, auth, linkedEmail } from '../firebase';
-import { character, type CharacterState, NOTEBOOK_HELP_NOTE } from './character';
+import { character, type CharacterState, BLANK_CHARACTER, removeQtyFromItem, receiveItem, freeContainerChildren } from './character';
+import type { Item, ItemType, Gift } from '../data/types';
+import { isEquippableType } from '../data/itemTags';
+import { giftDisplayName, pickVerb, giftRecipientToast } from '../data/gifts';
+import { forceToast } from './toasts';
 import { coterieState, masqueradeClock, blankCoterie, coterieDirty, masqueradeDirty } from './coterie';
 import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
@@ -92,54 +96,44 @@ function stripMetadata(data: Record<string, unknown>): CharacterState {
     const urls = legacyArr?.length ? legacyArr : legacySingle ? [legacySingle] : [];
     clean.portraits = urls.map((u: string) => ({ url: u, x: 50, y: 50, scale: 1 }));
   }
+  /* Coerce items to the full shape, then heal dead references (orphaned/self/non-container
+     containerId) and stale equip state so the UI never dereferences a missing container. */
+  if (Array.isArray(clean.items)) {
+    const items = (clean.items as Record<string, unknown>[]).map(it => ({
+      id: typeof it.id === 'string' ? it.id : crypto.randomUUID(),
+      name: typeof it.name === 'string' ? it.name : '',
+      type: typeof it.type === 'string' ? it.type : 'Miscellaneous',
+      tags: Array.isArray(it.tags) ? it.tags : [],
+      description: typeof it.description === 'string' ? it.description : '',
+      qty: typeof it.qty === 'number' && it.qty > 0 ? it.qty : 1,
+      equipped: it.equipped === true,
+      isContainer: it.isContainer === true,
+      containerId: typeof it.containerId === 'string' ? it.containerId : null,
+    })) as Item[];
+    const containers = new Set(items.filter(i => i.isContainer).map(i => i.id));
+    for (const it of items) {
+      const cid = it.containerId;
+      /* 'haven' is deliberately NOT valid here: Haven items live in the Coterie doc,
+         never a character doc, so a stray 'haven' is a ghost — heal it to loose. */
+      const valid = cid === null || cid === 'stash'
+        || (cid !== it.id && containers.has(cid));
+      if (!valid) it.containerId = null;
+      if (it.equipped && (it.containerId !== null || !isEquippableType(it.type as ItemType))) {
+        it.equipped = false;
+      }
+    }
+    clean.items = items;
+  }
   return clean as unknown as CharacterState;
 }
 
-export const BLANK_CHARACTER: CharacterState = {
-  name: '',
-  portraits: [],
-  playbook: '',
-  predatorType: '',
-  ageBracket: '',
-  bio: { apparentAge: '', vampiricAge: '', pronouns: ['', ''], height: '', weight: '', style: '', occupation: '' },
-  archetypeName: '',
-  customArchetypeName: '',
-  customArchetypeTagline: '',
-  stats: { Blood: 0, Shadow: 0, Resolve: 0, Demeanor: 0, Wits: 0 },
-  unlockedDisciplines: [],
-  startingDisciplines: [],
-  knownPowers: [],
-  knownProjectPowers: [],
-  advancedMoves: [],
-  pendingUpgrades: [],
-  bp: 0,
-  hunger: 0,
-  humanity: 7,
-  stains: 0,
-  harm: { superficial: 0, aggravated: 0 },
-  xp: 0,
-  xpTriggers: [],
-  debts: [],
-  modifiers: [],
-  convictions: [''],
-  touchstones: [{ name: '', pronouns: ['', ''], ageBracket: '', description: '' }],
-  merits: [],
-  flaws: [],
-  folkloricBanes: [],
-  baneChoice: 'standard',
-  ghoulPatron: null,
-  customTheme: null,
-  creationComplete: false,
-  creationStep: 'name',
-  tourComplete: false,
-  clocks: [],
-  notes: [{ ...NOTEBOOK_HELP_NOTE }],
-  initiative: '',
-  combatNotes: '',
-  bloodSurgesUsed: 0,
-  bloodSurgeAdvantages: 0,
-  quickHealUsedThisScene: false,
-};
+/* Advisory stamp on freshly-saved docs; reads tolerate absent fields, so nothing
+   branches on it. Bumped to 2 when the items array (Possessions) was added. */
+export const SCHEMA_VERSION = 2;
+
+/* Defined in character.ts (so the default signal can use it cycle-free); re-exported
+   here for components that import it from the persistence module. */
+export { BLANK_CHARACTER };
 
 function toSummary(id: string, data: Record<string, unknown>): CharacterSummary {
   return {
@@ -399,7 +393,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
     coterieId: null,
     slug,
     public: false,
-    schemaVersion: 1,
+    schemaVersion: SCHEMA_VERSION,
     updatedAt: Date.now(),
     pendingSync: true,
   };
@@ -412,7 +406,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
       ownerId: uid,
       slug,
       public: false,
-      schemaVersion: 1,
+      schemaVersion: SCHEMA_VERSION,
       coterieId: null,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
@@ -740,13 +734,18 @@ let coterieUnsub: (() => void) | null = null;
 
 function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false) {
   const members = (data.members as CoterieState['members']) ?? [];
+  /* Shared inventory + gift queue are externally owned, so they always apply (like
+     members), regardless of our local dirty state. */
+  const havenItems = (data.havenItems as Item[]) ?? [];
+  const giftQueue = (data.giftQueue as Gift[]) ?? [];
   /* Roster always applies (externally owned). The Clock applies too, except while our increment is in flight, so a stale snapshot can't revert it. */
   if (data.masqueradeClock && !masqueradeDirty.value) {
     masqueradeClock.value = data.masqueradeClock as Clock;
   }
   if (preserveLocalEdits) {
     console.log('[CoterieSync] applyCoterie PRESERVE local; ignoring incoming stats', data.stats);
-    coterieState.value = { ...coterieState.value, members };
+    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue };
+    processGiftQueue();
     return;
   }
   console.log('[CoterieSync] applyCoterie OVERWRITE from server; stats', data.stats, 'haven', data.havenDescription);
@@ -757,7 +756,143 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
     havenPositives: (data.havenPositives as string[]) ?? [],
     havenNegatives: (data.havenNegatives as string[]) ?? [],
     members,
+    havenItems,
+    giftQueue,
   };
+  processGiftQueue();
+}
+
+/* Claim every queued gift addressed to the active character. Idempotent on two axes:
+   the local add keys on the gift id, and the queue-removal transaction no-ops for any
+   client that lost the race. Adding locally BEFORE removing means a crash mid-claim
+   re-claims harmlessly next load rather than dropping the item.
+
+   Loop-safety: runTransaction commits server-side, so the resulting snapshot arrives
+   with hasPendingWrites=false and DOES re-enter applyCoterie → processGiftQueue. The
+   `claiming` guard plus the idempotent "gift already gone → no-op" transaction are what
+   terminate it (the snapshot post-removal shows an empty queue), NOT the echo-skip. Keep
+   the guard. */
+let claiming = false;
+function processGiftQueue(): void {
+  if (claiming) return;
+  const mine = activeCharacterId.value;
+  const coterieId = activeCoterie.value;
+  if (!mine || !coterieId) return;
+  const pending = coterieState.value.giftQueue.filter(g => g.toCharacterId === mine);
+  if (pending.length === 0) return;
+  claiming = true;
+  (async () => {
+    try { for (const gift of pending) await claimGift(gift, coterieId); }
+    finally { claiming = false; }
+  })();
+}
+
+async function claimGift(gift: Gift, coterieId: string): Promise<void> {
+  receiveItem({ ...gift.item, id: gift.id, equipped: false, containerId: null });
+  const ref = doc(db, 'coteries', coterieId);
+  let won = false;
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const queue: Gift[] = snap.data().giftQueue ?? [];
+      if (!queue.some(g => g.id === gift.id)) return;
+      won = true;
+      txn.update(ref, { giftQueue: queue.filter(g => g.id !== gift.id), updatedAt: serverTimestamp() });
+    });
+  } catch { return; }
+  if (won) forceToast(giftRecipientToast(gift), 'success', 'Incoming!');
+}
+
+/* Hand part or all of a stack to a Coterie-mate. Writes the gift to the shared queue
+   first; only on success does the sender's stack shrink, so a failed write can't vanish it. */
+export async function giveItem(itemId: string, toCharacterId: string, amount: number): Promise<void> {
+  const coterieId = activeCoterie.value;
+  const fromId = activeCharacterId.value;
+  if (!coterieId || !fromId) return;
+  const item = character.value.items.find(i => i.id === itemId);
+  if (!item) return;
+  const qty = Math.max(1, Math.min(Math.floor(amount), item.qty));
+
+  const gift: Gift = {
+    id: crypto.randomUUID(),
+    item: { ...item, qty, equipped: false, containerId: null },
+    fromCharacterId: fromId,
+    fromDisplayName: giftDisplayName(character.value.name),
+    toCharacterId,
+    verb: pickVerb(),
+    createdAt: Date.now(),
+  };
+
+  try {
+    const ref = doc(db, 'coteries', coterieId);
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) throw new Error('Coterie not found');
+      const queue: Gift[] = snap.data().giftQueue ?? [];
+      txn.update(ref, { giftQueue: [...queue, gift], updatedAt: serverTimestamp() });
+    });
+  } catch {
+    forceToast('Could not hand that over right now. Try again?', 'warning');
+    return;
+  }
+
+  /* Free a given container's children to loose first, or they'd strand pointing at a
+     parent that's left for the recipient. */
+  if (item.isContainer) freeContainerChildren(itemId);
+  removeQtyFromItem(itemId, qty);
+  const recipient = coterieState.value.members.find(m => m.characterId === toCharacterId)?.name ?? 'them';
+  forceToast(`Gave ${qty > 1 ? `${qty}× ` : ''}your ${item.name} to ${recipient}.`, 'info');
+}
+
+/* Stash the whole stack in the Coterie-shared Haven. A container's children are freed
+   to loose first so they don't strand pointing at a now-departed parent. */
+export async function depositToHaven(itemId: string): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  const item = character.value.items.find(i => i.id === itemId);
+  if (!item) return;
+  const havenItem: Item = { ...item, equipped: false, containerId: 'haven' };
+
+  try {
+    const ref = doc(db, 'coteries', coterieId);
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) throw new Error('Coterie not found');
+      const haven: Item[] = snap.data().havenItems ?? [];
+      txn.update(ref, { havenItems: [...haven, havenItem], updatedAt: serverTimestamp() });
+    });
+  } catch {
+    forceToast('Could not reach the Haven right now. Try again?', 'warning');
+    return;
+  }
+
+  if (item.isContainer) freeContainerChildren(itemId);
+  removeQtyFromItem(itemId, item.qty);
+}
+
+/* Pull an item out of the shared Haven into your own inventory. Idempotent: a stale
+   click re-reads an absent item and no-ops, so two members can't both grab it. */
+export async function withdrawFromHaven(havenItemId: string): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  let taken: Item | null = null;
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const haven: Item[] = snap.data().havenItems ?? [];
+      const found = haven.find(i => i.id === havenItemId);
+      if (!found) return;
+      taken = found;
+      txn.update(ref, { havenItems: haven.filter(i => i.id !== havenItemId), updatedAt: serverTimestamp() });
+    });
+  } catch {
+    forceToast('Could not reach the Haven right now. Try again?', 'warning');
+    return;
+  }
+  if (taken) receiveItem({ ...(taken as Item), containerId: null, equipped: false });
 }
 
 export async function loadCoterie(coterieId: string): Promise<void> {
@@ -778,6 +913,9 @@ export async function loadCoterie(coterieId: string): Promise<void> {
 
 export function stopCoterieListener() {
   if (coterieUnsub) { coterieUnsub(); coterieUnsub = null; }
+  /* Clear the claim guard so a hung in-flight transaction on the old Coterie can't
+     suppress gift processing after a switch. */
+  claiming = false;
 }
 
 export async function saveCoterie(): Promise<void> {
@@ -847,15 +985,7 @@ export async function createCoterie(initial: Partial<CoterieState> = {}): Promis
   const uid = auth.currentUser?.uid;
   if (!uid) throw new Error('Not authenticated');
 
-  const state: CoterieState = {
-    typeName: '',
-    stats: { Clout: 0, Cohesion: 0, Charm: 0, Claim: 0, Currency: 0 },
-    havenDescription: '',
-    havenPositives: [],
-    havenNegatives: [],
-    members: [],
-    ...initial,
-  };
+  const state: CoterieState = { ...blankCoterie(), ...initial };
 
   const code = await generateLobbyCode();
   const ref = doc(db, 'coteries', code);

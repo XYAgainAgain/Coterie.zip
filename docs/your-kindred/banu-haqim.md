@@ -20,7 +20,7 @@ Choose 2 to start: [**Blood Sorcery**](../disciplines/blood-sorcery.md) **| [Cel
 
 ## Bane: *Diablerist's Thirst*
 
-**When you *Feed* from another vampire**, you must immediately **Stay Chill** or enter a feeding Frenzy, attempting to drain them completely and commit Diablerie. On a success, you stop yourself, but take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Stay Chill** and resist **Feeding** from them again until you're too far away to smell them. After 3 successes, you get a hold of yourself and shake off the urge.
+**When you *Feed* from another vampire**, you must immediately **Stay Chill** or enter a **Feeding** Frenzy, attempting to drain them completely and commit Diablerie. On a success, you stop yourself, but take an Ongoing penalty equal to your Blood Potency (minimum 1) to **Stay Chill** and resist **Feeding** from them again until you're too far away to smell them. After 3 successes, you get a hold of yourself and shake off the urge.
 
 ## Compulsion: *Judgment*
 

@@ -114,7 +114,7 @@ Debts are favors owed and favors held. Some Predator Types give you starting Deb
 
 !!! tip "Guidance"
 
-    *Debts are story hooks just as much as they are mechanics. "You owe me" should come with a reason: I covered up your feeding Frenzy, I introduced you to my Sire, I lied to the Sheriff for you. Make them specific and make them hurt.*
+    *Debts are story hooks just as much as they are mechanics. "You owe me" should come with a reason: I covered up your Frenzy, I introduced you to my Sire, I lied to the Sheriff for you. Make them specific and make them hurt.*
 
 ### 7. Decide on Disciplines
 
@@ -175,7 +175,7 @@ Now comes the hard part: unliving with other vampires. You'll need to work as a 
 | **[Fortitude](../disciplines/fortitude.md)** | Strengthens the user's physical and mental resistance, and grants extra HP. | [Daughter of Cacophony](daughter-of-cacophony.md), [Gangrel](gangrel.md), [Hecata](hecata.md), [Salubri](salubri.md), [Ventrue](ventrue.md) |
 | **[Melpominee](../disciplines/melpominee.md)** | The art of the supernatural voice, allowing practitioners to weaponize speech, song, and sound itself; from throwing phantom whispers across a city to shattering glass and minds alike with a firm note. | [Daughter of Cacophony](daughter-of-cacophony.md) |
 | **[Obfuscate](../disciplines/obfuscate.md)** | The art of invisibility, even in crowds, either through being wholly unseen or by blending in. | [Banu Haqim](banu-haqim.md), [Malkavian](malkavian.md), [The Ministry](the-ministry.md), [Nosferatu](nosferatu.md), [Ravnos](ravnos.md) |
-| **[Oblivion](../disciplines/oblivion.md)** | Has two branches: one allows the user to manipulate shadows at will and the other enables necromancy or usage of spirits, though both tap into the Abyss. (Ceremonies are an extension of this.) | [Baali](baali.md), [Hecata](hecata.md), [Lasombra](lasombra.md) |
+| **[Oblivion](../disciplines/oblivion.md)** | Has two branches: one allows the user to manipulate shadows at will and the other enables necromancy or usage of Spirits, though both tap into the Abyss. (Ceremonies are an extension of this.) | [Baali](baali.md), [Hecata](hecata.md), [Lasombra](lasombra.md) |
 | **[Potence](../disciplines/potence.md)** | Strengthens the user's physical prowess. By, like, a LOT. You're goin' *down*, bucko. | [Brujah](brujah.md), [Gargoyle](gargoyle.md), [Nosferatu](nosferatu.md), [Lasombra](lasombra.md) |
 | **[Presence](../disciplines/presence.md)** | Enables the user to use subtle manipulation, control, and swaying of emotions to guide others towards a goal. Probably the most commonly-used Discipline, but don't dismiss it — it's quite strong. | [Baali](baali.md), [Brujah](brujah.md), [Daughter of Cacophony](daughter-of-cacophony.md), [Devorari](devorari.md), [Ravnos](ravnos.md), [Toreador](toreador.md), [The Ministry](the-ministry.md), [Ventrue](ventrue.md) |
 | **[Protean](../disciplines/protean.md)** | Grants the ability to change one's shape, grow vicious claws, meld into the earth, or become fog. | [Gangrel](gangrel.md), [Gargoyle](gargoyle.md), [The Ministry](the-ministry.md), [Tzimisce](tzimisce.md) |

@@ -2,7 +2,7 @@
 title: "Blood Potency"
 ---
 
-The Blood thickens with age. A Fledgling's Vitae is thin and watery compared to the concentrated ichor running through an Elder's veins; more potent blood grants access to stronger Disciplines, more powerful Surges, and greater resilience, but it also deepens the curse. Your Bane bites harder, your Compulsions grow more demanding, and your feeding requirements become increasingly restrictive. Blood Potency is the double-edged sword at the center of vampiric existence: the stronger you become, the more the Beast owns you.
+The Blood thickens with age. A Fledgling's Vitae is thin and watery compared to the concentrated ichor running through an Elder's veins; more potent blood grants access to stronger Disciplines, more powerful Surges, and greater resilience, but it also deepens the curse. Your Bane bites harder, your Compulsions grow more demanding, and your **Feeding** requirements become increasingly restrictive. Blood Potency is the double-edged sword at the center of vampiric existence: the stronger you become, the more the Beast owns you.
 
 Blood Potency is rated on a scale of 0–5. It can be increased by 1 by spending 10 XP and entering voluntary slumber at 0 Hunger; the transformation takes a full day of uninterrupted rest as the Blood reshapes itself. Your starting Blood Potency is determined by your Age Bracket, and BP 0 characters (Thin-Bloods & Ghouls) cannot increase it through normal advancement — Diablerie is the sole exception for Thin-Bloods, and the Embrace is the only way up for Ghouls.
 
@@ -52,7 +52,7 @@ Your Blood Potency determines the maximum level of Discipline Power you can lear
 
 As your Blood thickens, it becomes pickier about what sustains it. Weak or stale sources that satisfied you as a Fledgling eventually stop working entirely, forcing you toward fresher and more dangerous prey.
 
-- **BP 0–1:** No feeding restrictions. Animals, blood bags, and mortals all work as described in the **Feed** Move.
+- **BP 0–1:** No restrictions. Animals, blood bags, and mortals all work as described in the **Feed** Move.
 - **BP 2:** Animal blood and blood bags are less satisfying. When you **Feed** from these sources, reduce Hunger by 1 less than you normally would (minimum 0). The Bagger Predator Type lets you ignore this restriction.
 - **BP 3:** Animal blood provides no sustenance whatsoever. You must **Feed** from humans. The Farmer Predator Type cannot be selected at this level or above.
 - **BP 4:** Blood bags become light snacks. You can only reduce Hunger below 2 by draining a mortal to the point of death or beyond. Normal **Feeding** works for 5 → 2 Hunger, but getting below 2 requires near-total or total exsanguination. This will likely kill your vessel.

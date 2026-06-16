@@ -142,13 +142,13 @@ You're running. Someone powerful wants you found, staked, and dealt with. Maybe 
 
 ## The Gatekeepers
 
-Your Coterie deals with the dead. The actually dead: ghosts, spirits, restless ancestors, things that lurk in the spaces between life and whatever comes after. You commune with them, command them, lay them to rest, or exploit them, depending on your moral compass and your client list. Other vampires find you creepy, which is saying something. They also find you useful, which is why they keep calling.
+Your Coterie deals with the dead. The actually dead: Ghosts, Spirits, restless ancestors, things that lurk in the spaces between life and whatever comes after. You commune with them, command them, lay them to rest, or exploit them, depending on your moral compass and your client list. Other vampires find you creepy, which is saying something. They also find you useful, which is why they keep calling.
 
 **Coterie Stats:** **Clout +1** | **Cohesion +1** | **Charm −2** | **Claim +1** | **Currency +1**
 
 ##### *Haven Features*
 
-- **Pick 3 Positive:** *Spirit wards, cemetery access, ritual circle, spectral informants, séance parlor, occult library, consecrated ground, bone collection, ghost traps, cold storage*
+- **Pick 3 Positive:** *Spirit wards, cemetery access, ritual circle, spectral informants, séance parlor, occult library, consecrated ground, bone collection, Ghost traps, cold storage*
 - **Pick 3 Negative:** *very fucking haunted, perpetual chill, friendly new neighbors, unsettling noises, always attracting weirdos, corpse smell, restless tenants, flickering lights*
 
 ---
@@ -161,14 +161,14 @@ You know blood better than anyone. Where to find it, how to cultivate it, which 
 
 ##### *Haven Features*
 
-- **Pick 3 Positive:** *managed herd, blood storage, private feeding rooms, distinguished clientele, discreet location, veterinary supplies, delivery network, wellness program, tasting notes*
+- **Pick 3 Positive:** *managed herd, blood storage, private dining rooms, distinguished clientele, discreet location, veterinary supplies, delivery network, wellness program, tasting notes*
 - **Pick 2 Negative:** *herd poachers, inventory spoilage, demanding clientele, attachment issues, refrigeration costs, ethical queasiness, jealous rivals*
 
 ---
 
 ## The Nomads
 
-You don't stay. Maybe you perform; a traveling show, a band, a roving market of curiosities and contraband. Maybe you just drift, all for one and one for all, moving on before anyone asks too many questions but after you collect your tips. Your Haven (you prefer *Haven't* — it's less sad when it's voluntary) is a convoy, a tour bus, a caravan, a blacked-out truck, or whatever gets you down the road before dawn. Every city is a new audience, a new feeding ground, and a new set of problems you'll leave behind in a week or two, tops. The freedom is genuine. The loneliness is too.
+You don't stay. Maybe you perform; a traveling show, a band, a roving market of curiosities and contraband. Maybe you just drift, all for one and one for all, moving on before anyone asks too many questions but after you collect your tips. Your Haven (you prefer *Haven't* — it's less sad when it's voluntary) is a convoy, a tour bus, a caravan, a blacked-out truck, or whatever gets you down the road before dawn. Every city is a new audience, a new **Feeding** ground, and a new set of problems you'll leave behind in a week or two, tops. The freedom is genuine. The loneliness is too.
 
 **Coterie Stats:** **Clout +0** | **Cohesion +1** | **Charm +2** | **Claim −2** | **Currency +1**
 

@@ -2,11 +2,11 @@
 title: "Predator Types"
 ---
 
-Every vampire is a predator. They are inherently carnivorous (almost entirely hematophagous), but as in nature, their exact methods differ vastly from vamp to vamp. They can be broadly broken down into the categories below, though there will always be outliers. Older vampires almost never stray from their established hunting and feeding rituals, while younger ones may experiment with various methods until they find one that feels right for them. Often, this is a messy and distressing process for everyone involved, so the sooner you figure this out, the better.
+Every vampire is a predator. They are inherently carnivorous (almost entirely hematophagous), but as in nature, their exact methods differ vastly from vamp to vamp. They can be broadly broken down into the categories below, though there will always be outliers. Older vampires almost never stray from their established **Hunting** and **Feeding** rituals, while younger ones may experiment with various methods until they find one that feels right for them. Often, this is a messy and distressing process for everyone involved, so the sooner you figure this out, the better.
 
 Your Predator Type dictates what stat you roll with when you **Hunt** and grants access to a Discipline. It does not unlock any Powers other than the associated Discipline Perk, unless the Discipline overlaps with one you select in your Playbook, in which case you receive a free Power of your choice from that Discipline of any level you can access.
 
-Additionally, each one comes with a Merit and a Flaw, some of which are more impactful than others by design. They may also include a Humanity modifier, which applies only to your base/starting Humanity level (e.g., an Elder Alleycat would start at Humanity 2 instead of 3). Some come with Feeding Rules or restrictions; you'll notice Ventrue cannot select several of them. They're a bit snobby.
+Additionally, each one comes with a Merit and a Flaw, some of which are more impactful than others by design. They may also include a Humanity modifier, which applies only to your base/starting Humanity level (e.g., an Elder Alleycat would start at Humanity 2 instead of 3). Some come with **Feeding** Rules or restrictions; you'll notice Ventrue cannot select several of them. They're a bit snobby.
 
 ## Abductor
 
@@ -27,7 +27,7 @@ You are an opportunistic feeder, lunging for prey in back alleys, empty parking 
 - **Hunting Stat:** +Blood
 - **Discipline:** Celerity
 - **Merit:** *I Know a Guy.* You have connections in the criminal underworld. **When you *Influence* criminals, dealers, fences, or street-level operatives**, take +1 Ongoing until your problem is resolved.
-- **Flaw:** *Catching Heat.* Your violent feeding style attracts attention. **When you attempt to *Influence* law enforcement or anyone investigating violent crimes in your territory**, you have −1 Ongoing.
+- **Flaw:** *Catching Heat.* Your violent **Feeding** style attracts attention. **When you attempt to *Influence* law enforcement or anyone investigating violent crimes in your territory**, you have −1 Ongoing.
 - **Humanity:** −1
 
 ---
@@ -63,7 +63,7 @@ You are a peculiar type of parasite who drinks only from other vampires, which s
 - **Hunting Stat:** +Shadow
 - **Discipline:** Protean
 - **Merit:** *Kindred Sense.* You can identify most other vampires on sight, even if they're using **Blush of Life**. **When you *Catch the Scent* to detect vampires or their activities**, take +1 Forward.
-- **Flaw:** *Marked & Made.* Your feeding habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time.
+- **Flaw:** *Marked & Made.* Your mealtime habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time.
 - **Feeding Rules:** You can only slake Hunger by **Feeding** from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain.
 
 ---
@@ -133,7 +133,7 @@ You are an anomaly among Kindred who feeds covertly from your own or another vam
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Dominate
 - **Merit:** *Trusted Circle.* You maintain relationships with mortals who provide regular access to blood. **When you *Hunt* within your established circle** (family, close friends, dependents), you automatically find suitable prey without rolling.
-- **Flaw:** *Catastrophic Secret.* Your feeding method is a Masquerade breach waiting to happen. **If your family or friends discover the full truth of what you are and what you've done**, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it).
+- **Flaw:** *Catastrophic Secret.* Your **Feeding** method is a Masquerade breach waiting to happen. **If your family or friends discover the full truth of what you are and what you've done**, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it).
 
 ---
 
@@ -155,7 +155,7 @@ You never take blood without informed consent. You might have a blood-related co
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Auspex
 - **Merit:** *Willing Donors.* You maintain relationships with mortals who knowingly consent to being fed upon; one or more of these must be one of your Touchstones. **When you *Feed* from a willing, consenting vessel**, choose 1 additional option from the 10+ list (even on a 7–9).
-- **Flaw:** *Ethical Spiral.* You feel wildly uncomfortable feeding from non-consenting victims. **If you *Feed* from someone who hasn't given genuine consent (except in self-defense)**, mark 2 Stains and take −1 Ongoing until your next consensual feeding due to the guilt and self-loathing. If you violate your own rule more than once in a row, the Ongoing penalty stacks.
+- **Flaw:** *Ethical Spiral.* You feel wildly uncomfortable **Feeding** from non-consenting victims. **If you *Feed* from someone who hasn't given genuine consent (except in self-defense)**, mark 2 Stains and take −1 Ongoing until your next consensual or inanimate drink due to the guilt and self-loathing. If you violate your own rule more than once in a row, the Ongoing penalty stacks.
 - **Humanity:** +1
 
 ---
@@ -215,7 +215,7 @@ The ancients are stirring, the end of the world is coming, and you intend to be 
 
 - **Hunting Stat:** +Resolve
 - **Discipline:** Fortitude
-- **Merit:** *Second Amendment.* You have an untraceable firearm "just in case". No serial numbers, no paper trail, and plenty of ammunition. Choose any gun you like that deals 3-Harm or less, and give it the Concealed and Reliable tags.
+- **Merit:** *Second Amendment.* You have a trusty firearm "just in case". No serial numbers, no paper trail, and plenty of ammunition. Choose any gun you like that deals 3-Harm or less, and give it the Concealable and Untraceable tags.
 - **Flaw:** *Bunker Mentality.* Your paranoia is palpable and off-putting. You have −1 Ongoing to **Influence** anyone you've known for less than a month. Trust is earned, never given.
 
 ---
@@ -252,7 +252,7 @@ You cultivate swarms of arthropods that nest in corpses and carrion, producing V
 - **Hunting Stat:** +Resolve
 - **Discipline:** Animalism
 - **Merit:** *Untraceable.* Your feeding method creates no victims, no witnesses, and no bite marks. **When you *Hunt***, you never risk a Masquerade breach from the act of **Feeding** itself.
-- **Flaw:** *Stomach-Turning.* Any Kindred or mortal unfamiliar with you who witnesses your feeding method is (understandably) revolted. You have −3 Ongoing to **Influence** anyone who has watched you eat until at least a full week has passed.
+- **Flaw:** *Stomach-Turning.* Any Kindred or mortal unfamiliar with you who witnesses your **Feeding** method is (understandably) revolted. You have −3 Ongoing to **Influence** anyone who has watched you eat until at least a full week has passed.
 - **Humanity:** −1
 - **Feeding Rules:** You can only slake Hunger by consuming uncomfortably large quantities of bugs swollen with partially-digested blood. This is horrific to watch, and anybody unused to your **Feeding** habits who witnesses it will want to leave at once, even Elders who thought they'd seen it all.
 
@@ -352,7 +352,7 @@ There is one person in the world who occupies your every waking thought. You wat
 
 ## Organovore
 
-You are a monster among monsters. Human blood does little to satiate your hunger; you can only survive on human flesh and organs. You are especially fond of those rich in blood, such as the heart, brain, lungs, liver, placenta, spleen... and of course, the fresher the better. This method of feeding, while not unheard of, is viewed with disdain by many blood-only vampires. It's messy, time consuming, and almost invariably lethal, but at least you can make yourself nice pink smoothies to go. So what if you like a little pulp in your juice?
+You are a monster among monsters. Human blood does little to satiate your hunger; you can only survive on human flesh and organs. You are especially fond of those rich in blood, such as the heart, brain, lungs, liver, placenta, spleen... and of course, the fresher the better. This method of **Feeding**, while not unheard of, is viewed with disdain by many blood-only vampires. It's messy, time consuming, and almost invariably lethal, but at least you can make yourself nice pink smoothies to go. So what if you like a little pulp in your juice?
 
 - **Hunting Stat:** +Blood
 - **Discipline:** Potence
@@ -459,7 +459,7 @@ You are constantly driving, always watching the shoulder of the road. Rest areas
 - **Hunting Stat:** +Shadow
 - **Discipline:** Protean
 - **Merit:** *Long Haul.* You maintain a reliable vehicle and know every back road, rest stop, and dead zone within a night's drive. **When you *Hunt* along roads, highways, or rest areas**, roll with Advantage. You somehow always have enough money for gas.
-- **Flaw:** *Mile Markers.* Your feeding method creates a geographic trail of disappearances. You start with 1 Debt owed to someone who's helped you cover your tracks along your route; a corrupt cop, a fellow Kindred with a cleanup crew, or a mortal who saw too much and was paid off.
+- **Flaw:** *Mile Markers.* Your **Feeding** method creates a geographic trail of disappearances. You start with 1 Debt owed to someone who's helped you cover your tracks along your route; a corrupt cop, a fellow Kindred with a cleanup crew, or a mortal who saw too much and was paid off.
 - **Humanity:** −1
 
 ---
@@ -505,7 +505,7 @@ You are a common sight amongst a particular group of people, and you love how th
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Presence
 - **Merit:** *Hot Tea.* You know everyone and everything in your scene. **When you successfully *Discern Vibes* or *Catch the Scent* within your subculture**, you gain 1 extra Hold.
-- **Flaw:** *Tied to the Scene.* Your feeding pattern is dependent on your subculture. **When you *Hunt* outside your established scene**, take −1 Forward.
+- **Flaw:** *Tied to the Scene.* Your meal pattern is dependent on your subculture. **When you *Hunt* outside your established scene**, take −1 Forward.
 
 ---
 
@@ -528,7 +528,7 @@ You feed almost exclusively during sex or other intimate activities. You try to 
 - **Hunting Stat:** +Demeanor
 - **Discipline:** Presence
 - **Merit:** *Touch-Starving.* **When you *Feed* during or immediately after sex or intimate physical contact**, you can choose to also heal 1 additional Superficial Harm. People you **Feed** from experience your bite as intensely pleasurable, much more so than the average vampire's bite.
-- **Flaw:** *Tangled Sheets & Hearts.* Your feeding creates complicated emotional bonds, even unintentionally. **Each time you *Feed* from the same person more than once**, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion.
+- **Flaw:** *Tangled Sheets & Hearts.* Your **Feeding** creates complicated emotional bonds, even unintentionally. **Each time you *Feed* from the same person more than once**, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion.
 
 ---
 
@@ -552,7 +552,7 @@ Named for the order of seabirds that regurgitate food for their young, your **Fe
 - **Hunting Stat:** +Blood
 - **Discipline:** Animalism
 - **Merit:** *Plausible Deniability.* Your animals do the dirty work. **When you *Hunt* by sending your animals out to feed**, you never need to be present at the scene and your prey never sees your face.
-- **Flaw:** *Delayed Delivery.* Your feeding method takes *ages*. It takes at least six hours for your animals to return with enough blood to slake 1 Hunger, and you can never slake more than 2 Hunger per night this way.
+- **Flaw:** *Delayed Delivery.* Your **Feeding** method takes *ages*. It takes at least six hours for your animals to return with enough blood to slake 1 Hunger, and you can never slake more than 2 Hunger per night this way.
 
 ---
 
@@ -580,7 +580,7 @@ You don't have to hunt. You *receive*. Through intimidation, political maneuveri
 
 ## Tourist Hunter
 
-You know your territory better than you know yourself, and you can tell when something's different. A new face at the diner, an unfamiliar car parked overnight, a backpacker asking for directions at the wrong hour... you always notice. You prey exclusively on travelers, drifters, tourists, and transients; people passing through who won't be missed by anyone nearby. Your hunting ground is your home, and you never soil it by feeding from the locals. That's how patterns form, and patterns get you staked, baked, and swept into the trash.
+You know your territory better than you know yourself, and you can tell when something's different. A new face at the diner, an unfamiliar car parked overnight, a backpacker asking for directions at the wrong hour... you always notice. You prey exclusively on travelers, drifters, tourists, and transients; people passing through who won't be missed by anyone nearby. Your hunting ground is your home, and you never soil it by **Feeding** from the locals. That's how patterns form, and patterns get you staked, baked, and swept into the trash.
 
 - **Hunting Stat:** +Wits
 - **Discipline:** Obfuscate

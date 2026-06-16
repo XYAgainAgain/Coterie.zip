@@ -13,7 +13,6 @@ extra_css = ["stylesheets/glightbox.min.css", "stylesheets/extra.css"]
 extra_javascript = [
   "javascripts/glightbox.min.js",
   "javascripts/extra.js",
-  # "javascripts/terminology-toggle.js",
   "javascripts/firebase-kdr.js",
   "javascripts/batthew.js",
 ]
@@ -99,6 +98,10 @@ nav = [
       { "Thin-Blood Alchemy" = "disciplines/thin-blood-alchemy.md" },
       { "Visceratika" = "disciplines/visceratika.md" },
     ] },
+  ] },
+  { "Storyteller Guidance" = "storyteller/index.md" },
+  { "Appendices" = [
+    { "Appendix B: Items & Tags" = "storyteller/items-and-tags.md" },
   ] },
 ]
 

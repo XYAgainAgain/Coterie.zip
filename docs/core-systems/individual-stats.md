@@ -8,13 +8,13 @@ These are the five core attributes — or statistics, AKA stats — for player c
 
 The Vitae that animates your body. Blood is the raw supernatural power coursing through your undead flesh; the terrible speed that lets you chase prey, the unnatural strength that lets you tear through obstacles, and the vampiric essence that fuels your sorceries. When you move with inhuman grace, when you hunt like the apex predator you've become, or when you channel the Beast's physical gifts, you're drawing on Blood.
 
-**Used for:** Supernatural physicality, hunting and feeding, the Blood Sorcery Discipline, combat prowess, preternatural reflexes
+**Used for:** Supernatural physicality, **Hunting** and **Feeding**, much of the Blood Sorcery Discipline, combat prowess, preternatural reflexes
 
 ## Shadow
 
 The darkness you inhabit and command. Shadow is your ability to move unseen, to deceive and misdirect, to become the thing that hides behind the shower curtain. It's the lies that slip off your tongue, the way you melt into darkness, the subtle manipulation that leaves no fingerprints. Whether you're cloaking yourself with mundane stealth or wrapping yourself in literal shadows through Oblivion, you're using Shadow.
 
-**Used for:** Stealth and sneaking, deception and lies, misdirection, the Oblivion Discipline, going unnoticed
+**Used for:** Stealth and sneaking, deception and lies, misdirection, much of the Oblivion Discipline, going unnoticed
 
 ## Resolve
 

@@ -30,7 +30,7 @@ Each turn while you have the spotlight, you can do one of each of the following:
 
 1. **Movement:** Narrative positioning in physical space; you can travel up to one Range, from **Distant ↔ Far ↔ Close ↔ Hand ↔ Intimate**
 2. **One Action:** Any Basic Move or Discipline Power. *Remember, you must narrate your character's actual actions to trigger your Moves!*
-3. **One Free Action:** Basic things your character can do without expending any extra effort or time while performing other tasks.
+3. **One Free Action:** Basic things your character can do without expending much extra effort or time while performing other tasks.
 
 !!! tip "Guidance"
 

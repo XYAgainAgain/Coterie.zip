@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-12T05:55:11.252Z",
+  "generatedAt": "2026-06-15T03:02:04.598Z",
   "entries": [
     {
       "name": "Abductor",
@@ -281,7 +281,7 @@
       "discipline": "Fortitude",
       "merit": {
         "name": "Second Amendment",
-        "description": "You have an untraceable firearm \"just in case\". No serial numbers, no paper trail, and plenty of ammunition. Choose any gun you like that deals 3-Harm or less, and give it the Concealed and Reliable tags."
+        "description": "You have a trusty firearm \"just in case\". No serial numbers, no paper trail, and plenty of ammunition. Choose any gun you like that deals 3-Harm or less, and give it the Concealable and Untraceable tags."
       },
       "flaw": {
         "name": "Bunker Mentality",

@@ -117,7 +117,7 @@ Supernatural creatures with Blood Potency higher than yours can attempt to resis
 
 Your voice is heard in the target's ear as clearly as if you were standing next to them. You can hold a normal two-way conversation; they can respond and you hear them. The connection's reach depends on your Blood Potency; at BP 3 you can reach anyone within Distant Range, at BP 4 you can reach any other Daughter of Cacophony at any distance, and at BP 5, the Range restriction is removed and you may contact anyone anywhere in the world.
 
-The target always hears your Inner Song bleeding faintly underneath your words, like hold music from a phone line nobody really wants to be on. There is nothing you can do about this. The target may find it unsettling, soothing, groovy as hell, or just plain weird.
+The target always hears your Inner Song bleeding faintly underneath your words, like hold music from a phone line nobody really wants to be on. There is nothing you can do about this. The target may find it unnerving, soothing, groovy as hell, or just plain weird.
 
 ---
 

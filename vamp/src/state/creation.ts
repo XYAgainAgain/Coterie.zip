@@ -156,10 +156,3 @@ function playbookStepWarning(): string {
   if (c.archetypeName === '') return "You haven't chosen an Archetype yet!";
   return "Your stats haven't been assigned yet!";
 }
-
-/* Returns list of incomplete step labels for the finish gate */
-export function incompleteSteps(): string[] {
-  return CREATION_STEPS
-    .filter(s => !stepComplete.value[s])
-    .map(s => STEP_LABELS[s]);
-}

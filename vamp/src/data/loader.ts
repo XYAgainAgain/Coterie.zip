@@ -3,7 +3,7 @@ import type {
   BloodPotencyData, HungerData, HumanityData, AdvancementData,
   CoterieStatsData, CoterieType, CoterieMove,
   HarmHealingData, StatRefTablesData, OptionalExtrasData,
-  SnippetEntry,
+  SnippetEntry, ItemTag,
   DataFile, DataFileWrapped,
 } from './types';
 
@@ -57,7 +57,16 @@ export const getCoterieStats = () => getData<CoterieStatsData>('coterie-stats');
 export const getHarmHealing = () => getData<HarmHealingData>('harm-healing');
 export const getStatRefTables = () => getData<StatRefTablesData>('stat-ref-tables');
 export const getOptionalExtras = () => getData<OptionalExtrasData>('optional-extras');
-export const getSnippets = () => getEntries<SnippetEntry>('snippets').catch(() => [] as SnippetEntry[]);
+export const getSnippets = () => getEntries<SnippetEntry>('snippets').catch((e) => {
+  console.warn('[Vamp] snippets.json failed to load; snippets disabled.', e);
+  return [] as SnippetEntry[];
+});
+/* Catch like snippets: a missing/stale tags.json degrades Possessions tooltips and
+   autocomplete to plain text rather than bricking the whole app's boot. */
+export const getItemTags = () => getEntries<ItemTag>('tags').catch((e) => {
+  console.warn('[Vamp] tags.json failed to load; item tags disabled.', e);
+  return [] as ItemTag[];
+});
 
 export interface GameData {
   playbooks: Playbook[];
@@ -68,6 +77,7 @@ export interface GameData {
   coterieTypes: CoterieType[];
   coterieMoves: CoterieMove[];
   snippets: SnippetEntry[];
+  itemTags: ItemTag[];
   bloodPotency: BloodPotencyData;
   hunger: HungerData;
   humanity: HumanityData;
@@ -81,19 +91,19 @@ export interface GameData {
 export async function loadAllGameData(): Promise<GameData> {
   const [
     playbooks, predatorTypes, disciplines, basicMoves, ageBrackets,
-    coterieTypes, coterieMoves, snippets,
+    coterieTypes, coterieMoves, snippets, itemTags,
     bloodPotency, hunger, humanity, advancement,
     coterieStats, harmHealing, statRefTables, optionalExtras,
   ] = await Promise.all([
     getPlaybooks(), getPredatorTypes(), getDisciplines(), getBasicMoves(), getAgeBrackets(),
-    getCoterieTypes(), getCoterieMoves(), getSnippets(),
+    getCoterieTypes(), getCoterieMoves(), getSnippets(), getItemTags(),
     getBloodPotency(), getHunger(), getHumanity(), getAdvancement(),
     getCoterieStats(), getHarmHealing(), getStatRefTables(), getOptionalExtras(),
   ]);
 
   return {
     playbooks, predatorTypes, disciplines, basicMoves, ageBrackets,
-    coterieTypes, coterieMoves, snippets,
+    coterieTypes, coterieMoves, snippets, itemTags,
     bloodPotency, hunger, humanity, advancement,
     coterieStats, harmHealing, statRefTables, optionalExtras,
   };

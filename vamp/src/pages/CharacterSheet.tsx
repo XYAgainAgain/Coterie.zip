@@ -9,6 +9,10 @@ import { DisciplinesTab } from '../components/DisciplinesTab';
 import { ClockDisplay } from '../components/ClockDisplay';
 import { NewClockWidget } from '../components/NewClockWidget';
 import { NotebookTab } from '../components/NotebookTab';
+/* DISABLED 2026-06-13: Possessions UI is a placeholder pending a ground-up redesign
+   (see the plan doc's POST-BUILD FEEDBACK section). The component + backend stay on
+   disk for reuse; only the tab render is stubbed. */
+// import { PossessionsTab } from '../components/PossessionsTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
@@ -30,6 +34,7 @@ import {
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
   getSnippet, gameData, statCap, startingDisciplineSlugs,
   bloodSurgesRemaining,
+  /* totalArmor — re-import when the Possessions redesign re-enables Armor display. */
 } from '../state/derived';
 import {
   switchTab, openMove, activeContentTab, splitMode, splitRightTab, splitRatio,
@@ -331,6 +336,8 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
       <div class="vamp-pip-row vamp-pip-row--harm" style={{ '--harm-cols': String(cols.value) }}>
         <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
       </div>
+      {/* DISABLED 2026-06-13 pending Possessions redesign: shield pips under Harm grew
+         the top boxes' height (Sam: hard no). The totalArmor derived + perk registry stay. */}
       {canRoll && char.playbook !== 'Ghoul' && (
         <div class="vamp-vital-actions">
           <VitalRollButton label="Quick Heal" onClick={performQuickHeal} disabled={sup === 0 || !!char.quickHealUsedThisScene} />
@@ -717,12 +724,9 @@ function TabPanels({ selected, isViewing, paneClass }: {
       <div style={{ display: show('vitals') }}><VitalsTab /></div>
       <div style={{ display: show('disciplines') }}><DisciplinesTab /></div>
       <div style={{ display: show('possessions') }}>
-        {/* TODO: Possessions tab — sortable table of tagged items (Tag-System-Rules.md).
-           Structured input: base type dropdown, mechanical/descriptive tag fields, description.
-           Hover tooltips on tags from parsed reference data. */}
         <div class="vamp-placeholder">
-          Possessions and inventory
-          <br /><span class="vamp-placeholder__note">Tagged items, equipment, resources</span>
+          Possessions
+          <br /><span class="vamp-placeholder__note">Under redesign, back soon</span>
         </div>
       </div>
       <div style={{ display: show('clocks') }}><ClocksDebtsTab /></div>

@@ -1,5 +1,3 @@
-import { signal, computed } from '@preact/signals';
-import { updateCharacter } from './character';
 import type { RPanelTab, ContentTab } from './panel';
 
 export type TourStop =
@@ -108,44 +106,3 @@ export const TOUR_STEPS: TourStepDef[] = [
     message: "These buttons control your experience with the ***Coterie*** character sheet. The Settings gear will let you customize the sheet itself to your liking, while the lock/unlock button switches between Edit and Play modes, allowing you to change your character freely. Please use responsibly! The eyes up here switch between the three preset Vamp themes just like the main site, but your custom ones are always saved. When you click Finish, you'll see a notification in the bottom left!",
   },
 ];
-
-export const tourMode = signal(false);
-export const tourStepIndex = signal(0);
-
-export const currentTourStep = computed<TourStepDef>(() =>
-  TOUR_STEPS[tourStepIndex.value],
-);
-
-export const tourProgress = computed(() => ({
-  current: tourStepIndex.value + 1,
-  total: TOUR_STEPS.length,
-}));
-
-export function startTour() {
-  tourMode.value = true;
-  tourStepIndex.value = 0;
-}
-
-export function nextTourStop() {
-  if (tourStepIndex.value < TOUR_STEPS.length - 1) {
-    tourStepIndex.value = tourStepIndex.value + 1;
-  } else {
-    completeTour();
-  }
-}
-
-export function prevTourStop() {
-  if (tourStepIndex.value > 0) {
-    tourStepIndex.value = tourStepIndex.value - 1;
-  }
-}
-
-export function skipTour() {
-  completeTour();
-}
-
-function completeTour() {
-  tourMode.value = false;
-  tourStepIndex.value = 0;
-  updateCharacter({ tourComplete: true });
-}

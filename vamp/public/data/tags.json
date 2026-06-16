@@ -1,0 +1,1018 @@
+{
+  "version": 1,
+  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "entries": [
+    {
+      "name": "Abyssal",
+      "categories": [
+        "Artifacts",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "A small piece of the Abyss, taken or somehow escaped; plainly visible to ***Abyssal Sight***, and incorporeal entities like Ghosts can physically interact with it."
+    },
+    {
+      "name": "Addictive",
+      "categories": [
+        "Consumables"
+      ],
+      "effect": "Breeds craving in those who partake; going without it can cause lots of problems."
+    },
+    {
+      "name": "Analog",
+      "categories": [
+        "Intel",
+        "Tech"
+      ],
+      "effect": "Old-school tech; can't be hacked, traced, or wiped remotely."
+    },
+    {
+      "name": "Anointed",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Treated with blood, oil, or ritual substance for a single specific use."
+    },
+    {
+      "name": "Antique",
+      "categories": [
+        "Artifacts",
+        "Misc.",
+        "Weapons",
+        "Wearables"
+      ],
+      "effect": "Old and rare; valuable to the right buyer or collector."
+    },
+    {
+      "name": "Balanced",
+      "categories": [
+        "Weapons"
+      ],
+      "effect": "Perfectly weighted; you always roll flat with it, ignoring both Advantage and Disadvantage."
+    },
+    {
+      "name": "Blessed",
+      "categories": [
+        "All"
+      ],
+      "effect": "Sanctified by genuine faith; soothing to mortals, uncomfortable for the damned."
+    },
+    {
+      "name": "Boiling",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Scalding hot; burns and blisters living flesh on contact without ever setting anything alight."
+    },
+    {
+      "name": "Bound",
+      "categories": [
+        "Artifacts",
+        "Weapons"
+      ],
+      "effect": "Tied (magically or biomechanically) to one owner; resists use by anyone else until the bond is broken."
+    },
+    {
+      "name": "Bulky",
+      "categories": [
+        "Misc.",
+        "Tech",
+        "Wearables"
+      ],
+      "effect": "Big and awkward; hard to hide and gets in the way."
+    },
+    {
+      "name": "Classified",
+      "categories": [
+        "Intel"
+      ],
+      "effect": "Restricted information; possessing it is dangerous and someone wants it back."
+    },
+    {
+      "name": "Compact",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Small and easy to stow; takes up almost no space."
+    },
+    {
+      "name": "Complete",
+      "categories": [
+        "Artifacts",
+        "Intel",
+        "Misc."
+      ],
+      "effect": "Whole and unbroken; nothing missing, every piece accounted for."
+    },
+    {
+      "name": "Concealable",
+      "categories": [
+        "Consumables",
+        "Intel",
+        "Misc.",
+        "Tech",
+        "Weapons",
+        "Wearables"
+      ],
+      "effect": "Can be hidden on your person or in a bag without notice."
+    },
+    {
+      "name": "Conspicuous",
+      "categories": [
+        "Misc.",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Impossible to ignore; people remember seeing it, and seeing you with it."
+    },
+    {
+      "name": "Contraband",
+      "categories": [
+        "Consumables",
+        "Misc."
+      ],
+      "effect": "Banned or restricted goods; valuable on the right market, risky to move."
+    },
+    {
+      "name": "Corrosive",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Eats through material on contact; ruins gear, restraints, locks, flesh, and evidence alike."
+    },
+    {
+      "name": "Counterfeit",
+      "categories": [
+        "Intel",
+        "Misc.",
+        "Wearables"
+      ],
+      "effect": "A convincing fake; passes casual inspection but fails an expert's eye."
+    },
+    {
+      "name": "Cramped",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Too tight for comfort or a proper fight; hard to maneuver inside."
+    },
+    {
+      "name": "Cursed",
+      "categories": [
+        "All"
+      ],
+      "effect": "Carries misfortune for its owner; getting rid of it is harder than it should be."
+    },
+    {
+      "name": "Defensible",
+      "categories": [
+        "Structures"
+      ],
+      "effect": "Easy to hold against intruders; clear sightlines and chokepoints."
+    },
+    {
+      "name": "Derelict",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Falling apart and easy to overlook, but nobody comes to investigate most of the time."
+    },
+    {
+      "name": "Devastating",
+      "categories": [
+        "Weapons"
+      ],
+      "effect": "Leaves savage wounds; any Harm it inflicts cannot be healed by any means short of a day's rest."
+    },
+    {
+      "name": "Disguised",
+      "categories": [
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Lets the wearer pass as someone or something they're not; holds up until someone looks too closely."
+    },
+    {
+      "name": "Disposable",
+      "categories": [
+        "Consumables",
+        "Misc."
+      ],
+      "effect": "Cheap and replaceable; easy to ditch and to source another."
+    },
+    {
+      "name": "Encrypted",
+      "categories": [
+        "Intel",
+        "Tech"
+      ],
+      "effect": "Locked behind strong cryptic protection; useless to anyone without the key, code, or skill to crack it."
+    },
+    {
+      "name": "Explosive-X",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Detonates, dealing Aggravated Harm to everything within the stated Range (e.g., **Explosive-Close**)."
+    },
+    {
+      "name": "Exposed",
+      "categories": [
+        "Structures"
+      ],
+      "effect": "Open to approach and observation from multiple angles; hard to defend."
+    },
+    {
+      "name": "Flammable",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Catches fire easily and burns fast; keep it away from sparks and other items with the same Tag."
+    },
+    {
+      "name": "Forged",
+      "categories": [
+        "Intel"
+      ],
+      "effect": "Falsified documents or credentials; opens doors until someone dutifully triple-checks."
+    },
+    {
+      "name": "Fortified",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Built to withstand assault; forcing entry takes time, tools, and noise."
+    },
+    {
+      "name": "Fractured",
+      "categories": [
+        "Artifacts",
+        "Intel",
+        "Misc."
+      ],
+      "effect": "Broken or incomplete; missing pieces limit what it can do until it's made whole."
+    },
+    {
+      "name": "Fragile",
+      "categories": [
+        "All"
+      ],
+      "effect": "Breaks easily; rough use or a bad hit can put it out of commission."
+    },
+    {
+      "name": "Freezing",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Bitterly cold; disables Movement of all kinds until something is done about the frost."
+    },
+    {
+      "name": "Garlicky",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Reeks of or contains garlic; harms anything vulnerable to it."
+    },
+    {
+      "name": "Gruesome",
+      "categories": [
+        "Artifacts",
+        "Weapons"
+      ],
+      "effect": "Viscerally awful to behold; average people who witness its use recoil, flee, or freeze."
+    },
+    {
+      "name": "Haunted",
+      "categories": [
+        "All"
+      ],
+      "effect": "A Ghost or Spirit is attached to it and comes along wherever it goes; every Fetter has this Tag by default."
+    },
+    {
+      "name": "Hawthorn",
+      "categories": [
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Made of or incorporating hawthorn wood; deals Aggravated Harm to anything vulnerable to it."
+    },
+    {
+      "name": "Healing",
+      "categories": [
+        "Artifacts",
+        "Consumables",
+        "Tech"
+      ],
+      "effect": "Restores Superficial Harm when used; the amount depends on the item and the fiction."
+    },
+    {
+      "name": "Hefty",
+      "categories": [
+        "Misc.",
+        "Weapons",
+        "Wearables"
+      ],
+      "effect": "Heavy enough to be a burden; tiring to carry or wield for long, but it hits hard."
+    },
+    {
+      "name": "Hidden",
+      "categories": [
+        "All"
+      ],
+      "effect": "Hard to find without being told where to look."
+    },
+    {
+      "name": "Holy",
+      "categories": [
+        "All"
+      ],
+      "effect": "Repels and/or deals Aggravated Harm to anything vulnerable to religious symbols or blessings."
+    },
+    {
+      "name": "Ignore-Armor",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Bypasses Armor entirely; the target marks full Harm regardless of protection."
+    },
+    {
+      "name": "Ignore-BP-Armor",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Bypasses an amount of Armor equal to the wielder's Blood Potency."
+    },
+    {
+      "name": "Illegal",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Possessing it is a crime; getting caught with it brings the law down on you (mortal or otherwise)."
+    },
+    {
+      "name": "Improvised",
+      "categories": [
+        "All"
+      ],
+      "effect": "Quickly grabbed and used as a tool for a job not suited to its original purpose (like using a chair as a club)."
+    },
+    {
+      "name": "Incendiary",
+      "categories": [
+        "Artifacts",
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Deals Aggravated Harm and sets things alight; fire spreads if left unchecked."
+    },
+    {
+      "name": "Incriminating",
+      "categories": [
+        "Intel",
+        "Misc."
+      ],
+      "effect": "Proof of someone's wrongdoing; dangerous to hold, valuable as leverage."
+    },
+    {
+      "name": "Infernal",
+      "categories": [
+        "Artifacts",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "A small piece of the Outer Dark given form and function; grants its bearer some terrible \"benefit\" and attracts demonic attention wherever it goes."
+    },
+    {
+      "name": "Intoxicating",
+      "categories": [
+        "Consumables"
+      ],
+      "effect": "Impairs whoever consumes it; alters senses & perception, even secondhand through blood."
+    },
+    {
+      "name": "Jury-Rigged",
+      "categories": [
+        "Tech",
+        "Vehicles"
+      ],
+      "effect": "Held together with improvisation and hope; works now, no promises about later."
+    },
+    {
+      "name": "Lightweight",
+      "categories": [
+        "Tech",
+        "Weapons",
+        "Wearables"
+      ],
+      "effect": "Barely there; quick to carry, draw, or wear all night."
+    },
+    {
+      "name": "Lubricating",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Tech"
+      ],
+      "effect": "Slick and slippery; greases machinery, restraints, footing, or bodies (scent optional)."
+    },
+    {
+      "name": "Luminous",
+      "categories": [
+        "All"
+      ],
+      "effect": "Sheds bright light; banishes darkness and dazzles eyes adjusted to the dark."
+    },
+    {
+      "name": "Magical",
+      "categories": [
+        "All"
+      ],
+      "effect": "Carries a supernatural effect; works on things mundane tools can't touch."
+    },
+    {
+      "name": "Marked",
+      "categories": [
+        "Misc.",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Bears the colors, logo, or insignia of an allegiance; friends and enemies both read it at a glance."
+    },
+    {
+      "name": "Messy",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Leaves clear evidence of its use splattered everywhere."
+    },
+    {
+      "name": "Modular",
+      "categories": [
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Breaks down, reconfigures, or accepts attachments; spend a scene modifying it to swap one other Tag for a different one (within reason)."
+    },
+    {
+      "name": "N-Armor",
+      "categories": [
+        "Artifacts",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Reduces incoming Superficial Harm by a flat amount until removed or destroyed."
+    },
+    {
+      "name": "N-Charge",
+      "categories": [
+        "Artifacts",
+        "Tech"
+      ],
+      "effect": "Holds a number of charges of a renewable resource; powered or magical."
+    },
+    {
+      "name": "N-Fireproof",
+      "categories": [
+        "Structures",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Works like Armor against fire, removing a number of points of Aggravated Harm from flame; the item itself won't catch alight."
+    },
+    {
+      "name": "N-Harm",
+      "categories": [
+        "Weapons"
+      ],
+      "effect": "Deals an amount of Harm when it hits; the foundation of any weapon."
+    },
+    {
+      "name": "N-Use",
+      "categories": [
+        "Artifacts",
+        "Consumables",
+        "Misc.",
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Works a set number of times, then it's spent until restocked, reloaded, or replaced; mundane or non-renewable."
+    },
+    {
+      "name": "Networked",
+      "categories": [
+        "Structures",
+        "Tech",
+        "Vehicles"
+      ],
+      "effect": "Connected, powered, and online; full utilities and network access."
+    },
+    {
+      "name": "Nimble",
+      "categories": [
+        "Vehicles"
+      ],
+      "effect": "Corners and weaves with ease; built for tight spaces, cool stunts, and quick escapes."
+    },
+    {
+      "name": "Nitro-Boosted",
+      "categories": [
+        "Vehicles"
+      ],
+      "effect": "A burst of overwhelming speed on demand; thrilling but hard on the engine; usable once per scene."
+    },
+    {
+      "name": "Noisy",
+      "categories": [
+        "All"
+      ],
+      "effect": "Draws attention from anyone within Far Range curious about the sounds."
+    },
+    {
+      "name": "Off-Road",
+      "categories": [
+        "Vehicles"
+      ],
+      "effect": "Handles terrain that stops ordinary vehicles; mud, rubble, wilderness, stairs."
+    },
+    {
+      "name": "Official",
+      "categories": [
+        "Intel",
+        "Wearables"
+      ],
+      "effect": "Carries genuine authority; credentials, uniforms, or seals that command deference and compliance."
+    },
+    {
+      "name": "Ornate",
+      "categories": [
+        "Artifacts",
+        "Misc.",
+        "Weapons",
+        "Wearables"
+      ],
+      "effect": "Beautiful and clearly valuable; attracts notice and covetous eyes."
+    },
+    {
+      "name": "Outdated",
+      "categories": [
+        "Intel",
+        "Tech",
+        "Vehicles"
+      ],
+      "effect": "Behind the times; works, but incompatible, unsupported, or easy to outmaneuver."
+    },
+    {
+      "name": "Perishable",
+      "categories": [
+        "Consumables",
+        "Intel"
+      ],
+      "effect": "Spoils if not used fresh; time, heat, and neglect render it worthless."
+    },
+    {
+      "name": "Piercing",
+      "categories": [
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Ideal for staking."
+    },
+    {
+      "name": "Pocketed",
+      "categories": [
+        "Misc.",
+        "Wearables"
+      ],
+      "effect": "Riddled with hidden pockets; carries far more than it looks like it should."
+    },
+    {
+      "name": "Poisonous",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Sickens or inflicts Harm upon the living that ingest it; the dead are mostly unaffected."
+    },
+    {
+      "name": "Prestigious",
+      "categories": [
+        "Artifacts",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "A mark of status; impresses those who recognize what it signals."
+    },
+    {
+      "name": "Putrid",
+      "categories": [
+        "Artifacts",
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Foul enough to turn stomachs; anyone too close risks gagging, vomiting, or worse."
+    },
+    {
+      "name": "Radioactive",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Tech"
+      ],
+      "effect": "Leaks invisible contamination; lingers in an area and sickens the living over time."
+    },
+    {
+      "name": "Recharge-X",
+      "categories": [
+        "Artifacts",
+        "Tech"
+      ],
+      "effect": "Refills its charge(s) under the stated condition (e.g., **Recharge-Dawn**, **Recharge-Scene**)."
+    },
+    {
+      "name": "Reflective",
+      "categories": [
+        "Misc.",
+        "Structures",
+        "Tech",
+        "Wearables"
+      ],
+      "effect": "Shows clear reflections; reveals at a glance who has one and who doesn't."
+    },
+    {
+      "name": "Refrigerated",
+      "categories": [
+        "Structures",
+        "Tech",
+        "Vehicles"
+      ],
+      "effect": "Chilled storage; contents stay fresh far longer than they otherwise would (especially anything **Perishable**)."
+    },
+    {
+      "name": "Registered",
+      "categories": [
+        "Vehicles",
+        "Weapons"
+      ],
+      "effect": "Legally on the books in your name; legitimate, but it's in a database somewhere."
+    },
+    {
+      "name": "Reinforced",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Built tougher than standard; resists ramming, breaching, and structural damage."
+    },
+    {
+      "name": "Relic",
+      "categories": [
+        "Artifacts",
+        "Wearables"
+      ],
+      "effect": "An object of great historical or spiritual weight; certain people will kill to possess it."
+    },
+    {
+      "name": "Restraining",
+      "categories": [
+        "Misc.",
+        "Wearables"
+      ],
+      "effect": "Binds and holds a captive; escaping takes help, leverage, luck, or a great deal of effort."
+    },
+    {
+      "name": "Returning",
+      "categories": [
+        "Artifacts",
+        "Weapons"
+      ],
+      "effect": "Comes back to your hand after being thrown or knocked away."
+    },
+    {
+      "name": "Salted",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Coated, lined, or filled with dry salt; an unbroken line of it stops certain creatures in their tracks."
+    },
+    {
+      "name": "Sedating",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Induces unconsciousness or stupor in the living; the dead are much harder to put down."
+    },
+    {
+      "name": "Self-Replicating",
+      "categories": [
+        "Artifacts",
+        "Consumables",
+        "Misc.",
+        "Tech"
+      ],
+      "effect": "Makes more of itself given time and opportunity; contain it or it spreads."
+    },
+    {
+      "name": "Sentient",
+      "categories": [
+        "All"
+      ],
+      "effect": "Aware, conscious, and willful; has its own desires and can communicate somehow."
+    },
+    {
+      "name": "Shabby",
+      "categories": [
+        "Intel",
+        "Misc.",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Worn, cheap, and forgettable; marks its owner as someone not worth a second glance."
+    },
+    {
+      "name": "Shielded",
+      "categories": [
+        "Tech",
+        "Wearables"
+      ],
+      "effect": "Blocks signals, scans, electrical surges, and/or detection; nothing gets in or out electronically."
+    },
+    {
+      "name": "Silver",
+      "categories": [
+        "Consumables",
+        "Weapons"
+      ],
+      "effect": "Deals Aggravated Harm to anything vulnerable to silver."
+    },
+    {
+      "name": "Single-Exit",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Only one way in or out; easy to guard, easy to get cornered in."
+    },
+    {
+      "name": "Slow-Reload",
+      "categories": [
+        "Weapons"
+      ],
+      "effect": "Takes a while to ready again; you can't reload or recharge it until combat is over."
+    },
+    {
+      "name": "Sluggish",
+      "categories": [
+        "Vehicles"
+      ],
+      "effect": "Slow to accelerate and turn; gets where it's going eventually but is more likely to be caught."
+    },
+    {
+      "name": "Smart",
+      "categories": [
+        "Tech",
+        "Vehicles"
+      ],
+      "effect": "Automated and responsive; clever enough to follow commands, learn habits, and act on its own."
+    },
+    {
+      "name": "Soothing",
+      "categories": [
+        "Artifacts",
+        "Consumables"
+      ],
+      "effect": "Calms nerves and quiets the Beast; eases fear and frayed composure rather than wounds."
+    },
+    {
+      "name": "Soundproof",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "No sound escapes or enters; what happens inside stays inside."
+    },
+    {
+      "name": "Spacious",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "Room enough for the whole Coterie and then some."
+    },
+    {
+      "name": "Speedy",
+      "categories": [
+        "Vehicles"
+      ],
+      "effect": "Outpaces most things on the road; built for getting somewhere or getting gone."
+    },
+    {
+      "name": "Sticky",
+      "categories": [
+        "Consumables",
+        "Misc.",
+        "Weapons"
+      ],
+      "effect": "Clings and adheres; traps, slows, or holds fast whatever it touches."
+    },
+    {
+      "name": "Stinky",
+      "categories": [
+        "Consumables",
+        "Misc."
+      ],
+      "effect": "Reeks badly enough to foul the air and ruin anything tracking by scent."
+    },
+    {
+      "name": "Stolen",
+      "categories": [
+        "All"
+      ],
+      "effect": "Someone wants it back, and they may be looking; hard to sell or display openly."
+    },
+    {
+      "name": "Sturdy",
+      "categories": [
+        "All"
+      ],
+      "effect": "Takes a beating and keeps working; resists wear, weather, and abuse."
+    },
+    {
+      "name": "Stylish",
+      "categories": [
+        "Misc.",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Striking and fashionable; turns heads and opens doors that stay shut to the drab."
+    },
+    {
+      "name": "Subterranean",
+      "categories": [
+        "Structures"
+      ],
+      "effect": "Below ground; naturally climate-controlled, low-light, and insulated from the world above."
+    },
+    {
+      "name": "Subtle",
+      "categories": [
+        "Misc.",
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Doesn't read as a weapon or a threat; draws no attention when carried."
+    },
+    {
+      "name": "Sunproof",
+      "categories": [
+        "Structures",
+        "Vehicles"
+      ],
+      "effect": "No sunlight reaches the interior; safe to slumber through the day."
+    },
+    {
+      "name": "Surveilled",
+      "categories": [
+        "Structures",
+        "Tech"
+      ],
+      "effect": "Watched by cameras, sensors, or eyes; assume all comings and goings are recorded and reviewed."
+    },
+    {
+      "name": "Tantalizing",
+      "categories": [
+        "Consumables",
+        "Misc."
+      ],
+      "effect": "Smells temptingly of fresh blood; hungry Kindred struggle to ignore it."
+    },
+    {
+      "name": "Trapped",
+      "categories": [
+        "Artifacts",
+        "Structures",
+        "Tech"
+      ],
+      "effect": "Rigged to harm or catch intruders who don't know the trick."
+    },
+    {
+      "name": "[Trespasser]-Warded",
+      "categories": [
+        "Artifacts",
+        "Structures",
+        "Tech",
+        "Wearables"
+      ],
+      "effect": "Protected by a (***Lesser*** or ***Greater***) Ward keyed to a named Trespasser type (e.g., **Ghoul-Warded**); triggers when that type of entity touches it."
+    },
+    {
+      "name": "Two-Handed",
+      "categories": [
+        "Weapons"
+      ],
+      "effect": "Requires both hands; no shield, no free grip, no phone."
+    },
+    {
+      "name": "Unbreakable",
+      "categories": [
+        "All"
+      ],
+      "effect": "Cannot be broken, shattered, or destroyed by ordinary means."
+    },
+    {
+      "name": "Unreliable",
+      "categories": [
+        "Tech",
+        "Vehicles",
+        "Weapons"
+      ],
+      "effect": "Works inconsistently; the Storyteller can have it jam, stall, or sputter at a dramatic moment."
+    },
+    {
+      "name": "Untraceable",
+      "categories": [
+        "Misc.",
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Leaves no trail; no records, no registration, no way to follow it home."
+    },
+    {
+      "name": "UV",
+      "categories": [
+        "Tech",
+        "Weapons"
+      ],
+      "effect": "Emits concentrated ultraviolet light; deals Aggravated Harm to anything vulnerable to UV."
+    },
+    {
+      "name": "Verified",
+      "categories": [
+        "Intel"
+      ],
+      "effect": "Confirmed true and reliable; the rare piece of information you can actually trust."
+    },
+    {
+      "name": "Watchful",
+      "categories": [
+        "Artifacts",
+        "Misc.",
+        "Tech"
+      ],
+      "effect": "Watches, listens, or records; cameras, bugs, trackers, drones, hidden eyes, government birds."
+    },
+    {
+      "name": "Weatherproof",
+      "categories": [
+        "Intel",
+        "Misc.",
+        "Wearables"
+      ],
+      "effect": "Shrugs off rain, cold, wind, and the elements; keeps the wearer and its contents dry."
+    },
+    {
+      "name": "Welcoming",
+      "categories": [
+        "Structures"
+      ],
+      "effect": "Mortals can be invited in and put at ease; often ideal for **Feeding**."
+    },
+    {
+      "name": "Wrought-Iron",
+      "categories": [
+        "Misc.",
+        "Structures",
+        "Weapons"
+      ],
+      "effect": "Forged from true wrought iron, the old stuff; deals Aggravated Harm to anything vulnerable to it."
+    }
+  ]
+}

@@ -30,7 +30,7 @@ Daimonion does not follow normal Discipline access rules. Instead of requiring B
 
 You carry three curses woven into your infernal blood, each pulling you in a different direction:
 
-*Holy Repulsion.* You automatically receive three mandatory [Folkloric Banes](optional-extras.md#folkloric-banes) at character creation: *Holy Water*, *Ding-Dong Don't*, and *Holy Symbols*. These grant only half their normal XP (+3 XP total instead of +6).
+*Holy Repulsion.* You automatically receive three mandatory [Folkloric Banes](optional-extras.md#folkloric-banes) at character creation: *Holy Water*, *Ding-Dong Don't*, and *Holy Symbols*. These grant only half their normal XP (+3 XP total instead of +6) and don't count towards the normal limit.
 
 *Eternal Sacrifice.* **Once per session, you may voluntarily mark a Stain to sustain your connection to the Outer Dark.** This is both your burden and your fuel (see the ***Dark Sacrament*** Perk below). **If you skip the Sacrament**, the demonic Vitae in your veins grows restless: whenever a Hunger Check is called for, you must make 1 additional Hunger Check on top of whatever was already required. This penalty persists until you perform a Sacrament, Dark or otherwise.
 
@@ -48,7 +48,7 @@ You carry three curses woven into your infernal blood, each pulling you in a dif
 - One or more animals in the vicinity panics, flees, attacks someone nearby, or drops dead for no visible reason; the more loved and appreciated an animal is, the higher the likelihood of this effect
 - Something nearby warps or corrupts; food spoils instantly, water turns acrid and stagnant, glass cracks in mesmerizing spiral patterns, paint blisters off the walls like pustules, statues weep blood
 
-The Compulsion ends after the demonic bailout resolves. These complications are unsettling and leave evidence, but are not automatic Masquerade breaches on their own.
+The Compulsion ends after the demonic bailout resolves. These complications are distinctly odd and leave evidence, but are not automatic Masquerade breaches on their own.
 
 ## Baali Perks
 
@@ -61,9 +61,9 @@ You get 3 unique abilities:
 - **At 2 segments:** The corrupted character gains a free Level 1 Daimonion Power of their choice. They need not ask for this, it simply trickles into their Blood one night when they need it most.
 - **At 4 segments:** The corrupted character gains a free Level 2 Daimonion Power of their choice.
 - **At 6 segments:** The corruption reaches critical mass. The corrupted character must choose one of three outcomes:
-    - **Apostasy** (they are re-Embraced as Baali, retire their current Playbook, and adopt this one; see below)
-    - **Sacrifice** (they are consumed as part of your next ***Dark Sacrament***, a Diablerie that feeds both you and the Outer Dark; you have Advantage on all Hunger Checks to Diablerize them)
-    - **Trial by Balefire** (ritualistic one-on-one combat with you to scrub the Debt and the Corruption Clock entirely — if they win, they're free, fair and square; if they lose, the Storyteller determines the fallout, but you're probably getting a snack)
+    - **Apostasy:** They are re-Embraced as Baali, retire their current Playbook, and adopt this one (see below).
+    - **Sacrifice:** They are consumed as part of your next ***Dark Sacrament***, a Diablerie that feeds both you and the Outer Dark; you have Advantage on all Hunger Checks to Diablerize them.
+    - **Trial by Balefire:** Ritualistic one-on-one combat with you to scrub the Debt and the Corruption Clock entirely — if they win, they're free, fair and square; if they lose, the Storyteller determines the fallout, but you're probably getting a snack.
 
 
 ***Dark Sacrament:*** **When you maintain your connection to the Outer Dark by voluntarily marking a Stain** (as described in your Bane), choose a dedication:
@@ -78,8 +78,8 @@ You get 3 unique abilities:
 Once each per session, gain +1 XP when you...
 
 - **Corrupt, tempt, or manipulate someone** into acting against their own interests or morals
-- **Suffer meaningful consequences from your infernal nature** at a moment when they cost you something real
-- **Maintain your cover identity** in a situation where exposure would have been catastrophic
+- **Suffer meaningful consequences from your infernal nature** at a moment when they cost you something
+- **Maintain your cover identity** in a situation where exposure could have been catastrophic
 
 ### *If Someone Undergoes Apostasy*
 

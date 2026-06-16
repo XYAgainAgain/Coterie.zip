@@ -10,7 +10,7 @@ import {
   currentPlaybook, currentPredatorType, currentBloodlineUrl, currentAgeBracket, gameData,
   statCap, parseXPValue, xpRange, baaliGrantedBaneEntries, grantedBaneXP,
 } from '../state/derived';
-import { character, setXP, updateCharacter, addPendingUpgrade, type GhoulPatron } from '../state/character';
+import { character, setXP, updateCharacter, addPendingUpgrade, buyAdvancedMove, type GhoulPatron } from '../state/character';
 import { coterieState, adjustCoterieStat, setHavenDescription, setHavenPicks } from '../state/coterie';
 import { editMode, enterDisciplineBuyMode, viewingOtherSheet } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
@@ -1378,15 +1378,6 @@ function MovesPanel() {
   const isEdit = editMode.value;
   const char = character.value;
 
-  function buyAdvancedMove(name: string) {
-    const cur = character.value;
-    if (cur.xp < 5 || cur.advancedMoves.includes(name)) return;
-    updateCharacter({
-      advancedMoves: [...cur.advancedMoves, name],
-      xp: cur.xp - 5,
-    });
-  }
-
   function addAdvancedMove(name: string) {
     const cur = character.value;
     if (cur.advancedMoves.includes(name)) return;
@@ -1553,15 +1544,6 @@ function AdvancementPanel() {
     updateCharacter({
       stats: { ...cur.stats, [stat]: cur.stats[stat] + 1 },
       xp: cur.xp - 8,
-    });
-  }
-
-  function purchaseAdvancedMove(moveName: string) {
-    const cur = character.value;
-    if (cur.xp < 5 || cur.advancedMoves.includes(moveName)) return;
-    updateCharacter({
-      advancedMoves: [...cur.advancedMoves, moveName],
-      xp: cur.xp - 5,
     });
   }
 
@@ -1823,7 +1805,7 @@ function AdvancementPanel() {
                 key={move.name}
                 class={`vamp-adv-move-btn ${unlocked ? 'vamp-adv-move-btn--unlocked' : ''}`}
                 disabled={unlocked || char.xp < 5}
-                onClick={() => purchaseAdvancedMove(move.name)}
+                onClick={() => buyAdvancedMove(move.name)}
               >
                 {unlocked && <span class="vamp-adv-move-btn__check">{'✓'}</span>}
                 {move.name}

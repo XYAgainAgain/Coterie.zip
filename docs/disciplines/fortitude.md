@@ -160,7 +160,7 @@ Unarmed attackers feel it immediately: their knuckles splinter, their bones ratt
 
 An opponent that rolls a 12+ on any offensive Move or Power bypasses ***Flesh of Marble*** entirely. Nothing is truly invincible and some blows simply cannot be denied.
 
-While active, your skin takes on an unsettling, faintly luminous sheen. It doesn't look like stone, exactly, but it doesn't look quite right either. It's a little like being slathered in glittery sunscreen.
+While active, your skin takes on a magnificent, faintly luminous sheen. It doesn't look like stone, exactly, but it doesn't look quite right either. It's a little like being slathered in glittery sunscreen.
 
 ### *Meat Shields*
 

@@ -114,7 +114,7 @@ At the beginning or end of any scene when you have Superficial Harm, you may cho
 
 Aggravated Harm does *not* heal between scenes. It heals only during slumber, and only if you go to bed at 2 Hunger or below. Kindred need both rest and fuel to repair this kind of damage; if you're too hungry, it prioritizes keeping you functional over fixing what's broken.
 
-When you wake from slumber at 2 Hunger or below, heal Aggravated Harm equal to 1 + your Blood Potency. At BP 1, that's 2 Aggravated healed per day; at BP 4, that's 5. Significant wounds can still take multiple days of rest and feeding to fully recover from, which is intentional. Aggravated Harm should linger long enough to create consequences.
+When you wake from slumber at 2 Hunger or below, heal Aggravated Harm equal to 1 + your Blood Potency. At BP 1, that's 2 Aggravated healed per day; at BP 4, that's 5. Significant wounds can still take multiple days of rest and **Feeding** to fully recover from, which is intentional. Aggravated Harm should linger long enough to create consequences.
 
 The **Feed** Basic Move also offers limited Aggravated healing. **On a 10+,** you can choose to heal 2 Superficial Harm, or spend both choices to heal 1 Aggravated Harm. This is the only way to heal Aggravated Harm outside of slumber (barring specific Discipline Powers or Perks such as the Salubri's ***Mending Touch***).
 

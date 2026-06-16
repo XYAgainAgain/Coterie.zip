@@ -2,7 +2,7 @@
 title: "Bardo"
 ---
 
-Bardo is the Discipline of turning back. Every other Discipline leans into what you became the night you were Embraced, but Bardo is the long, painful project of remembering what you were before. It was devised and taught by Osiris — a legendary ascetic vampire from old Egypt (not the literal deity) and powerful spiritual exemplar — to those who wanted out, and it has been passed down through hidden temples and whispered lineages for millennia.
+Bardo is the Discipline of turning back. Every other Discipline leans into what you became the night you were Embraced, but Bardo is the long, painful project of remembering what you were before. It was devised and taught by Osiris — a legendary ascetic vampire from old Egypt (not the literal deity, though there will always be some debate on where they diverge) and powerful spiritual exemplar — to those who wanted out, and it has been passed down through hidden temples and whispered lineages for millennia.
 
 The Followers of Set have been trying to stamp it out for just as long, and they've almost succeeded. In the modern nights, learning Bardo means finding an Osirian willing to teach you, which is roughly as easy as finding a unicorn who also does taxes unerringly (hooves, calculators... old rivals).
 
@@ -24,7 +24,7 @@ There is no inherent counter to Bardo. Vampires who want to resist its effects c
 
 **When you trace the crescent sigil of Thoth in the air between yourself and an incoming Discipline Power or other magical effect directed at you,** make a Hunger Check and roll +Resolve. You can activate this Power reactively the instant something offensive and magical targets you, even if it isn't your turn, substituting it for a **Stay Chill** roll if one is called for.
 
-**On a 10+,** the sigil flares and the Power unravels before it reaches you. The effect is completely negated. The attacker feels their Power collapse and knows something you did blocked it, but not how or what. The ancient god of wisdom, writing, magic, and measurement, that's what.
+**On a 10+,** the sigil flares and the Power unravels before it reaches you. The effect is completely negated. The attacker feels their Power collapse and knows something you did blocked it, but not how or what. Presumably the ancient god of wisdom, writing, magic, and measurement, that's what.
 
 **On a 7–9,** the sigil absorbs the worst of it but doesn't hold entirely. Choose 1:
 
@@ -40,7 +40,7 @@ There is no inherent counter to Bardo. Vampires who want to resist its effects c
 
 As your Humanity grows, so does the strength of the breeze:
 
-- **At 7+ Humanity,** you may choose to heal 1 Aggravated Harm instead of rolling for Superficial
+- **At 7+ Humanity,** you may choose to heal 1 Aggravated Harm instead of Superficial Harm as usual
 - **At 9+ Humanity,** the d6 result becomes a pool of healing points you can distribute across any Harm type; each point of Aggravated Harm healed costs 2 points from the pool (so a roll of 6 could heal 6 Superficial, or 3 Aggravated, or 2 Superficial & 2 Aggravated, or any similar combination)
 
 The wound closes, the bruise fades, the fracture knits, the spilled blood steams away and is replenished. The target feels a faint breeze that smells of clean linen, old incense, older books, and warm sand.
@@ -157,7 +157,7 @@ The trance takes at least as long as a full day of slumber, but when it ends, al
 
 **On a 6-,** your belief wavers just enough. The sun hits you like it hits every other vampire. Take 5 Aggravated Harm immediately and you must **Stay Chill** or flee for cover in a blind panic. If you were standing in an open field with nowhere to hide, that's going to be a very bad day.
 
-*If you also have Fortitude:* The cost drops to 1 Hunger Check per scene instead of 2. Your body is better equipped to endure what your spirit is so brazenly attempting.
+*If you also have Fortitude:* The cost drops to 1 Hunger Check per scene instead of 2. Your body is better equipped to endure what your Spirit is so brazenly attempting.
 
 ### *Boon of Anubis (Passive)*
 
@@ -175,7 +175,7 @@ You can protect a number of mortals up to half your current Humanity, rounded up
 
 **On a 10+,** the object freezes in time. All of its energy, momentum, and chemical processes halt completely. A bullet hangs in midair, a grenade takes a while to think about if it's really ready to explode, a truck plowing over an embankment at you and your Coterie freezes long enough for emergency services to arrive. The object remains suspended until the end of the scene or until any physical contact more significant than a raindrop occurs. When the stasis breaks, the object resumes exactly where it left off with all of its original energy intact: the bullet continues its flight, the grenade opts to fail, and the car tumbles to a fiery halt far away from you. Choose 1 additional benefit:
 
-- You can suspend a number of objects (probably bullets) at once equal to 5 × your Blood Potency
+- You can suspend a number of small objects (probably bullets) at once equal to 5 × your Blood Potency
 - The stasis is slightly stronger, and you can gently turn or redirect the object without breaking it
 - The duration extends to the next sunset
 
@@ -253,6 +253,6 @@ This Power has two paths. Both require sacrifice. Both reverse what everyone kno
 Your Humanity radiates outward like warmth from a hearth. **While you are enjoying the presence of your Coterie,** every member gains the following benefits from your connection to mortality:
 
 - Each Coterie member gains the effects of your **Blush of Life** tier (9–10 Humanity) regardless of their own Humanity without rolling a Hunger Check. This benefit lasts as long as they remain within Far Range of you; if they leave your presence, their **Blush of Life** reverts to their own Humanity tier at the end of the scene as though they had activated it. They might even miss you.
-- Each Coterie member gains the benefits of your ***Gift of Apis*** Perk. Animal blood nourishes them as effectively as human blood, regardless of their Blood Potency, with no BP-related feeding restrictions and no foul taste. The Ventrue can drink squirrel blood. The BP 4 Lasombra can subsist on pigeons. It tastes exactly as delicious as you always insist. It's fine, just try it! C'mon!
+- Each Coterie member gains the benefits of your ***Gift of Apis*** Perk. Animal blood nourishes them as effectively as human blood, regardless of their Blood Potency, with no BP-related **Feeding** restrictions and no foul taste. The Ventrue can drink squirrel blood. The BP 4 Lasombra can subsist on pigeons. It tastes exactly as delicious as you always insist. It's fine, just try it! C'mon!
 
 These benefits require no roll, no Hunger Check, and no activation. They are simply what it means to stand beside someone who has climbed this high. You are the most human vampire anyone will ever meet, and a little of that rubs off on the people you care about. Thank Caine you unlive forever, right?

@@ -315,6 +315,57 @@ export interface SnippetEntry {
   snippet: string;
 }
 
+/* Item Tag catalog (Corebook Appendix B), source of truth for the Possessions
+   tab's tooltips and tag autocomplete. Distinct from Power.tags (Discipline tags). */
+export interface ItemTag {
+  name: string;
+  categories: string[];
+  effect: string;
+}
+
+export type ItemType =
+  | 'Weapon' | 'Wearable' | 'Vehicle' | 'Consumable'
+  | 'Tech' | 'Artifact' | 'Intel' | 'Structure' | 'Miscellaneous';
+
+export const ITEM_TYPES: ItemType[] = [
+  'Weapon', 'Wearable', 'Vehicle', 'Consumable',
+  'Tech', 'Artifact', 'Intel', 'Structure', 'Miscellaneous',
+];
+
+/* A single tag on an item. `base` matches an ItemTag `name`, or the reserved
+   'Range' (dedicated picker) / '__custom__' (player-authored) sentinels.
+   `param` fills a template slot (N-Harm '3', Range 'Close-Far', Recharge-X 'Dawn',
+   [Trespasser]-Warded 'Ghoul'). `custom` carries the label + tooltip when base is custom. */
+export interface TagRef {
+  base: string;
+  param?: string;
+  custom?: { label: string; description: string };
+}
+
+export interface Item {
+  id: string;
+  name: string;
+  type: ItemType;
+  tags: TagRef[];          /* stored in player order; display re-orders templates only */
+  description: string;     /* free text, never rules-critical */
+  qty: number;             /* default 1 */
+  equipped: boolean;
+  isContainer: boolean;
+  containerId: string | null; /* null = carried loose, 'stash', 'haven', or another Item.id */
+}
+
+/* A pending hand-off in the Coterie doc's giftQueue. The sender pre-rolls verb +
+   display name so every client renders an identical toast. */
+export interface Gift {
+  id: string;              /* claim key (uuid); the claimed item adopts it for idempotency */
+  item: Item;              /* full payload; containerId reset to null on claim */
+  fromCharacterId: string;
+  fromDisplayName: string;
+  toCharacterId: string;
+  verb: string;
+  createdAt: number;
+}
+
 export interface Prerequisite {
   type: 'power' | 'discipline';
   name: string;

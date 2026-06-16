@@ -43,8 +43,9 @@ jobs:
       - run: npm ci --prefix vamp
 
       - run: npm exec --prefix vamp -- tsc -p vamp/tsconfig.json --noEmit
-      - run: npm test --prefix vamp --if-present
+      - run: npm test --prefix vamp
 
+      - run: npm exec --prefix minions/vamp-swarm -- tsc -p minions/vamp-swarm/tsconfig.json --noEmit
       - run: npm run parse --prefix minions/vamp-swarm
       - run: zensical build --clean
       - run: npm run build --prefix vamp

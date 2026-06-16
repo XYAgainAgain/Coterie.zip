@@ -3,7 +3,10 @@
 (function () {
   'use strict';
 
-  if (typeof firebase === 'undefined' || !firebase.database) return;
+  if (typeof firebase === 'undefined' || !firebase.database) {
+    console.warn('[Coterie] Firebase SDK unavailable; Batthew KDR disabled.');
+    return;
+  }
 
   var app = firebase.initializeApp({
     apiKey: 'AIzaSyAEHxHwfggbE_O51EAkgTA1tq10aGqR5BU',
@@ -31,7 +34,8 @@
         meals: val.meals || 0,
         deaths: val.deaths || 0
       });
-    }, function () {
+    }, function (err) {
+      console.warn('[Coterie] KDR read failed:', err);
       callback(null);
     });
   };

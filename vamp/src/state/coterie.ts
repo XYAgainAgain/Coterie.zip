@@ -1,6 +1,6 @@
 import { signal } from '@preact/signals';
 import type { Clock } from './character';
-import type { CoterieStatName } from '../data/types';
+import type { CoterieStatName, Item, Gift } from '../data/types';
 
 export interface CoterieMember {
   characterId: string;
@@ -20,6 +20,10 @@ export interface CoterieState {
   havenPositives: string[];
   havenNegatives: string[];
   members: CoterieMember[];
+  /* Shared inventory and pending hand-offs. Externally owned (any member writes via
+     transaction), so they always apply from snapshots — never dirty-gated. */
+  havenItems: Item[];
+  giftQueue: Gift[];
 }
 
 export function blankCoterie(): CoterieState {
@@ -30,6 +34,8 @@ export function blankCoterie(): CoterieState {
     havenPositives: [],
     havenNegatives: [],
     members: [],
+    havenItems: [],
+    giftQueue: [],
   };
 }
 

@@ -18,7 +18,7 @@ Because not everything resolves in a single roll! Sometimes threats build slowly
 **Filling Segments:** When something happens that advances the Clock, tick 1–3 segments depending on how significant the event is.
 
 - **Minor:** 1 segment (small mistake with a single witness who got away)
-- **Moderate:** 2 segments (messy feeding that someone noticed, public argument or fight, obvious supernatural display)
+- **Moderate:** 2 segments (messy **Feeding** that someone noticed, public argument or fight, obvious supernatural display)
 - **Major:** 3 segments (killing in public, using Disciplines on camera, attacking a mortal institution)
 
 **Emptying Segments:** When something happens that might hinder the Clock's progression, untick 1–3 segments.
@@ -52,7 +52,7 @@ This is the big one. The Masquerade Clock is *always* ticking. It tracks how muc
 
 - Masquerade breaches (witnesses to your evening activities, footage or photographs, bodies discovered)
 - Failed rolls on Moves where the complication is "start or advance the Masquerade Clock"
-- Storyteller Moves when you give them golden opportunities (feeding in public, using Disciplines openly, etc.)
+- Storyteller Moves when you give them golden opportunities (**Feeding** in public, using Disciplines openly, etc.)
 
 **When It's Filled:** The local Kindred authorities take action. This might mean...
 

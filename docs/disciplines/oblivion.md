@@ -16,9 +16,9 @@ There is no inherent counter to Oblivion. ***Sense the Unseen*** (Auspex) can de
 
 Your senses sharpen far beyond mortal limits. **You suffer no penalties from darkness of any kind, including supernatural, and your awareness extends into spaces that most minds instinctively refuse to perceive.**
 
-**Whenever you like**, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. **While your eyes are black**, you can see ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.
+**Whenever you like**, you can let the Abyss bleed into your eyes (counts as a Free Action). Your eyes turn solid black from edge to edge. **While your eyes are black**, you can see Ghosts that are not actively concealing their presence, appearing however they choose (as they looked in life, as the wounds that killed them, or as something worse). Ghosts don't automatically realize you can see them, but the ones that figure it out tend to have strong opinions about it.
 
-The black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both.
+The black eyes impose an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls targeting mortals who can see your face. Other Kindred find it mildly unsettling but manageable. This does not grant the ability to touch, command, or physically interact with Ghosts. For that, you'll need Ceremonies, a polite introduction, or ideally both.
 
 ---
 
@@ -32,9 +32,9 @@ This works on any mortal corpse, fresh or ancient, human or animal. It does not 
 
 ### *The Binding Fetter (Passive)*
 
-**While *Abyssal Sight* is active,** you can also perceive Fetters, which are objects, places, or people that anchor a ghost to the world. Fetters emanate auras visible only to those with Oblivion access; Auspex is useless when trying to identify them. Some glow with lingering vitality, others radiate decay, and many carry the phantom scent of something the dead person loved or feared (fresh bread, gasoline, recently-cut grass, perfume, hospital antiseptic, blood, wood smoke, or really anything else).
+**While *Abyssal Sight* is active,** you can also perceive Fetters, which are objects, places, or people that anchor a Ghost to the world. Fetters emanate auras visible only to those with Oblivion access; Auspex is useless when trying to identify them. Some glow with lingering vitality, others radiate decay, and many carry the phantom scent of something the dead person loved or feared (fresh bread, gasoline, recently-cut grass, perfume, hospital antiseptic, blood, wood smoke, or really anything else).
 
-Once you've identified a ghost's Fetter, you gain an Ongoing bonus equal to your Blood Potency (minimum 1) on all social, investigative, and Discipline rolls when dealing with that ghost or spirit, for as long as you know what and where the Fetter is.
+Once you've identified a Ghost's Fetter, you gain an Ongoing bonus equal to your Blood Potency (minimum 1) on all social, investigative, and Discipline rolls when dealing with that Ghost or Spirit, for as long as you know what and where the Fetter is.
 
 ### *Shadow Cloak (Passive)*
 
@@ -42,7 +42,7 @@ Once you've identified a ghost's Fetter, you gain an Ongoing bonus equal to your
 
 ### *Lambent Dark (Passive)*
 
-**When you raise a hand to guide yourself and your allies through darkness,** you begin to radiate a strange, pale ghost-light from your palm. This has no Hunger cost, no roll, and can be activated or deactivated as a Free Action.
+**When you raise a hand to guide yourself and your allies through darkness,** you begin to radiate a strange, pale Ghost-light from your palm. This has no Hunger cost, no roll, and can be activated or deactivated as a Free Action.
 
 Lambent Dark is a unique substance that is visible only to you and to others with Oblivion access; think of it like darkness so complete that it wraps back around to being light again. ***Sense the Unseen*** cannot detect it. Auspex cannot perceive it. Mortals, Ghouls, and creatures without Oblivion see nothing at all; you could illuminate an entire room and nobody without ***Abyssal Sight*** would notice.
 
@@ -140,7 +140,7 @@ Without this Power, Oblivion users cannot benefit from these Ongoing bonuses eve
 
 - **Impenetrable/Thick:** the Storyteller gives you a false reading; you believe the Veil is thicker or thinner than it actually is, and you won't find out until a Ceremony fails
 - **Thin:** something notices you probing; expect an uninvited visitor before the night is over
-- **Frayed:** a ghost reaches through during your assessment; take 1 Superficial Harm and 1 Stain
+- **Frayed:** a Ghost reaches through during your assessment; take 1 Superficial Harm and 1 Stain
 - **Absent:** you've poked a hornet's nest; take 2 Superficial Harm as something troublesome comes through immediately using your body as the focal point
 
 ---
@@ -152,24 +152,6 @@ Without this Power, Oblivion users cannot benefit from these Ongoing bonuses eve
 **When you let the entropy of the Abyss seep out through your pallid skin,** make 3 Hunger Checks. For the rest of the scene, everything within Close Range of you rots rapidly. Plants wilt and blacken, food spoils, wood warps, paint peels, brick crumbles, and mortals grow ill. Living creatures caught in the aura take Superficial Harm equal to your Blood Potency over the course of the scene, applied gradually as their bodies weaken. This Harm is supernatural in origin and cannot be treated by mundane medicine while the aura is active.
 
 You also *absolutely reek* of death while this Power is active. You have an Ongoing penalty equal to your Blood Potency (minimum 1) to all social rolls for the duration unless you're talking to a Graverobber or Grim Reaper. Anyone who consumes food or drink affected by the aura takes 2 Superficial Harm per item consumed until treated with supernatural means or healed with Vitae. The aura ends when the scene ends or you choose to let it disperse (a Free Action).
-
-### *Passion Feast*
-
-*(Requires: Fortitude access)*
-
-**When you *Feed* from a particularly passionate or benevolent spirit,** mark 1 Stain, make a Hunger Check, and roll with your normal **Feed** stat. You drain ephemera, something like the psychic imprint of emotion itself, consuming the ghost's tethering passions and leaving whatever remains. Aggressive Wraiths or Spectres and apathetic ghosts have nothing worth consuming; the Spirit must have genuine positive attachments for this Power to work.
-
-**On a 12+,** slake 3 Hunger. The ghost is left hollowed out but intact, drifting in vacant, sorrowful apathy forevermore. Hope the meal was worth condemning them to that.
-
-**On a 10+,** slake 2 Hunger. The ghost loses the passion you consumed and begins to slide toward destructive, Spectre-like behavior. If left unchecked, it might cause problems later on.
-
-**On a 7–9,** slake 1 Hunger, and the Storyteller chooses 1 complication:
-
-- The consumed passion floods your senses; you overwhelmingly feel what the ghost felt in its final moments for the rest of the scene
-- The ghost turns hostile immediately; you've eaten its reason to be anything other than furious
-- The tingly taste lingers on your tongue; take −1 Ongoing to **Feed** from mortals until the next dawn
-
-**On a 6-,** the passion won't go down easy. The ghost's emotions flood into you unfiltered and you experience the painfully concentrated energies of a dead person who will never feel anything new again. Slake 1 Hunger, take 2 Superficial Harm, and the ghost becomes a vengeful Spectre with a very specific grudge against you.
 
 ### *Shade Servant*
 
@@ -189,6 +171,14 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 - Bright light along its path forces a detour; the Storyteller decides how long and how inconvenient
 
 **On a 6-,** the Shade detaches but ignores your commands. It wanders off on its own and returns at the worst possible moment with information you didn't want. Or it doesn't return at all. Shadows grow back. Probably. There *has* to be a book about this somewhere...
+
+### *Stygian Shroud (Passive)*
+
+*(Requires: **Umbral Sphere**)*
+
+**When you extend your *Umbral Sphere* beyond its normal reach,** your shadow deepens and sound dies within it. All sound inside the sphere becomes muffled: voices dissolve into murmurs, footsteps vanish, screams become whispers, gunshots become faint cracks, and music is put through a heavy low-pass filter. Anyone inside the sphere without ***Abyssal Sight*** has an Ongoing −2 penalty to all perception-based rolls for as long as they remain within.
+
+Mortals caught in the shroud take 1 Superficial Harm per turn from the suffocating emptiness. It just really sucks to be in there.
 
 ### *Touch of Oblivion*
 
@@ -248,13 +238,21 @@ You also *absolutely reek* of death while this Power is active. You have an Ongo
 
 **On a 6-,** their belief wins over your disdain. You take 1 Aggravated Harm for each symbol of faith the target carries, even if you don't have the *Holy Symbols* Folkloric Bane, and their religion's primary symbol is seared into the flesh right between your eyes. The mark stubbornly persists until you gain 1 Humanity.
 
-### *Stygian Shroud (Passive)*
+### *Shadow Step*
 
-*(Requires: **Umbral Sphere**)*
+**When you step into any shadow large enough to cover you and step out of another somewhere else,** make a Hunger Check. You disappear and reappear from another shadow within Distant Range and line of sight. In combat, this consumes your Movement. The passage is instantaneous but not painless; something bitterly cold brushes against you each time, and the chill lingers for hours.
 
-**When you extend your *Umbral Sphere* beyond its normal reach,** your shadow deepens and sound dies within it. All sound inside the sphere becomes muffled: voices dissolve into murmurs, footsteps vanish, screams become whispers, gunshots become faint cracks, and music is put through a heavy low-pass filter. Anyone inside the sphere without ***Abyssal Sight*** has an Ongoing −2 penalty to all perception-based rolls for as long as they remain within.
+You can bring one willing passenger through at no additional cost; they must be touching you when you step in, and if they don't have Oblivion access, they take 1 Superficial Harm from whatever dwells in there.
 
-Mortals caught in the shroud take 1 Superficial Harm per turn from the suffocating emptiness. It just really sucks to be in there.
+**When you try to drag an unwilling creature through with you,** they must be held in a grapple. Roll +Shadow. **On a 10+,** they come through. An unprepared mortal is rendered catatonic until the end of the scene. A vampire must **Stay Chill** or enter Frenzy and flee from your Abyssal gaze immediately.
+
+**On a 7–9,** they come through, but the Storyteller chooses 1 complication:
+
+- They arrive partially; a limb or piece of equipment is left behind in the void
+- The passage traumatizes them so completely that they cannot act for 2 full turns after arriving
+- Something dark latches on and follows you out; the Storyteller decides exactly how bad it is
+
+**On a 6-,** you step through just fine. They don't. They vanish into the space between shadows and do not come out. Mark 5 Stains. You know you will never see them again.
 
 ### *Umbrous Clutch*
 
@@ -275,22 +273,6 @@ Unprepared mortals are catatonic with shock for the rest of the scene. Vampires 
 **On a success (7+),** a shadowy doppelgänger erupts from the target's shadow constructed of their suppressed impulses, their cruelty, and their darkest instincts, all given physical form. The dark entity matches its host's stats, equipment, HP, and Discipline access, but it has no allies (not even you) and no interest in self-preservation. Its only purpose is the destruction of its other half. It fights mercilessly until the end of the scene or until it or its host is destroyed.
 
 **On a 6-,** the entity emerges, briefly regards its host with something like recognition and camaraderie, and turns on you instead. You probably should have foreseen this.
-
-### *Shadow Step*
-
-**When you step into any shadow large enough to cover you and step out of another somewhere else,** make a Hunger Check. You disappear and reappear from another shadow within Distant Range and line of sight. In combat, this consumes your Movement. The passage is instantaneous but not painless; something bitterly cold brushes against you each time, and the chill lingers for hours.
-
-You can bring one willing passenger through at no additional cost; they must be touching you when you step in, and if they don't have Oblivion access, they take 1 Superficial Harm from whatever dwells in there.
-
-**When you try to drag an unwilling creature through with you,** they must be held in a grapple. Roll +Shadow. **On a 10+,** they come through. An unprepared mortal is rendered catatonic until the end of the scene. A vampire must **Stay Chill** or enter Frenzy and flee from your Abyssal gaze immediately.
-
-**On a 7–9,** they come through, but the Storyteller chooses 1 complication:
-
-- They arrive partially; a limb or piece of equipment is left behind in the void
-- The passage traumatizes them so completely that they cannot act for 2 full turns after arriving
-- Something dark latches on and follows you out; the Storyteller decides exactly how bad it is
-
-**On a 6-,** you step through just fine. They don't. They vanish into the space between shadows and do not come out. Mark 5 Stains. You know you will never see them again.
 
 ### *Skuld Fulfilled*
 
@@ -340,7 +322,7 @@ You can envelop a single creature by flowing over them. An enveloped target suff
 
 **When you firmly grasp a creature, lock eyes, and channel raw entropy directly into their soul,** make 2 Hunger Checks and roll +Shadow. You must be within Hand Range. This Power affects mortals and vampires differently but devastates both. Mark 5 Stains unless the kill aligns with one of your Convictions.
 
-Against mortals, the target takes Aggravated Harm equal to twice your Blood Potency. Those killed by ***Withering Spirit*** are annihilated so completely that they cannot return as ghosts. No Wraith, no Spectre, no haunting. They are gone and banished and no longer your problem.
+Against mortals, the target takes Aggravated Harm equal to twice your Blood Potency. Those killed by ***Withering Spirit*** are annihilated so completely that they cannot return as Ghosts. No Wraith, no Spectre, no haunting. They are gone and banished and no longer your problem.
 
 Against vampires, instead of dealing Harm, you consume Humanity equal to your Blood Potency from the target. Their Humanity drops by that amount immediately, with all associated consequences. A vampire reduced to 0 Humanity becomes a Wight, which is another flavor of bad news and almost certainly a Masquerade breach about to happen.
 
@@ -389,7 +371,7 @@ The Spirit is under no obligation to cooperate. It may be grateful for the conta
 
 ***Requirements:*** *a stone from a holy site (church wall, temple foundation, consecrated ground), your Vitae, the true name of the deceased, 1 scene*
 
-You pour your Vitae into a vessel and use it to write the deceased's true name on the consecrated stone. Gain +1 Hunger. If the individual still exists as a ghost or Spirit anywhere in the world, you receive a vision of their current location, clear enough to identify the place, but not precise enough to navigate there blindly (unless you're a GeoGuessr pro).
+You pour your Vitae into a vessel and use it to write the deceased's true name on the consecrated stone. Gain +1 Hunger. If the individual still exists as a Ghost or Spirit anywhere in the world, you receive a vision of their current location, clear enough to identify the place, but not precise enough to navigate there blindly (unless you're a GeoGuessr pro).
 
 The vision persists for the rest of the scene and can be revisited by holding the stone and concentrating. If the individual has passed on entirely and no Spirit remains, the stone absorbs the Vitae and nothing happens. A clean negative result, no false readings. If you were hoping they'd still be around, at least you know now.
 
@@ -488,7 +470,7 @@ You splash your Vitae toward the Spirit and hold the destructive implement again
 
 **On a 7–9,** the Spirit is compelled but the Storyteller chooses 1 complication:
 
-- The Spirit obeys the letter of your commands, not the spirit (pun unashamedly intended); you (the player) should expect creative interpretation but you (the character) assume it'll listen to you
+- The Spirit obeys the letter of your commands, not the Spirit (pun unashamedly intended); you (the player) should expect creative interpretation but you (the character) assume it'll listen to you
 - The compulsion is fragile; if you leave the Spirit's presence for longer than a scene, it breaks free
 - The Spirit completes your tasks but remembers everything; it has friends on the other side of the Veil that might come and beat you up later if you made it do something it didn't like
 

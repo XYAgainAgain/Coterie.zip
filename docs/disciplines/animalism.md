@@ -81,7 +81,7 @@ One or two short sentences is ideal; longer messages are possible but the Famili
 
 ### *Animal Succulence (Passive)*
 
-Feeding from animals nourishes you more than it does for most Kindred. **When you *Feed* from an animal,** slake 1 additional Hunger beyond what the roll provides. Your Blood Potency counts as 2 lower (minimum 0) for the purposes of any **Feeding** restrictions or penalties related to animal blood.
+**Feeding** from animals nourishes you more than it does for most Kindred. **When you *Feed* from an animal,** slake 1 additional Hunger beyond what the roll provides. Your Blood Potency counts as 2 lower (minimum 0) for the purposes of any **Feeding** restrictions or penalties related to animal blood.
 
 You may also choose to consume your Familiar entirely, draining every drop of its supernaturally enriched Vitae. This is permanent and irreversible; the animal dies, the Bond is severed, and something quiet and important inside you goes with it. Slake 4 Hunger. Additionally, the Storyteller determines which of your stats is most closely associated with the consumed animal, and you gain +2 to that stat until the next dawn. A consumed cat might raise Wits or Shadow, a dog might raise Resolve or Blood, a raven might raise Wits or Demeanor. The Storyteller has final say.
 

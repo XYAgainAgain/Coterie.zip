@@ -23,7 +23,7 @@ Against supernatural creatures, make a Hunger Check and roll +Demeanor (commandi
 **On a 7–9,** the target obeys, but the Storyteller chooses 1 complication:
 
 - The target hesitates visibly before complying; onlookers notice something's wrong
-- The command is obeyed to the letter but not the spirit
+- The command is obeyed to the letter but not the Spirit
 - The target remembers exactly what happened and who did it
 
 **On a 6-,** the target's will snaps back against yours. They recoil from you instinctively, as if they've glimpsed something monstrous behind your eyes. The target is immediately hostile, and anyone nearby who sees their reaction knows something just went very wrong.

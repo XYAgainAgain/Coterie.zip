@@ -55,14 +55,14 @@ As your Humanity drops, the fiction changes around you. You become more dangerou
 
 1. **Was it necessary?** (self-defense, mercy, accident vs. cruelty, convenience)
 2. **Did they consent?** (genuinely, not under supernatural coercion)
-3. **What were the circumstances?** (EMT feeding on dying patients vs. actual serial killer)
+3. **What were the circumstances?** (EMT **Feeding** on dying patients vs. actual serial killer)
 4. **What does your character believe?** (Convictions matter! Violating your own moral code costs Humanity)
 
 **The Storyteller asks:** *"Does this violate one of your Convictions, or cross a line for your character?"*
 **If Yes:** Mark 1 Stain (potential Humanity loss at end of session)
 **If No:** No Stain, but the act still happened (Masquerade risk, Debts, other consequences)
 
-**Predator Types influence this.** A Sandman (feeds on sleeping humans) might lose Humanity from violent kills, but an Alleycat (opportunistic assault feeder) might not, because that's their mode of survival. You will never lose Humanity by feeding from animals, blood bags, or consciously consenting people (not manipulated or coerced).
+**Predator Types influence this.** A Sandman (feeds on sleeping humans) might lose Humanity from violent kills, but an Alleycat (opportunistic assault feeder) might not, because that's their mode of survival. You will never lose Humanity by **Feeding** from animals, blood bags, or consciously consenting people (not manipulated or coerced).
 
 ### Clawing it Back
 

@@ -8203,3 +8203,472 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
   0%, 100% { filter: invert(1) drop-shadow(0 0 0.1875rem var(--v-glow)) drop-shadow(0 0 0.375rem var(--v-glow)); }
   50% { filter: invert(1) drop-shadow(0 0 0 transparent); }
 }
+
+/* Possessions tab (Phase 2: loose items, tags, tooltips, sort). */
+.vamp-poss {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-inline: 0.4rem;
+}
+
+.vamp-poss__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--v-text-muted);
+}
+
+.vamp-poss__sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.vamp-poss__sort select,
+.vamp-poss-edit__type,
+.vamp-poss-add__type {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--v-text);
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.15rem 0.3rem;
+}
+
+.vamp-poss__empty {
+  color: var(--v-text-muted);
+  font-style: italic;
+  text-align: center;
+  padding-block: 1.5rem;
+}
+
+.vamp-poss__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.vamp-poss-row {
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-md);
+  background: var(--v-glass-bg);
+  overflow: visible;
+}
+
+.vamp-poss-row--equipped {
+  border-color: var(--v-border-accent);
+}
+
+.vamp-poss-row__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.vamp-poss-row__pip {
+  flex: none;
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  border-radius: 50%;
+  border: 2px solid var(--v-text-muted);
+  box-sizing: border-box;
+}
+
+.vamp-poss-row__pip.is-on {
+  background: var(--v-accent);
+  border-color: var(--v-accent);
+  box-shadow: 0 0 0.35rem var(--v-glow);
+}
+
+.vamp-poss-row__pip--none {
+  visibility: hidden;
+}
+
+.vamp-poss-row__name {
+  flex: none;
+  font-family: var(--v-font-heading);
+  color: var(--v-text);
+  white-space: nowrap;
+}
+
+.vamp-poss-row__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.vamp-poss-row__chips--body,
+.vamp-poss-row__chips--edit {
+  margin-block: 0.35rem;
+}
+
+.vamp-poss-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  padding: 0.05rem 0.4rem;
+  border-radius: 999px;
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border-muted);
+  color: var(--v-text-secondary);
+  cursor: help;
+}
+
+.vamp-poss-chip__x {
+  font: inherit;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--v-text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.vamp-poss-chip__x:hover { color: var(--v-danger); }
+
+.vamp-poss-row__body {
+  padding-block: 0 0.5rem;
+  padding-inline: 1.8rem 0.6rem; /* indent under the name, past the pip */
+}
+
+.vamp-poss-row__desc {
+  color: var(--v-text-secondary);
+  font-size: 0.85rem;
+  margin-block: 0.35rem;
+}
+
+.vamp-poss-row__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-block-start: 0.4rem;
+}
+
+.vamp-poss-btn {
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+  transition: var(--v-transition);
+}
+
+.vamp-poss-btn:hover { border-color: var(--v-accent); color: var(--v-text); }
+.vamp-poss-btn--on { background: var(--v-accent-subtle); border-color: var(--v-accent); color: var(--v-text-accent); }
+.vamp-poss-btn--danger { border-color: var(--v-danger); color: var(--v-danger); }
+
+.vamp-poss-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-block: 0.35rem;
+}
+
+.vamp-poss-edit__row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.vamp-poss-edit__name,
+.vamp-poss-adder__input,
+.vamp-poss-add__name {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--v-text);
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.2rem 0.4rem;
+}
+
+.vamp-poss-edit__name { flex: 1; min-inline-size: 0; }
+
+.vamp-poss-edit__desc {
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--v-text);
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.3rem 0.4rem;
+  min-block-size: 2.5lh;
+  resize: vertical;
+  field-sizing: content;
+}
+
+.vamp-poss-adder {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.vamp-poss-adder__input { flex: 1; min-inline-size: 7rem; }
+
+.vamp-poss-adder__base {
+  font-size: 0.8rem;
+  color: var(--v-text-accent);
+  font-family: var(--v-font-heading);
+}
+
+.vamp-poss-adder__ok,
+.vamp-poss-adder__cancel,
+.vamp-poss-add__btn {
+  font: inherit;
+  font-size: 0.8rem;
+  border-radius: var(--v-radius-sm);
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+  border: 1px solid var(--v-border);
+  background: var(--v-bg-sunken);
+  color: var(--v-text-secondary);
+}
+
+.vamp-poss-adder__ok { border-color: var(--v-accent); color: var(--v-text-accent); }
+.vamp-poss-adder__ok:disabled,
+.vamp-poss-add__btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.vamp-poss-add {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-block-start: 0.4rem;
+  padding-block-start: 0.4rem;
+  border-block-start: 1px solid var(--v-border-muted);
+}
+
+.vamp-poss-add__name { flex: 1; min-inline-size: 0; }
+
+/* Tooltip framework (first wave). Portaled to body; fixed-positioned from JS. */
+.vamp-tip-anchor { outline: none; }
+
+.vamp-tip {
+  position: fixed;
+  z-index: 9000;
+  max-inline-size: 18rem;
+  transform: translate(-50%, calc(-100% - 0.25rem));
+  padding: 0.4rem 0.6rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--v-dice-numeral);
+  background: var(--v-glass-bg);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  backdrop-filter: blur(0.75rem);
+  -webkit-backdrop-filter: blur(0.75rem);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.vamp-tip--below { transform: translate(-50%, 0.25rem); }
+
+/* Possessions Phase 3: sections, containers, move menu, drag-and-drop. */
+.vamp-poss-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border-radius: var(--v-radius-md);
+  border: 1px dashed transparent;
+  transition: var(--v-transition);
+}
+
+.vamp-poss-section--drop {
+  border-color: var(--v-accent);
+  background: var(--v-accent-subtle);
+}
+
+.vamp-poss-section__title {
+  font-family: var(--v-font-display);
+  font-size: 0.8rem;
+  color: var(--v-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.vamp-poss-section__empty {
+  color: var(--v-text-muted);
+  font-style: italic;
+  font-size: 0.8rem;
+  padding-inline: 0.3rem;
+}
+
+.vamp-poss-row--container > .vamp-poss-row__head { border-inline-start: 2px solid var(--v-border-accent); }
+.vamp-poss-row--drop { outline: 2px solid var(--v-accent); outline-offset: -2px; }
+
+.vamp-poss-row__bag { color: var(--v-text-accent); font-size: 0.8em; }
+.vamp-poss-row__contains { color: var(--v-text-muted); font-size: 0.85em; }
+
+.vamp-poss-row__children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-inline-start: 1rem;
+  padding-block: 0.3rem;
+  padding-inline-start: 0.4rem;
+  border-inline-start: 1px dashed var(--v-border-muted);
+}
+
+.vamp-poss-move { position: relative; display: inline-flex; }
+
+.vamp-poss-move__menu {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 8rem;
+  background: var(--v-bg-elevated);
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.vamp-poss-move__item {
+  font: inherit;
+  font-size: 0.8rem;
+  text-align: start;
+  color: var(--v-text-secondary);
+  background: none;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+
+.vamp-poss-move__item:hover { background: var(--v-accent-subtle); color: var(--v-text); }
+
+.vamp-poss-edit__container {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+  accent-color: var(--v-accent);
+}
+
+/* Possessions Phase 4: Give stepper + Haven rows. */
+.vamp-poss-give__qty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+  border-block-end: 1px solid var(--v-border-muted);
+}
+
+.vamp-poss-give__qty button {
+  font: inherit;
+  inline-size: 1.4rem;
+  block-size: 1.4rem;
+  border-radius: var(--v-radius-sm);
+  border: 1px solid var(--v-border);
+  background: var(--v-bg-sunken);
+  color: var(--v-text);
+  cursor: pointer;
+}
+
+.vamp-poss-row__head--haven {
+  cursor: default;
+}
+
+.vamp-poss-haven__take {
+  margin-inline-start: auto;
+}
+
+/* Possessions Phase 5: loadout strip + Armor shield pips. */
+.vamp-pip--shield {
+  inline-size: 1.05rem;
+  block-size: 1.05rem;
+  border: none;
+  border-radius: 0;
+  cursor: default;
+  background: var(--v-text-secondary);
+  mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
+}
+
+.vamp-armor-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin-block-start: 0.4rem;
+}
+
+.vamp-armor-row__label {
+  font-size: 0.8rem;
+  color: var(--v-text-muted);
+  margin-inline-start: 0.3rem;
+}
+
+.vamp-poss-loadout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: var(--v-radius-md);
+  background: var(--v-bg-sunken);
+  border: 1px solid var(--v-border-muted);
+  font-size: 0.8rem;
+}
+
+.vamp-poss-loadout__armor {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--v-text-secondary);
+  font-weight: 600;
+  cursor: help;
+}
+
+.vamp-poss-loadout__shield {
+  inline-size: 0.9rem;
+  block-size: 0.9rem;
+  background: var(--v-text-secondary);
+  mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
+}
+
+.vamp-poss-loadout__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding-inline-start: 0.4rem;
+  border-inline-start: 1px solid var(--v-border-muted);
+}
+
+.vamp-poss-loadout__name { color: var(--v-text); font-family: var(--v-font-heading); }
+.vamp-poss-loadout__stat { color: var(--v-text-muted); }
+
+.vamp-poss-loadout__use {
+  font: inherit;
+  font-size: 0.75rem;
+  color: var(--v-text-accent);
+  background: var(--v-accent-subtle);
+  border: 1px solid var(--v-accent);
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  cursor: pointer;
+}
+
+.vamp-poss-loadout__use:disabled { opacity: 0.5; cursor: default; }

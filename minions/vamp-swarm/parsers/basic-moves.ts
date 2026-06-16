@@ -103,6 +103,14 @@ function parseStandardMove(section: Section): StandardMove {
     );
   }
 
+  /* Every standard Move must define the 6- failure outcome; three non-failure tiers
+     (7-9/10+/12+) would otherwise pass the count check and ship a Move that can't fail. */
+  if (!outcomes.some(o => o.tier === '6-')) {
+    throw new Error(
+      `[Basic Moves > ${section.name}] Missing the 6- failure tier (found: ${outcomes.map(o => o.tier).join(', ')})`
+    );
+  }
+
   return {
     type: 'standard',
     name: section.name,

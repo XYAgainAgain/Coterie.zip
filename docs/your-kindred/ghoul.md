@@ -36,9 +36,9 @@ You get 3 unique abilities:
 
 ***Still Kicking:*** Your Blood Potency is 0 and cannot increase through normal advancement, but you're alive! You have a heartbeat, body heat, and a functioning digestive system. You can eat food, walk in direct sunlight, pass any medical examination (hopefully), and interact with mortal society without restriction. You cannot use **Blush of Life** because you don't need it.
 
-***Borrowed Time:*** **When you consume Vitae from your patron**, they gain +1 Hunger, you reduce your Hunger by the usual amount, and choose one: heal Harm (Superficial or Aggravated) equal to their Blood Potency, or gain Advantage on the same number of rolls to use your Discipline until you sleep. The Vitae sustains you in ways that go far beyond slaking thirst — for a brief, intoxicating moment, you feel what it might be like to be one of them.
+***Borrowed Time:*** **When you consume Vitae from your patron**, they gain +1 Hunger, you reduce your Hunger by the usual amount, and choose one: heal Harm (Superficial or Aggravated) equal to their Blood Potency, or gain Advantage on the same number of Discipline rolls until you sleep. The Vitae sustains you in ways that go far beyond slaking Hunger — for a brief, intoxicating moment, you feel what it might be like to be one of them.
 
-***Unshackled Servant:*** You have no Beast, no Predator Type, and you never Frenzy. **Stay Chill** still applies for stress, danger, and resisting manipulation, but never for rampage resistance. Your Hunger represents Vitae dependency, not a monster clawing at your insides. At 5 Hunger, instead of going wild, you enter withdrawal: you lose access to your Discipline and have Disadvantage on all rolls except those made to **Feed** until you consume Vitae (ideally from your patron).
+***Unshackled Servant:*** You have no Beast, no Predator Type, and you never Frenzy. **Stay Chill** still applies for stress, danger, and resisting manipulation, but never for rampage resistance. Your Hunger represents Vitae dependency, not a monster clawing at your insides. At 5 Hunger, instead of going wild, you enter withdrawal: you lose access to your Disciplines and have Disadvantage on all rolls except those made to **Feed** until you consume Vitae (ideally from your patron).
 
 ## Mortal Experience
 
@@ -50,9 +50,9 @@ Once each per session, gain +1 XP when you...
 
 ### *If You Are Embraced*
 
-Should the fiction lead to your Embrace — whether through the Advanced **Feed** Move, a narrative milestone, or a dramatic turning point — retire this Playbook. Choose a Clan Playbook; your patron's Clan is the default, but others are possible if the fiction supports it.
+Should the fiction lead to your Embrace — whether through the Advanced **Feed** Move, a narrative milestone, or a dramatic turning point — retire this Playbook. Choose a Playbook; your patron's is the default, but others are possible if the fiction supports it.
 
-Rebuild your character using that Clan's Playbook, transferring all your Convictions, Touchstones, and any Debts. The Blood Bond transforms into a standard Debt between you and your Sire, or is erased entirely; your choice. Your stat array changes to the standard spread, and may be reassigned however you like. All XP you earned as a Ghoul carries over and may also be reassigned. Welcome to the night.
+Rebuild your character using your Sire's Playbook, transferring all your Convictions, Touchstones, and any Debts. The Blood Bond transforms into a standard Debt between you and your Sire or is erased entirely; your choice. Your stat array changes to the standard spread, and may be reassigned however you like. All XP you earned as a Ghoul carries over and may also be reassigned. Welcome to the night.
 
 ## Archetypes
 

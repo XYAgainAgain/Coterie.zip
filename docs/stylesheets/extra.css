@@ -1431,6 +1431,16 @@ a, button, .md-nav__link, .md-footer__link {
   }
 }
 
+/* Storyteller Guidance landing stub: center the placeholder GIF. */
+.weatherboy {
+  display: block;
+  margin-inline: auto;
+  margin-block: 2rem;
+  inline-size: auto;
+  max-inline-size: min(540px, 100%);
+  block-size: auto;
+}
+
 .md-typeset blockquote {
   background-color: var(--color-bg-lighter);
 }

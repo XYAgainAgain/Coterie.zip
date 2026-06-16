@@ -1,7 +1,10 @@
 import { idbGet, idbPut } from '../state/idb';
 import { loadAllGameData, clearFetchCache, getCachedGeneratedAt, type GameData } from '../data/loader';
 
-const IDB_KEY = 'game-data-bundle';
+/* Bump on GameData shape changes so stale bundles (e.g. missing itemTags) are discarded,
+   not surfaced as undefined on first paint before the generatedAt refresh lands. */
+const BUNDLE_VERSION = 2;
+const IDB_KEY = `game-data-bundle-v${BUNDLE_VERSION}`;
 
 interface CachedBundle {
   generatedAt: string;

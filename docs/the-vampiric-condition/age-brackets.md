@@ -60,7 +60,7 @@ The mortal world is increasingly alien. You remember a time before smartphones, 
 - **Starting Humanity:** 6
 - **Starting Blood Potency:** 2
 - **Advancement:** Moderate; growth is steady but no longer rapid
-- **Predator Type:** Chosen at character creation; you've settled into steady feeding habits
+- **Predator Type:** Chosen at character creation; you've settled into steady **Feeding** habits
 - **Narrative Feel:** You're navigating the tension between power and connection. You've got influence, resources, and supernatural abilities that would terrify your younger self. But every year, it gets harder to remember why mortals and their trifling lives matter.
 
 ## Ancilla
@@ -76,12 +76,12 @@ Depending on when you were Embraced, you might remember...
 - **1800s–1840s:** Napoleonic Wars, westward expansion, early steam engines, the invention of trains
 - **1750s–1790s:** The American Revolution, the French Revolution, probably several other revolutions, the Enlightenment
 
-Humanity is a distant memory for most Ancillae. You maintain the forms (you can pass as a mortal if you must), but the substance is gone. You don't really understand mortals anymore. Their concerns seem trivial, their lives fleeting. The Beast is always close now, and creeping closer.
+Humanity is a dusty memory for most Ancillae. You maintain the forms (you can pass as a mortal if you must), but the substance is gone. You don't really understand mortals anymore. Their concerns seem trivial, their lives fleeting. The Beast is always close now, and creeping closer.
 
 - **Starting Humanity:** 4–5
 - **Starting Blood Potency:** 3
 - **Advancement:** Slow; real growth takes years, not months
-- **Predator Type:** Chosen at character creation; your feeding habits are deeply ingrained
+- **Predator Type:** Chosen at character creation; your habits are deeply ingrained
 - **Narrative Feel:** You're powerful and terrifying but increasingly isolated. Mortal connections are almost impossible to maintain because they just keep aging. Other vampires your age are the closest thing you have to peers, but trust is rare. You're fighting a losing battle against the Beast.
 
 ## Elder
@@ -104,4 +104,4 @@ You can't remember what the sun felt like on your skin. You know only blood and 
 - **Starting Blood Potency:** 4
 - **Advancement:** Very slow; meaningful growth takes decades
 - **Predator Type:** Chosen at character creation; centuries of habit are hard to break
-- **Narrative Feel:** You're a walking nightmare. You have power that lesser Kindred can't comprehend, but you're also struggling to remember why anything matters. The world has moved on without you. You're a ghost haunting the modern age, clinging to old grudges and ancient ambitions because you don't know what else to do. The Beast isn't something you fight anymore; it's a fact you've learned to unlive with.
+- **Narrative Feel:** You're a walking nightmare. You have power that lesser Kindred can't comprehend, but you're also struggling to remember why anything matters. The world has moved on without you. You're a Ghost haunting the modern age, clinging to old grudges and ancient ambitions because you don't know what else to do. The Beast isn't something you fight anymore; it's a fact you've learned to unlive with.

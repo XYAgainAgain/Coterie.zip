@@ -224,7 +224,7 @@ If you act on the answers, you get +1 Ongoing while the information is relevant.
 
 **When you feed from a vessel**, roll +Blood.
 
-**On a 10+,** reduce Hunger by 2 (or by 1 if feeding from animals/blood bags). No Masquerade breach. Choose 2:
+**On a 10+,** reduce Hunger by 2 (or by 1 if drinking from animals/blood bags). No Masquerade breach. Choose 2:
 
 - You leave them in a warm haze, coherent enough to get home safely
 - You heal 2 Superficial Harm (or alternatively, use both choices to heal 1 Aggravated Harm)

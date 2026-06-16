@@ -10,9 +10,9 @@ title: "Devorari"
 
 Nobody knows precisely what you are or how you work, including you. You might have been born this way, awakened through a ritual, cursed by something ancient, or simply changed one day with no explanation. You are not Kindred. You carry no lineage from Caine, no Beast clawing at your insides, no connection to the political machinations of vampire society. What you are is something older and stranger; a creature that exists in the folklore of nearly every culture on Earth under a thousand different names: Succubi and incubi. Kitsune. Huli jing. Yakshini. The Bebarlangs. The Evil Eye. Every civilization since humankind first crawled out of the mud and huddled around a fire has a story about something that drains the life force from the living through proximity or touch. You're one of those stories, walking around in business casual and carrying a smartphone.
 
-You consume **ephemera** rather than blood; the raw emotional and psychic energy that radiates from all beings. Skin-to-skin contact is the primary channel; a lingering touch, an embrace, an intimate encounter. Your prey feels lethargic afterward, like the saturation has been turned down on everything. Most assume they're just having a bummer of a day. The Kindred with whom you share a Coterie can't sustain you (they have nothing to give), can't **Feed** from you (your Vitae provides no nourishment), but you *can* do something invaluable for them: you can manipulate a mortal's emotional state before they **Feed**, turning prey Choleric, Sanguine, Melancholic, or Phlegmatic on demand. You're also the only member of the Coterie who can drain ghosts and spirits, which makes you either useful or highly unsettling depending upon the context.
+You consume **ephemera** rather than blood; the raw emotional and psychic energy that radiates from all beings. Skin-to-skin contact is the primary channel; a lingering touch, an embrace, an intimate encounter. Your prey feels lethargic afterward, like the saturation has been turned down on everything. Most assume they're just having a bummer of a day. The Kindred with whom you share a Coterie can't sustain you long-term (their emotions are mostly too dulled and taste like watery gruel), can't **Feed** from you (your Vitae provides no nourishment), but you *can* do something invaluable for them: you can manipulate a mortal's emotional state before they **Feed**, turning prey Choleric, Sanguine, Melancholic, or Phlegmatic on demand. You're also the only member of the Coterie who can drain Ghosts and Spirits, which makes you either useful or expendable, depending upon the context.
 
-The cost is the distance. Every person you touch loses something, and the more frequently you feed from someone, the worse it gets. You leave a trail of exhausted friends, hollowed-out lovers, and relationships that wither for reasons nobody can articulate. You walk in daylight, you look perfectly human, and you'll stay young as long as you keep feeding... but you can't eat, you can't drink, and the closest you'll ever get to another person is the moment you're taking something from them forever.
+The cost is the distance. Every person you touch loses something, and the more frequently you feed from someone, the worse it gets. You leave a trail of exhausted friends, hollowed-out lovers, and relationships that wither for reasons nobody can articulate. You walk in daylight, you look perfectly human, and you'll stay young as long as you keep **Feeding**... but you can't eat, you can't drink, and the closest you'll ever get to another person is the moment you're taking something from them forever.
 
 !!! warning "Important Note"
 
@@ -38,7 +38,7 @@ Until you make prolonged contact to **Feed** from the source of the emotion or t
 
 You get 2 unique abilities:
 
-***Psychic Predator:*** You have no Beast, no Predator Type, and you never consume blood, but you can **Feed** from mortals as well as Spirits of the dead — only vampires are a no-go. You can walk in daylight, age only if you stop feeding, and pass as human without effort. However, you cannot eat nor drink, and cannot use **Blush of Life**. You can still use the other Basic Moves (replacing blood with ephemera) and Blood Surge, but you cannot enter a Frenzy unless forced into one by certain Discipline Powers. Whenever any roll calls for +Blood, you may roll +Wits instead. At 5 Hunger, you begin to literally fade. Your presence becomes forgettable, your features indistinct, your voice easy to talk over. You lose access to your Disciplines and have Disadvantage on all rolls except **Hunt** and **Feed** until you consume ephemera.
+***Psychic Predator:*** You have no Beast, no Predator Type, and you never consume blood, but you can **Feed** from mortals, vampires, and Spirits of the dead. You can walk in daylight, age only if you stop **Feeding**, and pass as human without effort. However, you cannot eat nor drink, and cannot use **Blush of Life**. You can still use the other Basic Moves (replacing blood with ephemera) and Blood Surge, but you cannot enter a Frenzy unless forced into one by certain Discipline Powers. Whenever any roll calls for +Blood, you may roll +Wits instead. At 5 Hunger, you begin to literally fade. Your presence becomes forgettable, your features indistinct, your voice easy to talk over. You lose access to your Disciplines and have Disadvantage on all rolls except **Hunt** and **Feed** until you consume ephemera.
 
 ***Sanguine Sommelier:*** **When you *Influence* a mortal's emotional state through conversation, intimidation, seduction, or comfort**, you can shift their Blood Resonance to match the emotion you're cultivating. This takes a few minutes of sustained interaction, and the Storyteller decides how intense it becomes. When a Kindred subsequently **Feeds** from that mortal, the Resonance you set is what they get.
 
@@ -52,10 +52,10 @@ Once each per session, gain +1 XP when you...
 
 ## Archetypes
 
-- **Intimate:** *You crave closeness and you use every feeding as an excuse to find it.*
+- **Intimate:** *You crave closeness and you use every meal as an excuse to find it.*
     - Blood +1 | Shadow +0 | Resolve −1 | Demeanor +2 | Wits +1
 - **Ascetic:** *Distance keeps people safe. You feed carefully, clinically, and leave before it gets personal.*
     - Blood −1 | Shadow +1 | Resolve +2 | Demeanor +0 | Wits +1
-- **Puzzler:** *You're much less interested in the feeding than in the question: what the hell are you?*
+- **Puzzler:** *You're much less interested in the usual stuff than in the question: what the hell are you?*
     - Blood +0 | Shadow −1 | Resolve +1 | Demeanor +1 | Wits +2
 - **Custom Archetype:** Create your own by distributing these stats: **+2 | +1 | +1 | +0 | −1**

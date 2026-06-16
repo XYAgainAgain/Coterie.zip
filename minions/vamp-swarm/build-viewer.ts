@@ -615,6 +615,16 @@ RENDERERS['coterie-moves'] = function(entry) {
   return html;
 };
 
+RENDERERS['tags'] = function(entry) {
+  var html = '<div class="field"><div class="field-label">Suggested Categories</div><div class="stat-bar">';
+  for (var i = 0; i < entry.categories.length; i++) {
+    html += '<span class="stat-chip">' + esc(entry.categories[i]) + '</span>';
+  }
+  html += '</div></div>';
+  html += fieldHtml('Effect', entry.effect);
+  return html;
+};
+
 var REF_RENDERERS = {};
 
 REF_RENDERERS['stat-ref-tables'] = function(data) {

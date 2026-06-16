@@ -2,9 +2,9 @@
 title: "Auspex"
 ---
 
-Auspex is perception beyond its usual limitations. Where mortals squint and guess and make up scary stories to tell in the dark, you *actually know.* You hear the heartbeat behind the wall, smell the lie beneath the smile, and see the ghost standing right next to the dead body that nobody else seems able to detect.
+Auspex is perception beyond its usual limitations. Where mortals squint and guess and make up scary stories to tell in the dark, you *actually know.* You hear the heartbeat behind the wall, smell the lie beneath the smile, and see the Ghost standing right next to the dead body that nobody else seems able to detect.
 
-Your senses can expand to encompass entire city blocks or narrow to read the emotions written in a drop of blood. Most Auspex Powers are invisible to observers, so the Masquerade risk is low unless your eyes do something unsettling or you visibly space out while your mind is elsewhere. Auspex has no universal resistance mechanic; defenses are described within individual Powers.
+Your senses can expand to encompass entire city blocks or narrow to read the emotions written in a drop of blood. Most Auspex Powers are invisible to observers, so the Masquerade risk is low unless your eyes do something strange or you visibly space out while your mind is elsewhere. Auspex has no universal resistance mechanic; defenses are described within individual Powers.
 
 The flip side: everything hits a hell of a lot harder. ***Heightened Senses*** makes you vulnerable to extreme stimuli, and that vulnerability only grows as you open yourself wider. The more you perceive, the more you risk being overwhelmed by what you find.
 
@@ -30,7 +30,7 @@ However, if you're exposed to extreme sensations (loud bangs, intense light, ove
 
 ### *Sense the Unseen (Passive)*
 
-Your awareness pierces the veil between worlds. Cloaked vampires, distant watchers, lingering spirits, and woven enchantments all register to your expanded perception — you know what hides in the spaces between reality.
+Your awareness pierces the veil between worlds. Cloaked vampires, skulking watchers, lingering Spirits, and woven enchantments all register to your expanded perception — you know what hides in the spaces between reality.
 
 **When you successfully *Discern Vibes* or *Catch the Scent*,** you gain +1 additional Hold. The following questions can also be asked regardless of which Move you used:
 

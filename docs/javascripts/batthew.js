@@ -161,7 +161,7 @@
       if (sheets[t][name]) { if (--n === 0) cb(); return; }
       const img = new Image();
       img.onload = function () { sheets[t][name] = img; if (--n === 0) cb(); };
-      img.onerror = function () { if (--n === 0) cb(); };
+      img.onerror = function () { console.warn('[Batthew] sprite failed to load: ' + t + '/' + name); if (--n === 0) cb(); };
       img.src = BASE + t + '/' + name + '.webp';
     });
   }

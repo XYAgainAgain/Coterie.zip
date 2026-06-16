@@ -73,7 +73,7 @@ Before making a social or investigative roll involving someone you have a Debt w
 
 - Lend you Currency, equipment, or a vehicle
 - Let you use their Haven temporarily
-- Provide blood (if mortal) or feeding access (if vampire)
+- Provide blood (if mortal) or **Feeding** access (if vampire)
 
 **Debt Manipulation:**
 

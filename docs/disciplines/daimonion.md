@@ -6,11 +6,11 @@ Daimonion is a direct connection to the Outer Dark, the domain past the Abyss an
 
 The Discipline operates on two axes. The first is **communion**: sensing moral vulnerability, reading desire, understanding forbidden languages, and receiving whispers from entities that don't think the way you do. The second is **devastation**: Balefire, flesh-born parasites, insect swarms, area denial, and the destructive output of channeling energy from a place that hates all of creation. Communion Powers tend to be quiet and deceptive in nature. Devastation Powers tend to leave evidence, Stains, and lots of screaming; these are the ones that risk a Masquerade breach.
 
+**Humanity Gating:** Daimonion Powers are gated by low Humanity, not Blood Potency. Each level requires your Humanity to be at or below a threshold to learn and use. If your Humanity rises above a Power's threshold, you lose access until it drops again. Level 1 requires 6 Humanity or lower, level 2 requires ≤5, level 3 requires ≤4, level 4 requires ≤3, and level 5 requires ≤2 Humanity. It's scary down there.
+
 **Infernal Taint:** When you roll a Fanged Failure on any Daimonion roll, the Storyteller can choose 1 infernal complication from the list in your *Devil's Bargain* Compulsion. This happens whether or not you're currently under its effects.
 
 **Holy Vulnerability:** Items and effects with the Holy tag deal 2× Harm to any Kindred who has learned at least one Daimonion Power. This vulnerability is permanent, even if they later lose access to the Power. Nobody harnesses the infernal unscathed.
-
-**Humanity Gating:** Daimonion Powers are gated by low Humanity, not Blood Potency. Each level requires your Humanity to be at or below a threshold to learn and use. If your Humanity rises above a Power's threshold, you lose access until it drops again. Level 1 requires 6 Humanity or lower, level 2 requires ≤5, level 3 requires ≤4, level 4 requires ≤3, and level 5 requires ≤2 Humanity. It's scary down there.
 
 There is no inherent counter to Daimonion, but it can't hurt to hang religious symbols everywhere and add a couple drops of holy water to every bath you take. You know, just in case.
 
@@ -264,9 +264,9 @@ A faintly luminous ring of pale green light, visible only to those with supernat
 
 **While your *Dark Sacrament* is dedicated to the Outer Dark,** you gain the following benefits:
 
-- You can clearly perceive Wraiths, Shades, ghosts, and other incorporeal entities that are not actively concealing their presence, regardless of whether ***Abyssal Sight*** or similar Powers are active.
+- You can clearly perceive Wraiths, Shades, Ghosts, and other incorporeal entities that are not actively concealing their presence, regardless of whether ***Abyssal Sight*** or similar Powers are active.
 - You sense when Blood Sorcery, Oblivion, or Daimonion Powers are activated within Distant Range and can identify the general direction and relative threat level of the source compared to yourself.
-- You gain an Ongoing bonus equal to your Blood Potency (minimum 1) on all social rolls involving entities not native to the mortal realm. This applies to ghosts, Wraiths, Shades, summoned entities, demonic manifestations, and anything else that doesn't belong here.
+- You gain an Ongoing bonus equal to your Blood Potency (minimum 1) on all social rolls involving entities not native to the mortal realm. This applies to Ghosts, Wraiths, Shades, summoned entities, demonic manifestations, and anything else that doesn't belong here.
 
 If you change your ***Dark Sacrament*** dedication to the Beast or your Coterie, ***Crown of the Lost Clan*** goes dormant until you return to the Outer Dark dedication.
 

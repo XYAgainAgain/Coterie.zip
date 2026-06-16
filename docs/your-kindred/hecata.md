@@ -12,7 +12,7 @@ You were Embraced into a family. A sprawling, centuries-old dynasty that happens
 
 What you bring to the table is something no other Clan can quite match: the dead talk to you. Ghosts, corpses, Spirits — the Hecata can interrogate them, command them, even send them out as spies. That kind of access to secrets that people assumed were safely buried makes the Clan very useful and very wealthy. Other Kindred often find the whole thing distasteful, but they still come knocking when they need a body silenced permanently or a long-dead witness dragged back to testify. The Hecata are happy to help... for a price.
 
-The cost is in the feeding. Where other vampires deliver ecstasy with their bite, yours delivers agony. Your Kiss is pure pain; victims scream, thrash, and fight unless you pin them down or knock them out first. Willing donors exist, but even they have to steel themselves against it. Feeding is never subtle and never pleasant, meaning every meal is a logistical nightmare on top of a moral one.
+The cost is in the pain you cause. Where other vampires deliver ecstasy with their bite, yours delivers agony. Your Kiss is pure pain; victims scream, thrash, and fight unless you pin them down or knock them out first. Willing donors exist, but even they have to steel themselves against it. **Feeding** is never subtle and never pleasant, meaning every meal is a logistical nightmare on top of a moral one.
 
 ## Disciplines
 
@@ -32,7 +32,7 @@ Until you transform something's state (kill, resurrect, conclude, rekindle — t
 
 You get 2 unique abilities:
 
-***Death's Confidant:*** **When you encounter a corpse or sense a ghost's presence**, you can ask the dead one question and receive a truthful answer without rolling. The response may be cryptic, fragmented, or colored by the dead's own limited perspective. Anything beyond a single question requires Discipline use.
+***Death's Confidant:*** **When you encounter a corpse or sense a Ghost's presence**, you can ask the dead one question and receive a truthful answer without rolling. The response may be cryptic, fragmented, or colored by the dead's own limited perspective. Anything beyond a single question requires Discipline use.
 
 ***Wages of Pain:*** **When you successfully *Feed* from a living vessel**, slake 1 additional Hunger. Your Kiss is agony, but agony runs deep. This Perk allows you to drop below the Hunger floor imposed by high Blood Potency levels.
 

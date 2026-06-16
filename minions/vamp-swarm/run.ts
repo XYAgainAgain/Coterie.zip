@@ -18,6 +18,7 @@ import { parseStatRefTables } from './parsers/stat-ref-tables.js';
 import { parseHarmHealing } from './parsers/harm-healing.js';
 import { parseOptionalExtras } from './parsers/optional-extras.js';
 import { parseSnippets } from './parsers/snippets.js';
+import { parseTags } from './parsers/tags.js';
 import { AgeBracketsFileSchema } from './schemas/age-brackets.js';
 import { PredatorTypesFileSchema } from './schemas/predator-types.js';
 import { BasicMovesFileSchema } from './schemas/basic-moves.js';
@@ -34,6 +35,7 @@ import { StatRefTablesFileSchema } from './schemas/stat-ref-tables.js';
 import { HarmHealingFileSchema } from './schemas/harm-healing.js';
 import { OptionalExtrasFileSchema } from './schemas/optional-extras.js';
 import { SnippetsFileSchema } from './schemas/snippets.js';
+import { TagsFileSchema } from './schemas/tags.js';
 import type { ZodType } from 'zod';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -170,6 +172,13 @@ const tasks: ParserTask[] = [
     parse: () => parseSnippets(REPO_ROOT),
     schema: SnippetsFileSchema,
     outputFile: 'snippets.json',
+  },
+  {
+    name: 'Tags',
+    kind: 'entries',
+    parse: () => parseTags(REPO_ROOT),
+    schema: TagsFileSchema,
+    outputFile: 'tags.json',
   },
 ];
 

@@ -1,5 +1,6 @@
 import { computed, signal } from '@preact/signals';
 import { character, maxHPFor, BLOOD_SURGE_SOURCE, type CharacterState } from './character';
+import { tagNumber } from '../data/itemTags';
 import { parseHuntingStat, parsePrerequisites } from '../data/transforms';
 import type {
   StatName, Playbook, PredatorType, Discipline,
@@ -196,6 +197,37 @@ const BP_STAT_CAP: Record<number, number> = { 0: 3, 1: 3, 2: 3, 3: 4, 4: 5, 5: 5
 
 export const maxHP = computed(() => maxHPFor(character.value));
 export const statCap = computed(() => BP_STAT_CAP[character.value.bp] ?? 3);
+
+export interface ArmorBreakdown {
+  total: number;
+  vsAggravated: number; /* portion that also blunts Aggravated Harm (Stone Hide) */
+}
+
+/* Non-item Armor sources, keyed by the Playbook perk that grants them. Extensible:
+   add a perk name → amount/vsAggravated function. */
+const ARMOR_PERKS: Record<string, (char: CharacterState) => { amount: number; vsAggravated: boolean }> = {
+  'Stone Hide': (char) => ({ amount: Math.max(1, char.bp), vsAggravated: true }),
+};
+
+/* Derived Armor: equipped items' N-Armor plus any granting perk. Surfaced in the
+   loadout strip and as shield pips; never auto-subtracted (application stays a fiction call). */
+export const totalArmor = computed<ArmorBreakdown>(() => {
+  const char = character.value;
+  let total = 0;
+  let vsAggravated = 0;
+  for (const it of char.items) {
+    if (!it.equipped) continue;
+    for (const t of it.tags) total += tagNumber(t, 'N-Armor');
+  }
+  const perks = currentPlaybook.value?.perks ?? [];
+  for (const [name, fn] of Object.entries(ARMOR_PERKS)) {
+    if (!perks.some(p => p.name === name)) continue;
+    const src = fn(char);
+    total += src.amount;
+    if (src.vsAggravated) vsAggravated += src.amount;
+  }
+  return { total, vsAggravated };
+});
 
 export type PowerStatus = 'known' | 'pending' | 'available' | 'locked';
 

@@ -12,7 +12,7 @@ You were Embraced because you already carried yourself like you were in charge. 
 
 The Ventrue are the establishment. They make the rules, enforce the rules, and punish anyone who breaks the rules, which conveniently keeps them at the top. For centuries, the Ventrue have held more positions of power than any other Clan and they will fight to keep it that way. These nights, open leadership is too dangerous; the smart ones operate as shadow directors, reclusive donors, and silent partners, influencing mortal institutions from just off-stage. They resent having to hide, but they're pragmatic enough to do it anyway. In a Coterie, every Ventrue considers themselves the natural leader, and they might even be right. They're also the ones most likely to keep the group functional through sheer force of organizational will.
 
-The cost is your palate. Your blood is excruciatingly particular about what it will accept. Every Ventrue can only feed from a specific, narrow category of mortal that caters exactly to their taste. Anything outside your preference comes right back up. This turns every feeding into a logistical exercise, and the more obscure your requirement, the harder your nights get. You're the most powerful Clan at the table but you can be brought to your knees by not being able to find the right lunch.
+The cost is your palate. Your blood is excruciatingly particular about what it will accept. Every Ventrue can only feed from a specific, narrow category of mortal that caters exactly to their taste. Anything outside your preference comes right back up. This turns every **Feed** into a logistical exercise, and the more obscure your requirement, the harder your nights get. You're the most powerful Clan at the table but you can be brought to your knees by not being able to find the right lunch. It's a rough unlife you lead.
 
 ## Disciplines
 
@@ -20,7 +20,7 @@ Choose 2 to start: [**Dominate**](../disciplines/dominate.md) **| [Fortitude](..
 
 ## Bane: *Rarefied Palate*
 
-**At character creation, define your exclusive feeding preference**: a narrow, specific category of vessel (e.g., redheads, military veterans, people experiencing grief, individuals of noble descent, methamphetamine users, etc.) Blood from anyone outside your preference provides no sustenance; you vomit it back up within moments. Ventrue with the *Blood Leech* Predator Type are especially susceptible to going hungry.
+**At character creation, define your exclusive Feeding preference**: a narrow, specific category of vessel (e.g., redheads, military veterans, people experiencing grief, individuals of noble descent, methamphetamine users, etc.) Blood from anyone outside your preference provides no sustenance; you vomit it back up within moments. Ventrue with the *Blood Leech* Predator Type are especially susceptible to going hungry.
 
 You can sense whether a vessel matches your preference by spending a moment in close proximity and rolling +Wits. **On a 7+,** you know for certain if they fit the bill. It's like sniffing your food to check for mold.
 

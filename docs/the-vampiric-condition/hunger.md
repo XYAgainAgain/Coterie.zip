@@ -12,7 +12,7 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 
 **0 Hunger: Sated**
 
-- Just fed well. No penalties. You couldn't possibly have another drop. Unless...
+- All is well. No penalties. You couldn't possibly have another drop. Unless...
 
 **1–2 Hunger: Manageable**
 
@@ -34,7 +34,7 @@ Mmmm, blood... notoriously a liquid. I wonder why this isn't called Thirst. Mayb
 - In Frenzy, you remain in control of your character, but the Beast is driving. You *must* **Feed** until you reach 0 Hunger. Nothing else matters besides that and self-preservation. Some Discipline Powers can activate Frenzy, but most of the time you'll do it to yourself by getting reckless. This is something every Kindred experiences at least once.
 - When you reach 0 Hunger again, the Beast releases you. Your character may not remember exactly what happened during their rampage. They will soon find out.
 - **Age Scaling:**
-    - **Semimortal:** Desperate, embarrassing. May not even happen.
+    - **Semimortal:** Desperate, embarrassing. Probably won't even happen.
     - **Fledgling:** Violent and dangerous. You will hurt someone.
     - **Neonate:** Focused and highly dangerous. You will hurt multiple people.
     - **Ancilla:** Horrifying and efficient. Mortals are like cattle for the slaughter.
@@ -55,11 +55,11 @@ Some particularly taxing uses might require beating your Hunger by 2, or automat
 
 ## Feeding
 
-The actual process of a vampire bite, referred to as The Kiss, is ecstasy and violation wrapped into one. For the bloodsucker, it's pure satisfaction: warm blood flooding cold veins, the Hunger receding, the world snapping back into focus. For the mortal, it's overwhelming: a rush of endorphins that drowns out pain, fear, and reason. Most vampires' fangs carry a mild euphoric venom that makes victims pliant or even eager once they're connected. The experience leaves mortals dazed, often convinced it was a dream or that they wanted it all along. Vampires with the *Siren* Predator Type produce an especially potent Kiss, turning feeding into something mortals crave and chase.
+The actual process of a vampire bite, referred to as The Kiss, is ecstasy and violation wrapped into one. For the bloodsucker, it's pure satisfaction: warm blood flooding cold veins, the Hunger receding, the world snapping back into focus. For the mortal, it's overwhelming: a rush of endorphins that drowns out pain, fear, and reason. Most vampires' fangs carry a mild euphoric venom that makes victims pliant or even eager once they're connected. The experience leaves mortals dazed, often convinced it was a dream or that they wanted it all along. Vampires with the *Siren* Predator Type produce an especially potent Kiss, turning **Feeding** into something mortals crave and chase.
 
-The danger isn't just in the act, it's in the aftermath. Mortals who've been fed upon often return, consciously or not, seeking that high again. Some become willing vessels (even Blood Dolls), growing increasingly addicted to the vampire's touch. Others rationalize it away, their minds unable to process what happened. Either way, careless feeding creates patterns, and patterns create problems. A vampire who feeds sloppily leaves trails: witnesses, security footage, missing persons reports, or worse — mortals who *remember*.
+The danger isn't just in the act, it's in the aftermath. Mortals who've been fed upon often return, consciously or not, seeking that high again. Some become willing vessels (even Blood Dolls), growing increasingly addicted to the vampire's touch. Others rationalize it away, their minds unable to process what happened. Either way, careless **Feeding** creates patterns, and patterns create problems. A vampire who feeds sloppily leaves trails: witnesses, security footage, missing persons reports, or worse — mortals who *remember*.
 
-Feeding is intimate in ways that transcend the physical. You're close enough to smell their fear, their arousal, their resignation. You taste not just their blood but their emotions, their Resonance coloring the Vitae like spice in mulled wine. Some Kindred treat it as a simple transaction. Others savor it and try to make it last. A few lose themselves entirely in the act, forgetting where the feeding ends and the Frenzy begins.
+**Feeding** is intimate in ways that transcend the physical. You're close enough to smell their fear, their arousal, their resignation. You taste not just their blood but their emotions, their Resonance coloring the Vitae like spice in mulled wine. Some Kindred treat it as a simple transaction. Others savor it and try to make it last. A few lose themselves entirely in the act, forgetting where the **Feeding** ends and the Frenzy begins.
 
 Practically speaking, a vampire needs to **Feed** roughly once every three nights to avoid the Beast clawing its way to the surface. Older vampires can stretch this longer through voluntary Torpor or sheer willpower, but younger ones, especially Fledglings, feel the pull sooner and sharper. Miss too many nights and the Hunger becomes all-consuming. The Beast doesn't negotiate, and it doesn't care who gets hurt.
 
@@ -80,7 +80,7 @@ For each instance of Advantage you gain from the Resonance, you can spend it on 
 
 It's crucial to understand that Resonances aren't static. A Phlegmatic office worker might become Choleric after a road rage incident. A Sanguine partygoer could turn Melancholic when they get a text with some bad news. The Storyteller determines how emotions change Resonance based on what's happening in the fiction.
 
-Vampires who want specific Resonances learn to manipulate their prey's emotional states before feeding; scaring them, seducing them, or enraging them to get the flavor they crave. Doubling down on an emotion a mortal is already feeling can intensify the Resonance, increasing its strength when consumed. If blood has Resonance, it will have one of three strength levels:
+Vampires who want specific Resonances learn to manipulate their prey's emotional states before **Feeding**; scaring them, seducing them, or enraging them to get the flavor they crave. Doubling down on an emotion a mortal is already feeling can intensify the Resonance, increasing its strength when consumed. If blood has Resonance, it will have one of three strength levels:
 
 - **Fleeting:** Grants 1 stocked Advantage
 - **Intense:** Grants 2 stocked Advantages
@@ -92,7 +92,7 @@ Vampires who want specific Resonances learn to manipulate their prey's emotional
 
 ## Blood Bonds
 
-Blood, specifically Vitae, is far more than just sustenance. Yours carries supernatural power and probably many centuries of curses, innate abilities, feuds, and more. Feeding somebody else your blood or drinking another's is an exceedingly intimate act that is equal parts addiction, devotion, and bondage.
+Blood, specifically Vitae, is far more than just sustenance. Yours carries supernatural power and probably many centuries of curses, innate abilities, feuds, and more. Giving somebody else your blood or drinking another's is an exceedingly intimate act that is equal parts addiction, devotion, and bondage.
 
 ### The Process
 

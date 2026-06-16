@@ -1,5 +1,6 @@
 import { signal } from '@preact/signals';
-import type { StatName } from '../data/types';
+import type { StatName, Item } from '../data/types';
+import { canEquip } from '../data/itemTags';
 import type { CustomTheme } from '../themes/customTheme';
 
 export interface Debt {
@@ -130,6 +131,7 @@ export interface CharacterState {
   bloodSurgeAdvantages: number;
   /* Quick Heal is 1/scene. Resets on New Scene/New Night; absent on old docs = false. */
   quickHealUsedThisScene?: boolean;
+  items: Item[];
 }
 
 export const NOTEBOOK_HELP_ID = '1998';
@@ -191,80 +193,56 @@ export const NOTEBOOK_HELP_NOTE: Note = {
   body: NOTEBOOK_HELP_BODY,
 };
 
-const JOHNNY_FANGS: CharacterState = {
-  name: 'Johnny Fangs',
-  portraits: [{ url: 'https://i.imgur.com/ELvdOgp.jpeg', x: 50, y: 50, scale: 1 }],
-  playbook: 'Banu Haqim',
-  predatorType: 'Consensualist',
-  ageBracket: 'Fledgling',
-  bio: { apparentAge: '28', vampiricAge: '3', pronouns: ['he', 'him'], height: '5\'10"', weight: '165 lbs', style: 'Leather jacket, slicked-back hair', occupation: 'Bouncer' },
-  archetypeName: 'Greaser',
+/* Empty character: createCharacter's base and stripMetadata's field whitelist (absent
+   keys drop on load). Here, not persistence.ts, so the default signal avoids a cycle. */
+export const BLANK_CHARACTER: CharacterState = {
+  name: '',
+  portraits: [],
+  playbook: '',
+  predatorType: '',
+  ageBracket: '',
+  bio: { apparentAge: '', vampiricAge: '', pronouns: ['', ''], height: '', weight: '', style: '', occupation: '' },
+  archetypeName: '',
   customArchetypeName: '',
   customArchetypeTagline: '',
-  stats: { Blood: 1, Shadow: 1, Resolve: -1, Demeanor: 0, Wits: 2 },
-  unlockedDisciplines: ['celerity', 'obfuscate'],
-  startingDisciplines: ['celerity', 'obfuscate'],
-  knownPowers: [
-    'Sense the Unseen',
-    'Rapid Reflexes',
-    'Traversal',
-    'Silence of Death',
-  ],
+  stats: { Blood: 0, Shadow: 0, Resolve: 0, Demeanor: 0, Wits: 0 },
+  unlockedDisciplines: [],
+  startingDisciplines: [],
+  knownPowers: [],
   knownProjectPowers: [],
   advancedMoves: [],
   pendingUpgrades: [],
-  bp: 1,
-  hunger: 2,
-  humanity: 8,
-  stains: 1,
-  harm: { superficial: 2, aggravated: 1 },
-  xp: 3,
-  xpTriggers: [false, false, false],
-  debts: [
-    { id: 'd1', who: 'Alejandro', text: 'You kept quiet about his unsanctioned feeding grounds', direction: 'owed', state: 'empty' },
-    { id: 'd2', who: 'Nadia', text: 'You saved her ghoul from a Sabbat ambush', direction: 'owed', state: 'slashed' },
-    { id: 'd3', who: 'The Prince', text: 'Overlooked your Sire breaking Tradition when Embracing you', direction: 'owe', state: 'empty' },
-  ],
-  modifiers: [
-    { id: 'm1', type: 'forward', value: 1, target: 'Influence', source: 'Auspex: Premonition' },
-    { id: 'm2', type: 'ongoing', value: 2, target: null, source: 'Heightened Senses' },
-    { id: 'm3', type: 'hold', value: 3, target: null, source: 'Discern Vibes', spendOn: 'ask a question about what you see' },
-    { id: 'm4', type: 'forward', value: -1, target: null, source: MANUAL_SOURCE },
-    { id: 'm5', type: 'advantage', value: 0, target: null, source: 'Obfuscate' },
-  ],
-  convictions: [
-    '"I will never harm an innocent."',
-    '"The strong must protect the weak."',
-  ],
-  touchstones: [
-    { name: 'Marcus', pronouns: ['he', 'him'], ageBracket: 'Mature Adult', description: 'mortal friend, bartender at The Red Door' },
-    { name: 'Elena', pronouns: ['she', 'her'], ageBracket: 'Young Adult', description: 'former colleague, social worker' },
-  ],
+  bp: 0,
+  hunger: 0,
+  humanity: 7,
+  stains: 0,
+  harm: { superficial: 0, aggravated: 0 },
+  xp: 0,
+  xpTriggers: [],
+  debts: [],
+  modifiers: [],
+  convictions: [''],
+  touchstones: [{ name: '', pronouns: ['', ''], ageBracket: '', description: '' }],
   merits: [],
   flaws: [],
   folkloricBanes: [],
   baneChoice: 'standard',
   ghoulPatron: null,
   customTheme: null,
-  creationComplete: true,
+  creationComplete: false,
   creationStep: 'name',
-  tourComplete: true,
-  clocks: [
-    { id: 'c1', name: 'Find the Sabbat Safe House', segments: 6, filled: 2 },
-    { id: 'c2', name: 'Blood Bond to Alejandro', segments: 4, filled: 0, condition: 'Fully Bound at 4' },
-  ],
-  notes: [
-    { ...NOTEBOOK_HELP_NOTE },
-    { id: 'n1', title: 'Session 1', body: 'Met Katie at the house party. She knows about us.\n\nNeed to figure out how to handle this.' },
-    { id: 'n2', title: 'Safe House Intel', body: 'Alejandro mentioned a warehouse on **Pier 7**. Sabbat presence suspected.' },
-  ],
+  tourComplete: false,
+  clocks: [],
+  notes: [{ ...NOTEBOOK_HELP_NOTE }],
   initiative: '',
   combatNotes: '',
   bloodSurgesUsed: 0,
   bloodSurgeAdvantages: 0,
+  quickHealUsedThisScene: false,
+  items: [],
 };
 
-export const character = signal<CharacterState>(JOHNNY_FANGS);
+export const character = signal<CharacterState>(structuredClone(BLANK_CHARACTER));
 
 export function updateCharacter(patch: Partial<CharacterState>) {
   character.value = { ...character.value, ...patch };
@@ -602,9 +580,9 @@ export function newScene() {
   };
 }
 
-export function quickAdjustForward(delta: number) {
+function quickAdjustUniversal(type: 'forward' | 'ongoing', delta: number) {
   const mods = character.value.modifiers;
-  const existing = mods.find(m => m.type === 'forward' && m.source === MANUAL_SOURCE && !m.target);
+  const existing = mods.find(m => m.type === type && m.source === MANUAL_SOURCE && !m.target);
   if (existing) {
     const next = Math.max(-5, Math.min(5, existing.value + delta));
     if (next === 0) {
@@ -616,27 +594,12 @@ export function quickAdjustForward(delta: number) {
       };
     }
   } else if (delta !== 0) {
-    addModifier({ type: 'forward', value: Math.max(-5, Math.min(5, delta)), target: null, source: MANUAL_SOURCE });
+    addModifier({ type, value: Math.max(-5, Math.min(5, delta)), target: null, source: MANUAL_SOURCE });
   }
 }
 
-export function quickAdjustOngoing(delta: number) {
-  const mods = character.value.modifiers;
-  const existing = mods.find(m => m.type === 'ongoing' && m.source === MANUAL_SOURCE && !m.target);
-  if (existing) {
-    const next = Math.max(-5, Math.min(5, existing.value + delta));
-    if (next === 0) {
-      removeModifier(existing.id);
-    } else {
-      character.value = {
-        ...character.value,
-        modifiers: mods.map(m => m.id === existing.id ? { ...m, value: next } : m),
-      };
-    }
-  } else if (delta !== 0) {
-    addModifier({ type: 'ongoing', value: Math.max(-5, Math.min(5, delta)), target: null, source: MANUAL_SOURCE });
-  }
-}
+export function quickAdjustForward(delta: number) { quickAdjustUniversal('forward', delta); }
+export function quickAdjustOngoing(delta: number) { quickAdjustUniversal('ongoing', delta); }
 
 export function quickAddHold() {
   const holdCount = character.value.modifiers.filter(m => m.type === 'hold').length;
@@ -644,16 +607,18 @@ export function quickAddHold() {
   addModifier({ type: 'hold', value: 1, target: null, source: MANUAL_SOURCE });
 }
 
-export function quickToggleAdvantage() {
+// The arrows negate one another: a standing opposite cancels back to Flat before the
+// chosen one can be set, so a single click never jumps straight across the two states.
+function quickToggleEither(self: 'advantage' | 'disadvantage', other: 'advantage' | 'disadvantage') {
   const mods = character.value.modifiers;
-  const existingAdv = mods.find(m => m.type === 'advantage' && m.source === MANUAL_SOURCE);
-  const existingDis = mods.find(m => m.type === 'disadvantage' && m.source === MANUAL_SOURCE);
-  // The arrows negate one another: a standing Disadvantage cancels back to Flat before
-  // Advantage can be set, so a single click never jumps straight across the two states.
-  if (existingDis) { removeModifier(existingDis.id); return; }
-  if (existingAdv) { removeModifier(existingAdv.id); return; }
-  addModifier({ type: 'advantage', target: null, source: MANUAL_SOURCE });
+  const existingOther = mods.find(m => m.type === other && m.source === MANUAL_SOURCE);
+  const existingSelf = mods.find(m => m.type === self && m.source === MANUAL_SOURCE);
+  if (existingOther) { removeModifier(existingOther.id); return; }
+  if (existingSelf) { removeModifier(existingSelf.id); return; }
+  addModifier({ type: self, target: null, source: MANUAL_SOURCE });
 }
+
+export function quickToggleAdvantage() { quickToggleEither('advantage', 'disadvantage'); }
 
 export function addDebt(direction: 'owed' | 'owe', who: string, text: string) {
   character.value = {
@@ -693,16 +658,15 @@ export function cycleDebtState(id: string, reverse: boolean) {
   };
 }
 
-export function quickToggleDisadvantage() {
-  const mods = character.value.modifiers;
-  const existingDis = mods.find(m => m.type === 'disadvantage' && m.source === MANUAL_SOURCE);
-  const existingAdv = mods.find(m => m.type === 'advantage' && m.source === MANUAL_SOURCE);
-  // Mirror of quickToggleAdvantage: a standing Advantage cancels to Flat first.
-  if (existingAdv) { removeModifier(existingAdv.id); return; }
-  if (existingDis) { removeModifier(existingDis.id); return; }
-  addModifier({ type: 'disadvantage', target: null, source: MANUAL_SOURCE });
-}
+export function quickToggleDisadvantage() { quickToggleEither('disadvantage', 'advantage'); }
 
+
+/* Buy an Advanced Move for 5 XP; no-op if unaffordable or already owned. */
+export function buyAdvancedMove(name: string) {
+  const cur = character.value;
+  if (cur.xp < 5 || cur.advancedMoves.includes(name)) return;
+  updateCharacter({ advancedMoves: [...cur.advancedMoves, name], xp: cur.xp - 5 });
+}
 
 export function addPendingUpgrade(upgrade: Omit<PendingUpgrade, 'id'>) {
   character.value = {
@@ -811,4 +775,113 @@ export function reorderNotes(fromIndex: number, toIndex: number) {
   const [moved] = notes.splice(fromIndex, 1);
   notes.splice(toIndex, 0, moved);
   character.value = { ...character.value, notes };
+}
+
+function setItems(items: Item[]) {
+  character.value = { ...character.value, items };
+}
+
+export function addItem(init: Partial<Item> & { name: string; type: Item['type'] }): string {
+  const id = crypto.randomUUID();
+  const item: Item = {
+    id,
+    name: init.name,
+    type: init.type,
+    tags: init.tags ?? [],
+    description: init.description ?? '',
+    qty: init.qty ?? 1,
+    equipped: init.equipped ?? false,
+    isContainer: init.isContainer ?? false,
+    containerId: init.containerId ?? null,
+  };
+  setItems([...character.value.items, item]);
+  return id;
+}
+
+/* Raw field patch; re-checks the equip invariant so a patch can't leave a stowed or
+   non-equippable item equipped. Equip toggling proper goes through toggleEquip. */
+export function updateItem(id: string, patch: Partial<Omit<Item, 'id'>>) {
+  setItems(character.value.items.map(i => {
+    if (i.id !== id) return i;
+    const next = { ...i, ...patch };
+    if (next.equipped && !canEquip(next)) next.equipped = false;
+    return next;
+  }));
+}
+
+/* Deleting a container frees its children to loose rather than orphaning them. */
+export function removeItem(id: string) {
+  const items = character.value.items;
+  const removed = items.find(i => i.id === id);
+  let next = items.filter(i => i.id !== id);
+  if (removed?.isContainer) {
+    next = next.map(i => (i.containerId === id ? { ...i, containerId: null } : i));
+  }
+  setItems(next);
+}
+
+/* Move to loose (null), Stash, Haven, or an item-container. Enforces 1-level nesting
+   (no container-in-container, no self-nest) and clears equipped when stowed off-person. */
+export function moveItem(id: string, target: string | null) {
+  const items = character.value.items;
+  const item = items.find(i => i.id === id);
+  if (!item) return;
+
+  const intoItemContainer = target !== null && target !== 'stash' && target !== 'haven';
+  if (intoItemContainer) {
+    if (target === id || item.isContainer) return;
+    const dest = items.find(i => i.id === target);
+    if (!dest || !dest.isContainer) return;
+  }
+
+  setItems(items.map(i =>
+    i.id === id
+      ? { ...i, containerId: target, equipped: target === null ? i.equipped : false }
+      : i,
+  ));
+}
+
+export function setItemQty(id: string, qty: number) {
+  const q = Math.max(1, Math.floor(qty));
+  setItems(character.value.items.map(i => (i.id === id ? { ...i, qty: q } : i)));
+}
+
+/* Toggle container status. Un-containering reparents children to wherever the
+   container itself lived (null/'stash'/'haven' — nesting is impossible), so a private
+   Stash bag's contents don't leak to the public Carried list. */
+export function setItemContainer(id: string, isContainer: boolean) {
+  let next = character.value.items.map(i => (i.id === id ? { ...i, isContainer } : i));
+  if (!isContainer) {
+    const fallback = next.find(i => i.id === id)?.containerId ?? null;
+    next = next.map(i => (i.containerId === id ? { ...i, containerId: fallback } : i));
+  }
+  setItems(next);
+}
+
+export function toggleEquip(id: string) {
+  setItems(character.value.items.map(i => {
+    if (i.id !== id || !canEquip(i)) return i;
+    return { ...i, equipped: !i.equipped };
+  }));
+}
+
+/* Remove `amount` from a stack for a hand-off; drops the row at 0. */
+export function removeQtyFromItem(id: string, amount: number) {
+  setItems(character.value.items.flatMap(i => {
+    if (i.id !== id) return [i];
+    const left = i.qty - amount;
+    return left > 0 ? [{ ...i, qty: left }] : [];
+  }));
+}
+
+/* Append a received item, idempotent on id so a re-claim from a stale queue no-ops. */
+export function receiveItem(item: Item) {
+  if (character.value.items.some(i => i.id === item.id)) return;
+  setItems([...character.value.items, item]);
+}
+
+/* Reparent a container's children to loose. Called before a container leaves the
+   inventory (gift or Haven deposit) so its contents don't strand on a departed parent. */
+export function freeContainerChildren(containerId: string) {
+  setItems(character.value.items.map(i => i.containerId === containerId ? { ...i, containerId: null } : i));
 }
