@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "generatedAt": "2026-06-18T02:02:04.038Z",
   "entries": [
     {
       "name": "Abductor",
@@ -29,7 +29,7 @@
       },
       "flaw": {
         "name": "Catching Heat",
-        "description": "Your violent feeding style attracts attention. **When you attempt to *Influence* law enforcement or anyone investigating violent crimes in your territory**, you have −1 Ongoing."
+        "description": "Your violent **Feeding** style attracts attention. **When you attempt to *Influence* law enforcement or anyone investigating violent crimes in your territory**, you have −1 Ongoing."
       },
       "humanity": "−1",
       "feedingRules": null
@@ -77,7 +77,7 @@
       },
       "flaw": {
         "name": "Marked & Made",
-        "description": "Your feeding habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time."
+        "description": "Your mealtime habits are known or suspected. Start with 1 Debt owed to someone who knows your secret and could expose you at any time."
       },
       "humanity": null,
       "feedingRules": "You can only slake Hunger by **Feeding** from other vampires. If you **Feed** from a mortal, you gain no benefits and mark 1 Stain."
@@ -173,7 +173,7 @@
       },
       "flaw": {
         "name": "Catastrophic Secret",
-        "description": "Your feeding method is a Masquerade breach waiting to happen. **If your family or friends discover the full truth of what you are and what you've done**, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it)."
+        "description": "Your **Feeding** method is a Masquerade breach waiting to happen. **If your family or friends discover the full truth of what you are and what you've done**, they become a 2-Debt liability until the situation is resolved (through memory manipulation, death, or turning them into Touchstones who accept it)."
       },
       "humanity": null,
       "feedingRules": null
@@ -205,7 +205,7 @@
       },
       "flaw": {
         "name": "Ethical Spiral",
-        "description": "You feel wildly uncomfortable feeding from non-consenting victims. **If you *Feed* from someone who hasn't given genuine consent (except in self-defense)**, mark 2 Stains and take −1 Ongoing until your next consensual feeding due to the guilt and self-loathing. If you violate your own rule more than once in a row, the Ongoing penalty stacks."
+        "description": "You feel wildly uncomfortable **Feeding** from non-consenting victims. **If you *Feed* from someone who hasn't given genuine consent (except in self-defense)**, mark 2 Stains and take −1 Ongoing until your next consensual or inanimate drink due to the guilt and self-loathing. If you violate your own rule more than once in a row, the Ongoing penalty stacks."
       },
       "humanity": "+1",
       "feedingRules": null
@@ -333,7 +333,7 @@
       },
       "flaw": {
         "name": "Stomach-Turning",
-        "description": "Any Kindred or mortal unfamiliar with you who witnesses your feeding method is (understandably) revolted. You have −3 Ongoing to **Influence** anyone who has watched you eat until at least a full week has passed."
+        "description": "Any Kindred or mortal unfamiliar with you who witnesses your **Feeding** method is (understandably) revolted. You have −3 Ongoing to **Influence** anyone who has watched you eat until at least a full week has passed."
       },
       "humanity": "−1",
       "feedingRules": "You can only slake Hunger by consuming uncomfortably large quantities of bugs swollen with partially-digested blood. This is horrific to watch, and anybody unused to your **Feeding** habits who witnesses it will want to leave at once, even Elders who thought they'd seen it all."
@@ -468,7 +468,7 @@
     },
     {
       "name": "Organovore",
-      "description": "You are a monster among monsters. Human blood does little to satiate your hunger; you can only survive on human flesh and organs. You are especially fond of those rich in blood, such as the heart, brain, lungs, liver, placenta, spleen... and of course, the fresher the better. This method of feeding, while not unheard of, is viewed with disdain by many blood-only vampires. It's messy, time consuming, and almost invariably lethal, but at least you can make yourself nice pink smoothies to go. So what if you like a little pulp in your juice?",
+      "description": "You are a monster among monsters. Human blood does little to satiate your hunger; you can only survive on human flesh and organs. You are especially fond of those rich in blood, such as the heart, brain, lungs, liver, placenta, spleen... and of course, the fresher the better. This method of **Feeding**, while not unheard of, is viewed with disdain by many blood-only vampires. It's messy, time consuming, and almost invariably lethal, but at least you can make yourself nice pink smoothies to go. So what if you like a little pulp in your juice?",
       "huntingStat": "+Blood",
       "discipline": "Potence",
       "merit": {
@@ -621,7 +621,7 @@
       },
       "flaw": {
         "name": "Mile Markers",
-        "description": "Your feeding method creates a geographic trail of disappearances. You start with 1 Debt owed to someone who's helped you cover your tracks along your route; a corrupt cop, a fellow Kindred with a cleanup crew, or a mortal who saw too much and was paid off."
+        "description": "Your **Feeding** method creates a geographic trail of disappearances. You start with 1 Debt owed to someone who's helped you cover your tracks along your route; a corrupt cop, a fellow Kindred with a cleanup crew, or a mortal who saw too much and was paid off."
       },
       "humanity": "−1",
       "feedingRules": null
@@ -685,7 +685,7 @@
       },
       "flaw": {
         "name": "Tied to the Scene",
-        "description": "Your feeding pattern is dependent on your subculture. **When you *Hunt* outside your established scene**, take −1 Forward."
+        "description": "Your meal pattern is dependent on your subculture. **When you *Hunt* outside your established scene**, take −1 Forward."
       },
       "humanity": null,
       "feedingRules": null
@@ -717,7 +717,7 @@
       },
       "flaw": {
         "name": "Tangled Sheets & Hearts",
-        "description": "Your feeding creates complicated emotional bonds, even unintentionally. **Each time you *Feed* from the same person more than once**, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion."
+        "description": "Your **Feeding** creates complicated emotional bonds, even unintentionally. **Each time you *Feed* from the same person more than once**, they become increasingly attached to you. The Storyteller may introduce romantic complications, jealous exes, or obsessive behavior at their discretion."
       },
       "humanity": null,
       "feedingRules": null
@@ -749,7 +749,7 @@
       },
       "flaw": {
         "name": "Delayed Delivery",
-        "description": "Your feeding method takes *ages*. It takes at least six hours for your animals to return with enough blood to slake 1 Hunger, and you can never slake more than 2 Hunger per night this way."
+        "description": "Your **Feeding** method takes *ages*. It takes at least six hours for your animals to return with enough blood to slake 1 Hunger, and you can never slake more than 2 Hunger per night this way."
       },
       "humanity": null,
       "feedingRules": null
@@ -788,7 +788,7 @@
     },
     {
       "name": "Tourist Hunter",
-      "description": "You know your territory better than you know yourself, and you can tell when something's different. A new face at the diner, an unfamiliar car parked overnight, a backpacker asking for directions at the wrong hour... you always notice. You prey exclusively on travelers, drifters, tourists, and transients; people passing through who won't be missed by anyone nearby. Your hunting ground is your home, and you never soil it by feeding from the locals. That's how patterns form, and patterns get you staked, baked, and swept into the trash.",
+      "description": "You know your territory better than you know yourself, and you can tell when something's different. A new face at the diner, an unfamiliar car parked overnight, a backpacker asking for directions at the wrong hour... you always notice. You prey exclusively on travelers, drifters, tourists, and transients; people passing through who won't be missed by anyone nearby. Your hunting ground is your home, and you never soil it by **Feeding** from the locals. That's how patterns form, and patterns get you staked, baked, and swept into the trash.",
       "huntingStat": "+Wits",
       "discipline": "Obfuscate",
       "merit": {

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "generatedAt": "2026-06-18T02:02:04.038Z",
   "entries": [
     {
       "name": "Abyssal",
@@ -130,6 +130,18 @@
         "Wearables"
       ],
       "effect": "Impossible to ignore; people remember seeing it, and seeing you with it."
+    },
+    {
+      "name": "Container",
+      "categories": [
+        "Artifacts",
+        "Misc.",
+        "Structures",
+        "Tech",
+        "Vehicles",
+        "Wearables"
+      ],
+      "effect": "Contains stuff it could reasonably be expected to hold; size matters."
     },
     {
       "name": "Contraband",

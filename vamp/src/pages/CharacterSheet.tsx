@@ -9,10 +9,7 @@ import { DisciplinesTab } from '../components/DisciplinesTab';
 import { ClockDisplay } from '../components/ClockDisplay';
 import { NewClockWidget } from '../components/NewClockWidget';
 import { NotebookTab } from '../components/NotebookTab';
-/* DISABLED 2026-06-13: Possessions UI is a placeholder pending a ground-up redesign
-   (see the plan doc's POST-BUILD FEEDBACK section). The component + backend stay on
-   disk for reuse; only the tab render is stubbed. */
-// import { PossessionsTab } from '../components/PossessionsTab';
+import { PossessionsTab } from '../components/PossessionsTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
@@ -33,8 +30,7 @@ import {
   currentPlaybook, currentPredatorType,
   moveStatMap, otherMoves, maxHP, accessibleDisciplineData,
   getSnippet, gameData, statCap, startingDisciplineSlugs,
-  bloodSurgesRemaining,
-  /* totalArmor — re-import when the Possessions redesign re-enables Armor display. */
+  bloodSurgesRemaining, totalArmor,
 } from '../state/derived';
 import {
   switchTab, openMove, activeContentTab, splitMode, splitRightTab, splitRatio,
@@ -315,6 +311,7 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
 
   const rootRef = useRef<HTMLDivElement>(null);
   const cols = useSignal(hp);
+  const compact = useSignal(false);
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -323,6 +320,7 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
       const perRow = Math.max(1, Math.floor((avail + 3.2) / 27.2));
       const rows = Math.max(1, Math.ceil(hp / perRow));
       cols.value = Math.ceil(hp / rows);
+      compact.value = el.clientWidth < 210; // below this, collapse Quick Heal to Heal + shields to N-shield (tune in Firefox)
     };
     recompute();
     if (typeof ResizeObserver === 'undefined') return;
@@ -331,16 +329,30 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
     return () => ro.disconnect();
   }, [hp]);
 
+  const armor = totalArmor.value;
+  const canHeal = canRoll && char.playbook !== 'Ghoul';
+
   return (
     <div ref={rootRef}>
       <div class="vamp-pip-row vamp-pip-row--harm" style={{ '--harm-cols': String(cols.value) }}>
         <DualPhasePips boxes={boxes.value} advance={advance} reverse={reverse} />
       </div>
-      {/* DISABLED 2026-06-13 pending Possessions redesign: shield pips under Harm grew
-         the top boxes' height (Sam: hard no). The totalArmor derived + perk registry stay. */}
-      {canRoll && char.playbook !== 'Ghoul' && (
+      {/* Button + shield-pips overlay the box (absolute), so Armor never grows its height. */}
+      {(canHeal || armor.total > 0) && (
         <div class="vamp-vital-actions">
-          <VitalRollButton label="Quick Heal" onClick={performQuickHeal} disabled={sup === 0 || !!char.quickHealUsedThisScene} />
+          {canHeal && (
+            <VitalRollButton
+              label={compact.value ? 'Heal' : 'Quick Heal'}
+              onClick={performQuickHeal} disabled={sup === 0 || !!char.quickHealUsedThisScene}
+            />
+          )}
+          {armor.total > 0 && (
+            <span class="vamp-armor-track" title={`${armor.total}-Armor${armor.vsAggravated > 0 ? `, ${armor.vsAggravated} vs Aggravated` : ''}`}>
+              {compact.value
+                ? <><span class="vamp-armor-count">{armor.total}-</span><span class="vamp-armor-pip" /></>
+                : Array.from({ length: armor.total }, (_, i) => <span key={i} class="vamp-armor-pip" />)}
+            </span>
+          )}
         </div>
       )}
     </div>
@@ -723,12 +735,7 @@ function TabPanels({ selected, isViewing, paneClass }: {
     <div class={`vamp-tabs__panel ${paneClass ?? ''}`} role="tabpanel">
       <div style={{ display: show('vitals') }}><VitalsTab /></div>
       <div style={{ display: show('disciplines') }}><DisciplinesTab /></div>
-      <div style={{ display: show('possessions') }}>
-        <div class="vamp-placeholder">
-          Possessions
-          <br /><span class="vamp-placeholder__note">Under redesign, back soon</span>
-        </div>
-      </div>
+      <div style={{ display: show('possessions') }}><PossessionsTab /></div>
       <div style={{ display: show('clocks') }}><ClocksDebtsTab /></div>
       {!isViewing && <div class="vamp-tab-pane--fill" style={{ display: show('notebook') }}><NotebookTab /></div>}
     </div>

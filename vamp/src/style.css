@@ -1439,6 +1439,18 @@ a:hover {
   border-color: var(--v-accent);
 }
 
+/* Armor shield-pips: the surge-track setup, larger and Armor-blue, under Quick Heal. */
+.vamp-armor-track { display: inline-flex; align-items: center; gap: 0.18rem; }
+.vamp-armor-pip {
+  inline-size: 1rem;
+  block-size: 1rem;
+  flex: none;
+  background: #9cc4f0;
+  -webkit-mask: url(/assets/images/vamp/shield.svg) center / contain no-repeat;
+  mask: url(/assets/images/vamp/shield.svg) center / contain no-repeat;
+}
+.vamp-armor-count { font-family: 'Merriweather', serif; font-size: 0.62rem; font-weight: 700; line-height: 1; color: #9cc4f0; }
+
 .vamp-pip-row--harm {
   display: grid;
   grid-template-columns: repeat(var(--harm-cols), 1.5rem);
@@ -1607,13 +1619,8 @@ a:hover {
   position: absolute;
   inset-block: 0;
   width: 2px;
-  background: repeating-linear-gradient(0deg,
-    var(--v-text-secondary) 0 3px, transparent 3px 6px,
-    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
-    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
-    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
-    var(--v-text-secondary) 38px 48px, transparent 48px 51px
-  );
+  color: var(--v-text-secondary);
+  background: var(--v-dot-dash-v);
   opacity: 0.35;
 }
 
@@ -3703,13 +3710,8 @@ textarea.vamp-editable__input {
   touch-action: none;
   --divider-color: var(--v-text-secondary);
   opacity: 0.5;
-  background: repeating-linear-gradient(0deg,
-    var(--divider-color) 0 3px, transparent 3px 6px,
-    var(--divider-color) 6px 16px, transparent 16px 19px,
-    var(--divider-color) 19px 29px, transparent 29px 32px,
-    var(--divider-color) 32px 35px, transparent 35px 38px,
-    var(--divider-color) 38px 48px, transparent 48px 51px
-  );
+  color: var(--divider-color);
+  background: var(--v-dot-dash-v);
   transition: opacity 0.15s ease;
 }
 
@@ -3893,13 +3895,8 @@ textarea.vamp-editable__input {
   inset-inline-start: calc(-0.75rem - 1px);
   inline-size: 2px;
   opacity: 0.35;
-  background: repeating-linear-gradient(0deg,
-    var(--v-text-secondary) 0 3px, transparent 3px 6px,
-    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
-    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
-    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
-    var(--v-text-secondary) 38px 48px, transparent 48px 51px
-  );
+  color: var(--v-text-secondary);
+  background: var(--v-dot-dash-v);
 }
 
 .vamp-bane-compulsion--even > .vamp-bane-compulsion__compulsion {
@@ -3915,13 +3912,8 @@ textarea.vamp-editable__input {
   inset-block-start: 0;
   block-size: 2px;
   opacity: 0.35;
-  background: repeating-linear-gradient(90deg,
-    var(--v-text-secondary) 0 3px, transparent 3px 6px,
-    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
-    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
-    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
-    var(--v-text-secondary) 38px 48px, transparent 48px 51px
-  );
+  color: var(--v-text-secondary);
+  background: var(--v-dot-dash-h);
 }
 
 .vamp-bane-compulsion .vamp-perk__header {
@@ -4147,13 +4139,8 @@ textarea.vamp-editable__input {
 .vamp-merits-flaws__divider {
   width: 2px;
   opacity: 0.35;
-  background: repeating-linear-gradient(0deg,
-    var(--v-text-secondary) 0 3px, transparent 3px 6px,
-    var(--v-text-secondary) 6px 16px, transparent 16px 19px,
-    var(--v-text-secondary) 19px 29px, transparent 29px 32px,
-    var(--v-text-secondary) 32px 35px, transparent 35px 38px,
-    var(--v-text-secondary) 38px 48px, transparent 48px 51px
-  );
+  color: var(--v-text-secondary);
+  background: var(--v-dot-dash-v);
   flex-shrink: 0;
 }
 
@@ -8204,471 +8191,172 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
   50% { filter: invert(1) drop-shadow(0 0 0 transparent); }
 }
 
-/* Possessions tab (Phase 2: loose items, tags, tooltips, sort). */
+/* Possessions tab: left item list, right "scoot your stuff" mover zones. All text
+   scales off the rocker via a scaled root + em children. */
 .vamp-poss {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding-inline: 0.4rem;
+  align-items: flex-start;
+  font-size: calc(0.92rem * var(--v-text-scale));
+  padding-inline: 0.2rem;
+  container-type: inline-size;
+}
+.vamp-poss__list { flex: 1.5 1 0; min-inline-size: 0; padding-inline-end: 0.9em; display: flex; flex-direction: column; gap: 0.55em; }
+.vamp-poss__divider { flex: none; align-self: stretch; inline-size: 1px; margin-block: 0.15em; color: var(--v-border); background: var(--v-dot-dash-v); opacity: 0.8; }
+.vamp-poss__zones {
+  flex: 1 1 0; min-inline-size: 16.5rem; max-inline-size: 23rem;
+  padding-inline-start: 0.9em; display: flex; flex-direction: column; gap: 0.6em;
+  position: sticky; inset-block-start: 0.3rem; align-self: flex-start;
+}
+.vamp-poss__zones-label { font-size: 0.78em; color: var(--v-text-muted); text-transform: uppercase; letter-spacing: 0.06em; padding-inline: 0.2em; }
+
+/* Stack the mover under the list when the center pane is narrow. */
+@container (inline-size < 40rem) {
+  .vamp-poss { flex-direction: column; }
+  .vamp-poss__divider { display: none; }
+  .vamp-poss__list { padding-inline-end: 0; }
+  .vamp-poss__zones { position: static; max-inline-size: none; padding-inline-start: 0; }
 }
 
-.vamp-poss__toolbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
-  font-size: 0.85rem;
-  color: var(--v-text-muted);
+/* List groups */
+.vamp-poss-group { display: flex; flex-direction: column; gap: 0.1em; }
+.vamp-poss-group__head { display: flex; align-items: center; gap: 0.5em; padding: 0.1em 0 0.2em 0.1em; }
+.vamp-poss-group__icon { inline-size: 1.1em; block-size: 1.1em; flex: none; background: var(--v-text-secondary); -webkit-mask: var(--poss-icon) center / contain no-repeat; mask: var(--poss-icon) center / contain no-repeat; }
+.vamp-poss-group__title { font-family: var(--v-font-display); font-size: 1.02em; color: var(--v-text-accent); letter-spacing: 0.03em; white-space: nowrap; }
+.vamp-poss-group__count { font-size: 0.74em; color: var(--v-text-muted); }
+.vamp-poss-group__rule { flex: 1; block-size: 1px; color: var(--v-border); background: var(--v-dot-dash-h); opacity: 0.8; }
+.vamp-poss-empty { font-size: 0.8em; color: var(--v-text-muted); font-style: italic; padding: 0.15em 0.3em 0.35em; margin: 0; }
+
+/* Item rows */
+.vamp-poss-row { border-radius: var(--v-radius-md); transition: background 0.15s ease; }
+.vamp-poss-row.is-open { background: color-mix(in srgb, var(--v-bg-elevated) 55%, transparent); }
+.vamp-poss-row__line {
+  display: flex; align-items: center; gap: 0.45em; border-radius: var(--v-radius-md);
+  padding: 0.35em 0.4em;
+  padding-inline-start: calc(0.4em + var(--poss-depth, 0) * 1.3em);
 }
+.vamp-poss-row__pip { inline-size: 1.05em; block-size: 1.05em; flex: none; padding: 0; border-radius: 50%; border: 2px solid var(--v-text-muted); background: transparent; cursor: pointer; transition: all 0.15s ease; }
+.vamp-poss-row__pip:hover:not(:disabled) { border-color: var(--v-accent); }
+.vamp-poss-row__pip.is-on { background: var(--v-accent); border-color: var(--v-accent); box-shadow: 0 0 6px var(--v-glow); }
+.vamp-poss-row__pip.is-none { border: none; cursor: default; opacity: 0.5; background: var(--v-text-muted); -webkit-mask: url(/assets/images/vamp/no-equip.svg) center / contain no-repeat; mask: url(/assets/images/vamp/no-equip.svg) center / contain no-repeat; }
+.vamp-poss-row__main { display: flex; align-items: center; gap: 0.45em; flex: 1; min-inline-size: 0; background: none; border: none; text-align: start; cursor: pointer; padding: 0; color: inherit; font: inherit; }
+.vamp-poss-row__main--static { cursor: default; }
+.vamp-poss-row__name { font-family: var(--v-font-body); font-weight: 600; font-size: 0.95em; color: var(--v-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: none; max-inline-size: 13em; }
+.vamp-poss-row__qty { font-size: 0.78em; color: var(--v-text-muted); flex: none; }
+.vamp-poss-row__chips { display: flex; gap: 0.28em; flex-wrap: wrap; align-items: center; min-inline-size: 0; }
+.vamp-poss-row__edit { display: inline-flex; align-items: center; justify-content: center; inline-size: 1.6em; block-size: 1.6em; padding: 0; flex: none; border: 1.5px solid transparent; border-radius: 50%; background: none; color: var(--v-text-muted); cursor: pointer; font-size: 0.95em; font-weight: 700; }
+.vamp-poss-row__edit:hover { color: var(--v-text-secondary); }
+.vamp-poss-row__edit.is-on { color: var(--v-success); }
+.vamp-poss-row__edit.is-dirty { border-color: var(--v-success); }
+.vamp-poss-row__body { padding: 0.3em 0.6em 0.5em 2.5em; display: flex; flex-direction: column; gap: 0.45em; border-top: 1px solid color-mix(in srgb, var(--v-border) 50%, transparent); }
+.vamp-poss-row__desc { font-size: 0.84em; color: var(--v-text-secondary); font-style: italic; line-height: 1.5; margin: 0; }
+.vamp-poss-row__actions { display: flex; gap: 0.4em; align-items: center; flex-wrap: wrap; position: relative; }
+.vamp-poss-row__children { padding-inline-start: 0.4em; display: flex; flex-direction: column; gap: 0.3em; }
 
-.vamp-poss__sort {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
+/* Tag pills + zone chips share role colors; desaturated dark fills read native on glass. */
+.vamp-poss-chip { display: inline-flex; align-items: center; gap: 0.2em; border-radius: 999px; padding: 0.12em 0.5em; font-size: 0.78em; font-weight: 600; line-height: 1.35; white-space: nowrap; border: 1px solid transparent; }
+.vamp-poss-chip__x { border: none; background: none; color: inherit; cursor: pointer; font-size: 1em; line-height: 1; padding-inline: 0.1em 0; opacity: 0.7; }
+.vamp-poss-chip__x:hover { opacity: 1; }
+.vamp-poss-zchip { display: inline-flex; align-items: center; gap: 0.25em; padding: 0.18em 0.5em; border-radius: 999px; font-size: 0.82em; font-family: var(--v-font-body); cursor: pointer; white-space: nowrap; border: 1px solid transparent; }
+.vamp-poss-zchip__dot { inline-size: 0.42em; block-size: 0.42em; border-radius: 50%; background: var(--v-accent); flex: none; }
+.vamp-poss-zchip__count { opacity: 0.6; }
 
-.vamp-poss__sort select,
-.vamp-poss-edit__type,
-.vamp-poss-add__type {
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--v-text);
-  background: var(--v-bg-sunken);
-  border: 1px solid var(--v-border);
-  border-radius: var(--v-radius-sm);
-  padding: 0.15rem 0.3rem;
-}
+.vamp-poss-chip--plain, .vamp-poss-zchip--plain { background: color-mix(in srgb, var(--v-text-muted) 16%, transparent); color: var(--v-text-secondary); border-color: color-mix(in srgb, var(--v-text-muted) 22%, transparent); }
+.vamp-poss-chip--custom, .vamp-poss-zchip--custom { background: var(--v-accent-subtle); color: var(--v-text-accent); border: 1px dashed var(--v-border-accent); }
+.vamp-poss-chip--harm, .vamp-poss-zchip--harm { background: #5b1717; color: #f3a9a9; border-color: #7e2c2c; }
+.vamp-poss-chip--range, .vamp-poss-zchip--range { background: #123f44; color: #7fd1d1; border-color: #1d5b61; }
+.vamp-poss-chip--armor, .vamp-poss-zchip--armor { background: #17314e; color: #9cc4f0; border-color: #264a6d; }
+.vamp-poss-chip--res, .vamp-poss-zchip--res { background: #4a3413; color: #f0c07a; border-color: #6b4d1f; }
+.vamp-poss-chip--container, .vamp-poss-zchip--container { background: #332a4e; color: #c3b0e8; border-color: #473a66; }
 
-.vamp-poss__empty {
-  color: var(--v-text-muted);
-  font-style: italic;
-  text-align: center;
-  padding-block: 1.5rem;
-}
+/* Buttons */
+.vamp-poss-btn { font: inherit; font-size: 0.84em; padding: 0.25em 0.6em; border-radius: var(--v-radius-sm); border: 1px solid var(--v-border); background: var(--v-bg-elevated); color: var(--v-text-secondary); cursor: pointer; white-space: nowrap; line-height: 1.2; }
+.vamp-poss-btn:hover:not(:disabled) { border-color: var(--v-border-accent); color: var(--v-text-primary); }
+.vamp-poss-btn:disabled { opacity: 0.5; cursor: default; }
+.vamp-poss-btn--primary { background: var(--v-accent-subtle); border-color: var(--v-accent); color: var(--v-text-accent); }
+.vamp-poss-btn--select { background: var(--v-accent-subtle); border-color: var(--v-border-accent); color: var(--v-text-accent); }
+.vamp-poss-btn--del { color: var(--v-danger); }
+.vamp-poss-btn--del:hover:not(:disabled) { color: var(--v-danger); border-color: var(--v-danger); }
+.vamp-poss-btn--danger { background: var(--v-danger); border-color: var(--v-danger); color: #fff; }
+.vamp-poss-btn--danger:hover:not(:disabled) { color: #fff; border-color: var(--v-danger); }
 
-.vamp-poss__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
+/* Move / Give / bag-delete dropdowns */
+.vamp-poss-menu { position: relative; display: inline-flex; }
+.vamp-poss-menu__list { position: absolute; inset-block-start: 2.1em; inset-inline-start: 0; z-index: 50; min-inline-size: 11em; background: var(--v-bg-elevated); border: 1px solid var(--v-border-accent); border-radius: var(--v-radius-md); box-shadow: 0 0.4rem 1rem rgba(0, 0, 0, 0.5); padding: 0.25em; display: flex; flex-direction: column; }
+.vamp-poss-menu__item { text-align: start; padding: 0.35em 0.55em; background: none; border: none; border-radius: var(--v-radius-sm); color: var(--v-text-primary); cursor: pointer; font: inherit; font-size: 0.85em; }
+.vamp-poss-menu__item:hover:not(:disabled) { background: var(--v-accent-subtle); }
+.vamp-poss-menu__item:disabled { color: var(--v-text-muted); opacity: 0.5; cursor: default; }
+.vamp-poss-menu__note { padding: 0.35em 0.55em; font-size: 0.78em; color: var(--v-text-muted); }
+.vamp-poss-give__qty { display: flex; align-items: center; gap: 0.4em; padding: 0.3em 0.55em; font-size: 0.82em; color: var(--v-text-secondary); }
+.vamp-poss-give__qty button { padding: 0 0.45em; background: var(--v-bg-sunken); border: 1px solid var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-primary); cursor: pointer; font: inherit; }
 
-.vamp-poss-row {
-  border: 1px solid var(--v-glass-border);
-  border-radius: var(--v-radius-md);
-  background: var(--v-glass-bg);
-  overflow: visible;
-}
+/* Qty stepper */
+.vamp-poss-qty { display: inline-flex; align-items: center; gap: 0.25em; }
+.vamp-poss-qty__val { min-inline-size: 1.3em; text-align: center; font-size: 0.9em; color: var(--v-text-primary); }
+.vamp-poss-haven__take { margin-inline-start: auto; }
 
-.vamp-poss-row--equipped {
-  border-color: var(--v-border-accent);
-}
+/* Inline editor */
+.vamp-poss-edit { display: flex; flex-direction: column; gap: 0.55em; }
+.vamp-poss-edit__row { display: flex; gap: 0.5em; }
+.vamp-poss-edit__name, .vamp-poss-edit__type, .vamp-poss-edit__desc { padding: 0.4em 0.55em; background: var(--v-bg-sunken); border: 1px solid var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-primary); font: inherit; }
+.vamp-poss-edit__name { flex: 1; min-inline-size: 0; font-weight: 600; font-size: 0.95em; }
+.vamp-poss-edit__type { font-size: 0.9em; }
+.vamp-poss-edit__desc { font-size: 0.86em; color: var(--v-text-secondary); font-style: italic; resize: vertical; }
+.vamp-poss-edit__tags { display: flex; flex-wrap: wrap; gap: 0.3em; align-items: center; }
+.vamp-poss-edit__notags { font-size: 0.78em; color: var(--v-text-muted); font-style: italic; }
+.vamp-poss-edit__picker { display: flex; flex-direction: column; gap: 0.3em; }
+.vamp-poss-edit__tagbtn { margin-inline-start: auto; align-self: center; font: inherit; font-size: 0.78em; font-weight: 600; padding: 0.14em 0.7em; border-radius: 999px; background: var(--v-accent-subtle); border: 1px solid var(--v-border-accent); color: var(--v-text-accent); cursor: pointer; white-space: nowrap; }
+.vamp-poss-edit__tagbtn:hover { border-color: var(--v-accent); }
 
-.vamp-poss-row__head {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.6rem;
-  cursor: pointer;
-  user-select: none;
-}
+/* Tag picker */
+.vamp-poss-picker { border: 1px solid var(--v-border-accent); border-radius: var(--v-radius-md); background: var(--v-bg-sunken); padding: 0.5em; display: flex; flex-direction: column; gap: 0.45em; }
+.vamp-poss-picker--param { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 0.3em; }
+.vamp-poss-picker__input, .vamp-poss-picker__num, .vamp-poss-picker__band { padding: 0.4em 0.55em; background: var(--v-bg-elevated); border: 1px solid var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-primary); font: inherit; font-size: 0.9em; }
+.vamp-poss-picker__num { inline-size: 4.4em; }
+.vamp-poss-picker__results { max-block-size: 13rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.15em; scrollbar-width: thin; scrollbar-color: var(--v-accent-subtle) transparent; }
+.vamp-poss-picker__row { display: flex; flex-direction: row; align-items: center; gap: 0.5em; inline-size: 100%; text-align: start; padding: 0.34em 0.45em; background: none; border: none; border-radius: var(--v-radius-sm); cursor: pointer; color: var(--v-text-secondary); font-size: 0.95em; line-height: 1.35; }
+.vamp-poss-picker__row:hover { background: var(--v-accent-subtle); }
+.vamp-poss-picker__row--custom { background: var(--v-accent-subtle); border: 1px dashed var(--v-border-accent); color: var(--v-text-accent); }
+.vamp-poss-picker__name { display: flex; align-items: center; gap: 0.4em; flex: none; font-weight: 600; color: var(--v-text-primary); white-space: nowrap; }
+.vamp-poss-picker__dot { inline-size: 0.5em; block-size: 0.5em; border-radius: 50%; flex: none; background: var(--v-text-muted); }
+.vamp-poss-picker__dot.is-relevant { background: var(--v-accent); }
+.vamp-poss-picker__hint { flex: 1; min-inline-size: 0; font-size: 1em; color: var(--v-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vamp-poss-picker__empty { font-size: 0.78em; color: var(--v-text-muted); padding: 0.3em; }
+.vamp-poss-picker__more { inline-size: 100%; text-align: center; padding: 0.4em; background: none; border: 1px dashed var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-secondary); font: inherit; font-size: 0.8em; cursor: pointer; }
+.vamp-poss-picker__prefix, .vamp-poss-picker__suffix { font-weight: 600; color: var(--v-text-secondary); }
+.vamp-poss-picker__dash { color: var(--v-text-muted); }
 
-.vamp-poss-row__pip {
-  flex: none;
-  inline-size: 0.7rem;
-  block-size: 0.7rem;
-  border-radius: 50%;
-  border: 2px solid var(--v-text-muted);
-  box-sizing: border-box;
-}
+/* Mover zones */
+.vamp-poss-zone { display: flex; flex-direction: column; gap: 0.5em; padding: 0.7em 0.75em; border-radius: var(--v-radius-lg); background: var(--v-glass-bg); border: 1px solid color-mix(in srgb, var(--v-border) 85%, var(--v-text-muted)); }
+.vamp-poss-zone__head { display: flex; align-items: center; gap: 0.6em; }
+.vamp-poss-zone__icon { inline-size: 2.5em; block-size: 2.5em; flex: none; background: var(--v-text-secondary); -webkit-mask: var(--poss-icon) center / contain no-repeat; mask: var(--poss-icon) center / contain no-repeat; }
+.vamp-poss-zone__labels { display: flex; flex-direction: column; gap: 0.05em; min-inline-size: 0; }
+.vamp-poss-zone__title { font-family: var(--v-font-display); font-size: 1.02em; color: var(--v-text-primary); letter-spacing: 0.02em; }
+.vamp-poss-zone__sub { font-size: 0.74em; color: var(--v-text-muted); }
+.vamp-poss-zone__chips { display: flex; flex-wrap: wrap; gap: 0.3em; min-block-size: 1.4em; align-content: flex-start; }
+.vamp-poss-zone__empty { font-size: 0.76em; color: var(--v-text-muted); font-style: italic; }
 
-.vamp-poss-row__pip.is-on {
-  background: var(--v-accent);
-  border-color: var(--v-accent);
-  box-shadow: 0 0 0.35rem var(--v-glow);
-}
+/* Quick add */
+.vamp-poss-add__open { inline-size: 100%; text-align: start; padding: 0.5em 0.8em; background: var(--v-bg-elevated); border: 1px solid var(--v-border); border-radius: var(--v-radius-md); color: var(--v-text-secondary); cursor: pointer; font: inherit; font-size: 0.9em; }
+.vamp-poss-add { border: 1px solid var(--v-border-accent); border-radius: var(--v-radius-md); background: color-mix(in srgb, var(--v-bg-sunken) 45%, transparent); padding: 0.6em 0.7em; display: flex; flex-direction: column; gap: 0.55em; }
+.vamp-poss-add__row { display: flex; gap: 0.5em; align-items: center; flex-wrap: wrap; }
+.vamp-poss-add__name { flex: 1 1 12em; min-inline-size: 9em; padding: 0.45em 0.6em; background: var(--v-bg-sunken); border: 1px solid var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-primary); font: inherit; font-size: 0.95em; }
+.vamp-poss-add__type { padding: 0.45em 0.5em; background: var(--v-bg-sunken); border: 1px solid var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-primary); font: inherit; font-size: 0.9em; }
+.vamp-poss-add__req { display: flex; gap: 0.6em; align-items: center; flex-wrap: wrap; }
+.vamp-poss-add__q { font-size: 0.85em; color: var(--v-text-secondary); }
+.vamp-poss-add__field { display: flex; align-items: center; gap: 0.3em; font-size: 0.85em; color: var(--v-text-secondary); }
+.vamp-poss-add__field input, .vamp-poss-add__field select { padding: 0.3em 0.4em; background: var(--v-bg-sunken); border: 1px solid var(--v-border); border-radius: var(--v-radius-sm); color: var(--v-text-primary); font: inherit; }
+.vamp-poss-add__field input { inline-size: 3em; }
+.vamp-poss-add__field span { font-weight: 600; color: var(--v-text-primary); }
+.vamp-poss-add__foot { display: flex; gap: 0.5em; align-items: center; }
 
-.vamp-poss-row__pip--none {
-  visibility: hidden;
-}
-
-.vamp-poss-row__name {
-  flex: none;
-  font-family: var(--v-font-heading);
-  color: var(--v-text);
-  white-space: nowrap;
-}
-
-.vamp-poss-row__chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.25rem;
-  align-items: center;
-}
-
-.vamp-poss-row__chips--body,
-.vamp-poss-row__chips--edit {
-  margin-block: 0.35rem;
-}
-
-.vamp-poss-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.2rem;
-  font-size: 0.72rem;
-  line-height: 1.4;
-  padding: 0.05rem 0.4rem;
-  border-radius: 999px;
-  background: var(--v-bg-sunken);
-  border: 1px solid var(--v-border-muted);
-  color: var(--v-text-secondary);
-  cursor: help;
-}
-
-.vamp-poss-chip__x {
-  font: inherit;
-  font-size: 0.9rem;
-  line-height: 1;
-  color: var(--v-text-muted);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.vamp-poss-chip__x:hover { color: var(--v-danger); }
-
-.vamp-poss-row__body {
-  padding-block: 0 0.5rem;
-  padding-inline: 1.8rem 0.6rem; /* indent under the name, past the pip */
-}
-
-.vamp-poss-row__desc {
-  color: var(--v-text-secondary);
-  font-size: 0.85rem;
-  margin-block: 0.35rem;
-}
-
-.vamp-poss-row__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-block-start: 0.4rem;
-}
-
-.vamp-poss-btn {
-  font: inherit;
-  font-size: 0.8rem;
-  color: var(--v-text-secondary);
-  background: var(--v-bg-sunken);
-  border: 1px solid var(--v-border);
-  border-radius: var(--v-radius-sm);
-  padding: 0.2rem 0.6rem;
-  cursor: pointer;
-  transition: var(--v-transition);
-}
-
-.vamp-poss-btn:hover { border-color: var(--v-accent); color: var(--v-text); }
-.vamp-poss-btn--on { background: var(--v-accent-subtle); border-color: var(--v-accent); color: var(--v-text-accent); }
-.vamp-poss-btn--danger { border-color: var(--v-danger); color: var(--v-danger); }
-
-.vamp-poss-edit {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin-block: 0.35rem;
-}
-
-.vamp-poss-edit__row {
-  display: flex;
-  gap: 0.4rem;
-}
-
-.vamp-poss-edit__name,
-.vamp-poss-adder__input,
-.vamp-poss-add__name {
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--v-text);
-  background: var(--v-bg-sunken);
-  border: 1px solid var(--v-border);
-  border-radius: var(--v-radius-sm);
-  padding: 0.2rem 0.4rem;
-}
-
-.vamp-poss-edit__name { flex: 1; min-inline-size: 0; }
-
-.vamp-poss-edit__desc {
-  font: inherit;
-  font-size: 0.85rem;
-  color: var(--v-text);
-  background: var(--v-bg-sunken);
-  border: 1px solid var(--v-border);
-  border-radius: var(--v-radius-sm);
-  padding: 0.3rem 0.4rem;
-  min-block-size: 2.5lh;
-  resize: vertical;
-  field-sizing: content;
-}
-
-.vamp-poss-adder {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.3rem;
-}
-
-.vamp-poss-adder__input { flex: 1; min-inline-size: 7rem; }
-
-.vamp-poss-adder__base {
-  font-size: 0.8rem;
-  color: var(--v-text-accent);
-  font-family: var(--v-font-heading);
-}
-
-.vamp-poss-adder__ok,
-.vamp-poss-adder__cancel,
-.vamp-poss-add__btn {
-  font: inherit;
-  font-size: 0.8rem;
-  border-radius: var(--v-radius-sm);
-  padding: 0.2rem 0.55rem;
-  cursor: pointer;
-  border: 1px solid var(--v-border);
-  background: var(--v-bg-sunken);
-  color: var(--v-text-secondary);
-}
-
-.vamp-poss-adder__ok { border-color: var(--v-accent); color: var(--v-text-accent); }
-.vamp-poss-adder__ok:disabled,
-.vamp-poss-add__btn:disabled { opacity: 0.45; cursor: not-allowed; }
-
-.vamp-poss-add {
-  display: flex;
-  gap: 0.4rem;
-  align-items: center;
-  margin-block-start: 0.4rem;
-  padding-block-start: 0.4rem;
-  border-block-start: 1px solid var(--v-border-muted);
-}
-
-.vamp-poss-add__name { flex: 1; min-inline-size: 0; }
-
-/* Tooltip framework (first wave). Portaled to body; fixed-positioned from JS. */
-.vamp-tip-anchor { outline: none; }
-
-.vamp-tip {
-  position: fixed;
-  z-index: 9000;
-  max-inline-size: 18rem;
-  transform: translate(-50%, calc(-100% - 0.25rem));
-  padding: 0.4rem 0.6rem;
-  font-size: 0.8rem;
-  line-height: 1.4;
-  color: var(--v-dice-numeral);
-  background: var(--v-glass-bg);
-  border: 1px solid var(--v-glass-border);
-  border-radius: var(--v-radius-sm);
-  backdrop-filter: blur(0.75rem);
-  -webkit-backdrop-filter: blur(0.75rem);
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.45);
-  pointer-events: none;
-}
-
-.vamp-tip--below { transform: translate(-50%, 0.25rem); }
-
-/* Possessions Phase 3: sections, containers, move menu, drag-and-drop. */
-.vamp-poss-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  padding: 0.3rem;
-  border-radius: var(--v-radius-md);
-  border: 1px dashed transparent;
-  transition: var(--v-transition);
-}
-
-.vamp-poss-section--drop {
-  border-color: var(--v-accent);
-  background: var(--v-accent-subtle);
-}
-
-.vamp-poss-section__title {
-  font-family: var(--v-font-display);
-  font-size: 0.8rem;
-  color: var(--v-text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 0;
-}
-
-.vamp-poss-section__empty {
-  color: var(--v-text-muted);
-  font-style: italic;
-  font-size: 0.8rem;
-  padding-inline: 0.3rem;
-}
-
-.vamp-poss-row--container > .vamp-poss-row__head { border-inline-start: 2px solid var(--v-border-accent); }
-.vamp-poss-row--drop { outline: 2px solid var(--v-accent); outline-offset: -2px; }
-
-.vamp-poss-row__bag { color: var(--v-text-accent); font-size: 0.8em; }
-.vamp-poss-row__contains { color: var(--v-text-muted); font-size: 0.85em; }
-
-.vamp-poss-row__children {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-inline-start: 1rem;
-  padding-block: 0.3rem;
-  padding-inline-start: 0.4rem;
-  border-inline-start: 1px dashed var(--v-border-muted);
-}
-
-.vamp-poss-move { position: relative; display: inline-flex; }
-
-.vamp-poss-move__menu {
-  position: absolute;
-  inset-block-start: 100%;
-  inset-inline-start: 0;
-  z-index: 50;
-  display: flex;
-  flex-direction: column;
-  min-inline-size: 8rem;
-  background: var(--v-bg-elevated);
-  border: 1px solid var(--v-border);
-  border-radius: var(--v-radius-sm);
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.45);
-  overflow: hidden;
-}
-
-.vamp-poss-move__item {
-  font: inherit;
-  font-size: 0.8rem;
-  text-align: start;
-  color: var(--v-text-secondary);
-  background: none;
-  border: none;
-  padding: 0.3rem 0.6rem;
-  cursor: pointer;
-}
-
-.vamp-poss-move__item:hover { background: var(--v-accent-subtle); color: var(--v-text); }
-
-.vamp-poss-edit__container {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  color: var(--v-text-secondary);
-  accent-color: var(--v-accent);
-}
-
-/* Possessions Phase 4: Give stepper + Haven rows. */
-.vamp-poss-give__qty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.3rem 0.6rem;
-  font-size: 0.8rem;
-  color: var(--v-text-secondary);
-  border-block-end: 1px solid var(--v-border-muted);
-}
-
-.vamp-poss-give__qty button {
-  font: inherit;
-  inline-size: 1.4rem;
-  block-size: 1.4rem;
-  border-radius: var(--v-radius-sm);
-  border: 1px solid var(--v-border);
-  background: var(--v-bg-sunken);
-  color: var(--v-text);
-  cursor: pointer;
-}
-
-.vamp-poss-row__head--haven {
-  cursor: default;
-}
-
-.vamp-poss-haven__take {
-  margin-inline-start: auto;
-}
-
-/* Possessions Phase 5: loadout strip + Armor shield pips. */
-.vamp-pip--shield {
-  inline-size: 1.05rem;
-  block-size: 1.05rem;
-  border: none;
-  border-radius: 0;
-  cursor: default;
-  background: var(--v-text-secondary);
-  mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
-  -webkit-mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
-}
-
-.vamp-armor-row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.2rem;
-  margin-block-start: 0.4rem;
-}
-
-.vamp-armor-row__label {
-  font-size: 0.8rem;
-  color: var(--v-text-muted);
-  margin-inline-start: 0.3rem;
-}
-
-.vamp-poss-loadout {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.5rem;
-  border-radius: var(--v-radius-md);
-  background: var(--v-bg-sunken);
-  border: 1px solid var(--v-border-muted);
-  font-size: 0.8rem;
-}
-
-.vamp-poss-loadout__armor {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.25rem;
-  color: var(--v-text-secondary);
-  font-weight: 600;
-  cursor: help;
-}
-
-.vamp-poss-loadout__shield {
-  inline-size: 0.9rem;
-  block-size: 0.9rem;
-  background: var(--v-text-secondary);
-  mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
-  -webkit-mask: url('/assets/images/vamp/shield.svg') center/contain no-repeat;
-}
-
-.vamp-poss-loadout__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding-inline-start: 0.4rem;
-  border-inline-start: 1px solid var(--v-border-muted);
-}
-
-.vamp-poss-loadout__name { color: var(--v-text); font-family: var(--v-font-heading); }
-.vamp-poss-loadout__stat { color: var(--v-text-muted); }
-
-.vamp-poss-loadout__use {
-  font: inherit;
-  font-size: 0.75rem;
-  color: var(--v-text-accent);
-  background: var(--v-accent-subtle);
-  border: 1px solid var(--v-accent);
-  border-radius: 999px;
-  padding: 0.05rem 0.4rem;
-  cursor: pointer;
-}
-
-.vamp-poss-loadout__use:disabled { opacity: 0.5; cursor: default; }
+/* Drag-and-drop (dnd-kit) */
+.vamp-poss-row__grip { display: inline-flex; align-items: center; flex: none; padding-inline: 0.1em; color: var(--v-text-muted); font-size: 0.85em; line-height: 1; cursor: grab; touch-action: none; user-select: none; }
+.vamp-poss-row__grip:active { cursor: grabbing; }
+.vamp-poss-zchip { touch-action: none; }
+.vamp-poss-row.is-dragging, .vamp-poss-zchip.is-dragging { opacity: 0.4; }
+.vamp-poss-zone.is-drop-over { border-color: var(--v-accent); background: color-mix(in srgb, var(--v-accent-subtle) 55%, var(--v-glass-bg)); }
+.vamp-poss-row.is-drop-over > .vamp-poss-row__line { border-radius: var(--v-radius-md); background: var(--v-accent-subtle); box-shadow: inset 0 0 0 2px var(--v-accent); }
+.vamp-poss-zchip.is-drop-over { box-shadow: 0 0 0 2px var(--v-accent); }
+.vamp-poss-group.is-drop-over { border-radius: var(--v-radius-md); background: color-mix(in srgb, var(--v-accent-subtle) 40%, transparent); box-shadow: inset 0 0 0 1px var(--v-border-accent); }
+/* Portaled to body (outside the scaled root), so size it explicitly to match the chip. */
+.vamp-poss-zchip--ghost { font-size: calc(0.754rem * var(--v-text-scale)); cursor: grabbing; box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.5); }

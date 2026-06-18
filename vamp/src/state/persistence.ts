@@ -895,6 +895,57 @@ export async function withdrawFromHaven(havenItemId: string): Promise<void> {
   if (taken) receiveItem({ ...(taken as Item), containerId: null, equipped: false });
 }
 
+/* Edit a shared Haven item in place. Writes via transaction like deposit/withdraw,
+   since havenItems is externally owned and never dirty-gated; the snapshot reflects it. */
+export async function updateHavenItem(id: string, patch: Partial<Omit<Item, 'id'>>): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const haven: Item[] = snap.data().havenItems ?? [];
+      txn.update(ref, { havenItems: haven.map(i => (i.id === id ? { ...i, ...patch } : i)), updatedAt: serverTimestamp() });
+    });
+  } catch {
+    forceToast('Could not update that Haven item right now. Try again?', 'warning');
+  }
+}
+
+export async function removeHavenItem(id: string): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const haven: Item[] = snap.data().havenItems ?? [];
+      txn.update(ref, { havenItems: haven.filter(i => i.id !== id), updatedAt: serverTimestamp() });
+    });
+  } catch {
+    forceToast('Could not remove that Haven item right now. Try again?', 'warning');
+  }
+}
+
+/* Relative qty change resolved inside the transaction, so rapid clicks can't lose updates. */
+export async function adjustHavenItemQty(id: string, delta: number): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const haven: Item[] = snap.data().havenItems ?? [];
+      txn.update(ref, { havenItems: haven.map(i => (i.id === id ? { ...i, qty: Math.max(1, i.qty + delta) } : i)), updatedAt: serverTimestamp() });
+    });
+  } catch {
+    forceToast('Could not update quantity right now. Try again?', 'warning');
+  }
+}
+
 export async function loadCoterie(coterieId: string): Promise<void> {
   if (coterieUnsub) { coterieUnsub(); coterieUnsub = null; }
 

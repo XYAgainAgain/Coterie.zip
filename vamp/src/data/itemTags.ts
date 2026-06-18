@@ -7,11 +7,21 @@ export const HAVEN_ID = 'haven';
 export const CUSTOM_TAG = '__custom__';
 export const RANGE_TAG = 'Range';
 
-/* Range bands + adjacent spans for the dedicated Range picker (not a table tag). */
-export const RANGE_OPTIONS = [
-  'Intimate', 'Hand', 'Close', 'Near', 'Far',
-  'Intimate-Hand', 'Hand-Close', 'Close-Near', 'Near-Far', 'Close-Far',
-];
+export const RANGE_BANDS = ['Intimate', 'Hand', 'Close', 'Far', 'Distant'];
+
+/* Fold a min/max pair into one param: single band if equal, else "Min-Max". */
+export function rangeParam(min: string, max: string): string {
+  const lo = RANGE_BANDS.indexOf(min);
+  const hi = RANGE_BANDS.indexOf(max);
+  if (lo < 0 || hi < 0) return min || max;
+  const [a, b] = lo <= hi ? [lo, hi] : [hi, lo];
+  return a === b ? RANGE_BANDS[a] : `${RANGE_BANDS[a]}-${RANGE_BANDS[b]}`;
+}
+
+/* Single bands plus every min-before-max span, valid by construction. */
+export const RANGE_OPTIONS: string[] = RANGE_BANDS.flatMap((band, i) =>
+  RANGE_BANDS.slice(i).map((to) => (to === band ? band : `${band}-${to}`)),
+);
 
 type TagSlot = 'leading' | 'middle' | 'trailing';
 type TagParamKind = 'none' | 'number' | 'text';

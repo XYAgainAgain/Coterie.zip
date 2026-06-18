@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "generatedAt": "2026-06-18T02:02:04.038Z",
   "entries": [
     {
       "type": "standard",
@@ -241,7 +241,7 @@
       "outcomes": [
         {
           "tier": "10+",
-          "content": "reduce Hunger by 2 (or by 1 if feeding from animals/blood bags). No Masquerade breach. Choose 2:\n\n- You leave them in a warm haze, coherent enough to get home safely\n- You heal 2 Superficial Harm (or alternatively, use both choices to heal 1 Aggravated Harm)\n- You learn something intimate or important about them or their environment\n- You gain the temporary benefit from Resonant blood\n- They enjoy the experience and ask to meet up again sometime\n- Only animals/blood bags: You feel you made a wise choice and you remove 1 Stain"
+          "content": "reduce Hunger by 2 (or by 1 if drinking from animals/blood bags). No Masquerade breach. Choose 2:\n\n- You leave them in a warm haze, coherent enough to get home safely\n- You heal 2 Superficial Harm (or alternatively, use both choices to heal 1 Aggravated Harm)\n- You learn something intimate or important about them or their environment\n- You gain the temporary benefit from Resonant blood\n- They enjoy the experience and ask to meet up again sometime\n- Only animals/blood bags: You feel you made a wise choice and you remove 1 Stain"
         },
         {
           "tier": "7-9",

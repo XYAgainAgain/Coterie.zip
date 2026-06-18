@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "generatedAt": "2026-06-18T02:02:04.038Z",
   "entries": [
     {
       "name": "Semimortal",
@@ -29,17 +29,17 @@
       "startingHumanity": "6",
       "startingBloodPotency": 2,
       "advancement": "Moderate; growth is steady but no longer rapid",
-      "predatorType": "Chosen at character creation; you've settled into steady feeding habits",
+      "predatorType": "Chosen at character creation; you've settled into steady **Feeding** habits",
       "narrativeFeel": "You're navigating the tension between power and connection. You've got influence, resources, and supernatural abilities that would terrify your younger self. But every year, it gets harder to remember why mortals and their trifling lives matter."
     },
     {
       "name": "Ancilla",
       "embraced": "100–300 years ago (~1725–1925)",
-      "flavor": "You're old. Not ancient, but old enough that the mortal world has gotten significantly more complicated than when you were still breathing. You were Embraced before the advent of most modern technology, and certainly before most of the social movements that define contemporary life. You've accumulated real power: supernatural abilities that lesser vampires can't match, political connections spanning decades, some modicum of money, and the cold pragmatism that comes from watching mortals repeat the same mistakes century after century.\n\nDepending on when you were Embraced, you might remember...\n\n- **1900s–1920s:** World War I, the Spanish Flu, Prohibition, the Roaring Twenties, silent films\n- **1850s–1890s:** The American Civil War, the Industrial Revolution, Victorian era, gas lamps, the first skyscraper\n- **1800s–1840s:** Napoleonic Wars, westward expansion, early steam engines, the invention of trains\n- **1750s–1790s:** The American Revolution, the French Revolution, probably several other revolutions, the Enlightenment\n\nHumanity is a distant memory for most Ancillae. You maintain the forms (you can pass as a mortal if you must), but the substance is gone. You don't really understand mortals anymore. Their concerns seem trivial, their lives fleeting. The Beast is always close now, and creeping closer.",
+      "flavor": "You're old. Not ancient, but old enough that the mortal world has gotten significantly more complicated than when you were still breathing. You were Embraced before the advent of most modern technology, and certainly before most of the social movements that define contemporary life. You've accumulated real power: supernatural abilities that lesser vampires can't match, political connections spanning decades, some modicum of money, and the cold pragmatism that comes from watching mortals repeat the same mistakes century after century.\n\nDepending on when you were Embraced, you might remember...\n\n- **1900s–1920s:** World War I, the Spanish Flu, Prohibition, the Roaring Twenties, silent films\n- **1850s–1890s:** The American Civil War, the Industrial Revolution, Victorian era, gas lamps, the first skyscraper\n- **1800s–1840s:** Napoleonic Wars, westward expansion, early steam engines, the invention of trains\n- **1750s–1790s:** The American Revolution, the French Revolution, probably several other revolutions, the Enlightenment\n\nHumanity is a dusty memory for most Ancillae. You maintain the forms (you can pass as a mortal if you must), but the substance is gone. You don't really understand mortals anymore. Their concerns seem trivial, their lives fleeting. The Beast is always close now, and creeping closer.",
       "startingHumanity": "4–5",
       "startingBloodPotency": 3,
       "advancement": "Slow; real growth takes years, not months",
-      "predatorType": "Chosen at character creation; your feeding habits are deeply ingrained",
+      "predatorType": "Chosen at character creation; your habits are deeply ingrained",
       "narrativeFeel": "You're powerful and terrifying but increasingly isolated. Mortal connections are almost impossible to maintain because they just keep aging. Other vampires your age are the closest thing you have to peers, but trust is rare. You're fighting a losing battle against the Beast."
     },
     {
@@ -50,7 +50,7 @@
       "startingBloodPotency": 4,
       "advancement": "Very slow; meaningful growth takes decades",
       "predatorType": "Chosen at character creation; centuries of habit are hard to break",
-      "narrativeFeel": "You're a walking nightmare. You have power that lesser Kindred can't comprehend, but you're also struggling to remember why anything matters. The world has moved on without you. You're a ghost haunting the modern age, clinging to old grudges and ancient ambitions because you don't know what else to do. The Beast isn't something you fight anymore; it's a fact you've learned to unlive with."
+      "narrativeFeel": "You're a walking nightmare. You have power that lesser Kindred can't comprehend, but you're also struggling to remember why anything matters. The world has moved on without you. You're a Ghost haunting the modern age, clinging to old grudges and ancient ambitions because you don't know what else to do. The Beast isn't something you fight anymore; it's a fact you've learned to unlive with."
     }
   ]
 }

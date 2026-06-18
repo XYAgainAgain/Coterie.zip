@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "generatedAt": "2026-06-18T02:02:04.038Z",
   "data": {
     "clanBaneVariantsIntro": "Each of the 14 Clans has a variant Bane, which you may take as an alternative to the usual one with the approval of the Storyteller. For a bit of additional challenge, with the Storyteller's permission, you may opt to suffer from both of your Clan's Banes in exchange for 5 XP. All Banes are permanent and cannot be removed. This XP must be spent by the end of your first slumber or it is lost.",
     "clanBaneVariants": [
@@ -735,7 +735,7 @@
         "name": "Zeroed",
         "category": "Your Standing",
         "limit": "—",
-        "description": "**You do not exist in any mortal database.** No birth certificate, no social security number, no driver's license, no digital footprint. Background checks return nothing. Facial recognition software has no match. You are a ghost in the system. This makes institutional life impossible (no bank accounts, no legal employment, no contracts), but it also means no one can find you through conventional research. That won't deter the *truly* determined, just everyone else. Expect the normal amount of spam regardless.",
+        "description": "**You do not exist in any mortal database.** No birth certificate, no social security number, no driver's license, no digital footprint. Background checks return nothing. Facial recognition software has no match. You are a Ghost in the system. This makes institutional life impossible (no bank accounts, no legal employment, no contracts), but it also means no one can find you through conventional research. That won't deter the *truly* determined, just everyone else. Expect the normal amount of spam regardless.",
         "xpCost": "4"
       },
       {

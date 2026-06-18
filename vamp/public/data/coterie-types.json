@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T03:02:04.598Z",
+  "generatedAt": "2026-06-18T02:02:04.038Z",
   "entries": [
     {
       "name": "The Champions",
@@ -340,7 +340,7 @@
     },
     {
       "name": "The Gatekeepers",
-      "description": "Your Coterie deals with the dead. The actually dead: ghosts, spirits, restless ancestors, things that lurk in the spaces between life and whatever comes after. You commune with them, command them, lay them to rest, or exploit them, depending on your moral compass and your client list. Other vampires find you creepy, which is saying something. They also find you useful, which is why they keep calling.",
+      "description": "Your Coterie deals with the dead. The actually dead: Ghosts, Spirits, restless ancestors, things that lurk in the spaces between life and whatever comes after. You commune with them, command them, lay them to rest, or exploit them, depending on your moral compass and your client list. Other vampires find you creepy, which is saying something. They also find you useful, which is why they keep calling.",
       "coterieStats": "Clout +1 | Cohesion +1 | Charm −2 | Claim +1 | Currency +1",
       "havenFeatures": {
         "positiveCount": 3,
@@ -353,7 +353,7 @@
           "occult library",
           "consecrated ground",
           "bone collection",
-          "ghost traps",
+          "Ghost traps",
           "cold storage"
         ],
         "negativeCount": 3,
@@ -381,7 +381,7 @@
         "positiveOptions": [
           "managed herd",
           "blood storage",
-          "private feeding rooms",
+          "private dining rooms",
           "distinguished clientele",
           "discreet location",
           "veterinary supplies",
@@ -406,7 +406,7 @@
     },
     {
       "name": "The Nomads",
-      "description": "You don't stay. Maybe you perform; a traveling show, a band, a roving market of curiosities and contraband. Maybe you just drift, all for one and one for all, moving on before anyone asks too many questions but after you collect your tips. Your Haven (you prefer *Haven't* — it's less sad when it's voluntary) is a convoy, a tour bus, a caravan, a blacked-out truck, or whatever gets you down the road before dawn. Every city is a new audience, a new feeding ground, and a new set of problems you'll leave behind in a week or two, tops. The freedom is genuine. The loneliness is too.",
+      "description": "You don't stay. Maybe you perform; a traveling show, a band, a roving market of curiosities and contraband. Maybe you just drift, all for one and one for all, moving on before anyone asks too many questions but after you collect your tips. Your Haven (you prefer *Haven't* — it's less sad when it's voluntary) is a convoy, a tour bus, a caravan, a blacked-out truck, or whatever gets you down the road before dawn. Every city is a new audience, a new **Feeding** ground, and a new set of problems you'll leave behind in a week or two, tops. The freedom is genuine. The loneliness is too.",
       "coterieStats": "Clout +0 | Cohesion +1 | Charm +2 | Claim −2 | Currency +1",
       "havenFeatures": {
         "positiveCount": 3,
@@ -803,7 +803,7 @@
           "gallery space",
           "generational wealth",
           "getaway vehicle",
-          "ghost traps",
+          "Ghost traps",
           "go-bags ready",
           "good water pressure",
           "guest quarters",
@@ -859,7 +859,7 @@
           "portable shrine",
           "powerful Wards",
           "pre-furnished",
-          "private feeding rooms",
+          "private dining rooms",
           "rare manuscripts",
           "recognized authority",
           "recording studio",
