@@ -347,7 +347,7 @@ function HarmTracker({ hp, canRoll }: { hp: number; canRoll?: boolean }) {
             />
           )}
           {armor.total > 0 && (
-            <span class="vamp-armor-track" title={`${armor.total}-Armor${armor.vsAggravated > 0 ? `, ${armor.vsAggravated} vs Aggravated` : ''}`}>
+            <span class="vamp-armor-track" title={`${armor.total}-Armor${armor.vsAggravated > 0 ? `, ${armor.vsAggravated} vs. Aggravated` : ''}`}>
               {compact.value
                 ? <><span class="vamp-armor-count">{armor.total}-</span><span class="vamp-armor-pip" /></>
                 : Array.from({ length: armor.total }, (_, i) => <span key={i} class="vamp-armor-pip" />)}

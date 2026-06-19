@@ -176,29 +176,40 @@ function formatMod(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
 }
 
+/* Inlined so the Fanged Failure icon paints instantly (an <img> decode pops on a quick toast). */
+const FANGS_D = 'M166.594,96.28C124.604,134.82 68.824,171.255 19.124,182.28C59.262,196.486 126.714,200.888 172.406,191.812L173.626,191.406L173.626,191.594C173.832,191.551 174.044,191.512 174.25,191.469C227.51,222.795 268.468,223.651 325.25,191.469C325.506,191.555 325.774,191.632 326.03,191.719L326,191.405L333.594,194.03C333.699,194.06 333.801,194.096 333.906,194.125C378.116,206.413 436.81,203.24 488.186,182.155C428.662,172.507 363.316,130.542 333.094,96.281C277.592,135.904 222.094,128.428 166.594,96.281L166.594,96.28ZM28.72,206.688C40.346,229.006 61.332,264.328 93.625,301.501C92.075,283.337 91.11,265.556 90.595,248.876C68.415,237.611 47.597,223.596 28.719,206.688L28.72,206.688ZM475.875,214.22C455.325,228.953 432.775,241.535 408.937,251.844C408.33,269.59 407.205,288.527 405.437,307.781C439.413,272.866 462.27,238.177 475.875,214.221L475.875,214.22ZM153.562,217.406C138.528,221.126 123.548,222.261 109,221.562C108.884,261.019 111.945,311.616 119.22,358.844C124.474,392.964 132.217,425.032 141.594,449.031L153.564,217.407L153.562,217.406ZM346.062,217.406L358.032,449.031C367.408,425.033 375.152,392.965 380.406,358.845C387.68,311.617 390.741,261.02 390.626,221.565C376.072,222.262 361.102,221.13 346.063,217.407L346.062,217.406ZM330.406,276.5C277.326,287.405 221.691,287.898 169.25,276.53L164.812,362.563C214.455,385.721 283.232,385.023 334.812,362.063L330.406,276.5Z';
+
 export function showRollToast(breakdown: RollBreakdown): void {
   const { result, statName, statValue, forwardMod, ongoingMod } = breakdown;
   const tier = result.tier;
   const colors = TIER_COLORS[tier];
 
   const hasStat = statName !== '';
+  /* Fanged Failures (snake eyes) auto-fail, so bonuses don't count: strike them; the fangs icon replaces the total. */
+  const fanged = tier === 'fanged';
+  const modClass = fanged ? 'vamp-roll-toast__mod vamp-roll-toast__struck' : 'vamp-roll-toast__mod';
+  const statClass = fanged ? 'vamp-roll-toast__stat vamp-roll-toast__struck' : 'vamp-roll-toast__stat';
 
   const message = h('span', { class: 'vamp-roll-toast' },
     result.kept.map((d, i) => h('span', { key: `k${i}`, class: 'vamp-roll-toast__die' }, d)),
     result.dropped.length > 0 && h('span', { class: 'vamp-roll-toast__dropped' },
       result.dropped.map((d, i) => h('span', { key: `d${i}`, class: 'vamp-roll-toast__die vamp-roll-toast__die--dropped' }, d)),
     ),
-    hasStat && forwardMod !== 0 && h('span', { class: 'vamp-roll-toast__mod' }, formatMod(forwardMod),
+    hasStat && forwardMod !== 0 && h('span', { class: modClass }, formatMod(forwardMod),
       h('span', { class: 'vamp-roll-toast__mod-label' }, 'F'),
     ),
-    hasStat && ongoingMod !== 0 && h('span', { class: 'vamp-roll-toast__mod' }, formatMod(ongoingMod),
+    hasStat && ongoingMod !== 0 && h('span', { class: modClass }, formatMod(ongoingMod),
       h('span', { class: 'vamp-roll-toast__mod-label' }, 'O'),
     ),
-    hasStat && h('span', { class: 'vamp-roll-toast__mod' }, formatMod(statValue)),
+    hasStat && h('span', { class: modClass }, formatMod(statValue)),
     hasStat && ' ',
-    hasStat && h('span', { class: 'vamp-roll-toast__stat' }, statName),
-    ' = ',
-    h('span', { class: 'vamp-roll-toast__total' }, result.total),
+    hasStat && h('span', { class: statClass }, statName),
+    fanged
+      ? h('svg', { class: 'vamp-roll-toast__fangs', viewBox: '0 0 736 736', 'aria-hidden': 'true' },
+          h('g', { transform: 'matrix(0.92,0,0,0.92,0,0)' },
+            h('g', { transform: 'matrix(1.69837,0,0,1.69837,-30.4348,-30.4348)' },
+              h('path', { d: FANGS_D }))))
+      : [' = ', h('span', { class: 'vamp-roll-toast__total' }, result.total)],
   );
 
   forceToast(message, 'info', TIER_LABELS[tier], {
@@ -279,7 +290,7 @@ export async function performHungerCheck(): Promise<boolean | null> {
     const colors = safe ? GOOD : BAD;
     const message = h('span', { class: 'vamp-roll-toast' },
       ...checkDiceSpans(check),
-      ' vs Hunger ', h('span', { class: 'vamp-roll-toast__total' }, hungerBefore),
+      ' vs. ', h('span', { class: 'vamp-roll-toast__total' }, hungerBefore), ' Hunger',
       h('span', { class: 'vamp-roll-toast__outcome' }, safe ? 'Resisted' : '+1 Hunger'),
     );
     forceToast(message, 'info', 'Hunger Check', {
@@ -306,7 +317,7 @@ export async function performRemorseCheck(): Promise<boolean | null> {
     const colors = safe ? GOOD : BAD;
     const message = h('span', { class: 'vamp-roll-toast' },
       ...checkDiceSpans(check),
-      ' vs ', h('span', { class: 'vamp-roll-toast__total' }, stains), ` Stain${stains === 1 ? '' : 's'}`,
+      ' vs. ', h('span', { class: 'vamp-roll-toast__total' }, stains), ` Stain${stains === 1 ? '' : 's'}`,
       h('span', { class: 'vamp-roll-toast__outcome' }, safe ? 'Stains cleared' : '−1 Humanity, Stains cleared'),
     );
     forceToast(message, 'info', 'Remorse Check', {
@@ -364,7 +375,7 @@ export async function performBloodSurge(): Promise<boolean | null> {
       ...checkDiceSpans(check),
       h('span', { class: 'vamp-roll-toast__outcome' }, `Banked ${char.bp} Advantage${char.bp === 1 ? '' : 's'}`),
       h('span', { class: 'vamp-roll-toast__sub' },
-        `${safe ? 'Hunger held' : '+1 Hunger'} · ${left} surge${left === 1 ? '' : 's'} left tonight`),
+        `${safe ? 'Hunger held' : '+1 Hunger'} · ${left} Surge${left === 1 ? '' : 's'} left tonight`),
     );
     forceToast(message, 'info', 'Blood Surge', {
       duration: rollToastDuration(), bg: GOOD.bg, border: GOOD.border, isRoll: true,

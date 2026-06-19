@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { theme, setDeviceTheme, THEMES, type Theme } from '../state/theme';
 import { customThemeActive, type EyeAnim } from '../themes/customTheme';
+import { sweepThemes } from '../state/themeSweep';
 import { character } from '../state/character';
 import { activeCharacterId } from '../state/persistence';
 import { viewingOtherSheet } from '../state/ui';
@@ -47,6 +48,7 @@ export function EyeToggle() {
     const current: Position = customThemeActive.value ? 'custom' : theme.value;
     const next = positions[(positions.indexOf(current) + 1) % positions.length];
     if (next === 'custom') {
+      sweepThemes();
       customThemeActive.value = true; /* lifecycle effect applies the palette */
     } else {
       customThemeActive.value = false;

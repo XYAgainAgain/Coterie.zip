@@ -1,4 +1,5 @@
 import { signal } from '@preact/signals';
+import { sweepThemes } from './themeSweep';
 
 /* Device-tier theme: one of the three real schemes, persisted in localStorage. The
    per-character custom palette is an in-memory overlay on top (see themes/customTheme.ts);
@@ -22,6 +23,7 @@ export const theme = signal<Theme>(loadTheme());
 document.documentElement.setAttribute('data-theme', theme.value);
 
 export function setDeviceTheme(t: Theme): void {
+  sweepThemes();
   theme.value = t;
   document.documentElement.setAttribute('data-theme', t);
   try { localStorage.setItem('vamp-theme', t); } catch { /* noop */ }

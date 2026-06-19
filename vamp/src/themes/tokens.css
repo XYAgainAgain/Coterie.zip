@@ -1,3 +1,26 @@
+/* Registered <color> so the armed :root transition can animate them. Alpha tokens use hex8 (Firefox @property quirk). */
+@property --v-bg-primary     { syntax: '<color>'; inherits: true; initial-value: #1b1b1e; }
+@property --v-bg-secondary   { syntax: '<color>'; inherits: true; initial-value: #252528; }
+@property --v-bg-elevated    { syntax: '<color>'; inherits: true; initial-value: #2e2e32; }
+@property --v-bg-sunken      { syntax: '<color>'; inherits: true; initial-value: #141416; }
+@property --v-text-primary   { syntax: '<color>'; inherits: true; initial-value: #E1E1E1; }
+@property --v-text-secondary { syntax: '<color>'; inherits: true; initial-value: #b0b0b0; }
+@property --v-text-muted     { syntax: '<color>'; inherits: true; initial-value: #908a91; }
+@property --v-text-accent    { syntax: '<color>'; inherits: true; initial-value: #e04444; }
+@property --v-accent         { syntax: '<color>'; inherits: true; initial-value: #cc3333; }
+@property --v-accent-hover   { syntax: '<color>'; inherits: true; initial-value: #e04444; }
+@property --v-accent-subtle  { syntax: '<color>'; inherits: true; initial-value: #cc333326; }
+@property --v-accent-2       { syntax: '<color>'; inherits: true; initial-value: #cc3333; }
+@property --v-accent-2-subtle { syntax: '<color>'; inherits: true; initial-value: #cc333326; }
+@property --v-glow-2         { syntax: '<color>'; inherits: true; initial-value: #c03030; }
+@property --v-primary        { syntax: '<color>'; inherits: true; initial-value: #96031a; }
+@property --v-glow           { syntax: '<color>'; inherits: true; initial-value: #c03030; }
+@property --v-glow-bright    { syntax: '<color>'; inherits: true; initial-value: #e04444; }
+@property --v-border         { syntax: '<color>'; inherits: true; initial-value: #3a3a3e; }
+@property --v-border-accent  { syntax: '<color>'; inherits: true; initial-value: rgba(204, 51, 51, 0.3); }
+@property --v-glass-bg       { syntax: '<color>'; inherits: true; initial-value: #1b1b1dd1; }
+@property --v-glass-border   { syntax: '<color>'; inherits: true; initial-value: hsla(0, 60%, 40%, 0.15); }
+
 :root {
   --v-bg-primary: var(--_bg-primary);
   --v-bg-secondary: var(--_bg-secondary);
@@ -12,6 +35,9 @@
   --v-accent: var(--_accent);
   --v-accent-hover: var(--_accent-hover);
   --v-accent-subtle: var(--_accent-subtle);
+  --v-accent-2: var(--_accent-2, var(--_accent));
+  --v-accent-2-subtle: var(--_accent-2-subtle, var(--_accent-subtle));
+  --v-glow-2: var(--_glow-2, var(--_glow));
   --v-primary: var(--_primary);
   --v-glow: var(--_glow);
   --v-glow-bright: var(--_glow-bright);
@@ -83,31 +109,37 @@
 
   --v-transition: 0.15s ease;
 
+  /* Theme-switch sweep duration (separate from --v-transition so it never slows hovers). */
+  --v-theme-sweep: 300ms ease;
+
+  /* Divider ink: currentColor by default (unchanged); accent 2 under [data-accent-b]. */
+  --v-dot-dash-color: currentColor;
+
   --v-dot-dash-h: repeating-linear-gradient(
     90deg,
-    currentColor 0 4px,
+    var(--v-dot-dash-color) 0 4px,
     transparent 4px 8px,
-    currentColor 8px 22px,
+    var(--v-dot-dash-color) 8px 22px,
     transparent 22px 26px,
-    currentColor 26px 40px,
+    var(--v-dot-dash-color) 26px 40px,
     transparent 40px 44px,
-    currentColor 44px 48px,
+    var(--v-dot-dash-color) 44px 48px,
     transparent 48px 52px,
-    currentColor 52px 66px,
+    var(--v-dot-dash-color) 52px 66px,
     transparent 66px 72px
   );
 
   --v-dot-dash-v: repeating-linear-gradient(
     0deg,
-    currentColor 0 4px,
+    var(--v-dot-dash-color) 0 4px,
     transparent 4px 8px,
-    currentColor 8px 22px,
+    var(--v-dot-dash-color) 8px 22px,
     transparent 22px 26px,
-    currentColor 26px 40px,
+    var(--v-dot-dash-color) 26px 40px,
     transparent 40px 44px,
-    currentColor 44px 48px,
+    var(--v-dot-dash-color) 44px 48px,
     transparent 48px 52px,
-    currentColor 52px 66px,
+    var(--v-dot-dash-color) 52px 66px,
     transparent 66px 72px
   );
 }
@@ -115,4 +147,28 @@
 /* Font swap: serif mode only remaps body copy; headings/display fonts stay put. */
 :root[data-font-mode="serif"] {
   --v-font-body: 'Merriweather', Georgia, serif;
+}
+
+/* Present only while armed (themeSweep.ts), so the live picker and per-load custom themes stay instant. */
+:root[data-theme-sweeping] {
+  transition:
+    --v-bg-primary var(--v-theme-sweep), --v-bg-secondary var(--v-theme-sweep),
+    --v-bg-elevated var(--v-theme-sweep), --v-bg-sunken var(--v-theme-sweep),
+    --v-text-primary var(--v-theme-sweep), --v-text-secondary var(--v-theme-sweep),
+    --v-text-muted var(--v-theme-sweep), --v-text-accent var(--v-theme-sweep),
+    --v-accent var(--v-theme-sweep), --v-accent-hover var(--v-theme-sweep),
+    --v-accent-subtle var(--v-theme-sweep), --v-accent-2 var(--v-theme-sweep),
+    --v-accent-2-subtle var(--v-theme-sweep), --v-glow-2 var(--v-theme-sweep), --v-primary var(--v-theme-sweep),
+    --v-glow var(--v-theme-sweep), --v-glow-bright var(--v-theme-sweep),
+    --v-border var(--v-theme-sweep), --v-border-accent var(--v-theme-sweep),
+    --v-glass-bg var(--v-theme-sweep), --v-glass-border var(--v-theme-sweep);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --v-theme-sweep: 0ms; }
+}
+
+/* The second accent recolors the dot-dash dividers; off falls back to currentColor (single-accent). */
+:root[data-accent-b] {
+  --v-dot-dash-color: var(--v-accent-2);
 }

@@ -8,9 +8,11 @@ import {
 import { rollMode } from '../dice/diceConfig';
 import type { RollMode } from '../dice/types';
 import { theme, setDeviceTheme, type Theme } from '../state/theme';
+import { sweepThemes } from '../state/themeSweep';
 import { character, setCustomTheme, patchCustomTheme } from '../state/character';
 import {
-  customThemeActive, normalizeHex, DICE_FONTS, DEFAULT_DICE_FONT, DEFAULT_DICE_METALNESS,
+  customThemeActive, normalizeHex, autoAccentB, randomContrastHex, randomAccent,
+  DICE_FONTS, DEFAULT_DICE_FONT, DEFAULT_DICE_METALNESS,
   type CustomTheme, type ThemeBase, type EyeAnim,
 } from '../themes/customTheme';
 import { activeCharacterId, flushSave, stopCoterieListener } from '../state/persistence';
@@ -168,6 +170,7 @@ function ThemeTab() {
         diceFont: DEFAULT_DICE_FONT, diceMetalness: DEFAULT_DICE_METALNESS,
       });
     }
+    sweepThemes();
     customThemeActive.value = true;
   }
 
@@ -209,6 +212,7 @@ function ThemeTab() {
 function CustomThemeSection({ ct }: { ct: CustomTheme }) {
   const hexDraft = useSignal(ct.accent);
   const hexFocused = useRef(false);
+  const pickerTarget = useSignal<'accent' | 'accent2'>('accent');
 
   /* Sync the text field when the accent changes from elsewhere (OS picker, cross-device
      sync), but never while the user is mid-edit. hasFocused-ref pattern, not activeElement. */
@@ -225,6 +229,32 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
       hexDraft.value = ct.accent; /* revert invalid input */
     }
   }
+
+  /* Second accent defaults to the complement; the hex field and randomize button override it. */
+  const accent2Value = normalizeHex(ct.accent2 ?? '') ?? autoAccentB(ct.accent);
+  const hex2Draft = useSignal(accent2Value);
+  const hex2Focused = useRef(false);
+  useEffect(() => {
+    if (!hex2Focused.current) hex2Draft.value = accent2Value;
+  }, [ct.accent2, ct.accent]);
+
+  function commitHex2() {
+    const normalized = normalizeHex(hex2Draft.value);
+    if (normalized) { patchCustomTheme({ accent2: normalized }); hex2Draft.value = normalized; }
+    else { hex2Draft.value = accent2Value; }
+  }
+  function randomizeAccent2() {
+    const c = randomContrastHex(ct.accent);
+    hex2Draft.value = c;
+    patchCustomTheme({ accent2: c });
+  }
+  function randomizeAccentA() {
+    const c = randomAccent();
+    hexDraft.value = c;
+    /* Clear accent 2 so it re-derives a fresh coordinated pair from the new accent 1. */
+    patchCustomTheme({ accent: c, accent2: undefined });
+  }
+  const dualOn = ct.accentB !== false;
 
   return (
     <div class="vamp-settings__sub">
@@ -252,22 +282,66 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
 
       <div class="vamp-settings__accent">
         <ColorPicker
-          value={normalizeHex(ct.accent) ?? '#cc3333'}
-          onChange={hex => { hexDraft.value = hex; patchCustomTheme({ accent: hex }); }}
-        />
-        <input
-          type="text"
-          class="vamp-settings-color__hex"
-          value={hexDraft.value}
-          spellcheck={false}
-          onFocus={() => { hexFocused.current = true; }}
-          onInput={e => { hexDraft.value = (e.target as HTMLInputElement).value; }}
-          onBlur={() => { hexFocused.current = false; commitHex(); }}
-          onKeyDown={e => {
-            if (e.key === 'Enter') { commitHex(); (e.target as HTMLInputElement).blur(); }
-            if (e.key === 'Escape') { hexDraft.value = ct.accent; (e.target as HTMLInputElement).blur(); }
+          value={pickerTarget.value === 'accent2' ? accent2Value : (normalizeHex(ct.accent) ?? '#cc3333')}
+          onChange={hex => {
+            if (pickerTarget.value === 'accent2') { hex2Draft.value = hex; patchCustomTheme({ accent2: hex }); }
+            else { hexDraft.value = hex; patchCustomTheme({ accent: hex }); }
           }}
         />
+        <div class="vamp-settings__accent-row">
+          <span class="vamp-settings__accent-label">ACCENT A:</span>
+          <button
+            type="button"
+            title="Edit accent with the picker"
+            class={`vamp-settings__swatch${pickerTarget.value === 'accent' ? ' is-active' : ''}`}
+            style={{ background: hexDraft.value }}
+            onClick={() => { pickerTarget.value = 'accent'; }}
+          />
+          <input
+            type="text"
+            class="vamp-settings-color__hex"
+            value={hexDraft.value}
+            spellcheck={false}
+            onFocus={() => { hexFocused.current = true; }}
+            onInput={e => { hexDraft.value = (e.target as HTMLInputElement).value; }}
+            onBlur={() => { hexFocused.current = false; commitHex(); }}
+            onKeyDown={e => {
+              if (e.key === 'Enter') { commitHex(); (e.target as HTMLInputElement).blur(); }
+              if (e.key === 'Escape') { hexDraft.value = ct.accent; (e.target as HTMLInputElement).blur(); }
+            }}
+          />
+          <button class="vamp-settings__accent2-rand" type="button" title="Randomize accent A" onClick={randomizeAccentA} />
+        </div>
+        <div class={`vamp-settings__accent-row${dualOn ? '' : ' is-muted'}`}>
+          <span class="vamp-settings__accent-label">ACCENT B:</span>
+          <button
+            type="button"
+            title="Edit alt accent with the picker"
+            class={`vamp-settings__swatch${pickerTarget.value === 'accent2' ? ' is-active' : ''}`}
+            style={{ background: hex2Draft.value }}
+            onClick={() => { pickerTarget.value = 'accent2'; }}
+          />
+          <input
+            type="text"
+            class="vamp-settings-color__hex"
+            value={hex2Draft.value}
+            spellcheck={false}
+            onFocus={() => { hex2Focused.current = true; }}
+            onInput={e => { hex2Draft.value = (e.target as HTMLInputElement).value; }}
+            onBlur={() => { hex2Focused.current = false; commitHex2(); }}
+            onKeyDown={e => {
+              if (e.key === 'Enter') { commitHex2(); (e.target as HTMLInputElement).blur(); }
+              if (e.key === 'Escape') { hex2Draft.value = accent2Value; (e.target as HTMLInputElement).blur(); }
+            }}
+          />
+          <button class="vamp-settings__accent2-rand" type="button" title="Randomize" onClick={randomizeAccent2} />
+          <button
+            class={`vamp-settings__accent-toggle${dualOn ? '' : ' is-off'}`}
+            type="button"
+            title={dualOn ? 'Disable second accent' : 'Enable second accent'}
+            onClick={() => patchCustomTheme({ accentB: !dualOn })}
+          />
+        </div>
       </div>
 
       <SettingRow label="Eye Animation">

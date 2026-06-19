@@ -669,7 +669,7 @@ function QuickAdd() {
   const armorN = useSignal('');
   const container = useSignal<boolean | null>(null);
 
-  function reset() { open.value = false; name.value = ''; type.value = ''; harm.value = ''; armor.value = null; armorN.value = ''; container.value = null; }
+  function reset() { open.value = false; name.value = ''; type.value = ''; harm.value = ''; rMin.value = 'Close'; rMax.value = 'Close'; armor.value = null; armorN.value = ''; container.value = null; }
 
   const t = type.value;
   const valid = !!name.value.trim() && !!t
