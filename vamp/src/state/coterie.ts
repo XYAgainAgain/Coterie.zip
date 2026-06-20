@@ -24,6 +24,9 @@ export interface CoterieState {
      transaction), so they always apply from snapshots — never dirty-gated. */
   havenItems: Item[];
   giftQueue: Gift[];
+  /* The claimed Storyteller's uid, or null if unclaimed. Externally owned: set by claim,
+     cleared by step-down or member kick; applies from snapshots like the roster. */
+  storytellerUid: string | null;
 }
 
 export function blankCoterie(): CoterieState {
@@ -36,6 +39,7 @@ export function blankCoterie(): CoterieState {
     members: [],
     havenItems: [],
     giftQueue: [],
+    storytellerUid: null,
   };
 }
 

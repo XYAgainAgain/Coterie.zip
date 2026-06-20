@@ -1,10 +1,12 @@
 import { signal, effect } from '@preact/signals';
 import {
-  collection, doc, getDoc, getDocs, setDoc, deleteDoc,
+  collection, doc, getDoc, getDocs, setDoc, deleteDoc, deleteField,
   query, where, serverTimestamp, onSnapshot, runTransaction,
 } from 'firebase/firestore';
 import { db, auth, linkedEmail } from '../firebase';
-import { character, type CharacterState, BLANK_CHARACTER, removeQtyFromItem, receiveItem, freeContainerChildren } from './character';
+import { character, type CharacterState, type Note, BLANK_CHARACTER, removeQtyFromItem, receiveItem, freeContainerChildren } from './character';
+import { planNotesReconcile } from './notesSync';
+import { activeStConsent, type StConsent } from './storyteller';
 import type { Item, ItemType, Gift } from '../data/types';
 import { isEquippableType } from '../data/itemTags';
 import { giftDisplayName, pickVerb, giftRecipientToast } from '../data/gifts';
@@ -67,6 +69,9 @@ interface IDBCharacterRecord extends CharacterState {
   schemaVersion: number;
   updatedAt: number;
   pendingSync: boolean;
+  /* Mirrors the dedicated character-doc field, kept here so an offline reload doesn't
+     lose it (Firestore is authoritative when online). */
+  stConsent?: StConsent | null;
 }
 
 export const activeCharacterId = signal<string | null>(null);
@@ -212,6 +217,7 @@ export async function loadCharacterList(): Promise<CharacterSummary[]> {
           schemaVersion: data.schemaVersion ?? 1,
           updatedAt: ts,
           pendingSync: false,
+          stConsent: (data.stConsent as StConsent | null) ?? null,
         } satisfies IDBCharacterRecord).catch(() => {});
       }
     }
@@ -226,9 +232,52 @@ export async function loadCharacterList(): Promise<CharacterSummary[]> {
 
 let lastSavedJson = '';
 
+/* Notes live in an owner-only subcollection, hidden from a consented ST who can read the parent. */
+function withoutNotes(state: CharacterState): Omit<CharacterState, 'notes'> {
+  const { notes, ...rest } = state;
+  void notes;
+  return rest;
+}
+function notesDoc(id: string) {
+  return doc(db, 'characters', id, 'private', 'notes');
+}
+async function writeNotesSub(id: string, uid: string, notes: Note[]): Promise<void> {
+  await setDoc(notesDoc(id), { ownerId: uid, notes, updatedAt: serverTimestamp() });
+}
+
+/* Migrate notes: write the sub BEFORE deleting the parent field, so a failed write can't lose them. */
+async function reconcileNotes(id: string, uid: string, cloudAuthoritative: boolean, parentHadNotes: boolean): Promise<void> {
+  if (!uid) return;
+  let subExists = false;
+  let subNotes: Note[] = [];
+  try {
+    const snap = await getDoc(notesDoc(id));
+    if (snap.exists()) { subExists = true; subNotes = (snap.data().notes as Note[]) ?? []; }
+  } catch { return; }
+
+  const plan = planNotesReconcile({ subExists, cloudAuthoritative, parentHasNotesField: parentHadNotes });
+
+  if (plan.adoptSubNotes) {
+    character.value = { ...character.value, notes: subNotes };
+    lastSavedJson = JSON.stringify(character.value);
+    try {
+      const rec = await idbGet<IDBCharacterRecord>('characters', id);
+      if (rec) await idbPut('characters', { ...rec, notes: subNotes });
+    } catch {}
+  }
+  if (plan.writeSub) {
+    try { await writeNotesSub(id, uid, character.value.notes); }
+    catch { return; }
+  }
+  if (plan.deleteParentField) {
+    try { await setDoc(doc(db, 'characters', id), { notes: deleteField(), updatedAt: serverTimestamp() }, { merge: true }); } catch {}
+  }
+}
+
 export async function loadCharacter(id: string): Promise<void> {
   let idbTs = 0;
   let loaded = false;
+  let localPending = false;
   let coterieId: string | null = null;
 
   try {
@@ -239,7 +288,9 @@ export async function loadCharacter(id: string): Promise<void> {
       character.value = state;
       activeCharacterId.value = id;
       idbTs = rec.updatedAt || 0;
+      localPending = rec.pendingSync;
       coterieId = rec.coterieId;
+      activeStConsent.value = rec.stConsent ?? null;
       loaded = true;
     }
   } catch {}
@@ -254,15 +305,21 @@ export async function loadCharacter(id: string): Promise<void> {
 
     const raw = snap.data();
     const ts = fsTimestamp(raw);
+    const fsFresher = ts > idbTs || !loaded;
+    const uid = auth.currentUser?.uid ?? '';
 
-    if (ts > idbTs || !loaded) {
+    /* Consent lives outside the autosaved blob, so it isn't subject to the state
+       freshness check: Firestore is always authoritative for it when online. */
+    const consent = (raw.stConsent as StConsent | null) ?? null;
+    activeStConsent.value = consent;
+
+    if (fsFresher) {
       const state = stripMetadata(raw);
       lastSavedJson = JSON.stringify(state);
       character.value = state;
       activeCharacterId.value = id;
       coterieId = raw.coterieId ?? null;
 
-      const uid = auth.currentUser?.uid ?? '';
       idbPut('characters', {
         ...state,
         id,
@@ -273,8 +330,13 @@ export async function loadCharacter(id: string): Promise<void> {
         schemaVersion: raw.schemaVersion ?? 1,
         updatedAt: ts || Date.now(),
         pendingSync: false,
+        stConsent: consent,
       } satisfies IDBCharacterRecord).catch(() => {});
     }
+
+    /* Cloud notes win unless local has unsynced edits AND the server isn't newer; mirrors
+       how the parent-field overwrite above resolves a cross-device conflict. */
+    await reconcileNotes(id, uid, fsFresher || !localPending, 'notes' in raw);
   } catch (err) {
     if (!loaded) throw err;
   }
@@ -316,6 +378,7 @@ async function saveCharacter(
       schemaVersion: existing?.schemaVersion ?? 1,
       updatedAt: Date.now(),
       pendingSync: true,
+      stConsent: existing?.stConsent ?? null,
     } satisfies IDBCharacterRecord);
     idbOk = true;
 
@@ -338,13 +401,14 @@ async function saveCharacter(
   try {
     const slug = generateNameSlug(state.name);
     await setDoc(doc(db, 'characters', id), {
-      ...state,
+      ...withoutNotes(state),
       ownerId: uid,
       coterieId,
       slug,
       public: !!coterieId,
       updatedAt: serverTimestamp(),
     }, { merge: true });
+    await writeNotesSub(id, uid, state.notes);
 
     lastSavedJson = json;
 
@@ -402,7 +466,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
 
   try {
     await setDoc(ref, {
-      ...state,
+      ...withoutNotes(state),
       ownerId: uid,
       slug,
       public: false,
@@ -411,12 +475,14 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
     });
+    await writeNotesSub(ref.id, uid, state.notes);
     await idbPut('characters', { ...record, pendingSync: false, updatedAt: Date.now() });
   } catch {}
 
   lastSavedJson = JSON.stringify(state);
   character.value = state;
   activeCharacterId.value = ref.id;
+  activeStConsent.value = null;
   return ref.id;
 }
 
@@ -459,6 +525,8 @@ export async function deleteCharacter(id: string): Promise<void> {
   } catch {}
 
   try { await idbDelete('characters', id); } catch {}
+  /* Subcollections don't cascade on parent delete, so drop the notes doc explicitly. */
+  try { await deleteDoc(notesDoc(id)); } catch {}
   try { await deleteDoc(doc(db, 'characters', id)); } catch {}
   if (activeCharacterId.value === id) {
     activeCharacterId.value = null;
@@ -481,7 +549,7 @@ async function syncPending(): Promise<void> {
     try {
       const state = stripMetadata(rec as unknown as Record<string, unknown>);
       await setDoc(doc(db, 'characters', rec.id), {
-        ...state,
+        ...withoutNotes(state),
         ownerId: uid,
         coterieId: rec.coterieId,
         slug: rec.slug,
@@ -489,6 +557,7 @@ async function syncPending(): Promise<void> {
         schemaVersion: rec.schemaVersion,
         updatedAt: serverTimestamp(),
       }, { merge: true });
+      await writeNotesSub(rec.id, uid, state.notes);
       await idbPut('characters', { ...rec, pendingSync: false, updatedAt: Date.now() });
     } catch {}
   }
@@ -738,13 +807,14 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
      members), regardless of our local dirty state. */
   const havenItems = (data.havenItems as Item[]) ?? [];
   const giftQueue = (data.giftQueue as Gift[]) ?? [];
+  const storytellerUid = (data.storytellerUid as string | null) ?? null;
   /* Roster always applies (externally owned). The Clock applies too, except while our increment is in flight, so a stale snapshot can't revert it. */
   if (data.masqueradeClock && !masqueradeDirty.value) {
     masqueradeClock.value = data.masqueradeClock as Clock;
   }
   if (preserveLocalEdits) {
     console.log('[CoterieSync] applyCoterie PRESERVE local; ignoring incoming stats', data.stats);
-    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue };
+    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue, storytellerUid };
     processGiftQueue();
     return;
   }
@@ -758,6 +828,7 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
     members,
     havenItems,
     giftQueue,
+    storytellerUid,
   };
   processGiftQueue();
 }
@@ -1120,8 +1191,68 @@ export async function leaveCoterie(): Promise<void> {
 
   await setCharacterCoterie(charId, null);
 
+  /* Leaving revokes consent; the ST can't clear other players' consent, so do our own here. */
+  try { await clearStConsent(charId); } catch {}
+
   stopCoterieListener();
   activeCoterie.value = null;
   coterieState.value = blankCoterie();
+  activeStConsent.value = null;
   masqueradeClock.value = { id: 'masquerade', name: 'The Masquerade', segments: 8, filled: 0 };
+}
+
+/* Storytellers must be email-verified; the Firestore rules enforce the same server-side. */
+function isEmailVerified(): boolean {
+  return auth.currentUser?.emailVerified === true;
+}
+
+/* Claim an unclaimed Coterie as its Storyteller. Writes only storytellerUid, never roster
+   or stats. Throws if already claimed by someone else or the user isn't email-verified. */
+export async function claimStoryteller(rawCode: string): Promise<void> {
+  const uid = auth.currentUser?.uid;
+  if (!uid) throw new Error('Not authenticated');
+  if (!isEmailVerified()) throw new Error('Storytellers must link a verified email first.');
+
+  const code = rawCode.trim().toUpperCase();
+  const ref = doc(db, 'coteries', code);
+  const snap = await getDoc(ref);
+  if (!snap.exists()) throw new Error(`No Coterie found with code "${code}"`);
+  const current = (snap.data().storytellerUid as string | null) ?? null;
+  if (current && current !== uid) throw new Error('This Coterie already has a Storyteller.');
+
+  await setDoc(ref, { storytellerUid: uid, updatedAt: serverTimestamp() }, { merge: true });
+}
+
+/* Step down (the current ST) or kick (a member). Either clears storytellerUid; the uid
+   mismatch then auto-invalidates every player's consent. */
+export async function clearStoryteller(rawCode: string): Promise<void> {
+  if (!auth.currentUser?.uid) throw new Error('Not authenticated');
+  const code = rawCode.trim().toUpperCase();
+  await setDoc(doc(db, 'coteries', code), { storytellerUid: null, updatedAt: serverTimestamp() }, { merge: true });
+}
+
+/* Owner approves the current Storyteller for their character. The dedicated stConsent field
+   (outside the autosaved blob) IS the security boundary for ST sheet access. */
+export async function setStConsent(charId: string, stUid: string): Promise<void> {
+  if (!auth.currentUser?.uid) return;
+  const consent: StConsent = { uid: stUid, approvedAt: Date.now() };
+  /* Signal only after the write lands, so a rejected write can't leave the UI showing
+     consent that was never persisted. */
+  await setDoc(doc(db, 'characters', charId), { stConsent: consent, updatedAt: serverTimestamp() }, { merge: true });
+  activeStConsent.value = consent;
+  try {
+    const rec = await idbGet<IDBCharacterRecord>('characters', charId);
+    if (rec) await idbPut('characters', { ...rec, stConsent: consent });
+  } catch {}
+}
+
+/* Withdraw consent (decline, or on leaving). Removes the field so the rules read it as null. */
+export async function clearStConsent(charId: string): Promise<void> {
+  if (!auth.currentUser?.uid) return;
+  await setDoc(doc(db, 'characters', charId), { stConsent: deleteField(), updatedAt: serverTimestamp() }, { merge: true });
+  activeStConsent.value = null;
+  try {
+    const rec = await idbGet<IDBCharacterRecord>('characters', charId);
+    if (rec) await idbPut('characters', { ...rec, stConsent: null });
+  } catch {}
 }

@@ -3,10 +3,22 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
+    function emailVerified() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
     match /characters/{charId} {
       allow read: if request.auth != null && (
         resource.data.ownerId == request.auth.uid ||
-        resource.data.public == true
+        resource.data.public == true ||
+        // Consented, email-verified ST: stConsent.uid is the per-character opt-in, and the live
+        // storytellerUid get() revokes access on kick/step-down even before stale consent clears.
+        (emailVerified()
+          && resource.data.get('stConsent', null) != null
+          && resource.data.stConsent.uid == request.auth.uid
+          && resource.data.get('coterieId', null) != null
+          && exists(/databases/$(database)/documents/coteries/$(resource.data.coterieId))
+          && get(/databases/$(database)/documents/coteries/$(resource.data.coterieId)).data.get('storytellerUid', null) == request.auth.uid)
       );
       allow create: if request.auth != null
         && request.resource.data.ownerId == request.auth.uid
@@ -16,6 +28,20 @@ service cloud.firestore {
         && request.resource.data.ownerId == request.auth.uid;
       allow delete: if request.auth != null
         && resource.data.ownerId == request.auth.uid;
+
+      // Private notes: owner-only, so a consented Storyteller who can read the
+      // parent character doc still cannot read the notes inside it.
+      match /private/{docId} {
+        // resource == null guards reads/deletes of a not-yet-created doc, which Firestore
+        // would otherwise error-deny, silently aborting first-time migration.
+        allow read, delete: if request.auth != null
+          && (resource == null || resource.data.ownerId == request.auth.uid);
+        allow create: if request.auth != null
+          && request.resource.data.ownerId == request.auth.uid;
+        allow update: if request.auth != null
+          && resource.data.ownerId == request.auth.uid
+          && request.resource.data.ownerId == request.auth.uid;
+      }
     }
 
     match /coteries/{code} {
@@ -26,8 +52,21 @@ service cloud.firestore {
       allow create: if request.auth != null
         && request.auth.uid in request.resource.data.memberUids;
       allow update: if request.auth != null
-        && (request.auth.uid in resource.data.memberUids
-            || request.auth.uid in request.resource.data.memberUids);
+        && (
+          // Members (current or joining) own Coterie data, including a kick (clearing storytellerUid).
+          request.auth.uid in resource.data.memberUids
+          || request.auth.uid in request.resource.data.memberUids
+          // Storyteller claim: an email-verified user takes an UNCLAIMED Coterie, touching only storytellerUid.
+          || (emailVerified()
+              && resource.data.get('storytellerUid', null) == null
+              && request.resource.data.storytellerUid == request.auth.uid
+              && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['storytellerUid', 'updatedAt']))
+          // Storyteller step-down: the current ST clears themselves, touching only storytellerUid.
+          || (emailVerified()
+              && resource.data.get('storytellerUid', null) == request.auth.uid
+              && request.resource.data.get('storytellerUid', null) == null
+              && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['storytellerUid', 'updatedAt']))
+        );
       // Only the sole remaining member may delete the Coterie (last one out)!
       allow delete: if request.auth != null
         && resource.data.memberUids.size() == 1
