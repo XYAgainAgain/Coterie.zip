@@ -21,8 +21,10 @@ export const DICE_SURFACES: { id: DiceSurface; label: string }[] = [
 
 const ROLL_MODES: RollMode[] = ['standard', 'fast', 'no3d'];
 
-/* Ephemeral drawer state, never persisted. */
+/* Ephemeral drawer state, never persisted. The active tab is shared so the sheet
+   shortcut handler can stay live on the Keys tab while suppressing on the others. */
 export const settingsOpen = signal(false);
+export const settingsTab = signal<string>('theme');
 
 function readString(key: string): string | null {
   try { return localStorage.getItem(key); } catch { return null; }

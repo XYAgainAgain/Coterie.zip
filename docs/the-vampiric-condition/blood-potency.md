@@ -38,11 +38,11 @@ Like Bane Severity, an Ongoing penalty imposed by your Compulsion scales with yo
 
 ### Blood Surges
 
-At any time, any vampire can activate a Blood Surge to gain Advantage on a number of rolls equal to their Blood Potency. Make a Hunger Check when activating, gaining +1 Hunger on a failure. Unused Advantages expire at the end of a scene or when you sleep, whichever comes first.
+At any time, any vampire can activate a Blood Surge to gain Advantage on their next roll plus an additional number of rolls equal to their Blood Potency. To Blood Surge, make a Hunger Check, gaining +1 Hunger on a failure as usual. Unused Advantages expire at the end of a scene or when you sleep, whichever comes first.
 
-You cannot activate a Blood Surge while a previous activation is still active (e.g., if a scene continues across multiple sessions). The Advantage this grants, as usual, stacks with Forward/Ongoing bonuses and cancels out any Disadvantage you might have.
+You cannot activate a Blood Surge while a previous activation is still active (e.g., if a scene continues across multiple sessions). You also cannot use Advantages they grant on Hunger Checks or Remorse Checks, since a Blood Surge is like letting the Beast run around in the yard instead of fully off-leash. The Advantage this grants, as usual, stacks with Forward/Ongoing bonuses and cancels out any Disadvantage you might have.
 
-You can activate Blood Surge a number of times per night equal to your Blood Potency. If your BP is 3, you can Blood Surge 3 times for a total of 9 instances of Advantage on rolls. Simple!
+You can activate Blood Surge a number of times per night equal to your Blood Potency. If your BP is 2, you can Blood Surge 2 times for a total of 6 (the 2 instant ones + 4 banked) instances of Advantage on rolls. Simple!
 
 ### Discipline Access
 
@@ -50,7 +50,7 @@ Your Blood Potency determines the maximum level of Discipline Power you can lear
 
 ### Feeding Restrictions
 
-As your Blood thickens, it becomes pickier about what sustains it. Weak or stale sources that satisfied you as a Fledgling eventually stop working entirely, forcing you toward fresher and more dangerous prey.
+As your Vitae thickens, it becomes pickier about what sustains it. Weak or stale sources that satisfied you as a Fledgling eventually stop working entirely, forcing you toward fresher and more dangerous prey.
 
 - **BP 0–1:** No restrictions. Animals, blood bags, and mortals all work as described in the **Feed** Move.
 - **BP 2:** Animal blood and blood bags are less satisfying. When you **Feed** from these sources, reduce Hunger by 1 less than you normally would (minimum 0). The Bagger Predator Type lets you ignore this restriction.
@@ -58,13 +58,13 @@ As your Blood thickens, it becomes pickier about what sustains it. Weak or stale
 - **BP 4:** Blood bags become light snacks. You can only reduce Hunger below 2 by draining a mortal to the point of death or beyond. Normal **Feeding** works for 5 → 2 Hunger, but getting below 2 requires near-total or total exsanguination. This will likely kill your vessel.
 - **BP 5:** You can only reduce Hunger below 3 by draining a mortal completely. Reaching 0 Hunger always means someone died.
 
-These restrictions apply to the **Hunt**, **Feed**, and **Sate Your Hunger** Moves. When the restriction says a source "provides no sustenance," treat any Hunger reduction from that source as 0 regardless of the roll result; you still get other benefits or complications from the Move, just no Hunger relief. Yes, your beastly tummy may well rumble.
+These restrictions apply to the **Hunt**, **Feed**, and **Sate Your Hunger** Moves. When the restriction says a source "provides no sustenance," treat any Hunger reduction from that source as 0 regardless of the roll result; you still get other benefits or complications from the Move, just no Hunger relief. Yes, your Beastly tummy may well rumble.
 
 ### Advancement Rate
 
-Younger vampires learn and adapt faster than older ones. Your Blood Potency affects how quickly you accumulate experience from sources that aren't tied to your Clan Experience triggers. As a general principle: the higher your BP, the slower meaningful growth comes. The Blood has less room to change when it's already thick and gunky with centuries of accumulated power.
+Younger vampires learn and adapt faster than older ones. Your Blood Potency affects how quickly you accumulate experience from sources that aren't tied to your Clan Experience triggers. As a general principle, the higher your BP, the slower meaningful growth comes. Vitae has less room to change when it's already viscous and gunky with centuries of accumulated power.
 
-Older, more potent vampires have seen it all before. What would be a transformative experience for a Fledgling is just another Tuesday night for an Elder. This penalty applies to Slumber Reflections and Storyteller Awards only, never to Clan Experience triggers.
+Older, more potent vampires have seen it all before. What would be a transformative experience for a Fledgling is just another Tuesday night for an Elder. This penalty applies to Slumber Reflections and Storyteller Awards only, never to Clan Experience triggers or Moves That Say So.
 
 - **BP 0–2:** No penalty.
 - **BP 3:** −1 XP from affected sources (minimum 0 per source).

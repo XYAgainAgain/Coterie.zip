@@ -1,10 +1,10 @@
 import { h } from 'preact';
 import {
-  clearForwards, consumeArmedSurge, bankBloodSurge, bloodSurgeActive, character,
+  clearForwards, clearDiceMode, bloodSurge, bloodSurgeActive, character,
   setHunger, setHumanity, setHarm, resolveRemorse, superficialHealAmount, updateCharacter,
 } from '../state/character';
 import { forceToast } from '../state/toasts';
-import { netAdvantage, bloodSurgesRemaining } from '../state/derived';
+import { netAdvantage, checkAdvantage, bloodSurgesRemaining } from '../state/derived';
 import type { AdvantageState } from '../state/derived';
 import { diceEngine } from './diceState';
 import { logRoll } from './rollHistory';
@@ -29,12 +29,19 @@ export interface RollBreakdown {
   advantage: 'advantage' | 'disadvantage' | 'flat';
 }
 
-export function rollMove(statName: StatName): RollBreakdown {
+/* Foundry convention: Ctrl/Cmd+Click forces Advantage, Alt+Click forces Disadvantage. */
+export function forcedAdvantage(e: MouseEvent): 'advantage' | 'disadvantage' | undefined {
+  if (e.ctrlKey || e.metaKey) return 'advantage';
+  if (e.altKey) return 'disadvantage';
+  return undefined;
+}
+
+export function rollMove(statName: StatName, forced?: 'advantage' | 'disadvantage'): RollBreakdown {
   const statValue = character.value.stats[statName];
   const forwardMod = modTotalForStat(statName, 'forward');
   const ongoingMod = modTotalForStat(statName, 'ongoing');
   const totalMod = forwardMod + ongoingMod;
-  const advantage = netAdvantage.value;
+  const advantage = forced ?? netAdvantage.value;
 
   let kept: number[];
   let dropped: number[];
@@ -69,7 +76,7 @@ export function rollMove(statName: StatName): RollBreakdown {
   };
 
   clearForwards(statName);
-  consumeArmedSurge();
+  clearDiceMode();
 
   return {
     result,
@@ -125,12 +132,12 @@ async function animateDice(dice: number[]): Promise<void> {
   engine.fadeDiceOut(Math.round(3000 / speed), Math.round(600 / speed));
 }
 
-export async function performRoll(statName: StatName): Promise<RollBreakdown | null> {
+export async function performRoll(statName: StatName, forced?: 'advantage' | 'disadvantage'): Promise<RollBreakdown | null> {
   if (rolling) return null;
   rolling = true;
 
   try {
-    const breakdown = rollMove(statName);
+    const breakdown = rollMove(statName, forced);
     await animateDice(breakdown.result.dice);
     showRollToast(breakdown);
     logRoll(breakdown);
@@ -242,8 +249,8 @@ interface CheckRoll {
 
 /* Single-die check (Hunger/Remorse). Advantage/Disadvantage roll the d6 twice and
    keep the higher/lower; no Forward/Ongoing modifiers apply (rolling-dice.md). */
-function rollSingleCheck(): CheckRoll {
-  const advantage = netAdvantage.value;
+function rollSingleCheck(forced?: 'advantage' | 'disadvantage'): CheckRoll {
+  const advantage = forced ?? checkAdvantage.value;
   if (advantage === 'advantage' || advantage === 'disadvantage') {
     const pair = [rollD6(), rollD6()].sort((a, b) => a - b);
     const keepHigh = advantage === 'advantage';
@@ -278,13 +285,12 @@ function checkDiceSpans(check: CheckRoll) {
 const GOOD = TIER_COLORS.success;
 const BAD = TIER_COLORS.failure;
 
-export async function performHungerCheck(): Promise<boolean | null> {
+export async function performHungerCheck(forced?: 'advantage' | 'disadvantage'): Promise<boolean | null> {
   if (rolling) return null;
   rolling = true;
   try {
-    const check = rollSingleCheck();
+    const check = rollSingleCheck(forced);
     await animateDice([...check.kept, ...check.dropped]);
-    consumeArmedSurge();
     const hungerBefore = character.value.hunger;
     const safe = applyHungerResult(check.value);
     const colors = safe ? GOOD : BAD;
@@ -302,13 +308,12 @@ export async function performHungerCheck(): Promise<boolean | null> {
   }
 }
 
-export async function performRemorseCheck(): Promise<boolean | null> {
+export async function performRemorseCheck(forced?: 'advantage' | 'disadvantage'): Promise<boolean | null> {
   if (rolling) return null;
   rolling = true;
   try {
-    const check = rollSingleCheck();
+    const check = rollSingleCheck(forced);
     await animateDice([...check.kept, ...check.dropped]);
-    consumeArmedSurge();
     const char = character.value;
     const stains = char.stains;
     const outcome = resolveRemorse(char.humanity, stains, check.value);
@@ -329,7 +334,7 @@ export async function performRemorseCheck(): Promise<boolean | null> {
   }
 }
 
-export async function performQuickHeal(): Promise<boolean | null> {
+export async function performQuickHeal(forced?: 'advantage' | 'disadvantage'): Promise<boolean | null> {
   const char = character.value;
   if (char.playbook === 'Ghoul') return null;
   if (char.harm.superficial === 0) return null;
@@ -337,9 +342,8 @@ export async function performQuickHeal(): Promise<boolean | null> {
   if (rolling) return null;
   rolling = true;
   try {
-    const check = rollSingleCheck();
+    const check = rollSingleCheck(forced);
     await animateDice([...check.kept, ...check.dropped]);
-    consumeArmedSurge();
     const safe = applyHungerResult(check.value);
     const maxHeal = superficialHealAmount(char.bp);
     const newSuperficial = Math.max(0, char.harm.superficial - maxHeal);
@@ -360,20 +364,20 @@ export async function performQuickHeal(): Promise<boolean | null> {
   }
 }
 
-export async function performBloodSurge(): Promise<boolean | null> {
+export async function performBloodSurge(forced?: 'advantage' | 'disadvantage'): Promise<boolean | null> {
   const char = character.value;
   if (char.bp < 1 || bloodSurgesRemaining.value <= 0 || bloodSurgeActive()) return null;
   if (rolling) return null;
   rolling = true;
   try {
-    const check = rollSingleCheck();
+    const check = rollSingleCheck(forced);
     await animateDice([...check.kept, ...check.dropped]);
     const safe = applyHungerResult(check.value);
-    bankBloodSurge(char.bp);
+    bloodSurge(char.bp);
     const left = bloodSurgesRemaining.value;
     const message = h('span', { class: 'vamp-roll-toast' },
       ...checkDiceSpans(check),
-      h('span', { class: 'vamp-roll-toast__outcome' }, `Banked ${char.bp} Advantage${char.bp === 1 ? '' : 's'}`),
+      h('span', { class: 'vamp-roll-toast__outcome' }, `1 Advantage armed + ${char.bp} banked`),
       h('span', { class: 'vamp-roll-toast__sub' },
         `${safe ? 'Hunger held' : '+1 Hunger'} · ${left} Surge${left === 1 ? '' : 's'} left tonight`),
     );

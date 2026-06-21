@@ -9,6 +9,8 @@ import {
   activeCharacterId,
   maxCharacters,
 } from '../state/persistence';
+import { vampConfirm } from '../state/dialog';
+import { showToast } from '../state/toasts';
 
 export function CharacterList() {
   const loading = useSignal(true);
@@ -31,17 +33,21 @@ export function CharacterList() {
       const id = await createCharacter();
       route(`/vamp/${id}`);
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to create character');
+      showToast(err instanceof Error ? err.message : 'Failed to create character', 'error');
     }
   }
 
   async function handleDelete(id: string) {
-    if (!confirm("Are you sure you want to delete this character? They'll meet Final Death and be gone forever!")) return;
+    const ok = await vampConfirm(
+      "Are you sure you want to delete this character? They'll meet Final Death and be gone forever!",
+      { title: 'Final Death', confirmLabel: 'Delete', cancelLabel: 'Cancel' },
+    );
+    if (!ok) return;
     deleting.value = id;
     try {
       await deleteCharacter(id);
     } catch {
-      alert('Failed to delete character.');
+      showToast('Failed to delete character.', 'error');
     } finally {
       deleting.value = null;
     }

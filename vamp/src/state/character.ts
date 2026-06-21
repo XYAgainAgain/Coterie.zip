@@ -131,6 +131,8 @@ export interface CharacterState {
   bloodSurgeAdvantages: number;
   /* Quick Heal is 1/scene. Resets on New Scene/New Night; absent on old docs = false. */
   quickHealUsedThisScene?: boolean;
+  /* Identity bio block collapsed to its one-line summary; absent on old docs = expanded. */
+  bioCollapsed?: boolean;
   items: Item[];
 }
 
@@ -239,6 +241,7 @@ export const BLANK_CHARACTER: CharacterState = {
   bloodSurgesUsed: 0,
   bloodSurgeAdvantages: 0,
   quickHealUsedThisScene: false,
+  bioCollapsed: false,
   items: [],
 };
 
@@ -547,6 +550,12 @@ export function bankBloodSurge(amount: number) {
   };
 }
 
+/* Blood Surge: bank BP advantages and arm one free Advantage on the next roll (BP+1 total). */
+export function bloodSurge(bp: number) {
+  bankBloodSurge(bp);
+  addModifier({ type: 'advantage', target: null, source: BLOOD_SURGE_SOURCE });
+}
+
 /* Arm the next roll with one banked advantage (a one-shot, consumed when the roll fires). */
 export function armBloodSurge() {
   const char = character.value;
@@ -556,13 +565,23 @@ export function armBloodSurge() {
   addModifier({ type: 'advantage', target: null, source: BLOOD_SURGE_SOURCE });
 }
 
-/* Remove an armed Blood Surge advantage after a roll has consumed it. */
-export function consumeArmedSurge() {
+/* Toggle the next roll's Blood Surge arm; disarming refunds the banked advantage. */
+export function toggleBloodSurge() {
   const char = character.value;
-  if (!char.modifiers.some(m => m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)) return;
+  const armed = char.modifiers.some(m => m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE);
+  if (!armed) { armBloodSurge(); return; }
   character.value = {
     ...char,
+    bloodSurgeAdvantages: char.bloodSurgeAdvantages + 1,
     modifiers: char.modifiers.filter(m => !(m.type === 'advantage' && m.source === BLOOD_SURGE_SOURCE)),
+  };
+}
+
+/* Advantage/Disadvantage are one-shot like Forward: cleared after a roll, which also consumes an armed surge. */
+export function clearDiceMode() {
+  character.value = {
+    ...character.value,
+    modifiers: character.value.modifiers.filter(m => m.type !== 'advantage' && m.type !== 'disadvantage'),
   };
 }
 

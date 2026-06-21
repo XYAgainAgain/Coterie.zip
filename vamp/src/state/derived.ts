@@ -406,6 +406,17 @@ export const netAdvantage = computed<AdvantageState>(() => {
   return 'flat';
 });
 
+/* Advantage for Hunger/Remorse/Quick-Heal checks: Blood Surge advantages never apply (rules). */
+export const checkAdvantage = computed<AdvantageState>(() => {
+  const mods = character.value.modifiers;
+  const hasAdv = mods.some(m => m.type === 'advantage' && m.source !== BLOOD_SURGE_SOURCE);
+  const hasDisadv = mods.some(m => m.type === 'disadvantage');
+  if (hasAdv && hasDisadv) return 'flat';
+  if (hasAdv) return 'advantage';
+  if (hasDisadv) return 'disadvantage';
+  return 'flat';
+});
+
 export const universalForwardTotal = computed(() =>
   character.value.modifiers
     .filter(m => m.type === 'forward' && !m.target)

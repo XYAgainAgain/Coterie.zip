@@ -2,7 +2,7 @@ import type { ComponentChildren } from 'preact';
 import { useSignal } from '@preact/signals';
 import { useEffect, useRef } from 'preact/hooks';
 import {
-  settingsOpen, diceVolume, diceMuted, diceSurface, DICE_SURFACES,
+  settingsOpen, settingsTab, diceVolume, diceMuted, diceSurface, DICE_SURFACES,
   setDiceVolume, toggleDiceMute, setRollMode, setDiceSurface, type DiceSurface,
 } from '../state/settings';
 import { rollMode } from '../dice/diceConfig';
@@ -20,10 +20,12 @@ import { linkedEmail, sendEmailLink, signOutUser } from '../firebase';
 import { showToast, forceToast } from '../state/toasts';
 import { enterCreationMode } from '../state/creation';
 import { ColorPicker } from './ColorPicker';
+import { ShortcutList } from './ShortcutList';
 
 const SETTINGS_TABS = [
   { id: 'theme', label: 'Theme' },
   { id: 'dice', label: 'Dice' },
+  { id: 'keys', label: 'Keys' },
   { id: 'account', label: 'Account' },
 ] as const;
 type SettingsTab = (typeof SETTINGS_TABS)[number]['id'];
@@ -66,7 +68,6 @@ const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)
 
 export function SettingsDrawer() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const activeTab = useSignal<SettingsTab>('theme');
 
   /* Persistent drawer, stays open until intentionally closed (gear, close button, Escape).
      Escape is stopped from leaking into the sheet's editable-field cancel handlers. */
@@ -82,7 +83,7 @@ export function SettingsDrawer() {
     return () => document.removeEventListener('keydown', onKeyDown, true);
   }, [settingsOpen.value]);
 
-  const activeIdx = SETTINGS_TABS.findIndex(t => t.id === activeTab.value);
+  const activeIdx = SETTINGS_TABS.findIndex(t => t.id === settingsTab.value);
 
   return (
     <div class="vamp-settings-wrap" ref={wrapRef}>
@@ -96,19 +97,20 @@ export function SettingsDrawer() {
       </button>
 
       {settingsOpen.value && (
-        <div class="vamp-settings" role="dialog" aria-label="Settings">
-          <div
-            class="vamp-settings__tabs"
-            role="tablist"
-            style={`--tab-active-idx: ${activeIdx}; --tab-count: ${SETTINGS_TABS.length}`}
-          >
+        <div
+          class="vamp-settings"
+          role="dialog"
+          aria-label="Settings"
+          style={`--tab-active-idx: ${activeIdx}; --tab-count: ${SETTINGS_TABS.length}`}
+        >
+          <div class="vamp-settings__tabs" role="tablist">
             {SETTINGS_TABS.map(tab => (
               <button
                 key={tab.id}
-                class={`vamp-settings__tab ${activeTab.value === tab.id ? 'vamp-settings__tab--active' : ''}`}
+                class={`vamp-settings__tab ${settingsTab.value === tab.id ? 'vamp-settings__tab--active' : ''}`}
                 role="tab"
-                aria-selected={activeTab.value === tab.id}
-                onClick={() => { activeTab.value = tab.id; }}
+                aria-selected={settingsTab.value === tab.id}
+                onClick={() => { settingsTab.value = tab.id; }}
               >
                 {tab.label}
               </button>
@@ -116,9 +118,10 @@ export function SettingsDrawer() {
           </div>
 
           <div class="vamp-settings__body">
-            {activeTab.value === 'theme' && <ThemeTab />}
-            {activeTab.value === 'dice' && <DiceTab />}
-            {activeTab.value === 'account' && <AccountTab />}
+            {settingsTab.value === 'theme' && <ThemeTab />}
+            {settingsTab.value === 'dice' && <DiceTab />}
+            {settingsTab.value === 'keys' && <ShortcutList />}
+            {settingsTab.value === 'account' && <AccountTab />}
           </div>
         </div>
       )}

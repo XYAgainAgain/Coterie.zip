@@ -1,9 +1,13 @@
-import { signal, useSignal } from '@preact/signals';
+import { signal, useSignal, effect } from '@preact/signals';
 import { useRef, useEffect } from 'preact/hooks';
 import { character, updateCharacter, newNight, newSession, newScene } from '../state/character';
 import { debounce } from '../utils/debounce';
+import { vampConfirm } from '../state/dialog';
 
 export const staked = signal(false);
+
+/* Sync the dim-everything body class to the signal so the button and the S shortcut agree. */
+effect(() => { document.body.classList.toggle('vamp-staked', staked.value); });
 
 export function SceneTools() {
   const char = character.value;
@@ -43,7 +47,6 @@ export function SceneTools() {
 
   function handleStaked() {
     staked.value = !staked.value;
-    document.body.classList.toggle('vamp-staked', staked.value);
   }
 
   function startInitEdit() {
@@ -88,10 +91,12 @@ export function SceneTools() {
     notesDraft.value = '';
   }
 
-  /* Scaffold: a blocking confirm until a themed Yes/No dialog is built. Feeding clears
-     all Superficial on waking. */
-  function handleNewNight() {
-    const fed = window.confirm('Did you Feed at least once tonight?');
+  /* Feeding clears all Superficial Harm on waking. */
+  async function handleNewNight() {
+    const fed = await vampConfirm(
+      <>Did you <strong>Feed</strong> at least once tonight?</>,
+      { title: 'New Night' },
+    );
     newNight(fed);
   }
 

@@ -93,7 +93,7 @@ Low Humanity has serious penalties. At **3 Humanity**, take −1 Ongoing to soci
 Blood Potency (0–5) is the double-edged sword of vampiric existence. Higher isn't necessarily better, but it sure is stronger. It scales and interacts with almost everything:
 
 - **Harm Capacity:** 6 HP at BP 0–1, then +3 per BP level (9 → 12 → 15 → 18 HP).
-- **Blood Surges:** Activate with a Hunger Check whenever you want to gain a number of Advantages equal to your BP to use on rolls within that scene (they don't have to be consecutive). Unused Advantages expire at scene's end or slumber. You can Blood Surge BP times per night.
+- **Blood Surges:** Activate with a Hunger Check whenever you want Advantage on something *right now* plus a number of banked Advantages equal to your BP to use on rolls within that scene (they don't have to be consecutive). Unused Advantages expire at scene's end or slumber. You can Blood Surge BP times per night.
 - **Bane Severity:** Your Bane's penalties scale with your BP (always minimum 1).
 - **Compulsion Intensity:** The Ongoing penalty from a triggered Compulsion equals your BP.
 - **Discipline Powers:** You can only learn or use Powers of a level up to your current BP.

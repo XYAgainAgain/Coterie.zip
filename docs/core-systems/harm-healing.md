@@ -100,7 +100,7 @@ A staked vampire can be revived by removing the stake, which can be done by anyo
 
 ### Healing Superficial Harm
 
-At the beginning or end of any scene when you have Superficial Harm, you may choose to make a Hunger Check. Regardless of whether your Hunger increases, you heal Superficial Harm equal to your Blood Potency (minimum 1). Kindred Blood knits flesh, resets bones, and pushes out bullets; the only question is how thirsty it makes you. If you slumber after **Feeding** at least once the previous night, heal all Superficial Harm upon waking.
+At any point in a scene when you have Superficial Harm, you may choose to make a Hunger Check. Regardless of whether your Hunger increases, you heal Superficial Harm equal to your Blood Potency (minimum 1). Kindred Blood knits flesh, resets bones, and pushes out bullets; the only question is how thirsty it makes you. If you slumber after **Feeding** at least once the previous night, heal all Superficial Harm upon waking.
 
 !!! warning "Important Note"
 

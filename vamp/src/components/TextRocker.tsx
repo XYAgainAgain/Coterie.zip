@@ -1,5 +1,6 @@
 import { signal } from '@preact/signals';
 import { useEffect } from 'preact/hooks';
+import { isTypingContext } from '../utils/isTypingContext';
 
 /* OpenDyslexic is deliberately excluded from the swap: its kerning needs layout tuning we haven't done. */
 
@@ -53,12 +54,6 @@ function toggleFont() {
   fontMode.value = next;
   applyFont(next);
   try { localStorage.setItem(FONT_KEY, next); } catch { /* noop */ }
-}
-
-function isTypingContext(target: EventTarget | null): boolean {
-  const el = target as HTMLElement | null;
-  if (!el) return false;
-  return el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT' || el.isContentEditable;
 }
 
 export function TextRocker() {

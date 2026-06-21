@@ -12,6 +12,7 @@ import { CreationProgress } from './components/creation/CreationProgress';
 import { initCustomThemeLifecycle } from './themes/customThemeLifecycle';
 import { DiceOverlay } from './dice/DiceOverlay';
 import { ToastStack } from './components/ToastStack';
+import { VampDialog } from './components/VampDialog';
 import { prefetchRules } from './utils/rulesCache';
 import { loadGameDataCached } from './utils/gameDataCache';
 import { gameData } from './state/derived';
@@ -118,6 +119,7 @@ export function App() {
       </main>
       <DiceOverlay />
       <ToastStack />
+      <VampDialog />
     </div>
   );
 }

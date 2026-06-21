@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'preact/hooks';
-import { theme, setDeviceTheme, THEMES, type Theme } from '../state/theme';
+import { theme, THEMES, type Theme } from '../state/theme';
 import { customThemeActive, type EyeAnim } from '../themes/customTheme';
-import { sweepThemes } from '../state/themeSweep';
+import { cycleTheme } from '../state/themeCycle';
 import { character } from '../state/character';
 import { activeCharacterId } from '../state/persistence';
 import { viewingOtherSheet } from '../state/ui';
@@ -36,25 +36,6 @@ export function EyeToggle() {
   const hasCustom = !!customTheme && !!activeCharacterId.value && !viewingOtherSheet.value;
   const isCustom = customThemeActive.value && hasCustom;
   const eyeAnim: EyeAnim = customTheme?.eyeAnim ?? 'heartbeat';
-
-  function cycle() {
-    if (!hasCustom) {
-      const idx = THEMES.indexOf(theme.value);
-      customThemeActive.value = false;
-      setDeviceTheme(THEMES[(idx + 1) % THEMES.length]);
-      return;
-    }
-    const positions: Position[] = [...THEMES, 'custom'];
-    const current: Position = customThemeActive.value ? 'custom' : theme.value;
-    const next = positions[(positions.indexOf(current) + 1) % positions.length];
-    if (next === 'custom') {
-      sweepThemes();
-      customThemeActive.value = true; /* lifecycle effect applies the palette */
-    } else {
-      customThemeActive.value = false;
-      setDeviceTheme(next);
-    }
-  }
 
   function doBlink() {
     const btn = btnRef.current;
@@ -127,7 +108,7 @@ export function EyeToggle() {
       class={`eye-toggle ${isCustom ? `eye-toggle--custom eye-anim-${eyeAnim}` : ''}`}
       type="button"
       aria-label={`Switch to ${POSITION_LABEL[next]}`}
-      onClick={cycle}
+      onClick={cycleTheme}
     >
       <img src={src} alt="" class="eye-toggle__eye eye-toggle__eye--1" aria-hidden="true" />
       <img src={src} alt="" class="eye-toggle__eye eye-toggle__eye--2" aria-hidden="true" />

@@ -12,6 +12,7 @@ import { NotebookTab } from '../components/NotebookTab';
 import { PossessionsTab } from '../components/PossessionsTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
+import { SheetShortcuts } from '../components/SheetShortcuts';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
 import { GuideCard } from '../components/creation/GuideCard';
 import { PortraitEditor } from '../components/PortraitEditor';
@@ -20,9 +21,10 @@ import {
   character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
   setHunger, setBP, setXP, fireXPTrigger, setHumanity, setHarm, applyStain,
   addDebt, removeDebt, updateDebt, cycleDebtState, adjustStat, bloodSurgeActive,
+  type CharacterState,
 } from '../state/character';
 import {
-  performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge,
+  performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge, forcedAdvantage,
 } from '../dice/rollMove';
 import { editMode, viewingOtherSheet, portraitMinimized } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade, coterieState } from '../state/coterie';
@@ -142,14 +144,14 @@ function ClickPipRow({ value, count, onChange, muted, droplet }: {
 /* Roll-action button anchored to top-right of a box (Play mode only). */
 function VitalRollButton({ label, onClick, disabled, singleLine }: {
   label: string;
-  onClick: () => void;
+  onClick: (forced?: 'advantage' | 'disadvantage') => void;
   disabled?: boolean;
   singleLine?: boolean;
 }) {
   return (
     <button
       class={`vamp-vital-roll ${singleLine ? 'vamp-vital-roll--inline' : ''}`}
-      onClick={onClick}
+      onClick={(e) => onClick(forcedAdvantage(e))}
       disabled={disabled}
       title={label}
     >
@@ -1548,6 +1550,51 @@ function BioSection({ bio }: { bio: Bio }) {
   );
 }
 
+function MetaLines({ char }: { char: CharacterState }) {
+  return (
+    <>
+      <div class="vamp-identity__meta">
+        <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook || 'No Playbook'}</span>
+      </div>
+      <div class="vamp-identity__meta">
+        <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket || '?'}</span>
+        {char.predatorType && (
+          <>
+            <span class="vamp-identity__sep">|</span>
+            <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+/* Identity bio: full meta + 2×3 grid, or a one-line summary. Renders both so a height
+   media query can force the summary on short screens regardless of the manual toggle. */
+function BioBlock({ char }: { char: CharacterState }) {
+  const collapsed = char.bioCollapsed ?? false;
+  const pronouns = char.bio.pronouns.filter(Boolean).join('/');
+  const head = [`BP ${char.bp}`, char.ageBracket, char.playbook].filter(Boolean).join(' ');
+  const summary = pronouns ? `${head}, ${pronouns}` : head;
+  return (
+    <div class="vamp-bioblock" data-collapsed={collapsed ? 'true' : 'false'}>
+      <button
+        class="vamp-bioblock__toggle"
+        onClick={() => updateCharacter({ bioCollapsed: !collapsed })}
+        aria-label={collapsed ? 'Expand bio details' : 'Collapse bio details'}
+        aria-expanded={!collapsed}
+      >
+        <span class="vamp-bioblock__bat" />
+      </button>
+      <div class="vamp-bioblock__summary">{summary || '—'}</div>
+      <div class="vamp-bioblock__full">
+        <MetaLines char={char} />
+        <BioSection bio={char.bio} />
+      </div>
+    </div>
+  );
+}
+
 function NameField({ name, isCreating }: { name: string; isCreating: boolean }) {
   const editing = useSignal(false);
   const draft = useSignal(name);
@@ -1717,19 +1764,6 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     }
   }, [isViewing, coterieCode, rosterSlug]);
 
-  /* Short viewports (720p, or a zoomed-in larger screen) can't fit the full portrait plus
-     the stat column. Default the portrait minimized when one is set; manual expand sticks
-     since this only ever minimizes, never re-opens. */
-  const portraitCount = character.value.portraits.length;
-  useEffect(() => {
-    if (isViewing || portraitCount === 0) return;
-    const mql = window.matchMedia('(max-height: 760px)');
-    const apply = () => { if (mql.matches) portraitMinimized.value = true; };
-    apply();
-    mql.addEventListener('change', apply);
-    return () => mql.removeEventListener('change', apply);
-  }, [slug, portraitCount, isViewing]);
-
   if (loading.value) {
     return <div class="vamp-loading">Materializing...</div>;
   }
@@ -1802,6 +1836,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
     <div class={sheetClass}>
       {guideOn && <SpotlightOverlay />}
       {guideOn && <GuideCard />}
+      {!isViewing && <SheetShortcuts />}
 
       <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? 'guide-spotlight' : ''}`}>
         <div class="vamp-identity">
@@ -1814,22 +1849,16 @@ export function CharacterSheet({ slug }: { slug?: string }) {
                 {!isCreating && <PortraitToggle />}
                 <PortraitEditor portraits={char.portraits} name={char.name} />
               </div>
-              <div class="vamp-identity__meta">
-                <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.playbook || 'No Playbook'}</span>
-              </div>
-              <div class="vamp-identity__meta">
-                <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.ageBracket || '?'}</span>
-                {char.predatorType && (
-                  <>
-                    <span class="vamp-identity__sep">|</span>
-                    <span class="vamp-identity__link" onClick={() => switchTab('character')}>{char.predatorType}</span>
-                  </>
-                )}
-              </div>
+              {isCreating ? (
+                <>
+                  <MetaLines char={char} />
+                  <BioSection bio={char.bio} />
+                </>
+              ) : (
+                <BioBlock char={char} />
+              )}
             </>
           )}
-
-          <BioSection bio={char.bio} />
         </div>
 
         <div class="vamp-stat-list">
@@ -1841,8 +1870,8 @@ export function CharacterSheet({ slug }: { slug?: string }) {
             const isEdit = editMode.value && !isCreating;
             const canRoll = !isEdit && !isCreating && !isViewing;
             const cap = statCap.value;
-            const handleStatRoll = (stat: typeof statName) => {
-              performRoll(stat);
+            const handleStatRoll = (stat: typeof statName, e: MouseEvent) => {
+              performRoll(stat, forcedAdvantage(e));
             };
             return (
               <div class="vamp-stat" key={statName}>
@@ -1856,7 +1885,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
                   )}
                   <div
                     class={`vamp-stat__circle ${canRoll ? 'vamp-stat__circle--rollable' : ''}`}
-                    onClick={canRoll ? () => handleStatRoll(statName) : undefined}
+                    onClick={canRoll ? (e) => handleStatRoll(statName, e) : undefined}
                     role={canRoll ? 'button' : undefined}
                     tabIndex={canRoll ? 0 : undefined}
                     aria-label={canRoll ? `Roll +${statName}` : undefined}
@@ -1872,7 +1901,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
                   )}
                   <div
                     class={`vamp-stat__name ${canRoll ? 'vamp-stat__name--rollable' : ''}`}
-                    onClick={canRoll ? () => handleStatRoll(statName) : undefined}
+                    onClick={canRoll ? (e) => handleStatRoll(statName, e) : undefined}
                   >
                     {statName}
                   </div>

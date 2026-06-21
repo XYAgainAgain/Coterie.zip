@@ -6,6 +6,7 @@ import {
   EmailAuthProvider, linkWithCredential, signOut,
 } from 'firebase/auth';
 import { showToast } from './state/toasts';
+import { vampConfirm, vampPrompt } from './state/dialog';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAEHxHwfggbE_O51EAkgTA1tq10aGqR5BU',
@@ -68,7 +69,10 @@ export async function handleEmailLinkRedirect(): Promise<boolean> {
   try {
     let email = localStorage.getItem(EMAIL_STORAGE_KEY);
     if (!email) {
-      email = window.prompt('Confirm your email address for sign-in:');
+      email = await vampPrompt('Confirm your email address for sign-in:', {
+        title: 'Confirm Email',
+        placeholder: 'you@example.com',
+      });
       if (!email) return false;
     }
 
@@ -82,10 +86,11 @@ export async function handleEmailLinkRedirect(): Promise<boolean> {
         const code = err instanceof Error && 'code' in err ? (err as { code: string }).code : '';
         if (code === 'auth/email-already-in-use' || code === 'auth/credential-already-in-use') {
           /* Signing in (not linking) abandons the anon session and its characters */
-          const proceed = window.confirm(
+          const proceed = await vampConfirm(
             'This email already has an account. Signing in will switch to it, and any '
             + 'characters created in this browser while signed out will be left behind '
             + '(Sam can transfer them later). Continue?',
+            { title: 'Account Already Exists', confirmLabel: 'Continue', cancelLabel: 'Stay Signed Out' },
           );
           if (!proceed) {
             showToast('Sign-in cancelled. You are still on your signed-out session.', 'warning');

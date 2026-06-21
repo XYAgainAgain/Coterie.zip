@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'preact/hooks';
 import {
   character, addModifier, removeModifier, adjustModifierValue,
   quickAdjustForward, quickAdjustOngoing, quickAddHold,
-  quickToggleAdvantage, quickToggleDisadvantage, armBloodSurge,
+  quickToggleAdvantage, quickToggleDisadvantage, toggleBloodSurge,
   MANUAL_SOURCE, MAX_HOLD_COUNTERS,
 } from '../state/character';
 import type { Modifier } from '../state/character';
@@ -20,35 +20,34 @@ const HOLD_COLORS = ['var(--v-hold-1)', 'var(--v-hold-2)', 'var(--v-hold-3)'];
 const MOD_TYPES = ['forward', 'ongoing', 'hold', 'advantage', 'disadvantage'] as const;
 
 const PlusSvg = () => (
-  <svg viewBox="0 0 16 16" width="12" height="12">
+  <svg viewBox="0 0 16 16" width="14" height="14">
     <line x1="8" y1="3" x2="8" y2="13" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
     <line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
   </svg>
 );
 
 const MinusSvg = () => (
-  <svg viewBox="0 0 16 16" width="12" height="12">
+  <svg viewBox="0 0 16 16" width="14" height="14">
     <line x1="3" y1="8" x2="13" y2="8" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
   </svg>
 );
 
-function VerticalButtons({
-  onUp,
-  onDown,
-  upLabel,
-  downLabel,
-  className,
-}: {
+/* Number with its +/- stacked above/below, matching the Hold counters. */
+function NumberCounter({ value, label, dim, onUp, onDown }: {
+  value: string;
+  label: string;
+  dim: boolean;
   onUp: () => void;
   onDown: () => void;
-  upLabel: string;
-  downLabel: string;
-  className?: string;
 }) {
   return (
-    <div class={`vamp-mod-vbtns ${className ?? ''}`}>
-      <button class="vamp-mod-vbtn" onClick={onUp} aria-label={upLabel} title={upLabel}><PlusSvg /></button>
-      <button class="vamp-mod-vbtn" onClick={onDown} aria-label={downLabel} title={downLabel}><MinusSvg /></button>
+    <div class="vamp-mod-pair">
+      <div class="vamp-mod-counter">
+        <button class="vamp-mod-vbtn" onClick={onUp} aria-label={`Add +1 ${label}`} title={`Add +1 ${label}`}><PlusSvg /></button>
+        <span class={`vamp-mod-num ${dim ? 'vamp-mod-num--dim' : ''}`}>{value}</span>
+        <button class="vamp-mod-vbtn" onClick={onDown} aria-label={`Subtract 1 ${label}`} title={`Subtract 1 ${label}`}><MinusSvg /></button>
+      </div>
+      <span class={`vamp-mod-pair-label ${dim ? 'vamp-mod-pair-label--dim' : ''}`}>{label}</span>
     </div>
   );
 }
@@ -56,64 +55,66 @@ function VerticalButtons({
 function NumbersZone() {
   const fwd = universalForwardTotal.value;
   const ong = universalOngoingTotal.value;
-  const fmtFwd = fwd >= 0 ? `+${fwd}` : `${fwd}`;
-  const fmtOng = ong >= 0 ? `+${ong}` : `${ong}`;
-  const dimFwd = fwd === 0;
-  const dimOng = ong === 0;
 
   return (
     <div class="vamp-mod-zone vamp-mod-zone--numbers">
-      <div class="vamp-mod-pair">
-        <VerticalButtons
-          onUp={() => quickAdjustForward(1)}
-          onDown={() => quickAdjustForward(-1)}
-          upLabel="Add +1 Forward"
-          downLabel="Subtract 1 Forward"
-        />
-        <span class={`vamp-mod-value ${dimFwd ? 'vamp-mod-value--dim' : ''}`}>
-          <span class="vamp-mod-num">{fmtFwd}</span>
-          <span class="vamp-mod-label">Forward</span>
-        </span>
-      </div>
-      <div class="vamp-mod-pair">
-        <VerticalButtons
-          onUp={() => quickAdjustOngoing(1)}
-          onDown={() => quickAdjustOngoing(-1)}
-          upLabel="Add +1 Ongoing"
-          downLabel="Subtract 1 Ongoing"
-        />
-        <span class={`vamp-mod-value ${dimOng ? 'vamp-mod-value--dim' : ''}`}>
-          <span class="vamp-mod-num">{fmtOng}</span>
-          <span class="vamp-mod-label">Ongoing</span>
-        </span>
-      </div>
+      <NumberCounter
+        value={fwd >= 0 ? `+${fwd}` : `${fwd}`}
+        label="Forward"
+        dim={fwd === 0}
+        onUp={() => quickAdjustForward(1)}
+        onDown={() => quickAdjustForward(-1)}
+      />
+      <NumberCounter
+        value={ong >= 0 ? `+${ong}` : `${ong}`}
+        label="Ongoing"
+        dim={ong === 0}
+        onUp={() => quickAdjustOngoing(1)}
+        onDown={() => quickAdjustOngoing(-1)}
+      />
     </div>
   );
 }
 
 function DiceModeZone() {
   const state = netAdvantage.value;
-  const label = state === 'advantage' ? 'Advantage' : state === 'disadvantage' ? 'Disadvantage' : 'Flat';
+  const shortLabel = state === 'advantage' ? 'ADV' : state === 'disadvantage' ? 'DIS' : 'FLAT';
+  const fullLabel = state === 'advantage' ? 'Advantage' : state === 'disadvantage' ? 'Disadvantage' : 'Flat';
+  const armed = bloodSurgeArmed.value;
+  const surgeCount = character.value.bloodSurgeAdvantages + (armed ? 1 : 0);
 
   return (
     <div class="vamp-mod-zone vamp-mod-zone--dice">
-      <button
-        class={`vamp-mod-arrow vamp-mod-arrow--up ${state === 'advantage' ? 'vamp-mod-arrow--active' : ''}`}
-        onClick={quickToggleAdvantage}
-        aria-label="Toggle Advantage"
-        title="Toggle Advantage"
-      >
-        <span class="vamp-mod-bat vamp-mod-bat--up" aria-hidden="true" />
-      </button>
-      <span class={`vamp-mod-dice-label vamp-mod-dice-label--${state}`}>{label}</span>
-      <button
-        class={`vamp-mod-arrow vamp-mod-arrow--down ${state === 'disadvantage' ? 'vamp-mod-arrow--active' : ''}`}
-        onClick={quickToggleDisadvantage}
-        aria-label="Toggle Disadvantage"
-        title="Toggle Disadvantage"
-      >
-        <span class="vamp-mod-bat vamp-mod-bat--down" aria-hidden="true" />
-      </button>
+      <div class="vamp-mod-dice-toggle">
+        <button
+          class={`vamp-mod-arrow vamp-mod-arrow--up ${state === 'advantage' ? 'vamp-mod-arrow--active' : ''}`}
+          onClick={quickToggleAdvantage}
+          aria-label="Toggle Advantage"
+          title="Toggle Advantage"
+        >
+          <span class="vamp-mod-bat vamp-mod-bat--up" aria-hidden="true" />
+        </button>
+        <span class={`vamp-mod-dice-label vamp-mod-dice-label--${state}`} title={fullLabel}>{shortLabel}</span>
+        <button
+          class={`vamp-mod-arrow vamp-mod-arrow--down ${state === 'disadvantage' ? 'vamp-mod-arrow--active' : ''}`}
+          onClick={quickToggleDisadvantage}
+          aria-label="Toggle Disadvantage"
+          title="Toggle Disadvantage"
+        >
+          <span class="vamp-mod-bat vamp-mod-bat--down" aria-hidden="true" />
+        </button>
+      </div>
+      {surgeCount > 0 && (
+        <button
+          class={`vamp-mod-surge ${armed ? 'vamp-mod-surge--armed' : ''}`}
+          onClick={toggleBloodSurge}
+          aria-pressed={armed}
+          title={armed ? 'Blood Surge armed for your next roll (tap to cancel)' : 'Arm a Blood Surge Advantage on your next roll'}
+        >
+          <span class="vamp-mod-surge-name">Surge</span>
+          <span class="vamp-mod-surge-count">&times;{surgeCount}</span>
+        </button>
+      )}
     </div>
   );
 }
@@ -132,7 +133,7 @@ function HoldZone() {
             onClick={() => adjustModifierValue(h.id, 1)}
             aria-label="Gain 1 Hold"
             title="Gain 1 Hold"
-          >+</button>
+          ><PlusSvg /></button>
           <span
             class="vamp-mod-hold-value"
             style={{ color: HOLD_COLORS[i] }}
@@ -142,7 +143,7 @@ function HoldZone() {
             onClick={() => adjustModifierValue(h.id, -1)}
             aria-label="Spend 1 Hold"
             title="Spend 1 Hold"
-          >-</button>
+          ><MinusSvg /></button>
         </div>
       ))}
       {canAdd && (
@@ -153,25 +154,6 @@ function HoldZone() {
           title="Add Hold counter"
         >{holds.length === 0 ? '+HOLD' : '+H'}</button>
       )}
-    </div>
-  );
-}
-
-/* Manual-spend pool from an active Blood Surge: arm one banked Advantage onto the next roll. */
-function BloodSurgeZone() {
-  const pool = character.value.bloodSurgeAdvantages;
-  const armed = bloodSurgeArmed.value;
-
-  return (
-    <div class="vamp-mod-zone vamp-mod-zone--surge">
-      <span class="vamp-mod-label">Surge</span>
-      <span class="vamp-mod-surge-count">{pool}</span>
-      <button
-        class="vamp-mod-surge-arm"
-        onClick={armBloodSurge}
-        disabled={pool <= 0 || armed}
-        title={armed ? 'Advantage armed for your next roll' : 'Arm Advantage on your next roll'}
-      >{armed ? 'Armed' : 'Arm'}</button>
     </div>
   );
 }
@@ -189,16 +171,14 @@ function TotalZone({ onBarClick }: { onBarClick: () => void }) {
 
   return (
     <div class={`vamp-mod-zone vamp-mod-zone--total ${dim ? 'vamp-mod-zone--dim' : ''}`}>
+      <span class="vamp-mod-total-caption">Total</span>
       <button
         class={`vamp-mod-total-number vamp-mod-total-number--${advState}`}
         onClick={(e) => { e.stopPropagation(); onBarClick(); }}
         aria-label="View modifier details"
         title="View modifier details"
       >{fmtTotal}</button>
-      {condText
-        ? <span class="vamp-mod-conditionals">{condText}</span>
-        : <span class="vamp-mod-conditionals">&nbsp;</span>
-      }
+      <span class="vamp-mod-conditionals">{condText || ' '}</span>
     </div>
   );
 }
@@ -321,7 +301,7 @@ function AddModifierForm({ onClose }: { onClose: () => void }) {
           <label>Source*</label>
           <input
             type="text"
-            placeholder="e.g. Auspex: Premonition"
+            placeholder="e.g. cover, an ally, Premonition"
             value={modSource.value}
             onInput={(e) => { modSource.value = (e.target as HTMLInputElement).value; }}
           />
@@ -447,7 +427,6 @@ function ModifierPopover({ onClose, initialShowAdd }: { onClose: () => void; ini
 export function ModifierBar() {
   const popoverOpen = useSignal(false);
   const addMode = useSignal(false);
-  const surgeActive = character.value.bloodSurgeAdvantages > 0 || bloodSurgeArmed.value;
 
   function handleBarClick() {
     addMode.value = false;
@@ -479,16 +458,10 @@ export function ModifierBar() {
         }}>
           <NumbersZone />
           <div class="vamp-mod-divider" />
-          <DiceModeZone />
-          <div class="vamp-mod-divider" />
           <HoldZone />
           <div class="vamp-mod-divider" />
-          {surgeActive && (
-            <>
-              <BloodSurgeZone />
-              <div class="vamp-mod-divider" />
-            </>
-          )}
+          <DiceModeZone />
+          <div class="vamp-mod-divider" />
           <TotalZone onBarClick={() => handleBarClick()} />
         </div>
         {popoverOpen.value && <ModifierPopover onClose={handleClose} initialShowAdd={addMode.value} />}
