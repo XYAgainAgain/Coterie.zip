@@ -15,7 +15,7 @@ import { SceneTools } from '../components/SceneTools';
 import { SheetShortcuts } from '../components/SheetShortcuts';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
 import { GuideCard } from '../components/creation/GuideCard';
-import { PortraitEditor } from '../components/PortraitEditor';
+import { PortraitEditor, cropStyle } from '../components/PortraitEditor';
 import { rightColumnWidth, rightColumnMinimized, rightColumnMaxWidth, MIN_WIDTH as MIN_RIGHT_WIDTH } from '../components/RightColumn';
 import {
   character, updateCharacter, fillClockSegment, unfillClockSegment, removeClock,
@@ -1707,7 +1707,7 @@ function MiniIdentityCard() {
       <div class="vamp-identity__mini-pic">
         <PortraitToggle />
         {p
-          ? <img src={p.url} alt={char.name} style={`object-position: ${p.x}% ${p.y}%`} />
+          ? <img src={p.url} alt={char.name} style={cropStyle(p)} />
           : <span class="vamp-identity__mini-placeholder">?</span>}
       </div>
       <div class="vamp-identity__mini-info">

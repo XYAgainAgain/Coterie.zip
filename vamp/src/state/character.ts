@@ -251,6 +251,11 @@ export function updateCharacter(patch: Partial<CharacterState>) {
   character.value = { ...character.value, ...patch };
 }
 
+export function setPortraitCrop(index: number, crop: { x: number; y: number; scale: number }) {
+  const portraits = character.value.portraits.map((p, i) => (i === index ? { ...p, ...crop } : p));
+  character.value = { ...character.value, portraits };
+}
+
 export function setCustomTheme(ct: CustomTheme | null) {
   character.value = { ...character.value, customTheme: ct };
 }
