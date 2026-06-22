@@ -1345,6 +1345,143 @@ a:hover {
   padding-left: 0;
 }
 
+/* Live roll log — Coterie-shared dice results, compressed mirror of the roll toast */
+.vamp-roll-log {
+  margin-block-start: 0.6rem;
+  padding-block-start: 0.6rem;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto; /* collapsed: just the header */
+  min-block-size: 0;
+}
+
+/* Expanded: fill leftover space to the sidebar bottom; basis 0 = no pushing power. */
+.vamp-roll-log:has(.vamp-roll-log__list),
+.vamp-roll-log:has(.vamp-roll-log__empty) {
+  flex: 1 1 0;
+}
+
+.vamp-roll-log::before {
+  content: '';
+  display: block;
+  block-size: 2px;
+  flex-shrink: 0; /* a flex child here, else the column squeezes the divider thin */
+  margin-block-end: 0.6rem;
+  opacity: 0.4;
+  background: var(--v-dot-dash-h);
+}
+
+.vamp-roll-log__header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.vamp-roll-log__header > .vamp-stat__name {
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.vamp-roll-log__header::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  margin-block: auto;
+  inline-size: 0.7rem;
+  block-size: 0.7rem;
+  background: currentColor;
+  mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  rotate: 0deg;
+  transition: rotate 0.15s ease;
+}
+
+.vamp-roll-log__header--open::before {
+  rotate: 90deg;
+}
+
+.vamp-roll-log__empty {
+  margin: 0.3rem 0 0;
+  font-size: calc(0.72rem * var(--v-text-scale));
+  color: var(--v-text-muted);
+  text-align: center;
+}
+
+.vamp-roll-log__list {
+  margin: 0.3rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1 1 0;
+  min-block-size: 0;
+  overflow-y: auto;
+}
+
+.vamp-roll-log__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: calc(0.7rem * var(--v-text-scale));
+  padding: 0.1rem 0.1rem 0.1rem 0.4rem;
+  border-inline-start: 2px solid transparent; /* tier accent set inline per row */
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--v-bg-sunken) 35%, transparent);
+}
+
+.vamp-roll-log__row--crit {
+  background: color-mix(in srgb, hsl(145 60% 42%) 22%, transparent);
+  border-inline-start-color: hsl(145 55% 50%);
+}
+
+.vamp-roll-log__row--fanged {
+  background: color-mix(in srgb, hsl(0 55% 16%) 85%, #050505);
+  border-inline-start-color: hsl(0 60% 32%);
+}
+
+.vamp-roll-log__who {
+  flex: 0 0 auto;
+  max-inline-size: 6.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--v-text-accent);
+  font-weight: 700;
+}
+
+.vamp-roll-log__syntax {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.1em;
+}
+
+.vamp-roll-log__label {
+  font-style: italic;
+  color: var(--v-text-secondary);
+  margin-inline-start: 0.2em;
+}
+
+.vamp-roll-log__outcome {
+  color: var(--v-text-secondary);
+}
+
+.vamp-roll-log__fangs {
+  inline-size: 1rem;
+  block-size: 1rem;
+  fill: #fff;
+  flex-shrink: 0;
+  align-self: center;
+  margin-inline-start: 0.15em;
+}
+
 /* Keyboard shortcut list (Settings → Keys tab) */
 .vamp-shortcuts {
   display: flex;

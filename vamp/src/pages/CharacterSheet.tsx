@@ -12,6 +12,7 @@ import { NotebookTab } from '../components/NotebookTab';
 import { PossessionsTab } from '../components/PossessionsTab';
 import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
+import { RollLog } from '../components/RollLog';
 import { SheetShortcuts } from '../components/SheetShortcuts';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
 import { GuideCard } from '../components/creation/GuideCard';
@@ -1947,6 +1948,8 @@ export function CharacterSheet({ slug }: { slug?: string }) {
             </ul>
           </div>
         )}
+
+        <RollLog />
 
         {statsDualHighlight && (
           <div class="vamp-sidebar__creation-hint">

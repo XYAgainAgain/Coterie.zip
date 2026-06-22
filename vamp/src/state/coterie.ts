@@ -1,6 +1,7 @@
 import { signal } from '@preact/signals';
 import type { Clock } from './character';
 import type { CoterieStatName, Item, Gift } from '../data/types';
+import type { RollLogEntry } from '../dice/types';
 
 export interface CoterieMember {
   characterId: string;
@@ -24,6 +25,9 @@ export interface CoterieState {
      transaction), so they always apply from snapshots — never dirty-gated. */
   havenItems: Item[];
   giftQueue: Gift[];
+  /* Shared live roll log, capped at 50, newest-first. Externally owned (any member
+     appends via transaction), so it always applies from snapshots like havenItems. */
+  diceRolls: RollLogEntry[];
   /* The claimed Storyteller's uid, or null if unclaimed. Externally owned: set by claim,
      cleared by step-down or member kick; applies from snapshots like the roster. */
   storytellerUid: string | null;
@@ -39,6 +43,7 @@ export function blankCoterie(): CoterieState {
     members: [],
     havenItems: [],
     giftQueue: [],
+    diceRolls: [],
     storytellerUid: null,
   };
 }

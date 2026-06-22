@@ -7,7 +7,7 @@ import { forceToast } from '../state/toasts';
 import { netAdvantage, checkAdvantage, bloodSurgesRemaining } from '../state/derived';
 import type { AdvantageState } from '../state/derived';
 import { diceEngine } from './diceState';
-import { logRoll } from './rollHistory';
+import { recordRoll } from './rollLog';
 import { getRollSpeed, rollMode } from './diceConfig';
 import { rollD6, rollMultipleD6, rollWithAdvantage, rollWithDisadvantage } from './DiceFairness';
 import { classifyRoll, type MoveRollResult, type ResultTier } from './types';
@@ -140,7 +140,16 @@ export async function performRoll(statName: StatName, forced?: 'advantage' | 'di
     const breakdown = rollMove(statName, forced);
     await animateDice(breakdown.result.dice);
     showRollToast(breakdown);
-    logRoll(breakdown);
+    recordRoll({
+      kept: breakdown.result.kept,
+      dropped: breakdown.result.dropped,
+      statName: breakdown.statName,
+      statValue: breakdown.statValue,
+      forwardMod: breakdown.forwardMod,
+      ongoingMod: breakdown.ongoingMod,
+      total: breakdown.result.total,
+      tier: breakdown.result.tier,
+    });
     return breakdown;
   } finally {
     rolling = false;
@@ -155,19 +164,17 @@ export async function performRawRoll(count: number): Promise<void> {
     const dice = rollMultipleD6(count);
     const total = dice.reduce((a, b) => a + b, 0);
     await animateDice(dice);
-
-    const breakdown: RollBreakdown = {
-      result: { dice, kept: dice, dropped: [], total, stat: '', modifier: 0, tier: 'failure', context: `roll ${count}d6`, timestamp: Date.now() },
+    showRawRollToast(count, dice, total);
+    recordRoll({
+      kept: dice,
+      dropped: [],
       statName: '',
       statValue: 0,
       forwardMod: 0,
       ongoingMod: 0,
-      totalMod: 0,
-      advantage: 'flat',
-    };
-
-    showRawRollToast(count, dice, total);
-    logRoll(breakdown);
+      total,
+      label: `${count}d6`,
+    });
   } finally {
     rolling = false;
   }
@@ -184,7 +191,7 @@ function formatMod(value: number): string {
 }
 
 /* Inlined so the Fanged Failure icon paints instantly (an <img> decode pops on a quick toast). */
-const FANGS_D = 'M166.594,96.28C124.604,134.82 68.824,171.255 19.124,182.28C59.262,196.486 126.714,200.888 172.406,191.812L173.626,191.406L173.626,191.594C173.832,191.551 174.044,191.512 174.25,191.469C227.51,222.795 268.468,223.651 325.25,191.469C325.506,191.555 325.774,191.632 326.03,191.719L326,191.405L333.594,194.03C333.699,194.06 333.801,194.096 333.906,194.125C378.116,206.413 436.81,203.24 488.186,182.155C428.662,172.507 363.316,130.542 333.094,96.281C277.592,135.904 222.094,128.428 166.594,96.281L166.594,96.28ZM28.72,206.688C40.346,229.006 61.332,264.328 93.625,301.501C92.075,283.337 91.11,265.556 90.595,248.876C68.415,237.611 47.597,223.596 28.719,206.688L28.72,206.688ZM475.875,214.22C455.325,228.953 432.775,241.535 408.937,251.844C408.33,269.59 407.205,288.527 405.437,307.781C439.413,272.866 462.27,238.177 475.875,214.221L475.875,214.22ZM153.562,217.406C138.528,221.126 123.548,222.261 109,221.562C108.884,261.019 111.945,311.616 119.22,358.844C124.474,392.964 132.217,425.032 141.594,449.031L153.564,217.407L153.562,217.406ZM346.062,217.406L358.032,449.031C367.408,425.033 375.152,392.965 380.406,358.845C387.68,311.617 390.741,261.02 390.626,221.565C376.072,222.262 361.102,221.13 346.063,217.407L346.062,217.406ZM330.406,276.5C277.326,287.405 221.691,287.898 169.25,276.53L164.812,362.563C214.455,385.721 283.232,385.023 334.812,362.063L330.406,276.5Z';
+export const FANGS_D = 'M166.594,96.28C124.604,134.82 68.824,171.255 19.124,182.28C59.262,196.486 126.714,200.888 172.406,191.812L173.626,191.406L173.626,191.594C173.832,191.551 174.044,191.512 174.25,191.469C227.51,222.795 268.468,223.651 325.25,191.469C325.506,191.555 325.774,191.632 326.03,191.719L326,191.405L333.594,194.03C333.699,194.06 333.801,194.096 333.906,194.125C378.116,206.413 436.81,203.24 488.186,182.155C428.662,172.507 363.316,130.542 333.094,96.281C277.592,135.904 222.094,128.428 166.594,96.281L166.594,96.28ZM28.72,206.688C40.346,229.006 61.332,264.328 93.625,301.501C92.075,283.337 91.11,265.556 90.595,248.876C68.415,237.611 47.597,223.596 28.719,206.688L28.72,206.688ZM475.875,214.22C455.325,228.953 432.775,241.535 408.937,251.844C408.33,269.59 407.205,288.527 405.437,307.781C439.413,272.866 462.27,238.177 475.875,214.221L475.875,214.22ZM153.562,217.406C138.528,221.126 123.548,222.261 109,221.562C108.884,261.019 111.945,311.616 119.22,358.844C124.474,392.964 132.217,425.032 141.594,449.031L153.564,217.407L153.562,217.406ZM346.062,217.406L358.032,449.031C367.408,425.033 375.152,392.965 380.406,358.845C387.68,311.617 390.741,261.02 390.626,221.565C376.072,222.262 361.102,221.13 346.063,217.407L346.062,217.406ZM330.406,276.5C277.326,287.405 221.691,287.898 169.25,276.53L164.812,362.563C214.455,385.721 283.232,385.023 334.812,362.063L330.406,276.5Z';
 
 export function showRollToast(breakdown: RollBreakdown): void {
   const { result, statName, statValue, forwardMod, ongoingMod } = breakdown;
@@ -274,6 +281,21 @@ function applyHungerResult(value: number): boolean {
   return safe;
 }
 
+function logCheck(check: CheckRoll, label: string, tier: ResultTier, outcome: string): void {
+  recordRoll({
+    kept: check.kept,
+    dropped: check.dropped,
+    statName: '',
+    statValue: 0,
+    forwardMod: 0,
+    ongoingMod: 0,
+    total: check.value,
+    tier,
+    label,
+    outcome,
+  });
+}
+
 function checkDiceSpans(check: CheckRoll) {
   return [
     ...check.kept.map((d, i) => h('span', { key: `k${i}`, class: 'vamp-roll-toast__die' }, d)),
@@ -302,6 +324,7 @@ export async function performHungerCheck(forced?: 'advantage' | 'disadvantage'):
     forceToast(message, 'info', 'Hunger Check', {
       duration: rollToastDuration(), bg: colors.bg, border: colors.border, isRoll: true,
     });
+    logCheck(check, 'Hunger Check', safe ? 'success' : 'failure', safe ? 'Resisted' : '+1 Hunger');
     return safe;
   } finally {
     rolling = false;
@@ -328,6 +351,7 @@ export async function performRemorseCheck(forced?: 'advantage' | 'disadvantage')
     forceToast(message, 'info', 'Remorse Check', {
       duration: rollToastDuration(), bg: colors.bg, border: colors.border, isRoll: true,
     });
+    logCheck(check, 'Remorse Check', safe ? 'success' : 'failure', safe ? 'Stains cleared' : '−1 Humanity');
     return safe;
   } finally {
     rolling = false;
@@ -358,6 +382,7 @@ export async function performQuickHeal(forced?: 'advantage' | 'disadvantage'): P
     forceToast(message, 'info', 'Quick Heal', {
       duration: rollToastDuration(), bg: GOOD.bg, border: GOOD.border, isRoll: true,
     });
+    logCheck(check, 'Quick Heal', 'success', `Healed ${healed}${safe ? '' : ' · +1 Hunger'}`);
     return safe;
   } finally {
     rolling = false;
@@ -384,6 +409,7 @@ export async function performBloodSurge(forced?: 'advantage' | 'disadvantage'): 
     forceToast(message, 'info', 'Blood Surge', {
       duration: rollToastDuration(), bg: GOOD.bg, border: GOOD.border, isRoll: true,
     });
+    logCheck(check, 'Blood Surge', 'success', `Armed (+${char.bp})${safe ? '' : ' · +1 Hunger'}`);
     return safe;
   } finally {
     rolling = false;

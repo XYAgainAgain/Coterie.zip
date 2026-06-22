@@ -14,6 +14,7 @@ import { forceToast } from './toasts';
 import { coterieState, masqueradeClock, blankCoterie, coterieDirty, masqueradeDirty } from './coterie';
 import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
+import type { RollLogEntry } from '../dice/types';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
 import { showToast } from './toasts';
 
@@ -807,6 +808,7 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
      members), regardless of our local dirty state. */
   const havenItems = (data.havenItems as Item[]) ?? [];
   const giftQueue = (data.giftQueue as Gift[]) ?? [];
+  const diceRolls = (data.diceRolls as RollLogEntry[]) ?? [];
   const storytellerUid = (data.storytellerUid as string | null) ?? null;
   /* Roster always applies (externally owned). The Clock applies too, except while our increment is in flight, so a stale snapshot can't revert it. */
   if (data.masqueradeClock && !masqueradeDirty.value) {
@@ -814,7 +816,7 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
   }
   if (preserveLocalEdits) {
     console.log('[CoterieSync] applyCoterie PRESERVE local; ignoring incoming stats', data.stats);
-    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue, storytellerUid };
+    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue, diceRolls, storytellerUid };
     processGiftQueue();
     return;
   }
@@ -828,6 +830,7 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
     members,
     havenItems,
     giftQueue,
+    diceRolls,
     storytellerUid,
   };
   processGiftQueue();
@@ -942,6 +945,22 @@ export async function depositToHaven(itemId: string): Promise<void> {
   removeQtyFromItem(itemId, item.qty);
 }
 
+/* Append to the Coterie-shared log (newest-first, capped 50). Transaction so concurrent
+   rolls don't clobber; a dropped write is swallowed (the roller still saw the toast). */
+export async function appendCoterieRoll(entry: RollLogEntry): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  try {
+    const ref = doc(db, 'coteries', coterieId);
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const rolls: RollLogEntry[] = snap.data().diceRolls ?? [];
+      txn.update(ref, { diceRolls: [entry, ...rolls].slice(0, 50), updatedAt: serverTimestamp() });
+    });
+  } catch { /* roll-log write isn't worth a retry or a toast */ }
+}
+
 /* Pull an item out of the shared Haven into your own inventory. Idempotent: a stale
    click re-reads an absent item and no-ops, so two members can't both grab it. */
 export async function withdrawFromHaven(havenItemId: string): Promise<void> {
@@ -1048,8 +1067,8 @@ export async function saveCoterie(): Promise<void> {
   if (coterieSaving) { coterieSaveQueued = true; return; }
   coterieSaving = true;
 
-  /* Write only the fields this save owns; members/memberUids belong to the
-     transactional member-sync paths. */
+  /* Write only the fields this save owns; members/memberUids, havenItems, and diceRolls
+     belong to the transactional paths — never spread ...c here or it clobbers their appends. */
   const c = coterieState.value;
   const clockAtWrite = masqueradeClock.value;
   console.log('[CoterieSync] saveCoterie writing stats', c.stats, 'haven', c.havenDescription, 'clock', clockAtWrite.filled);
