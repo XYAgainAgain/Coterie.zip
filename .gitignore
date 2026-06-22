@@ -4,6 +4,7 @@ site/
 # Development Files; dev undotted so I can see it in Obsidian
 dev/
 .obsidian/
+.obsidianignore
 .cache/
 
 # Python

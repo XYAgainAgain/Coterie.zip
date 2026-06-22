@@ -1,0 +1,107 @@
+# Coterie
+
+> A free, street-level vampire tabletop RPG built on the Powered by the Apocalypse (PbtA) framework, adapting Vampire: The Masquerade V5 into a fiction-first game of personal horror at middling crunch (medium rules complexity). Small coteries navigate the dusk-to-dawn hours: messy drama and consequences over centuries-spanning politics. Released free under CC0 1.0 and Dark Pack compliant: an unofficial, non-commercial fan project using Paradox Interactive's materials with permission. A free companion web app, Vamp, is in development: a native character sheet with a built-in dice roller.
+
+Key facts:
+- PbtA bones, VTM fangs: fiction-first Moves and Playbooks with Clans, Disciplines, Hunger, and Humanity
+- Middling crunch: aims for medium rules complexity, snappier than VTM's dots and dice pools
+- Five character stats: Blood, Shadow, Resolve, Demeanor, Wits
+- Five coterie stats: Clout, Cohesion, Charm, Claim, Currency
+- 22 Playbooks (14 Clan, 8 Clanless) and 17 Disciplines
+- Basic Roll = 2d6 + stat; outcomes: 6- failure, 7–9 mixed success, 10+ success, 12+ critical (all 1s = Fanged Failure)
+- Vamp character sheet app (in development, not yet publicly released): guided creation, built-in 3D dice roller, custom theming, and trackers
+- 4–7 players, one of them the Storyteller
+- Dark Pack compliant; full rules at https://coterie.zip, built with Zensical and hosted on GitHub Pages
+
+## Core Systems
+
+- [How to Play](https://coterie.zip/core-systems/how-to-play/): The fiction-first approach and how a session flows
+- [Individual Stats](https://coterie.zip/core-systems/individual-stats/): The five character stats and what each governs
+- [Rolling Dice](https://coterie.zip/core-systems/rolling-dice/): The dice mechanic and its outcome tiers (6-, 7-9, 10+)
+- [Basic Moves](https://coterie.zip/core-systems/basic-moves/): The core moves every character can trigger
+- [Harm & Healing](https://coterie.zip/core-systems/harm-healing/): Taking, tracking, and recovering from injury
+- [Combat](https://coterie.zip/core-systems/combat/): Resolving violence within the Move framework
+- [Debt](https://coterie.zip/core-systems/debt/): Favors owed and owing between characters
+- [Clocks](https://coterie.zip/core-systems/clocks/): Segmented progress and threat trackers
+
+## The Vampiric Condition
+
+- [Kith & Kindred](https://coterie.zip/the-vampiric-condition/kith-kindred/): What vampires are in Coterie's world
+- [Hunger](https://coterie.zip/the-vampiric-condition/hunger/): The Hunger track and feeding
+- [Humanity](https://coterie.zip/the-vampiric-condition/humanity/): Holding onto (or losing) your humanity
+- [Age Brackets](https://coterie.zip/the-vampiric-condition/age-brackets/): How a vampire's age shapes play
+- [Blood Potency](https://coterie.zip/the-vampiric-condition/blood-potency/): The strength of the Blood and what it unlocks
+- [Blood Potency Table](https://coterie.zip/the-vampiric-condition/blood-potency-table/): Reference table for Blood Potency effects
+
+## Your Kindred (Character Creation)
+
+- [Creating Your Character](https://coterie.zip/your-kindred/creating-your-character/): Step-by-step character creation
+- [Predator Types](https://coterie.zip/your-kindred/predator-types/): How your character hunts and feeds
+- [Optional Extras](https://coterie.zip/your-kindred/optional-extras/): Folkloric Banes and other add-ons
+- [Advancement](https://coterie.zip/your-kindred/advancement/): Earning XP and growing your character
+
+## Clan Playbooks
+
+- [Banu Haqim](https://coterie.zip/your-kindred/banu-haqim/)
+- [Brujah](https://coterie.zip/your-kindred/brujah/)
+- [Gangrel](https://coterie.zip/your-kindred/gangrel/)
+- [Hecata](https://coterie.zip/your-kindred/hecata/)
+- [Lasombra](https://coterie.zip/your-kindred/lasombra/)
+- [Malkavian](https://coterie.zip/your-kindred/malkavian/)
+- [The Ministry](https://coterie.zip/your-kindred/the-ministry/)
+- [Nosferatu](https://coterie.zip/your-kindred/nosferatu/)
+- [Ravnos](https://coterie.zip/your-kindred/ravnos/)
+- [Salubri](https://coterie.zip/your-kindred/salubri/)
+- [Toreador](https://coterie.zip/your-kindred/toreador/)
+- [Tremere](https://coterie.zip/your-kindred/tremere/)
+- [Tzimisce](https://coterie.zip/your-kindred/tzimisce/)
+- [Ventrue](https://coterie.zip/your-kindred/ventrue/)
+
+## Clanless Playbooks
+
+- [Baali](https://coterie.zip/your-kindred/baali/)
+- [Caitiff](https://coterie.zip/your-kindred/caitiff/)
+- [Daughter of Cacophony](https://coterie.zip/your-kindred/daughter-of-cacophony/)
+- [Devorari](https://coterie.zip/your-kindred/devorari/)
+- [Gargoyle](https://coterie.zip/your-kindred/gargoyle/)
+- [Ghoul](https://coterie.zip/your-kindred/ghoul/)
+- [Osirian](https://coterie.zip/your-kindred/osirian/)
+- [Thin-Blood](https://coterie.zip/your-kindred/thin-blood/)
+
+## Your Coterie
+
+- [What is a Coterie?](https://coterie.zip/your-coterie/what-is-a-coterie/): The group as a unit of play
+- [Creating Your Coterie](https://coterie.zip/your-coterie/creating-your-coterie/): Building the shared coterie
+- [Coterie Stats](https://coterie.zip/your-coterie/coterie-stats/): Clout, Cohesion, Charm, Claim, Currency
+- [Coterie Moves](https://coterie.zip/your-coterie/coterie-moves/): Moves the coterie makes together
+- [Coterie Types](https://coterie.zip/your-coterie/coterie-types/): Templates for what the coterie is about
+- [Coterie Stat Reference Tables](https://coterie.zip/your-coterie/coterie-stat-reference-tables/): Reference tables for coterie stats
+
+## Disciplines
+
+- [General Rules](https://coterie.zip/disciplines/general-rules/): How Disciplines and their Powers work
+- [Animalism](https://coterie.zip/disciplines/animalism/)
+- [Auspex](https://coterie.zip/disciplines/auspex/)
+- [Bardo](https://coterie.zip/disciplines/bardo/)
+- [Blood Sorcery](https://coterie.zip/disciplines/blood-sorcery/)
+- [Celerity](https://coterie.zip/disciplines/celerity/)
+- [Daimonion](https://coterie.zip/disciplines/daimonion/)
+- [Dominate](https://coterie.zip/disciplines/dominate/)
+- [Fortitude](https://coterie.zip/disciplines/fortitude/)
+- [Melpominee](https://coterie.zip/disciplines/melpominee/)
+- [Obfuscate](https://coterie.zip/disciplines/obfuscate/)
+- [Oblivion](https://coterie.zip/disciplines/oblivion/)
+- [Potence](https://coterie.zip/disciplines/potence/)
+- [Presence](https://coterie.zip/disciplines/presence/)
+- [Protean](https://coterie.zip/disciplines/protean/)
+- [Psychotrophia](https://coterie.zip/disciplines/psychotrophia/)
+- [Thin-Blood Alchemy](https://coterie.zip/disciplines/thin-blood-alchemy/)
+- [Visceratika](https://coterie.zip/disciplines/visceratika/)
+
+## Storyteller
+
+- [Storyteller Guidance](https://coterie.zip/storyteller/): Running the game as the Storyteller
+
+## Appendices
+
+- [Appendix B: Items & Tags](https://coterie.zip/storyteller/items-and-tags/): The Item and Tag system; critical reading for Storytellers
