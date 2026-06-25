@@ -32,8 +32,12 @@ export function initCustomThemeLifecycle(): void {
 
   effect(() => {
     const ct = character.value.customTheme;
-    const onOwnSheet = !!activeCharacterId.value && !viewingOtherSheet.value;
-    if (customThemeActive.value && onOwnSheet && ct) {
+    const viewing = viewingOtherSheet.value;
+    const onOwnSheet = !!activeCharacterId.value && !viewing;
+    /* Own sheet: gated by the eye's custom position. Viewing someone else's sheet: always show
+       the owner's saved palette, so a character's custom theme travels with it to viewers. */
+    const show = !!ct && (viewing || (customThemeActive.value && onOwnSheet));
+    if (show && ct) {
       applyCustomTheme(ct);
     } else {
       clearCustomTheme(theme.value);

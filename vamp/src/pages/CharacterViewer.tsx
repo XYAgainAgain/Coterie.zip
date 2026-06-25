@@ -30,8 +30,6 @@ export function CharacterViewer({ coterieCode, charSlug, charId }: {
       : loadCharacterPublic(charId!)
           .then(({ state, coterieId, isOwner }) => ({ state, coterieId, isOwner }));
 
-    viewingOtherSheet.value = true;
-
     load
       .then(async ({ state, coterieId, isOwner }) => {
         if (isOwner) {
@@ -39,7 +37,10 @@ export function CharacterViewer({ coterieCode, charSlug, charId }: {
           if (ownId) { route(`/vamp/${ownId}`, true); return; }
         }
 
+        /* Flip viewing on only with the target character already in the signal, so the
+           theme effect never applies the previous (own) character's palette mid-load. */
         character.value = state;
+        viewingOtherSheet.value = true;
 
         if (coterieId) await loadCoterie(coterieId);
 
