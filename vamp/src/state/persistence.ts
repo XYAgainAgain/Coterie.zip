@@ -4,7 +4,8 @@ import {
   query, where, serverTimestamp, onSnapshot, runTransaction,
 } from 'firebase/firestore';
 import { db, auth, linkedEmail } from '../firebase';
-import { character, type CharacterState, type Note, BLANK_CHARACTER, removeQtyFromItem, receiveItem, freeContainerChildren } from './character';
+import { character, type CharacterState, type Note, BLANK_CHARACTER, moveItem, removeQtyFromItem, receiveItem, receiveItems, removeItems, freeContainerChildren } from './character';
+import { collectSubtree, isDescendant, isContainerItem } from '../data/itemTree';
 import { planNotesReconcile } from './notesSync';
 import { activeStConsent, type StConsent } from './storyteller';
 import type { Item, ItemType, Gift } from '../data/types';
@@ -919,14 +920,40 @@ export async function giveItem(itemId: string, toCharacterId: string, amount: nu
   forceToast(`Gave ${qty > 1 ? `${qty}× ` : ''}your ${item.name} to ${recipient}.`, 'info');
 }
 
-/* Stash the whole stack in the Coterie-shared Haven. A container's children are freed
-   to loose first so they don't strand pointing at a now-departed parent. */
-export async function depositToHaven(itemId: string): Promise<void> {
+/* Which store owns a move target: the character (null, 'stash', or a char item id) or
+   the Coterie Haven ('haven' or a haven item id). Unknown ids default to char. */
+export function locationStore(target: string | null): 'char' | 'haven' {
+  if (target === null || target === 'stash') return 'char';
+  if (target === 'haven') return 'haven';
+  if (character.value.items.some(i => i.id === target)) return 'char';
+  if (coterieState.value.havenItems.some(i => i.id === target)) return 'haven';
+  return 'char';
+}
+
+/* Single entry point for every item move; routes by source store and destination store.
+   Same-store moves carry subtrees automatically (children point at the item id); the two
+   cross-store paths copy the whole subtree across the character/Coterie boundary. */
+export function relocate(itemId: string, target: string | null): void {
+  const inChar = character.value.items.some(i => i.id === itemId);
+  const inHaven = !inChar && coterieState.value.havenItems.some(i => i.id === itemId);
+  if (!inChar && !inHaven) return;
+  const dest = locationStore(target);
+  if (inChar) {
+    if (dest === 'char') moveItem(itemId, target);
+    else depositToHaven(itemId, target as string);
+  } else {
+    if (dest === 'haven') moveHavenItem(itemId, target as string);
+    else withdrawFromHaven(itemId, target);
+  }
+}
+
+/* Move into the Coterie Haven, carrying the item's whole subtree so nested contents
+   survive the boundary. target is 'haven' (root) or a Haven container id. */
+export async function depositToHaven(itemId: string, target: string = 'haven'): Promise<void> {
   const coterieId = activeCoterie.value;
   if (!coterieId) return;
-  const item = character.value.items.find(i => i.id === itemId);
-  if (!item) return;
-  const havenItem: Item = { ...item, equipped: false, containerId: 'haven' };
+  const subtree = collectSubtree(character.value.items, itemId);
+  if (subtree.length === 0) return;
 
   try {
     const ref = doc(db, 'coteries', coterieId);
@@ -934,15 +961,22 @@ export async function depositToHaven(itemId: string): Promise<void> {
       const snap = await txn.get(ref);
       if (!snap.exists()) throw new Error('Coterie not found');
       const haven: Item[] = snap.data().havenItems ?? [];
-      txn.update(ref, { havenItems: [...haven, havenItem], updatedAt: serverTimestamp() });
+      /* Resolve the target against live Haven data so a room another member deleted
+         mid-deposit falls back to the root instead of orphaning the subtree. */
+      const root = (target !== 'haven' && !haven.some(i => i.id === target && isContainerItem(i))) ? 'haven' : target;
+      const payload: Item[] = subtree.map(it =>
+        it.id === itemId
+          ? { ...it, equipped: false, containerId: root }
+          : { ...it, equipped: false },
+      );
+      txn.update(ref, { havenItems: [...haven, ...payload], updatedAt: serverTimestamp() });
     });
   } catch {
     forceToast('Could not reach the Haven right now. Try again?', 'warning');
     return;
   }
 
-  if (item.isContainer) freeContainerChildren(itemId);
-  removeQtyFromItem(itemId, item.qty);
+  removeItems(new Set(subtree.map(i => i.id)));
 }
 
 /* Append to the Coterie-shared log (newest-first, capped 50). Transaction so concurrent
@@ -961,28 +995,71 @@ export async function appendCoterieRoll(entry: RollLogEntry): Promise<void> {
   } catch { /* roll-log write isn't worth a retry or a toast */ }
 }
 
-/* Pull an item out of the shared Haven into your own inventory. Idempotent: a stale
-   click re-reads an absent item and no-ops, so two members can't both grab it. */
-export async function withdrawFromHaven(havenItemId: string): Promise<void> {
+/* Pull an item and its whole subtree out of the Haven. target is null (On You), 'stash',
+   or a char container id. Idempotent: a stale click finds nothing and no-ops, so two
+   members can't both grab it. */
+export async function withdrawFromHaven(havenItemId: string, target: string | null = null): Promise<void> {
   const coterieId = activeCoterie.value;
   if (!coterieId) return;
+
+  let root = target;
+  if (root !== null && root !== 'stash') {
+    const dest = character.value.items.find(i => i.id === root);
+    if (!dest || !isContainerItem(dest)) root = null;
+  }
+
   const ref = doc(db, 'coteries', coterieId);
-  let taken: Item | null = null;
+  let taken: Item[] = [];
   try {
     await runTransaction(db, async (txn) => {
       const snap = await txn.get(ref);
       if (!snap.exists()) return;
       const haven: Item[] = snap.data().havenItems ?? [];
-      const found = haven.find(i => i.id === havenItemId);
-      if (!found) return;
-      taken = found;
-      txn.update(ref, { havenItems: haven.filter(i => i.id !== havenItemId), updatedAt: serverTimestamp() });
+      const subtree = collectSubtree(haven, havenItemId);
+      if (subtree.length === 0) return;
+      taken = subtree;
+      const ids = new Set(subtree.map(i => i.id));
+      txn.update(ref, { havenItems: haven.filter(i => !ids.has(i.id)), updatedAt: serverTimestamp() });
     });
   } catch {
     forceToast('Could not reach the Haven right now. Try again?', 'warning');
     return;
   }
-  if (taken) receiveItem({ ...(taken as Item), containerId: null, equipped: false });
+  if (taken.length === 0) return;
+  const payload = taken.map(it =>
+    it.id === havenItemId
+      ? { ...it, equipped: false, containerId: root }
+      : { ...it, equipped: false },
+  );
+  receiveItems(payload);
+}
+
+/* Reparent a Haven item within the Haven (to 'haven' root or another Haven container).
+   Cycle-guarded; the subtree follows because children point at the item id. */
+export async function moveHavenItem(id: string, target: string): Promise<void> {
+  const coterieId = activeCoterie.value;
+  if (!coterieId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const haven: Item[] = snap.data().havenItems ?? [];
+      const item = haven.find(i => i.id === id);
+      if (!item) return;
+      if (target !== 'haven') {
+        if (target === id || isDescendant(haven, id, target)) return;
+        const dest = haven.find(i => i.id === target);
+        if (!dest || !isContainerItem(dest)) return;
+      }
+      txn.update(ref, {
+        havenItems: haven.map(i => i.id === id ? { ...i, containerId: target, equipped: false } : i),
+        updatedAt: serverTimestamp(),
+      });
+    });
+  } catch {
+    forceToast('Could not move that Haven item right now. Try again?', 'warning');
+  }
 }
 
 /* Edit a shared Haven item in place. Writes via transaction like deposit/withdraw,
@@ -1003,6 +1080,8 @@ export async function updateHavenItem(id: string, patch: Partial<Omit<Item, 'id'
   }
 }
 
+/* Remove a Haven item, spilling any children up to its own location (the enclosing room,
+   or the Haven root) so contents are never destroyed. */
 export async function removeHavenItem(id: string): Promise<void> {
   const coterieId = activeCoterie.value;
   if (!coterieId) return;
@@ -1012,7 +1091,13 @@ export async function removeHavenItem(id: string): Promise<void> {
       const snap = await txn.get(ref);
       if (!snap.exists()) return;
       const haven: Item[] = snap.data().havenItems ?? [];
-      txn.update(ref, { havenItems: haven.filter(i => i.id !== id), updatedAt: serverTimestamp() });
+      const removed = haven.find(i => i.id === id);
+      if (!removed) return;
+      const fallback = removed.containerId ?? 'haven';
+      const next = haven
+        .filter(i => i.id !== id)
+        .map(i => i.containerId === id ? { ...i, containerId: fallback } : i);
+      txn.update(ref, { havenItems: next, updatedAt: serverTimestamp() });
     });
   } catch {
     forceToast('Could not remove that Haven item right now. Try again?', 'warning');

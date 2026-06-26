@@ -1,6 +1,7 @@
 import { signal } from '@preact/signals';
 import type { StatName, Item } from '../data/types';
 import { canEquip } from '../data/itemTags';
+import { isContainerItem, isDescendant } from '../data/itemTree';
 import type { CustomTheme } from '../themes/customTheme';
 
 export interface Debt {
@@ -844,8 +845,9 @@ export function removeItem(id: string) {
   setItems(next);
 }
 
-/* Move to loose (null), Stash, Haven, or an item-container. Enforces 1-level nesting
-   (no container-in-container, no self-nest) and clears equipped when stowed off-person. */
+/* Move to loose (null), Stash, or an item-container. Containers nest freely; the guard
+   rejects self-nesting and dropping a container into its own subtree. Clears equipped
+   when stowed off-person. */
 export function moveItem(id: string, target: string | null) {
   const items = character.value.items;
   const item = items.find(i => i.id === id);
@@ -853,9 +855,9 @@ export function moveItem(id: string, target: string | null) {
 
   const intoItemContainer = target !== null && target !== 'stash' && target !== 'haven';
   if (intoItemContainer) {
-    if (target === id || item.isContainer) return;
+    if (target === id || isDescendant(items, id, target!)) return;
     const dest = items.find(i => i.id === target);
-    if (!dest || !dest.isContainer) return;
+    if (!dest || !isContainerItem(dest)) return;
   }
 
   setItems(items.map(i =>
@@ -905,7 +907,20 @@ export function receiveItem(item: Item) {
 }
 
 /* Reparent a container's children to loose. Called before a container leaves the
-   inventory (gift or Haven deposit) so its contents don't strand on a departed parent. */
+   inventory (gift) so its contents don't strand on a departed parent. */
 export function freeContainerChildren(containerId: string) {
   setItems(character.value.items.map(i => i.containerId === containerId ? { ...i, containerId: null } : i));
+}
+
+/* Append several received items at once, skipping ids already present (idempotent like
+   receiveItem). Used to pull a whole subtree out of the Haven in one write. */
+export function receiveItems(incoming: Item[]) {
+  const have = new Set(character.value.items.map(i => i.id));
+  const fresh = incoming.filter(i => !have.has(i.id));
+  if (fresh.length) setItems([...character.value.items, ...fresh]);
+}
+
+/* Drop a set of items by id in one write (a whole subtree leaving for the Haven). */
+export function removeItems(ids: Set<string>) {
+  setItems(character.value.items.filter(i => !ids.has(i.id)));
 }

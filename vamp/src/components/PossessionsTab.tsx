@@ -6,7 +6,7 @@ import {
   character, addItem, updateItem, removeItem, moveItem, setItemContainer, toggleEquip,
 } from '../state/character';
 import { coterieState } from '../state/coterie';
-import { activeCoterie, activeCharacterId, giveItem, depositToHaven, withdrawFromHaven, updateHavenItem, removeHavenItem, adjustHavenItemQty } from '../state/persistence';
+import { activeCoterie, activeCharacterId, giveItem, relocate, depositToHaven, withdrawFromHaven, updateHavenItem, removeHavenItem, adjustHavenItemQty } from '../state/persistence';
 import { gameData } from '../state/derived';
 import { viewingOtherSheet } from '../state/ui';
 import { forceToast } from '../state/toasts';
@@ -14,6 +14,7 @@ import {
   orderTags, tagDisplay, canEquip, isEquippableType,
   TEMPLATE_TAGS, RANGE_TAG, CUSTOM_TAG, RANGE_BANDS, rangeParam, STASH_ID, HAVEN_ID,
 } from '../data/itemTags';
+import { isContainerItem, CONTAINER_TAG, isDescendant } from '../data/itemTree';
 import { ITEM_TYPES, type Item, type TagRef, type ItemType, type ItemTag } from '../data/types';
 import { debounce } from '../utils/debounce';
 import { Tooltip } from './Tooltip';
@@ -23,18 +24,24 @@ import {
   type DragEndEvent, type DragStartEvent, type CollisionDetection,
 } from '@dnd-kit/core';
 
-const CONTAINER_TAG = 'Container';
-
-/* Single-row expand shared across the list (matches the approved mockup). Module-level
-   so the right-column zone chips can expand a row in the left list; reset on mount. */
-const expandedId = signal<string | null>(null);
-const openMode = signal<'view' | 'edit'>('view');
+/* Rows that are expanded to show their body + children. A Set, not one id, so a nested
+   path (room → bag → contents) can stay open at once; reset on mount. */
+const expandedIds = signal<Set<string>>(new Set());
+/* The one row whose inline editor is open (only ever one at a time). */
+const editingId = signal<string | null>(null);
 /* Flips true once the open editor changes anything, so the edit tick reads as "saved". */
 const editDirty = signal(false);
 /* Which row menu is open, keyed "move:id" / "give:id" / "bag:id"; one at a time. */
 const openMenu = signal<string | null>(null);
 /* The item id being dragged, for the drag-overlay ghost. */
 const draggingId = signal<string | null>(null);
+
+function isExpanded(id: string): boolean { return expandedIds.value.has(id); }
+function setExpanded(id: string, on: boolean): void {
+  const next = new Set(expandedIds.value);
+  if (on) next.add(id); else next.delete(id);
+  expandedIds.value = next;
+}
 
 /* The mutators a row edits through: owned items hit the character signal (instant),
    Haven items hit the coterie transaction. Same editor UI, different store. */
@@ -66,11 +73,6 @@ function itemRole(it: Item): TagRole {
   if (isContainerItem(it)) return 'container';
   if (has(RANGE_TAG)) return 'range';
   return 'plain';
-}
-
-/* Container-ness reads the Container tag OR the legacy flag; the two are kept in sync. */
-function isContainerItem(it: Item): boolean {
-  return it.isContainer || it.tags.some(t => t.base === CONTAINER_TAG);
 }
 
 function plainEffect(s: string): string {
@@ -108,7 +110,8 @@ function zoneLabel(target: string | null): string {
   if (target === null) return 'On You';
   if (target === STASH_ID) return 'the Stash';
   if (target === HAVEN_ID) return 'the Haven';
-  return 'the bag';
+  const it = character.value.items.find(i => i.id === target) ?? coterieState.value.havenItems.find(i => i.id === target);
+  return it ? (it.name || 'the bag') : 'the bag';
 }
 
 /* Always-on debounced field; EditableTextField is dblclick-gated, wrong inside an open
@@ -349,25 +352,32 @@ function ItemEditor({ item, catalog, store }: { item: Item; catalog: Map<string,
 
 interface MoveTarget { label: string; target: string | null; disabled: boolean; }
 
-function moveTargetsFor(item: Item, allItems: Item[], inCoterie: boolean, stashLabel: string): MoveTarget[] {
+/* Move destinations across both stores, minus the item itself and its own subtree (you
+   can't nest a container into its own contents). Cross-store targets can't cycle. */
+function moveTargetsFor(item: Item, charItems: Item[], havenItems: Item[], inCoterie: boolean, stashLabel: string): MoveTarget[] {
+  const pool = havenItems.some(h => h.id === item.id) ? havenItems : charItems;
+  const allowed = (cid: string) => cid !== item.id && !isDescendant(pool, item.id, cid);
+
   const out: MoveTarget[] = [
     { label: 'On You', target: null, disabled: item.containerId === null },
     { label: stashLabel, target: STASH_ID, disabled: item.containerId === STASH_ID },
   ];
-  if (inCoterie) out.push({ label: 'Haven', target: HAVEN_ID, disabled: false });
-  if (!isContainerItem(item)) {
-    for (const c of allItems) {
-      if (isContainerItem(c) && c.id !== item.id) out.push({ label: `Into: ${c.name || 'Bag'}`, target: c.id, disabled: item.containerId === c.id });
+  if (inCoterie) out.push({ label: 'Haven', target: HAVEN_ID, disabled: item.containerId === HAVEN_ID });
+  for (const c of charItems) {
+    if (isContainerItem(c) && allowed(c.id)) out.push({ label: `Into: ${c.name || 'Bag'}`, target: c.id, disabled: item.containerId === c.id });
+  }
+  if (inCoterie) {
+    for (const c of havenItems) {
+      if (isContainerItem(c) && allowed(c.id)) out.push({ label: `Into Haven: ${c.name || 'Room'}`, target: c.id, disabled: item.containerId === c.id });
     }
   }
   return out;
 }
 
-/* Move an item to a zone/container with a toast; Haven uses the coterie transaction. */
+/* Move an item to a zone/container through the shared router, with a toast. */
 function performMove(item: Item, target: string | null) {
   if (target === item.containerId) return;
-  if (target === HAVEN_ID) { depositToHaven(item.id); forceToast(`Moved ${item.name || 'item'} to the Haven.`, 'info'); return; }
-  moveItem(item.id, target);
+  relocate(item.id, target);
   forceToast(`Moved ${item.name || 'item'} to ${zoneLabel(target)}.`, 'info');
 }
 
@@ -462,21 +472,34 @@ function DeleteControl({ item, contents, inCoterie }: { item: Item; contents: It
   );
 }
 
-function ItemRow({ item, allItems, catalog, inCoterie, stashLabel, readOnly, depth = 0 }: {
+/* Toggle a row's expand (view) state; clicking the open editor's row collapses to view. */
+function toggleRow(id: string) {
+  if (isExpanded(id) && editingId.value !== id) setExpanded(id, false);
+  else { setExpanded(id, true); editingId.value = null; }
+}
+
+/* Toggle a row's inline editor; the ✓ closes the row entirely (matches the old flow). */
+function toggleEditRow(id: string) {
+  if (editingId.value === id) { editingId.value = null; setExpanded(id, false); }
+  else { editingId.value = id; setExpanded(id, true); editDirty.value = false; }
+}
+
+function ItemRow({ item, allItems, havenItems, catalog, inCoterie, stashLabel, readOnly, depth = 0 }: {
   item: Item;
   allItems: Item[];
+  havenItems: Item[];
   catalog: Map<string, ItemTag>;
   inCoterie: boolean;
   stashLabel: string;
   readOnly: boolean;
   depth?: number;
 }) {
-  const expanded = expandedId.value === item.id;
-  const editing = expanded && openMode.value === 'edit';
+  const expanded = isExpanded(item.id);
+  const editing = editingId.value === item.id;
   const ordered = orderTags(item.tags);
   const chips = [...ordered.leading, ...ordered.middle, ...ordered.trailing];
   const container = isContainerItem(item);
-  const children = container && depth === 0 ? allItems.filter(i => i.containerId === item.id) : [];
+  const children = container ? allItems.filter(i => i.containerId === item.id) : [];
   const equippable = isEquippableType(item.type);
   const equipTip = !canEquip(item)
     ? (equippable ? "Can't equip from storage; carry it first" : "This type can't be equipped")
@@ -501,7 +524,7 @@ function ItemRow({ item, allItems, catalog, inCoterie, stashLabel, readOnly, dep
             onClick={(e) => { e.stopPropagation(); toggleEquip(item.id); }}
           />
         )}
-        <button class="vamp-poss-row__main" onClick={() => { if (expanded && openMode.value === 'view') { expandedId.value = null; } else { expandedId.value = item.id; openMode.value = 'view'; } }}>
+        <button class="vamp-poss-row__main" onClick={() => toggleRow(item.id)}>
           <span class="vamp-poss-row__name">{item.name || 'Unnamed'}</span>
           {item.qty > 1 && <span class="vamp-poss-row__qty">×{item.qty}</span>}
           <span class="vamp-poss-row__chips">
@@ -511,7 +534,7 @@ function ItemRow({ item, allItems, catalog, inCoterie, stashLabel, readOnly, dep
         {!readOnly && (
           <button
             class={`vamp-poss-row__edit ${editing ? 'is-on' : ''} ${editing && editDirty.value ? 'is-dirty' : ''}`} title={editing ? 'Done editing' : 'Edit'}
-            onClick={(e) => { e.stopPropagation(); if (editing) { expandedId.value = null; } else { expandedId.value = item.id; openMode.value = 'edit'; editDirty.value = false; } }}
+            onClick={(e) => { e.stopPropagation(); toggleEditRow(item.id); }}
           >{editing ? '✓' : '✎'}</button>
         )}
       </div>
@@ -523,7 +546,7 @@ function ItemRow({ item, allItems, catalog, inCoterie, stashLabel, readOnly, dep
             : (item.description && <p class="vamp-poss-row__desc">{item.description}</p>)}
           {!readOnly && (
             <div class="vamp-poss-row__actions">
-              <MoveMenu item={item} targets={moveTargetsFor(item, allItems, inCoterie, stashLabel)} />
+              <MoveMenu item={item} targets={moveTargetsFor(item, allItems, havenItems, inCoterie, stashLabel)} />
               <GiveControl item={item} />
               <span class="vamp-poss-qty">
                 <button class="vamp-poss-btn" onClick={() => updateItem(item.id, { qty: Math.max(1, item.qty - 1) })}>−</button>
@@ -536,12 +559,12 @@ function ItemRow({ item, allItems, catalog, inCoterie, stashLabel, readOnly, dep
         </div>
       )}
 
-      {expanded && container && depth === 0 && (
+      {expanded && container && (
         <div class="vamp-poss-row__children">
           {children.length === 0
             ? <p class="vamp-poss-empty">Currently empty. Drag an item into it!</p>
             : children.map(c => (
-              <ItemRow key={c.id} item={c} allItems={allItems} catalog={catalog} inCoterie={inCoterie} stashLabel={stashLabel} readOnly={readOnly} depth={1} />
+              <ItemRow key={c.id} item={c} allItems={allItems} havenItems={havenItems} catalog={catalog} inCoterie={inCoterie} stashLabel={stashLabel} readOnly={readOnly} depth={depth + 1} />
             ))}
         </div>
       )}
@@ -549,16 +572,37 @@ function ItemRow({ item, allItems, catalog, inCoterie, stashLabel, readOnly, dep
   );
 }
 
-function HavenRow({ item, catalog, readOnly }: { item: Item; catalog: Map<string, ItemTag>; readOnly: boolean }) {
+function HavenRow({ item, allHaven, charItems, catalog, inCoterie, stashLabel, readOnly, depth = 0 }: {
+  item: Item;
+  allHaven: Item[];
+  charItems: Item[];
+  catalog: Map<string, ItemTag>;
+  inCoterie: boolean;
+  stashLabel: string;
+  readOnly: boolean;
+  depth?: number;
+}) {
   const confirmDel = useSignal(false);
-  const expanded = expandedId.value === item.id;
-  const editing = expanded && openMode.value === 'edit';
+  const expanded = isExpanded(item.id);
+  const editing = editingId.value === item.id;
   const ordered = orderTags(item.tags);
   const chips = [...ordered.leading, ...ordered.middle, ...ordered.trailing];
+  const container = isContainerItem(item);
+  const children = container ? allHaven.filter(i => i.containerId === item.id) : [];
+
+  const drag = useDraggable({ id: `row:${item.id}`, disabled: readOnly });
+  const drop = useDroppable({ id: `crow:${item.id}`, disabled: !container });
+  const setRef = (node: HTMLElement | null) => { drag.setNodeRef(node); drop.setNodeRef(node); };
+
   return (
-    <div class={`vamp-poss-row ${expanded ? 'is-open' : ''}`}>
+    <div
+      ref={setRef}
+      class={`vamp-poss-row ${expanded ? 'is-open' : ''} ${drag.isDragging ? 'is-dragging' : ''} ${drop.isOver ? 'is-drop-over' : ''}`}
+      style={depth ? { '--poss-depth': String(depth) } : undefined}
+    >
       <div class="vamp-poss-row__line">
-        <button class="vamp-poss-row__main" onClick={() => { if (expanded && openMode.value === 'view') { expandedId.value = null; } else { expandedId.value = item.id; openMode.value = 'view'; } }}>
+        {!readOnly && <span class="vamp-poss-row__grip" title="Drag to move" {...drag.listeners}>⋮⋮</span>}
+        <button class="vamp-poss-row__main" onClick={() => toggleRow(item.id)}>
           <span class="vamp-poss-row__name">{item.name || 'Unnamed'}</span>
           {item.qty > 1 && <span class="vamp-poss-row__qty">×{item.qty}</span>}
           <span class="vamp-poss-row__chips">
@@ -569,7 +613,7 @@ function HavenRow({ item, catalog, readOnly }: { item: Item; catalog: Map<string
         {!readOnly && (
           <button
             class={`vamp-poss-row__edit ${editing ? 'is-on' : ''} ${editing && editDirty.value ? 'is-dirty' : ''}`} title={editing ? 'Done editing' : 'Edit'}
-            onClick={(e) => { e.stopPropagation(); if (editing) { expandedId.value = null; } else { expandedId.value = item.id; openMode.value = 'edit'; editDirty.value = false; } }}
+            onClick={(e) => { e.stopPropagation(); toggleEditRow(item.id); }}
           >{editing ? '✓' : '✎'}</button>
         )}
       </div>
@@ -581,6 +625,7 @@ function HavenRow({ item, catalog, readOnly }: { item: Item; catalog: Map<string
             : (item.description && <p class="vamp-poss-row__desc">{item.description}</p>)}
           {!readOnly && (
             <div class="vamp-poss-row__actions">
+              <MoveMenu item={item} targets={moveTargetsFor(item, charItems, allHaven, inCoterie, stashLabel)} />
               <span class="vamp-poss-qty">
                 <button class="vamp-poss-btn" onClick={() => adjustHavenItemQty(item.id, -1)}>−</button>
                 <span class="vamp-poss-qty__val">{item.qty}</span>
@@ -593,6 +638,16 @@ function HavenRow({ item, catalog, readOnly }: { item: Item; catalog: Map<string
               >{confirmDel.value ? 'Sure?' : 'Delete'}</button>
             </div>
           )}
+        </div>
+      )}
+
+      {expanded && container && (
+        <div class="vamp-poss-row__children">
+          {children.length === 0
+            ? <p class="vamp-poss-empty">Currently empty. Drag an item into it!</p>
+            : children.map(c => (
+              <HavenRow key={c.id} item={c} allHaven={allHaven} charItems={charItems} catalog={catalog} inCoterie={inCoterie} stashLabel={stashLabel} readOnly={readOnly} depth={depth + 1} />
+            ))}
         </div>
       )}
     </div>
@@ -617,10 +672,10 @@ function ListGroup({ title, icon, count, empty, emptyHint, zoneKey, children }: 
 }
 
 /* Compact mover chip in the right-column zones; clicking jumps to (expands) its row. */
-function ZoneChip({ item }: { item: Item }) {
-  const kids = isContainerItem(item) ? character.value.items.filter(i => i.containerId === item.id).length : 0;
+function ZoneChip({ item, pool }: { item: Item; pool: Item[] }) {
+  const kids = isContainerItem(item) ? pool.filter(i => i.containerId === item.id).length : 0;
   const equippedHere = item.equipped && item.containerId === null;
-  const drag = useDraggable({ id: `chip:${item.id}`, disabled: item.containerId === HAVEN_ID || viewingOtherSheet.value });
+  const drag = useDraggable({ id: `chip:${item.id}`, disabled: viewingOtherSheet.value });
   const drop = useDroppable({ id: `cchip:${item.id}`, disabled: !isContainerItem(item) });
   const setRef = (node: HTMLElement | null) => { drag.setNodeRef(node); drop.setNodeRef(node); };
   return (
@@ -629,7 +684,7 @@ function ZoneChip({ item }: { item: Item }) {
       class={`vamp-poss-zchip vamp-poss-zchip--${itemRole(item)} ${equippedHere ? 'is-equipped' : ''} ${drag.isDragging ? 'is-dragging' : ''} ${drop.isOver ? 'is-drop-over' : ''}`}
       title={item.description || item.name}
       {...drag.listeners}
-      onClick={() => { expandedId.value = item.id; openMode.value = 'view'; }}
+      onClick={() => { setExpanded(item.id, true); editingId.value = null; }}
     >
       {equippedHere && <span class="vamp-poss-zchip__dot" />}
       {item.name || 'Unnamed'}
@@ -638,7 +693,7 @@ function ZoneChip({ item }: { item: Item }) {
   );
 }
 
-function ZonePanel({ title, sub, icon, items, zoneKey }: { title: string; sub: string; icon: string; items: Item[]; zoneKey: string }) {
+function ZonePanel({ title, sub, icon, items, zoneKey, pool }: { title: string; sub: string; icon: string; items: Item[]; zoneKey: string; pool: Item[] }) {
   const { setNodeRef, isOver } = useDroppable({ id: `zone:${zoneKey}` });
   return (
     <div ref={setNodeRef} class={`vamp-poss-zone ${isOver ? 'is-drop-over' : ''}`}>
@@ -652,7 +707,7 @@ function ZonePanel({ title, sub, icon, items, zoneKey }: { title: string; sub: s
       <div class="vamp-poss-zone__chips">
         {items.length === 0
           ? <span class="vamp-poss-zone__empty">Nothing here yet.</span>
-          : items.map(it => <ZoneChip key={it.id} item={it} />)}
+          : items.map(it => <ZoneChip key={it.id} item={it} pool={pool} />)}
       </div>
     </div>
   );
@@ -687,8 +742,9 @@ function QuickAdd() {
     if (isBag) tags.push({ base: CONTAINER_TAG });
     const id = addItem({ name: name.value.trim(), type: t as ItemType, tags, isContainer: isBag });
     if (t === 'Structure') moveItem(id, STASH_ID); // you don't carry a building; default it to the Stash
-    expandedId.value = id;
-    openMode.value = 'edit';
+    setExpanded(id, true);
+    editingId.value = id;
+    editDirty.value = false;
     reset();
   }
 
@@ -764,8 +820,8 @@ export function PossessionsTab() {
     document.addEventListener('click', onDocClick);
     return () => {
       document.removeEventListener('click', onDocClick);
-      expandedId.value = null;
-      openMode.value = 'view';
+      expandedIds.value = new Set();
+      editingId.value = null;
       editDirty.value = false;
       openMenu.value = null;
       draggingId.value = null;
@@ -780,45 +836,52 @@ export function PossessionsTab() {
   const carried = items.filter(i => i.containerId === null);
   const stash = items.filter(i => i.containerId === STASH_ID);
   const havenItems = coterieState.value.havenItems;
+  const havenTop = havenItems.filter(i => i.containerId === HAVEN_ID);
   const inCoterie = !!activeCoterie.value;
   const stashLabel = character.value.playbook === 'Tzimisce' ? 'Hoard' : 'Stash';
   const stashIcon = stashLabel === 'Hoard' ? 'treasure-chest.svg' : 'coffin.svg';
 
-  const rowProps = { allItems: items, catalog, inCoterie, stashLabel, readOnly };
+  const rowProps = { allItems: items, havenItems, catalog, inCoterie, stashLabel, readOnly };
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }));
 
-  /* Drop routing: a dragged item lands on a zone/group (move) or a container (nest). */
+  /* Drop routing: a dragged item lands on a zone/group (move to that root) or a container
+     (nest). relocate() resolves the source + destination store, including cross-store. */
   function onDragEnd(e: DragEndEvent) {
     draggingId.value = null;
     if (!e.over) return;
     const id = String(e.active.id).replace(/^(row|chip):/, '');
-    const item = items.find(i => i.id === id);
-    if (!item) return;
+    const dragged = items.find(i => i.id === id) ?? havenItems.find(i => i.id === id);
+    if (!dragged) return;
     const target = String(e.over.id);
     const zoneMatch = target.match(/^(?:zone|group):(.+)$/);
+
+    let dest: string | null;
     if (zoneMatch) {
       const zone = zoneMatch[1];
-      if (zone === 'haven') { performMove(item, HAVEN_ID); return; }
-      if (zone === 'stash') { performMove(item, STASH_ID); return; }
-      if (item.containerId !== null) {
-        moveItem(item.id, null);
-        if (isEquippableType(item.type)) toggleEquip(item.id); // drop On You = carry + auto-equip
-        forceToast(`Moved ${item.name || 'item'} to On You.`, 'info');
-      }
-      return;
+      dest = zone === 'haven' ? HAVEN_ID : zone === 'stash' ? STASH_ID : null;
+    } else {
+      dest = target.replace(/^(crow|cchip):/, '');
+      const destItem = items.find(i => i.id === dest) ?? havenItems.find(i => i.id === dest);
+      const pool = items.some(i => i.id === id) ? items : havenItems;
+      if (!destItem || !isContainerItem(destItem) || dest === id || isDescendant(pool, id, dest)) return;
     }
-    const cid = target.replace(/^(crow|cchip):/, '');
-    const bag = items.find(i => i.id === cid);
-    if (!bag || !isContainerItem(bag) || isContainerItem(item) || item.containerId === cid) return;
-    moveItem(item.id, cid);
-    forceToast(`Moved ${item.name || 'item'} into ${bag.name || 'the bag'}.`, 'info');
+    if (dest === dragged.containerId) return;
+
+    const before = items.find(i => i.id === id);
+    relocate(id, dest);
+    if (dest === null && before && before.containerId !== null) {
+      const it = character.value.items.find(i => i.id === id);
+      if (it && isEquippableType(it.type) && !it.equipped) toggleEquip(id); // drop On You = carry + auto-equip
+    }
+    forceToast(`Moved ${dragged.name || 'item'} to ${zoneLabel(dest)}.`, 'info');
   }
 
   const ghost = draggingId.value
     ? items.find(i => i.id === draggingId.value) ?? havenItems.find(i => i.id === draggingId.value)
     : null;
-  const ghostKids = ghost && isContainerItem(ghost) ? items.filter(i => i.containerId === ghost.id).length : 0;
+  const ghostPool = ghost && items.some(i => i.id === ghost.id) ? items : havenItems;
+  const ghostKids = ghost && isContainerItem(ghost) ? ghostPool.filter(i => i.containerId === ghost.id).length : 0;
 
   return (
     <DndContext
@@ -840,8 +903,8 @@ export function PossessionsTab() {
           )}
 
           {inCoterie && (
-            <ListGroup title="Haven" icon="haven.svg" count={havenItems.length} empty={havenItems.length === 0} emptyHint="Shared with your Coterie." zoneKey="haven">
-              {havenItems.map(it => <HavenRow key={it.id} item={it} catalog={catalog} readOnly={readOnly} />)}
+            <ListGroup title="Haven" icon="haven.svg" count={havenTop.length} empty={havenTop.length === 0} emptyHint="Shared with your Coterie." zoneKey="haven">
+              {havenTop.map(it => <HavenRow key={it.id} item={it} allHaven={havenItems} charItems={items} catalog={catalog} inCoterie={inCoterie} stashLabel={stashLabel} readOnly={readOnly} />)}
             </ListGroup>
           )}
         </div>
@@ -851,9 +914,9 @@ export function PossessionsTab() {
         <div class="vamp-poss__zones">
           {!readOnly && <QuickAdd />}
           <div class="vamp-poss__zones-label">Scoot your stuff around</div>
-          <ZonePanel title="On You" sub="Carried & equipped" icon="person.svg" items={carried} zoneKey="carried" />
-          {!readOnly && <ZonePanel title={stashLabel} sub="Private (only you)" icon={stashIcon} items={stash} zoneKey="stash" />}
-          {inCoterie && <ZonePanel title="Haven" sub="Shared with your Coterie" icon="haven.svg" items={havenItems} zoneKey="haven" />}
+          <ZonePanel title="On You" sub="Carried & equipped" icon="person.svg" items={carried} zoneKey="carried" pool={items} />
+          {!readOnly && <ZonePanel title={stashLabel} sub="Private (only you)" icon={stashIcon} items={stash} zoneKey="stash" pool={items} />}
+          {inCoterie && <ZonePanel title="Haven" sub="Shared with your Coterie" icon="haven.svg" items={havenTop} zoneKey="haven" pool={havenItems} />}
         </div>
       </div>
       {createPortal(

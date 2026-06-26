@@ -80,11 +80,11 @@ describe('moveItem', () => {
     expect(byId(phone)!.containerId).toBe(bag);
   });
 
-  it('rejects nesting a container inside a container', () => {
-    const bag = addItem({ name: 'Bag', type: 'Miscellaneous', isContainer: true });
-    const box = addItem({ name: 'Box', type: 'Miscellaneous', isContainer: true });
-    moveItem(box, bag);
-    expect(byId(box)!.containerId).toBeNull();
+  it('nests a container inside another container', () => {
+    const room = addItem({ name: 'Room', type: 'Structure', isContainer: true });
+    const bag = addItem({ name: 'Go-Bag', type: 'Miscellaneous', isContainer: true });
+    moveItem(bag, room);
+    expect(byId(bag)!.containerId).toBe(room);
   });
 
   it('rejects a target that is not a real container', () => {
@@ -98,6 +98,15 @@ describe('moveItem', () => {
     const bag = addItem({ name: 'Bag', type: 'Miscellaneous', isContainer: true });
     moveItem(bag, bag);
     expect(byId(bag)!.containerId).toBeNull();
+  });
+
+  it('rejects nesting a container into its own descendant', () => {
+    const room = addItem({ name: 'Room', type: 'Structure', isContainer: true });
+    const bag = addItem({ name: 'Go-Bag', type: 'Miscellaneous', isContainer: true });
+    moveItem(bag, room);   // bag now inside room
+    moveItem(room, bag);   // would form a cycle
+    expect(byId(room)!.containerId).toBeNull();
+    expect(byId(bag)!.containerId).toBe(room);
   });
 });
 
