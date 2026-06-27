@@ -9,7 +9,7 @@ import { collectSubtree, isDescendant, isContainerItem } from '../data/itemTree'
 import { planNotesReconcile } from './notesSync';
 import { activeStConsent, type StConsent } from './storyteller';
 import type { Item, ItemType, Gift } from '../data/types';
-import { isEquippableType } from '../data/itemTags';
+import { isEquippableType, STASH_ID, HAVEN_ID } from '../data/itemTags';
 import { giftDisplayName, pickVerb, giftRecipientToast } from '../data/gifts';
 import { forceToast } from './toasts';
 import { coterieState, masqueradeClock, blankCoterie, coterieDirty, masqueradeDirty } from './coterie';
@@ -914,7 +914,7 @@ export async function giveItem(itemId: string, toCharacterId: string, amount: nu
 
   /* Free a given container's children to loose first, or they'd strand pointing at a
      parent that's left for the recipient. */
-  if (item.isContainer) freeContainerChildren(itemId);
+  if (isContainerItem(item)) freeContainerChildren(itemId);
   removeQtyFromItem(itemId, qty);
   const recipient = coterieState.value.members.find(m => m.characterId === toCharacterId)?.name ?? 'them';
   forceToast(`Gave ${qty > 1 ? `${qty}× ` : ''}your ${item.name} to ${recipient}.`, 'info');
@@ -923,8 +923,8 @@ export async function giveItem(itemId: string, toCharacterId: string, amount: nu
 /* Which store owns a move target: the character (null, 'stash', or a char item id) or
    the Coterie Haven ('haven' or a haven item id). Unknown ids default to char. */
 export function locationStore(target: string | null): 'char' | 'haven' {
-  if (target === null || target === 'stash') return 'char';
-  if (target === 'haven') return 'haven';
+  if (target === null || target === STASH_ID) return 'char';
+  if (target === HAVEN_ID) return 'haven';
   if (character.value.items.some(i => i.id === target)) return 'char';
   if (coterieState.value.havenItems.some(i => i.id === target)) return 'haven';
   return 'char';
@@ -949,7 +949,7 @@ export function relocate(itemId: string, target: string | null): void {
 
 /* Move into the Coterie Haven, carrying the item's whole subtree so nested contents
    survive the boundary. target is 'haven' (root) or a Haven container id. */
-export async function depositToHaven(itemId: string, target: string = 'haven'): Promise<void> {
+export async function depositToHaven(itemId: string, target: string = HAVEN_ID): Promise<void> {
   const coterieId = activeCoterie.value;
   if (!coterieId) return;
   const subtree = collectSubtree(character.value.items, itemId);
@@ -963,13 +963,16 @@ export async function depositToHaven(itemId: string, target: string = 'haven'): 
       const haven: Item[] = snap.data().havenItems ?? [];
       /* Resolve the target against live Haven data so a room another member deleted
          mid-deposit falls back to the root instead of orphaning the subtree. */
-      const root = (target !== 'haven' && !haven.some(i => i.id === target && isContainerItem(i))) ? 'haven' : target;
+      const root = (target !== HAVEN_ID && !haven.some(i => i.id === target && isContainerItem(i))) ? HAVEN_ID : target;
       const payload: Item[] = subtree.map(it =>
         it.id === itemId
           ? { ...it, equipped: false, containerId: root }
           : { ...it, equipped: false },
       );
-      txn.update(ref, { havenItems: [...haven, ...payload], updatedAt: serverTimestamp() });
+      /* Skip ids already in the Haven so a double-triggered deposit can't duplicate the subtree. */
+      const existing = new Set(haven.map(i => i.id));
+      const fresh = payload.filter(p => !existing.has(p.id));
+      txn.update(ref, { havenItems: [...haven, ...fresh], updatedAt: serverTimestamp() });
     });
   } catch {
     forceToast('Could not reach the Haven right now. Try again?', 'warning');
@@ -1003,7 +1006,7 @@ export async function withdrawFromHaven(havenItemId: string, target: string | nu
   if (!coterieId) return;
 
   let root = target;
-  if (root !== null && root !== 'stash') {
+  if (root !== null && root !== STASH_ID) {
     const dest = character.value.items.find(i => i.id === root);
     if (!dest || !isContainerItem(dest)) root = null;
   }
@@ -1012,6 +1015,7 @@ export async function withdrawFromHaven(havenItemId: string, target: string | nu
   let taken: Item[] = [];
   try {
     await runTransaction(db, async (txn) => {
+      taken = []; // reset each attempt: a Firestore retry must not keep a prior read's subtree
       const snap = await txn.get(ref);
       if (!snap.exists()) return;
       const haven: Item[] = snap.data().havenItems ?? [];
@@ -1047,7 +1051,7 @@ export async function moveHavenItem(id: string, target: string): Promise<void> {
       const haven: Item[] = snap.data().havenItems ?? [];
       const item = haven.find(i => i.id === id);
       if (!item) return;
-      if (target !== 'haven') {
+      if (target !== HAVEN_ID) {
         if (target === id || isDescendant(haven, id, target)) return;
         const dest = haven.find(i => i.id === target);
         if (!dest || !isContainerItem(dest)) return;
@@ -1093,7 +1097,7 @@ export async function removeHavenItem(id: string): Promise<void> {
       const haven: Item[] = snap.data().havenItems ?? [];
       const removed = haven.find(i => i.id === id);
       if (!removed) return;
-      const fallback = removed.containerId ?? 'haven';
+      const fallback = removed.containerId ?? HAVEN_ID;
       const next = haven
         .filter(i => i.id !== id)
         .map(i => i.containerId === id ? { ...i, containerId: fallback } : i);

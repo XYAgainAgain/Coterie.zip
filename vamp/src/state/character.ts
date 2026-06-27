@@ -839,8 +839,8 @@ export function removeItem(id: string) {
   const items = character.value.items;
   const removed = items.find(i => i.id === id);
   let next = items.filter(i => i.id !== id);
-  if (removed?.isContainer) {
-    next = next.map(i => (i.containerId === id ? { ...i, containerId: null } : i));
+  if (removed && isContainerItem(removed)) {
+    next = next.map(i => (i.containerId === id ? { ...i, containerId: removed.containerId ?? null } : i));
   }
   setItems(next);
 }
@@ -872,9 +872,8 @@ export function setItemQty(id: string, qty: number) {
   setItems(character.value.items.map(i => (i.id === id ? { ...i, qty: q } : i)));
 }
 
-/* Toggle container status. Un-containering reparents children to wherever the
-   container itself lived (null/'stash'/'haven' — nesting is impossible), so a private
-   Stash bag's contents don't leak to the public Carried list. */
+/* Toggle container status. Un-containering reparents children to where the container
+   itself lived (parent bag, Stash, Haven, or loose) so Stash contents don't leak to Carried. */
 export function setItemContainer(id: string, isContainer: boolean) {
   let next = character.value.items.map(i => (i.id === id ? { ...i, isContainer } : i));
   if (!isContainer) {

@@ -14,7 +14,7 @@ import {
   orderTags, tagDisplay, canEquip, isEquippableType,
   TEMPLATE_TAGS, RANGE_TAG, CUSTOM_TAG, RANGE_BANDS, rangeParam, STASH_ID, HAVEN_ID,
 } from '../data/itemTags';
-import { isContainerItem, CONTAINER_TAG, isDescendant } from '../data/itemTree';
+import { isContainerItem, CONTAINER_TAG, isDescendant, collectSubtree } from '../data/itemTree';
 import { ITEM_TYPES, type Item, type TagRef, type ItemType, type ItemTag } from '../data/types';
 import { debounce } from '../utils/debounce';
 import { Tooltip } from './Tooltip';
@@ -436,6 +436,8 @@ function DeleteControl({ item, contents, inCoterie }: { item: Item; contents: It
   const confirm = useSignal(false);
   const key = `bag:${item.id}`;
   const bagOpen = openMenu.value === key;
+  /* Count the whole subtree, not just direct children: nested contents ride along too. */
+  const moving = collectSubtree(character.value.items, item.id).length - 1;
 
   function redistribute(target: string | null) {
     for (const c of contents) {
@@ -453,7 +455,7 @@ function DeleteControl({ item, contents, inCoterie }: { item: Item; contents: It
         <button class="vamp-poss-btn vamp-poss-btn--del" onClick={() => { openMenu.value = bagOpen ? null : key; }}>Delete bag…</button>
         {bagOpen && (
           <div class="vamp-poss-menu__list">
-            <div class="vamp-poss-menu__note">Send {contents.length} item{contents.length === 1 ? '' : 's'} to:</div>
+            <div class="vamp-poss-menu__note">Send {moving} item{moving === 1 ? '' : 's'} to:</div>
             <button class="vamp-poss-menu__item" onClick={() => redistribute(null)}>On You</button>
             <button class="vamp-poss-menu__item" onClick={() => redistribute(STASH_ID)}>Stash</button>
             {inCoterie && <button class="vamp-poss-menu__item" onClick={() => redistribute(HAVEN_ID)}>Haven</button>}
