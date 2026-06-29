@@ -6903,6 +6903,19 @@ details[open] > .vamp-detail__summary::before {
   flex-shrink: 0;
 }
 
+.vamp-rpanel-section__pill--action {
+  border: 1px solid color-mix(in srgb, var(--v-accent) 40%, transparent);
+  cursor: pointer;
+  line-height: 1.2;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.vamp-rpanel-section__pill--action:hover {
+  background: var(--v-accent);
+  color: var(--v-bg-sunken);
+  border-color: var(--v-accent);
+}
+
 .vamp-rpanel-section__content {
   padding-block-end: 0.5rem;
 }
@@ -7025,8 +7038,9 @@ details[open] > .vamp-detail__summary::before {
 /* Move sections (full-width expand/collapse bars) */
 
 .vamp-coterie-stats {
-  display: grid;
-  grid-auto-rows: 1fr;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 /* Coterie stat rings take the complementary accent to set them apart from personal stats (custom themes). */
@@ -7810,6 +7824,44 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 
 .vamp-rules-body strong {
   color: var(--v-text-primary);
+}
+
+/* Per-paragraph first-line indent breaks up the text blocks. */
+.vamp-rules-body p,
+.vamp-rules-intro p {
+  text-indent: 1.125em;
+}
+
+.vamp-rules-body a {
+  color: var(--v-accent);
+}
+
+/* Bold game terms inside a link take the link color, not the primary-text strong color, so they read as links. */
+.vamp-rules-body a strong {
+  color: inherit;
+}
+
+/* Deep-link target flash from the Coterie "More Info" pill. */
+@keyframes vamp-rules-pulse {
+  0%, 100% { background: transparent; box-shadow: 0 0 0 0 transparent; }
+  15% { background: var(--v-accent-subtle); box-shadow: 0 0 0.75rem 0.1rem color-mix(in srgb, var(--v-accent) 55%, transparent); }
+  35% { background: transparent; box-shadow: 0 0 0 0 transparent; }
+  55% { background: var(--v-accent-subtle); box-shadow: 0 0 0.75rem 0.1rem color-mix(in srgb, var(--v-accent) 55%, transparent); }
+  75% { background: transparent; box-shadow: 0 0 0 0 transparent; }
+}
+
+.vamp-rules-pulse {
+  border-radius: var(--v-radius-sm);
+  animation: vamp-rules-pulse 1.9s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-rules-pulse {
+    animation: none;
+    border-radius: var(--v-radius-sm);
+    background: var(--v-accent-subtle);
+    box-shadow: 0 0 0.5rem 0.05rem color-mix(in srgb, var(--v-accent) 40%, transparent);
+  }
 }
 
 .vamp-rules-body ul,
@@ -8849,7 +8901,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 .vamp-poss-row__pip.is-none { border: none; cursor: default; opacity: 0.5; background: var(--v-text-muted); -webkit-mask: url(/assets/images/vamp/no-equip.svg) center / contain no-repeat; mask: url(/assets/images/vamp/no-equip.svg) center / contain no-repeat; }
 .vamp-poss-row__main { display: flex; align-items: center; gap: 0.45em; flex: 1; min-inline-size: 0; background: none; border: none; text-align: start; cursor: pointer; padding: 0; color: inherit; font: inherit; }
 .vamp-poss-row__main--static { cursor: default; }
-.vamp-poss-row__name { font-family: var(--v-font-body); font-weight: 600; font-size: 0.95em; color: var(--v-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: none; max-inline-size: 13em; }
+.vamp-poss-row__name { font-family: var(--v-font-body); font-weight: 600; font-size: 0.95em; color: var(--v-text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto; min-inline-size: 0; }
 .vamp-poss-row__qty { font-size: 0.78em; color: var(--v-text-muted); flex: none; }
 .vamp-poss-row__chips { display: flex; gap: 0.28em; flex-wrap: wrap; align-items: center; min-inline-size: 0; }
 .vamp-poss-row__edit { display: inline-flex; align-items: center; justify-content: center; inline-size: 1.6em; block-size: 1.6em; padding: 0; flex: none; border: 1.5px solid transparent; border-radius: 50%; background: none; color: var(--v-text-muted); cursor: pointer; font-size: 0.95em; font-weight: 700; }

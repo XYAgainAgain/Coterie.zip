@@ -19,6 +19,11 @@ export const activeContentTab = signal<ContentTab>('vitals');
 
 export const scrollToMove = signal<string | null>(null);
 
+/* Rules-tab deep link: the Coterie "More Info" pill opens a section and pulses a paragraph.
+   Bumping rulesPulse re-fires the highlight even when the section is already open. */
+export const rulesOpenSection = signal<string | null>(null);
+export const rulesPulse = signal(0);
+
 /* Split view is device-tier state: persisted in localStorage (same rule as state/settings.ts),
    never the character doc — a ratio drag fed through the autosave debounce would spray
    Firestore writes. Pane A reuses activeContentTab; only pane B gets its own signal. */

@@ -4,6 +4,7 @@ import { useRef, useEffect } from 'preact/hooks';
 import { useSignal, useSignalEffect } from '@preact/signals';
 import {
   RPANEL_TABS, TAB_TOOLTIPS, activeRightTab, scrollToMove, switchTab,
+  rulesOpenSection, rulesPulse,
   type RPanelTab,
 } from '../state/panel';
 import {
@@ -249,12 +250,23 @@ function TabBar() {
 
 
 const COTERIE_STAT_DESC: Record<CoterieStatName, string> = {
-  Clout: 'Reputation and influence among Kindred.',
-  Cohesion: 'How well you work together. Modifies Coterie Move rolls.',
-  Charm: 'How likable your Coterie is to mortals and Kindred.',
+  Clout: 'Kindred reputation/influence.',
+  Cohesion: 'How well you work together.',
+  Charm: "How likable y'all are.",
   Claim: 'Territory size and quality.',
   Currency: 'Abstracted monetary wealth.',
 };
+
+/* Jump to the How-to-Coterie rules and flash the Coterie-stats explainer. */
+function openCoterieInfo() {
+  rulesOpenSection.value = 'Your Coterie';
+  rulesPulse.value++;
+  switchTab('rules');
+}
+
+/* Module-scoped so it survives RulesPanel remounts; a per-component ref would reset
+   on every tab switch and re-fire the flash without a fresh pill click. */
+let lastRulesPulse = 0;
 
 function CoterieSetup() {
   const data = gameData.value;
@@ -573,7 +585,7 @@ function CoteriePanel() {
         )}
       </CollapsibleSection>
 
-      <CollapsibleSection title="Coterie Stats" defaultOpen>
+      <CollapsibleSection title="Coterie Stats" defaultOpen pill="More Info" onPillClick={openCoterieInfo}>
         <div class="vamp-coterie-stats">
           {COTERIE_STAT_NAMES.map(name => {
             const val = cot.stats[name] ?? 0;
@@ -744,9 +756,10 @@ function CoteriePanel() {
 }
 
 
-function CollapsibleSection({ title, pill, defaultOpen, children }: {
+function CollapsibleSection({ title, pill, onPillClick, defaultOpen, children }: {
   title: string;
   pill?: string;
+  onPillClick?: () => void;
   defaultOpen?: boolean;
   children: preact.ComponentChildren;
 }) {
@@ -754,7 +767,10 @@ function CollapsibleSection({ title, pill, defaultOpen, children }: {
     <details class="vamp-rpanel-section" open={defaultOpen}>
       <summary class="vamp-rpanel-section__bar">
         {title}
-        {pill && <span class="vamp-rpanel-section__pill">{pill}</span>}
+        {pill && (onPillClick
+          ? <button type="button" class="vamp-rpanel-section__pill vamp-rpanel-section__pill--action"
+              onClick={e => { e.preventDefault(); e.stopPropagation(); onPillClick(); }}>{pill}</button>
+          : <span class="vamp-rpanel-section__pill">{pill}</span>)}
       </summary>
       <div class="vamp-rpanel-section__content">{children}</div>
     </details>
@@ -2027,7 +2043,6 @@ function FlawRow({ flaw, selected, disabled, onToggle, subOptions, selection, on
 }
 
 function RulesPanel() {
-  const expanded = useSignal<string | null>(null);
   const rules = useSignal(getCachedRules());
 
   useEffect(() => {
@@ -2040,6 +2055,26 @@ function RulesPanel() {
     return () => { live = false; };
   }, []);
 
+  /* Fired by the Coterie "More Info" pill: once the deep-linked section is rendered open,
+     double-pulse its second paragraph. Nonce guard so a manual section toggle never re-pulses. */
+  useSignalEffect(() => {
+    const nonce = rulesPulse.value;
+    const open = rulesOpenSection.value;
+    const ready = rules.value;
+    if (!nonce || nonce === lastRulesPulse || !ready || open == null) return;
+    lastRulesPulse = nonce;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    const rafId = requestAnimationFrame(() => {
+      const p = document.querySelector('.vamp-rules-body p:nth-of-type(2)') as HTMLElement | null;
+      if (!p) return;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      p.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      p.classList.add('vamp-rules-pulse');
+      timeoutId = setTimeout(() => p.classList.remove('vamp-rules-pulse'), 2600);
+    });
+    return () => { cancelAnimationFrame(rafId); clearTimeout(timeoutId); };
+  });
+
   if (!rules.value) return <div class="vamp-rpanel-scroll" />;
   const { title, intro, sections } = rules.value;
 
@@ -2048,11 +2083,11 @@ function RulesPanel() {
       {title && <div class="vamp-rules-title" dangerouslySetInnerHTML={{ __html: title }} />}
       <div class="vamp-rules-intro" dangerouslySetInnerHTML={{ __html: intro }} />
       {sections.map(s => (
-        <div key={s.title} class={`vamp-move-section ${expanded.value === s.title ? 'vamp-move-section--open' : ''}`}>
-          <div class="vamp-move-section__bar" onClick={() => { expanded.value = expanded.value === s.title ? null : s.title; }}>
+        <div key={s.title} class={`vamp-move-section ${rulesOpenSection.value === s.title ? 'vamp-move-section--open' : ''}`}>
+          <div class="vamp-move-section__bar" onClick={() => { rulesOpenSection.value = rulesOpenSection.value === s.title ? null : s.title; }}>
             <span class="vamp-move-section__name">{s.title}</span>
           </div>
-          {expanded.value === s.title && (
+          {rulesOpenSection.value === s.title && (
             <div class="vamp-move-section__body vamp-rules-body"
               dangerouslySetInnerHTML={{ __html: s.body }}
             />

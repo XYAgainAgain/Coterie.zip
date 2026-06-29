@@ -36,6 +36,7 @@ export function SheetShortcuts() {
       if (e.shiftKey) return;
 
       switch (e.key.toLowerCase()) {
+        case 'i': switchContentTab('possessions'); break; /* unlisted: I = inventory */
         case 'c': switchTab('coterie'); break;
         case 'v': switchTab('character'); break;
         case 'x': switchTab('advancement'); break;
