@@ -8913,7 +8913,7 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 .vamp-poss-row__actions { display: flex; gap: 0.4em; align-items: center; flex-wrap: wrap; position: relative; }
 .vamp-poss-row__children { padding-inline-start: 0.4em; display: flex; flex-direction: column; gap: 0.3em; }
 
-/* Tag pills + zone chips share role colors; desaturated dark fills read native on glass. */
+/* Tag pills + zone chips share one role palette via --tip-*, consumed here and forwarded to the tooltip. */
 .vamp-poss-chip { display: inline-flex; align-items: center; gap: 0.2em; border-radius: 999px; padding: 0.12em 0.5em; font-size: 0.78em; font-weight: 600; line-height: 1.35; white-space: nowrap; border: 1px solid transparent; }
 .vamp-poss-chip__x { border: none; background: none; color: inherit; cursor: pointer; font-size: 1em; line-height: 1; padding-inline: 0.1em 0; opacity: 0.7; }
 .vamp-poss-chip__x:hover { opacity: 1; }
@@ -8921,13 +8921,56 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 .vamp-poss-zchip__dot { inline-size: 0.42em; block-size: 0.42em; border-radius: 50%; background: var(--v-accent); flex: none; }
 .vamp-poss-zchip__count { opacity: 0.6; }
 
-.vamp-poss-chip--plain, .vamp-poss-zchip--plain { background: color-mix(in srgb, var(--v-text-muted) 16%, transparent); color: var(--v-text-secondary); border-color: color-mix(in srgb, var(--v-text-muted) 22%, transparent); }
-.vamp-poss-chip--custom, .vamp-poss-zchip--custom { background: var(--v-accent-subtle); color: var(--v-text-accent); border: 1px dashed var(--v-border-accent); }
-.vamp-poss-chip--harm, .vamp-poss-zchip--harm { background: #5b1717; color: #f3a9a9; border-color: #7e2c2c; }
-.vamp-poss-chip--range, .vamp-poss-zchip--range { background: #123f44; color: #7fd1d1; border-color: #1d5b61; }
-.vamp-poss-chip--armor, .vamp-poss-zchip--armor { background: #17314e; color: #9cc4f0; border-color: #264a6d; }
-.vamp-poss-chip--res, .vamp-poss-zchip--res { background: #4a3413; color: #f0c07a; border-color: #6b4d1f; }
-.vamp-poss-chip--container, .vamp-poss-zchip--container { background: #332a4e; color: #c3b0e8; border-color: #473a66; }
+.vamp-poss-chip--plain, .vamp-poss-zchip--plain { --tip-bg: color-mix(in srgb, var(--v-text-muted) 16%, transparent); --tip-fg: var(--v-text-secondary); --tip-border: color-mix(in srgb, var(--v-text-muted) 22%, transparent); background: var(--tip-bg); color: var(--tip-fg); border-color: var(--tip-border); }
+.vamp-poss-chip--custom, .vamp-poss-zchip--custom { --tip-bg: var(--v-accent-subtle); --tip-fg: var(--v-text-accent); --tip-border: var(--v-border-accent); background: var(--tip-bg); color: var(--tip-fg); border: 1px dashed var(--tip-border); }
+.vamp-poss-chip--harm, .vamp-poss-zchip--harm { --tip-bg: #5b1717; --tip-fg: #f3a9a9; --tip-border: #7e2c2c; background: var(--tip-bg); color: var(--tip-fg); border-color: var(--tip-border); }
+.vamp-poss-chip--range, .vamp-poss-zchip--range { --tip-bg: #123f44; --tip-fg: #7fd1d1; --tip-border: #1d5b61; background: var(--tip-bg); color: var(--tip-fg); border-color: var(--tip-border); }
+.vamp-poss-chip--armor, .vamp-poss-zchip--armor { --tip-bg: #17314e; --tip-fg: #9cc4f0; --tip-border: #264a6d; background: var(--tip-bg); color: var(--tip-fg); border-color: var(--tip-border); }
+.vamp-poss-chip--res, .vamp-poss-zchip--res { --tip-bg: #4a3413; --tip-fg: #f0c07a; --tip-border: #6b4d1f; background: var(--tip-bg); color: var(--tip-fg); border-color: var(--tip-border); }
+.vamp-poss-chip--container, .vamp-poss-zchip--container { --tip-bg: #332a4e; --tip-fg: #c3b0e8; --tip-border: #473a66; background: var(--tip-bg); color: var(--tip-fg); border-color: var(--tip-border); }
+
+/* Themed tag tooltip. Portals to <body>, so Tooltip.tsx forwards the hovered chip's --tip-* inline;
+   the tag color paints over an opaque base so it stays legible and solid on every theme. */
+.vamp-tip-anchor { cursor: help; }
+.vamp-tip {
+  position: fixed;
+  z-index: 10001;
+  max-inline-size: 18rem;
+  padding: 0.45em 0.65em;
+  border-radius: var(--v-radius-md);
+  font-family: var(--v-font-body);
+  font-size: calc(0.82rem * var(--v-text-scale, 1));
+  line-height: 1.4;
+  text-align: start;
+  text-wrap: pretty;
+  background-color: var(--v-bg-elevated);
+  background-image: linear-gradient(var(--tip-bg, transparent) 0 0);
+  color: var(--tip-fg, var(--v-text-primary));
+  border: 1px solid var(--tip-border, var(--v-border-accent));
+  box-shadow: 0 0.35rem 1.1rem rgb(0 0 0 / 0.55);
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  animation: vamp-tip-in 120ms ease both;
+}
+.vamp-tip--below { transform: translate(-50%, 0); }
+@keyframes vamp-tip-in { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .vamp-tip { animation: none; } }
+/* Markdown renders as block content; trim the wrapping block's outer margins. */
+.vamp-tip :first-child { margin-block-start: 0; }
+.vamp-tip :last-child { margin-block-end: 0; }
+
+/* Future defined-term affordance for the rules-glossary tooltip: dot-dash underline in
+   the accent, reusing the canonical pattern token. Not wired to anything yet. */
+.vamp-term {
+  --v-dot-dash-color: var(--v-accent);
+  background-image: var(--v-dot-dash-h);
+  background-size: 100% 0.12em;
+  background-position: bottom left;
+  background-repeat: no-repeat;
+  padding-block-end: 0.1em;
+  cursor: help;
+}
+.vamp-term:hover { --v-dot-dash-color: var(--v-accent-hover); }
 
 /* Buttons */
 .vamp-poss-btn { font: inherit; font-size: 0.84em; padding: 0.25em 0.6em; border-radius: var(--v-radius-sm); border: 1px solid var(--v-border); background: var(--v-bg-elevated); color: var(--v-text-secondary); cursor: pointer; white-space: nowrap; line-height: 1.2; }

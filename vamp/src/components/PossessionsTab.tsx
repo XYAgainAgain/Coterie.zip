@@ -83,7 +83,7 @@ function effectFor(ref: TagRef, catalog: Map<string, ItemTag>): string {
   if (ref.base === CUSTOM_TAG) return ref.custom?.description?.trim() || 'Custom tag; ask your Storyteller.';
   if (ref.base === RANGE_TAG) return 'The Range band at which this item operates.';
   const tag = catalog.get(ref.base);
-  return tag ? plainEffect(tag.effect) : 'Custom tag; ask your Storyteller.';
+  return tag ? tag.effect : 'Custom tag; ask your Storyteller.';
 }
 
 /* Key chips by content + index so a removal remounts the node, clearing a stuck tooltip. */
@@ -155,7 +155,7 @@ function TagChip({ refTag, catalog, onRemove }: {
   onRemove?: () => void;
 }) {
   return (
-    <Tooltip content={effectFor(refTag, catalog)} anchorClass={`vamp-poss-chip vamp-poss-chip--${tagRole(refTag.base)}`}>
+    <Tooltip content={effectFor(refTag, catalog)} userContent={refTag.base === CUSTOM_TAG} anchorClass={`vamp-poss-chip vamp-poss-chip--${tagRole(refTag.base)}`}>
       <span class="vamp-poss-chip__label">{tagDisplay(refTag)}</span>
       {onRemove && (
         <button
