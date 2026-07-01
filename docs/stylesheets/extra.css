@@ -774,6 +774,16 @@ a, button, .md-nav__link, .md-footer__link {
   width: 64px;
   height: 64px;
   image-rendering: pixelated;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  transition: transform 0.08s ease, opacity 0.08s ease;
+}
+
+/* Dim via opacity, not filter: the Abyss glow animation owns filter every frame */
+.bat-stats__mugshot--pressed {
+  transform: scale(0.9) translateY(1px);
+  opacity: 0.8;
 }
 
 [data-md-color-scheme="abyss"] .bat-stats__mugshot {
@@ -1744,7 +1754,7 @@ code,
   will-change: transform, opacity;
 }
 
-#batthew {
+.batthew {
   position: fixed;
   top: 0;
   left: 0;
@@ -1753,7 +1763,7 @@ code,
   will-change: transform;
 }
 
-#batthew canvas {
+.batthew canvas {
   display: block;
   pointer-events: auto;
   cursor: pointer;
@@ -1762,7 +1772,7 @@ code,
   filter: drop-shadow(3px 4px 5px rgba(0, 0, 0, 0.45));
 }
 
-[data-md-color-scheme="abyss"] #batthew canvas {
+[data-md-color-scheme="abyss"] .batthew canvas {
   opacity: 0.8;
   animation: batthew-glow var(--anim-batthew-glow) ease-in-out infinite;
 }
@@ -1830,8 +1840,8 @@ code,
   .blood-drips { display: none; }
 
   /* Batthew */
-  #batthew { will-change: auto; }
-  [data-md-color-scheme="abyss"] #batthew canvas { animation: none; }
+  .batthew { will-change: auto; }
+  [data-md-color-scheme="abyss"] .batthew canvas { animation: none; }
 
   /* Echolocation */
   .echo-overlay { display: none; }

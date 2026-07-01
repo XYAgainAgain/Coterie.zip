@@ -64,7 +64,7 @@ function tagRole(base: string): TagRole {
   return 'plain';
 }
 
-/* The item's dominant role for its zone chip; charges outrank Harm (Sam's call). */
+/* The item's dominant role for its zone chip; charges outrank Harm (locked ruling). */
 function itemRole(it: Item): TagRole {
   const has = (b: string) => it.tags.some(t => t.base === b);
   if (has('N-Use') || has('N-Charge') || has('Recharge-X')) return 'res';

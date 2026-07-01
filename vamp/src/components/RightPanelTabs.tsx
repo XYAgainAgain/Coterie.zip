@@ -391,7 +391,7 @@ function CoterieSetup() {
 }
 
 /* Aggregate (The Uncategorizable) draws from the pooled options with its own caps,
-   kept as named consts because Sam wants them unlockable later, not buried literals. */
+   kept as named consts so they can be made unlockable later, not buried literals. */
 const AGGREGATE_POSITIVE_CAP = 3;
 const AGGREGATE_NEGATIVE_CAP = 2;
 

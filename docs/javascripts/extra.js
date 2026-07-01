@@ -452,6 +452,23 @@ window.Coterie.storage = {
     mug.className = 'bat-stats__mugshot';
     mug.src = getMugshotSrc();
     mug.alt = 'Batthew';
+    mug.draggable = false;
+    /* He contains multitudes. */
+    mug.addEventListener('pointerdown', function(e) {
+      e.preventDefault();
+      mug.classList.add('bat-stats__mugshot--pressed');
+    });
+    mug.addEventListener('pointerup', function() {
+      if (!mug.classList.contains('bat-stats__mugshot--pressed')) return;
+      mug.classList.remove('bat-stats__mugshot--pressed');
+      if (window.Coterie.batthew.swarm) window.Coterie.batthew.swarm();
+    });
+    mug.addEventListener('pointerleave', function() {
+      mug.classList.remove('bat-stats__mugshot--pressed');
+    });
+    mug.addEventListener('pointercancel', function() {
+      mug.classList.remove('bat-stats__mugshot--pressed');
+    });
     hdr.appendChild(mug);
     pop.appendChild(hdr);
 
