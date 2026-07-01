@@ -374,11 +374,11 @@ function moveTargetsFor(item: Item, charItems: Item[], havenItems: Item[], inCot
   return out;
 }
 
-/* Move an item to a zone/container through the shared router, with a toast. */
-function performMove(item: Item, target: string | null) {
+/* Move an item to a zone/container through the shared router, with a toast. Toasts only
+   after the move lands; failed Haven transactions surface their own warning. */
+async function performMove(item: Item, target: string | null) {
   if (target === item.containerId) return;
-  relocate(item.id, target);
-  forceToast(`Moved ${item.name || 'item'} to ${zoneLabel(target)}.`, 'info');
+  if (await relocate(item.id, target)) forceToast(`Moved ${item.name || 'item'} to ${zoneLabel(target)}.`, 'info');
 }
 
 function MoveMenu({ item, targets }: { item: Item; targets: MoveTarget[] }) {
@@ -439,14 +439,18 @@ function DeleteControl({ item, contents, inCoterie }: { item: Item; contents: It
   /* Count the whole subtree, not just direct children: nested contents ride along too. */
   const moving = collectSubtree(character.value.items, item.id).length - 1;
 
-  function redistribute(target: string | null) {
+  /* Haven deposits are awaited one by one; if any fails the bag survives so the leftover
+     children still have a parent (the deposit's own warning toast covers the failure). */
+  async function redistribute(target: string | null) {
+    openMenu.value = null;
+    let allMoved = true;
     for (const c of contents) {
-      if (target === HAVEN_ID) depositToHaven(c.id);
+      if (target === HAVEN_ID) allMoved = (await depositToHaven(c.id)) && allMoved;
       else moveItem(c.id, target);
     }
+    if (!allMoved) return;
     removeItem(item.id);
     forceToast(`Deleted ${item.name || 'bag'}; contents sent to ${zoneLabel(target)}.`, 'info');
-    openMenu.value = null;
   }
 
   if (isContainerItem(item) && contents.length > 0) {
@@ -849,7 +853,7 @@ export function PossessionsTab() {
 
   /* Drop routing: a dragged item lands on a zone/group (move to that root) or a container
      (nest). relocate() resolves the source + destination store, including cross-store. */
-  function onDragEnd(e: DragEndEvent) {
+  async function onDragEnd(e: DragEndEvent) {
     draggingId.value = null;
     if (!e.over) return;
     const id = String(e.active.id).replace(/^(row|chip):/, '');
@@ -870,9 +874,8 @@ export function PossessionsTab() {
     }
     if (dest === dragged.containerId) return;
 
-    const before = items.find(i => i.id === id);
-    relocate(id, dest);
-    if (dest === null && before && before.containerId !== null) {
+    if (!(await relocate(id, dest))) return;
+    if (dest === null && dragged.containerId !== null) {
       const it = character.value.items.find(i => i.id === id);
       if (it && isEquippableType(it.type) && !it.equipped) toggleEquip(id); // drop On You = carry + auto-equip
     }

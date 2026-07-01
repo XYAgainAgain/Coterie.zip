@@ -14,6 +14,7 @@ import { ModifierBar } from '../components/ModifierBar';
 import { SceneTools } from '../components/SceneTools';
 import { RollLog } from '../components/RollLog';
 import { SheetShortcuts } from '../components/SheetShortcuts';
+import { ConsentCeremony } from '../components/ConsentCeremony';
 import { SpotlightOverlay } from '../components/creation/SpotlightOverlay';
 import { GuideCard } from '../components/creation/GuideCard';
 import { PortraitEditor, cropStyle } from '../components/PortraitEditor';
@@ -1838,6 +1839,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
       {guideOn && <SpotlightOverlay />}
       {guideOn && <GuideCard />}
       {!isViewing && <SheetShortcuts />}
+      {!isViewing && <ConsentCeremony />}
 
       <aside class={`vamp-sheet__sidebar ${sidebarSpotlight ? 'guide-spotlight' : ''}`}>
         <div class="vamp-identity">

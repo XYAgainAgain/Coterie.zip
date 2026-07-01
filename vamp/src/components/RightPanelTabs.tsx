@@ -16,7 +16,9 @@ import { coterieState, adjustCoterieStat, setHavenDescription, setHavenPicks } f
 import { editMode, enterDisciplineBuyMode, viewingOtherSheet } from '../state/ui';
 import { creationMode, creationStep } from '../state/creation';
 import { switchContentTab } from '../state/panel';
-import { activeCoterie, createCoterie, joinCoterie, leaveCoterie, BLANK_CHARACTER } from '../state/persistence';
+import { activeCoterie, createCoterie, joinCoterie, leaveCoterie, BLANK_CHARACTER, activeCharacterId, setStConsent, setStDeclined, castStKickVote } from '../state/persistence';
+import { activeStConsent, activeStDeclined, consentValid } from '../state/storyteller';
+import { auth } from '../firebase';
 import { EditableTextField } from './EditableTextField';
 import { showToast } from '../state/toasts';
 import { renderGameMarkdown, capitalizeFirst, parseStatString } from '../data/transforms';
@@ -723,6 +725,8 @@ function CoteriePanel() {
         ))}
       </CollapsibleSection>
 
+      <StorytellerSection />
+
       <div class="vamp-coterie-code">
         <span class="vamp-coterie-code__label">Coterie Code</span>
         <div class="vamp-coterie-code__row">
@@ -755,6 +759,89 @@ function CoteriePanel() {
   );
 }
 
+
+/* Storyteller status row: consent state + decision buttons + the kick-vote entry point.
+   Revocation after consent is deliberately absent — the plan allows it only via leaving
+   the Coterie or a unanimous kick (one griefer can't strip the ST mid-session). */
+function StorytellerSection() {
+  const busy = useSignal(false);
+  const confirmVote = useSignal(false);
+
+  const charId = activeCharacterId.value;
+  const cot = coterieState.value;
+  const stUid = cot.storytellerUid;
+  const uid = auth.currentUser?.uid;
+  if (!charId) return null;
+
+  const consented = consentValid(activeStConsent.value, stUid);
+  const declinedThisSt = !!stUid && activeStDeclined.value === stUid;
+  const hasVoted = !!uid && cot.stKickVotes.includes(uid);
+
+  async function decide(approve: boolean) {
+    if (!stUid || busy.value) return;
+    busy.value = true;
+    try {
+      if (approve) await setStConsent(charId!, stUid);
+      else await setStDeclined(charId!, stUid);
+    } catch {
+      showToast('Could not save your Storyteller decision.', 'error');
+    }
+    busy.value = false;
+  }
+
+  async function vote(rescind: boolean) {
+    if (busy.value) return;
+    busy.value = true;
+    try { await castStKickVote(rescind); } finally { busy.value = false; }
+    confirmVote.value = false;
+  }
+
+  return (
+    <div class="vamp-st">
+      <span class="vamp-st__label">Storyteller</span>
+      {!stUid ? (
+        <p class="vamp-st__status">No Storyteller has claimed this Coterie.</p>
+      ) : stUid === uid ? (
+        <p class="vamp-st__status">You are this Coterie&rsquo;s Storyteller.</p>
+      ) : (
+        <>
+          {consented ? (
+            <p class="vamp-st__status">Your sheet is open to the Storyteller. Private notes stay yours alone.</p>
+          ) : declinedThisSt ? (
+            <>
+              <p class="vamp-st__status">You declined the current Storyteller, so they cannot see this sheet.</p>
+              <button class="vamp-btn vamp-btn--sm" onClick={() => decide(true)} disabled={busy.value}>Approve them after all</button>
+            </>
+          ) : (
+            <>
+              <p class="vamp-st__status">A Storyteller has claimed this Coterie and awaits your decision.</p>
+              <div class="vamp-st__actions">
+                <button class="vamp-btn vamp-btn--sm vamp-st__approve" onClick={() => decide(true)} disabled={busy.value}>Approve</button>
+                <button class="vamp-btn vamp-btn--sm vamp-st__decline" onClick={() => decide(false)} disabled={busy.value}>Decline</button>
+              </div>
+            </>
+          )}
+          <div class="vamp-st__kick">
+            {cot.stKickVotes.length > 0 && (
+              <span class="vamp-st__votes">{cot.stKickVotes.length} vote{cot.stKickVotes.length === 1 ? '' : 's'} to remove &mdash; needs every player.</span>
+            )}
+            {hasVoted ? (
+              <button class="vamp-btn vamp-btn--sm" onClick={() => vote(true)} disabled={busy.value}>Rescind your vote</button>
+            ) : confirmVote.value ? (
+              <>
+                <span class="vamp-st__votes">Vote to remove the Storyteller?</span>
+                <button class="vamp-btn vamp-btn--sm vamp-st__decline" onClick={() => vote(false)} disabled={busy.value}>Yes, vote</button>
+                <button class="vamp-btn vamp-btn--sm" onClick={() => { confirmVote.value = false; }} disabled={busy.value}>Cancel</button>
+              </>
+            ) : (
+              <button class="vamp-st__kick-btn" onClick={() => { confirmVote.value = true; }}>Vote to remove Storyteller</button>
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
 
 function CollapsibleSection({ title, pill, onPillClick, defaultOpen, children }: {
   title: string;

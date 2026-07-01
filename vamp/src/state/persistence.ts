@@ -7,7 +7,7 @@ import { db, auth, linkedEmail } from '../firebase';
 import { character, type CharacterState, type Note, BLANK_CHARACTER, moveItem, removeQtyFromItem, receiveItem, receiveItems, removeItems, freeContainerChildren } from './character';
 import { collectSubtree, isDescendant, isContainerItem } from '../data/itemTree';
 import { planNotesReconcile } from './notesSync';
-import { activeStConsent, type StConsent } from './storyteller';
+import { activeStConsent, activeStDeclined, kickVotePassed, type StConsent } from './storyteller';
 import type { Item, ItemType, Gift } from '../data/types';
 import { isEquippableType, STASH_ID, HAVEN_ID } from '../data/itemTags';
 import { giftDisplayName, pickVerb, giftRecipientToast } from '../data/gifts';
@@ -74,6 +74,8 @@ interface IDBCharacterRecord extends CharacterState {
   /* Mirrors the dedicated character-doc field, kept here so an offline reload doesn't
      lose it (Firestore is authoritative when online). */
   stConsent?: StConsent | null;
+  /* Declined-ST uid, same mirroring contract as stConsent. */
+  stDeclined?: string | null;
 }
 
 export const activeCharacterId = signal<string | null>(null);
@@ -220,6 +222,7 @@ export async function loadCharacterList(): Promise<CharacterSummary[]> {
           updatedAt: ts,
           pendingSync: false,
           stConsent: (data.stConsent as StConsent | null) ?? null,
+          stDeclined: (data.stDeclined as string | null) ?? null,
         } satisfies IDBCharacterRecord).catch(() => {});
       }
     }
@@ -293,6 +296,7 @@ export async function loadCharacter(id: string): Promise<void> {
       localPending = rec.pendingSync;
       coterieId = rec.coterieId;
       activeStConsent.value = rec.stConsent ?? null;
+      activeStDeclined.value = rec.stDeclined ?? null;
       loaded = true;
     }
   } catch {}
@@ -314,6 +318,8 @@ export async function loadCharacter(id: string): Promise<void> {
        freshness check: Firestore is always authoritative for it when online. */
     const consent = (raw.stConsent as StConsent | null) ?? null;
     activeStConsent.value = consent;
+    const declined = (raw.stDeclined as string | null) ?? null;
+    activeStDeclined.value = declined;
 
     if (fsFresher) {
       const state = stripMetadata(raw);
@@ -333,6 +339,7 @@ export async function loadCharacter(id: string): Promise<void> {
         updatedAt: ts || Date.now(),
         pendingSync: false,
         stConsent: consent,
+        stDeclined: declined,
       } satisfies IDBCharacterRecord).catch(() => {});
     }
 
@@ -381,6 +388,7 @@ async function saveCharacter(
       updatedAt: Date.now(),
       pendingSync: true,
       stConsent: existing?.stConsent ?? null,
+      stDeclined: existing?.stDeclined ?? null,
     } satisfies IDBCharacterRecord);
     idbOk = true;
 
@@ -485,6 +493,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
   character.value = state;
   activeCharacterId.value = ref.id;
   activeStConsent.value = null;
+  activeStDeclined.value = null;
   return ref.id;
 }
 
@@ -811,13 +820,14 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
   const giftQueue = (data.giftQueue as Gift[]) ?? [];
   const diceRolls = (data.diceRolls as RollLogEntry[]) ?? [];
   const storytellerUid = (data.storytellerUid as string | null) ?? null;
+  const stKickVotes = (data.stKickVotes as string[]) ?? [];
   /* Roster always applies (externally owned). The Clock applies too, except while our increment is in flight, so a stale snapshot can't revert it. */
   if (data.masqueradeClock && !masqueradeDirty.value) {
     masqueradeClock.value = data.masqueradeClock as Clock;
   }
   if (preserveLocalEdits) {
     console.log('[CoterieSync] applyCoterie PRESERVE local; ignoring incoming stats', data.stats);
-    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue, diceRolls, storytellerUid };
+    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue, diceRolls, storytellerUid, stKickVotes };
     processGiftQueue();
     return;
   }
@@ -833,6 +843,7 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
     giftQueue,
     diceRolls,
     storytellerUid,
+    stKickVotes,
   };
   processGiftQueue();
 }
@@ -932,28 +943,28 @@ export function locationStore(target: string | null): 'char' | 'haven' {
 
 /* Single entry point for every item move; routes by source store and destination store.
    Same-store moves carry subtrees automatically (children point at the item id); the two
-   cross-store paths copy the whole subtree across the character/Coterie boundary. */
-export function relocate(itemId: string, target: string | null): void {
+   cross-store paths copy the whole subtree across the character/Coterie boundary.
+   Resolves true only once the move actually landed, so callers can toast honestly. */
+export async function relocate(itemId: string, target: string | null): Promise<boolean> {
   const inChar = character.value.items.some(i => i.id === itemId);
   const inHaven = !inChar && coterieState.value.havenItems.some(i => i.id === itemId);
-  if (!inChar && !inHaven) return;
+  if (!inChar && !inHaven) return false;
   const dest = locationStore(target);
   if (inChar) {
-    if (dest === 'char') moveItem(itemId, target);
-    else depositToHaven(itemId, target as string);
-  } else {
-    if (dest === 'haven') moveHavenItem(itemId, target as string);
-    else withdrawFromHaven(itemId, target);
+    if (dest === 'char') { moveItem(itemId, target); return true; }
+    return depositToHaven(itemId, target as string);
   }
+  if (dest === 'haven') return moveHavenItem(itemId, target as string);
+  return withdrawFromHaven(itemId, target);
 }
 
 /* Move into the Coterie Haven, carrying the item's whole subtree so nested contents
    survive the boundary. target is 'haven' (root) or a Haven container id. */
-export async function depositToHaven(itemId: string, target: string = HAVEN_ID): Promise<void> {
+export async function depositToHaven(itemId: string, target: string = HAVEN_ID): Promise<boolean> {
   const coterieId = activeCoterie.value;
-  if (!coterieId) return;
+  if (!coterieId) return false;
   const subtree = collectSubtree(character.value.items, itemId);
-  if (subtree.length === 0) return;
+  if (subtree.length === 0) return false;
 
   try {
     const ref = doc(db, 'coteries', coterieId);
@@ -976,10 +987,11 @@ export async function depositToHaven(itemId: string, target: string = HAVEN_ID):
     });
   } catch {
     forceToast('Could not reach the Haven right now. Try again?', 'warning');
-    return;
+    return false;
   }
 
   removeItems(new Set(subtree.map(i => i.id)));
+  return true;
 }
 
 /* Append to the Coterie-shared log (newest-first, capped 50). Transaction so concurrent
@@ -1001,9 +1013,9 @@ export async function appendCoterieRoll(entry: RollLogEntry): Promise<void> {
 /* Pull an item and its whole subtree out of the Haven. target is null (On You), 'stash',
    or a char container id. Idempotent: a stale click finds nothing and no-ops, so two
    members can't both grab it. */
-export async function withdrawFromHaven(havenItemId: string, target: string | null = null): Promise<void> {
+export async function withdrawFromHaven(havenItemId: string, target: string | null = null): Promise<boolean> {
   const coterieId = activeCoterie.value;
-  if (!coterieId) return;
+  if (!coterieId) return false;
 
   let root = target;
   if (root !== null && root !== STASH_ID) {
@@ -1027,25 +1039,28 @@ export async function withdrawFromHaven(havenItemId: string, target: string | nu
     });
   } catch {
     forceToast('Could not reach the Haven right now. Try again?', 'warning');
-    return;
+    return false;
   }
-  if (taken.length === 0) return;
+  if (taken.length === 0) return false;
   const payload = taken.map(it =>
     it.id === havenItemId
       ? { ...it, equipped: false, containerId: root }
       : { ...it, equipped: false },
   );
   receiveItems(payload);
+  return true;
 }
 
 /* Reparent a Haven item within the Haven (to 'haven' root or another Haven container).
    Cycle-guarded; the subtree follows because children point at the item id. */
-export async function moveHavenItem(id: string, target: string): Promise<void> {
+export async function moveHavenItem(id: string, target: string): Promise<boolean> {
   const coterieId = activeCoterie.value;
-  if (!coterieId) return;
+  if (!coterieId) return false;
   const ref = doc(db, 'coteries', coterieId);
+  let moved = false;
   try {
     await runTransaction(db, async (txn) => {
+      moved = false; // reset each attempt so a Firestore retry can't keep a stale verdict
       const snap = await txn.get(ref);
       if (!snap.exists()) return;
       const haven: Item[] = snap.data().havenItems ?? [];
@@ -1056,6 +1071,7 @@ export async function moveHavenItem(id: string, target: string): Promise<void> {
         const dest = haven.find(i => i.id === target);
         if (!dest || !isContainerItem(dest)) return;
       }
+      moved = true;
       txn.update(ref, {
         havenItems: haven.map(i => i.id === id ? { ...i, containerId: target, equipped: false } : i),
         updatedAt: serverTimestamp(),
@@ -1063,7 +1079,9 @@ export async function moveHavenItem(id: string, target: string): Promise<void> {
     });
   } catch {
     forceToast('Could not move that Haven item right now. Try again?', 'warning');
+    return false;
   }
+  return moved;
 }
 
 /* Edit a shared Haven item in place. Writes via transaction like deposit/withdraw,
@@ -1086,12 +1104,14 @@ export async function updateHavenItem(id: string, patch: Partial<Omit<Item, 'id'
 
 /* Remove a Haven item, spilling any children up to its own location (the enclosing room,
    or the Haven root) so contents are never destroyed. */
-export async function removeHavenItem(id: string): Promise<void> {
+export async function removeHavenItem(id: string): Promise<boolean> {
   const coterieId = activeCoterie.value;
-  if (!coterieId) return;
+  if (!coterieId) return false;
   const ref = doc(db, 'coteries', coterieId);
+  let dropped = false;
   try {
     await runTransaction(db, async (txn) => {
+      dropped = false; // reset each attempt so a Firestore retry can't keep a stale verdict
       const snap = await txn.get(ref);
       if (!snap.exists()) return;
       const haven: Item[] = snap.data().havenItems ?? [];
@@ -1101,11 +1121,14 @@ export async function removeHavenItem(id: string): Promise<void> {
       const next = haven
         .filter(i => i.id !== id)
         .map(i => i.containerId === id ? { ...i, containerId: fallback } : i);
+      dropped = true;
       txn.update(ref, { havenItems: next, updatedAt: serverTimestamp() });
     });
   } catch {
     forceToast('Could not remove that Haven item right now. Try again?', 'warning');
+    return false;
   }
+  return dropped;
 }
 
 /* Relative qty change resolved inside the transaction, so rapid clicks can't lose updates. */
@@ -1306,6 +1329,7 @@ export async function leaveCoterie(): Promise<void> {
   activeCoterie.value = null;
   coterieState.value = blankCoterie();
   activeStConsent.value = null;
+  activeStDeclined.value = null;
   masqueradeClock.value = { id: 'masquerade', name: 'The Masquerade', segments: 8, filled: 0 };
 }
 
@@ -1345,22 +1369,101 @@ export async function setStConsent(charId: string, stUid: string): Promise<void>
   if (!auth.currentUser?.uid) return;
   const consent: StConsent = { uid: stUid, approvedAt: Date.now() };
   /* Signal only after the write lands, so a rejected write can't leave the UI showing
-     consent that was never persisted. */
-  await setDoc(doc(db, 'characters', charId), { stConsent: consent, updatedAt: serverTimestamp() }, { merge: true });
-  activeStConsent.value = consent;
+     unpersisted consent. Approving wipes any prior decline, so leave + rejoin re-prompts.
+     The charId guard keeps a slow write from stomping a switched-to character's signals. */
+  await setDoc(doc(db, 'characters', charId), { stConsent: consent, stDeclined: deleteField(), updatedAt: serverTimestamp() }, { merge: true });
+  if (activeCharacterId.value === charId) {
+    activeStConsent.value = consent;
+    activeStDeclined.value = null;
+  }
   try {
     const rec = await idbGet<IDBCharacterRecord>('characters', charId);
-    if (rec) await idbPut('characters', { ...rec, stConsent: consent });
+    if (rec) await idbPut('characters', { ...rec, stConsent: consent, stDeclined: null });
   } catch {}
 }
 
 /* Withdraw consent (decline, or on leaving). Removes the field so the rules read it as null. */
 export async function clearStConsent(charId: string): Promise<void> {
   if (!auth.currentUser?.uid) return;
-  await setDoc(doc(db, 'characters', charId), { stConsent: deleteField(), updatedAt: serverTimestamp() }, { merge: true });
-  activeStConsent.value = null;
+  await setDoc(doc(db, 'characters', charId), { stConsent: deleteField(), stDeclined: deleteField(), updatedAt: serverTimestamp() }, { merge: true });
+  if (activeCharacterId.value === charId) {
+    activeStConsent.value = null;
+    activeStDeclined.value = null;
+  }
   try {
     const rec = await idbGet<IDBCharacterRecord>('characters', charId);
-    if (rec) await idbPut('characters', { ...rec, stConsent: null });
+    if (rec) await idbPut('characters', { ...rec, stConsent: null, stDeclined: null });
   } catch {}
+}
+
+/* Owner declines the current Storyteller: no consent, no more prompts for this ST.
+   Same write-then-signal ordering as setStConsent. */
+export async function setStDeclined(charId: string, stUid: string): Promise<void> {
+  if (!auth.currentUser?.uid) return;
+  await setDoc(doc(db, 'characters', charId), { stDeclined: stUid, updatedAt: serverTimestamp() }, { merge: true });
+  if (activeCharacterId.value === charId) activeStDeclined.value = stUid;
+  try {
+    const rec = await idbGet<IDBCharacterRecord>('characters', charId);
+    if (rec) await idbPut('characters', { ...rec, stDeclined: stUid });
+  } catch {}
+}
+
+/* Cast (or with rescind=true, withdraw) a vote to remove the Storyteller. Unanimity is
+   tallied INSIDE the transaction against live memberUids; the deciding vote clears
+   storytellerUid + votes in one commit, blocking double-kicks and membership-change races. */
+export async function castStKickVote(rescind = false): Promise<void> {
+  const uid = auth.currentUser?.uid;
+  const coterieId = activeCoterie.value;
+  if (!uid || !coterieId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const data = snap.data();
+      if (!data.storytellerUid) return; // ST already gone; nothing to vote on
+      const memberUids: string[] = data.memberUids ?? [];
+      const prior: string[] = data.stKickVotes ?? [];
+      /* Departed members' votes drop at every write, so stale ballots never count. */
+      const votes = prior.filter(v => memberUids.includes(v) && v !== uid);
+      if (!rescind) votes.push(uid);
+      if (kickVotePassed(votes, memberUids)) {
+        txn.update(ref, { storytellerUid: null, stKickVotes: [], updatedAt: serverTimestamp() });
+      } else {
+        txn.update(ref, { stKickVotes: votes, updatedAt: serverTimestamp() });
+      }
+    });
+  } catch {
+    forceToast('Could not record your vote right now. Try again?', 'warning');
+  }
+}
+
+export interface StClaimStatus {
+  code: string;
+  typeName: string;
+  memberCount: number;
+  consented: number;
+  isStoryteller: boolean;
+}
+
+/* Status for the Storyteller claim card. Consent tally reads each member's stConsent
+   field directly (Coterie characters are public-readable, so read success alone proves
+   nothing; the FIELD naming this uid is what counts). */
+export async function getStClaimStatus(rawCode: string): Promise<StClaimStatus | null> {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return null;
+  const code = rawCode.trim().toUpperCase();
+  const snap = await getDoc(doc(db, 'coteries', code));
+  if (!snap.exists()) return null;
+  const data = snap.data();
+  const members: CoterieMember[] = data.members ?? [];
+  const isStoryteller = (data.storytellerUid ?? null) === uid;
+  let consented = 0;
+  if (isStoryteller) {
+    const reads = await Promise.allSettled(members.map(m => getDoc(doc(db, 'characters', m.characterId))));
+    consented = reads.filter(r =>
+      r.status === 'fulfilled' && r.value.exists() && (r.value.data().stConsent as StConsent | undefined)?.uid === uid,
+    ).length;
+  }
+  return { code, typeName: (data.typeName as string) ?? '', memberCount: members.length, consented, isStoryteller };
 }

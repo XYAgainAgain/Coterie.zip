@@ -31,6 +31,9 @@ export interface CoterieState {
   /* The claimed Storyteller's uid, or null if unclaimed. Externally owned: set by claim,
      cleared by step-down or member kick; applies from snapshots like the roster. */
   storytellerUid: string | null;
+  /* Open kick-vote: uids of members who voted to remove the ST. Externally owned
+     (transactional writes); unanimity vs live memberUids resolves inside the transaction. */
+  stKickVotes: string[];
 }
 
 export function blankCoterie(): CoterieState {
@@ -45,6 +48,7 @@ export function blankCoterie(): CoterieState {
     giftQueue: [],
     diceRolls: [],
     storytellerUid: null,
+    stKickVotes: [],
   };
 }
 

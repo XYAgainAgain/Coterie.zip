@@ -9,7 +9,6 @@ interface EditableTextFieldProps {
   onSave: (value: string) => void;
   placeholder?: string;
   multiline?: boolean;
-  markdown?: (raw: string) => string;
   autoResize?: boolean;
   className?: string;
   label?: string;
@@ -22,7 +21,6 @@ export function EditableTextField({
   onSave,
   placeholder,
   multiline,
-  markdown,
   autoResize,
   className,
   label,
@@ -140,12 +138,9 @@ export function EditableTextField({
         <span class="vamp-editable__placeholder">
           {placeholder || (label ? `Double-click to add ${label.toLowerCase()}...` : 'Double-click to edit...')}
         </span>
-      ) : markdown ? (
-        <div
-          class="vamp-editable__display vamp-editable--markdown"
-          dangerouslySetInnerHTML={{ __html: markdown(displayValue) }}
-        />
       ) : (
+        /* User-typed content renders as plain text on purpose: if this field ever needs
+           markdown, it must go through renderUserMarkdown, never renderGameMarkdown. */
         <span class="vamp-editable__display">{displayValue}</span>
       )}
     </div>
