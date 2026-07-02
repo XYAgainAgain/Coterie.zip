@@ -4,7 +4,7 @@ import { debounce } from '../utils/debounce';
 import { preloadPortraits } from '../utils/preloadPortraits';
 import { SectionBox } from '../components/SectionBox';
 import { RightColumn } from '../components/RightColumn';
-import { RightPanelContent } from '../components/RightPanelTabs';
+import { RightPanelContent } from '../components/right-panel/RightPanelContent';
 import { DisciplinesTab } from '../components/DisciplinesTab';
 import { ClockDisplay } from '../components/ClockDisplay';
 import { NewClockWidget } from '../components/NewClockWidget';
@@ -1056,6 +1056,14 @@ function VitalsTab() {
         for (const fb of char.folkloricBanes) {
           const full = extras?.folkloricBanes.find(b => b.baneName === fb.baneName);
           extraBanes.push({ key: `folk-${fb.baneName}`, type: 'banes', name: fb.baneName, fullText: full?.consequences ?? '', nameClass: 'vamp-bane__name', label: baneLabel('Folkloric Bane:') });
+        }
+        /* Baneful Blood: the patron Clan picked in the Flaw's dropdown curses the Ghoul too */
+        const banefulBlood = char.flaws.find(f => f.name === 'Baneful Blood');
+        const patronPb = banefulBlood?.selection
+          ? gameData.value?.playbooks.find(p => p.name === banefulBlood.selection)
+          : undefined;
+        if (patronPb) {
+          extraBanes.push({ key: `patron-${patronPb.name}`, type: 'banes', name: patronPb.baneName, fullText: patronPb.baneDescription, nameClass: 'vamp-bane__name', label: baneLabel("Patron's Bane:") });
         }
         extraBanes.sort((a, b) => a.name.localeCompare(b.name));
 

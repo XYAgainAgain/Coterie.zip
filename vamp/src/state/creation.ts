@@ -63,6 +63,14 @@ export const namePromptAnswered = signal(false);
 const PREDATOR_SKIP_AGE = new Set(['Fledgling']);
 const PREDATOR_SKIP_PLAYBOOK = new Set(['Devorari', 'Ghoul']);
 
+/* Ghouls/Thin-Bloods locked to auto-Semimortal; Ghouls don't get Pred Type, guide skips both. */
+export function stepIrrelevant(step: CreationStep): boolean {
+  const pb = character.value.playbook;
+  if (step === 'age') return pb === 'Ghoul' || pb === 'Thin-Blood';
+  if (step === 'predator') return pb === 'Ghoul';
+  return false;
+}
+
 function predatorSkippable(ageBracket: string, playbook: string): boolean {
   return PREDATOR_SKIP_AGE.has(ageBracket) || PREDATOR_SKIP_PLAYBOOK.has(playbook);
 }

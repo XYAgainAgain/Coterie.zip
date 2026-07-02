@@ -6694,7 +6694,6 @@ details[open] > .vamp-detail__summary::before {
 
 .vamp-rpanel-bar__tab--active .vamp-rpanel-bar__icon {
   opacity: 1;
-  color: #fff;
   filter: drop-shadow(0 0 0.35rem var(--v-glow, rgba(255,255,255,0.5)));
 }
 
@@ -6702,6 +6701,7 @@ details[open] > .vamp-detail__summary::before {
   display: inline-block;
   inline-size: 1.3rem;
   block-size: 1.3rem;
+  color: #fff;
   background: currentColor;
   opacity: 0.4;
   mask-size: contain;

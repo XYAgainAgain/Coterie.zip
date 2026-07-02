@@ -4,7 +4,7 @@ import {
   type CreationStep,
   CREATION_STEPS, STEP_ZONE, STEP_LABELS, STEP_MESSAGES, STEP_WARNINGS,
   creationMode, creationStep, namePromptAnswered, stepComplete,
-  currentStepWarning,
+  currentStepWarning, stepIrrelevant,
 } from './creation';
 import { TOUR_STEPS } from './tour';
 import { splitMode, type RPanelTab, type ContentTab } from './panel';
@@ -88,9 +88,12 @@ export function startGuide() {
   let saved = character.value.creationStep as CreationStep;
   if (saved === 'stats' as string) saved = 'playbook';
   const resumeStep = CREATION_STEPS.includes(saved) ? saved : 'name';
-  const idx = ALL_GUIDE_STEPS.findIndex(s => s.creationStep === resumeStep);
-  guideStepIndex.value = idx >= 0 ? idx : 0;
-  creationStep.value = resumeStep;
+  let idx = ALL_GUIDE_STEPS.findIndex(s => s.creationStep === resumeStep);
+  if (idx < 0) idx = 0;
+  /* A saved step can turn irrelevant after a Playbook change; resume past it */
+  while (idx < ALL_GUIDE_STEPS.length - 1 && guideStepSkipped(ALL_GUIDE_STEPS[idx])) idx++;
+  guideStepIndex.value = idx;
+  creationStep.value = ALL_GUIDE_STEPS[idx].creationStep ?? resumeStep;
 }
 
 export function resumeGuideForTour() {
@@ -100,28 +103,34 @@ export function resumeGuideForTour() {
   guideStepIndex.value = tourStart >= 0 ? tourStart : 0;
 }
 
-export function nextGuideStep() {
-  if (guideStepIndex.value < ALL_GUIDE_STEPS.length - 1) {
-    guideStepIndex.value = guideStepIndex.value + 1;
-    const step = ALL_GUIDE_STEPS[guideStepIndex.value];
-    if (step.creationStep) {
-      creationStep.value = step.creationStep;
-      updateCharacter({ creationStep: step.creationStep });
-    }
-  } else {
-    completeGuide();
+function guideStepSkipped(step: GuideStep): boolean {
+  return !!step.creationStep && stepIrrelevant(step.creationStep);
+}
+
+function landOnStep(idx: number) {
+  guideStepIndex.value = idx;
+  const step = ALL_GUIDE_STEPS[idx];
+  if (step.creationStep) {
+    creationStep.value = step.creationStep;
+    updateCharacter({ creationStep: step.creationStep });
   }
 }
 
-export function prevGuideStep() {
-  if (guideStepIndex.value > 0) {
-    guideStepIndex.value = guideStepIndex.value - 1;
-    const step = ALL_GUIDE_STEPS[guideStepIndex.value];
-    if (step.creationStep) {
-      creationStep.value = step.creationStep;
-      updateCharacter({ creationStep: step.creationStep });
-    }
+export function nextGuideStep() {
+  let idx = guideStepIndex.value + 1;
+  while (idx < ALL_GUIDE_STEPS.length && guideStepSkipped(ALL_GUIDE_STEPS[idx])) idx++;
+  if (idx >= ALL_GUIDE_STEPS.length) {
+    completeGuide();
+    return;
   }
+  landOnStep(idx);
+}
+
+export function prevGuideStep() {
+  let idx = guideStepIndex.value - 1;
+  while (idx > 0 && guideStepSkipped(ALL_GUIDE_STEPS[idx])) idx--;
+  if (idx < 0) return;
+  landOnStep(idx);
 }
 
 export function skipGuide() {

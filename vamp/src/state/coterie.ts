@@ -54,25 +54,44 @@ export function blankCoterie(): CoterieState {
 
 export const coterieState = signal<CoterieState>(blankCoterie());
 
-/* Set when this client makes a local edit to the shared Coterie fields, cleared
-   once saveCoterie persists. While true, the realtime listener won't overwrite
-   those fields from an incoming snapshot, so an unrelated roster/clock write
-   can't revert an in-flight stat or Haven edit before it's saved. */
-export const coterieDirty = signal(false);
+/* The owned (non-transactional) Coterie fields this client saves directly. */
+export type CoterieOwnedField = 'typeName' | 'stats' | 'havenDescription' | 'havenPositives' | 'havenNegatives';
+
+/* Per-field dirty set: a marked field wins over incoming snapshots until its own save
+   lands (last-write-wins per whole field), so edits to different fields can't clobber. */
+export const coterieDirtyFields = signal<ReadonlySet<CoterieOwnedField>>(new Set());
+
+export function markCoterieDirty(...fields: CoterieOwnedField[]) {
+  const next = new Set(coterieDirtyFields.value);
+  for (const f of fields) next.add(f);
+  coterieDirtyFields.value = next;
+}
+
+/* No args = clear everything (leave/switch/save-give-up). */
+export function clearCoterieDirty(fields?: CoterieOwnedField[]) {
+  if (!fields) {
+    if (coterieDirtyFields.value.size > 0) coterieDirtyFields.value = new Set();
+    return;
+  }
+  if (fields.length === 0) return;
+  const next = new Set(coterieDirtyFields.value);
+  for (const f of fields) next.delete(f);
+  coterieDirtyFields.value = next;
+}
 
 export function setCoterieType(name: string, stats: Record<CoterieStatName, number>) {
   coterieState.value = { ...coterieState.value, typeName: name, stats };
-  coterieDirty.value = true;
+  markCoterieDirty('typeName', 'stats');
 }
 
 export function setHavenDescription(text: string) {
   coterieState.value = { ...coterieState.value, havenDescription: text };
-  coterieDirty.value = true;
+  markCoterieDirty('havenDescription');
 }
 
 export function setHavenPicks(havenPositives: string[], havenNegatives: string[]) {
   coterieState.value = { ...coterieState.value, havenPositives, havenNegatives };
-  coterieDirty.value = true;
+  markCoterieDirty('havenPositives', 'havenNegatives');
 }
 
 export function adjustCoterieStat(stat: CoterieStatName, delta: number) {
@@ -82,8 +101,8 @@ export function adjustCoterieStat(stat: CoterieStatName, delta: number) {
     ...coterieState.value,
     stats: { ...coterieState.value.stats, [stat]: next },
   };
-  coterieDirty.value = true;
-  console.log('[CoterieSync] adjustCoterieStat', stat, '->', coterieState.value.stats[stat], 'dirty=', coterieDirty.value);
+  markCoterieDirty('stats');
+  console.log('[CoterieSync] adjustCoterieStat', stat, '->', coterieState.value.stats[stat], 'dirty=', [...coterieDirtyFields.value]);
 }
 
 /* Always 8 segments. Shared across all Coterie members' sheets. */

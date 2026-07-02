@@ -12,7 +12,7 @@ import type { Item, ItemType, Gift } from '../data/types';
 import { isEquippableType, STASH_ID, HAVEN_ID } from '../data/itemTags';
 import { giftDisplayName, pickVerb, giftRecipientToast } from '../data/gifts';
 import { forceToast } from './toasts';
-import { coterieState, masqueradeClock, blankCoterie, coterieDirty, masqueradeDirty } from './coterie';
+import { coterieState, masqueradeClock, blankCoterie, coterieDirtyFields, clearCoterieDirty, masqueradeDirty, type CoterieOwnedField } from './coterie';
 import type { CoterieState, CoterieMember } from './coterie';
 import type { Clock } from './character';
 import type { RollLogEntry } from '../dice/types';
@@ -279,6 +279,17 @@ async function reconcileNotes(id: string, uid: string, cloudAuthoritative: boole
   }
 }
 
+/* activeCoterie must always match the active character's own Coterie; saveCharacter
+   attaches it, so a stale value would silently enroll the character. */
+function resetCoterieContext(): void {
+  stopCoterieListener();
+  activeCoterie.value = null;
+  coterieState.value = blankCoterie();
+  clearCoterieDirty();
+  masqueradeDirty.value = false;
+  masqueradeClock.value = { id: 'masquerade', name: 'The Masquerade', segments: 8, filled: 0 };
+}
+
 export async function loadCharacter(id: string): Promise<void> {
   let idbTs = 0;
   let loaded = false;
@@ -306,6 +317,7 @@ export async function loadCharacter(id: string): Promise<void> {
     if (!snap.exists()) {
       if (!loaded) throw new Error(`Character ${id} not found`);
       if (coterieId) await loadCoterie(coterieId);
+      else resetCoterieContext();
       return;
     }
 
@@ -352,6 +364,8 @@ export async function loadCharacter(id: string): Promise<void> {
 
   if (coterieId) {
     await loadCoterie(coterieId);
+  } else {
+    resetCoterieContext();
   }
 }
 
@@ -494,6 +508,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
   activeCharacterId.value = ref.id;
   activeStConsent.value = null;
   activeStDeclined.value = null;
+  resetCoterieContext();
   return ref.id;
 }
 
@@ -696,7 +711,7 @@ export function startAutoSave(): void {
       if (!id) return;
       /* Local edits only: saving on bare signal change looped write→snapshot→write
          in every open tab (the 2026-06-11 136K-read quota blowout) */
-      if (!coterieDirty.value && !masqueradeDirty.value) return;
+      if (coterieDirtyFields.value.size === 0 && !masqueradeDirty.value) return;
       /* Schedule-once: resetting a pending timer would let busy-group roster
          snapshots starve the save indefinitely */
       if (!coterieSaveTimer) {
@@ -812,7 +827,9 @@ export async function loadCharacterPublic(
 
 let coterieUnsub: (() => void) | null = null;
 
-function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false) {
+const NO_DIRTY_FIELDS: ReadonlySet<CoterieOwnedField> = new Set();
+
+function applyCoterie(data: Record<string, unknown>, dirty: ReadonlySet<CoterieOwnedField> = NO_DIRTY_FIELDS) {
   const members = (data.members as CoterieState['members']) ?? [];
   /* Shared inventory + gift queue are externally owned, so they always apply (like
      members), regardless of our local dirty state. */
@@ -825,19 +842,18 @@ function applyCoterie(data: Record<string, unknown>, preserveLocalEdits = false)
   if (data.masqueradeClock && !masqueradeDirty.value) {
     masqueradeClock.value = data.masqueradeClock as Clock;
   }
-  if (preserveLocalEdits) {
-    console.log('[CoterieSync] applyCoterie PRESERVE local; ignoring incoming stats', data.stats);
-    coterieState.value = { ...coterieState.value, members, havenItems, giftQueue, diceRolls, storytellerUid, stKickVotes };
-    processGiftQueue();
-    return;
-  }
-  console.log('[CoterieSync] applyCoterie OVERWRITE from server; stats', data.stats, 'haven', data.havenDescription);
+  /* Per-field last-write-wins: a locally dirty field keeps its exact ref (saveCoterie's
+     ref-equality guard-clear depends on that); every other field applies from the server. */
+  const cur = coterieState.value;
+  if (dirty.size > 0) console.log('[CoterieSync] applyCoterie preserving dirty fields', [...dirty]);
+  else console.log('[CoterieSync] applyCoterie OVERWRITE from server; stats', data.stats, 'haven', data.havenDescription);
   coterieState.value = {
-    typeName: (data.typeName as string) ?? '',
-    stats: (data.stats as CoterieState['stats']) ?? { Clout: 0, Cohesion: 0, Charm: 0, Claim: 0, Currency: 0 },
-    havenDescription: (data.havenDescription as string) ?? '',
-    havenPositives: (data.havenPositives as string[]) ?? [],
-    havenNegatives: (data.havenNegatives as string[]) ?? [],
+    typeName: dirty.has('typeName') ? cur.typeName : ((data.typeName as string) ?? ''),
+    stats: dirty.has('stats') ? cur.stats
+      : ((data.stats as CoterieState['stats']) ?? { Clout: 0, Cohesion: 0, Charm: 0, Claim: 0, Currency: 0 }),
+    havenDescription: dirty.has('havenDescription') ? cur.havenDescription : ((data.havenDescription as string) ?? ''),
+    havenPositives: dirty.has('havenPositives') ? cur.havenPositives : ((data.havenPositives as string[]) ?? []),
+    havenNegatives: dirty.has('havenNegatives') ? cur.havenNegatives : ((data.havenNegatives as string[]) ?? []),
     members,
     havenItems,
     giftQueue,
@@ -1151,16 +1167,19 @@ export async function adjustHavenItemQty(id: string, delta: number): Promise<voi
 export async function loadCoterie(coterieId: string): Promise<void> {
   if (coterieUnsub) { coterieUnsub(); coterieUnsub = null; }
 
+  /* Unsaved local edits belong to the previous Coterie (if any); never carry them across. */
+  clearCoterieDirty();
+
   const snap = await getDoc(doc(db, 'coteries', coterieId));
   if (!snap.exists()) return;
   applyCoterie(snap.data());
   activeCoterie.value = coterieId;
 
   coterieUnsub = onSnapshot(doc(db, 'coteries', coterieId), snap => {
-    console.log('[CoterieSync] snapshot pending=', snap.metadata.hasPendingWrites, 'dirty=', coterieDirty.value, 'exists=', snap.exists());
+    console.log('[CoterieSync] snapshot pending=', snap.metadata.hasPendingWrites, 'dirty=', [...coterieDirtyFields.value], 'exists=', snap.exists());
     /* Skip local write echoes; only confirmed remote changes apply. */
     if (!snap.exists() || snap.metadata.hasPendingWrites) return;
-    applyCoterie(snap.data(), coterieDirty.value);
+    applyCoterie(snap.data(), coterieDirtyFields.value);
   });
 }
 
@@ -1177,32 +1196,30 @@ export async function saveCoterie(): Promise<void> {
   if (!id || !uid) return;
   /* 1 write at a time; a concurrent debounce + retry would double-count failures and race the give-up clear. Re-run once if an edit lands mid-write. */
   if (coterieSaving) { coterieSaveQueued = true; return; }
+
+  /* Write ONLY the locally dirty fields (last-write-wins per whole field): a stats save
+     must never carry a stale havenDescription over another client's newer write.
+     members/memberUids, havenItems, and diceRolls belong to the transactional paths. */
+  const dirtyAtWrite = coterieDirtyFields.value;
+  const writeClock = masqueradeDirty.value;
+  if (dirtyAtWrite.size === 0 && !writeClock) return;
   coterieSaving = true;
 
-  /* Write only the fields this save owns; members/memberUids, havenItems, and diceRolls
-     belong to the transactional paths — never spread ...c here or it clobbers their appends. */
   const c = coterieState.value;
   const clockAtWrite = masqueradeClock.value;
-  console.log('[CoterieSync] saveCoterie writing stats', c.stats, 'haven', c.havenDescription, 'clock', clockAtWrite.filled);
+  const payload: Record<string, unknown> = { updatedAt: serverTimestamp() };
+  for (const f of dirtyAtWrite) payload[f] = c[f];
+  if (writeClock) payload.masqueradeClock = clockAtWrite;
+  console.log('[CoterieSync] saveCoterie writing', [...dirtyAtWrite], writeClock ? '+ clock' : '');
   try {
-    await setDoc(doc(db, 'coteries', id), {
-      typeName: c.typeName,
-      stats: c.stats,
-      havenDescription: c.havenDescription,
-      havenPositives: c.havenPositives,
-      havenNegatives: c.havenNegatives,
-      masqueradeClock: clockAtWrite,
-      updatedAt: serverTimestamp(),
-    }, { merge: true });
+    await setDoc(doc(db, 'coteries', id), payload, { merge: true });
     coterieSaveFailures = 0;
     if (coterieSaveRetry) { clearTimeout(coterieSaveRetry); coterieSaveRetry = null; }
-    /* Clear guards only after the server confirms, and only if nothing landed mid-write */
+    /* Clear each guard only after the server confirms, and only for fields that didn't
+       change mid-write (ref equality; every mutation replaces the object). */
     const now = coterieState.value;
-    const unchanged = now.typeName === c.typeName && now.stats === c.stats
-      && now.havenDescription === c.havenDescription
-      && now.havenPositives === c.havenPositives && now.havenNegatives === c.havenNegatives;
-    if (unchanged) coterieDirty.value = false;
-    if (masqueradeClock.value === clockAtWrite) masqueradeDirty.value = false;
+    clearCoterieDirty([...dirtyAtWrite].filter(f => now[f] === c[f]));
+    if (writeClock && masqueradeClock.value === clockAtWrite) masqueradeDirty.value = false;
   } catch (err) {
     /* Retry on timer; a stuck-dirty client ignores incoming snapshots and re-pushes stale fields. After repeated failures, clear guards so sync recovers. */
     console.error('[Coterie] saveCoterie failed:', err);
@@ -1213,7 +1230,7 @@ export async function saveCoterie(): Promise<void> {
       }
     } else {
       coterieSaveFailures = 0;
-      coterieDirty.value = false;
+      clearCoterieDirty();
       masqueradeDirty.value = false;
     }
   } finally {
@@ -1325,12 +1342,9 @@ export async function leaveCoterie(): Promise<void> {
   /* Leaving revokes consent; the ST can't clear other players' consent, so do our own here. */
   try { await clearStConsent(charId); } catch {}
 
-  stopCoterieListener();
-  activeCoterie.value = null;
-  coterieState.value = blankCoterie();
+  resetCoterieContext();
   activeStConsent.value = null;
   activeStDeclined.value = null;
-  masqueradeClock.value = { id: 'masquerade', name: 'The Masquerade', segments: 8, filled: 0 };
 }
 
 /* Storytellers must be email-verified; the Firestore rules enforce the same server-side. */
