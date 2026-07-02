@@ -13,6 +13,9 @@ export class DiceRenderer {
      pipeline compile mid-tumble (the freeze-then-jump hitch, worst on Firefox WebGPU). */
   private dieMaterials: THREE.MeshStandardMaterial[] | null = null;
   private spinnerCube: THREE.Mesh | null = null;
+  /* CSS-px x the spinner should center on (tracks the header wordmark); null = corner default */
+  private spinnerAnchorX: number | null = null;
+  private cssWidth: number;
   private shadowFloor: THREE.Mesh | null = null;
   private sun: THREE.DirectionalLight | null = null;
   private fill: THREE.DirectionalLight | null = null;
@@ -24,6 +27,7 @@ export class DiceRenderer {
 
     const w = canvas.clientWidth || canvas.width || 800;
     const h = canvas.clientHeight || canvas.height || 600;
+    this.cssWidth = w;
 
     this.camera = new THREE.PerspectiveCamera(24, w / h, 0.1, 100);
     this.camera.position.set(0, 40, 0);
@@ -186,8 +190,18 @@ export class DiceRenderer {
     const vFov = this.camera.fov * Math.PI / 180;
     const halfH = Math.tan(vFov / 2) * this.camera.position.y;
     const halfW = halfH * this.camera.aspect;
-    this.spinnerCube.position.set(-halfW + 1.8, 0.3, -halfH + 0.45);
+    /* Anchored: invert the projection at the spinner's own height so world x lands on the CSS px */
+    const planeHalfW = Math.tan(vFov / 2) * (this.camera.position.y - 0.3) * this.camera.aspect;
+    const x = this.spinnerAnchorX !== null
+      ? ((this.spinnerAnchorX / this.cssWidth) * 2 - 1) * planeHalfW
+      : -halfW + 1.8;
+    this.spinnerCube.position.set(x, 0.3, -halfH + 0.45);
     this.spinnerCube.scale.setScalar(0.4);
+  }
+
+  setSpinnerAnchorX(cssX: number | null): void {
+    this.spinnerAnchorX = cssX;
+    this.positionSpinnerInCorner();
   }
 
   updateSpinner(elapsed: number): void {
@@ -312,6 +326,7 @@ export class DiceRenderer {
   }
 
   handleResize(width: number, height: number): void {
+    this.cssWidth = width;
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);

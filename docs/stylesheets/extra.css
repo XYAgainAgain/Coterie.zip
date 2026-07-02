@@ -1171,6 +1171,102 @@ a, button, .md-nav__link, .md-footer__link {
   overflow: visible;
 }
 
+/* Grid-stacked topics keep the un-grown title intrinsic so the CTA hugs it; below the
+   CTA's breakpoint the title must grow again or the right cluster drifts left. */
+@media screen and (min-width: 720px) {
+  .md-header__title { flex-grow: 0; min-width: 0; }
+  /* width: auto is the no-JS fallback; the CTA script sets a px width per visible topic */
+  .md-header__ellipsis { display: grid; width: auto; transition: width 0.4s cubic-bezier(0.1, 0.7, 0.1, 1); }
+  .md-header__topic { position: static; grid-area: 1 / 1; }
+  .header-vamp-cta { margin-right: auto; }
+}
+
+.header-vamp-cta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-left: 0.75rem;
+  flex-shrink: 0;
+}
+
+.header-vamp-cta::before {
+  content: '';
+  position: absolute;
+  left: -0.5rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  opacity: 0.4;
+  background: linear-gradient(
+    0deg,
+    currentColor 0% 6%,
+    transparent 6% 12%,
+    currentColor 12% 30%,
+    transparent 30% 36%,
+    currentColor 36% 54%,
+    transparent 54% 60%,
+    currentColor 60% 66%,
+    transparent 66% 72%,
+    currentColor 72% 90%,
+    transparent 90% 100%
+  );
+}
+
+.header-vamp-cta__label {
+  font-family: 'IM Fell English SC', serif;
+  font-size: 0.75rem;
+  color: var(--md-primary-bg-color--light);
+}
+
+.header-vamp-cta__link {
+  font-family: 'Sinistre', serif;
+  font-size: 0.9rem;
+  color: inherit;
+  filter:
+    drop-shadow(0 0 3px var(--color-glow))
+    drop-shadow(0 0 6px var(--color-glow));
+}
+
+.header-vamp-cta__link:hover {
+  text-decoration: none;
+}
+
+/* Scaled-down port of vamp/src/style.css's vamp-neon-startup (blur radii x0.75) */
+@keyframes vamp-link-neon-startup {
+  0%    { opacity: 0.55; filter: none; }
+  3%    { opacity: 1; filter: drop-shadow(0 0 3px var(--color-glow)) drop-shadow(0 0 6px var(--color-glow)); }
+  4.7%  { opacity: 0.4; filter: none; }
+  7%    { opacity: 0.95; filter: drop-shadow(0 0 3px var(--color-glow)) drop-shadow(0 0 6px var(--color-glow)); }
+  9.7%  { opacity: 0.55; filter: drop-shadow(0 0 1.5px var(--color-glow)); }
+  15%  {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 3.75px var(--color-glow))
+      drop-shadow(0 0 10.5px var(--color-glow))
+      drop-shadow(0 0 19.5px var(--color-glow))
+      brightness(1.65);
+  }
+  44%  {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 3.75px var(--color-glow))
+      drop-shadow(0 0 9px var(--color-glow))
+      drop-shadow(0 0 15px var(--color-glow))
+      brightness(1.3);
+  }
+  100% {
+    opacity: 1;
+    filter:
+      drop-shadow(0 0 3px var(--color-glow))
+      drop-shadow(0 0 6.75px var(--color-glow));
+  }
+}
+
+.header-vamp-cta__link--flicker {
+  animation: vamp-link-neon-startup 3.2s ease-out;
+}
+
 
 /* 7. Search */
 
@@ -1828,6 +1924,14 @@ code,
     animation: none !important;
   }
 
+  /* Vamp header CTA */
+  .header-vamp-cta__link--flicker {
+    animation: none !important;
+  }
+  .md-header__ellipsis {
+    transition: none;
+  }
+
   /* Bat stats */
   .bat-stats__icon { transition: none; }
   .bat-stats__popover { transition: none; }
@@ -1991,6 +2095,7 @@ code,
   }
 
   .md-header__source { display: none !important; }
+  .header-vamp-cta { display: none !important; }
 }
 
 @media screen and (max-width: 479px) {

@@ -246,6 +246,10 @@ export class DiceEngine {
     return this.physics.waitForSettle();
   }
 
+  setSpinnerAnchorX(cssX: number | null): void {
+    this.renderer.setSpinnerAnchorX(cssX);
+  }
+
   getSpinnerScreenPosition(): { x: number; y: number } | null {
     return this.renderer.getSpinnerScreenPosition(
       this.canvas.clientWidth || this.canvas.width,

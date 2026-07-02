@@ -8,6 +8,7 @@ export interface DiceEngineHandle {
   clearDice(): void;
   waitForSettle(): Promise<void>;
   handleResize(w: number, h: number): void;
+  setSpinnerAnchorX(cssX: number | null): void;
   getSpinnerScreenPosition(): { x: number; y: number } | null;
   dispose(): void;
 }

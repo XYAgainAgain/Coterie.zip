@@ -311,6 +311,189 @@ a:hover {
   }
 }
 
+/* Brand block: 1:1 port of the main site's header source link, fangs standing in for the download icon */
+.vamp-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Sinistre', var(--v-font-display);
+  font-size: 1.15rem;
+  color: var(--v-text-primary);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  filter:
+    drop-shadow(0 0 3px var(--v-glow))
+    drop-shadow(0 0 6px var(--v-glow));
+}
+
+.vamp-brand:hover {
+  color: var(--v-text-primary);
+  text-decoration: none;
+  filter:
+    drop-shadow(0 0 4px var(--v-glow))
+    drop-shadow(0 0 9px var(--v-glow));
+}
+
+.vamp-brand__icon {
+  inline-size: 1.05em;
+  block-size: 1.05em;
+  background: currentColor;
+  mask: url('/assets/images/fangs.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/fangs.svg') center/contain no-repeat;
+}
+
+.vamp-brand__presents {
+  font-family: 'IM Fell English SC', serif;
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--v-text-secondary);
+  margin-inline: -0.35rem;
+  white-space: nowrap;
+}
+
+/* Zensical search, scooped: same index, styled on Vamp tokens */
+.vamp-search {
+  position: relative;
+  flex: 0 1 20rem;
+  min-inline-size: 0;
+}
+
+.vamp-search__icon {
+  position: absolute;
+  inset-inline-start: 0.6rem;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  inline-size: 1rem;
+  block-size: 1rem;
+  color: var(--v-text-secondary);
+  pointer-events: none;
+}
+
+.vamp-search__key {
+  position: absolute;
+  inset-inline-end: 0.5rem;
+  inset-block-start: 50%;
+  translate: 0 -50%;
+  padding: 0.1rem 0.35rem;
+  font-family: var(--v-font-body);
+  font-size: 0.65rem;
+  line-height: 1.2;
+  color: var(--v-text-secondary);
+  border: 1px solid var(--v-border);
+  border-radius: 0.25rem;
+  pointer-events: none;
+}
+
+.vamp-search:focus-within .vamp-search__key,
+.vamp-search__input:not(:placeholder-shown) ~ .vamp-search__key {
+  display: none;
+}
+
+.vamp-search__input {
+  inline-size: 100%;
+  padding: 0.35rem 3.4rem 0.35rem 2rem;
+  font-family: var(--v-font-body);
+  font-size: 0.85rem;
+  color: var(--v-text-primary);
+  background: var(--v-bg-elevated);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-md);
+  transition: border-color var(--v-transition), box-shadow var(--v-transition);
+}
+
+.vamp-search__input::placeholder {
+  font-family: var(--v-font-display);
+  font-size: 0.78rem;
+  color: var(--v-text-secondary);
+  opacity: 0.8;
+}
+
+.vamp-search__input:focus {
+  outline: none;
+  border-color: var(--v-accent);
+  box-shadow: 0 0 0 3px var(--v-accent-subtle);
+}
+
+.vamp-search__panel {
+  position: absolute;
+  inset-block-start: calc(100% + 0.4rem);
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  inline-size: min(40rem, 86vw);
+  max-block-size: min(65vh, 30rem);
+  overflow-y: auto;
+  background: var(--v-bg-elevated);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-md);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+  z-index: 100;
+}
+
+.vamp-search__count {
+  padding: 0.45rem 0.75rem 0.3rem;
+  font-size: 0.72rem;
+  color: var(--v-text-secondary);
+  border-block-end: 1px solid var(--v-border);
+}
+
+.vamp-search__sentinel { block-size: 1px; }
+
+.vamp-search__result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.5rem 0.75rem;
+  border-block-end: 1px solid var(--v-border);
+  color: var(--v-text-primary);
+}
+
+.vamp-search__result:last-child { border-block-end: none; }
+
+.vamp-search__result:hover,
+.vamp-search__result--selected {
+  background: var(--v-accent-subtle);
+  text-decoration: none;
+}
+
+.vamp-search__result-title {
+  font-family: var(--v-font-display);
+  font-size: 0.9rem;
+  color: var(--v-text-accent);
+}
+
+.vamp-search__result-crumbs {
+  font-size: 0.7rem;
+  color: var(--v-text-secondary);
+}
+
+.vamp-search__result-excerpt {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--v-text-secondary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
+.vamp-search__panel mark {
+  background: transparent;
+  color: var(--v-accent);
+  font-weight: 700;
+}
+
+.vamp-search__empty {
+  padding: 0.6rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--v-text-secondary);
+}
+
+/* Mobile layout is still pending; the header has no room for search below this */
+@media (max-width: 900px) {
+  .vamp-search { display: none; }
+}
+
 .vamp-header__spacer { flex: 1; }
 
 .vamp-header__controls {

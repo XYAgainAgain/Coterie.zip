@@ -9,6 +9,7 @@ import { TextRocker } from './components/TextRocker';
 import { EmailLinkPrompt } from './components/EmailLinkPrompt';
 import { SettingsDrawer } from './components/SettingsDrawer';
 import { CreationProgress } from './components/creation/CreationProgress';
+import { SiteSearch } from './components/SiteSearch';
 import { initCustomThemeLifecycle } from './themes/customThemeLifecycle';
 import { DiceOverlay } from './dice/DiceOverlay';
 import { ToastStack } from './components/ToastStack';
@@ -70,6 +71,11 @@ export function App() {
       <div class="ambient-blob ambient-blob--bottom" aria-hidden="true" />
       <div class="ambient-smoke" aria-hidden="true" />
       <header class="vamp-header">
+        <a class="vamp-brand" href="https://coterie.zip/" title="Go to Coterie.zip">
+          <span class="vamp-brand__icon" aria-hidden="true" />
+          Coterie.zip
+        </a>
+        <span class="vamp-brand__presents">presents</span>
         <a
           class="vamp-header__title"
           href="/vamp/"
@@ -77,6 +83,8 @@ export function App() {
           onMouseEnter={titleNeonFlicker}
           onAnimationEnd={e => (e.currentTarget as HTMLElement).classList.remove('vamp-header__title--flicker')}
         >Vamp</a>
+        <div class="vamp-header__spacer" />
+        <SiteSearch />
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
         <div class={`vamp-header__controls ${guideActive.value && currentGuideStep.value?.zone === 'header' ? 'guide-spotlight' : ''}`}>

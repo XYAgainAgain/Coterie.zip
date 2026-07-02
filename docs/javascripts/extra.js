@@ -1090,3 +1090,89 @@ window.Coterie.isTypingContext = function() {
     initPronunciations();
   });
 })();
+
+/* "Create a Vamp" header link */
+(function() {
+  'use strict';
+
+  let lastFlicker = -Infinity;
+
+  function flicker(e) {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const now = performance.now();
+    if (now - lastFlicker < 3000) return;
+    lastFlicker = now;
+    e.currentTarget.classList.add('header-vamp-cta__link--flicker');
+  }
+
+  function injectVampLink() {
+    if (document.querySelector('.header-vamp-cta')) return;
+    const title = document.querySelector('.md-header__title');
+    if (!title) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'header-vamp-cta';
+
+    const label = document.createElement('span');
+    label.className = 'header-vamp-cta__label';
+    label.textContent = 'Create a ';
+
+    const link = document.createElement('a');
+    link.className = 'header-vamp-cta__link';
+    link.href = 'https://coterie.zip/vamp/';
+    link.textContent = 'Vamp';
+    link.addEventListener('mouseenter', flicker);
+    link.addEventListener('animationend', function() {
+      link.classList.remove('header-vamp-cta__link--flicker');
+    });
+
+    wrap.appendChild(label);
+    wrap.appendChild(link);
+    title.insertAdjacentElement('afterend', wrap);
+  }
+
+  /* The CTA hugs the title, so the title must track the VISIBLE topic's width; an explicit
+     px width also gives the swap a real transition endpoint (auto doesn't animate) */
+  const wide = window.matchMedia('(min-width: 720px)');
+
+  function syncTitleWidth() {
+    const title = document.querySelector('.md-header__title');
+    const ellipsis = title && title.querySelector('.md-header__ellipsis');
+    if (!ellipsis) return;
+    const topics = title.querySelectorAll('.md-header__topic');
+    if (!wide.matches || topics.length < 2) {
+      ellipsis.style.width = '';
+      return;
+    }
+    const active = title.classList.contains('md-header__title--active');
+    const topic = topics[active ? 1 : 0];
+    const text = topic.firstElementChild || topic;
+    ellipsis.style.width = Math.ceil(text.getBoundingClientRect().width) + 'px';
+  }
+
+  let observedTitle = null;
+  const titleObserver = new MutationObserver(syncTitleWidth);
+
+  function watchTitle() {
+    const title = document.querySelector('.md-header__title');
+    if (!title || title === observedTitle) return;
+    observedTitle = title;
+    titleObserver.disconnect();
+    titleObserver.observe(title, {
+      attributes: true,
+      attributeFilter: ['class'],
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+  }
+
+  wide.addEventListener('change', syncTitleWidth);
+  if (document.fonts) document.fonts.ready.then(syncTitleWidth);
+
+  onDocReady(function() {
+    injectVampLink();
+    watchTitle();
+    syncTitleWidth();
+  });
+})();

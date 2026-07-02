@@ -8,6 +8,12 @@ const DICE_COUNTS = [1, 2, 3, 4, 5, 6, 10] as const;
 type DiceCount = (typeof DICE_COUNTS)[number];
 const DBLCLICK_WINDOW = 300;
 
+/* Spinner sits just right of the Vamp wordmark; null falls back to the corner default */
+function headerAnchorX(): number | null {
+  const title = document.querySelector('.vamp-header__title');
+  return title ? title.getBoundingClientRect().right + 28 : null;
+}
+
 export function DiceOverlay() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const clickTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -35,7 +41,14 @@ export function DiceOverlay() {
       if (disposed) { engine.dispose(); return; }
 
       diceEngine.value = engine;
+      engine.setSpinnerAnchorX(headerAnchorX());
       setBtnPos(engine.getSpinnerScreenPosition());
+      /* Sinistre swapping in changes the wordmark width */
+      document.fonts?.ready.then(() => {
+        if (disposed || !diceEngine.value) return;
+        diceEngine.value.setSpinnerAnchorX(headerAnchorX());
+        setBtnPos(diceEngine.value.getSpinnerScreenPosition());
+      });
     }
 
     function onResize() {
@@ -45,6 +58,7 @@ export function DiceOverlay() {
       canvasRef.current.width = w;
       canvasRef.current.height = h;
       diceEngine.value.handleResize(w, h);
+      diceEngine.value.setSpinnerAnchorX(headerAnchorX());
       setBtnPos(diceEngine.value.getSpinnerScreenPosition());
     }
 
@@ -127,8 +141,9 @@ export function DiceOverlay() {
               top: `${btnPos.y - 10}px`,
               zIndex: 10001,
               pointerEvents: 'none',
-              background: '#cc3333',
-              color: '#fff',
+              background: 'var(--v-accent-2)',
+              /* Flips black/white on the badge's own lightness so any custom accent stays legible */
+              color: 'oklch(from var(--v-accent-2) calc((0.66 - l) * infinity) 0 0)',
               borderRadius: '50%',
               width: '14px',
               height: '14px',
