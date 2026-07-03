@@ -6,6 +6,7 @@ dev/
 .obsidian/
 .obsidianignore
 .cache/
+*.canvas
 
 # Python
 __pycache__/
