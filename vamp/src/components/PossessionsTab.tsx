@@ -6,7 +6,7 @@ import {
   character, addItem, updateItem, removeItem, moveItem, setItemContainer, toggleEquip,
 } from '../state/character';
 import { coterieState } from '../state/coterie';
-import { activeCoterie, activeCharacterId, giveItem, relocate, depositToHaven, withdrawFromHaven, updateHavenItem, removeHavenItem, adjustHavenItemQty } from '../state/persistence';
+import { activeCoterie, activeCharacterId, giveItem, relocate, depositToHaven, updateHavenItem, removeHavenItem, adjustHavenItemQty } from '../state/persistence';
 import { gameData } from '../state/derived';
 import { viewingOtherSheet } from '../state/ui';
 import { forceToast } from '../state/toasts';
@@ -17,6 +17,7 @@ import {
 import { isContainerItem, CONTAINER_TAG, isDescendant, collectSubtree } from '../data/itemTree';
 import { ITEM_TYPES, type Item, type TagRef, type ItemType, type ItemTag } from '../data/types';
 import { debounce } from '../utils/debounce';
+import { moveToast, takeToast } from '../data/gifts';
 import { Tooltip } from './Tooltip';
 import {
   DndContext, DragOverlay, useDraggable, useDroppable,
@@ -114,6 +115,23 @@ function zoneLabel(target: string | null): string {
   return it ? (it.name || 'the bag') : 'the bag';
 }
 
+/* Toasts fire only on a root-box change, so each move end resolves to its owning box. */
+function rootZone(target: string | null): 'you' | 'stash' | 'haven' {
+  const haven = coterieState.value.havenItems;
+  const charItems = character.value.items;
+  let cur = target;
+  const seen = new Set<string>();
+  while (cur !== null && cur !== STASH_ID && cur !== HAVEN_ID) {
+    if (seen.has(cur)) break; // defends against a corrupt containerId cycle
+    seen.add(cur);
+    const inHaven = haven.some(i => i.id === cur);
+    const parent = (inHaven ? haven : charItems).find(i => i.id === cur);
+    if (!parent) return inHaven ? 'haven' : 'you';
+    cur = parent.containerId;
+  }
+  return cur === STASH_ID ? 'stash' : cur === HAVEN_ID ? 'haven' : 'you';
+}
+
 /* Always-on debounced field; EditableTextField is dblclick-gated, wrong inside an open
    editor. Keyed by item id at the call site, so draft state is fresh per edit session. */
 function DebouncedInput({ value, onSave, placeholder, multiline, className }: {
@@ -145,6 +163,39 @@ function DebouncedInput({ value, onSave, placeholder, multiline, className }: {
       onBlur={() => save.flush()}
       onKeyDown={onKeyDown}
       {...(multiline ? { rows: 2 } : {})}
+    />
+  );
+}
+
+/* The qty number between the steppers; double-click to type an exact amount instead of
+   clicking +/- hundreds of times. Commits a whole number >= 1 on Enter/blur. */
+function EditableQty({ qty, onSet }: { qty: number; onSet: (n: number) => void }) {
+  const editing = useSignal(false);
+  const draft = useSignal('');
+  const focused = useRef(false);
+
+  if (!editing.value) {
+    return (
+      <span
+        class="vamp-poss-qty__val" title="Double-click to type an amount"
+        onDblClick={() => { draft.value = String(qty); focused.current = false; editing.value = true; }}
+      >{qty}</span>
+    );
+  }
+
+  const commit = () => {
+    if (!editing.value) return; // Escape already closed us; unmount blur must not re-commit
+    const n = Math.floor(Number(draft.value));
+    if (Number.isFinite(n) && n >= 1) onSet(n);
+    editing.value = false;
+  };
+  return (
+    <input
+      class="vamp-poss-qty__input" type="number" min="1" inputMode="numeric" value={draft.value}
+      ref={(el) => { if (el && !focused.current) { focused.current = true; el.focus(); el.select(); } }}
+      onInput={(e) => { draft.value = (e.target as HTMLInputElement).value; }}
+      onKeyDown={(e) => { if (e.key === 'Enter') commit(); else if (e.key === 'Escape') editing.value = false; }}
+      onBlur={commit}
     />
   );
 }
@@ -378,7 +429,10 @@ function moveTargetsFor(item: Item, charItems: Item[], havenItems: Item[], inCot
    after the move lands; failed Haven transactions surface their own warning. */
 async function performMove(item: Item, target: string | null) {
   if (target === item.containerId) return;
-  if (await relocate(item.id, target)) forceToast(`Moved ${item.name || 'item'} to ${zoneLabel(target)}.`, 'info');
+  const crossedBox = rootZone(item.containerId) !== rootZone(target);
+  if (await relocate(item.id, target) && crossedBox) {
+    forceToast(target === null ? takeToast(item.name) : moveToast(item.name, zoneLabel(target)), 'info');
+  }
 }
 
 function MoveMenu({ item, targets }: { item: Item; targets: MoveTarget[] }) {
@@ -556,7 +610,7 @@ function ItemRow({ item, allItems, havenItems, catalog, inCoterie, stashLabel, r
               <GiveControl item={item} />
               <span class="vamp-poss-qty">
                 <button class="vamp-poss-btn" onClick={() => updateItem(item.id, { qty: Math.max(1, item.qty - 1) })}>−</button>
-                <span class="vamp-poss-qty__val">{item.qty}</span>
+                <EditableQty qty={item.qty} onSet={(n) => updateItem(item.id, { qty: n })} />
                 <button class="vamp-poss-btn" onClick={() => updateItem(item.id, { qty: item.qty + 1 })}>+</button>
               </span>
               <DeleteControl item={item} contents={children} inCoterie={inCoterie} />
@@ -615,7 +669,7 @@ function HavenRow({ item, allHaven, charItems, catalog, inCoterie, stashLabel, r
             {chips.map((t, i) => <TagChip key={tagKey(t, i)} refTag={t} catalog={catalog} />)}
           </span>
         </button>
-        {!readOnly && <button class="vamp-poss-btn vamp-poss-haven__take" onClick={() => withdrawFromHaven(item.id)}>Take</button>}
+        {!readOnly && <button class="vamp-poss-btn vamp-poss-haven__take" onClick={() => performMove(item, null)}>Take</button>}
         {!readOnly && (
           <button
             class={`vamp-poss-row__edit ${editing ? 'is-on' : ''} ${editing && editDirty.value ? 'is-dirty' : ''}`} title={editing ? 'Done editing' : 'Edit'}
@@ -634,7 +688,7 @@ function HavenRow({ item, allHaven, charItems, catalog, inCoterie, stashLabel, r
               <MoveMenu item={item} targets={moveTargetsFor(item, charItems, allHaven, inCoterie, stashLabel)} />
               <span class="vamp-poss-qty">
                 <button class="vamp-poss-btn" onClick={() => adjustHavenItemQty(item.id, -1)}>−</button>
-                <span class="vamp-poss-qty__val">{item.qty}</span>
+                <EditableQty qty={item.qty} onSet={(n) => updateHavenItem(item.id, { qty: n })} />
                 <button class="vamp-poss-btn" onClick={() => adjustHavenItemQty(item.id, 1)}>+</button>
               </span>
               <button
@@ -873,13 +927,14 @@ export function PossessionsTab() {
       if (!destItem || !isContainerItem(destItem) || dest === id || isDescendant(pool, id, dest)) return;
     }
     if (dest === dragged.containerId) return;
+    const crossedBox = rootZone(dragged.containerId) !== rootZone(dest);
 
     if (!(await relocate(id, dest))) return;
     if (dest === null && dragged.containerId !== null) {
       const it = character.value.items.find(i => i.id === id);
       if (it && isEquippableType(it.type) && !it.equipped) toggleEquip(id); // drop On You = carry + auto-equip
     }
-    forceToast(`Moved ${dragged.name || 'item'} to ${zoneLabel(dest)}.`, 'info');
+    if (crossedBox) forceToast(dest === null ? takeToast(dragged.name) : moveToast(dragged.name, zoneLabel(dest)), 'info');
   }
 
   const ghost = draggingId.value

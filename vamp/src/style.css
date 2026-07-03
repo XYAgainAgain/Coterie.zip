@@ -9265,7 +9265,9 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
 
 /* Qty stepper */
 .vamp-poss-qty { display: inline-flex; align-items: center; gap: 0.25em; }
-.vamp-poss-qty__val { min-inline-size: 1.3em; text-align: center; font-size: 0.9em; color: var(--v-text-primary); }
+.vamp-poss-qty__val { min-inline-size: 1.3em; text-align: center; font-size: 0.9em; color: var(--v-text-primary); cursor: text; border-block-end: 1px dashed var(--v-text-muted); }
+.vamp-poss-qty__input { inline-size: 4em; text-align: center; font: inherit; font-size: 0.9em; padding: 0.15em 0.3em; background: var(--v-bg-sunken); border: 1px solid var(--v-border-accent); border-radius: var(--v-radius-sm); color: var(--v-text-primary); appearance: textfield; }
+.vamp-poss-qty__input::-webkit-inner-spin-button, .vamp-poss-qty__input::-webkit-outer-spin-button { appearance: none; margin: 0; }
 .vamp-poss-haven__take { margin-inline-start: auto; }
 
 /* Inline editor */

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-21T00:52:19.203Z",
+  "generatedAt": "2026-07-03T08:54:50.490Z",
   "entries": [
     {
       "name": "Abyssal",
@@ -909,6 +909,16 @@
         "Vehicles"
       ],
       "effect": "No sunlight reaches the interior; safe to slumber through the day."
+    },
+    {
+      "name": "Suppressed",
+      "categories": [
+        "Artifacts",
+        "Tech",
+        "Weapons",
+        "Misc."
+      ],
+      "effect": "Fitted with a suppressor/silencer or other sound-dampening device. Audible only within Close Range regardless of its usual noisiness."
     },
     {
       "name": "Surveilled",

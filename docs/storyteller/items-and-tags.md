@@ -199,6 +199,7 @@ Here's a handful of examples from some assorted categories to get you started. N
 | **Subterranean** | Structures | Below ground; naturally climate-controlled, low-light, and insulated from the world above. |
 | **Subtle** | Misc., Tech, Weapons | Doesn't read as a weapon or a threat; draws no attention when carried. |
 | **Sunproof** | Structures, Vehicles | No sunlight reaches the interior; safe to slumber through the day. |
+| **Suppressed** | Artifacts, Tech, Weapons, Misc. | Fitted with a suppressor/silencer or other sound-dampening device. Audible only within Close Range regardless of its usual noisiness. |
 | **Surveilled** | Structures, Tech | Watched by cameras, sensors, or eyes; assume all comings and goings are recorded and reviewed. |
 | **Tantalizing** | Consumables, Misc. | Smells temptingly of fresh blood; hungry Kindred struggle to ignore it. |
 | **Trapped** | Artifacts, Structures, Tech | Rigged to harm or catch intruders who don't know the trick. |

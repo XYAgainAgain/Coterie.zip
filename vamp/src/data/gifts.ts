@@ -19,6 +19,52 @@ export function pickVerb(): string {
   return verb;
 }
 
+/* Verbs for the "moved X to Y" toast; all read cleanly with a "to <zone>" tail.
+   Kept separate from GIFT_VERBS so a hand-off and a self-move never sound alike. */
+export const MOVE_VERBS = [
+  'moved', 'shifted', 'relocated', 'shuffled', 'carried', 'ferried', 'carted',
+  'hauled', 'stowed', 'whisked', 'sent', 'scooted', 'transferred', 'migrated',
+  'shunted', 'spirited', 'schlepped', 'yeeted', 'teleported', 'beamed',
+];
+
+let lastMoveVerb: string | null = null;
+
+export function pickMoveVerb(): string {
+  const pool = lastMoveVerb ? MOVE_VERBS.filter(v => v !== lastMoveVerb) : MOVE_VERBS;
+  const verb = pool[Math.floor(Math.random() * pool.length)];
+  lastMoveVerb = verb;
+  return verb;
+}
+
+/* "Scooted the Room to the Haven." — verb-varied twin of the hand-off toast. */
+export function moveToast(itemName: string, zoneLabel: string): string {
+  const verb = pickMoveVerb();
+  return `${verb[0].toUpperCase()}${verb.slice(1)} ${itemName || 'item'} to ${zoneLabel}.`;
+}
+
+/* Grab verbs for moves that land On You; lets the toast drop the clunky "to On You" tail. */
+export const TAKE_VERBS = [
+  'yoinked', 'grabbed', 'swiped', 'pinched', 'scooped', 'nabbed', 'snagged',
+  'snatched', 'pocketed', 'lifted', 'acquired', 'procured', 'requisitioned',
+  'commandeered', 'claimed', 'liberated', 'filched', 'pilfered', 'picked up',
+  "totally didn't steal",
+];
+
+let lastTakeVerb: string | null = null;
+
+export function pickTakeVerb(): string {
+  const pool = lastTakeVerb ? TAKE_VERBS.filter(v => v !== lastTakeVerb) : TAKE_VERBS;
+  const verb = pool[Math.floor(Math.random() * pool.length)];
+  lastTakeVerb = verb;
+  return verb;
+}
+
+/* On-You twin of moveToast; drops the destination so it reads "Yoinked Crowbar." */
+export function takeToast(itemName: string): string {
+  const verb = pickTakeVerb();
+  return `${verb[0].toUpperCase()}${verb.slice(1)} ${itemName || 'item'}.`;
+}
+
 const HONORIFICS = ['Ms.', 'Mr.', 'Mrs.', 'Mx.', 'Dr.', 'Prof.', 'Miss', 'Sir', 'Dame', 'Lady', 'Lord'];
 
 /* The label shown in the recipient's toast. Prefers a quoted nickname, then an
