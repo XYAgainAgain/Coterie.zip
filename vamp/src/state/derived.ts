@@ -162,6 +162,17 @@ export function grantedBaneXP(banes: CharacterState['folkloricBanes']): number {
   return Math.floor(full / 2);
 }
 
+/* Order-independent starting-XP pool: BP grant + Flaw/Bane/Both-Bane gains, capped at 10.
+   Single source of truth for creation XP; handlers derive spendable XP as pool − already-spent. */
+export function startingXPPool(char: CharacterState): number {
+  const bpBase = Math.max(1, char.bp) * 2;
+  const flawXP = char.flaws.reduce((sum, f) => sum + parseXPValue(f.xpGain), 0);
+  const baneXP = char.folkloricBanes.filter(b => !b.fromPlaybookBane)
+    .reduce((sum, b) => sum + parseXPValue(b.xpGain), 0) + grantedBaneXP(char.folkloricBanes);
+  const variantXP = char.baneChoice === 'both' ? 5 : 0;
+  return Math.min(10, bpBase + flawXP + baneXP + variantXP);
+}
+
 export function xpRange(str: string): [number, number] | null {
   const m = str.match(/(\d+)\s*[–\-]\s*(\d+)/);
   if (!m) return null;

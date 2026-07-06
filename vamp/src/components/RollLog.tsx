@@ -24,9 +24,9 @@ function RollRow({ entry, mine, index }: { entry: RollLogEntry; mine: string | n
   const statClass = fanged ? 'vamp-roll-toast__stat vamp-roll-toast__struck' : 'vamp-roll-toast__stat';
 
   /* Crit and Fanged own the whole row's background (set in CSS); other tiers get the inline
-     left-edge accent. Past the 24th row, fade 2% per row to ~50% so older reads as fainter. */
+     left-edge accent. From the 25th row on, fade 3% per row to a 25% floor so older reads as fainter. */
   const accent = entry.tier && !crit && !fanged ? TIER_COLORS[entry.tier].border : null;
-  const dim = index >= 24 ? Math.max(0.5, 1 - 0.02 * (index - 24)) : 1;
+  const dim = index >= 24 ? Math.max(0.25, 1 - 0.03 * (index - 23)) : 1;
   const style = [
     accent ? `border-inline-start-color: ${accent}` : '',
     dim < 1 ? `opacity: ${dim}` : '',

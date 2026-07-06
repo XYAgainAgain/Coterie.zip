@@ -1,7 +1,7 @@
 import { useEffect } from 'preact/hooks';
 import { useSignal } from '@preact/signals';
 import { switchContentTab } from '../../state/panel';
-import { currentPlaybook, gameData, statCap, parseXPValue, xpRange, grantedBaneXP } from '../../state/derived';
+import { currentPlaybook, gameData, statCap, parseXPValue, xpRange, grantedBaneXP, startingXPPool } from '../../state/derived';
 import { character, setXP, updateCharacter, addPendingUpgrade, buyAdvancedMove, type CharacterState } from '../../state/character';
 import { editMode, enterDisciplineBuyMode } from '../../state/ui';
 import { creationMode, creationStep } from '../../state/creation';
@@ -84,9 +84,10 @@ function checkLimitEligibility(
     return pts.some(p => p.toLowerCase() === char.predatorType.toLowerCase());
   }
 
-  /* "Requires Toreador or Daughter of Cacophony" (Playbook requirement) */
+  /* "Requires Toreador or Daughter of Cacophony" (plain Playbook name; asterisked
+     item prereqs like "Requires *Dark Secret*" fall through to reqItem below) */
   const reqPB = limit.match(/^Requires\s+(.+)$/i);
-  if (reqPB && !reqPB[1].includes('access') && !reqPB[1].includes('Predator')) {
+  if (reqPB && !reqPB[1].includes('access') && !reqPB[1].includes('Predator') && !reqPB[1].startsWith('*')) {
     const pbs = reqPB[1].split(/(?:,\s*|\s+or\s+)/i).map(s => s.replace(/\*/g, '').trim());
     return pbs.some(p => p.toLowerCase() === char.playbook.toLowerCase());
   }
@@ -186,7 +187,7 @@ export function AdvancementPanel() {
     .reduce((sum, b) => sum + parseXPValue(b.xpGain), 0) + grantedBaneXP(char.folkloricBanes);
   const variantXP = char.baneChoice === 'both' ? 5 : 0;
   const rawStarting = bpBase + flawXP + baneXP + variantXP;
-  const startingXP = Math.min(10, rawStarting);
+  const startingXP = startingXPPool(char);
 
   /* Merits + Flaws combined cap: 2 + max(1, BP) during creation */
   const meritFlawCap = 2 + Math.max(1, char.bp);
@@ -212,7 +213,7 @@ export function AdvancementPanel() {
       const refund = parseXPValue(existing.xpCost);
       updateCharacter({
         merits: cur.merits.filter(m => m.name !== name),
-        ...(isCreation ? { xp: Math.min(10, cur.xp + refund) } : {}),
+        ...(isCreation ? { xp: cur.xp + refund } : {}),
       });
     } else {
       if (isCreation && cur.xp < cost) return;
@@ -225,23 +226,25 @@ export function AdvancementPanel() {
 
   function toggleFlaw(name: string, xpGain: string, chosenXP?: string) {
     const effectiveGain = chosenXP ?? xpGain;
-    const gain = parseXPValue(effectiveGain);
     const cur = character.value;
+    const spent = startingXPPool(cur) - cur.xp;
     const existing = cur.flaws.find(f => f.name === name);
     if (existing) {
-      const storedGain = parseXPValue(existing.xpGain);
-      if (isCreation && cur.xp < storedGain) return;
+      const nextFlaws = cur.flaws.filter(f => f.name !== name);
+      const nextXP = startingXPPool({ ...cur, flaws: nextFlaws }) - spent;
+      if (isCreation && nextXP < 0) return;
       updateCharacter({
-        flaws: cur.flaws.filter(f => f.name !== name),
-        ...(isCreation ? { xp: Math.max(0, cur.xp - storedGain) } : {}),
+        flaws: nextFlaws,
+        ...(isCreation ? { xp: nextXP } : {}),
       });
     } else {
       /* Baneful Blood inherits a declared NPC patron's bloodline as its starting pick */
       const seed = name === 'Baneful Blood' && cur.ghoulPatron?.bloodline
         ? { selection: cur.ghoulPatron.bloodline } : {};
+      const nextFlaws = [...cur.flaws, { name, xpGain: effectiveGain, ...seed }];
       updateCharacter({
-        flaws: [...cur.flaws, { name, xpGain: effectiveGain, ...seed }],
-        ...(isCreation ? { xp: Math.min(10, cur.xp + gain) } : {}),
+        flaws: nextFlaws,
+        ...(isCreation ? { xp: startingXPPool({ ...cur, flaws: nextFlaws }) - spent } : {}),
       });
     }
   }
@@ -257,37 +260,36 @@ export function AdvancementPanel() {
   }
 
   function toggleFolkloricBane(baneName: string, xpGain: string) {
-    const gain = parseXPValue(xpGain);
     const cur = character.value;
+    const spent = startingXPPool(cur) - cur.xp;
     const existing = cur.folkloricBanes.find(b => b.baneName === baneName);
     /* Auto-granted (Baali) Banes are mandatory; no UI path reaches here, but stay safe */
     if (existing?.fromPlaybookBane) return;
     if (existing) {
-      if (isCreation && cur.xp < gain) return;
+      const nextBanes = cur.folkloricBanes.filter(b => b.baneName !== baneName);
+      const nextXP = startingXPPool({ ...cur, folkloricBanes: nextBanes }) - spent;
+      if (isCreation && nextXP < 0) return;
       updateCharacter({
-        folkloricBanes: cur.folkloricBanes.filter(b => b.baneName !== baneName),
-        ...(isCreation ? { xp: Math.max(0, cur.xp - gain) } : {}),
+        folkloricBanes: nextBanes,
+        ...(isCreation ? { xp: nextXP } : {}),
       });
     } else {
+      const nextBanes = [...cur.folkloricBanes, { baneName, xpGain, fromPlaybookBane: false }];
       updateCharacter({
-        folkloricBanes: [
-          ...cur.folkloricBanes,
-          { baneName, xpGain, fromPlaybookBane: false },
-        ],
-        ...(isCreation ? { xp: Math.min(10, cur.xp + gain) } : {}),
+        folkloricBanes: nextBanes,
+        ...(isCreation ? { xp: startingXPPool({ ...cur, folkloricBanes: nextBanes }) - spent } : {}),
       });
     }
   }
 
   function setLocalBaneChoice(choice: 'standard' | 'variant' | 'both') {
     const cur = character.value;
-    const oldBonus = cur.baneChoice === 'both' ? 5 : 0;
-    const newBonus = choice === 'both' ? 5 : 0;
-    const delta = newBonus - oldBonus;
-    if (isCreation && delta < 0 && cur.xp < Math.abs(delta)) return;
+    const spent = startingXPPool(cur) - cur.xp;
+    const nextXP = startingXPPool({ ...cur, baneChoice: choice }) - spent;
+    if (isCreation && nextXP < 0) return;
     updateCharacter({
       baneChoice: choice,
-      ...(isCreation && delta !== 0 ? { xp: Math.min(10, Math.max(0, cur.xp + delta)) } : {}),
+      ...(isCreation ? { xp: nextXP } : {}),
     });
   }
 
