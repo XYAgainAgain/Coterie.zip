@@ -3,14 +3,11 @@ import { character } from '../state/character';
 import { activeCharacterId } from '../state/persistence';
 import { viewingOtherSheet } from '../state/ui';
 import { theme } from '../state/theme';
+import { stDashboardActive } from '../state/stState';
 import { applyCustomTheme, clearCustomTheme, customThemeActive } from './customTheme';
 
-/* Ties character.customTheme to the DOM. Two effects:
-   1. When the active sheet changes, default the eye's custom position (on if that
-      character has a saved custom theme and we own the sheet).
-   2. Apply the derived palette when the custom position is active on an owned sheet,
-      otherwise restore the device theme. Runs on every character mutation, which is why
-      apply/clear guard their DOM writes (see customTheme.ts). */
+/* Ties character.customTheme to the DOM: defaults the eye's custom position on sheet/view
+   changes, then applies or clears the derived palette. Runs on every mutation, so apply/clear guard their own DOM writes (see customTheme.ts). */
 
 let started = false;
 let lastSheetKey: string | undefined;
@@ -31,6 +28,9 @@ export function initCustomThemeLifecycle(): void {
   });
 
   effect(() => {
+    /* The /st route owns its own palette (StDashboard applies stState.theme), so stay out of
+       its way — otherwise a blank character would clear the ST theme out from under it. */
+    if (stDashboardActive.value) return;
     const ct = character.value.customTheme;
     const viewing = viewingOtherSheet.value;
     const onOwnSheet = !!activeCharacterId.value && !viewing;

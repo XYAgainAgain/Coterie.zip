@@ -1,6 +1,8 @@
 import { signal, useSignal, effect } from '@preact/signals';
 import { useRef, useEffect } from 'preact/hooks';
 import { character, updateCharacter, newNight, newSession, newScene } from '../state/character';
+import { activeCoterie, activeCharacterId, setMyInitiative } from '../state/persistence';
+import { coterieState } from '../state/coterie';
 import { debounce } from '../utils/debounce';
 import { vampConfirm } from '../state/dialog';
 
@@ -9,21 +11,44 @@ export const staked = signal(false);
 /* Sync the dim-everything body class to the signal so the button and the S shortcut agree. */
 effect(() => { document.body.classList.toggle('vamp-staked', staked.value); });
 
+/* In a Coterie, Initiative is table-owned on the member entry (the ST edits the same value
+   from the Initiative ladder); solo characters keep the old local string. */
+function inCoterieNow(): boolean {
+  const cid = activeCharacterId.value;
+  return !!activeCoterie.value && !!cid && coterieState.value.members.some(m => m.characterId === cid);
+}
+
+function commitInitiativeValue(val: string): void {
+  if (inCoterieNow()) {
+    const n = val.trim() === '' ? null : parseInt(val, 10);
+    void setMyInitiative(n !== null && Number.isFinite(n) ? n : null);
+  } else {
+    updateCharacter({ initiative: val });
+  }
+}
+
 export function SceneTools() {
   const char = character.value;
-  const initDraft = useSignal(char.initiative);
+  /* Coterie members read/write Initiative through their member entry; solo play stays local. */
+  const inCoterie = inCoterieNow();
+  const myInit = inCoterie
+    ? coterieState.value.members.find(m => m.characterId === activeCharacterId.value)?.initiative ?? null
+    : null;
+  const initStr = inCoterie ? (myInit != null ? String(myInit) : '') : char.initiative;
+
+  const initDraft = useSignal(initStr);
   const notesDraft = useSignal(char.combatNotes);
   const editingInit = useSignal(false);
   const editingNotes = useSignal(false);
   const initRef = useRef<HTMLInputElement>(null);
   const notesRef = useRef<HTMLTextAreaElement>(null);
-  const initSaved = useRef(char.initiative);
+  const initSaved = useRef(initStr);
   const notesSaved = useRef(char.combatNotes);
 
   const debouncedInit = useRef(
     debounce((val: string) => {
       initSaved.current = val;
-      updateCharacter({ initiative: val });
+      commitInitiativeValue(val);
     }, 3000)
   ).current;
 
@@ -37,8 +62,8 @@ export function SceneTools() {
   useEffect(() => () => { debouncedInit.cancel(); debouncedNotes.cancel(); }, []);
 
   if (!editingInit.value) {
-    initDraft.value = char.initiative;
-    initSaved.current = char.initiative;
+    initDraft.value = initStr;
+    initSaved.current = initStr;
   }
   if (!editingNotes.value) {
     notesDraft.value = char.combatNotes;
@@ -50,8 +75,8 @@ export function SceneTools() {
   }
 
   function startInitEdit() {
-    initDraft.value = char.initiative;
-    initSaved.current = char.initiative;
+    initDraft.value = initStr;
+    initSaved.current = initStr;
     editingInit.value = true;
     requestAnimationFrame(() => initRef.current?.focus());
   }
@@ -87,6 +112,7 @@ export function SceneTools() {
 
   function handleNewScene() {
     newScene();
+    if (inCoterieNow()) void setMyInitiative(null);
     initDraft.value = '';
     notesDraft.value = '';
   }
@@ -103,7 +129,7 @@ export function SceneTools() {
   function clearInit() {
     debouncedInit.cancel();
     initDraft.value = '';
-    updateCharacter({ initiative: '' });
+    commitInitiativeValue('');
   }
 
   return (
@@ -130,16 +156,16 @@ export function SceneTools() {
           />
         ) : (
           <span
-            class={`vamp-scene-init__display ${!char.initiative ? 'vamp-scene-init__display--empty' : ''}`}
+            class={`vamp-scene-init__display ${!initStr ? 'vamp-scene-init__display--empty' : ''}`}
             onDblClick={startInitEdit}
             title="Double-click to set initiative"
           >
-            {char.initiative || '--'}
+            {initStr || '--'}
           </span>
         )}
         <span class="vamp-scene-init__label">
           Initiative
-          {char.initiative && (
+          {initStr && (
             <button
               class="vamp-scene-init__clear"
               onClick={clearInit}

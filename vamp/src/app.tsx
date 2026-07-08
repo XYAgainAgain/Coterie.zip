@@ -1,9 +1,12 @@
-import Router, { Route } from 'preact-router';
+import Router, { Route, route } from 'preact-router';
 import { signal } from '@preact/signals';
 import { CharacterList } from './pages/CharacterList';
 import { CharacterSheet } from './pages/CharacterSheet';
 import { CharacterViewer } from './pages/CharacterViewer';
 import { CoterieCharacterRoute } from './pages/CoterieCharacterRoute';
+import { StDashboard } from './pages/StDashboard';
+import { AddTilePicker, StRollModeToggle } from './components/st/StCanvas';
+import { stDashboardActive } from './state/stState';
 import { EyeToggle } from './components/EyeToggle';
 import { TextRocker } from './components/TextRocker';
 import { EmailLinkPrompt } from './components/EmailLinkPrompt';
@@ -70,7 +73,7 @@ export function App() {
       <div class="ambient-blob ambient-blob--top" aria-hidden="true" />
       <div class="ambient-blob ambient-blob--bottom" aria-hidden="true" />
       <div class="ambient-smoke" aria-hidden="true" />
-      <header class="vamp-header">
+      <header class={`vamp-header ${stDashboardActive.value ? 'vamp-header--st' : ''}`}>
         <a class="vamp-brand" href="https://coterie.zip/" title="Go to Coterie.zip">
           <span class="vamp-brand__icon" aria-hidden="true" />
           Coterie.zip
@@ -88,6 +91,17 @@ export function App() {
         <div class="vamp-header__spacer" />
         {creationMode.value && <CreationProgress />}
         <div class={`vamp-header__controls ${guideActive.value && currentGuideStep.value?.zone === 'header' ? 'guide-spotlight' : ''}`}>
+          {stDashboardActive.value && (
+            <div class="vamp-header__st">
+              <a
+                class="vamp-header__st-home"
+                href="/vamp/"
+                onClick={(e) => { e.preventDefault(); route('/vamp/'); }}
+              >Your Chronicles</a>
+              <StRollModeToggle />
+              <AddTilePicker />
+            </div>
+          )}
           <TextRocker />
           {!viewingOtherSheet.value && activeCharacterId.value && (
             <button
@@ -120,6 +134,7 @@ export function App() {
           <Router>
             <Route path="/vamp/" component={CharacterList} />
             <Route path="/vamp/view/:charId" component={CharacterViewer} />
+            <Route path="/vamp/:coterieCode/st" component={StDashboard} />
             <Route path="/vamp/:coterieCode/:charSlug" component={CoterieCharacterRoute} />
             <Route path="/vamp/:slug" component={CharacterSheet} />
           </Router>

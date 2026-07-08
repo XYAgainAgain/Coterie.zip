@@ -496,6 +496,16 @@ a:hover {
 
 .vamp-header__spacer { flex: 1; }
 
+/* On /st the extra "Your Chronicles/+ Add Tile" cluster unbalances the flex spacers and shoves
+   the centered search leftward; pin it to the true header center instead. Scoped to /st only. */
+.vamp-header--st .vamp-search {
+  position: absolute;
+  inset-inline-start: 50%;
+  translate: -50% 0;
+  flex: none;
+  inline-size: min(20rem, 26vw);
+}
+
 .vamp-header__controls {
   display: flex;
   align-items: center;
@@ -1626,6 +1636,10 @@ a:hover {
   background: color-mix(in srgb, hsl(0 55% 16%) 85%, #050505);
   border-inline-start-color: hsl(0 60% 32%);
 }
+
+/* Secret Storyteller roll: obscured for everyone, so it reads as a muted aside. */
+.vamp-roll-log__row--secret { border-inline-start-color: var(--v-border-accent); }
+.vamp-roll-log__secret { color: var(--v-text-muted); font-style: italic; }
 
 .vamp-roll-log__who {
   flex: 0 0 auto;
@@ -8316,6 +8330,1462 @@ button.vamp-haven-pill:hover .vamp-haven-pill__x {
     grid-row: auto;
     grid-column: 1 / -1;
   }
+}
+
+/* Storyteller Dashboard (Phase 2 shell) */
+
+/* Root is -dash: bare .vamp-st belongs to the Coterie-tab status widget. */
+.vamp-st-dash {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+/* ST-only cluster injected into the global header (left of the text rocker). */
+.vamp-header__st {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.vamp-header__st-home {
+  font-family: var(--v-font-display);
+  font-size: calc(0.85rem * var(--v-text-scale));
+  color: var(--v-text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--v-transition);
+}
+
+.vamp-header__st-home:hover { color: var(--v-accent); }
+
+/* ST roll-visibility toggle (Public/Secret/Hidden) in the /st header. */
+.vamp-st-rollmode { display: inline-flex; align-items: center; gap: 0.25rem; }
+.vamp-st-rollmode__label {
+  font-family: var(--v-font-display);
+  font-size: calc(0.8rem * var(--v-text-scale));
+  color: var(--v-text-muted);
+  margin-inline-end: 0.1rem;
+}
+.vamp-st-rollmode__btn {
+  font-family: var(--v-font-heading);
+  font-size: calc(0.8rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  background: color-mix(in oklab, var(--v-bg-elevated) 70%, transparent);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.15rem 0.45rem;
+  cursor: pointer;
+  transition: color var(--v-transition), border-color var(--v-transition), background var(--v-transition);
+}
+.vamp-st-rollmode__btn:hover { color: var(--v-text-accent); border-color: var(--v-border-accent); }
+.vamp-st-rollmode__btn.is-active { color: #fff; background: var(--v-accent); border-color: var(--v-accent); }
+
+.vamp-st__body {
+  flex: 1;
+  min-block-size: 0;
+  display: grid;
+  grid-template-columns: 16rem auto minmax(0, 1fr);
+  gap: 0.35rem;
+  overflow: hidden;
+}
+
+/* Rail-width drag handle: a slim vertical dot-dash divider, like the split view's. */
+.vamp-st__split {
+  inline-size: 0.5rem;
+  cursor: col-resize;
+  touch-action: none;
+  background: var(--v-dot-dash-v, var(--v-dot-dash-h)) center / 2px 100% no-repeat;
+  opacity: 0.5;
+  transition: opacity var(--v-transition);
+}
+
+.vamp-st__split:hover { opacity: 1; }
+
+/* Rail: fixed 16rem, never scrolls horizontally; roster scrolls, dials stay pinned. */
+.vamp-st-rail {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  inline-size: 100%;
+  background: var(--v-glass-bg);
+  backdrop-filter: blur(1rem);
+  -webkit-backdrop-filter: blur(1rem);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-md);
+  overflow: hidden;
+}
+
+/* Chronicle header block at the rail top: role + code, Coterie name, compact stat row. */
+.vamp-st-rail__top {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.6rem 0.6rem 0.55rem;
+  border-block-end: 1px solid var(--v-glass-border);
+}
+
+.vamp-st-rail__idrow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.vamp-st-rail__eyebrow {
+  font-size: calc(0.62rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--v-text-muted);
+}
+
+.vamp-st-rail__code {
+  font-family: var(--v-font-heading);
+  font-size: calc(0.78rem * var(--v-text-scale));
+  letter-spacing: 0.12em;
+  color: var(--v-text-secondary);
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-sm);
+}
+
+.vamp-st-rail__title {
+  margin: 0;
+  font-family: var(--v-font-display);
+  font-size: calc(1.25rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.vamp-st-rail__stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.25rem;
+  inline-size: 100%;
+  text-align: center;
+  margin-block-start: 0.1rem;
+}
+
+.vamp-st-rail__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.vamp-st-rail__stat-name {
+  font-size: calc(0.55rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--v-text-muted);
+}
+
+/* Numerals in the body font (bold), never IM Fell small-caps — matches the sheet stat circle. */
+.vamp-st-rail__stat-num {
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: calc(1.1rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+}
+
+/* Shared vertical scroll for the briefing slabs + roster; the rail never scrolls sideways. */
+.vamp-st-rail__scroll {
+  flex: 1;
+  min-block-size: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.vamp-st-roster {
+  min-block-size: 0;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Coterie briefing: collapsible read-only slabs above the roster. */
+.vamp-st-briefing {
+  display: flex;
+  flex-direction: column;
+}
+
+.vamp-st-sec {
+  border-block-end: 1px solid var(--v-glass-border);
+}
+
+.vamp-st-sec__bar {
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--v-font-heading);
+  font-size: calc(1rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  text-align: start;
+  transition: color var(--v-transition);
+}
+
+.vamp-st-sec__bar:hover { color: var(--v-text-accent); }
+
+.vamp-st-sec__title { flex: 1; min-inline-size: 0; }
+
+.vamp-st-sec__chev {
+  flex: none;
+  color: var(--v-text-muted);
+  transition: transform var(--v-transition);
+}
+
+.vamp-st-sec__chev.is-open { transform: rotate(180deg); }
+
+/* Height-animated body: grid rows collapse 1fr→0fr; child (with its padding) clipped while closed. */
+.vamp-st-sec__wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+}
+
+.vamp-st-sec__wrap.is-open { grid-template-rows: 1fr; }
+
+/* Collapsed body must carry ZERO block padding: a 0fr track hides content height only, so
+   any padding stays visible as a sliver of the first line. */
+.vamp-st-sec__wrap > .vamp-st-sec__body {
+  min-block-size: 0;
+  overflow: hidden;
+  padding-block-end: 0;
+  transition: padding-block-end 220ms ease;
+}
+
+.vamp-st-sec__wrap.is-open > .vamp-st-sec__body { padding-block-end: 0.6rem; }
+
+.vamp-st-sec__body {
+  padding: 0 0.6rem 0.6rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+}
+
+.vamp-st-briefing__haven {
+  margin: 0 0 0.5rem;
+  white-space: pre-wrap;
+  text-wrap: pretty;
+  color: var(--v-text-secondary);
+}
+
+.vamp-st-briefing__empty {
+  margin: 0 0 0.5rem;
+  font-style: italic;
+  color: var(--v-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-st-sec__wrap { transition: none; }
+}
+
+.vamp-st-roster__empty {
+  margin: 0.5rem;
+  font-size: calc(0.85rem * var(--v-text-scale));
+  color: var(--v-text-muted);
+  text-wrap: pretty;
+}
+
+.vamp-st-card {
+  border: 1px solid var(--v-border);
+  border-radius: var(--v-radius-sm);
+  background: var(--v-bg-secondary);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.vamp-st-card--locked {
+  opacity: 0.7;
+  background: transparent;
+}
+
+.vamp-st-card__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-inline-size: 0;
+}
+
+.vamp-st-card__portrait-btn {
+  flex: none;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 50%;
+  line-height: 0;
+}
+
+.vamp-st-card__portrait {
+  inline-size: 2.4rem;
+  block-size: 2.4rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--v-border-accent);
+}
+
+.vamp-st-card__portrait--blank {
+  display: inline-block;
+  background: var(--v-bg-elevated);
+}
+
+.vamp-st-card__id {
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  flex: 1;
+}
+
+.vamp-st-card__name {
+  font-family: var(--v-font-heading);
+  font-size: calc(1.15rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vamp-st-card__name-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: start;
+  cursor: pointer;
+}
+
+.vamp-st-card__name-btn:hover { text-decoration: underline; }
+
+.vamp-st-card__sub,
+.vamp-st-card__await {
+  font-size: calc(0.72rem * var(--v-text-scale));
+  color: var(--v-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vamp-st-card__await { font-style: italic; }
+
+.vamp-st-card__chevron {
+  flex: none;
+  border: none;
+  background: none;
+  color: var(--v-text-muted);
+  cursor: pointer;
+  padding: 0.2rem;
+  display: grid;
+  place-items: center;
+}
+
+.vamp-st-card__chevron svg { transition: transform var(--v-transition); }
+.vamp-st-card__chevron svg.is-open { transform: rotate(180deg); }
+.vamp-st-card__chevron:hover { color: var(--v-accent); }
+
+.vamp-st-card__vitals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.6rem;
+  font-size: calc(0.74rem * var(--v-text-scale));
+}
+
+.vamp-st-vital {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.vamp-st-vital__label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--v-text-muted);
+  font-size: 0.9em;
+}
+
+.vamp-st-vital__val { color: var(--v-text-secondary); }
+.vamp-st-vital abbr { text-decoration: none; color: var(--v-text-muted); }
+
+.vamp-st-pips {
+  display: inline-flex;
+  gap: 0.15rem;
+}
+
+.vamp-st-pip {
+  inline-size: 0.5rem;
+  block-size: 0.5rem;
+  border-radius: 50%;
+  border: 1px solid var(--v-border-accent);
+  background: transparent;
+}
+
+.vamp-st-pip--on {
+  background: var(--v-accent);
+  border-color: var(--v-accent);
+}
+
+/* Same 1fr→0fr height animation as .vamp-st-sec__wrap above. */
+.vamp-st-card__expand-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+}
+
+.vamp-st-card__expand-wrap.is-open {
+  grid-template-rows: 1fr;
+}
+
+.vamp-st-card__expand-wrap > .vamp-st-card__expand {
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-st-card__expand-wrap { transition: none; }
+}
+
+.vamp-st-card__expand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-block-start: 0.3rem;
+}
+
+.vamp-st-card__stats {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.vamp-st-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+}
+
+.vamp-st-stat__name {
+  font-size: calc(0.72rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--v-text-muted);
+}
+
+.vamp-st-stat__num {
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  font-size: calc(1.15rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+}
+
+/* Dot-dash rule, never border-style: dashed. */
+.vamp-st-card__divider {
+  block-size: 1px;
+  background: var(--v-dot-dash-h);
+  opacity: 0.7;
+}
+
+.vamp-st-card__row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  font-size: calc(0.74rem * var(--v-text-scale));
+}
+
+.vamp-st-card__row-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--v-text-muted);
+  font-size: 0.9em;
+}
+
+.vamp-st-card__row-val {
+  color: var(--v-text-secondary);
+  text-wrap: pretty;
+}
+
+.vamp-st-card__convictions {
+  margin: 0;
+  padding-inline-start: 1rem;
+  color: var(--v-text-secondary);
+}
+
+/* A Conviction's Touchstone, trailing the belief in a quieter, italic voice. */
+.vamp-st-card__touchstone {
+  display: block;
+  margin-block-start: 0.05rem;
+  font-size: 0.85em;
+  font-style: italic;
+  color: var(--v-text-muted);
+}
+.vamp-st-card__touchstone::before { content: '☞ '; font-style: normal; }
+
+/* Coterie dials pinned at the rail bottom, read-only. Minimizable MQC: slim bar collapsed,
+   full clock expanded. */
+.vamp-st-dials {
+  flex: none;
+  border-block-start: 1px solid var(--v-glass-border);
+  display: flex;
+  flex-direction: column;
+}
+
+.vamp-st-mqc__bar {
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.6rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--v-font-heading);
+  font-size: calc(0.95rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  text-align: start;
+  transition: color var(--v-transition);
+}
+
+.vamp-st-mqc__bar:hover { color: var(--v-text-accent); }
+
+.vamp-st-mqc__chev {
+  flex: none;
+  color: var(--v-text-muted);
+  transition: transform var(--v-transition);
+}
+
+.vamp-st-mqc__chev.is-open { transform: rotate(180deg); }
+
+.vamp-st-mqc__name { flex: 1; min-inline-size: 0; }
+
+.vamp-st-mqc__count {
+  flex: none;
+  font-family: var(--v-font-body);
+  font-weight: 700;
+  color: var(--v-mqc-accent, var(--v-text-secondary));
+}
+
+.vamp-st-mqc__wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 220ms ease;
+}
+
+.vamp-st-mqc__wrap.is-open { grid-template-rows: 1fr; }
+
+.vamp-st-mqc__wrap > .vamp-st-mqc__inner {
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+.vamp-st-mqc__inner {
+  display: flex;
+  justify-content: center;
+  padding: 0.2rem 0.55rem 0.6rem;
+}
+
+.vamp-st-dials__clock {
+  inline-size: 7rem;
+}
+
+.vamp-st-dials .vamp-clock { inline-size: 100%; max-width: 100%; }
+
+/* Name lives in the bar now; the clock keeps only its wheel + count. */
+.vamp-st-dials .vamp-clock__name { display: none; }
+
+/* Driveable: left-click fills, right-click unfills (wired to ST-only Coterie-doc writes). */
+.vamp-st-dials .vamp-clock__svg { inline-size: 100%; block-size: auto; cursor: pointer; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-st-mqc__wrap { transition: none; }
+}
+
+/* Canvas stage: placeholder in Phase 2, viewport guard under 64rem (1024px). */
+.vamp-st__stage {
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+/* Scroll viewport + query container: tiles resolve their cqi-based inline-size/inset
+   against this element's content width. */
+.vamp-st-canvas {
+  block-size: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-border-accent) transparent;
+  container-type: inline-size;
+}
+
+.vamp-st-canvas__empty {
+  margin: auto;
+  color: var(--v-text-muted);
+  font-family: var(--v-font-display);
+  text-align: center;
+  text-wrap: balance;
+  padding: 2rem;
+}
+
+/* Free-placement sizer tiles anchor into; height fits the tallest tile, min-block-size fills
+   the viewport so short layouts show no dead scroll (StCanvas adds headroom rows mid-drag). */
+.vamp-st-canvas__grid {
+  --st-dot: color-mix(in oklab, var(--v-border-accent) 68%, transparent);
+  position: relative;
+  inline-size: 100%;
+  block-size: calc(var(--st-rows, 1) * var(--st-row-unit, 4.5rem));
+  min-block-size: 100%;
+  background-image: radial-gradient(circle at center, var(--st-dot) 1.4px, transparent 1.7px);
+  background-size: calc(100cqi / var(--st-cols, 12)) var(--st-row-unit, 4.5rem);
+  /* Offset half a cell so the cell-centered dots land on the grid intersections. */
+  background-position: calc(50cqi / var(--st-cols, 12)) calc(var(--st-row-unit, 4.5rem) / 2);
+}
+
+/* Brighter grid while dragging or resizing so snap targets read clearly. */
+.vamp-st-canvas__grid.is-active {
+  --st-dot: var(--v-border-accent);
+}
+
+.vamp-st-guard {
+  display: none;
+  block-size: 100%;
+  place-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--v-text-secondary);
+  font-family: var(--v-font-display);
+  font-size: calc(1.05rem * var(--v-text-scale));
+  text-wrap: balance;
+}
+
+@media (width < 64rem) {
+  .vamp-st-canvas { display: none; }
+  .vamp-st-guard { display: grid; }
+}
+
+/* Canvas: shared button + add-tile picker */
+
+.vamp-st-btn {
+  font-family: var(--v-font-heading);
+  font-size: calc(0.95rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  background: color-mix(in oklab, var(--v-surface) 70%, transparent);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.2rem 0.55rem;
+  cursor: pointer;
+  transition: border-color var(--v-transition), color var(--v-transition);
+}
+
+.vamp-st-btn:hover:not(:disabled) { border-color: var(--v-border-accent); color: var(--v-text-accent); }
+.vamp-st-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.vamp-st-btn--primary { color: var(--v-text-accent); border-color: var(--v-border-accent); }
+.vamp-st-btn--del.is-danger { color: #fff; background: color-mix(in oklab, var(--v-accent) 65%, transparent); border-color: var(--v-accent); }
+.vamp-st-btn--select { color: var(--v-text-accent); border-color: var(--v-border-accent); background: color-mix(in oklab, var(--v-accent) 16%, transparent); }
+
+.vamp-st-add { position: relative; }
+
+.vamp-st-add__menu {
+  position: absolute;
+  inset-block-start: calc(100% + 0.25rem);
+  inset-inline-start: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 11rem;
+  /* Opaque (matches the Settings menu): --v-bg-elevated, not the glassy --v-surface which reads
+     as transparent over the always-rendering dice canvas. */
+  background: var(--v-bg-elevated);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-sm);
+  padding: 0.25rem;
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.5);
+}
+
+.vamp-st-add__heading {
+  padding: 0.35rem 0.5rem 0.15rem;
+  font-family: var(--v-font-heading);
+  font-size: calc(0.8rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-text-muted);
+  border-block-start: 1px solid var(--v-glass-border);
+  margin-block-start: 0.15rem;
+}
+
+.vamp-st-add__item {
+  text-align: start;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.05rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  background: none;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  padding: 0.35rem 0.5rem;
+  cursor: pointer;
+  transition: color var(--v-transition), background var(--v-transition);
+}
+
+.vamp-st-add__item:hover { background: color-mix(in oklab, var(--v-accent) 20%, transparent); color: var(--v-text-accent); }
+
+/* Canvas tiles: glass panels absolutely placed on the dot grid. --c/--r are 1-based cell
+   anchors, --w/--h are spans; a cell is 100cqi/12 wide by one row unit tall. The gap is
+   carved out of size, not position, so anchors land exactly on cell corners. */
+.vamp-st-tile {
+  --st-gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  min-block-size: 0;
+  position: absolute;
+  inset-inline-start: calc((var(--c) - 1) * (100cqi / var(--st-cols, 12)));
+  inset-block-start: calc((var(--r) - 1) * var(--st-row-unit, 4.5rem));
+  inline-size: calc(var(--w) * (100cqi / var(--st-cols, 12)) - var(--st-gap));
+  block-size: calc(var(--h) * var(--st-row-unit, 4.5rem) - var(--st-gap));
+  background: color-mix(in oklab, var(--v-bg-elevated) 75%, transparent);
+  backdrop-filter: blur(0.5rem);
+  -webkit-backdrop-filter: blur(0.5rem);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-md);
+  overflow: hidden;
+  container: vamp-st-tile / inline-size;
+  transition: inset 180ms ease, inline-size 180ms ease, block-size 180ms ease, opacity 200ms ease;
+}
+
+/* Mount fade-in for freshly added tiles. */
+@starting-style {
+  .vamp-st-tile { opacity: 0; }
+}
+
+/* While actively dragging/resizing, kill the transition so the tile tracks the pointer 1:1
+   and float it above its neighbours. */
+.vamp-st-tile.is-dragging,
+.vamp-st-tile.is-resizing {
+  transition: none;
+  z-index: 20;
+}
+
+.vamp-st-tile.is-dragging { cursor: grabbing; }
+
+/* Live drop-validity: a reddish rim while hovering an occupied cell (snaps back on release). */
+.vamp-st-tile.is-invalid {
+  border-color: color-mix(in oklab, #e5484d 75%, var(--v-glass-border));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, #e5484d 60%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-st-tile { transition: none; }
+}
+
+.vamp-st-tile__head {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-block-end: 1px solid var(--v-glass-border);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.vamp-st-tile__head:active { cursor: grabbing; }
+
+.vamp-st-tile__grip { color: var(--v-text-muted); font-size: 0.85rem; line-height: 1; }
+
+.vamp-st-tile__title {
+  flex: 1;
+  min-inline-size: 0;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.15rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vamp-st-tile__x {
+  flex: none;
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  display: grid;
+  place-items: center;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--v-text-muted);
+  background: none;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  transition: color var(--v-transition), background var(--v-transition);
+}
+
+.vamp-st-tile__x:hover { color: var(--v-accent); background: color-mix(in oklab, var(--v-accent) 18%, transparent); }
+/* Notes-tile delete confirm: the × turns into an armed "?" before it deletes the note. */
+.vamp-st-tile__x.is-danger { color: #fff; background: color-mix(in oklab, var(--v-accent) 65%, transparent); }
+
+/* Minimize chevron, left of the ×: same glyph treatment as the roster card's expander. */
+.vamp-st-tile__min {
+  flex: none;
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  display: grid;
+  place-items: center;
+  color: var(--v-text-muted);
+  background: none;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  transition: color var(--v-transition), background var(--v-transition);
+}
+
+.vamp-st-tile__min:hover { color: var(--v-accent); background: color-mix(in oklab, var(--v-accent) 18%, transparent); }
+.vamp-st-tile__min svg { transition: transform var(--v-transition); }
+.vamp-st-tile__min svg.is-open { transform: rotate(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .vamp-st-tile__min svg { transition: none; }
+}
+
+/* Minimized: collapse to the header bar; body (and resize grip) hidden, anchor preserved. */
+.vamp-st-tile.is-minimized {
+  block-size: auto;
+}
+
+.vamp-st-tile.is-minimized .vamp-st-tile__body,
+.vamp-st-tile.is-minimized .vamp-st-tile__resize {
+  display: none;
+}
+
+.vamp-st-tile.is-minimized .vamp-st-tile__head {
+  border-block-end: none;
+}
+
+.vamp-st-tile__body {
+  flex: 1;
+  min-block-size: 0;
+  overflow: auto;
+  padding: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-border-accent) transparent;
+}
+
+/* Corner resize grip: a subtle diagonal notch in the bottom-inline-end corner. */
+.vamp-st-tile__resize {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  inline-size: 1rem;
+  block-size: 1rem;
+  cursor: nwse-resize;
+  touch-action: none;
+  background:
+    linear-gradient(135deg, transparent 0 50%, var(--v-border-accent) 50% 60%, transparent 60% 72%, var(--v-border-accent) 72% 82%, transparent 82%);
+  opacity: 0.55;
+}
+
+.vamp-st-tile__resize:hover { opacity: 1; }
+
+.vamp-st-tile__body :is(.vamp-poss-edit) { font-size: calc(0.8rem * var(--v-text-scale)); }
+
+/* Roll Log + Quick Ref tiles host reused player-sheet modules that own their own scroll;
+   drop the tile-body padding/scroll so there's a single scroll container. */
+.vamp-st-tile__body:has(.vamp-st-rolllog),
+.vamp-st-tile__body:has(.vamp-st-quickref) {
+  padding: 0;
+  overflow: hidden;
+}
+
+.vamp-st-rolllog {
+  block-size: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v-border-accent) transparent;
+  padding: 0.4rem 0.5rem;
+}
+
+.vamp-st-quickref {
+  block-size: 100%;
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+}
+
+.vamp-st-tile__empty {
+  color: var(--v-text-muted);
+  font-style: italic;
+  text-align: center;
+  text-wrap: balance;
+  padding: 0.75rem 0.5rem;
+}
+
+/* Prompt Reference tile */
+
+.vamp-st-prompt { display: flex; flex-direction: column; gap: 0.7rem; }
+.vamp-st-prompt__block { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.vamp-st-prompt__heading {
+  margin: 0;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.1rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-block-end: 0.2rem;
+  background: var(--v-dot-dash-h) bottom / 100% 2px no-repeat;
+}
+
+.vamp-st-prompt__questions {
+  margin: 0;
+  padding-inline-start: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: calc(0.78rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+}
+
+.vamp-st-prompt__moves { display: flex; flex-direction: column; gap: 0.2rem; }
+
+.vamp-st-move { border-radius: var(--v-radius-sm); }
+
+.vamp-st-move__head {
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: start;
+  padding: 0.25rem 0.35rem;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.05rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  background: none;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+}
+
+.vamp-st-move__head:hover { color: var(--v-text-accent); background: color-mix(in oklab, var(--v-accent) 12%, transparent); }
+.vamp-st-move__chev { flex: none; transition: transform var(--v-transition); }
+.vamp-st-move__chev.is-open { transform: rotate(90deg); }
+.vamp-st-move__name { min-inline-size: 0; }
+
+.vamp-st-move__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 0.3rem 0.35rem 0.5rem 1.1rem;
+}
+
+.vamp-st-move__tier { display: flex; flex-direction: column; gap: 0.15rem; }
+
+.vamp-st-move__tier-label {
+  font-family: var(--v-font-heading);
+  font-size: calc(0.9rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.vamp-st-move__tier-label--soft { color: color-mix(in oklab, var(--v-text-secondary) 80%, var(--v-accent)); }
+.vamp-st-move__tier-label--hard { color: var(--v-accent); }
+
+.vamp-st-move__tier ul {
+  margin: 0;
+  padding-inline-start: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  font-size: calc(0.75rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+}
+
+/* Bat-bullet list markers across the ST dashboard, matching the site's ul li::before
+   pattern; scoped under the dashboard root so the player panel's own lists stay untouched. */
+.vamp-st-dash :is(
+  .vamp-st-card__convictions,
+  .vamp-st-briefing .vamp-rpanel-field__list,
+  .vamp-st-prompt__questions,
+  .vamp-st-move__tier ul
+) {
+  list-style: none;
+  padding-inline-start: 1.25em;
+}
+
+.vamp-st-dash :is(
+  .vamp-st-card__convictions,
+  .vamp-st-briefing .vamp-rpanel-field__list,
+  .vamp-st-prompt__questions,
+  .vamp-st-move__tier ul
+) > li {
+  position: relative;
+}
+
+.vamp-st-dash :is(
+  .vamp-st-card__convictions,
+  .vamp-st-briefing .vamp-rpanel-field__list,
+  .vamp-st-prompt__questions,
+  .vamp-st-move__tier ul
+) > li::before {
+  content: '';
+  position: absolute;
+  inset-inline-start: -1.25em;
+  inset-block-start: 0.5em;
+  inline-size: 0.85em;
+  block-size: 0.85em;
+  background-color: var(--v-accent);
+  mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+  -webkit-mask: url('/assets/images/bat-bullet.svg') center/contain no-repeat;
+}
+
+/* ST Notes tile */
+
+.vamp-st-notes__area {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 4rem;
+  resize: none;
+  font-family: var(--v-font-body, inherit);
+  font-size: calc(0.82rem * var(--v-text-scale));
+  line-height: 1.5;
+  color: var(--v-text);
+  background: color-mix(in oklab, var(--v-surface) 55%, transparent);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.5rem;
+}
+
+.vamp-st-notes__area:focus-visible { outline: 2px solid var(--v-border-accent); outline-offset: 1px; }
+
+/* Edit mode wraps the textarea plus the explicit delete control (closing the tile never deletes). */
+.vamp-st-notes__edit { display: flex; flex-direction: column; gap: 0.3rem; block-size: 100%; min-block-size: 0; }
+.vamp-st-notes__edit .vamp-st-notes__area { flex: 1; block-size: auto; }
+.vamp-st-notes__trash {
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--v-font-heading);
+  font-size: calc(0.78rem * var(--v-text-scale));
+  color: var(--v-text-muted);
+  background: none;
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0.15rem 0.4rem;
+  cursor: pointer;
+  transition: color var(--v-transition), border-color var(--v-transition), background var(--v-transition);
+}
+.vamp-st-notes__trash:hover { color: var(--v-danger); border-color: var(--v-danger); }
+.vamp-st-notes__trash.is-danger { color: #fff; background: var(--v-danger); border-color: var(--v-danger); }
+
+/* Rendered (view-mode) note: same markdown pipeline as player Notes, fills the tile body. */
+.vamp-st-notes__rendered {
+  block-size: 100%;
+  min-block-size: 4rem;
+  overflow: auto;
+  font-size: calc(0.82rem * var(--v-text-scale));
+  line-height: 1.55;
+  color: var(--v-text);
+  cursor: text;
+}
+.vamp-st-notes__rendered > :first-child { margin-block-start: 0; }
+.vamp-st-notes__rendered > :last-child { margin-block-end: 0; }
+.vamp-st-notes__rendered h1, .vamp-st-notes__rendered h2, .vamp-st-notes__rendered h3,
+.vamp-st-notes__rendered h4, .vamp-st-notes__rendered h5, .vamp-st-notes__rendered h6 {
+  font-family: var(--v-font-heading);
+  color: var(--v-text-accent);
+  margin-block: 0.5rem 0.25rem;
+}
+.vamp-st-notes__rendered a { color: var(--v-text-accent); }
+
+/* Haven tile (editable) */
+
+.vamp-st-haven { display: flex; flex-direction: column; gap: 0.5rem; min-block-size: 0; }
+
+.vamp-st-haven__add {
+  align-self: start;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.05rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  background: color-mix(in oklab, var(--v-accent) 14%, transparent);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-sm);
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+
+/* Type-driven add flow (mirrors the player's QuickAdd): a name/type row, then the
+   type-specific prompt rows (Weapon → Harm/Range, Wearable → Armor/Container). */
+.vamp-st-haven__form { display: flex; flex-direction: column; gap: 0.4rem; }
+.vamp-st-haven__form-row { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
+.vamp-st-haven__name { flex: 1 1 8rem; min-inline-size: 0; }
+.vamp-st-haven__type { flex: none; }
+.vamp-st-haven__form-foot { display: flex; gap: 0.35rem; }
+
+.vamp-st-haven__req { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: calc(0.82rem * var(--v-text-scale)); color: var(--v-text-secondary); }
+.vamp-st-haven__q { color: var(--v-text-muted); }
+.vamp-st-haven__field { display: inline-flex; align-items: center; gap: 0.25rem; }
+.vamp-st-haven__field input, .vamp-st-haven__field select { inline-size: 4.5rem; min-inline-size: 0; }
+.vamp-st-haven__field select { inline-size: auto; }
+
+/* "Send to…" menu on a Haven row: same anchored-list pattern as the sheet's Move/Give menus. */
+.vamp-st-haven__send { position: relative; }
+.vamp-st-haven__send-menu {
+  position: absolute;
+  inset-block-start: calc(100% + 0.25rem);
+  inset-inline-end: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 9rem;
+  /* Opaque, matching the Settings/Add-Tile menus (see .vamp-st-add__menu). */
+  background: var(--v-bg-elevated);
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-sm);
+  padding: 0.25rem;
+  box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.5);
+}
+.vamp-st-haven__send-item {
+  text-align: start;
+  font-size: calc(0.85rem * var(--v-text-scale));
+  color: var(--v-text-secondary);
+  background: none;
+  border: none;
+  border-radius: var(--v-radius-sm);
+  padding: 0.3rem 0.45rem;
+  cursor: pointer;
+}
+.vamp-st-haven__send-item:hover { background: color-mix(in oklab, var(--v-accent) 20%, transparent); color: var(--v-text-accent); }
+
+.vamp-st-haven__list { display: flex; flex-direction: column; gap: 0.3rem; overflow: auto; min-block-size: 0; }
+
+.vamp-st-haven__row {
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  background: color-mix(in oklab, var(--v-surface) 45%, transparent);
+}
+
+.vamp-st-haven__row.is-open { border-color: var(--v-border-accent); }
+
+.vamp-st-haven__line { display: flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.35rem; }
+
+.vamp-st-haven__main {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  text-align: start;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--v-text);
+}
+
+.vamp-st-haven__item-name { font-family: var(--v-font-heading); font-size: calc(1.05rem * var(--v-text-scale)); color: var(--v-text-accent); }
+.vamp-st-haven__item-type { font-size: calc(0.7rem * var(--v-text-scale)); color: var(--v-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.vamp-st-haven__item-qty, .vamp-st-haven__item-kids { font-size: calc(0.72rem * var(--v-text-scale)); color: var(--v-text-secondary); }
+.vamp-st-haven__qty { display: inline-flex; gap: 0.2rem; }
+
+.vamp-st-haven__editor {
+  padding: 0.4rem;
+  border-block-start: 1px solid var(--v-glass-border);
+}
+
+.vamp-st-haven__editor .vamp-poss-edit__row { flex-wrap: wrap; }
+.vamp-st-haven__editor .vamp-poss-edit__type { min-inline-size: 0; }
+
+/* The tag browser should claim the tile's leftover height instead of a fixed sliver: the open
+   row grows, and the picker's result list flexes to fill it (§12.9 item 4). Scoped to the ST
+   Haven tile so the player Possessions layout is untouched. */
+.vamp-st-haven__list { flex: 1; }
+.vamp-st-haven__row.is-open { display: flex; flex-direction: column; min-block-size: 0; flex: 1; }
+.vamp-st-haven__editor { display: flex; min-block-size: 0; flex: 1; }
+.vamp-st-haven__editor .vamp-poss-edit { flex: 1; min-block-size: 0; display: flex; flex-direction: column; }
+.vamp-st-haven__editor .vamp-poss-edit__picker { flex: 1; min-block-size: 0; display: flex; }
+.vamp-st-haven__editor .vamp-poss-picker { flex: 1; min-block-size: 0; display: flex; flex-direction: column; }
+.vamp-st-haven__editor .vamp-poss-picker__results { flex: 1; min-block-size: 6rem; max-block-size: none; }
+
+/* All-Clocks tile */
+
+.vamp-st-clocks { display: flex; flex-direction: column; gap: 0.7rem; }
+.vamp-st-clocks__group { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.vamp-st-clocks__heading {
+  margin: 0;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.1rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  padding-block-end: 0.2rem;
+  background: var(--v-dot-dash-h) bottom / 100% 2px no-repeat;
+}
+
+.vamp-st-clocks__grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.vamp-st-clocks__grid .vamp-clock { inline-size: 5.5rem; max-width: 5.5rem; }
+.vamp-st-clocks__grid .vamp-clock--mqc { inline-size: 7rem; max-width: 7rem; }
+.vamp-st-clocks__grid .vamp-clock__svg { inline-size: 100%; block-size: auto; }
+.vamp-st-clocks__grid .vamp-clock__name { white-space: normal; max-width: 100%; font-size: calc(0.9rem * var(--v-text-scale)); }
+/* Member clocks are read-only here; the ST's own private clocks (below) stay interactive. */
+.vamp-st-clocks__group:not(:first-child) .vamp-clock__svg { pointer-events: none; }
+
+/* Scope chooser in the New-Clock flow: ST-private works now, the other two show "soon". */
+.vamp-st-clocks__scopes { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+.vamp-st-clocks__scopes .vamp-st-btn { display: inline-flex; align-items: center; gap: 0.3rem; }
+.vamp-st-clocks__soon {
+  font-size: 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--v-text-muted);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  padding: 0 0.25rem;
+}
+
+/* Initiative tile */
+
+.vamp-st-init { display: flex; flex-direction: column; gap: 0.5rem; min-block-size: 0; }
+
+.vamp-st-init__controls { display: flex; align-items: stretch; gap: 0.4rem; }
+.vamp-st-init__controls .vamp-st-btn { flex: none; }
+
+.vamp-st-init__status {
+  flex: 1;
+  min-inline-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.vamp-st-init__round {
+  font-size: calc(0.7rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v-text-muted);
+}
+.vamp-st-init__turn {
+  font-family: var(--v-font-heading);
+  font-size: calc(1.05rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  max-inline-size: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vamp-st-init__list { display: flex; flex-direction: column; gap: 0.25rem; overflow: auto; min-block-size: 0; flex: 1; }
+/* Kill the shared input bottom-margin inside the tile so flex rows line up on their centers
+   (the stray 0.75rem was floating each input above its row-mates and the Add button). */
+.vamp-st-init .vamp-input { margin-block-end: 0; }
+
+.vamp-st-init__row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.3rem;
+  /* Per-row identity color: the opponent's palette hue, or a PC's own theme accent. */
+  border: 1px solid transparent;
+  border-inline-start: 3px solid var(--row-color, var(--v-border-accent));
+  border-radius: var(--v-radius-sm);
+  background: color-mix(in oklab, var(--v-bg-elevated) 55%, transparent);
+}
+.vamp-st-init__row.is-current {
+  border-block-color: var(--v-border-accent);
+  border-inline-end-color: var(--v-border-accent);
+  background: color-mix(in oklab, var(--v-accent) 16%, transparent);
+}
+.vamp-st-init__row.is-dragging { opacity: 0.4; }
+
+/* Drop indicator: a bright line between rows marking where the dragged turn will land. */
+.vamp-st-init__dropline {
+  block-size: 2px;
+  margin-block: -1px;
+  border-radius: 1px;
+  background: var(--v-accent);
+  box-shadow: 0 0 4px var(--v-accent);
+}
+
+.vamp-st-init__grip { flex: none; cursor: grab; color: var(--v-text-muted); line-height: 1; touch-action: none; }
+.vamp-st-init__list.is-dragging-active { user-select: none; }
+.vamp-st-init__grip:active { cursor: grabbing; }
+/* Sequence badge (duplicate-name letter + turn number), tinted to the opponent's color. */
+.vamp-st-init__seq {
+  flex: none;
+  font-family: var(--v-font-heading);
+  font-size: calc(0.72rem * var(--v-text-scale));
+  letter-spacing: 0.03em;
+  color: var(--row-color, var(--v-text-accent));
+  white-space: nowrap;
+}
+.vamp-st-init__kind { flex: none; color: var(--v-text-accent); font-size: 0.7em; line-height: 1; }
+.vamp-st-init__name { flex: 1; min-inline-size: 0; }
+.vamp-st-init__name--pc {
+  font-family: var(--v-font-heading);
+  color: var(--v-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.vamp-st-init__val { flex: none; inline-size: 3.25rem; text-align: center; }
+
+/* TPR badge + bare steppers for NPC rows (no native number spinner anywhere in the tile). */
+.vamp-st-init__tpr { flex: none; display: inline-flex; align-items: center; gap: 0.2rem; }
+.vamp-st-init__tpr-badge {
+  font-family: var(--v-font-heading);
+  font-size: calc(0.78rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--v-text-accent);
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  padding-inline: 0.3rem;
+  white-space: nowrap;
+}
+.vamp-st-init__step {
+  flex: none;
+  inline-size: 1.1rem;
+  block-size: 1.1rem;
+  display: inline-grid;
+  place-items: center;
+  font-family: var(--v-font-heading);
+  color: var(--v-text-secondary);
+  background: none;
+  border: 1px solid var(--v-glass-border);
+  border-radius: var(--v-radius-sm);
+  cursor: pointer;
+  line-height: 1;
+}
+.vamp-st-init__step:hover { color: var(--v-text-accent); border-color: var(--v-border-accent); }
+
+/* align-items: stretch equalizes the Add button's block-size to the inputs (it was rendering
+   shorter and floating off their baseline). */
+.vamp-st-init__add { display: flex; align-items: stretch; gap: 0.4rem; }
+.vamp-st-init__add .vamp-st-init__name { flex: 1; }
+.vamp-st-init__tpr-input { flex: none; inline-size: 3rem; text-align: center; }
+.vamp-st-init__add .vamp-st-btn { flex: none; display: inline-flex; align-items: center; }
+
+/* No native number-spinner tickers anywhere in the tile. */
+.vamp-st-init__val,
+.vamp-st-init__tpr-input { appearance: textfield; -moz-appearance: textfield; }
+.vamp-st-init__val::-webkit-outer-spin-button,
+.vamp-st-init__val::-webkit-inner-spin-button,
+.vamp-st-init__tpr-input::-webkit-outer-spin-button,
+.vamp-st-init__tpr-input::-webkit-inner-spin-button { appearance: none; margin: 0; }
+
+/* Debt Tracker tile */
+
+.vamp-st-debt { display: flex; flex-direction: column; gap: 0.7rem; overflow: auto; min-block-size: 0; }
+
+.vamp-st-debt__group { display: flex; flex-direction: column; gap: 0.35rem; }
+
+.vamp-st-debt__name {
+  margin: 0;
+  font-family: var(--v-font-heading);
+  font-size: calc(1.1rem * var(--v-text-scale));
+  color: var(--v-text-accent);
+  padding-block-end: 0.2rem;
+  background: var(--v-dot-dash-h) bottom / 100% 2px no-repeat;
+}
+
+.vamp-st-debt__split { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0.5rem; }
+
+.vamp-st-debt__col { display: flex; flex-direction: column; gap: 0.25rem; min-inline-size: 0; }
+
+.vamp-st-debt__heading {
+  font-family: var(--v-font-heading);
+  font-size: calc(0.78rem * var(--v-text-scale));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--v-text-muted);
+}
+
+.vamp-st-debt__divider {
+  inline-size: 2px;
+  align-self: stretch;
+  opacity: 0.4;
+  color: var(--v-border);
+  background: var(--v-dot-dash-v, var(--v-dot-dash-h)) center / 2px 100% no-repeat;
+}
+
+.vamp-st-debt__empty { font-style: italic; color: var(--v-text-muted); font-size: calc(0.78rem * var(--v-text-scale)); }
+
+.vamp-st-debt__line { display: flex; align-items: baseline; gap: 0.35rem; font-size: calc(0.82rem * var(--v-text-scale)); }
+/* Read-only pips: state colour only, no interaction. */
+.vamp-st-debt__line .vamp-pip { flex: none; pointer-events: none; cursor: default; align-self: center; }
+.vamp-st-debt__who { color: var(--v-text-accent); font-family: var(--v-font-heading); }
+.vamp-st-debt__what { color: var(--v-text-secondary); min-inline-size: 0; text-wrap: pretty; }
+
+/* Two-column home: Your Characters | Your Chronicles (§12.5) */
+.vamp-home--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 24rem);
+  gap: 1.5rem;
+  max-inline-size: 56rem;
+  margin: 2rem auto;
+  padding-inline: 1rem;
+}
+
+.vamp-home__col-title {
+  font-family: var(--v-font-display);
+  color: var(--v-text-accent);
+  margin-block-end: 1.25rem;
+  text-align: center;
+  font-size: 1.6rem;
+  text-wrap: balance;
+}
+
+.vamp-st-chronicles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-block-end: 0.6rem;
+}
+
+.vamp-st-chronicle {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--v-border-accent);
+  border-radius: var(--v-radius-md);
+  background: var(--v-bg-elevated);
+}
+
+.vamp-st-chronicle__title {
+  font-family: var(--v-font-display);
+  font-size: 1.1rem;
+  color: var(--v-text-accent);
+}
+
+.vamp-st-chronicle__meta {
+  font-size: 0.85rem;
+  color: var(--v-text-secondary);
+}
+
+.vamp-st-chronicle__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.vamp-st-chronicle__confirm {
+  font-size: 0.85rem;
+  color: var(--v-text-secondary);
+}
+
+@media (width < 48rem) {
+  .vamp-home--split { grid-template-columns: 1fr; }
 }
 
 /* Split-pane reflow. Em deliberately: resolves against the pane's rocker-scaled

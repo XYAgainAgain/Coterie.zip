@@ -8,153 +8,33 @@ import {
   deleteCharacter,
   activeCharacterId,
   maxCharacters,
-  claimStoryteller,
-  clearStoryteller,
-  getStClaimStatus,
+  loadMyChronicles,
   type StClaimStatus,
 } from '../state/persistence';
 import { vampConfirm } from '../state/dialog';
-import { showToast, forceToast } from '../state/toasts';
-
-const ST_CODES_KEY = 'vamp-st-codes';
-const LEGACY_ST_CODE_KEY = 'vamp-st-code';
-
-/* One account can Storyteller any number of Coteries; each doc's storytellerUid is
-   independent, so the only registry of "my Chronicles" is this local code list. */
-function readStCodes(): string[] {
-  let codes: string[] = [];
-  try { codes = JSON.parse(localStorage.getItem(ST_CODES_KEY) ?? '[]'); } catch {}
-  const legacy = localStorage.getItem(LEGACY_ST_CODE_KEY);
-  if (legacy) {
-    localStorage.removeItem(LEGACY_ST_CODE_KEY);
-    if (!codes.includes(legacy)) codes.push(legacy);
-  }
-  return codes;
-}
-
-function writeStCodes(codes: string[]): void {
-  localStorage.setItem(ST_CODES_KEY, JSON.stringify(codes));
-}
-
-/* "I'm a Storyteller" entry: claim-by-code plus a status card per claimed Coterie.
-   Phase 1 has no ST dashboard or Chronicles query, so claimed codes are remembered
-   locally and re-resolved on open; re-entering a code you already ST shows the same card. */
-function StorytellerClaim() {
-  const open = useSignal(false);
-  const code = useSignal('');
-  const statuses = useSignal<StClaimStatus[]>([]);
-  const working = useSignal(false);
-  const confirmStepDown = useSignal<string | null>(null);
-
-  async function toggleOpen() {
-    open.value = !open.value;
-    if (!open.value || statuses.value.length > 0) return;
-    const remembered = readStCodes();
-    if (remembered.length === 0) return;
-    working.value = true;
-    const results = await Promise.allSettled(remembered.map(c => getStClaimStatus(c)));
-    const keep: string[] = [];
-    const cards: StClaimStatus[] = [];
-    results.forEach((r, i) => {
-      /* A failed read (offline) keeps the code remembered; a successful read that shows
-         no ST seat drops it. */
-      if (r.status === 'rejected') { keep.push(remembered[i]); return; }
-      if (r.value?.isStoryteller) { keep.push(remembered[i]); cards.push(r.value); }
-    });
-    writeStCodes(keep);
-    statuses.value = cards;
-    working.value = false;
-  }
-
-  async function handleClaim() {
-    const c = code.value.trim().toUpperCase();
-    if (!c || working.value) return;
-    working.value = true;
-    try {
-      const existing = await getStClaimStatus(c);
-      if (!existing) throw new Error(`No Coterie found with code "${c}"`);
-      if (!existing.isStoryteller) {
-        await claimStoryteller(c);
-        forceToast('The Storyteller’s seat is yours. Players will be asked to open their sheets to you.', 'success', 'Claimed');
-      }
-      const codes = readStCodes();
-      if (!codes.includes(c)) writeStCodes([...codes, c]);
-      const fresh = (await getStClaimStatus(c)) ?? existing;
-      statuses.value = [...statuses.value.filter(s => s.code !== c), fresh];
-      code.value = '';
-    } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Could not claim that Coterie.', 'error');
-    }
-    working.value = false;
-  }
-
-  async function handleStepDown(s: StClaimStatus) {
-    if (working.value) return;
-    working.value = true;
-    try {
-      await clearStoryteller(s.code);
-      writeStCodes(readStCodes().filter(c => c !== s.code));
-      statuses.value = statuses.value.filter(x => x.code !== s.code);
-      confirmStepDown.value = null;
-      forceToast('You have stepped down. Player consent clears with you.', 'info');
-    } catch (err) {
-      showToast(err instanceof Error ? err.message : 'Could not step down.', 'error');
-    }
-    working.value = false;
-  }
-
-  return (
-    <div class="vamp-st-claim">
-      <button class="vamp-st-claim__toggle" onClick={toggleOpen}>
-        {open.value ? 'Never mind' : "I'm a Storyteller"}
-      </button>
-      {open.value && (
-        <div class="vamp-st-claim__body">
-          {statuses.value.map(s => (
-            <div class="vamp-st-claim__card" key={s.code}>
-              <div class="vamp-st-claim__title">{s.typeName || 'Your Chronicle'}</div>
-              <div class="vamp-st-claim__meta">
-                Code {s.code} &middot; {s.memberCount} member{s.memberCount === 1 ? '' : 's'} &middot; {s.consented} of {s.memberCount} consented
-              </div>
-              <div class="vamp-st-claim__note">Storyteller Dashboard coming soon! For now, all consenting players in the Coterie have granted you read-only access to their sheets.</div>
-              {confirmStepDown.value === s.code ? (
-                <div class="vamp-st-claim__actions">
-                  <span>Step down as Storyteller?</span>
-                  <button class="vamp-btn vamp-btn--sm" onClick={() => handleStepDown(s)} disabled={working.value}>Yes, step down</button>
-                  <button class="vamp-btn vamp-btn--sm" onClick={() => { confirmStepDown.value = null; }}>Cancel</button>
-                </div>
-              ) : (
-                <button class="vamp-btn vamp-btn--sm" onClick={() => { confirmStepDown.value = s.code; }} disabled={working.value}>Step down</button>
-              )}
-            </div>
-          ))}
-          <div class="vamp-st-claim__form">
-            <input
-              class="vamp-input"
-              type="text"
-              placeholder="Coterie code"
-              value={code.value}
-              onInput={(e) => { code.value = (e.target as HTMLInputElement).value; }}
-              onKeyDown={(e) => { if (e.key === 'Enter') handleClaim(); }}
-            />
-            <button class="vamp-btn vamp-btn--sm" onClick={handleClaim} disabled={working.value || !code.value.trim()}>
-              {working.value ? 'Claiming…' : 'Claim'}
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
+import { showToast } from '../state/toasts';
+import { ChroniclesColumn, StorytellerClaimEntry, readStCodes, writeStCodes } from '../components/st/StorytellerHome';
 
 export function CharacterList() {
   const loading = useSignal(true);
   const deleting = useSignal<string | null>(null);
+  const chronicles = useSignal<StClaimStatus[]>([]);
+
+  /* Merge discovered chronicles into the remembered-code list (add-only, so an offline
+     code is never dropped), then drive the two-column layout off the result. */
+  async function refreshChronicles() {
+    const found = await loadMyChronicles(readStCodes());
+    writeStCodes([...new Set([...readStCodes(), ...found.map(s => s.code)])]);
+    chronicles.value = found;
+  }
 
   useEffect(() => {
     activeCharacterId.value = null;
     document.title = 'Vamp: Coterie Character Sheet';
-    loadCharacterList().finally(() => { loading.value = false; });
+    Promise.all([
+      loadCharacterList(),
+      refreshChronicles().catch(() => { /* query already degrades internally; keep home usable */ }),
+    ]).finally(() => { loading.value = false; });
   }, []);
 
   if (loading.value) {
@@ -188,12 +68,8 @@ export function CharacterList() {
     }
   }
 
-  return (
-    <div class="vamp-character-list">
-      <h2 style={{ fontFamily: 'var(--v-font-display)', color: 'var(--v-text-accent)', marginBottom: '1.5rem', textAlign: 'center', fontSize: '2rem' }}>
-        Your <em><strong>Coterie</strong></em> Vamps
-      </h2>
-
+  const characters = (
+    <>
       {list.length === 0 && (
         <div class="vamp-character-list__empty">
           No characters yet. Create one below.
@@ -240,10 +116,7 @@ export function CharacterList() {
       ))}
 
       {list.length < maxCharacters() && (
-        <div
-          class="vamp-character-list__new"
-          onClick={handleCreate}
-        >
+        <div class="vamp-character-list__new" onClick={handleCreate}>
           + New Character
         </div>
       )}
@@ -253,8 +126,30 @@ export function CharacterList() {
           Character limit reached ({maxCharacters()})
         </div>
       )}
+    </>
+  );
 
-      <StorytellerClaim />
+  /* Two-column home once the user Storytells anything; otherwise the single-column list
+     with only the small first-claim entry (§12.5). */
+  if (chronicles.value.length > 0) {
+    return (
+      <div class="vamp-home vamp-home--split">
+        <section class="vamp-home__col">
+          <h2 class="vamp-home__col-title">Your <em><strong>Coterie</strong></em> Vamps</h2>
+          {characters}
+        </section>
+        <ChroniclesColumn chronicles={chronicles.value} onChange={refreshChronicles} />
+      </div>
+    );
+  }
+
+  return (
+    <div class="vamp-character-list">
+      <h2 style={{ fontFamily: 'var(--v-font-display)', color: 'var(--v-text-accent)', marginBottom: '1.5rem', textAlign: 'center', fontSize: '2rem' }}>
+        Your <em><strong>Coterie</strong></em> Vamps
+      </h2>
+      {characters}
+      <StorytellerClaimEntry onChange={refreshChronicles} />
     </div>
   );
 }

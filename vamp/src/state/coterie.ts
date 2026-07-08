@@ -1,6 +1,6 @@
 import { signal } from '@preact/signals';
 import type { Clock } from './character';
-import type { CoterieStatName, Item, Gift } from '../data/types';
+import type { CoterieStatName, StatName, Item, Gift } from '../data/types';
 import type { RollLogEntry } from '../dice/types';
 
 export interface CoterieMember {
@@ -12,6 +12,17 @@ export interface CoterieMember {
   ageBracket: string;
   bp: number;
   playbook: string;
+  /* Expanded summary the player publishes for the ST roster quick-view. All optional:
+     docs written before this landed lack them. Disciplines are the raw slugs. */
+  stats?: Record<StatName, number>;
+  hunger?: number;
+  humanity?: number;
+  disciplines?: string[];
+  convictions?: string[];
+  /* Table-owned Initiative for the ST Initiative ladder. NOT part of the published summary:
+     both the player (SceneTools) and the ST write it via a members-array transaction, so
+     syncMemberToCoterie must preserve it rather than overwrite. */
+  initiative?: number;
 }
 
 export interface CoterieState {

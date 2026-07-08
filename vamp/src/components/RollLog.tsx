@@ -16,6 +16,15 @@ function fmtMod(value: number): string {
 /* Renders one entry in the compressed toast syntax, reusing its classes. This is the
    single obfuscation seam: a future Storyteller pass blanks dice/total here. */
 function RollRow({ entry, mine, index }: { entry: RollLogEntry; mine: string | null; index: number }) {
+  /* A Secret Storyteller roll: show nothing but the fact one happened, for every client. */
+  if (entry.secret) {
+    return (
+      <li class="vamp-roll-log__row vamp-roll-log__row--secret">
+        <span class="vamp-roll-log__who">Storyteller</span>
+        <span class="vamp-roll-log__syntax vamp-roll-log__secret">rolled something.</span>
+      </li>
+    );
+  }
   const who = entry.characterId && entry.characterId === mine ? 'You' : giftDisplayName(entry.who || 'Someone');
   const fanged = entry.tier === 'fanged';
   const crit = entry.tier === 'crit';
@@ -68,6 +77,14 @@ function RollRow({ entry, mine, index }: { entry: RollLogEntry; mine: string | n
   );
 }
 
+/* The bare entry list, no header/collapse chrome. Reused by the ST dashboard's Roll Log
+   tile, which supplies its own tile header. */
+export function RollLogList({ entries, mine }: { entries: RollLogEntry[]; mine: string | null }) {
+  return entries.length === 0
+    ? <p class="vamp-roll-log__empty">No rolls yet.</p>
+    : <ul class="vamp-roll-log__list">{entries.map((e, i) => <RollRow key={e.id} entry={e} mine={mine} index={i} />)}</ul>;
+}
+
 export function RollLog() {
   /* In a Coterie the shared list is the source of truth (it already holds this client's
      own rolls); solo characters fall back to the local log. */
@@ -83,11 +100,7 @@ export function RollLog() {
       >
         <span class="vamp-stat__name">Roll Log</span>
       </div>
-      {!collapsed && (
-        entries.length === 0
-          ? <p class="vamp-roll-log__empty">No rolls yet.</p>
-          : <ul class="vamp-roll-log__list">{entries.map((e, i) => <RollRow key={e.id} entry={e} mine={mine} index={i} />)}</ul>
-      )}
+      {!collapsed && <RollLogList entries={entries} mine={mine} />}
     </div>
   );
 }

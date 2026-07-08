@@ -66,11 +66,33 @@ service cloud.firestore {
               && resource.data.get('storytellerUid', null) == request.auth.uid
               && request.resource.data.get('storytellerUid', null) == null
               && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['storytellerUid', 'updatedAt']))
+          // Storyteller writes, field-scoped: Haven stocking, driving the Masquerade Clock,
+          // and dropping gifts. Each write may touch only its own field.
+          || (emailVerified()
+              && resource.data.get('storytellerUid', null) == request.auth.uid
+              && (request.resource.data.diff(resource.data).affectedKeys().hasOnly(['havenItems', 'updatedAt'])
+                  || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['masqueradeClock', 'updatedAt'])
+                  || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['giftQueue', 'updatedAt'])
+                  // Send-to gifts move an item Haven -> giftQueue in ONE commit (both fields).
+                  || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['havenItems', 'giftQueue', 'updatedAt'])
+                  // ST dice rolls append to the shared log (Public/Secret modes).
+                  || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['diceRolls', 'updatedAt'])
+                  // members: table-owned Initiative lives in the summaries; trust model accepts
+                  // that this technically lets the ST touch other summary fields.
+                  || request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members', 'updatedAt'])))
         );
       // Only the sole remaining member may delete the Coterie (last one out)!
       allow delete: if request.auth != null
         && resource.data.memberUids.size() == 1
         && request.auth.uid in resource.data.memberUids;
+    }
+
+    // ST-private vault (layout, scratch notes, future prep): same boundary class as
+    // player notes — readable and writable ONLY by the Coterie's current Storyteller.
+    match /stState/{code} {
+      allow read, write: if emailVerified()
+        && exists(/databases/$(database)/documents/coteries/$(code))
+        && get(/databases/$(database)/documents/coteries/$(code)).data.get('storytellerUid', null) == request.auth.uid;
     }
 
     match /{document=**} {

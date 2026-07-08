@@ -4,7 +4,9 @@ import {
   query, where, serverTimestamp, onSnapshot, runTransaction,
 } from 'firebase/firestore';
 import { db, auth, linkedEmail } from '../firebase';
-import { character, type CharacterState, type Note, BLANK_CHARACTER, moveItem, removeQtyFromItem, receiveItem, receiveItems, removeItems, freeContainerChildren } from './character';
+import { character, type CharacterState, type Note, BLANK_CHARACTER, maxHPFor, moveItem, removeQtyFromItem, receiveItem, receiveItems, removeItems, freeContainerChildren } from './character';
+import { consentMatchesSt, type StRosterEntry, type StRosterVitals } from './stRosterLogic';
+import { normalizeHex } from '../themes/customTheme';
 import { collectSubtree, isDescendant, isContainerItem } from '../data/itemTree';
 import { planNotesReconcile } from './notesSync';
 import { activeStConsent, activeStDeclined, kickVotePassed, type StConsent } from './storyteller';
@@ -14,6 +16,7 @@ import { giftDisplayName, pickVerb, giftRecipientToast } from '../data/gifts';
 import { forceToast } from './toasts';
 import { coterieState, masqueradeClock, blankCoterie, coterieDirtyFields, clearCoterieDirty, masqueradeDirty, type CoterieOwnedField } from './coterie';
 import type { CoterieState, CoterieMember } from './coterie';
+import { buildMemberSummary, memberSummaryEqual } from './memberSummary';
 import type { Clock } from './character';
 import type { RollLogEntry } from '../dice/types';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
@@ -36,14 +39,13 @@ export function generateNameSlug(name: string): string {
     || 'unnamed';
 }
 
-/* Append -2, -3 etc. if slug collides with existing members in the same Coterie */
+/* Append -2, -3 etc. if slug collides with existing members in the same Coterie.
+   'st' is reserved: /vamp/{code}/st is the Storyteller dashboard route. */
 function dedupeSlug(slug: string, ownCharacterId: string, members: Array<{ slug?: string; characterId?: string }>): string {
-  const taken = new Set(
-    members
-      .filter(m => m.characterId !== ownCharacterId)
-      .map(m => m.slug)
-      .filter(Boolean),
-  );
+  const taken = new Set<string | undefined>(['st']);
+  for (const m of members) {
+    if (m.characterId !== ownCharacterId && m.slug) taken.add(m.slug);
+  }
   if (!taken.has(slug)) return slug;
   for (let i = 2; i <= 99; i++) {
     const candidate = `${slug}-${i}`;
@@ -589,10 +591,8 @@ async function syncPending(): Promise<void> {
   }
 }
 
-/* True if the user owns another character (besides excludeCharId) still attached to
-   this Coterie. Removing the uid from memberUids while such a character remains
-   locks the user out of their own Coterie (this raptured Jaz on 2026-06-11).
-   Returns null when the query fails, so callers can pick their own safe fallback. */
+/* True if the user still owns another character (besides excludeCharId) attached to this
+   Coterie — removing the uid while one remains locks them out. Null on a failed query lets callers pick their own fallback. */
 async function ownsOtherMemberCharacter(uid: string, coterieId: string, excludeCharId: string): Promise<boolean | null> {
   try {
     const q = query(
@@ -626,21 +626,12 @@ async function syncMemberToCoterie(
   slug: string,
 ): Promise<void> {
   try {
-    const firstPortrait = state.portraits[0]?.url ?? null;
-    const pronouns = state.bio.pronouns.filter(Boolean).join('/');
+    const summary = buildMemberSummary(state);
 
-    /* Each write costs ~1 read per online player; skip when nothing roster-visible
-       changed (slug excluded — the roster holds the deduped form) */
+    /* Each write costs ~1 read per online player; skip when nothing published changed
+       (slug excluded — the roster holds the deduped form) */
     const current = coterieState.value.members.find(m => m.characterId === characterId);
-    if (current
-      && current.name === (state.name || 'Unnamed')
-      && current.pronouns === (pronouns || '?/?')
-      && current.portraitUrl === firstPortrait
-      && current.ageBracket === state.ageBracket
-      && current.bp === state.bp
-      && current.playbook === state.playbook) {
-      return;
-    }
+    if (memberSummaryEqual(current, summary)) return;
 
     const coterieRef = doc(db, 'coteries', coterieId);
 
@@ -653,18 +644,13 @@ async function syncMemberToCoterie(
 
       const dedupedSlug = dedupeSlug(slug, characterId, members);
 
-      const entry: CoterieMember = {
-        characterId,
-        slug: dedupedSlug,
-        name: state.name || 'Unnamed',
-        pronouns: pronouns || '?/?',
-        portraitUrl: firstPortrait,
-        ageBracket: state.ageBracket,
-        bp: state.bp,
-        playbook: state.playbook,
-      };
-
       const idx = members.findIndex(m => m.characterId === characterId);
+      const entry: CoterieMember = { characterId, slug: dedupedSlug, ...summary };
+      /* Initiative is table-owned (written by the ST + the player's SceneTools via their own
+         members-array transactions), so carry the existing value through this summary write. */
+      const prevInit = idx >= 0 ? members[idx].initiative : undefined;
+      if (prevInit !== undefined) entry.initiative = prevInit;
+
       const updated = [...members];
       if (idx >= 0) {
         updated[idx] = entry;
@@ -765,8 +751,14 @@ export async function resolveCoterieCharacter(
 
   const isOwner = charSnap.data().ownerId === uid;
   if (!isOwner) {
-    const memberUids: string[] = coterieData.memberUids ?? [];
-    if (!memberUids.includes(uid)) {
+    /* Consent, not ST status, is the boundary (§2): a Storyteller reaches a sheet only when
+       that character consents to them. Membership remains the path for everyone else, so an
+       ST who also plays here still views fellow members normally. */
+    const isMember = (coterieData.memberUids as string[] ?? []).includes(uid);
+    const isStoryteller = (coterieData.storytellerUid ?? null) === uid;
+    const consentUid = (charSnap.data().stConsent as StConsent | undefined)?.uid;
+    const stConsented = isStoryteller && consentMatchesSt(consentUid, uid);
+    if (!isMember && !stConsented) {
       throw new Error("Sorry, you don't have permission to peek at this sheet! Try another coffin.");
     }
   }
@@ -864,16 +856,10 @@ function applyCoterie(data: Record<string, unknown>, dirty: ReadonlySet<CoterieO
   processGiftQueue();
 }
 
-/* Claim every queued gift addressed to the active character. Idempotent on two axes:
-   the local add keys on the gift id, and the queue-removal transaction no-ops for any
-   client that lost the race. Adding locally BEFORE removing means a crash mid-claim
-   re-claims harmlessly next load rather than dropping the item.
-
-   Loop-safety: runTransaction commits server-side, so the resulting snapshot arrives
-   with hasPendingWrites=false and DOES re-enter applyCoterie → processGiftQueue. The
-   `claiming` guard plus the idempotent "gift already gone → no-op" transaction are what
-   terminate it (the snapshot post-removal shows an empty queue), NOT the echo-skip. Keep
-   the guard. */
+/* Claims queued gifts, idempotent on gift id (local add) and a no-op removal transaction;
+   local-add-before-remove means a mid-claim crash re-claims harmlessly instead of dropping.
+   The commit's own snapshot re-enters applyCoterie → processGiftQueue (hasPendingWrites is
+   false); the `claiming` guard + idempotent removal terminate that loop, NOT the echo-skip. */
 let claiming = false;
 function processGiftQueue(): void {
   if (claiming) return;
@@ -957,10 +943,8 @@ export function locationStore(target: string | null): 'char' | 'haven' {
   return 'char';
 }
 
-/* Single entry point for every item move; routes by source store and destination store.
-   Same-store moves carry subtrees automatically (children point at the item id); the two
-   cross-store paths copy the whole subtree across the character/Coterie boundary.
-   Resolves true only once the move actually landed, so callers can toast honestly. */
+/* Single entry point for every item move: routes by source/destination store, carrying
+   subtrees along (same-store automatically, cross-store by copying). Resolves true only once the move actually lands, so callers can toast honestly. */
 export async function relocate(itemId: string, target: string | null): Promise<boolean> {
   const inChar = character.value.items.some(i => i.id === itemId);
   const inHaven = !inChar && coterieState.value.havenItems.some(i => i.id === itemId);
@@ -1008,6 +992,30 @@ export async function depositToHaven(itemId: string, target: string = HAVEN_ID):
 
   removeItems(new Set(subtree.map(i => i.id)));
   return true;
+}
+
+/* Write the active character's own Initiative onto its Coterie member entry (table-owned).
+   Transaction so it can't clobber a concurrent member/summary write; null clears it. Silent on
+   failure — Initiative is low-stakes and the SceneTools UI keeps the local draft either way. */
+export async function setMyInitiative(value: number | null): Promise<void> {
+  const coterieId = activeCoterie.value;
+  const charId = activeCharacterId.value;
+  if (!coterieId || !charId) return;
+  const ref = doc(db, 'coteries', coterieId);
+  try {
+    await runTransaction(db, async (txn) => {
+      const snap = await txn.get(ref);
+      if (!snap.exists()) return;
+      const members: CoterieMember[] = snap.data().members ?? [];
+      const idx = members.findIndex(m => m.characterId === charId);
+      if (idx < 0) return;
+      const updated = [...members];
+      const m = { ...updated[idx] };
+      if (value === null) delete m.initiative; else m.initiative = value;
+      updated[idx] = m;
+      txn.update(ref, { members: updated, updatedAt: serverTimestamp() });
+    });
+  } catch { /* Initiative write isn't worth a retry or a toast */ }
 }
 
 /* Append to the Coterie-shared log (newest-first, capped 50). Transaction so concurrent
@@ -1480,4 +1488,83 @@ export async function getStClaimStatus(rawCode: string): Promise<StClaimStatus |
     ).length;
   }
   return { code, typeName: (data.typeName as string) ?? '', memberCount: members.length, consented, isStoryteller };
+}
+
+/* Read a Coterie for the ST dashboard gate. The join code is a read capability by design,
+   so any code-holder reads; the caller enforces storytellerUid == uid. */
+export async function readStorytellerGate(rawCode: string): Promise<{
+  exists: boolean; storytellerUid: string | null; typeName: string; members: CoterieMember[];
+}> {
+  const code = rawCode.trim().toUpperCase();
+  const snap = await getDoc(doc(db, 'coteries', code));
+  if (!snap.exists()) return { exists: false, storytellerUid: null, typeName: '', members: [] };
+  const data = snap.data();
+  return {
+    exists: true,
+    storytellerUid: (data.storytellerUid as string | null) ?? null,
+    typeName: (data.typeName as string) ?? '',
+    members: (data.members as CoterieMember[]) ?? [],
+  };
+}
+
+/* Build the ST roster: one live character-doc read per member yields consent + vitals.
+   Un-consented (or unreadable) members return locked entries carrying summary identity only,
+   so no consent-gated data ever reaches the dashboard. */
+export async function loadStRoster(members: CoterieMember[], stUid: string): Promise<StRosterEntry[]> {
+  return Promise.all(members.map(async (m) => {
+    const identity = {
+      characterId: m.characterId,
+      slug: m.slug,
+      name: m.name || 'Unnamed',
+      pronouns: m.pronouns,
+      portraitUrl: m.portraitUrl ?? null,
+      playbook: m.playbook,
+      ageBracket: m.ageBracket,
+    };
+    try {
+      const snap = await getDoc(doc(db, 'characters', m.characterId));
+      if (!snap.exists()) return { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
+      const data = snap.data();
+      const consentUid = (data.stConsent as StConsent | undefined)?.uid;
+      if (!consentMatchesSt(consentUid, stUid)) return { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
+      const state = stripMetadata(data);
+      /* Pair convictions with their same-index Touchstone BEFORE dropping empties, so the two
+         arrays stay aligned for the roster card. */
+      const pairs = state.convictions
+        .map((c, i) => ({ conviction: c, touchstone: state.touchstones[i] }))
+        .filter(p => p.conviction.trim());
+      const vitals: StRosterVitals = {
+        hunger: state.hunger,
+        humanity: state.humanity,
+        harm: { ...state.harm },
+        maxHP: maxHPFor(state),
+        stats: { ...state.stats },
+        disciplines: [...state.unlockedDisciplines],
+        convictions: pairs.map(p => p.conviction),
+        touchstones: pairs.map(p => ({ name: p.touchstone?.name ?? '', description: p.touchstone?.description ?? '' })),
+      };
+      const themeAccent = state.customTheme?.accent ? normalizeHex(state.customTheme.accent) : null;
+      return { ...identity, consented: true, vitals, themeAccent, clocks: [...state.clocks], debts: [...state.debts] };
+    } catch {
+      return { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
+    }
+  }));
+}
+
+/* Chronicles the user Storytells: the storytellerUid query (roams to fresh devices) merged
+   with locally remembered codes. A failed query degrades to the local codes silently. */
+export async function loadMyChronicles(localCodes: string[]): Promise<StClaimStatus[]> {
+  const uid = auth.currentUser?.uid;
+  if (!uid) return [];
+  const codes = new Set(localCodes.map(c => c.trim().toUpperCase()).filter(Boolean));
+  try {
+    const qs = await getDocs(query(collection(db, 'coteries'), where('storytellerUid', '==', uid)));
+    qs.forEach(d => codes.add(d.id));
+  } catch (err) {
+    console.warn('[ST] chronicles query failed; using remembered codes only:', err);
+  }
+  const results = await Promise.allSettled([...codes].map(c => getStClaimStatus(c)));
+  const out: StClaimStatus[] = [];
+  for (const r of results) if (r.status === 'fulfilled' && r.value?.isStoryteller) out.push(r.value);
+  return out;
 }

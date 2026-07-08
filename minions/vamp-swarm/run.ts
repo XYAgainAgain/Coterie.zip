@@ -19,6 +19,7 @@ import { parseHarmHealing } from './parsers/harm-healing.js';
 import { parseOptionalExtras } from './parsers/optional-extras.js';
 import { parseSnippets } from './parsers/snippets.js';
 import { parseTags } from './parsers/tags.js';
+import { parseStorytellerPrompts } from './parsers/storyteller-prompts.js';
 import { AgeBracketsFileSchema } from './schemas/age-brackets.js';
 import { PredatorTypesFileSchema } from './schemas/predator-types.js';
 import { BasicMovesFileSchema } from './schemas/basic-moves.js';
@@ -36,6 +37,7 @@ import { HarmHealingFileSchema } from './schemas/harm-healing.js';
 import { OptionalExtrasFileSchema } from './schemas/optional-extras.js';
 import { SnippetsFileSchema } from './schemas/snippets.js';
 import { TagsFileSchema } from './schemas/tags.js';
+import { StPromptsFileSchema } from './schemas/storyteller-prompts.js';
 import type { ZodType } from 'zod';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -179,6 +181,13 @@ const tasks: ParserTask[] = [
     parse: () => parseTags(REPO_ROOT),
     schema: TagsFileSchema,
     outputFile: 'tags.json',
+  },
+  {
+    name: 'Storyteller Prompts',
+    kind: 'data',
+    parse: () => parseStorytellerPrompts(REPO_ROOT),
+    schema: StPromptsFileSchema,
+    outputFile: 'st-prompts.json',
   },
 ];
 

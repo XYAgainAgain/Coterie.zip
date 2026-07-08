@@ -32,7 +32,7 @@ const expandedIds = signal<Set<string>>(new Set());
 const editingId = signal<string | null>(null);
 /* Flips true once the open editor changes anything, so the edit tick reads as "saved". */
 const editDirty = signal(false);
-/* Which row menu is open, keyed "move:id" / "give:id" / "bag:id"; one at a time. */
+/* Which row menu is open, keyed "move:id"/"give:id"/"bag:id"; one at a time. */
 const openMenu = signal<string | null>(null);
 /* The item id being dragged, for the drag-overlay ghost. */
 const draggingId = signal<string | null>(null);
@@ -46,7 +46,7 @@ function setExpanded(id: string, on: boolean): void {
 
 /* The mutators a row edits through: owned items hit the character signal (instant),
    Haven items hit the coterie transaction. Same editor UI, different store. */
-interface ItemStore {
+export interface ItemStore {
   update: (id: string, patch: Partial<Omit<Item, 'id'>>) => void;
   remove: (id: string) => void;
 }
@@ -361,7 +361,7 @@ function TagPicker({ item, catalog, store }: { item: Item; catalog: Map<string, 
   );
 }
 
-function ItemEditor({ item, catalog, store }: { item: Item; catalog: Map<string, ItemTag>; store: ItemStore }) {
+export function ItemEditor({ item, catalog, store }: { item: Item; catalog: Map<string, ItemTag>; store: ItemStore }) {
   const adding = useSignal(false);
   const ordered = orderTags(item.tags);
   const chips = [...ordered.leading, ...ordered.middle, ...ordered.trailing];
@@ -773,6 +773,31 @@ function ZonePanel({ title, sub, icon, items, zoneKey, pool }: { title: string; 
   );
 }
 
+export interface PrefillOpts {
+  harm?: string;
+  rMin?: string;
+  rMax?: string;
+  armor?: boolean | null;
+  armorN?: string;
+  container?: boolean | null;
+}
+
+/* Type-driven starter tags for a freshly-added item, shared by QuickAdd (owned) and the ST
+   Haven form so both stay in lockstep: Weapons get N-Harm + Range, armored Wearables get
+   N-Armor, and Structures/Vehicles (or opted-in Wearables/Misc) become containers. */
+export function prefillTagsForType(type: ItemType, o: PrefillOpts): { tags: TagRef[]; isContainer: boolean } {
+  const tags: TagRef[] = [];
+  if (type === 'Weapon') {
+    tags.push({ base: 'N-Harm', param: String(o.harm ?? '') });
+    tags.push({ base: RANGE_TAG, param: rangeParam(o.rMin ?? 'Close', o.rMax ?? 'Close') });
+  }
+  if (type === 'Wearable' && o.armor === true) tags.push({ base: 'N-Armor', param: String(o.armorN ?? '') });
+  const isContainer = type === 'Structure' || type === 'Vehicle'
+    || ((type === 'Wearable' || type === 'Miscellaneous') && o.container === true);
+  if (isContainer) tags.push({ base: CONTAINER_TAG });
+  return { tags, isContainer };
+}
+
 function QuickAdd() {
   const open = useSignal(false);
   const name = useSignal('');
@@ -793,13 +818,9 @@ function QuickAdd() {
 
   function commit() {
     if (!valid) return;
-    const tags: TagRef[] = [];
-    if (t === 'Weapon') { tags.push({ base: 'N-Harm', param: String(harm.value) }); tags.push({ base: RANGE_TAG, param: rangeParam(rMin.value, rMax.value) }); }
-    if (t === 'Wearable' && armor.value === true) tags.push({ base: 'N-Armor', param: String(armorN.value) });
-    /* Structures and Vehicles obviously hold things, so they're containers by default. */
-    const isBag = t === 'Structure' || t === 'Vehicle'
-      || ((t === 'Wearable' || t === 'Miscellaneous') && container.value === true);
-    if (isBag) tags.push({ base: CONTAINER_TAG });
+    const { tags, isContainer: isBag } = prefillTagsForType(t as ItemType, {
+      harm: harm.value, rMin: rMin.value, rMax: rMax.value, armor: armor.value, armorN: armorN.value, container: container.value,
+    });
     const id = addItem({ name: name.value.trim(), type: t as ItemType, tags, isContainer: isBag });
     if (t === 'Structure') moveItem(id, STASH_ID); // you don't carry a building; default it to the Stash
     setExpanded(id, true);

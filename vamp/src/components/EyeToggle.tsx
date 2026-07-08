@@ -5,6 +5,7 @@ import { cycleTheme } from '../state/themeCycle';
 import { character } from '../state/character';
 import { activeCharacterId } from '../state/persistence';
 import { viewingOtherSheet } from '../state/ui';
+import { stDashboardActive, stState } from '../state/stState';
 
 type Position = Theme | 'custom';
 
@@ -15,7 +16,7 @@ const POSITION_LABEL: Record<Position, string> = {
   custom: 'Custom',
 };
 
-/* Cached eye element refs -- avoids querySelectorAll on every blink/rotation tick */
+/* Cached eye element refs — avoids querySelectorAll on every blink/rotation tick */
 let cachedBlinkEyes: NodeListOf<Element> | null = null;
 
 function getBlinkEyes(btn: HTMLButtonElement): NodeListOf<Element> {
@@ -31,10 +32,12 @@ export function EyeToggle() {
   const blinkTid = useRef<number | null>(null);
   const rotateTid = useRef<number | null>(null);
 
-  /* The custom position is only offered on an owned sheet whose character has a saved theme. */
-  const customTheme = character.value.customTheme;
-  const hasCustom = !!customTheme && !!activeCharacterId.value && !viewingOtherSheet.value;
-  const isCustom = customThemeActive.value && hasCustom;
+  /* On /st the eye acts on the per-Coterie theme (always "active" when one is set); on a sheet
+     it acts on the character's custom palette. Off both, it cycles the three device themes. */
+  const stMode = stDashboardActive.value;
+  const customTheme = stMode ? stState.value.theme : character.value.customTheme;
+  const hasCustom = stMode ? !!customTheme : (!!customTheme && !!activeCharacterId.value && !viewingOtherSheet.value);
+  const isCustom = stMode ? !!customTheme : (customThemeActive.value && hasCustom);
   const eyeAnim: EyeAnim = customTheme?.eyeAnim ?? 'heartbeat';
 
   function doBlink() {

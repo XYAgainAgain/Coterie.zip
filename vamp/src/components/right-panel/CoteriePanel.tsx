@@ -12,7 +12,7 @@ import { EditableTextField } from '../EditableTextField';
 import { showToast } from '../../state/toasts';
 import { renderGameMarkdown } from '../../data/transforms';
 import { COTERIE_STAT_NAMES } from '../../data/types';
-import type { CoterieStatName, HavenFeatures } from '../../data/types';
+import type { CoterieStatName, HavenFeatures, CoterieMove } from '../../data/types';
 import { CollapsibleSection } from './shared';
 
 const COTERIE_STAT_DESC: Record<CoterieStatName, string> = {
@@ -260,7 +260,7 @@ function HavenSide({
   );
 }
 
-function HavenFeatureSelector({
+export function HavenFeatureSelector({
   features, positives, negatives, isEditing,
 }: {
   features: HavenFeatures;
@@ -299,11 +299,67 @@ function HavenFeatureSelector({
   );
 }
 
+/* Read-only Coterie Moves accordion, shared by the player panel and the ST rail briefing. */
+export function CoterieMovesList({ moves }: { moves: CoterieMove[] }) {
+  const expandedMove = useSignal<string | null>(null);
+  return (
+    <>
+      {moves.map(cm => (
+        <div class={`vamp-move-section ${expandedMove.value === cm.name ? 'vamp-move-section--open' : ''}`} key={cm.name}>
+          <div class="vamp-move-section__bar" onClick={() => {
+            expandedMove.value = expandedMove.value === cm.name ? null : cm.name;
+          }}>
+            <span class="vamp-move-section__name">{cm.name}</span>
+            <span class="vamp-move-section__badge">+Cohesion</span>
+          </div>
+          {expandedMove.value === cm.name && (
+            <div class="vamp-move-section__body">
+              <div class="vamp-rpanel-field">
+                <span class="vamp-rpanel-field__label">Trigger</span>
+                <div class="vamp-rpanel-field__value"><strong>{cm.trigger}</strong></div>
+              </div>
+              <div class="vamp-rpanel-field">
+                <span class="vamp-rpanel-field__label">Rule</span>
+                <div class="vamp-rpanel-field__value"
+                  dangerouslySetInnerHTML={{ __html: renderGameMarkdown(cm.countRule) }}
+                />
+              </div>
+              {cm.tiers.map(t => {
+                const groupCls = t.tier.startsWith('Everyone') ? 'vamp-move-tier--group-all'
+                  : t.tier.startsWith('Half') ? 'vamp-move-tier--group-half'
+                  : t.tier.startsWith('Less') ? 'vamp-move-tier--group-less'
+                  : t.tier.startsWith('Nobody') ? 'vamp-move-tier--group-none' : '';
+                return (
+                <div class={`vamp-move-tier ${groupCls}`} key={t.tier}>
+                  <div class="vamp-move-tier__label">{t.tier}</div>
+                  <div class="vamp-move-tier__content"
+                    dangerouslySetInnerHTML={{ __html: renderGameMarkdown(t.description) }}
+                  />
+                </div>
+                );
+              })}
+              {cm.holdOptions && (
+                <div class="vamp-rpanel-field">
+                  <span class="vamp-rpanel-field__label">Spend Hold to...</span>
+                  <ul class="vamp-rpanel-field__list">
+                    {cm.holdOptions.map((opt, i) => (
+                      <li key={i} dangerouslySetInnerHTML={{ __html: renderGameMarkdown(opt) }} />
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      ))}
+    </>
+  );
+}
+
 export function CoteriePanel() {
   const coterieId = activeCoterie.value;
   /* Hooks run unconditionally, before any early return, so hook order stays
-     stable when activeCoterie flips null -> set without remounting. */
-  const expandedMove = useSignal<string | null>(null);
+     stable when activeCoterie flips null → set without remounting. */
   const copied = useSignal(false);
   const codeRevealed = useSignal(false);
   const confirmLeave = useSignal(false);
@@ -435,54 +491,7 @@ export function CoteriePanel() {
       </CollapsibleSection>
 
       <CollapsibleSection title="Coterie Moves">
-        {coterieMoves.map(cm => (
-          <div class={`vamp-move-section ${expandedMove.value === cm.name ? 'vamp-move-section--open' : ''}`} key={cm.name}>
-            <div class="vamp-move-section__bar" onClick={() => {
-              expandedMove.value = expandedMove.value === cm.name ? null : cm.name;
-            }}>
-              <span class="vamp-move-section__name">{cm.name}</span>
-              <span class="vamp-move-section__badge">+Cohesion</span>
-            </div>
-            {expandedMove.value === cm.name && (
-              <div class="vamp-move-section__body">
-                <div class="vamp-rpanel-field">
-                  <span class="vamp-rpanel-field__label">Trigger</span>
-                  <div class="vamp-rpanel-field__value"><strong>{cm.trigger}</strong></div>
-                </div>
-                <div class="vamp-rpanel-field">
-                  <span class="vamp-rpanel-field__label">Rule</span>
-                  <div class="vamp-rpanel-field__value"
-                    dangerouslySetInnerHTML={{ __html: renderGameMarkdown(cm.countRule) }}
-                  />
-                </div>
-                {cm.tiers.map(t => {
-                  const groupCls = t.tier.startsWith('Everyone') ? 'vamp-move-tier--group-all'
-                    : t.tier.startsWith('Half') ? 'vamp-move-tier--group-half'
-                    : t.tier.startsWith('Less') ? 'vamp-move-tier--group-less'
-                    : t.tier.startsWith('Nobody') ? 'vamp-move-tier--group-none' : '';
-                  return (
-                  <div class={`vamp-move-tier ${groupCls}`} key={t.tier}>
-                    <div class="vamp-move-tier__label">{t.tier}</div>
-                    <div class="vamp-move-tier__content"
-                      dangerouslySetInnerHTML={{ __html: renderGameMarkdown(t.description) }}
-                    />
-                  </div>
-                  );
-                })}
-                {cm.holdOptions && (
-                  <div class="vamp-rpanel-field">
-                    <span class="vamp-rpanel-field__label">Spend Hold to...</span>
-                    <ul class="vamp-rpanel-field__list">
-                      {cm.holdOptions.map((opt, i) => (
-                        <li key={i} dangerouslySetInnerHTML={{ __html: renderGameMarkdown(opt) }} />
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+        <CoterieMovesList moves={coterieMoves} />
       </CollapsibleSection>
 
       <StorytellerSection />

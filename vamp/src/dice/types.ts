@@ -36,6 +36,7 @@ export interface RollLogEntry {
   tier?: ResultTier;    /* drives the row accent; absent for raw rolls (neutral) */
   label?: string;       /* 'Hunger Check' | 'Remorse' | 'Quick Heal' | 'Blood Surge' | '3d6' */
   outcome?: string;     /* compact result for checks: 'Resisted', '+1 Hunger', etc. */
+  secret?: boolean;     /* ST Secret roll: every client renders "Storyteller rolled something." (no data written) */
 }
 
 export interface DiceConfig {

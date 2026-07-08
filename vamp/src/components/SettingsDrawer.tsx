@@ -16,6 +16,7 @@ import {
   type CustomTheme, type ThemeBase, type EyeAnim,
 } from '../themes/customTheme';
 import { activeCharacterId, flushSave, stopCoterieListener } from '../state/persistence';
+import { stDashboardActive, stState, setStTheme, patchStTheme } from '../state/stState';
 import { linkedEmail, sendEmailLink, signOutUser } from '../firebase';
 import { showToast, forceToast } from '../state/toasts';
 import { enterCreationMode } from '../state/creation';
@@ -162,40 +163,68 @@ function RadioGroup<T extends string>(props: {
 }
 
 function ThemeTab() {
+  /* On the /st route the theme editor targets stState (the Coterie dashboard palette);
+     on a sheet it targets the character. The engine + UI are identical; only the store differs. */
+  const stMode = stDashboardActive.value;
   const onSheet = !!activeCharacterId.value;
-  const ct = character.value.customTheme;
+  const canCustom = stMode || onSheet;
+  const ct = stMode ? stState.value.theme : character.value.customTheme;
+  const customIsActive = stMode ? !!ct : customThemeActive.value;
+
+  function selectBase(id: Theme) {
+    /* On /st with a custom theme set, a base preset retargets ITS base (matching T and the eye,
+       which cycle it); with no custom it switches the device theme like a player route. */
+    if (stMode) {
+      if (stState.value.theme) patchStTheme({ base: id as ThemeBase });
+      else setDeviceTheme(id);
+      return;
+    }
+    customThemeActive.value = false;
+    setDeviceTheme(id);
+  }
 
   function activateCustom() {
-    if (!character.value.customTheme) {
-      const base = theme.value as ThemeBase;
-      setCustomTheme({
-        base, accent: BASE_DEFAULT_ACCENT[base], eyeAnim: 'heartbeat',
-        diceFont: DEFAULT_DICE_FONT, diceMetalness: DEFAULT_DICE_METALNESS,
-      });
+    const base = theme.value as ThemeBase;
+    const seed: CustomTheme = {
+      base, accent: BASE_DEFAULT_ACCENT[base], eyeAnim: 'heartbeat',
+      diceFont: DEFAULT_DICE_FONT, diceMetalness: DEFAULT_DICE_METALNESS,
+    };
+    if (stMode) {
+      if (!stState.value.theme) setStTheme(seed);
+      sweepThemes();
+    } else {
+      if (!character.value.customTheme) setCustomTheme(seed);
+      sweepThemes();
+      customThemeActive.value = true;
     }
-    sweepThemes();
-    customThemeActive.value = true;
   }
+
+  function clearCustom() {
+    if (stMode) { setStTheme(null); }
+    else { customThemeActive.value = false; setCustomTheme(null); }
+  }
+
+  const onPatch = stMode ? patchStTheme : patchCustomTheme;
 
   return (
     <>
       <div class="vamp-settings-tiles">
         {THEME_TILES.map(tile => {
-          const active = !customThemeActive.value && theme.value === tile.id;
+          const active = !customIsActive && theme.value === tile.id;
           return (
             <button
               key={tile.id}
               class={`vamp-settings-tile ${active ? 'vamp-settings-tile--active' : ''}`}
-              onClick={() => { customThemeActive.value = false; setDeviceTheme(tile.id); }}
+              onClick={() => selectBase(tile.id)}
             >
               <span class="vamp-settings-tile__swatch" style={{ background: tile.swatch }} />
               <span class="vamp-settings-tile__name">{tile.name}</span>
             </button>
           );
         })}
-        {onSheet && (
+        {canCustom && (
           <button
-            class={`vamp-settings-tile ${customThemeActive.value ? 'vamp-settings-tile--active' : ''}`}
+            class={`vamp-settings-tile ${customIsActive ? 'vamp-settings-tile--active' : ''}`}
             onClick={activateCustom}
           >
             <span
@@ -207,12 +236,12 @@ function ThemeTab() {
         )}
       </div>
 
-      {onSheet && ct && <CustomThemeSection ct={ct} />}
+      {canCustom && ct && <CustomThemeSection ct={ct} onPatch={onPatch} onClear={clearCustom} />}
     </>
   );
 }
 
-function CustomThemeSection({ ct }: { ct: CustomTheme }) {
+function CustomThemeSection({ ct, onPatch, onClear }: { ct: CustomTheme; onPatch: (patch: Partial<CustomTheme>) => void; onClear: () => void }) {
   const hexDraft = useSignal(ct.accent);
   const hexFocused = useRef(false);
   const pickerTarget = useSignal<'accent' | 'accent2'>('accent');
@@ -226,7 +255,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
   function commitHex() {
     const normalized = normalizeHex(hexDraft.value);
     if (normalized) {
-      patchCustomTheme({ accent: normalized });
+      onPatch({ accent: normalized });
       hexDraft.value = normalized;
     } else {
       hexDraft.value = ct.accent; /* revert invalid input */
@@ -243,19 +272,19 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
 
   function commitHex2() {
     const normalized = normalizeHex(hex2Draft.value);
-    if (normalized) { patchCustomTheme({ accent2: normalized }); hex2Draft.value = normalized; }
+    if (normalized) { onPatch({ accent2: normalized }); hex2Draft.value = normalized; }
     else { hex2Draft.value = accent2Value; }
   }
   function randomizeAccent2() {
     const c = randomContrastHex(ct.accent);
     hex2Draft.value = c;
-    patchCustomTheme({ accent2: c });
+    onPatch({ accent2: c });
   }
   function randomizeAccentA() {
     const c = randomAccent();
     hexDraft.value = c;
     /* Clear accent 2 so it re-derives a fresh coordinated pair from the new accent 1. */
-    patchCustomTheme({ accent: c, accent2: undefined });
+    onPatch({ accent: c, accent2: undefined });
   }
   const dualOn = ct.accentB !== false;
 
@@ -263,10 +292,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
     <div class="vamp-settings__sub">
       <div class="vamp-settings__sub-head">
         <span>Custom Theme</span>
-        <button
-          class="vamp-settings__clear"
-          onClick={() => { customThemeActive.value = false; setCustomTheme(null); }}
-        >
+        <button class="vamp-settings__clear" onClick={onClear}>
           Clear
         </button>
       </div>
@@ -275,7 +301,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
         <select
           class="vamp-settings-select"
           value={ct.base}
-          onChange={e => patchCustomTheme({ base: (e.target as HTMLSelectElement).value as ThemeBase })}
+          onChange={e => onPatch({ base: (e.target as HTMLSelectElement).value as ThemeBase })}
         >
           <option value="night">Night</option>
           <option value="sunset">Sunset</option>
@@ -287,8 +313,8 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
         <ColorPicker
           value={pickerTarget.value === 'accent2' ? accent2Value : (normalizeHex(ct.accent) ?? '#cc3333')}
           onChange={hex => {
-            if (pickerTarget.value === 'accent2') { hex2Draft.value = hex; patchCustomTheme({ accent2: hex }); }
-            else { hexDraft.value = hex; patchCustomTheme({ accent: hex }); }
+            if (pickerTarget.value === 'accent2') { hex2Draft.value = hex; onPatch({ accent2: hex }); }
+            else { hexDraft.value = hex; onPatch({ accent: hex }); }
           }}
         />
         <div class="vamp-settings__accent-row">
@@ -342,7 +368,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
             class={`vamp-settings__accent-toggle${dualOn ? '' : ' is-off'}`}
             type="button"
             title={dualOn ? 'Disable second accent' : 'Enable second accent'}
-            onClick={() => patchCustomTheme({ accentB: !dualOn })}
+            onClick={() => onPatch({ accentB: !dualOn })}
           />
         </div>
       </div>
@@ -351,7 +377,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
         <select
           class="vamp-settings-select"
           value={ct.eyeAnim}
-          onChange={e => patchCustomTheme({ eyeAnim: (e.target as HTMLSelectElement).value as EyeAnim })}
+          onChange={e => onPatch({ eyeAnim: (e.target as HTMLSelectElement).value as EyeAnim })}
         >
           {EYE_ANIMS.map(a => <option key={a.id} value={a.id}>{a.label}</option>)}
         </select>
@@ -361,7 +387,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
         <select
           class="vamp-settings-select"
           value={ct.diceFont ?? DEFAULT_DICE_FONT}
-          onChange={e => patchCustomTheme({ diceFont: (e.target as HTMLSelectElement).value })}
+          onChange={e => onPatch({ diceFont: (e.target as HTMLSelectElement).value })}
         >
           {DICE_FONTS.map(f => <option key={f.id} value={f.id}>{f.label}</option>)}
         </select>
@@ -375,7 +401,7 @@ function CustomThemeSection({ ct }: { ct: CustomTheme }) {
           max="100"
           step="5"
           value={Math.round((ct.diceMetalness ?? DEFAULT_DICE_METALNESS) * 100)}
-          onInput={e => patchCustomTheme({ diceMetalness: parseInt((e.target as HTMLInputElement).value, 10) / 100 })}
+          onInput={e => onPatch({ diceMetalness: parseInt((e.target as HTMLInputElement).value, 10) / 100 })}
         />
       </SettingRow>
     </div>

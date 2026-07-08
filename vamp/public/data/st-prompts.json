@@ -1,0 +1,190 @@
+{
+  "version": 1,
+  "generatedAt": "2026-07-07T21:47:53.718Z",
+  "data": {
+    "discernVibes": [
+      "Have I met or heard of them before?",
+      "What do I think they aren't telling me?",
+      "How do they really feel about me/us?",
+      "What do they want most right now?",
+      "Who here has leverage over them?",
+      "What are they nervous about?",
+      "How can I get them to trust me?"
+    ],
+    "catchTheScent": [
+      "Who or what was here recently?",
+      "Have I encountered something like this before?",
+      "If we're familiar, what do I recall about it/them?",
+      "What happened here recently?",
+      "What evidence was left behind?",
+      "Where did they go from here?",
+      "What is being concealed here?",
+      "Are there any lurking dangers?",
+      "What's my best way in/out?"
+    ],
+    "stMoves": [
+      {
+        "category": "Build Pressure",
+        "soft": [
+          "Reveal signs of approaching danger",
+          "Show evidence of recent activity (blood trail, broken window, fresh grave)",
+          "Have an NPC act suspicious or nervous",
+          "Foreshadow a threat without showing it directly",
+          "Present a difficult choice with no good options",
+          "Put a countdown or deadline on something important",
+          "Show a glimpse of something terrible about to happen",
+          "Make an ominous portent (bad omen, unsettling dream, cryptic warning)",
+          "Reveal that time is running out (dawn approaches, meeting in one hour, etc.)"
+        ],
+        "hard": [
+          "The deadline arrives; consequences happen now",
+          "The foreshadowed threat materializes in full force",
+          "The difficult choice becomes unavoidable; choose right now or lose both options",
+          "The danger you've been building toward strikes"
+        ]
+      },
+      {
+        "category": "Sudden Complications",
+        "soft": [
+          "Someone or something appears unexpectedly (but not immediately hostile)",
+          "A plan develops an unforeseen snag",
+          "Equipment starts failing or acting unreliable",
+          "An ally becomes distracted or difficult",
+          "The environment shifts (weather changes, crowd gathers, noise draws attention)",
+          "A secret threatens to be exposed",
+          "Introduce a new wrinkle to the situation"
+        ],
+        "hard": [
+          "Equipment fails catastrophically at the worst moment",
+          "An ally becomes a direct problem (betrays, panics, gets captured)",
+          "The environment becomes immediately dangerous (fire, collapse, flood)",
+          "A secret is exposed to the worst possible person",
+          "Someone arrives who absolutely shouldn't be there",
+          "Turn one problem into two distinct crises happening simultaneously"
+        ]
+      },
+      {
+        "category": "Endanger the Coterie",
+        "soft": [
+          "Put them in a dangerous or compromising position",
+          "Threaten someone or something they care about",
+          "Show them they're being watched or followed",
+          "Give them a warning shot (miss on purpose, demonstrate power)",
+          "Present escalating danger they can still escape"
+        ],
+        "hard": [
+          "Inflict Harm as established",
+          "Capture or restrain a character",
+          "Separate one character from the group",
+          "Take away their stuff (weapons, phone, car keys, blood bags)",
+          "Force them to make a desperate Move right now",
+          "Give them a choice: sacrifice something or face consequences immediately",
+          "Injure or kill an NPC they care about",
+          "Activate a Compulsion at the worst moment (demand Stay Chill roll)"
+        ]
+      },
+      {
+        "category": "Threaten the Masquerade",
+        "soft": [
+          "Mortals witness something unusual (but not definitively supernatural)",
+          "Someone starts asking questions",
+          "Evidence could be left behind if they're not careful",
+          "An investigator gets interested",
+          "Someone's phone is out and recording"
+        ],
+        "hard": [
+          "Mortals definitively witness something supernatural",
+          "Security footage captures the act",
+          "A witness films or photographs clear evidence",
+          "Authorities arrive on scene right now (cops, FBI, health inspectors)",
+          "Social media posts go viral",
+          "Someone recognizes a character from \"that incident\"",
+          "Start or advance the Masquerade Clock",
+          "The Sheriff's people show up to investigate"
+        ]
+      },
+      {
+        "category": "Advance Opposition",
+        "soft": [
+          "Show signs that an enemy is making progress",
+          "An enemy prepares something (gathering resources, scouting, setting up)",
+          "Opposition gains information about the Coterie",
+          "They plant seeds of doubt or discord",
+          "Show that they're one step ahead"
+        ],
+        "hard": [
+          "An enemy achieves a goal or milestone",
+          "A rival Coterie moves into the territory",
+          "Hunters discover a vital clue about the Coterie",
+          "An Elder vampire takes direct notice and acts",
+          "Opposition turns an NPC against the Coterie",
+          "They spring a prepared trap or ambush",
+          "They make a decisive Move while the Coterie is distracted",
+          "Start or advance an Opposition Clock"
+        ]
+      },
+      {
+        "category": "Exploit Weaknesses",
+        "soft": [
+          "Present temptation aligned with their Compulsion",
+          "Surround them with blood smell when Hunger is high",
+          "Mention a Touchstone is in potential danger",
+          "Hint that someone wants to call in a Debt soon",
+          "Present a situation where Humanity and survival might conflict",
+          "Show them what they want (but make the cost unclear)"
+        ],
+        "hard": [
+          "Trigger a Compulsion (demand **Stay Chill** roll immediately)",
+          "Increase someone's Hunger through circumstance",
+          "Threaten or harm a Touchstone right now",
+          "Call in a Debt at the worst possible moment",
+          "Force them to choose between Humanity and survival this instant",
+          "Use their Bane against them",
+          "Make their low Humanity a direct liability",
+          "Exploit a character's Conviction or personal code in a way that hurts",
+          "Remind them viscerally what they've lost (their mortality, their family, their dreams)"
+        ]
+      },
+      {
+        "category": "Pressure Resources",
+        "soft": [
+          "Hint that the Haven has a problem (strange noises, complaints, inspector scheduled)",
+          "Show signs of territory encroachment",
+          "Have someone mention wanting payment soon",
+          "Indicate their reputation is slipping",
+          "Show wear and tear on important assets"
+        ],
+        "hard": [
+          "The Haven is directly threatened (fire, raid, eviction, structural damage)",
+          "Reduce Currency, Clout, or Claim",
+          "Mark or demand a Coterie Debt",
+          "Cut off a resource they rely on (blood supply, safe house, contact)",
+          "Someone demands payment or tribute right now",
+          "Their territory is actively encroached upon",
+          "A valuable asset is damaged, destroyed, or stolen",
+          "Their reputation takes a significant hit",
+          "Bills come due with immediate consequences",
+          "Start or advance a Haven Clock"
+        ]
+      },
+      {
+        "category": "Flexible/Multipurpose",
+        "soft": [
+          "Offer an opportunity with a visible cost",
+          "Ask provocative questions and build on their answers",
+          "Reveal an unwelcome truth (but not devastating)",
+          "Show them a downside of their nature (hunger, immortality, isolation)",
+          "Make them face something uncomfortable from their past"
+        ],
+        "hard": [
+          "Turn their Move back on them with full force",
+          "Tell them the immediate consequences and ask what they do",
+          "Reveal a devastating truth",
+          "Show them the full cost of their previous choices",
+          "Put them in an inescapable moral quandary",
+          "Make a Hard Move from one of your prepared Threats"
+        ]
+      }
+    ]
+  }
+}
