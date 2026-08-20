@@ -26,7 +26,7 @@ import {
   type CharacterState,
 } from '../state/character';
 import {
-  performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge, forcedAdvantage,
+  performRoll, performHungerCheck, performRemorseCheck, performQuickHeal, performBloodSurge, forcedAdvantage, rollOptionsFromEvent,
 } from '../dice/rollMove';
 import { editMode, viewingOtherSheet, portraitMinimized } from '../state/ui';
 import { masqueradeClock, fillMasquerade, unfillMasquerade, coterieState } from '../state/coterie';
@@ -1882,7 +1882,7 @@ export function CharacterSheet({ slug }: { slug?: string }) {
             const canRoll = !isEdit && !isCreating && !isViewing;
             const cap = statCap.value;
             const handleStatRoll = (stat: typeof statName, e: MouseEvent) => {
-              performRoll(stat, forcedAdvantage(e));
+              performRoll(stat, rollOptionsFromEvent(e));
             };
             return (
               <div class="vamp-stat" key={statName}>

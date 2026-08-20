@@ -444,7 +444,11 @@ async function saveCharacter(
         await idbPut('characters', { ...rec, pendingSync: false });
       }
     } catch {}
-  } catch {}
+  } catch (err) {
+    /* IDB holds the edit (pendingSync) and the next save retries. Loud so a silently-stale
+       Coterie or ST dashboard is diagnosable from the console. */
+    console.warn('[Persist] Firestore save failed; edit kept locally:', err);
+  }
 }
 
 export async function createCharacter(initial: Partial<CharacterState> = {}): Promise<string> {
@@ -1507,48 +1511,81 @@ export async function readStorytellerGate(rawCode: string): Promise<{
   };
 }
 
-/* Build the ST roster: one live character-doc read per member yields consent + vitals.
-   Un-consented (or unreadable) members return locked entries carrying summary identity only,
-   so no consent-gated data ever reaches the dashboard. */
-export async function loadStRoster(members: CoterieMember[], stUid: string): Promise<StRosterEntry[]> {
-  return Promise.all(members.map(async (m) => {
-    const identity = {
-      characterId: m.characterId,
-      slug: m.slug,
-      name: m.name || 'Unnamed',
-      pronouns: m.pronouns,
-      portraitUrl: m.portraitUrl ?? null,
-      playbook: m.playbook,
-      ageBracket: m.ageBracket,
-    };
-    try {
-      const snap = await getDoc(doc(db, 'characters', m.characterId));
-      if (!snap.exists()) return { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
-      const data = snap.data();
-      const consentUid = (data.stConsent as StConsent | undefined)?.uid;
-      if (!consentMatchesSt(consentUid, stUid)) return { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
-      const state = stripMetadata(data);
-      /* Pair convictions with their same-index Touchstone BEFORE dropping empties, so the two
-         arrays stay aligned for the roster card. */
-      const pairs = state.convictions
-        .map((c, i) => ({ conviction: c, touchstone: state.touchstones[i] }))
-        .filter(p => p.conviction.trim());
-      const vitals: StRosterVitals = {
-        hunger: state.hunger,
-        humanity: state.humanity,
-        harm: { ...state.harm },
-        maxHP: maxHPFor(state),
-        stats: { ...state.stats },
-        disciplines: [...state.unlockedDisciplines],
-        convictions: pairs.map(p => p.conviction),
-        touchstones: pairs.map(p => ({ name: p.touchstone?.name ?? '', description: p.touchstone?.description ?? '' })),
-      };
-      const themeAccent = state.customTheme?.accent ? normalizeHex(state.customTheme.accent) : null;
-      return { ...identity, consented: true, vitals, themeAccent, clocks: [...state.clocks], debts: [...state.debts] };
-    } catch {
-      return { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
-    }
-  }));
+/* Un-consented, missing, or unreadable members yield locked entries carrying summary
+   identity only, so no consent-gated data ever reaches the dashboard. */
+function rosterEntryFor(m: CoterieMember, stUid: string, data: Record<string, unknown> | null): StRosterEntry {
+  const identity = {
+    characterId: m.characterId,
+    slug: m.slug,
+    name: m.name || 'Unnamed',
+    pronouns: m.pronouns,
+    portraitUrl: m.portraitUrl ?? null,
+    playbook: m.playbook,
+    ageBracket: m.ageBracket,
+  };
+  const locked: StRosterEntry = { ...identity, consented: false, vitals: null, themeAccent: null, clocks: [], debts: [] };
+  if (!data) return locked;
+  const consentUid = (data.stConsent as StConsent | undefined)?.uid;
+  if (!consentMatchesSt(consentUid, stUid)) return locked;
+  const state = stripMetadata(data);
+  /* Pair convictions with their same-index Touchstone BEFORE dropping empties, so the two
+     arrays stay aligned for the roster card. */
+  const pairs = state.convictions
+    .map((c, i) => ({ conviction: c, touchstone: state.touchstones[i] }))
+    .filter(p => p.conviction.trim());
+  const vitals: StRosterVitals = {
+    hunger: state.hunger,
+    humanity: state.humanity,
+    harm: { ...state.harm },
+    maxHP: maxHPFor(state),
+    stats: { ...state.stats },
+    disciplines: [...state.unlockedDisciplines],
+    convictions: pairs.map(p => p.conviction),
+    touchstones: pairs.map(p => ({ name: p.touchstone?.name ?? '', description: p.touchstone?.description ?? '' })),
+  };
+  const themeAccent = state.customTheme?.accent ? normalizeHex(state.customTheme.accent) : null;
+  return { ...identity, consented: true, vitals, themeAccent, clocks: [...state.clocks], debts: [...state.debts] };
+}
+
+/* One listener per member so the dashboard tracks live sheets instead of freezing at mount.
+   onChange fires once every member has answered, then per update; a denied read locks that member. */
+export function subscribeStRoster(
+  members: CoterieMember[],
+  stUid: string,
+  onChange: (roster: StRosterEntry[]) => void,
+): () => void {
+  const entries: StRosterEntry[] = members.map(m => rosterEntryFor(m, stUid, null));
+  const ready = new Set<number>();
+  const emit = () => { if (ready.size === members.length) onChange([...entries]); };
+  const unsubs: (() => void)[] = [];
+  const timers: ReturnType<typeof setTimeout>[] = [];
+  let stopped = false;
+  /* Firestore kills a listener on error (e.g. a transient rules denial), so one delayed
+     re-attach per failure keeps a card from staying locked until the ST reloads. */
+  const attach = (m: CoterieMember, i: number, retried: boolean) => {
+    unsubs[i] = onSnapshot(
+      doc(db, 'characters', m.characterId),
+      snap => {
+        entries[i] = rosterEntryFor(m, stUid, snap.exists() ? snap.data() : null);
+        ready.add(i);
+        emit();
+      },
+      err => {
+        console.warn('[ST] roster listener failed for', m.characterId, err);
+        entries[i] = rosterEntryFor(m, stUid, null);
+        ready.add(i);
+        emit();
+        if (!retried && !stopped) timers.push(setTimeout(() => { if (!stopped) attach(m, i, true); }, 30_000));
+      },
+    );
+  };
+  members.forEach((m, i) => attach(m, i, false));
+  if (members.length === 0) onChange([]);
+  return () => {
+    stopped = true;
+    for (const t of timers) clearTimeout(t);
+    for (const u of unsubs) u();
+  };
 }
 
 /* Chronicles the user Storytells: the storytellerUid query (roams to fresh devices) merged

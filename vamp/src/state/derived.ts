@@ -1,4 +1,4 @@
-import { computed, signal } from '@preact/signals';
+import { computed, signal, effect } from '@preact/signals';
 import { character, maxHPFor, BLOOD_SURGE_SOURCE, type CharacterState } from './character';
 import { tagNumber } from '../data/itemTags';
 import { parseHuntingStat, parsePrerequisites } from '../data/transforms';
@@ -462,6 +462,23 @@ export const conditionalTotals = computed<ConditionalTotal[]>(() => {
     target,
     total: base + extra,
   }));
+});
+
+/* hunger.md: −1 at 3 Hunger, −2 at 4+, except Hunt/Feed-type rolls. Only the player knows
+   which rolls chase blood, so feedingRoll (one-shot, cleared per stat roll) waives it. */
+export const hungerPenalty = computed(() => {
+  const h = character.value.hunger;
+  return h >= 4 ? -2 : h >= 3 ? -1 : 0;
+});
+export const feedingRoll = signal(false);
+export function toggleFeedingRoll() { feedingRoll.value = !feedingRoll.value; }
+/* The pill hides at Hunger < 3, so an armed waiver must not linger invisibly until Hunger climbs back. */
+effect(() => { if (hungerPenalty.value === 0) feedingRoll.value = false; });
+
+/* daughter-of-cacophony.md Bane (Inner Song): Ongoing −BP (min 1) to Wits rolls; rollMove waives it on two sixes. */
+export const banePenalty = computed(() => {
+  const c = character.value;
+  return c.playbook === 'Daughter of Cacophony' ? -Math.max(1, c.bp) : 0;
 });
 
 export const holdCounters = computed(() =>

@@ -14,6 +14,7 @@ const GROUPS: Group[] = [
   { label: 'Rolls', rows: [
     [{ caps: [K('Ctrl')], desc: '+ click → Advantage' }],
     [{ caps: [K('Alt')], desc: '+ click → Disadvantage' }],
+    [{ caps: [K('Shift')], desc: '+ click → Roll without modifiers' }],
   ] },
   { label: 'Actions', rows: [
     [{ caps: [K('S')], desc: 'Stake' }, { caps: [K('P')], desc: 'Portrait' }, { caps: [K('Y')], desc: 'Split view' }],

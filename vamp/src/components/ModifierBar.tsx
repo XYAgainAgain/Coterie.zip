@@ -9,7 +9,7 @@ import {
 import type { Modifier } from '../state/character';
 import {
   universalForwardTotal, universalOngoingTotal, universalTotal,
-  conditionalTotals, holdCounters, netAdvantage, bloodSurgeArmed,
+  conditionalTotals, holdCounters, netAdvantage, bloodSurgeArmed, hungerPenalty, feedingRoll, toggleFeedingRoll, banePenalty,
 } from '../state/derived';
 import type { AdvantageState } from '../state/derived';
 import { STAT_NAMES } from '../data/types';
@@ -82,6 +82,8 @@ function DiceModeZone() {
   const fullLabel = state === 'advantage' ? 'Advantage' : state === 'disadvantage' ? 'Disadvantage' : 'Flat';
   const armed = bloodSurgeArmed.value;
   const surgeCount = character.value.bloodSurgeAdvantages + (armed ? 1 : 0);
+  const hungerPen = hungerPenalty.value;
+  const feeding = feedingRoll.value;
 
   return (
     <div class="vamp-mod-zone vamp-mod-zone--dice">
@@ -113,6 +115,19 @@ function DiceModeZone() {
         >
           <span class="vamp-mod-surge-name">Surge</span>
           <span class="vamp-mod-surge-count">&times;{surgeCount}</span>
+        </button>
+      )}
+      {hungerPen !== 0 && (
+        <button
+          class={`vamp-mod-feed ${feeding ? 'vamp-mod-feed--armed' : ''}`}
+          onClick={toggleFeedingRoll}
+          aria-pressed={feeding}
+          title={feeding
+            ? 'Next roll chases blood: Hunger penalty waived (tap to cancel)'
+            : `Hunger ${hungerPen}: tap to waive it for a Hunt, Feed, Dirty Your Claws, or Sate Your Hunger roll`}
+        >
+          <span class="vamp-mod-feed-name">{feeding ? 'Feeding' : 'Hunger'}</span>
+          <span class="vamp-mod-feed-count">{feeding ? '±0' : hungerPen}</span>
         </button>
       )}
     </div>
@@ -159,8 +174,14 @@ function HoldZone() {
 }
 
 function TotalZone({ onBarClick }: { onBarClick: () => void }) {
-  const total = universalTotal.value;
-  const conds = conditionalTotals.value;
+  const hungerPen = feedingRoll.value ? 0 : hungerPenalty.value;
+  const total = universalTotal.value + hungerPen;
+  const conds = conditionalTotals.value.map(c => ({ ...c, total: c.total + hungerPen }));
+  const banePen = banePenalty.value;
+  if (banePen !== 0) {
+    const wits = conds.find(c => c.target === 'Wits');
+    if (wits) wits.total += banePen; else conds.push({ target: 'Wits', total: total + banePen });
+  }
   const advState = netAdvantage.value;
   const fmtTotal = total >= 0 ? `+${total}` : `${total}`;
   const dim = total === 0 && conds.length === 0 && advState === 'flat';

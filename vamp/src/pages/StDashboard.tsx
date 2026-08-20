@@ -2,7 +2,7 @@ import { useEffect } from 'preact/hooks';
 import { effect, useSignal } from '@preact/signals';
 import { route } from 'preact-router';
 import { auth } from '../firebase';
-import { loadCoterie, stopCoterieListener, readStorytellerGate, loadStRoster, activeCoterie } from '../state/persistence';
+import { loadCoterie, stopCoterieListener, readStorytellerGate, subscribeStRoster, activeCoterie } from '../state/persistence';
 import { coterieState } from '../state/coterie';
 import { loadStState, flushStState, resetStState, stDashboardActive, stState } from '../state/stState';
 import { theme } from '../state/theme';
@@ -31,6 +31,8 @@ export function StDashboard({ coterieCode }: { coterieCode?: string }) {
     resolving.value = true;
     error.value = null;
     roster.value = [];
+    let stopRoster: (() => void) | null = null;
+    let unsubRoster: (() => void) | null = null;
 
     (async () => {
       const uid = auth.currentUser?.uid ?? null;
@@ -46,16 +48,30 @@ export function StDashboard({ coterieCode }: { coterieCode?: string }) {
       document.title = `Storyteller: ${gate.typeName || c}`;
       await loadCoterie(c);   // live subscription drives the rail dials
       await loadStState(c);   // ST-private layout + notes (blank until rules deploy)
-      const r = await loadStRoster(gate.members, uid!);
       if (cancelled) return;
-      roster.value = r;
-      resolving.value = false;
+      /* Roster follows the live member list: a join or leave on the Coterie doc re-subscribes,
+         keyed on member IDs so summary-only updates (Hunger, name) don't churn listeners. */
+      let memberKey: string | null = null;
+      stopRoster = effect(() => {
+        if (activeCoterie.value !== c) return;
+        const members = coterieState.value.members;
+        const key = members.map(m => m.characterId).join('|');
+        if (key === memberKey) return;
+        memberKey = key;
+        unsubRoster?.();
+        unsubRoster = subscribeStRoster(members, uid!, r => {
+          roster.value = r;
+          resolving.value = false;
+        });
+      });
     })().catch(err => {
       if (!cancelled) { error.value = err instanceof Error ? err.message : String(err); resolving.value = false; }
     });
 
     return () => {
       cancelled = true;
+      stopRoster?.();
+      unsubRoster?.();
       flushStState();   // commit any pending ST-state edit before detaching
       resetStState();
       stopCoterieListener();

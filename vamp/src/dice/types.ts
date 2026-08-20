@@ -32,6 +32,8 @@ export interface RollLogEntry {
   statValue: number;
   forwardMod: number;
   ongoingMod: number;
+  hungerMod?: number;   /* Hunger 3+ penalty applied to this roll (absent/0 when waived) */
+  baneMod?: number;     /* Playbook Bane penalty (Inner Song on Wits), 0 when two sixes waive it */
   total: number;
   tier?: ResultTier;    /* drives the row accent; absent for raw rolls (neutral) */
   label?: string;       /* 'Hunger Check' | 'Remorse' | 'Quick Heal' | 'Blood Surge' | '3d6' */

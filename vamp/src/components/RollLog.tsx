@@ -55,6 +55,12 @@ function RollRow({ entry, mine, index }: { entry: RollLogEntry; mine: string | n
         {isStat && entry.ongoingMod !== 0 && (
           <span class={modClass}>{fmtMod(entry.ongoingMod)}<span class="vamp-roll-toast__mod-label">O</span></span>
         )}
+        {isStat && !!entry.hungerMod && (
+          <span class={modClass}>{fmtMod(entry.hungerMod)}<span class="vamp-roll-toast__mod-label">H</span></span>
+        )}
+        {isStat && !!entry.baneMod && (
+          <span class={modClass}>{fmtMod(entry.baneMod)}<span class="vamp-roll-toast__mod-label">B</span></span>
+        )}
         {isStat && <span class={modClass}>{fmtMod(entry.statValue)}</span>}
         {isStat && ' '}
         {isStat && <span class={statClass}>{STAT_ABBR[entry.statName] ?? entry.statName}</span>}

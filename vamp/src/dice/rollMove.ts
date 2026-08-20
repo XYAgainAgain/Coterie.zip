@@ -4,7 +4,7 @@ import {
   setHunger, setHumanity, setHarm, resolveRemorse, superficialHealAmount, updateCharacter,
 } from '../state/character';
 import { forceToast } from '../state/toasts';
-import { netAdvantage, checkAdvantage, bloodSurgesRemaining } from '../state/derived';
+import { netAdvantage, checkAdvantage, bloodSurgesRemaining, hungerPenalty, feedingRoll, banePenalty } from '../state/derived';
 import type { AdvantageState } from '../state/derived';
 import { diceEngine } from './diceState';
 import { recordRoll } from './rollLog';
@@ -25,6 +25,8 @@ export interface RollBreakdown {
   statValue: number;
   forwardMod: number;
   ongoingMod: number;
+  hungerMod: number;
+  baneMod: number;
   totalMod: number;
   advantage: 'advantage' | 'disadvantage' | 'flat';
 }
@@ -36,11 +38,24 @@ export function forcedAdvantage(e: MouseEvent): 'advantage' | 'disadvantage' | u
   return undefined;
 }
 
-export function rollMove(statName: StatName, forced?: 'advantage' | 'disadvantage'): RollBreakdown {
+export interface RollOptions {
+  forced?: 'advantage' | 'disadvantage';
+  bare?: boolean;   /* 2d6 + stat only: no Forward/Ongoing/Hunger, and Forwards are not spent */
+}
+
+/* Shift+click rolls bare, alongside the Ctrl/Alt Advantage modifiers. */
+export function rollOptionsFromEvent(e: MouseEvent): RollOptions {
+  return { forced: forcedAdvantage(e), bare: e.shiftKey || undefined };
+}
+
+export function rollMove(statName: StatName, opts: RollOptions = {}): RollBreakdown {
+  const { forced } = opts;
   const statValue = character.value.stats[statName];
-  const forwardMod = modTotalForStat(statName, 'forward');
-  const ongoingMod = modTotalForStat(statName, 'ongoing');
-  const totalMod = forwardMod + ongoingMod;
+  const bare = !!opts.bare;
+  const forwardMod = bare ? 0 : modTotalForStat(statName, 'forward');
+  const ongoingMod = bare ? 0 : modTotalForStat(statName, 'ongoing');
+  const hungerMod = (bare || feedingRoll.value) ? 0 : hungerPenalty.value;
+  let baneMod = (bare || statName !== 'Wits') ? 0 : banePenalty.value;
   const advantage = forced ?? netAdvantage.value;
 
   let kept: number[];
@@ -59,6 +74,9 @@ export function rollMove(statName: StatName, forced?: 'advantage' | 'disadvantag
     dropped = [];
   }
 
+  /* Inner Song: two sixes on the kept dice grant a moment of clarity and the Bane penalty lifts. */
+  if (baneMod !== 0 && kept.every(d => d === 6)) baneMod = 0;
+  const totalMod = forwardMod + ongoingMod + hungerMod + baneMod;
   const diceTotal = kept.reduce((a, b) => a + b, 0);
   const total = diceTotal + statValue + totalMod;
   const tier = classifyRoll(total, kept);
@@ -75,8 +93,9 @@ export function rollMove(statName: StatName, forced?: 'advantage' | 'disadvantag
     timestamp: Date.now(),
   };
 
-  clearForwards(statName);
+  if (!bare) clearForwards(statName);
   clearDiceMode();
+  feedingRoll.value = false;
 
   return {
     result,
@@ -84,6 +103,8 @@ export function rollMove(statName: StatName, forced?: 'advantage' | 'disadvantag
     statValue,
     forwardMod,
     ongoingMod,
+    hungerMod,
+    baneMod,
     totalMod,
     advantage,
   };
@@ -132,12 +153,12 @@ async function animateDice(dice: number[]): Promise<void> {
   engine.fadeDiceOut(Math.round(3000 / speed), Math.round(600 / speed));
 }
 
-export async function performRoll(statName: StatName, forced?: 'advantage' | 'disadvantage'): Promise<RollBreakdown | null> {
+export async function performRoll(statName: StatName, opts: RollOptions = {}): Promise<RollBreakdown | null> {
   if (rolling) return null;
   rolling = true;
 
   try {
-    const breakdown = rollMove(statName, forced);
+    const breakdown = rollMove(statName, opts);
     await animateDice(breakdown.result.dice);
     showRollToast(breakdown);
     recordRoll({
@@ -147,6 +168,8 @@ export async function performRoll(statName: StatName, forced?: 'advantage' | 'di
       statValue: breakdown.statValue,
       forwardMod: breakdown.forwardMod,
       ongoingMod: breakdown.ongoingMod,
+      hungerMod: breakdown.hungerMod,
+      baneMod: breakdown.baneMod,
       total: breakdown.result.total,
       tier: breakdown.result.tier,
     });
@@ -194,7 +217,7 @@ function formatMod(value: number): string {
 export const FANGS_D = 'M166.594,96.28C124.604,134.82 68.824,171.255 19.124,182.28C59.262,196.486 126.714,200.888 172.406,191.812L173.626,191.406L173.626,191.594C173.832,191.551 174.044,191.512 174.25,191.469C227.51,222.795 268.468,223.651 325.25,191.469C325.506,191.555 325.774,191.632 326.03,191.719L326,191.405L333.594,194.03C333.699,194.06 333.801,194.096 333.906,194.125C378.116,206.413 436.81,203.24 488.186,182.155C428.662,172.507 363.316,130.542 333.094,96.281C277.592,135.904 222.094,128.428 166.594,96.281L166.594,96.28ZM28.72,206.688C40.346,229.006 61.332,264.328 93.625,301.501C92.075,283.337 91.11,265.556 90.595,248.876C68.415,237.611 47.597,223.596 28.719,206.688L28.72,206.688ZM475.875,214.22C455.325,228.953 432.775,241.535 408.937,251.844C408.33,269.59 407.205,288.527 405.437,307.781C439.413,272.866 462.27,238.177 475.875,214.221L475.875,214.22ZM153.562,217.406C138.528,221.126 123.548,222.261 109,221.562C108.884,261.019 111.945,311.616 119.22,358.844C124.474,392.964 132.217,425.032 141.594,449.031L153.564,217.407L153.562,217.406ZM346.062,217.406L358.032,449.031C367.408,425.033 375.152,392.965 380.406,358.845C387.68,311.617 390.741,261.02 390.626,221.565C376.072,222.262 361.102,221.13 346.063,217.407L346.062,217.406ZM330.406,276.5C277.326,287.405 221.691,287.898 169.25,276.53L164.812,362.563C214.455,385.721 283.232,385.023 334.812,362.063L330.406,276.5Z';
 
 export function showRollToast(breakdown: RollBreakdown): void {
-  const { result, statName, statValue, forwardMod, ongoingMod } = breakdown;
+  const { result, statName, statValue, forwardMod, ongoingMod, hungerMod, baneMod } = breakdown;
   const tier = result.tier;
   const colors = TIER_COLORS[tier];
 
@@ -214,6 +237,12 @@ export function showRollToast(breakdown: RollBreakdown): void {
     ),
     hasStat && ongoingMod !== 0 && h('span', { class: modClass }, formatMod(ongoingMod),
       h('span', { class: 'vamp-roll-toast__mod-label' }, 'O'),
+    ),
+    hasStat && hungerMod !== 0 && h('span', { class: modClass }, formatMod(hungerMod),
+      h('span', { class: 'vamp-roll-toast__mod-label' }, 'H'),
+    ),
+    hasStat && baneMod !== 0 && h('span', { class: modClass }, formatMod(baneMod),
+      h('span', { class: 'vamp-roll-toast__mod-label' }, 'B'),
     ),
     hasStat && h('span', { class: modClass }, formatMod(statValue)),
     hasStat && ' ',
