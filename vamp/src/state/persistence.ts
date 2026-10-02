@@ -21,6 +21,7 @@ import type { Clock } from './character';
 import type { RollLogEntry } from '../dice/types';
 import { idbGet, idbPut, idbDelete, idbGetAll } from './idb';
 import { showToast } from './toasts';
+import { firestoreSafe } from './firestoreSafe';
 
 const MAX_CHARACTERS_ANON = 2;
 const MAX_CHARACTERS_LINKED = 12;
@@ -96,6 +97,9 @@ function stripMetadata(data: Record<string, unknown>): CharacterState {
       ageBracket: t.ageBracket ?? '',
       description: t.description ?? '',
     }));
+  }
+  if (Array.isArray(clean.xpTriggers)) {
+    clean.xpTriggers = Array.from(clean.xpTriggers as unknown[], v => v === true);
   }
   if (clean.bio && typeof clean.bio === 'object') {
     clean.bio = { ...BLANK_CHARACTER.bio, ...(clean.bio as Record<string, unknown>) };
@@ -249,7 +253,7 @@ function notesDoc(id: string) {
   return doc(db, 'characters', id, 'private', 'notes');
 }
 async function writeNotesSub(id: string, uid: string, notes: Note[]): Promise<void> {
-  await setDoc(notesDoc(id), { ownerId: uid, notes, updatedAt: serverTimestamp() });
+  await setDoc(notesDoc(id), { ownerId: uid, notes: firestoreSafe(notes), updatedAt: serverTimestamp() });
 }
 
 /* Migrate notes: write the sub BEFORE deleting the parent field, so a failed write can't lose them. */
@@ -374,6 +378,7 @@ export async function loadCharacter(id: string): Promise<void> {
 /* Once-per-session storage failure warnings; retries stay silent */
 let warnedLocalSaveFail = false;
 let warnedLocalLoadFail = false;
+let warnedCloudSaveFail = false;
 
 async function saveCharacter(
   snapshotId?: string,
@@ -389,7 +394,6 @@ async function saveCharacter(
   const json = JSON.stringify(state);
   if (json === lastSavedJson) return;
 
-  let idbOk = false;
   try {
     const existing = await idbGet<IDBCharacterRecord>('characters', id);
     const newSlug = generateNameSlug(state.name);
@@ -406,7 +410,6 @@ async function saveCharacter(
       stConsent: existing?.stConsent ?? null,
       stDeclined: existing?.stDeclined ?? null,
     } satisfies IDBCharacterRecord);
-    idbOk = true;
 
     /* Sync member data to Coterie doc when character changes */
     if (coterieId) {
@@ -421,13 +424,10 @@ async function saveCharacter(
     console.error('[Persist] IDB save failed:', err);
   }
 
-  /* Only mark as saved once at least one storage path has the data */
-  if (idbOk) lastSavedJson = json;
-
   try {
     const slug = generateNameSlug(state.name);
     await setDoc(doc(db, 'characters', id), {
-      ...withoutNotes(state),
+      ...firestoreSafe(withoutNotes(state)),
       ownerId: uid,
       coterieId,
       slug,
@@ -436,6 +436,7 @@ async function saveCharacter(
     }, { merge: true });
     await writeNotesSub(id, uid, state.notes);
 
+    /* Advance only once the cloud has it, so unmount/pagehide flushes retry a failed write */
     lastSavedJson = json;
 
     try {
@@ -448,6 +449,10 @@ async function saveCharacter(
     /* IDB holds the edit (pendingSync) and the next save retries. Loud so a silently-stale
        Coterie or ST dashboard is diagnosable from the console. */
     console.warn('[Persist] Firestore save failed; edit kept locally:', err);
+    if (!warnedCloudSaveFail) {
+      warnedCloudSaveFail = true;
+      showToast("Cloud save failed: your changes are saved on this device only, so others won't see them yet.", 'warning');
+    }
   }
 }
 
@@ -496,7 +501,7 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
 
   try {
     await setDoc(ref, {
-      ...withoutNotes(state),
+      ...firestoreSafe(withoutNotes(state)),
       ownerId: uid,
       slug,
       public: false,
@@ -507,7 +512,9 @@ export async function createCharacter(initial: Partial<CharacterState> = {}): Pr
     });
     await writeNotesSub(ref.id, uid, state.notes);
     await idbPut('characters', { ...record, pendingSync: false, updatedAt: Date.now() });
-  } catch {}
+  } catch (err) {
+    console.warn('[Persist] Firestore create failed; character kept locally:', err);
+  }
 
   lastSavedJson = JSON.stringify(state);
   character.value = state;
@@ -581,7 +588,7 @@ async function syncPending(): Promise<void> {
     try {
       const state = stripMetadata(rec as unknown as Record<string, unknown>);
       await setDoc(doc(db, 'characters', rec.id), {
-        ...withoutNotes(state),
+        ...firestoreSafe(withoutNotes(state)),
         ownerId: uid,
         coterieId: rec.coterieId,
         slug: rec.slug,
@@ -591,7 +598,9 @@ async function syncPending(): Promise<void> {
       }, { merge: true });
       await writeNotesSub(rec.id, uid, state.notes);
       await idbPut('characters', { ...rec, pendingSync: false, updatedAt: Date.now() });
-    } catch {}
+    } catch (err) {
+      console.warn('[Persist] pending sync failed for', rec.id, err);
+    }
   }
 }
 

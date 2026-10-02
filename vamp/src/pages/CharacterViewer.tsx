@@ -19,6 +19,8 @@ export function CharacterViewer({ coterieCode, charSlug, charId }: {
     const isCoteriePath = coterieCode && charSlug;
     const isDirectPath = charId;
     if (!isCoteriePath && !isDirectPath) return;
+    /* A slow load landing after navigation away would hijack the shared character signal */
+    let cancelled = false;
 
     viewerLoading.value = true;
     viewerError.value = null;
@@ -32,11 +34,14 @@ export function CharacterViewer({ coterieCode, charSlug, charId }: {
 
     load
       .then(async ({ state, coterieId, isOwner }) => {
+        if (cancelled) return;
         if (isOwner) {
           const ownId = charId ?? activeCharacterId.value;
           if (ownId) { route(`/vamp/${ownId}`, true); return; }
         }
 
+        /* Autosave keys on activeCharacterId: clear it or the viewed state saves into our own doc */
+        activeCharacterId.value = null;
         /* Flip viewing on only with the target character already in the signal, so the
            theme effect never applies the previous (own) character's palette mid-load. */
         character.value = state;
@@ -47,13 +52,13 @@ export function CharacterViewer({ coterieCode, charSlug, charId }: {
         viewerReady.value = true;
       })
       .catch(err => {
-        viewerError.value = err instanceof Error ? err.message : String(err);
+        if (!cancelled) viewerError.value = err instanceof Error ? err.message : String(err);
       })
       .finally(() => {
-        viewerLoading.value = false;
+        if (!cancelled) viewerLoading.value = false;
       });
 
-    return () => { viewingOtherSheet.value = false; };
+    return () => { cancelled = true; viewingOtherSheet.value = false; };
   }, [coterieCode, charSlug, charId]);
 
   if (viewerLoading.value) {

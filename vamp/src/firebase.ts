@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import {
   getAuth, signInAnonymously, onAuthStateChanged,
   sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink,
@@ -19,7 +19,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
+/* An undefined field (e.g. an optional left unset) otherwise makes setDoc throw before the
+   network, freezing that doc's cloud copy while IDB keeps looking healthy. */
+export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 export const auth = getAuth(app);
 
 /* Resolves with the user's UID once auth completes.

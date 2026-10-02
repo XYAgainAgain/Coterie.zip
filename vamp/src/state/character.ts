@@ -427,8 +427,10 @@ export function slumberHeal(
 }
 
 export function fireXPTrigger(index: number) {
-  if (character.value.xpTriggers[index]) return;
-  const triggers = [...character.value.xpTriggers];
+  const prev = character.value.xpTriggers;
+  if (prev[index]) return;
+  /* Dense on purpose: a sparse slot reads as undefined, which Firestore can't store */
+  const triggers = Array.from({ length: Math.max(prev.length, index + 1) }, (_, i) => prev[i] === true);
   triggers[index] = true;
   character.value = {
     ...character.value,
@@ -443,7 +445,7 @@ export function addClock(name: string, segments: 4 | 6 | 8, condition?: string) 
     name,
     segments,
     filled: 0,
-    condition,
+    ...(condition ? { condition } : {}),
   };
   character.value = {
     ...character.value,
@@ -767,7 +769,7 @@ export function newSession() {
   }
   character.value = {
     ...character.value,
-    xpTriggers: character.value.xpTriggers.map(() => false),
+    xpTriggers: Array.from(character.value.xpTriggers, () => false),
     notes,
   };
 }
