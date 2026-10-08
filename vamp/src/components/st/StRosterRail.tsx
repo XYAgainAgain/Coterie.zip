@@ -10,7 +10,7 @@ import { HavenFeatureSelector, CoterieMovesList } from '../right-panel/CoteriePa
 
 const signed = (n: number) => (n >= 0 ? `+${n}` : `${n}`);
 
-/* Full stat names overflow the rail; three-letter forms are Sam's canonical abbreviations. */
+/* Full stat names overflow the rail; the three-letter forms are the canonical abbreviations. */
 const STAT_ABBR: Record<string, string> = { Blood: 'BLD', Shadow: 'SHA', Resolve: 'RES', Demeanor: 'DEM', Wits: 'WIT' };
 
 /* Per-device collapse state for the briefing sections + MQC, keyed by section id.
